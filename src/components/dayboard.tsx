@@ -1,8 +1,11 @@
 import { forwardRef } from "react";
+import styles from "./dayboard.module.css";
 
 export default function Dayboard() {
     return (
-        <DayboardLayout />
+        <div className={styles.body}>
+            <DayboardLayout />
+        </div>
     );
 }
 
@@ -24,13 +27,9 @@ type DayboardGridProps = {
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, ref) {
         return (
-            <div ref={ref} className="dayboard-grid">
-                {Array.from({ length: props.h }).map((_, i) => (
-                    <div key={i} className="dayboard-row">
-                        {Array.from({ length: props.w }).map((_, j) => (
-                            <div key={j} className="dayboard-cell" />
-                        ))}
-                    </div>
+            <div ref={ref} className={styles.grid}>
+                {Array.from({ length: props.w * props.h }).map((_, i) => (
+                    <div key={i} className={styles.cell} />
                 ))}
             </div>
         );
