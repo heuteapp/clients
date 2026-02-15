@@ -1,4 +1,5 @@
-import { createContext, createRef, forwardRef, useEffect } from "react";
+"use client";
+import { createContext, forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./dayboard.module.css";
 
 var mounted = false;
@@ -10,8 +11,6 @@ type DayboardContext = {
 };
 
 export default function Dayboard() {
-    const panelRef = createRef<HTMLDivElement>();
-
     useEffect(() => {
         if (!mounted) {
             mounted = true;
@@ -21,11 +20,22 @@ export default function Dayboard() {
         }
     }, [])
 
+    const panelRef = useRef<HTMLDivElement>(null);
+    const [ready, setReady] = useState(false);
+
+    useLayoutEffect(() => {
+        if (panelRef.current) {
+            setReady(true);
+        }
+    }, []);
+
     return (
         <div ref={panelRef} className={styles.body}>
-            <context.Provider value={{ panelRef: panelRef}}>
-                <DayboardLayout />
-            </context.Provider>
+            {ready && (
+                <context.Provider value={{ panelRef }}>
+                    <DayboardLayout />
+                </context.Provider>
+            )}
         </div>
     );
 }
@@ -49,10 +59,14 @@ type DayboardGridProps = {
 
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, ref) {
+        const c = useContext(context);
+
         return (
             <div ref={ref} className={styles.grid}>
                 {Array.from({ length: props.w * props.h }).map((_, i) => (
-                    <div key={i} className={styles.cell} />
+                    <div key={i} className={styles.cell} >
+                        {c?.panelRef?.current?.getBoundingClientRect()?.width ?? "sdf"}
+                    </div>
                 ))}
             </div>
         );
