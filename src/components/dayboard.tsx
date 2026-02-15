@@ -47,8 +47,10 @@ type DayboardContextProps = {
 const DayboardLayout = forwardRef<HTMLDivElement>(
     function DayboardLayout(props, ref) {
         return (
-            <div ref={ref} className="dayboard-layout" style={{ display: "flex", width: "100%", height: "100%" }}>
-                <DayboardGrid w={12} h={6} />
+            <div ref={ref} className="dayboard-layout" style={{ display: "flex", width: "100%", height: "100%", flexDirection: "column" }}>
+                <DayboardGrid w={12} h={3} />
+                <DayboardGrid w={12} h={3} />
+
             </div>
         );
     }

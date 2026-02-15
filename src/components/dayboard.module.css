@@ -1,11 +1,11 @@
-.body, .grid {
+.body {
     width: 100%;
     height: 100%;
 }
 
 .grid {
   --cols: 12;
-  --rows: 6;
+  --rows: 3;
 
   /* ekranın hem genişliğine hem yüksekliğine göre cell hesapla */
   --cellW: calc((100vw - 97px) / var(--cols));
@@ -28,7 +28,7 @@
 
 @media (max-width: 600px) {
     .grid {
-        --cols: 6;
+        --cols: 3;
         --rows: 12;
     }
 }
