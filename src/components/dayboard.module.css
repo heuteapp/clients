@@ -4,15 +4,33 @@
 }
 
 .grid {
-  --cell: min(96px, calc((100vw - 11 * 4px) / 12));
+  --cols: 12;
+  --rows: 6;
+
+  /* ekranın hem genişliğine hem yüksekliğine göre cell hesapla */
+  --cellW: calc((100vw - 97px) / var(--cols));
+  --cellH: calc((100vh - 90px) / var(--rows));
+
+  /* cell = en küçük olan (width mi height mı) */
+  --cell: min(var(--cellW), var(--cellH));
+
+  /* gap = cell'in oranı */
+  --gap: clamp(2px, calc(var(--cell) * 0.06), 10px);
 
   display: grid;
-  grid-template-columns: repeat(12, var(--cell));
-  grid-template-rows: repeat(6, var(--cell));
-  gap: 4px;
+  grid-template-columns: repeat(var(--cols), var(--cell));
+  grid-template-rows: repeat(var(--rows), var(--cell));
+  gap: var(--gap);
 
-  justify-content: center;
-  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        --cols: 6;
+        --rows: 12;
+    }
 }
 
 .cell {
@@ -20,4 +38,26 @@
     width: 96px;
     height: 96px;
     box-sizing: border-box;
+}
+
+@media (max-width: 1500px) {
+    .cell {
+        width: 72px;
+        height: 72px;
+    }
+}
+
+
+@media (max-width: 1200px) {
+    .cell {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 900px) {
+    .cell {
+        width: 48px;
+        height: 48px;
+    }
 }
