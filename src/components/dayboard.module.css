@@ -1,19 +1,23 @@
-.body {
+.body, .grid {
     width: 100%;
     height: 100%;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 4px;
-    width: 100%;
-    height: 100%;
+  --cell: min(96px, calc((100vw - 11 * 4px) / 12));
+
+  display: grid;
+  grid-template-columns: repeat(12, var(--cell));
+  grid-template-rows: repeat(6, var(--cell));
+  gap: 4px;
+
+  justify-content: center;
+  align-content: center;
 }
 
 .cell {
     border: 1px solid #ccc;
     width: 96px;
     height: 96px;
+    box-sizing: border-box;
 }
