@@ -1,13 +1,26 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import styles from "./dayboard.module.css";
 
+var mounted = false;
+
 export default function Dayboard() {
+    useEffect(() => {
+        if (!mounted) {
+            mounted = true;
+        }
+        else {
+            throw new Error("Dayboard component is already mounted. This should never happen.");
+        }
+    }, [])
+
     return (
         <div className={styles.body}>
             <DayboardLayout />
         </div>
     );
 }
+
+//
 
 const DayboardLayout = forwardRef<HTMLDivElement>(
     function DayboardLayout(props, ref) {
