@@ -4,12 +4,6 @@ import styles from "./dayboard.module.css";
 
 var mounted = false;
 
-const context = createContext<DayboardContext | null>(null);
-
-type DayboardContext = {
-    panelRef : React.RefObject<HTMLDivElement | null>;
-};
-
 export default function Dayboard() {
     useEffect(() => {
         if (!mounted) {
@@ -32,13 +26,21 @@ export default function Dayboard() {
     return (
         <div ref={panelRef} className={styles.body}>
             {ready && (
-                <context.Provider value={{ panelRef }}>
+                <DayboardContext.Provider value={{ panelRef }}>
                     <DayboardLayout />
-                </context.Provider>
+                </DayboardContext.Provider>
             )}
         </div>
     );
 }
+
+//
+
+const DayboardContext = createContext<DayboardContextProps | null>(null);
+
+type DayboardContextProps = {
+    panelRef : React.RefObject<HTMLDivElement | null>;
+};
 
 //
 
@@ -52,14 +54,9 @@ const DayboardLayout = forwardRef<HTMLDivElement>(
     }
 );
 
-type DayboardGridProps = {
-    w: number;
-    h: number;
-}
-
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, ref) {
-        const c = useContext(context);
+        const c = useContext(DayboardContext);
 
         return (
             <div ref={ref} className={styles.grid}>
@@ -72,3 +69,8 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
         );
     }
 );
+
+type DayboardGridProps = {
+    w: number;
+    h: number;
+}
