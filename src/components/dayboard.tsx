@@ -1,5 +1,5 @@
 "use client";
-import { createContext, forwardRef, use, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createContext, forwardRef, use, useContext, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import styles from "./dayboard.module.css";
 
 var mounted = false;
@@ -66,11 +66,25 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
             throw new Error("DayboardGrid must be used within a DayboardContext.Provider");
         }
 
+        const innerRef = useRef<HTMLDivElement>(null);
+        useImperativeHandle(ref, () => innerRef.current!, []);
+
+        useEffect(() => {
+            const observer = new ResizeObserver(() => {
+                innerRef.current?.style.setProperty("--cellSize", `${(context.panelRef.current?.getBoundingClientRect()?.width ?? 0) / props.w}px`);
+            });
+
+            observer.observe(context.panelRef.current!);
+
+            return () => {
+                observer.disconnect();
+            };
+        }, []);
+
         return (
-            <div ref={ref} className={styles.grid}>
+            <div ref={innerRef} className={styles.grid}>
                 {Array.from({ length: props.w * props.h }).map((_, i) => (
-                    <div key={i} className={styles.cell} style={{ display:"flex", flexDirection:"column" }}>
-                    </div>
+                    <div key={i} className={styles.cell} />
                 ))} 
             </div>
         );
