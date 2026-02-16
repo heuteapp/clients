@@ -32,6 +32,7 @@ export default function Dayboard() {
             {ready && (
                 <DayboardContext.Provider value={context}>
                     <DayboardLayout />
+                    {panelRef.current?.getBoundingClientRect().width}
                 </DayboardContext.Provider>
             )}
         </div>
@@ -71,7 +72,22 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 
         useEffect(() => {
             const observer = new ResizeObserver(() => {
-                innerRef.current?.style.setProperty("--cellSize", `${(context.panelRef.current?.getBoundingClientRect()?.width ?? 0) / props.w}px`);
+                if(!context.panelRef.current) return;
+                if(!innerRef.current) return;
+
+                const panelElm = context.panelRef.current;
+                const panelSize = panelElm.getBoundingClientRect();
+                const panelWidth = panelSize.width;
+                const panelHeight = panelSize.height;
+
+                const style = innerRef.current.style;
+                const possibleWidth = Math.floor(panelWidth / props.w);
+                const possibleHeight = Math.floor(panelHeight / props.h);
+                const fieldSize = Math.min(possibleWidth, possibleHeight);
+                const cellSize = Math.floor(fieldSize * 0.8);
+
+                style.setProperty("--cellSize", `${fieldSize}px`);
+                console.log(cellSize);
             });
 
             observer.observe(context.panelRef.current!);
