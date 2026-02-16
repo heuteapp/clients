@@ -1,6 +1,7 @@
 "use client";
 import { createContext, forwardRef, use, useContext, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import styles from "./dayboard.module.css";
+import mergeRefs from "merge-refs";
 
 var mounted = false;
 
@@ -66,27 +67,26 @@ const DayboardLayout = forwardRef<HTMLDivElement>(
 );
 
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
-    function DayboardGrid(props, ref) {
+    function DayboardGrid(props, forwardedRef) {
         const context = useContext(DayboardContext);
 
         if (!context) {
             throw new Error("DayboardGrid must be used within a DayboardContext.Provider");
         }
 
-        const innerRef = useRef<HTMLDivElement>(null);
-        useImperativeHandle(ref, () => innerRef.current!, []);
+        const ref = useRef<HTMLDivElement>(null);
 
         useEffect(() => {
             const observer = new ResizeObserver(() => {
                 if(!context.panelRef.current) return;
-                if(!innerRef.current) return;
+                if(!ref.current) return;
 
-                const gridElm = innerRef.current;
+                const gridElm = ref.current;
                 const gridSize = gridElm.getBoundingClientRect();
                 const gridWidth = gridSize.width;
                 const gridHeight = gridSize.height;
 
-                const style = innerRef.current.style;
+                const style = ref.current.style;
                 const possibleWidth = gridWidth / props.w;
                 const possibleHeight = gridHeight / props.h;
                 const fieldSize = Math.min(possibleWidth, possibleHeight);
@@ -108,7 +108,7 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
         }, []);
 
         return (
-            <div ref={innerRef} className={styles.grid}>
+            <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
                 {Array.from({ length: props.w * props.h }).map((_, i) => (
                     <div key={i} className={styles.cell} />
                 ))} 
