@@ -32,7 +32,12 @@ export default function Dayboard() {
             {ready && (
                 <DayboardContext.Provider value={context}>
                     <DayboardLayout />
-                    {panelRef.current?.getBoundingClientRect().width}
+                    <div>
+                        {panelRef.current?.getBoundingClientRect()?.width}
+                    </div>
+                    <div>
+                        {panelRef.current?.getBoundingClientRect()?.height}
+                    </div>
                 </DayboardContext.Provider>
             )}
         </div>
@@ -84,10 +89,14 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
                 const possibleWidth = Math.floor(panelWidth / props.w);
                 const possibleHeight = Math.floor(panelHeight / props.h);
                 const fieldSize = Math.min(possibleWidth, possibleHeight);
-                const cellSize = Math.floor(fieldSize * 0.8);
 
-                style.setProperty("--cellSize", `${fieldSize}px`);
-                console.log(cellSize);
+                const gridGap = Math.floor(fieldSize * 0.1);
+                const cellSize = Math.floor(fieldSize - (gridGap));
+
+                style.setProperty("--gridColumns", `${props.w}`);
+                style.setProperty("--gridRows", `${props.h}`);
+                style.setProperty("--gridGap", `${gridGap}px`);
+                style.setProperty("--cellSize", `${cellSize - (gridGap / props.w)}px`);
             });
 
             observer.observe(context.panelRef.current!);

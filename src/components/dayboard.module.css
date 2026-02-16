@@ -11,14 +11,11 @@
 }
 
 .grid {
-  --cols: 12;
-  --rows: 3;
-  /* gap = cell'in oranı */
-
   display: grid;
-  grid-template-columns: repeat(var(--cols), var(--cellSize));
-  grid-template-rows: repeat(var(--rows), var(--cellSize));
-  gap: var(--gap);
+  grid-template-columns: repeat(var(--gridColumns), var(--cellSize));
+  grid-template-rows: repeat(var(--gridRows), var(--cellSize));
+  gap: var(--gridGap);
+  padding: var(--gridGap);
 
   justify-items: center;
   align-items: center;
