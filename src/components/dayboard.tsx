@@ -23,29 +23,8 @@ export default function Dayboard() {
         }
     }, []);
 
-    const [panelSize, setPanelSize] = useState({ width: 0, height: 0 });
-
-    useEffect(() => {
-        const el = panelRef.current;
-        if (!el) return;
-
-        const observer = new ResizeObserver((entries) => {
-            for (let entry of entries) {
-                setPanelSize({
-                    width: entry.contentRect.width,
-                    height: entry.contentRect.height,
-                });
-            }
-        });
-
-        observer.observe(el);
-
-        return () => observer.disconnect();
-    }, []);
-
     const context : DayboardContextProps = {
-        panelRef,
-        panelSize
+        panelRef
     };
 
     return (
@@ -53,7 +32,6 @@ export default function Dayboard() {
             {ready && (
                 <DayboardContext.Provider value={context}>
                     <DayboardLayout />
-                {panelSize.width} {panelSize.height}
                 </DayboardContext.Provider>
             )}
         </div>
@@ -66,7 +44,6 @@ const DayboardContext = createContext<DayboardContextProps | null>(null);
 
 type DayboardContextProps = {
     panelRef : React.RefObject<HTMLDivElement | null>;
-    panelSize: { width: number; height: number };
 };
 
 //
@@ -89,22 +66,10 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
             throw new Error("DayboardGrid must be used within a DayboardContext.Provider");
         }
 
-        const panelWidth = context.panelSize.width;
-        const panelHeight = context.panelSize.height;
-
-        const possibleWidth = (panelWidth) / props.w;
-        const possibleHeight = (panelHeight) / props.h;
-        const fieldSize = Math.min(possibleWidth, possibleHeight);
-        const cellSize = fieldSize * 0.9;
-
         return (
             <div ref={ref} className={styles.grid}>
                 {Array.from({ length: props.w * props.h }).map((_, i) => (
                     <div key={i} className={styles.cell} style={{ display:"flex", flexDirection:"column" }}>
-                        <div>{Math.floor(possibleWidth)}</div>
-                        <div>{Math.floor(possibleHeight)}</div>
-                        <div>{Math.floor(fieldSize)}</div>
-                        <div>{Math.floor(cellSize)}</div>
                     </div>
                 ))} 
             </div>
@@ -115,11 +80,4 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 type DayboardGridProps = {
     w: number;
     h: number;
-}
-
-type DayboardGridDimensions = {
-    posibleWidth: number;
-    posibleHeight: number;
-    fieldSize: number;
-    cellSize: number;
 }
