@@ -7,15 +7,16 @@ import { useReadyRef } from "../hooks";
 export default function Dayboard() {
     const [dayboardRef, ready] = useReadyRef<HTMLDivElement>();
 
-    const register : DayboardRegister = {
-        dayboardRef
-    };
+    const register = useRef<DayboardRegister>({
+        dayboardRef,
+        dayboardLayout: null,
+    });
 
     return (
         <div ref={dayboardRef} className={styles.body}>
             { 
                 ready &&
-                <DayboardContext.Provider value={register}>
+                <DayboardContext.Provider value={register.current}>
                     <DayboardLayout />
                 </DayboardContext.Provider>
             }
@@ -29,14 +30,21 @@ const DayboardContext = createContext<DayboardRegister | null>(null);
 
 type DayboardRegister = {
     dayboardRef : React.RefObject<HTMLDivElement | null>;
+    dayboardLayout: DayboardLayoutRegister | null;
 };
 
 //
 
 const DayboardLayout = forwardRef<HTMLDivElement>(
     function DayboardLayout(props, ref) {
-        const register : DayboardLayoutRegister = {
-        };
+        const register = useRef<DayboardLayoutRegister>({
+        });
+
+        const context = useContext(DayboardContext)!;
+
+        useEffect(() => {
+            context.dayboardLayout = register;
+        }, []);
 
         return (
             <div ref={ref} className={styles.layout}>
@@ -55,8 +63,8 @@ type DayboardLayoutRegister = {
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, forwardedRef) {
         const context = useContext(DayboardContext);
-        const register : DayboardGridRegister = {
-        };
+        const register = useRef<DayboardGridRegister>({
+        });
 
         if (!context) {
             throw new Error("DayboardGrid must be used within a DayboardContext.Provider");
