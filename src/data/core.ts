@@ -12,3 +12,12 @@ export interface RectBounds extends Point {
     x2: number;
     y2: number;
 }
+
+//
+
+export interface Edges {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+}
