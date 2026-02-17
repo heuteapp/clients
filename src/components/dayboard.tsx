@@ -118,7 +118,12 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
         }, [context.dayboardRef, data.size.cols, data.size.rows]);
 
         return (
-            <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
+            <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid} style={{
+                left: `${data.bounds.x1}%`,
+                top: `${data.bounds.y1}%`,
+                right: `${100 - data.bounds.x2}%`,
+                bottom: `${100 - data.bounds.y2}%`,
+            }}>
                 {Array.from({ length: data.size.cols * data.size.rows }).map((_, i) => (
                     <div key={i} className={styles.cell} />
                 ))} 
