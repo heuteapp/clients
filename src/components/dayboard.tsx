@@ -8,7 +8,7 @@ export default function Dayboard() {
     const [dayboardRef, ready] = useReadyRef<HTMLDivElement>();
 
     const context : DayboardRegister = {
-        panelRef: dayboardRef
+        dayboardRef
     };
 
     return (
@@ -28,7 +28,7 @@ export default function Dayboard() {
 const DayboardContext = createContext<DayboardRegister | null>(null);
 
 type DayboardRegister = {
-    panelRef : React.RefObject<HTMLDivElement | null>;
+    dayboardRef : React.RefObject<HTMLDivElement | null>;
 };
 
 //
@@ -56,7 +56,7 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 
         useEffect(() => {
             const observer = new ResizeObserver(() => {
-                if(!context.panelRef.current) return;
+                if(!context.dayboardRef.current) return;
                 if(!ref.current) return;
 
                 const gridElm = ref.current;
@@ -78,12 +78,12 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
                 style.setProperty("--cellSize", `${Math.floor(cellSize)}px`);
             });
 
-            observer.observe(context.panelRef.current!);
+            observer.observe(context.dayboardRef.current!);
 
             return () => {
                 observer.disconnect();
             };
-        }, [context.panelRef, props.w, props.h]);
+        }, [context.dayboardRef, props.w, props.h]);
 
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
