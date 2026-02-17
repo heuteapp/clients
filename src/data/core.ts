@@ -3,7 +3,14 @@ export interface Point {
     y: number;
 }
 
-export interface Rect extends Point {
+export interface Size {
+    width: number;
+    height: number;
+}
+
+//
+
+export interface Rect extends Size {
     width: number;
     height: number;
 }
