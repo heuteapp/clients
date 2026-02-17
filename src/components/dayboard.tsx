@@ -35,14 +35,26 @@ type DayboardRegister = {
 
 const DayboardLayout = forwardRef<HTMLDivElement>(
     function DayboardLayout(props, ref) {
+        const register : DayboardLayoutRegister = {
+        };
+
         return (
             <div ref={ref} className={styles.layout}>
-                <DayboardGrid w={18} h={4} />
-                <DayboardGrid w={18} h={4} />
+                <DayboardLayoutContext.Provider value={register}>
+                    <DayboardGrid w={18} h={4} />
+                    <DayboardGrid w={18} h={4} />
+                </DayboardLayoutContext.Provider>
             </div>
         );
     }
 );
+
+const DayboardLayoutContext = createContext<DayboardLayoutRegister | null>(null);
+
+type DayboardLayoutRegister = {
+}
+
+//
 
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, forwardedRef) {
