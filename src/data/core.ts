@@ -4,3 +4,10 @@ export interface AbsolutePosition {
     x2: number;
     y2: number;
 }
+
+export interface RelativePosition {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
