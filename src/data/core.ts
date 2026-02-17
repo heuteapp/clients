@@ -38,9 +38,11 @@ export interface HeuteObject {
     id: string;
 }
 
-export function createObject<T extends HeuteObject>(data: Omit<T, "id">, genId?: () => string): T {
+export type HeuteData<T extends HeuteObject> = Omit<T, "id">;
+
+export function createObject<T extends HeuteObject>(data: HeuteData<T>, genId?: () => string): T {
     const id = genId ? genId() : crypto.randomUUID();
-    
+
     return {
         id,
         ...data,
