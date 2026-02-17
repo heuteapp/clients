@@ -6,3 +6,7 @@ interface DayboardGrid extends DayboardObject {
     width: number;
     height: number;
 }
+
+interface DayboardLayout extends DayboardObject {
+    grids: DayboardGrid[];
+}

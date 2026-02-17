@@ -35,19 +35,21 @@ type DayboardRegister = {
 
 //
 
-const DayboardLayout = forwardRef<HTMLDivElement>(
-    function DayboardLayout(props, ref) {
+const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
+    function DayboardLayout(props, forwardedRef) {
+        const ref = useRef<HTMLDivElement>(null);
+
         const register = useRef<DayboardLayoutRegister>({
         });
 
         const context = useContext(DayboardContext)!;
 
         useEffect(() => {
-            context.dayboardLayout = register;
+            context.dayboardLayout = register.current;
         }, []);
 
         return (
-            <div ref={ref} className={styles.layout}>
+            <div ref={mergeRefs(forwardedRef, ref)} className={styles.layout}>
                 <DayboardGrid w={18} h={4} />
                 <DayboardGrid w={18} h={4} />
             </div>
@@ -55,7 +57,12 @@ const DayboardLayout = forwardRef<HTMLDivElement>(
     }
 );
 
+type DayboardLayoutProps = {
+
+}
+
 type DayboardLayoutRegister = {
+
 }
 
 //
