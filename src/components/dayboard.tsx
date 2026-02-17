@@ -4,6 +4,7 @@ import styles from "./dayboard.module.css";
 import mergeRefs from "merge-refs";
 import { useReadyRef } from "../hooks";
 import { heuteApp } from "@/src/heute/app";
+import { DayboardGridData } from "@/src/data/dayboard";
 
 export default function Dayboard() {
     const [dayboardRef, ready] = useReadyRef<HTMLDivElement>();
@@ -54,7 +55,7 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.layout}>
                 {
                     layout?.grids.map((grid) => (
-                        <DayboardGrid key={grid.id} w={grid.size.cols} h={grid.size.rows} />
+                        <DayboardGrid key={grid.id} data={grid}/>
                     ))
                 }
             </div>
@@ -83,6 +84,7 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
         }
 
         const ref = useRef<HTMLDivElement>(null);
+        const data = props.data;
 
         useEffect(() => {
             const observer = new ResizeObserver(() => {
@@ -95,15 +97,15 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
                 const gridHeight = gridSize.height;
 
                 const style = ref.current.style;
-                const possibleWidth = gridWidth / props.w;
-                const possibleHeight = gridHeight / props.h;
+                const possibleWidth = gridWidth / data.size.cols;
+                const possibleHeight = gridHeight / data.size.rows;
                 const fieldSize = Math.min(possibleWidth, possibleHeight);
 
                 const gridGap = fieldSize * 0.2;
                 const cellSize = fieldSize - (gridGap);
 
-                style.setProperty("--gridColumns", `${props.w}`);
-                style.setProperty("--gridRows", `${props.h}`);
+                style.setProperty("--gridColumns", `${data.size.cols}`);
+                style.setProperty("--gridRows", `${data.size.rows}`);
                 style.setProperty("--gridGap", `${Math.floor(gridGap)}px`);
                 style.setProperty("--cellSize", `${Math.floor(cellSize)}px`);
             });
@@ -113,11 +115,11 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
             return () => {
                 observer.disconnect();
             };
-        }, [context.dayboardRef, props.w, props.h]);
+        }, [context.dayboardRef, data.size.cols, data.size.rows]);
 
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
-                {Array.from({ length: props.w * props.h }).map((_, i) => (
+                {Array.from({ length: data.size.cols * data.size.rows }).map((_, i) => (
                     <div key={i} className={styles.cell} />
                 ))} 
             </div>
@@ -125,9 +127,8 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     }
 );
 
-type DayboardGridProps = {
-    w: number;
-    h: number;
+interface DayboardGridProps {
+    data: DayboardGridData;
 }
 
 type DayboardGridRegister = {
