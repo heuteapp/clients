@@ -1,10 +1,9 @@
 import { createGrid, createLayout, DayboardLayout } from "./data/dayboard";
 
 class HeuteApp {
-    #dayboard: HeuteDayboard;
+    #dayboard = new HeuteDayboard();
 
     constructor() {
-        this.#dayboard = new HeuteDayboard();
     }
 
     public get dayboard(): HeuteDayboard {
