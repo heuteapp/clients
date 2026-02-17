@@ -7,7 +7,7 @@ import { useReadyRef } from "../hooks";
 export default function Dayboard() {
     const [dayboardRef, ready] = useReadyRef<HTMLDivElement>();
 
-    const context : DayboardRegister = {
+    const register : DayboardRegister = {
         dayboardRef
     };
 
@@ -15,7 +15,7 @@ export default function Dayboard() {
         <div ref={dayboardRef} className={styles.body}>
             { 
                 ready &&
-                <DayboardContext.Provider value={context}>
+                <DayboardContext.Provider value={register}>
                     <DayboardLayout />
                 </DayboardContext.Provider>
             }
@@ -40,16 +40,12 @@ const DayboardLayout = forwardRef<HTMLDivElement>(
 
         return (
             <div ref={ref} className={styles.layout}>
-                <DayboardLayoutContext.Provider value={register}>
-                    <DayboardGrid w={18} h={4} />
-                    <DayboardGrid w={18} h={4} />
-                </DayboardLayoutContext.Provider>
+                <DayboardGrid w={18} h={4} />
+                <DayboardGrid w={18} h={4} />
             </div>
         );
     }
 );
-
-const DayboardLayoutContext = createContext<DayboardLayoutRegister | null>(null);
 
 type DayboardLayoutRegister = {
 }
@@ -59,6 +55,8 @@ type DayboardLayoutRegister = {
 const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, forwardedRef) {
         const context = useContext(DayboardContext);
+        const register : DayboardGridRegister = {
+        };
 
         if (!context) {
             throw new Error("DayboardGrid must be used within a DayboardContext.Provider");
@@ -110,4 +108,7 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 type DayboardGridProps = {
     w: number;
     h: number;
+}
+
+type DayboardGridRegister = {
 }
