@@ -19,5 +19,15 @@ export function createGrid(id: string, data: HeuteData<DayboardGrid>): DayboardG
 }
 
 export function createLayout(id: string, data: HeuteData<DayboardLayout>): DayboardLayout {
-    return createObjectWithId<DayboardLayout>(id, data);
+    const layout = createObjectWithId<DayboardLayout>(id, data);
+    const ids = new Set<string>();
+    
+    for (const grid of layout.grids) {
+        if (ids.has(grid.id)) {
+            throw new Error(`Layout ${id} has duplicate grid id: ${grid.id}`);
+        }
+        ids.add(grid.id);
+    }
+
+    return layout;
 }
