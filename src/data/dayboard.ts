@@ -1,11 +1,12 @@
 import { UniqueData, Bounds, assignDataWithId, DataWithoutId, Placement } from "./core";
 
 export interface DayboardData {
+    layout: DayboardLayoutData;
 }
 
 //
 
-export interface DayboardLayoutData extends DayboardData, UniqueData {
+export interface DayboardLayoutData extends UniqueData {
     fields: DayboardFieldData[];
 }
 
@@ -25,7 +26,7 @@ export function assignLayout(id: string, data: DataWithoutId<DayboardLayoutData>
 
 //
 
-export interface DayboardFieldData extends DayboardData, UniqueData {
+export interface DayboardFieldData extends UniqueData {
     grid: DayboardGridData;
     bounds: Bounds;
     placement?: Placement;
@@ -37,7 +38,7 @@ export function assignField(id: string, data: DataWithoutId<DayboardFieldData>):
 
 //
 
-export interface DayboardGridData extends DayboardData {
+export interface DayboardGridData {
     cols: number;
     rows: number;
 }

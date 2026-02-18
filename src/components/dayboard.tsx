@@ -4,7 +4,7 @@ import styles from "./dayboard.module.css";
 import mergeRefs from "merge-refs";
 import { useReadyRef } from "../hooks";
 import { heuteApp } from "@/src/heute/app";
-import { DayboardFieldData, DayboardGridData } from "@/src/data/dayboard";
+import { DayboardFieldData, DayboardGridData, DayboardLayoutData } from "@/src/data/dayboard";
 
 export default function Dayboard() {
     const [dayboardRef, ready] = useReadyRef<HTMLDivElement>();
@@ -13,13 +13,15 @@ export default function Dayboard() {
         dayboardRef,
         dayboardLayout: null,
     });
+        
+    const layout = heuteApp.dayboard.layouts.get("default")!;
 
     return (
         <div ref={dayboardRef} className={styles.body}>
             { 
                 ready &&
                 <DayboardContext.Provider value={register.current}>
-                    <DayboardLayout />
+                    <DayboardLayout data={layout} />
                 </DayboardContext.Provider>
             }
         </div>
@@ -45,7 +47,7 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
         });
 
         const context = useContext(DayboardContext)!;
-        const layout = heuteApp.dayboard.layouts.get("default");
+        const data = props.data;
 
         useEffect(() => {
             context.dayboardLayout = register.current;
@@ -54,7 +56,7 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.layout}>
                 {
-                    layout?.fields.map((field) => (
+                    data.fields.map((field) => (
                         <DayboardField key={field.id} data={field}/>
                     ))
                 }
@@ -64,7 +66,7 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
 );
 
 type DayboardLayoutProps = {
-
+    data: DayboardLayoutData
 }
 
 type DayboardLayoutRegister = {

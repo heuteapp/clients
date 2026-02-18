@@ -12,7 +12,7 @@ export class HeuteDayboard {
                 fields: [
                     assignField("first", {
                         bounds: { x1: 0, y1: 0, x2: 100, y2: 50 },
-                        grid: { cols: 15, rows: 4 }
+                        grid: { cols: 18, rows: 4 }
 
                     }),
                     assignField("second", {
