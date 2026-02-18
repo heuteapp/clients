@@ -16,6 +16,8 @@
 
 .grid {
     display: grid;
+      touch-action: none;
+
     width: max-content;
     height: max-content;
     grid-template-columns: repeat(var(--gridColumns), var(--cellSize));
@@ -35,4 +37,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
+    transition: 0.2s border;
+}
+
+.cell.highlighted {
+    border: 6px solid #007bff;
 }

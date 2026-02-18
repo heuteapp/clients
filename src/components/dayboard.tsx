@@ -4,6 +4,7 @@ import styles from "./dayboard.module.css";
 import mergeRefs from "merge-refs";
 import { useReadyRef } from "../hooks";
 import { DayboardData, DayboardFieldData, DayboardGridData, DayboardLayoutData } from "@/src/data/dayboard";
+import { GridSize } from "../data/core";
 
 function Dayboard(props: DayboardProps) {
     const [ref, ready] = useReadyRef<HTMLDivElement>();
@@ -193,8 +194,92 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 
         const data = props.data;
 
+function mouseToGridCell(e: React.MouseEvent, size: GridSize) {
+  const gridEl = ref.current;
+  if (!gridEl) return null;
+
+  const rect = gridEl.getBoundingClientRect();
+
+  // mouse px (grid içinde)
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  // hücre px boyutu
+  const cellW = rect.width / data.cols;
+  const cellH = rect.height / data.rows;
+
+  // kart px boyutu
+  const cardW = size.cols * cellW;
+  const cardH = size.rows * cellH;
+
+  // ⭐ soft snap:
+  // kartı mouse'a ortala ama hücre merkezine daha yumuşak otursun
+  const pxLeft = mx - cardW / 2 + cellW / 2;
+  const pxTop  = my - cardH / 2 + cellH / 2;
+
+  // px -> grid cell (1-based)
+  let x = Math.floor(pxLeft / cellW) + 1;
+  let y = Math.floor(pxTop / cellH) + 1;
+
+  // clamp (kart taşmasın)
+  const maxX = data.cols - size.cols + 1;
+  const maxY = data.rows - size.rows + 1;
+
+  x = clamp(x, 1, maxX);
+  y = clamp(y, 1, maxY);
+
+  return { x, y };
+}
+
+
+        function clamp(n: number, min: number, max: number) {
+            return Math.max(min, Math.min(max, n));
+        }
+
+        function mouseMove(e: React.MouseEvent) {
+                const cardSize = { cols: 5, rows: 2 };
+                const point = mouseToGridCell(e, cardSize);
+
+                if (point) {
+                    for (const cell of register.current.cells) {
+                        const isHighlighted =
+                        cell.props.x + 1 >= point.x && cell.props.x + 1 < point.x + cardSize.cols &&
+                        cell.props.y + 1 >= point.y && cell.props.y + 1 < point.y + cardSize.rows;
+
+
+                        if (isHighlighted) {
+                            cell.ref.current?.classList.add(styles.highlighted);
+                        } else {
+                            cell.ref.current?.classList.remove(styles.highlighted);
+                        }
+                    }
+                }
+            }
+
         return (
-            <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
+            <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid} onPointerMove={mouseMove} onPointerDown={() => {
+                const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 90%, 55%)`;
+                
+                for (const cell of register.current.cells) {
+                    const element = cell.ref.current;
+
+                    if(element?.classList.contains(styles.highlighted)) {
+                        element.classList.remove(styles.highlighted);
+                        element.style.borderColor = randomColor;
+
+                        // 1 artsın borderWidth
+                        element.style.borderWidth = `${parseInt(getComputedStyle(element).borderWidth) + 1}px`;
+                    }
+                }
+            }}
+            onMouseLeave={() => {
+                requestAnimationFrame(() => {
+                    for (const cell of register.current.cells) {
+                        const element = cell.ref.current;
+                        element?.classList.remove(styles.highlighted);
+                    }
+                });
+            }}>
                 <DayboardGridContext.Provider value={register.current}>
                     {Array.from({ length: data.cols * data.rows }).map((_, i) => (
                         <DayboardCell key={i} x={i % data.cols} y={Math.floor(i / data.cols)} />
@@ -224,6 +309,7 @@ export const DayboardCell = forwardRef<HTMLDivElement, DayboardCellProps>(
 
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardCellRegister>({
+            props,
             ref
         });
 
@@ -248,5 +334,6 @@ interface DayboardCellProps {
 }
 
 interface DayboardCellRegister {
+    props: DayboardCellProps;
     ref: React.RefObject<HTMLDivElement | null>;
 }
