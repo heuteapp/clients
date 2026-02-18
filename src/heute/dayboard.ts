@@ -1,4 +1,4 @@
-import { createGrid, createLayout } from "@/src/data/dayboard";
+import { assignGrid, assignLayout } from "@/src/data/dayboard";
 import { HeuteDayboardLayouts } from "./dayboardLayouts";
 
 export class HeuteDayboard {
@@ -8,13 +8,13 @@ export class HeuteDayboard {
         this.#layouts = new HeuteDayboardLayouts();
 
         this.#layouts.add(
-            createLayout("default", {
+            assignLayout("default", {
                 grids: [
-                    createGrid("first", {
+                    assignGrid("first", {
                         size: { cols: 15, rows: 4 },
                         bounds: { x1: 0, y1: 0, x2: 100, y2: 50 }
                     }),
-                    createGrid("second", {
+                    assignGrid("second", {
                         size: { cols: 15, rows: 4 },
                         bounds: { x1: 0, y1: 50, x2: 100, y2: 100 }
                     }),

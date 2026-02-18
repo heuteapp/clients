@@ -41,13 +41,13 @@ export interface ContentPlacement {
 
 //
 
-export interface HeuteObject {
+export interface UniqueData {
     id: string;
 }
 
-export type HeuteData<T extends HeuteObject> = Omit<T, "id">;
+export type DataWithoutId<T extends UniqueData> = Omit<T, "id">;
 
-export function createObject<T extends HeuteObject>(data: HeuteData<T>, genId?: () => string): T {
+export function assignData<T extends UniqueData>(data: DataWithoutId<T>, genId?: () => string): T {
     const id = genId ? genId() : crypto.randomUUID();
 
     return {
@@ -56,7 +56,7 @@ export function createObject<T extends HeuteObject>(data: HeuteData<T>, genId?: 
     } as T;
 }
 
-export function createObjectWithId<T extends HeuteObject>(id: string, data: Omit<T, "id">): T {
+export function assignDataWithId<T extends UniqueData>(id: string, data: Omit<T, "id">): T {
     return {
         id,
         ...data,

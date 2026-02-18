@@ -1,6 +1,6 @@
-import { HeuteObject, Bounds, GridSize, createObjectWithId, HeuteData, Alignment, ContentPlacement } from "./core";
+import { UniqueData, Bounds, GridSize, assignDataWithId, DataWithoutId, ContentPlacement } from "./core";
 
-export interface DayboardData extends HeuteObject {
+export interface DayboardData extends UniqueData {
 }
 
 export interface DayboardGridData extends DayboardData {
@@ -15,12 +15,12 @@ export interface DayboardLayoutData extends DayboardData {
 
 //
 
-export function createGrid(id: string, data: HeuteData<DayboardGridData>): DayboardGridData {
-    return createObjectWithId<DayboardGridData>(id, data);
+export function assignGrid(id: string, data: DataWithoutId<DayboardGridData>): DayboardGridData {
+    return assignDataWithId<DayboardGridData>(id, data);
 }
 
-export function createLayout(id: string, data: HeuteData<DayboardLayoutData>): DayboardLayoutData {
-    const layout = createObjectWithId<DayboardLayoutData>(id, data);
+export function assignLayout(id: string, data: DataWithoutId<DayboardLayoutData>): DayboardLayoutData {
+    const layout = assignDataWithId<DayboardLayoutData>(id, data);
     const ids = new Set<string>();
 
     for (const grid of layout.grids) {
