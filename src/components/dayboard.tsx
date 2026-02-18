@@ -123,6 +123,8 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
                 top: `${data.bounds.y1}%`,
                 right: `${100 - data.bounds.x2}%`,
                 bottom: `${100 - data.bounds.y2}%`,
+                alignContent: data.contentPlacement?.align || "center",
+                justifyContent: data.contentPlacement?.justify || "center",
             }}>
                 {Array.from({ length: data.size.cols * data.size.rows }).map((_, i) => (
                     <div key={i} className={styles.cell} />

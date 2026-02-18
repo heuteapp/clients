@@ -32,10 +32,11 @@ export interface Edges {
     left: number;
 }
 
-export enum Alignment {
-    Start = "start",
-    Center = "center",
-    End = "end",
+export type Alignment = "start" | "center" | "end";
+
+export interface ContentPlacement {
+    align: Alignment;
+    justify: Alignment;
 }
 
 //

@@ -17,8 +17,6 @@
     grid-template-rows: repeat(var(--gridRows), var(--cellSize));
     gap: var(--gridGap);
     padding: calc(var(--gridGap) / 2);
-    align-content: center;
-    justify-content: center;
 }
 
 .cell {

@@ -1,4 +1,4 @@
-import { HeuteObject, Bounds, GridSize, createObjectWithId, HeuteData } from "./core";
+import { HeuteObject, Bounds, GridSize, createObjectWithId, HeuteData, Alignment, ContentPlacement } from "./core";
 
 export interface DayboardData extends HeuteObject {
 }
@@ -6,6 +6,7 @@ export interface DayboardData extends HeuteObject {
 export interface DayboardGridData extends DayboardData {
     size: GridSize;
     bounds: Bounds;
+    contentPlacement?: Partial<ContentPlacement>;
 }
 
 export interface DayboardLayoutData extends DayboardData {
