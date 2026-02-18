@@ -149,7 +149,7 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
                 {Array.from({ length: data.cols * data.rows }).map((_, i) => (
-                    <div key={i} className={styles.cell} />
+                    <DayboardCell key={i} x={i % data.cols} y={Math.floor(i / data.cols)} />
                 ))} 
             </div>
         );
@@ -158,4 +158,21 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 
 interface DayboardGridProps {
     data: DayboardGridData;
+}
+
+//
+
+export const DayboardCell = forwardRef<HTMLDivElement, DayboardCellProps>(
+    function DayboardCell(props, forwardedRef) {
+        const ref = useRef<HTMLDivElement>(null);
+
+        return (
+            <div ref={mergeRefs(forwardedRef, ref)} className={styles.cell} />
+        );
+    }
+);
+
+interface DayboardCellProps {
+    x: number;
+    y: number;
 }
