@@ -1,4 +1,4 @@
-import { UniqueData, Bounds, assignDataWithId, DataWithoutId, Placement } from "./core";
+import { GridSize, UniqueData, Bounds, assignDataWithId, DataWithoutId, Placement } from "./core";
 
 export interface DayboardData {
     layout: DayboardLayoutData;
@@ -38,7 +38,5 @@ export function assignField(id: string, data: DataWithoutId<DayboardFieldData>):
 
 //
 
-export interface DayboardGridData {
-    cols: number;
-    rows: number;
+export interface DayboardGridData extends GridSize {
 }
