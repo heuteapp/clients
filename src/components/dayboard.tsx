@@ -66,11 +66,13 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
 
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.layout}>
+                <DayboardLayoutContext.Provider value={register.current}>
                 {
                     data.fields.map((field) => (
                         <DayboardField key={field.id} data={field}/>
                     ))
                 }
+                </DayboardLayoutContext.Provider>
             </div>
         );
     }
@@ -79,6 +81,8 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
 type DayboardLayoutProps = {
     data: DayboardLayoutData
 }
+
+const DayboardLayoutContext = createContext<DayboardLayoutRegister | null>(null);
 
 type DayboardLayoutRegister = {
     ref: React.RefObject<HTMLDivElement | null>;
@@ -147,7 +151,9 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
                 alignContent: data.placement?.horizontal || "center",
                 justifyItems: data.placement?.vertical || "center"
             }}>
-                <DayboardGrid data={data.grid}/>
+                <DayboardFieldContext.Provider value={register.current}>
+                    <DayboardGrid data={data.grid}/>
+                </DayboardFieldContext.Provider>
             </div>
         );
     }
@@ -156,6 +162,8 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
 interface DayboardFieldProps {
     data: DayboardFieldData;
 }
+
+const DayboardFieldContext = createContext<DayboardFieldRegister | null>(null);
 
 type DayboardFieldRegister = {
     ref: React.RefObject<HTMLDivElement | null>;
@@ -181,9 +189,11 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid}>
-                {Array.from({ length: data.cols * data.rows }).map((_, i) => (
-                    <DayboardCell key={i} x={i % data.cols} y={Math.floor(i / data.cols)} />
-                ))} 
+                <DayboardGridContext.Provider value={register.current}>
+                    {Array.from({ length: data.cols * data.rows }).map((_, i) => (
+                        <DayboardCell key={i} x={i % data.cols} y={Math.floor(i / data.cols)} />
+                    ))} 
+                </DayboardGridContext.Provider>
             </div>
         );
     }
@@ -192,6 +202,8 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 interface DayboardGridProps {
     data: DayboardGridData;
 }
+
+const DayboardGridContext = createContext<DayboardGridRegister | null>(null);
 
 interface DayboardGridRegister {
     ref: React.RefObject<HTMLDivElement | null>;
