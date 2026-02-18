@@ -123,8 +123,8 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
                 top: `${data.bounds.y1}%`,
                 right: `${100 - data.bounds.x2}%`,
                 bottom: `${100 - data.bounds.y2}%`,
-                alignContent: data.grid?.alignContent || "center",
-                justifyItems: data.grid?.justifyContent || "center"
+                alignContent: data.placement?.horizontal || "center",
+                justifyItems: data.placement?.vertical || "center"
             }}>
                 <DayboardGrid data={data.grid}/>
             </div>

@@ -29,9 +29,9 @@ export interface Edges {
 
 export type Alignment = "start" | "center" | "end";
 
-export interface ContentPlacement {
-    align: Alignment;
-    justify: Alignment;
+export interface Placement {
+    horizontal: Alignment;
+    vertical: Alignment;
 }
 
 //
