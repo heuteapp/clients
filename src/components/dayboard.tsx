@@ -50,11 +50,19 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardLayoutRegister>({
             ref,
-            fields: null
+            fields: []
         });
             
-        dayboardRegistry.layout = register.current;
-        register.current.fields = [];
+        useLayoutEffect(() => {
+            dayboardRegistry.layout = register.current;
+
+            return () => {
+                if (dayboardRegistry.layout === register.current) {
+                    dayboardRegistry.layout = null;
+                }
+            };
+        }, [dayboardRegistry]);
+
 
         const data = props.data;
 
@@ -92,12 +100,19 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardFieldRegister>({
             ref,
-            grids: null
+            grids: []
         });
 
-        layoutRegistry.fields!.push(register.current);
-        register.current.grids = [];
-        
+        useLayoutEffect(() => {
+            layoutRegistry.fields!.push(register.current);
+
+            return () => {
+                layoutRegistry.fields = layoutRegistry.fields!.filter(
+                (x) => x !== register.current
+                );
+            };
+        }, [layoutRegistry]);
+
         const data = props.data;
 
         useEffect(() => {
@@ -168,7 +183,15 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
             ref
         });
 
-        fieldRegistry.grids!.push(register.current);
+        useLayoutEffect(() => {
+            fieldRegistry.grids!.push(register.current);
+
+            return () => {
+                fieldRegistry.grids = fieldRegistry.grids!.filter(
+                    (x) => x !== register.current
+                );
+            };
+        }, [fieldRegistry]);
 
         const data = props.data;
 
