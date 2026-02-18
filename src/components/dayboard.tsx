@@ -44,9 +44,10 @@ type DayboardRegister = {
 
 const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
     function DayboardLayout(props, forwardedRef) {
-        const ref = useRef<HTMLDivElement>(null);
+        const layoutRef = useRef<HTMLDivElement>(null);
 
         const register = useRef<DayboardLayoutRegister>({
+            layoutRef
         });
 
         const context = useContext(DayboardContext)!;
@@ -57,7 +58,7 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
         }, []);
 
         return (
-            <div ref={mergeRefs(forwardedRef, ref)} className={styles.layout}>
+            <div ref={mergeRefs(forwardedRef, layoutRef)} className={styles.layout}>
                 {
                     data.fields.map((field) => (
                         <DayboardField key={field.id} data={field}/>
@@ -73,7 +74,7 @@ type DayboardLayoutProps = {
 }
 
 type DayboardLayoutRegister = {
-
+    layoutRef: React.RefObject<HTMLDivElement | null>;
 }
 
 //
