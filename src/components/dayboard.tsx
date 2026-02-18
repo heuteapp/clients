@@ -48,7 +48,7 @@ export default Dayboard;
 
 const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
     function DayboardLayout(props, forwardedRef) {
-        const context = useContext(DayboardContext)!;
+        const dayboardRegistry = useContext(DayboardContext)!;
 
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardLayoutRegister>({
@@ -57,7 +57,7 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
         });
         
         useLayoutEffect(() => {
-            context.layout = register.current;
+            dayboardRegistry.layout = register.current;
             register.current.fields = [];
 
         });
@@ -93,7 +93,7 @@ type DayboardLayoutRegister = {
 
 const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
     function DayboardField(props, forwardedRef) {
-        const context = useContext(DayboardContext)!;
+        const layoutRegistry = useContext(DayboardLayoutContext)!;
 
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardFieldRegister>({
@@ -102,14 +102,10 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
         });
 
         useLayoutEffect(() => {
-            context.layout!.fields!.push(register.current);
+            layoutRegistry.fields!.push(register.current);
             register.current.grids = [];
         });
-
-        if (!context) {
-            throw new Error("DayboardField must be used within a DayboardContext.Provider");
-        }
-
+        
         const data = props.data;
 
         useEffect(() => {
@@ -135,8 +131,7 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
                 style.setProperty("--cellSize", `${Math.floor(cellSize)}px`);
             });
 
-            observer.observe(context.ref.current!);
-
+            observer.observe(layoutRegistry.ref.current!);
             return () => {
                 observer.disconnect();
             };
@@ -174,6 +169,7 @@ type DayboardFieldRegister = {
 
 export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
     function DayboardGrid(props, forwardedRef) {
+        const fieldRegistry = useContext(DayboardFieldContext)!;
 
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardGridRegister>({
@@ -181,8 +177,7 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
         });
 
         useLayoutEffect(() => {
-            const field = useContext(DayboardContext)!.layout!.fields![0];
-            field.grids!.push(register.current);
+            fieldRegistry.grids!.push(register.current);
         });
 
         const data = props.data;
