@@ -12,10 +12,7 @@ function Dayboard(props: DayboardProps) {
         ref,
         layout: null,
     });
-
-    useLayoutEffect(() => {
-        register.current.layout = null;
-    });
+    register.current.layout = null;
         
     const layout = props.data.layout;
 
@@ -55,12 +52,9 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
             ref,
             fields: null
         });
-        
-        useLayoutEffect(() => {
-            dayboardRegistry.layout = register.current;
-            register.current.fields = [];
-
-        });
+            
+        dayboardRegistry.layout = register.current;
+        register.current.fields = [];
 
         const data = props.data;
 
@@ -101,10 +95,8 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
             grids: null
         });
 
-        useLayoutEffect(() => {
-            layoutRegistry.fields!.push(register.current);
-            register.current.grids = [];
-        });
+        layoutRegistry.fields!.push(register.current);
+        register.current.grids = [];
         
         const data = props.data;
 
@@ -145,7 +137,7 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
                 bottom: `${100 - data.bounds.y2}%`,
                 alignContent: data.placement?.horizontal || "center",
                 justifyItems: data.placement?.vertical || "center"
-            }}>
+            }}> 
                 <DayboardFieldContext.Provider value={register.current}>
                     <DayboardGrid data={data.grid}/>
                 </DayboardFieldContext.Provider>
@@ -176,9 +168,7 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
             ref
         });
 
-        useLayoutEffect(() => {
-            fieldRegistry.grids!.push(register.current);
-        });
+        fieldRegistry.grids!.push(register.current);
 
         const data = props.data;
 
