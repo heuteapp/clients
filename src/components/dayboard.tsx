@@ -141,7 +141,7 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
             return () => {
                 observer.disconnect();
             };
-        }, []);
+        }, [data.grid]);
 
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.field} style={{
