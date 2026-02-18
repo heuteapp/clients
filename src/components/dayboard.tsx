@@ -99,7 +99,7 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardFieldRegister>({
             ref,
-            grids: []
+            grid: null
         });
 
         useLayoutEffect(() => {
@@ -107,7 +107,7 @@ const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
 
             return () => {
                 layoutRegistry.fields = layoutRegistry.fields!.filter(
-                (x) => x !== register.current
+                    (x) => x !== register.current
                 );
             };
         }, [layoutRegistry]);
@@ -168,7 +168,7 @@ const DayboardFieldContext = createContext<DayboardFieldRegister | null>(null);
 
 type DayboardFieldRegister = {
     ref: React.RefObject<HTMLDivElement | null>;
-    grids: DayboardGridRegister[] | null;
+    grid: DayboardGridRegister | null;
 }
 
 //
@@ -179,16 +179,15 @@ export const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
 
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardGridRegister>({
-            ref
+            ref,
+            cells: []
         });
 
         useLayoutEffect(() => {
-            fieldRegistry.grids!.push(register.current);
+            fieldRegistry.grid = register.current;
 
             return () => {
-                fieldRegistry.grids = fieldRegistry.grids!.filter(
-                    (x) => x !== register.current
-                );
+                fieldRegistry.grid = null;
             };
         }, [fieldRegistry]);
 
@@ -214,17 +213,26 @@ const DayboardGridContext = createContext<DayboardGridRegister | null>(null);
 
 interface DayboardGridRegister {
     ref: React.RefObject<HTMLDivElement | null>;
+    cells: DayboardCellRegister[];
 }
 
 //
 
 export const DayboardCell = forwardRef<HTMLDivElement, DayboardCellProps>(
     function DayboardCell(props, forwardedRef) {
+        const gridRegistry = useContext(DayboardGridContext)!;
 
         const ref = useRef<HTMLDivElement>(null);
         const register = useRef<DayboardCellRegister>({
             ref
         });
+
+        useLayoutEffect(() => {
+            gridRegistry.cells.push(register.current);
+            return () => {
+                gridRegistry.cells = gridRegistry.cells.filter(x => x !== register.current);
+            };
+        }, []);
 
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.cell}>
