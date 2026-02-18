@@ -10,11 +10,17 @@
     inset: 0;
 }
 
-.grid {
+.field {
     position: absolute;
+}
+
+.grid {
     display: grid;
+    width: max-content;
+    height: max-content;
     grid-template-columns: repeat(var(--gridColumns), var(--cellSize));
     grid-template-rows: repeat(var(--gridRows), var(--cellSize));
+
     gap: var(--gridGap);
     padding: calc(var(--gridGap) / 2);
 }

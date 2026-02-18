@@ -4,7 +4,7 @@ import styles from "./dayboard.module.css";
 import mergeRefs from "merge-refs";
 import { useReadyRef } from "../hooks";
 import { heuteApp } from "@/src/heute/app";
-import { DayboardGridData } from "@/src/data/dayboard";
+import { DayboardFieldData } from "@/src/data/dayboard";
 
 export default function Dayboard() {
     const [dayboardRef, ready] = useReadyRef<HTMLDivElement>();
@@ -54,8 +54,8 @@ const DayboardLayout = forwardRef<HTMLDivElement, DayboardLayoutProps>(
         return (
             <div ref={mergeRefs(forwardedRef, ref)} className={styles.layout}>
                 {
-                    layout?.grids.map((grid) => (
-                        <DayboardGrid key={grid.id} data={grid}/>
+                    layout?.fields.map((field) => (
+                        <DayboardField key={field.id} data={field}/>
                     ))
                 }
             </div>
@@ -73,14 +73,14 @@ type DayboardLayoutRegister = {
 
 //
 
-const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
-    function DayboardGrid(props, forwardedRef) {
+const DayboardField = forwardRef<HTMLDivElement, DayboardFieldProps>(
+    function DayboardField(props, forwardedRef) {
         const context = useContext(DayboardContext);
-        const register = useRef<DayboardGridRegister>({
+        const register = useRef<DayboardFieldRegister>({
         });
 
         if (!context) {
-            throw new Error("DayboardGrid must be used within a DayboardContext.Provider");
+            throw new Error("DayboardField must be used within a DayboardContext.Provider");
         }
 
         const ref = useRef<HTMLDivElement>(null);
@@ -97,15 +97,15 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
                 const gridHeight = gridSize.height;
 
                 const style = ref.current.style;
-                const possibleWidth = gridWidth / data.size.cols;
-                const possibleHeight = gridHeight / data.size.rows;
+                const possibleWidth = gridWidth / data.grid.cols;
+                const possibleHeight = gridHeight / data.grid.rows;
                 const fieldSize = Math.min(possibleWidth, possibleHeight);
 
                 const gridGap = fieldSize * 0.2;
                 const cellSize = fieldSize - (gridGap);
 
-                style.setProperty("--gridColumns", `${data.size.cols}`);
-                style.setProperty("--gridRows", `${data.size.rows}`);
+                style.setProperty("--gridColumns", `${data.grid.cols}`);
+                style.setProperty("--gridRows", `${data.grid.rows}`);
                 style.setProperty("--gridGap", `${Math.floor(gridGap)}px`);
                 style.setProperty("--cellSize", `${Math.floor(cellSize)}px`);
             });
@@ -115,28 +115,31 @@ const DayboardGrid = forwardRef<HTMLDivElement, DayboardGridProps>(
             return () => {
                 observer.disconnect();
             };
-        }, [context.dayboardRef, data.size.cols, data.size.rows]);
+        }, [context.dayboardRef, data.grid.cols, data.grid.rows]);
 
         return (
-            <div ref={mergeRefs(forwardedRef, ref)} className={styles.grid} style={{
+            <div ref={mergeRefs(forwardedRef, ref)} className={styles.field} style={{
                 left: `${data.bounds.x1}%`,
                 top: `${data.bounds.y1}%`,
                 right: `${100 - data.bounds.x2}%`,
                 bottom: `${100 - data.bounds.y2}%`,
-                alignContent: data.contentPlacement?.align || "center",
-                justifyContent: data.contentPlacement?.justify || "center",
+                alignContent: data.grid?.alignContent || "center",
+                justifyItems: data.grid?.justifyContent || "center"
             }}>
-                {Array.from({ length: data.size.cols * data.size.rows }).map((_, i) => (
-                    <div key={i} className={styles.cell} />
-                ))} 
+                <div className={styles.grid} style={{
+                }}>
+                    {Array.from({ length: data.grid.cols * data.grid.rows }).map((_, i) => (
+                        <div key={i} className={styles.cell} />
+                    ))} 
+                </div>
             </div>
         );
     }
 );
 
-interface DayboardGridProps {
-    data: DayboardGridData;
+interface DayboardFieldProps {
+    data: DayboardFieldData;
 }
 
-type DayboardGridRegister = {
+type DayboardFieldRegister = {
 }

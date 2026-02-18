@@ -1,23 +1,23 @@
-import { UniqueData, Bounds, GridSize, assignDataWithId, DataWithoutId, ContentPlacement } from "./core";
+import { UniqueData, Bounds, assignDataWithId, DataWithoutId, ContentPlacement, Alignment } from "./core";
 
-export interface DayboardData extends UniqueData {
+export interface DayboardData {
 }
 
 //
 
-export interface DayboardLayoutData extends DayboardData {
-    grids: DayboardGridData[];
+export interface DayboardLayoutData extends DayboardData, UniqueData {
+    fields: DayboardFieldData[];
 }
 
 export function assignLayout(id: string, data: DataWithoutId<DayboardLayoutData>): DayboardLayoutData {
     const layout = assignDataWithId<DayboardLayoutData>(id, data);
     const ids = new Set<string>();
 
-    for (const grid of layout.grids) {
-        if (ids.has(grid.id)) {
-            throw new Error(`Layout ${id} has duplicate grid id: ${grid.id}`);
+    for (const field of layout.fields) {
+        if (ids.has(field.id)) {
+            throw new Error(`Layout ${id} has duplicate field id: ${field.id}`);
         }
-        ids.add(grid.id);
+        ids.add(field.id);
     }
 
     return layout;
@@ -25,12 +25,20 @@ export function assignLayout(id: string, data: DataWithoutId<DayboardLayoutData>
 
 //
 
-export interface DayboardGridData extends DayboardData {
-    size: GridSize;
+export interface DayboardFieldData extends DayboardData, UniqueData {
+    grid: DayboardGridData;
     bounds: Bounds;
-    contentPlacement?: Partial<ContentPlacement>;
 }
 
-export function assignGrid(id: string, data: DataWithoutId<DayboardGridData>): DayboardGridData {
-    return assignDataWithId<DayboardGridData>(id, data);
+export function assignField(id: string, data: DataWithoutId<DayboardFieldData>): DayboardFieldData {
+    return assignDataWithId<DayboardFieldData>(id, data);
+}
+
+//
+
+export interface DayboardGridData extends DayboardData {
+    cols: number;
+    rows: number;
+    alignContent?: Partial<Alignment>;
+    justifyContent?: Partial<Alignment>;
 }

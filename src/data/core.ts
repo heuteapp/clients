@@ -8,11 +8,6 @@ export interface Size {
     height: number;
 }
 
-export interface GridSize {
-    cols: number;
-    rows: number;
-}
-
 // (x, y) + (x + width, y + height)
 export interface Rect extends Point, Size {}
 
