@@ -12,6 +12,8 @@ export default function HeuteSidebar() {
             <SidebarItem text="6x4" onMouse={() => heuteApp.cardSize = { cols: 6, rows: 4 }} />
             <SidebarItem text="3x2" onMouse={() => heuteApp.cardSize = { cols: 3, rows: 2 }} />
             <SidebarItem text="3x4" onMouse={() => heuteApp.cardSize = { cols: 3, rows: 4 }} />
+            <SidebarItem text="9x2" onMouse={() => heuteApp.cardSize = { cols: 9, rows: 2 }} />
+            <SidebarItem text="9x4" onMouse={() => heuteApp.cardSize = { cols: 9, rows: 4 }} />
         </div>
         <Divider orientation="vertical" flexItem />
     </Box>

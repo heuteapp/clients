@@ -17,7 +17,7 @@
 .grid {
     display: grid;
     touch-action: none;
-    border-radius: 20px;
+    border-radius: 10px;
 
     width: max-content;
     height: max-content;
@@ -31,7 +31,7 @@
 }
 
 .cell {
-    border-radius: 10%;
+    border-radius: 10px;
     width: var(--cellSize);
     height: var(--cellSize);
     box-sizing: border-box;
