@@ -23,12 +23,13 @@
     grid-template-columns: repeat(var(--gridColumns), var(--cellSize));
     grid-template-rows: repeat(var(--gridRows), var(--cellSize));
 
+    border: 2px solid #ccc;
+
     gap: var(--gridGap);
     padding: calc(var(--gridGap) / 2);
 }
 
 .cell {
-    border: 1px solid #ccc;
     border-radius: 20%;
     width: var(--cellSize);
     height: var(--cellSize);
@@ -37,9 +38,13 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    transition: 0.2s border;
+}
+
+.cell {
+  box-shadow: 0 0 0 0px #ccc;
+  transition: box-shadow 200ms;
 }
 
 .cell.highlighted {
-    border: 6px solid #007bff;
+  box-shadow: 0 0 0 2px #ccc;
 }

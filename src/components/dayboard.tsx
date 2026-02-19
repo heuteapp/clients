@@ -237,7 +237,7 @@ function mouseToGridCell(e: React.MouseEvent, size: GridSize) {
         }
 
         function mouseMove(e: React.MouseEvent) {
-                const cardSize = { cols: 5, rows: 2 };
+                const cardSize = { cols: 3, rows: 4 };
                 const point = mouseToGridCell(e, cardSize);
 
                 if (point) {
@@ -268,7 +268,7 @@ function mouseToGridCell(e: React.MouseEvent, size: GridSize) {
                         element.style.borderColor = randomColor;
 
                         // 1 artsın borderWidth
-                        element.style.borderWidth = `${parseInt(getComputedStyle(element).borderWidth) + 1}px`;
+                        element.style.border = "2px solid " + randomColor;
                     }
                 }
             }}
