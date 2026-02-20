@@ -7,6 +7,6 @@ export type { default as Edges } from "./edges";
 export type { default as Alignment } from "./alignment";
 export type { default as Placement } from "./placement";
 export type { default as UniqueData } from "./uniqueData";
-export type { default as DataWithoutId } from "./dataWithoutId";
+export type { default as DataProps } from "./dataProps";
 
-export { assignData, assignDataWithId } from "./dataWithoutId";
+export { createData as assignData, createDataGivenId as assignDataWithId } from "./dataProps";

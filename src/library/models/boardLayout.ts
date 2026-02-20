@@ -1,4 +1,4 @@
-import { assignDataWithId, DataWithoutId, UniqueData } from "@/src/library/base";
+import { assignDataWithId, DataProps, UniqueData } from "@/src/library/base";
 import { BoardFieldModel } from "./boardField";
 
 export interface BoardLayoutModel extends UniqueData {
@@ -7,7 +7,7 @@ export interface BoardLayoutModel extends UniqueData {
 
 export default BoardLayoutModel;
 
-export function boardLayout(id: string, data: DataWithoutId<BoardLayoutModel>): BoardLayoutModel {
+export function boardLayout(id: string, data: DataProps<BoardLayoutModel>): BoardLayoutModel {
     const layout = assignDataWithId<BoardLayoutModel>(id, data);
     const ids = new Set<string>();
 
