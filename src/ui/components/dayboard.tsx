@@ -2,7 +2,7 @@
 import { createContext, forwardRef, useContext, useEffect, useLayoutEffect, useRef } from "react";
 import styles from "@/src/ui/styles/dayboard.module.css";
 import { mergeRefs } from "@/src/ui/utility";
-import { useReadyRef } from "@/src/hooks";
+import { useReadyRef } from "@/src/ui/hooks";
 import { DayboardData, DayboardFieldData, DayboardGridData, DayboardLayoutData } from "@/src/data/dayboard";
 import { GridSize } from "@/src/library/base";
 
