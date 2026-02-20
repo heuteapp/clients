@@ -4,18 +4,19 @@ export type DataProps<T extends UniqueData> = Omit<T, "id">;
 
 export default DataProps;
 
-export function createData<T extends UniqueData>(data: DataProps<T>, genId?: () => string): T {
+export function createData<T extends UniqueData>(props: DataProps<T>, genId?: () => string): T {
     const id = genId ? genId() : crypto.randomUUID();
 
     return {
         id,
-        ...data,
-    } as T;
+        ...props,
+    } as T
+;
 }
 
-export function createDataGivenId<T extends UniqueData>(id: string, data: Omit<T, "id">): T {
+export function createDataGivenId<T extends UniqueData>(id: string, props: DataProps<T>): T {
     return {
         id,
-        ...data,
+        ...props,
     } as T;
 }
