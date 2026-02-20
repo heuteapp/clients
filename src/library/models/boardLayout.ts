@@ -1,8 +1,8 @@
 import { UniqueData } from "@/src/library/base";
-import { DayboardFieldModel } from "./boardField";
+import { BoardFieldModel } from "./boardField";
 
-export interface DayboardLayoutModel extends UniqueData {
-    fields: DayboardFieldModel[];
+export interface BoardLayoutModel extends UniqueData {
+    fields: BoardFieldModel[];
 }
 
-export default DayboardLayoutModel;
+export default BoardLayoutModel;
