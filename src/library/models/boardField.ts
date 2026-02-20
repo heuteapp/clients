@@ -9,6 +9,6 @@ export interface BoardFieldModel extends UniqueData {
 
 export default BoardFieldModel;
 
-export function boardField(id: string, data: DataProps<BoardFieldModel>): BoardFieldModel {
-    return createDataWithId<BoardFieldModel>(id, data);
+export function boardField(id: string, props: DataProps<BoardFieldModel>): BoardFieldModel {
+    return createDataWithId<BoardFieldModel>(id, props);
 }

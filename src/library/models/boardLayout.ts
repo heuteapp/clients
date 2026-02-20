@@ -7,6 +7,6 @@ export interface BoardLayoutModel extends UniqueData {
 
 export default BoardLayoutModel;
 
-export function boardLayout(id: string, data: DataProps<BoardLayoutModel>): BoardLayoutModel {
-    return createDataWithId<BoardLayoutModel>(id, data);
+export function boardLayout(id: string, props: DataProps<BoardLayoutModel>): BoardLayoutModel {
+    return createDataWithId<BoardLayoutModel>(id, props);
 }
