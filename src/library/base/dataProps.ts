@@ -12,7 +12,7 @@ export function createData<T extends UniqueData>(props: DataProps<T>, genId?: ()
 ;
 }
 
-export function createDataGivenId<T extends UniqueData>(id: string, props: DataProps<T>): T {
+export function createDataWithId<T extends UniqueData>(id: string, props: DataProps<T>): T {
     return {
         id,
         ...props,

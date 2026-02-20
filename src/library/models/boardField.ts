@@ -1,4 +1,4 @@
-import { UniqueData, Bounds, Placement, DataProps, createDataGivenId } from "@/src/library/base";
+import { UniqueData, Bounds, Placement, DataProps, createDataWithId } from "@/src/library/base";
 import BoardGridModel from "./boardGrid";
 
 export interface BoardFieldModel extends UniqueData {
@@ -10,5 +10,5 @@ export interface BoardFieldModel extends UniqueData {
 export default BoardFieldModel;
 
 export function boardField(id: string, data: DataProps<BoardFieldModel>): BoardFieldModel {
-    return createDataGivenId<BoardFieldModel>(id, data);
+    return createDataWithId<BoardFieldModel>(id, data);
 }
