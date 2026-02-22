@@ -1,5 +1,8 @@
-import { BoardLayoutModel } from "./board-layout";
+import { BoardCardModel } from "./board-card";
 
 export interface BoardModel {
-    layout: BoardLayoutModel
+    layoutId: string
+    cards: BoardCardModel[];
 }
+
+export default BoardModel;
