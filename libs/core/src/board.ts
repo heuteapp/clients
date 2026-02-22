@@ -1,16 +1,16 @@
-import HeuteBoardCard from "./board-card";
-import HeuteBoardLayout from "./board-layout";
+import { HeuteBoardCard } from "./board-card";
+import { HeuteBoardLayout } from "./board-layout";
 
 export class HeuteBoard {
-    #layout: HeuteBoardLayout | null;
+    #layout: HeuteBoardLayout;
     #cards: HeuteBoardCard[];
 
-    constructor(layout?: HeuteBoardLayout) {
+    constructor(layout: HeuteBoardLayout) {
         this.#layout = layout || null;
         this.#cards = [];
     }
 
-    public get layout(): HeuteBoardLayout | null {
+    public get layout(): HeuteBoardLayout {
         return this.#layout;
     }
 

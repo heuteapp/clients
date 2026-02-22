@@ -1,13 +1,13 @@
 import { HeuteBoard } from "./board";
 
 export class HeuteDomain {
-    #dayboard : HeuteBoard;
+    #dayboard : HeuteBoard | null;
 
     constructor() {
-        this.#dayboard = new HeuteBoard();
+        this.#dayboard = null;
     }
 
-    public get dayboard(): HeuteBoard {
+    public get dayboard(): HeuteBoard | null {
         return this.#dayboard;
     }
 }
