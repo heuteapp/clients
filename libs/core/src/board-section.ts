@@ -2,12 +2,13 @@ import { Placement, Rect } from "@heuteapp/common";
 import { HeuteBoardLayout } from "./board-layout";
 
 export class HeuteBoardSection {
-    readonly #id: string;
-    readonly #layout: HeuteBoardLayout;
-    readonly #cols: number;
-    readonly #rows: number;
-    readonly #position : Rect = { x: 0, y: 0, width: 0, height: 0 };
-    readonly #placement: Placement = { horizontal: "center", vertical: "center" };
+    readonly #id : string;
+    readonly #layout : HeuteBoardLayout;
+    
+    #cols : number;
+    #rows : number;
+    #position : Rect = { x: 0, y: 0, width: 0, height: 0 };
+    #placement : Placement = { horizontal: "center", vertical: "center" };
 
     constructor(id: string, layout: HeuteBoardLayout, cols: number, rows: number) {        
         this.#id = id;
@@ -16,27 +17,27 @@ export class HeuteBoardSection {
         this.#rows = rows;
     }
 
-    public get id() {
+    public get id() : string {
         return this.#id;
     }
 
-    public get layout() {
+    public get layout() : HeuteBoardLayout {
         return this.#layout;
     }
 
-    public get cols() {
+    public get cols() : number {
         return this.#cols;
     }
 
-    public get rows() {
+    public get rows() : number {
         return this.#rows;
     }
 
-    public get position(): Rect {
+    public get position() : Rect {
         return this.#position;
     }
     
-    public get placement(): Placement {
+    public get placement() : Placement {
         return this.#placement;
     }
 }
