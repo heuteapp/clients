@@ -7,19 +7,18 @@ export class HeuteBoardSection {
 
     #size: GridSize;
     #position : Rect;
-    #placement : Placement;
+    #placement : Placement = { horizontal: "center", vertical: "center" };
 
     constructor(
         id: string, 
         layout: HeuteBoardLayout, 
-        cols: number, 
-        rows: number, 
+        size: GridSize,
         position: Rect,
-        placement: Placement = { horizontal: "center", vertical: "center" }
+        placement: Placement 
     ) {        
         this.#id = id;
         this.#layout = layout;
-        this.#size = this.doSize(cols, rows);
+        this.#size = this.doSize(size);
         this.#position = this.doPosition(position);
         this.#placement = this.doPlacement(placement);
     }
@@ -48,8 +47,8 @@ export class HeuteBoardSection {
 
     //
 
-    public setSize(cols: number, rows: number) {
-        this.#size = this.doSize(cols, rows);
+    public setSize(size: GridSize) {
+        this.#size = this.doSize(size);
     }
 
     public setPosition(position: Rect) {
@@ -62,8 +61,8 @@ export class HeuteBoardSection {
 
     //
 
-    private doSize(cols: number, rows: number) : GridSize {
-        return Object.freeze({ cols, rows });
+    private doSize(size: GridSize) : GridSize {
+        return Object.freeze({ ...size });
     }
 
     private doPosition(position: Rect) : Rect {
