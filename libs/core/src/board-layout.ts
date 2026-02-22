@@ -39,11 +39,12 @@ export class HeuteBoardLayout_Sections {
     }
 
     public add(section: HeuteBoardSection) {
-        if(this.#cache.has(section.id)) {
-            throw new Error(`Section with id ${section.id} already exists in the layout.`);
+        const id = section.getId();
+        if(this.#cache.has(id)) {
+            throw new Error(`Section with id ${id} already exists in the layout.`);
         }
 
-        this.#cache.set(section.id, section);
+        this.#cache.set(id, section);
     }
 
     public get(id: string): HeuteBoardSection | undefined {
