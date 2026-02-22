@@ -26,6 +26,9 @@ importers:
       '@heuteapp/core':
         specifier: ^0.1.2
         version: 0.1.2
+      '@heuteapp/introduction':
+        specifier: ^0.1.1
+        version: 0.1.1
       '@heuteapp/models':
         specifier: ^0.1.3
         version: 0.1.3
@@ -255,6 +258,9 @@ packages:
 
   '@heuteapp/core@0.1.2':
     resolution: {integrity: sha512-TlWsWjiot3cweHNHwtW13IGAgKk+LAo4Mbol4ByIE8CP20LmNTWbr5nUCXUnn9CmcV/k86TDaY0P3mIfH6TXOg==}
+
+  '@heuteapp/introduction@0.1.1':
+    resolution: {integrity: sha512-bu4wnVSKB4to2PBD/rfRknwJcUWNqaaZ/jKGqSh4P95XgCZeAvxclp6zbGbmIsb3Gb5yYGh8NauZDCbvUwn+Jg==}
 
   '@heuteapp/models@0.1.3':
     resolution: {integrity: sha512-CjXfMOOHixfRLnQwPSbrQP6u7tjMEO7CY2+dJWrRLi/Mv78wGH8BkrjrNo3ooXFhp4r/7hwcYKXkSAzQD3FpMw==}
@@ -2281,6 +2287,8 @@ snapshots:
   '@heuteapp/common@0.1.3': {}
 
   '@heuteapp/core@0.1.2': {}
+
+  '@heuteapp/introduction@0.1.1': {}
 
   '@heuteapp/models@0.1.3':
     dependencies:
