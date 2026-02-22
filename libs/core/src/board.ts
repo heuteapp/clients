@@ -6,13 +6,21 @@ export class HeuteBoard {
     #cards: HeuteBoardCard[];
 
     constructor(layout: HeuteBoardLayout) {
-        this.#layout = layout || null;
+        this.#layout = layout;
         this.#cards = [];
     }
+
+    //
 
     public get layout(): HeuteBoardLayout {
         return this.#layout;
     }
+
+    public get cards(): HeuteBoardCard[] {
+        return this.#cards;
+    }
+
+    //
 
     public setLayout(layout: HeuteBoardLayout) {
         this.#layout = layout;
