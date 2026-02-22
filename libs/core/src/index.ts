@@ -1,2 +1,2 @@
-export { HeuteBoard } from "./board";
-export { HeuteDomain } from "./domain";
+export { HeuteBoard } from "./heute.board";
+export { HeuteDomain } from "./heute.domain";
