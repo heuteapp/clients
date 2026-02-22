@@ -1,15 +1,16 @@
-import { HeuteBoardGrid } from "./board-grid";
 import { HeuteBoardLayout } from "./board-layout";
 
-export class HeuteBoardField {
+export class HeuteBoardSection {
     readonly #id: string;
     readonly #layout: HeuteBoardLayout;
-    readonly #grid: HeuteBoardGrid;
+    readonly #cols: number;
+    readonly #rows: number;
 
     constructor(id: string, layout: HeuteBoardLayout, cols: number, rows: number) {        
         this.#id = id;
         this.#layout = layout;
-        this.#grid = new HeuteBoardGrid(this, cols, rows);
+        this.#cols = cols;
+        this.#rows = rows;
     }
 
     public get id() {
@@ -20,9 +21,13 @@ export class HeuteBoardField {
         return this.#layout;
     }
 
-    public get grid() {
-        return this.#grid;
+    public get cols() {
+        return this.#cols;
+    }
+
+    public get rows() {
+        return this.#rows;
     }
 }
 
-export default HeuteBoardField;
+export default HeuteBoardSection;
