@@ -2,11 +2,11 @@ import { HeuteBoardField } from "./board-field";
 import HeuteBoardLayout from "./board-layout";
 
 export class HeuteBoardGrid {
-    #field: HeuteBoardField;
-    #layout: HeuteBoardLayout
+    readonly #field: HeuteBoardField;
+    readonly #layout: HeuteBoardLayout
 
-    #cols: number;
-    #rows: number;
+    readonly #cols: number;
+    readonly #rows: number;
 
     constructor(field: HeuteBoardField, cols: number, rows: number) {
         this.#field = field;
