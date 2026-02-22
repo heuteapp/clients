@@ -3,13 +3,19 @@ import HeuteBoardField from "./board-field";
 
 export class HeuteBoardLayout {
     #board: HeuteBoard;
+    #fields: HeuteBoardLayout_Fields;
     
     constructor(board: HeuteBoard) {
         this.#board = board;
+        this.#fields = new HeuteBoardLayout_Fields();
     }
 
     public get board(): HeuteBoard {
         return this.#board;
+    }
+
+    public get fields(): HeuteBoardLayout_Fields {
+        return this.#fields;
     }
 }
 
