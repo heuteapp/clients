@@ -11,7 +11,7 @@ export class HeuteBoardGrid {
     constructor(field: HeuteBoardField, cols: number, rows: number) {
         this.#field = field;
         this.#layout = field.layout;
-
+        
         this.#cols = cols;
         this.#rows = rows;
     }
@@ -38,3 +38,10 @@ export class HeuteBoardGrid {
 }
 
 export default HeuteBoardGrid;
+
+//
+
+export interface HeuteBoardGridProps {
+    cols: number;
+    rows: number;
+}
