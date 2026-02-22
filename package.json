@@ -1,5 +1,8 @@
 {
   "private": true,
   "name": "heuteapp",
-  "packageManager": "pnpm@10.14.0"
+  "packageManager": "pnpm@10.14.0",
+  "devDependencies": {
+    "rimraf": "^6.1.3"
+  }
 }
