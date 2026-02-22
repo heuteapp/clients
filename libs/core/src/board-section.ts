@@ -19,9 +19,9 @@ export class HeuteBoardSection {
     ) {        
         this.#id = id;
         this.#layout = layout;
-        this.#size = Object.freeze({ cols, rows });
-        this.#position = Object.freeze({ ...position });
-        this.#placement = Object.freeze({ ...placement });
+        this.#size = this.doSize(cols, rows);
+        this.#position = this.doPosition(position);
+        this.#placement = this.doPlacement(placement);
     }
 
     public getId() : string {
@@ -49,15 +49,29 @@ export class HeuteBoardSection {
     //
 
     public setSize(cols: number, rows: number) {
-        this.#size = Object.freeze({ cols, rows });
+        this.#size = this.doSize(cols, rows);
     }
 
     public setPosition(position: Rect) {
-        this.#position = Object.freeze({ ...position });
+        this.#position = this.doPosition(position);
     }
 
     public setPlacement(placement: Placement) {
-        this.#placement = Object.freeze({ ...placement});
+        this.#placement = this.doPlacement(placement);
+    }
+
+    //
+
+    private doSize(cols: number, rows: number) : GridSize {
+        return Object.freeze({ cols, rows });
+    }
+
+    private doPosition(position: Rect) : Rect {
+        return Object.freeze({ ...position });
+    }
+
+    private doPlacement(placement: Placement) : Placement {
+        return Object.freeze({ ...placement });
     }
 }
 
