@@ -7,20 +7,18 @@ export class HeuteBoardSection {
 
     #size: GridSize;
     #position : Rect;
-    #placement : Placement = { horizontal: "center", vertical: "center" };
+    #placement : Placement;
 
     constructor(
         id: string, 
         layout: HeuteBoardLayout, 
-        size: GridSize,
-        position: Rect,
-        placement: Placement 
+        props: HeuteBoardSectionProps
     ) {        
         this.#id = id;
         this.#layout = layout;
-        this.#size = this.doSize(size);
-        this.#position = this.doPosition(position);
-        this.#placement = this.doPlacement(placement);
+        this.#size = this.doSize(props.size);
+        this.#position = this.doPosition(props.position);
+        this.#placement = this.doPlacement(props.placement || { horizontal: "center", vertical: "center" });
     }
 
     public getId() : string {
@@ -75,3 +73,11 @@ export class HeuteBoardSection {
 }
 
 export default HeuteBoardSection;
+
+//
+
+export interface HeuteBoardSectionProps {
+    size: GridSize;
+    position: Rect;
+    placement?: Placement;
+}
