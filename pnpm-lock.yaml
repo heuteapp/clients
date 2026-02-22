@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@heuteapp/common':
+        specifier: ^0.1.5
+        version: 0.1.5
     devDependencies:
       rimraf:
         specifier: ^6.1.3
@@ -76,8 +80,8 @@ importers:
   libs/models:
     dependencies:
       '@heuteapp/common':
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.1.5
+        version: 0.1.5
 
 packages:
 
@@ -256,8 +260,8 @@ packages:
   '@heuteapp/common@0.1.3':
     resolution: {integrity: sha512-R8zb41GC1t6RKkEFOomuo9hpzD8PGSCVvBNXRDuaciMovb4YTEj5KACTSJ0YrS4n1l5GN0zw3Or8vWg9UhG2iw==}
 
-  '@heuteapp/common@0.1.4':
-    resolution: {integrity: sha512-M4O+hsl5VAVo7RLMmY3bjZuIsiLvQaq5dFRxjcqx5UJxVfXN1iXMOog/Q/rnTSua4tghpqN34JjHY2JLi3YmrA==}
+  '@heuteapp/common@0.1.5':
+    resolution: {integrity: sha512-kJlnZZwhCvj0P20vcd2JxnJt+jynBw+11XCv1UxMngTxFABOBvLdwe5LAHESrhy3hFOSpPu4TKxl0ZlaQTBEaA==}
 
   '@heuteapp/core@0.1.2':
     resolution: {integrity: sha512-TlWsWjiot3cweHNHwtW13IGAgKk+LAo4Mbol4ByIE8CP20LmNTWbr5nUCXUnn9CmcV/k86TDaY0P3mIfH6TXOg==}
@@ -2289,7 +2293,7 @@ snapshots:
 
   '@heuteapp/common@0.1.3': {}
 
-  '@heuteapp/common@0.1.4': {}
+  '@heuteapp/common@0.1.5': {}
 
   '@heuteapp/core@0.1.2': {}
 
@@ -2297,7 +2301,7 @@ snapshots:
 
   '@heuteapp/models@0.1.3':
     dependencies:
-      '@heuteapp/common': 0.1.3
+      '@heuteapp/common': 0.1.5
 
   '@humanfs/core@0.19.1': {}
 
