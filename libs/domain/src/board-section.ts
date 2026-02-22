@@ -37,30 +37,27 @@ export class HeuteBoardSection {
 
     //
 
-    public setSize(size: GridSize) {
-        this.#size = this.doSize(size);
-    }
-
-    public setPosition(position: Rect) {
-        this.#position = this.doPosition(position);
-    }
-
-    public setPlacement(placement: Placement) {
-        this.#placement = this.doPlacement(placement);
-    }
-
-    //
-
     private doSize(size: GridSize) : GridSize {
-        return Object.freeze({ ...size });
+        const cols = Math.max(1, size.cols);
+        const rows = Math.max(1, size.rows);
+
+        return Object.freeze({ cols, rows });
     }
 
     private doPosition(position: Rect) : Rect {
-        return Object.freeze({ ...position });
+        const x = position.x;
+        const y = position.y;
+        const width = Math.max(0, position.width);
+        const height = Math.max(0, position.height);
+
+        return Object.freeze({ x, y, width, height });
     }
 
     private doPlacement(placement: Placement) : Placement {
-        return Object.freeze({ ...placement });
+        const horizontal = placement.horizontal || "center";
+        const vertical = placement.vertical || "center";
+
+        return Object.freeze({ horizontal, vertical });
     }
 }
 
