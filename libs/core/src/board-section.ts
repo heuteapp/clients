@@ -1,9 +1,7 @@
 import { GridSize, Placement, Rect } from "@heuteapp/common";
-import { HeuteBoardLayout } from "./board-layout";
 
 export class HeuteBoardSection {
     readonly #id : string;
-    readonly #layout : HeuteBoardLayout;
 
     #size: GridSize;
     #position : Rect;
@@ -11,11 +9,9 @@ export class HeuteBoardSection {
 
     constructor(
         id: string, 
-        layout: HeuteBoardLayout, 
         props: HeuteBoardSectionProps
     ) {        
         this.#id = id;
-        this.#layout = layout;
         this.#size = this.doSize(props.size);
         this.#position = this.doPosition(props.position);
         this.#placement = this.doPlacement(props.placement || { horizontal: "center", vertical: "center" });
@@ -23,10 +19,6 @@ export class HeuteBoardSection {
 
     public getId() : string {
         return this.#id;
-    }
-
-    public getLayout() : HeuteBoardLayout {
-        return this.#layout;
     }
 
     //
