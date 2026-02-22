@@ -7,13 +7,21 @@ export class HeuteBoardSection {
 
     #size: GridSize;
     #position : Rect;
-    #placement : Placement = { horizontal: "center", vertical: "center" };
+    #placement : Placement;
 
-    constructor(id: string, layout: HeuteBoardLayout, cols: number, rows: number, position: Rect) {        
+    constructor(
+        id: string, 
+        layout: HeuteBoardLayout, 
+        cols: number, 
+        rows: number, 
+        position: Rect,
+        placement: Placement = { horizontal: "center", vertical: "center" }
+    ) {        
         this.#id = id;
         this.#layout = layout;
-        this.#size = { cols, rows };
-        this.#position = position;
+        this.#size = Object.freeze({ cols, rows });
+        this.#position = Object.freeze({ ...position });
+        this.#placement = Object.freeze({ ...placement });
     }
 
     public getId() : string {
