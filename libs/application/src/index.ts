@@ -1,5 +1,5 @@
-import { HeuteApplication } from './application';
+import { HeuteApp } from './app';
 
-const heuteApp = new HeuteApplication();
+const heuteApp = new HeuteApp();
 
 export { heuteApp };
