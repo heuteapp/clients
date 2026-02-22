@@ -1,7 +1,6 @@
 export type { BoardModel } from "./board";
-export type { BoardFieldModel } from "./boardField";
-export type { BoardGridModel } from "./boardGrid";
-export type { BoardLayoutModel } from "./boardLayout";
+export type { BoardSectionModel } from "./board-section";
+export type { BoardLayoutModel } from "./board-layout";
 
-export { boardField } from "./boardField";
-export { boardLayout } from "./boardLayout";
+export { boardField } from "./board-section";
+export { boardLayout } from "./board-layout";
