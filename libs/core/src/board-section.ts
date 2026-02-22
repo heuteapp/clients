@@ -7,14 +7,15 @@ export class HeuteBoardSection {
 
     #cols : number;
     #rows : number;
-    #position : Rect = { x: 0, y: 0, width: 0, height: 0 };
+    #position : Rect;
     #placement : Placement = { horizontal: "center", vertical: "center" };
 
-    constructor(id: string, layout: HeuteBoardLayout, cols: number, rows: number) {        
+    constructor(id: string, layout: HeuteBoardLayout, cols: number, rows: number, position: Rect) {        
         this.#id = id;
         this.#layout = layout;
         this.#cols = cols;
         this.#rows = rows;
+        this.#position = position;
     }
 
     public getId() : string {
@@ -31,41 +32,30 @@ export class HeuteBoardSection {
         return this.#cols;
     }
 
-    public set cols(cols: number) {
-        if(cols < 1) {
-            this.#cols = 1;
-            return;
-        }
-
-        this.#cols = cols;
-    }
-
     public get rows() : number {
         return this.#rows;
     }
 
-    public set rows(rows: number) {
-        if(rows < 1) {
-            this.#rows = 1;
-            return;
-        }
-
-        this.#rows = rows;
-    }
-
     public get position() : Rect {
         return this.#position;
-    }
-
-    public set position(position: Rect) {
-        this.#position = position;
     }
     
     public get placement() : Placement {
         return this.#placement;
     }
 
-    public set placement(placement: Placement) {
+    //
+
+    public resize(cols: number, rows: number) {
+        this.#cols = cols;
+        this.#rows = rows;
+    }
+
+    public move(position: Rect) {
+        this.#position = position;
+    }
+
+    public setPlacement(placement: Placement) {
         this.#placement = placement;
     }
 }
