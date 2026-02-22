@@ -1,0 +1,14 @@
+{
+  "name": "@heuteapp/application",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublishOnly": "rimraf dist && tsc"
+  },
+  "keywords": [],
+  "author": "k4yr2",
+  "license": "MIT",
+  "type": "commonjs"
+}
