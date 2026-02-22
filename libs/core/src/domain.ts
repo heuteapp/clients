@@ -1,4 +1,4 @@
-import { HeuteBoard } from "./heute.board";
+import { HeuteBoard } from "./board";
 
 export class HeuteDomain {
     #dayboard : HeuteBoard;
