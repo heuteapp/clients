@@ -15,7 +15,7 @@ export class HeuteBoardLayout {
 
     //
 
-    public set id(id: string) {
+    private set id(id: string) {
         this.#id = id;
     }
 
