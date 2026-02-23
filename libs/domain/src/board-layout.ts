@@ -9,21 +9,21 @@ export class HeuteBoardLayout {
         this.#sections = props.sections;
     }
 
-    public getId(): string {
+    public get id() : string {
         return this.#id;
     }
 
-    public getSections(): ReadonlyArray<HeuteBoardSection> {
+    //
+
+    public listSections(): ReadonlyArray<HeuteBoardSection> {
         return [...this.#sections];
     }
 
     //
 
     public static copy(layout: HeuteBoardLayout): HeuteBoardLayout {
-        const id = layout.getId();
-        const sectionsCopy = layout.getSections().map(section => HeuteBoardSection.copy(section));
-        
-        return new HeuteBoardLayout(id, { sections: sectionsCopy });
+        const sectionsCopy = layout.listSections().map(section => HeuteBoardSection.copy(section));
+        return new HeuteBoardLayout(layout.id, { sections: sectionsCopy });
     }
 }
 
