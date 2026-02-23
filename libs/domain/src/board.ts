@@ -28,16 +28,17 @@ export class HeuteBoard {
         this.#layout = this.#processLayout(layout);
     }
 
-    public addCard(card: HeuteBoardCard) {
+    public addCard(card: HeuteBoardCardSnapshot) {
         if (this.#cards.has(card.id)) {
             throw new Error("Card already exists in board.");
         }
 
-        this.#cards.set(card.id, card);
+        const cardEntity = HeuteBoardCard.fromSnapshot(card);
+        this.#cards.set(card.id, cardEntity);
     }
 
-    public listCards(): ReadonlyArray<HeuteBoardCard> {
-        return [...this.#cards.values()];
+    public listCards(): ReadonlyArray<HeuteBoardCardSnapshot> {
+        return [...this.#cards.values()].map(card => HeuteBoardCard.toSnapshot(card));
     }
 
     //
