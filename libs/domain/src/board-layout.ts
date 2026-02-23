@@ -9,11 +9,9 @@ export class HeuteBoardLayout {
         this.#sections = props.sections;
     }
 
-    public get id(): string {
+    public getId(): string {
         return this.#id;
     }
-
-    //
 
     public getSections(): ReadonlyArray<HeuteBoardSection> {
         return [...this.#sections];
@@ -22,8 +20,10 @@ export class HeuteBoardLayout {
     //
 
     public static copy(layout: HeuteBoardLayout): HeuteBoardLayout {
+        const id = layout.getId();
         const sectionsCopy = layout.getSections().map(section => HeuteBoardSection.copy(section));
-        return new HeuteBoardLayout(layout.id, { sections: sectionsCopy });
+        
+        return new HeuteBoardLayout(id, { sections: sectionsCopy });
     }
 }
 
