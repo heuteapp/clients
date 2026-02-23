@@ -34,20 +34,26 @@ export class HeuteBoardSection {
 
     //
 
-    private set id(id: string) {
+    private set id(id: string | undefined) {
         this.#id = this.doId(id);
     }
 
-    private set size(size: GridSize) {
+    private set size(size: GridSize | undefined) {
         this.#size = this.doSize(size);
     }
 
-    private set position(position: Rect) {
+    private set position(position: Rect | undefined) {
         this.#position = this.doPosition(position);
     }
 
-    private set placement(placement: Placement) {
+    private set placement(placement: Placement | undefined) {
         this.#placement = this.doPlacement(placement);
+    }
+
+    //
+
+    _changeId(id?: string) {
+        this.id = id;
     }
 
     //
