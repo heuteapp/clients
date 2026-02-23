@@ -86,8 +86,8 @@ export class HeuteBoardSection {
     }
 
     private doPosition(position?: Rect) : Rect {
-        const x = position?.x || 0;
-        const y = position?.y || 0;
+        const x = position?.x ?? 0;
+        const y = position?.y ?? 0;
         const width = position ? Math.max(0, position.width) : 0;
         const height = position ? Math.max(0, position.height) : 0;
 

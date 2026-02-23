@@ -84,7 +84,7 @@ export class HeuteBoardCard {
     }
 
     private doPosition(position?: GridRect) : GridRect {
-        position = position || { col: 0, row: 0, colSpan: 1, rowSpan: 1 };
+        position = position ?? { col: 0, row: 0, colSpan: 1, rowSpan: 1 };
 
         const col = Math.max(0, position.col);
         const row = Math.max(0, position.row);
@@ -99,7 +99,7 @@ export class HeuteBoardCard {
     }
 
     private doTitle(title?: string | null) : string | null {
-        title = title || null;
+        title = title ?? null;
 
         return title;
     }
