@@ -34,16 +34,20 @@ export class HeuteBoardCard {
 
     //
 
+    public set id(id: string) {
+        this.#id = this.doId(id);
+    }
+
     public set section(section: HeuteBoardSection) {
-        this.#section = section;
+        this.#section = this.doSection(section);
     }
 
     public set position(position: GridRect) {
-        this.#position = position;
+        this.#position = this.doPosition(position);
     }
 
     public set title(title: string | null) {
-        this.#title = title;
+        this.#title = this.doTitle(title);
     }
 
     //
