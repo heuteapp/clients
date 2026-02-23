@@ -1,8 +1,7 @@
 import { GridSize, Placement, Rect } from "@heuteapp/common";
 
 export class HeuteBoardSection {
-    readonly #id : string;
-
+    #id : string;
     #size: GridSize;
     #position : Rect;
     #placement : Placement;
@@ -17,11 +16,9 @@ export class HeuteBoardSection {
         this.#placement = this.doPlacement(props.placement || { horizontal: "center", vertical: "center" });
     }
 
-    public getId() : string {
+    public get id() : string {
         return this.#id;
     }
-
-    //
 
     public get size() : GridSize {
         return this.#size;
@@ -37,6 +34,10 @@ export class HeuteBoardSection {
 
     //
 
+    public set id(id: string) {
+        this.#id = this.doId(id);
+    }
+
     public set size(size: GridSize) {
         this.#size = this.doSize(size);
     }
@@ -50,6 +51,14 @@ export class HeuteBoardSection {
     }
 
     //
+
+    private doId(id?: string) : string {
+        if (!id) {
+            throw new Error("ID is required for board section.");
+        }
+
+        return id;
+    }
 
     private doSize(size: GridSize) : GridSize {
         const cols = Math.max(1, size.cols);
@@ -77,11 +86,14 @@ export class HeuteBoardSection {
     //
 
     public static copy(section: HeuteBoardSection): HeuteBoardSection {
-        return new HeuteBoardSection(section.getId(), {
+        const id = section.id;
+        const props = {
             size: section.size,
             position: section.position,
             placement: section.placement
-        });
+        }
+
+        return new HeuteBoardSection(id, props);
     }
 }
 
