@@ -68,11 +68,6 @@ export class HeuteBoard {
         return HeuteBoardCard.toSnapshot(card);
     }
 
-    public listCards(): ReadonlyArray<HeuteBoardCardSnapshot> {
-        return [...this.#cards.values()].map(card => HeuteBoardCard.toSnapshot(card));
-    }
-
-
     public getCardSection(cardId: string): HeuteBoardSectionSnapshot | null {
         const card = this.#cards.get(cardId);
         if (!card) {
@@ -87,6 +82,10 @@ export class HeuteBoard {
         const section = this.#layout.sections.find(sec => sec.id === sectionId);
 
         return section ?? null;
+    }
+
+    public getCards(): ReadonlyArray<HeuteBoardCardSnapshot> {
+        return [...this.#cards.values()].map(card => HeuteBoardCard.toSnapshot(card));
     }
 
     public getSectionCards(sectionId: string): ReadonlyArray<HeuteBoardCardSnapshot> {
