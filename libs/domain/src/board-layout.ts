@@ -1,8 +1,8 @@
 import HeuteBoardSection from "./board-section";
 
 export class HeuteBoardLayout {
-    readonly #id: string;
-    readonly #sections: HeuteBoardSection[];
+    #id: string;
+    #sections: HeuteBoardSection[];
 
     constructor(id: string, props: HeuteBoardLayoutProps) {
         this.#id = id;
@@ -11,6 +11,12 @@ export class HeuteBoardLayout {
 
     public get id() : string {
         return this.#id;
+    }
+
+    //
+
+    public set id(id: string) {
+        this.#id = id;
     }
 
     //
