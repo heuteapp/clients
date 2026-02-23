@@ -89,6 +89,16 @@ export class HeuteBoard {
         return section ?? null;
     }
 
+    public getSectionCards(sectionId: string): ReadonlyArray<HeuteBoardCardSnapshot> {
+        const section = this.#layout.sections.find(sec => sec.id === sectionId);
+        if (!section) {
+            throw new Error("Section does not exist in board layout.");
+        }
+
+        const cardsInSection = [...this.#cards.values()].filter(card => card.sectionId === sectionId);
+        return cardsInSection.map(card => HeuteBoardCard.toSnapshot(card));
+    }
+
     //
 
     #processId(id: string | undefined) : string {
