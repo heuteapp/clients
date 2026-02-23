@@ -9,10 +9,6 @@ export class HeuteBoard {
     constructor(id: string, props: HeuteBoardProps) {
         this.#id = this.#validateId(id);
         this.#layoutId = this.#validateLayoutId(props.layoutId);
-
-        for (const card of props.cards ?? []) {
-            this.addCard(card);
-        }
     }
 
     //
@@ -64,5 +60,4 @@ export default HeuteBoard;
 
 export interface HeuteBoardProps {
     layoutId: string;
-    cards?: HeuteBoardCard[];
 }
