@@ -37,15 +37,15 @@ export class HeuteBoardSection {
 
     //
 
-    public setSize(size: GridSize) {
+    public set size(size: GridSize) {
         this.#size = this.doSize(size);
     }
 
-    public setPosition(position: Rect) {
+    public set position(position: Rect) {
         this.#position = this.doPosition(position);
     }
 
-    public setPlacement(placement: Placement) {
+    public set placement(placement: Placement) {
         this.#placement = this.doPlacement(placement);
     }
 
