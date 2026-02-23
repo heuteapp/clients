@@ -3,9 +3,9 @@ import { HeuteBoardSection } from "./board-section";
 
 export class HeuteBoardCard {
     readonly #id : string;
-    
-    #section : HeuteBoardSection;
-    #position : GridRect;
+
+    #section : HeuteBoardSection | null;
+    #position : GridRect | null;
     #title : string | null;
 
     constructor(id: string, props: HeuteBoardCardProps) {
@@ -21,11 +21,11 @@ export class HeuteBoardCard {
         return this.#id;
     }
 
-    public get section() : HeuteBoardSection {
+    public get section() : HeuteBoardSection | null {
         return this.#section;
     }
 
-    public get position() : GridRect {
+    public get position() : GridRect | null {
         return this.#position;
     }
 
@@ -35,12 +35,12 @@ export class HeuteBoardCard {
 
     //
 
-    private set section(section: HeuteBoardSection) {
-        this.#section = this.validateSection(section);
+    private set section(section: HeuteBoardSection | null) {
+        this.#section = section ? this.validateSection(section) : null;
     }
 
-    private set position(position: GridRect) {
-        this.#position = this.normalizePosition(position);
+    private set position(position: GridRect | null) {
+        this.#position = position ? this.normalizePosition(position) : null;
     }
 
     private set title(title: string | null) {
@@ -52,7 +52,7 @@ export class HeuteBoardCard {
     /**
      * @internal
      */
-    _move(section?: HeuteBoardSection, position?: GridRect) {
+    _move(section: HeuteBoardSection | null, position: GridRect | null) {
         if (section) {
             this.section = section;
         }
@@ -60,6 +60,14 @@ export class HeuteBoardCard {
         if (position) {
             this.position = position;
         }
+    }
+
+    /**
+     * @internal
+     */
+    _moveIdle() {
+        this.#section = null;
+        this.#position = null;
     }
 
     //
