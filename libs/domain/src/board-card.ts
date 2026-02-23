@@ -14,21 +14,21 @@ export class HeuteBoardCard {
         this.#title = this.doTitle(props.title);
     }
 
-    public getId(): string {
+    //
+
+    public get id() : string {
         return this.#id;
     }
 
-    //
-
-    public get section(): HeuteBoardSection {
+    public get section() : HeuteBoardSection {
         return this.#section;
     }
 
-    public get position(): GridRect {
+    public get position() : GridRect {
         return this.#position;
     }
 
-    public get title(): string | null {
+    public get title() : string | null {
         return this.#title;
     }
 
