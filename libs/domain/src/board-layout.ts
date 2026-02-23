@@ -21,15 +21,23 @@ export class HeuteBoardLayout {
 
     //
 
-    public listSections(): ReadonlyArray<HeuteBoardSection> {
-        return [...this.#sections];
+    public listSections(): ReadonlyArray<HeuteBoardSectionSnapshot> {
+        return this.#sections.map(section => HeuteBoardSection.toSnapshot(section));
     }
 
     //
 
-    public static copy(layout: HeuteBoardLayout): HeuteBoardLayout {
-        const sectionsCopy = layout.listSections().map(section => HeuteBoardSection.copy(section));
-        return new HeuteBoardLayout(layout.id, { sections: sectionsCopy });
+    public static fromSnapshot(snapshot: HeuteBoardLayoutSnapshot): HeuteBoardLayout {
+        return new HeuteBoardLayout(snapshot.id, {
+            sections: snapshot.sections
+        });
+    }
+
+    public static toSnapshot(layout: HeuteBoardLayout): HeuteBoardLayoutSnapshot {
+        return {
+            id: layout.id,
+            sections: layout.listSections()
+        };
     }
 }
 
@@ -37,7 +45,7 @@ export default HeuteBoardLayout;
 
 export interface HeuteBoardLayoutSnapshot {
     id: string;
-    sections: HeuteBoardSectionSnapshot[];
+    sections: readonly HeuteBoardSectionSnapshot[];
 }
 
 export type HeuteBoardLayoutProps = Omit<HeuteBoardLayoutSnapshot, "id">;
