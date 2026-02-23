@@ -10,10 +10,10 @@ export class HeuteBoardSection {
         id: string, 
         props: HeuteBoardSectionProps
     ) {        
-        this.#id = this.doId(id);
-        this.#size = this.doSize(props.size);
-        this.#position = this.doPosition(props.position);
-        this.#placement = this.doPlacement(props.placement);
+        this.#id = this.validateId(id);
+        this.#size = this.normalizeSize(props.size);
+        this.#position = this.normalizePosition(props.position);
+        this.#placement = this.normalizePlacement(props.placement);
     }
 
     public get id() : string {
@@ -35,19 +35,19 @@ export class HeuteBoardSection {
     //
 
     private set id(id: string | undefined) {
-        this.#id = this.doId(id);
+        this.#id = this.validateId(id);
     }
 
     private set size(size: GridSize | undefined) {
-        this.#size = this.doSize(size);
+        this.#size = this.normalizeSize(size);
     }
 
     private set position(position: Rect | undefined) {
-        this.#position = this.doPosition(position);
+        this.#position = this.normalizePosition(position);
     }
 
     private set placement(placement: Placement | undefined) {
-        this.#placement = this.doPlacement(placement);
+        this.#placement = this.normalizePlacement(placement);
     }
 
     //
@@ -70,7 +70,7 @@ export class HeuteBoardSection {
 
     //
 
-    private doId(id?: string) : string {
+    private validateId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board section.");
         }
@@ -78,27 +78,30 @@ export class HeuteBoardSection {
         return id;
     }
 
-    private doSize(size?: GridSize) : GridSize {
-        const cols = size ? Math.max(1, size.cols) : 1;
-        const rows = size ? Math.max(1, size.rows) : 1;
-
-        return Object.freeze({ cols, rows });
+    private normalizeSize(size?: GridSize) : GridSize {
+        return Object.freeze({ 
+            cols: size ? Math.max(1, size.cols) : 1, 
+            rows: size ? Math.max(1, size.rows) : 1 
+        });
     }
 
-    private doPosition(position?: Rect) : Rect {
-        const x = position?.x ?? 0;
-        const y = position?.y ?? 0;
-        const width = position ? Math.max(0, position.width) : 0;
-        const height = position ? Math.max(0, position.height) : 0;
-
-        return Object.freeze({ x, y, width, height });
+    private normalizePosition(position?: Rect) : Rect {
+        return Object.freeze({ 
+            x: position ? position.x : 0, 
+            y: position ? position.y : 0, 
+            width: position ? Math.max(0, position.width) : 0,
+            height: position ? Math.max(0, position.height) : 0
+        });
     }
 
-    private doPlacement(placement?: Placement) : Placement {
-        const horizontal = placement?.horizontal || "center";
-        const vertical = placement?.vertical || "center";
+    private normalizePlacement(placement?: Placement) : Placement {
+        const horizontal = placement?.horizontal ?? "center";
+        const vertical = placement?.vertical ?? "center";
 
-        return Object.freeze({ horizontal, vertical });
+        return Object.freeze({ 
+            horizontal: horizontal === "start" || horizontal === "center" || horizontal === "end" ? horizontal : "center", 
+            vertical: vertical === "start" || vertical === "center" || vertical === "end" ? vertical : "center"
+        });
     }
 
     //
