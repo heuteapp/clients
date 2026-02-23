@@ -154,7 +154,7 @@ export class HeuteBoardCard {
         return {
             id: card.id,
             sectionId: card.sectionId,
-            position: card.position,
+            position: card.position ? { ...card.position } : null,
             title: card.title
         };
     }
@@ -162,7 +162,7 @@ export class HeuteBoardCard {
     public static fromSnapshot(snapshot: HeuteBoardCardSnapshot): HeuteBoardCard {
         return new HeuteBoardCard(snapshot.id, {
             sectionId: snapshot.sectionId,
-            position: snapshot.position,
+            position: snapshot.position ? { ...snapshot.position } : null,
             title: snapshot.title
         });
     }
