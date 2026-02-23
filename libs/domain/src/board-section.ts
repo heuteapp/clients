@@ -13,7 +13,7 @@ export class HeuteBoardSection {
         this.#id = this.doId(id);
         this.#size = this.doSize(props.size);
         this.#position = this.doPosition(props.position);
-        this.#placement = this.doPlacement(props.placement || { horizontal: "center", vertical: "center" });
+        this.#placement = this.doPlacement(props.placement);
     }
 
     public get id() : string {
@@ -60,25 +60,25 @@ export class HeuteBoardSection {
         return id;
     }
 
-    private doSize(size: GridSize) : GridSize {
-        const cols = Math.max(1, size.cols);
-        const rows = Math.max(1, size.rows);
+    private doSize(size?: GridSize) : GridSize {
+        const cols = size ? Math.max(1, size.cols) : 1;
+        const rows = size ? Math.max(1, size.rows) : 1;
 
         return Object.freeze({ cols, rows });
     }
 
-    private doPosition(position: Rect) : Rect {
-        const x = position.x;
-        const y = position.y;
-        const width = Math.max(0, position.width);
-        const height = Math.max(0, position.height);
+    private doPosition(position?: Rect) : Rect {
+        const x = position?.x || 0;
+        const y = position?.y || 0;
+        const width = position ? Math.max(0, position.width) : 0;
+        const height = position ? Math.max(0, position.height) : 0;
 
         return Object.freeze({ x, y, width, height });
     }
 
-    private doPlacement(placement: Placement) : Placement {
-        const horizontal = placement.horizontal || "center";
-        const vertical = placement.vertical || "center";
+    private doPlacement(placement?: Placement) : Placement {
+        const horizontal = placement?.horizontal || "center";
+        const vertical = placement?.vertical || "center";
 
         return Object.freeze({ horizontal, vertical });
     }
