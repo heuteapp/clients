@@ -10,10 +10,10 @@ export class HeuteBoardSection {
         id: string, 
         props: HeuteBoardSectionProps
     ) {        
-        this.#id = this.#ensureId(id);
-        this.#size = this.#ensureSize(props.size);
-        this.#position = this.#ensurePosition(props.position);
-        this.#placement = this.#ensurePlacement(props.placement);
+        this.#id = this.#processId(id);
+        this.#size = this.#processSize(props.size);
+        this.#position = this.#processPosition(props.position);
+        this.#placement = this.#processPlacement(props.placement);
     }
 
     public get id() : string {
@@ -35,19 +35,19 @@ export class HeuteBoardSection {
     //
 
     private set id(id: string | undefined) {
-        this.#id = this.#ensureId(id);
+        this.#id = this.#processId(id);
     }
 
     private set size(size: GridSize | undefined) {
-        this.#size = this.#ensureSize(size);
+        this.#size = this.#processSize(size);
     }
 
     private set position(position: Rect | undefined) {
-        this.#position = this.#ensurePosition(position);
+        this.#position = this.#processPosition(position);
     }
 
     private set placement(placement: Placement | undefined) {
-        this.#placement = this.#ensurePlacement(placement);
+        this.#placement = this.#processPlacement(placement);
     }
 
     //
@@ -70,7 +70,7 @@ export class HeuteBoardSection {
 
     //
 
-    #ensureId(id?: string) : string {
+    #processId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board section.");
         }
@@ -78,7 +78,7 @@ export class HeuteBoardSection {
         return id;
     }
 
-    #ensureSize(size?: GridSize) : GridSize {
+    #processSize(size?: GridSize) : GridSize {
         if (!size) {
             throw new Error("Size is required for board section.");
         }
@@ -89,7 +89,7 @@ export class HeuteBoardSection {
         });
     }
 
-    #ensurePosition(position?: Rect) : Rect {
+    #processPosition(position?: Rect) : Rect {
         if(!position) {
             throw new Error("Position is required for board section.");
         }
@@ -102,7 +102,7 @@ export class HeuteBoardSection {
          });
     }
 
-    #ensurePlacement(placement?: Placement) : Placement {
+    #processPlacement(placement?: Placement) : Placement {
         const horizontal = placement?.horizontal ?? "center";
         const vertical = placement?.vertical ?? "center";
 
