@@ -1,14 +1,15 @@
 import { HeuteBoardCard, HeuteBoardCardSnapshot } from "./board-card";
+import { HeuteBoardLayoutSnapshot } from "./board-layout";
 
 export class HeuteBoard {
     readonly #id: string;
     
-    #layoutId: string;
+    #layout: HeuteBoardLayoutSnapshot;
     #cards: Map<string, HeuteBoardCard> = new Map();
 
     constructor(id: string, props: HeuteBoardProps) {
-        this.#id = this.#validateId(id);
-        this.#layoutId = this.#validateLayoutId(props.layoutId);
+        this.#id = this.#processId(id);
+        this.#layout = this.#processLayout(props.layout);
     }
 
     //
@@ -17,14 +18,14 @@ export class HeuteBoard {
         return this.#id;
     }
 
-    public get layoutId(): string {
-        return this.#layoutId;
+    public get layout(): HeuteBoardLayoutSnapshot {
+        return this.#layout;
     }
     
     //
 
-    public changeLayout(layoutId: string) {
-        this.#layoutId = this.#validateLayoutId(layoutId);
+    public changeLayout(layout: HeuteBoardLayoutSnapshot) {
+        this.#layout = this.#processLayout(layout);
     }
 
     public addCard(card: HeuteBoardCard) {
@@ -41,18 +42,18 @@ export class HeuteBoard {
 
     //
 
-    #validateId(id: string | undefined) : string {
+    #processId(id: string | undefined) : string {
         if (!id) {
             throw new Error("Board ID is required.");
         }
         return id;
     }
 
-    #validateLayoutId(layoutId: string | undefined) : string {
-        if (!layoutId) {
-            throw new Error("Layout ID is required for board.");
+    #processLayout(layout: HeuteBoardLayoutSnapshot | undefined) : HeuteBoardLayoutSnapshot {
+        if (!layout) {
+            throw new Error("Layout is required for board.");
         }
-        return layoutId;
+        return layout;
     }
 }
 
@@ -60,10 +61,8 @@ export default HeuteBoard;
 
 export interface HeuteBoardSnapshot {
     id: string;
-    layoutId: string;
+    layout: HeuteBoardLayoutSnapshot;
     cards: HeuteBoardCardSnapshot[];
 }
 
-export interface HeuteBoardProps {
-    layoutId: string;
-}
+export type HeuteBoardProps = Omit<HeuteBoardSnapshot, "id">;
