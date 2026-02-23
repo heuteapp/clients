@@ -9,7 +9,7 @@ export class HeuteBoard {
     constructor(id: string, props: HeuteBoardProps) {
         this.#id = id;
         this.#layout = props.layout;
-        this.#cards = props.cards || [];
+        this.#cards = props.cards ?? [];
     }
 
     //
