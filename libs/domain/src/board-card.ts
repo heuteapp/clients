@@ -4,13 +4,14 @@ import { HeuteBoardSection } from "./board-section";
 export class HeuteBoardCard {
     #section : HeuteBoardSection;
     #position : GridRect;
-    #content : string | undefined;
+    #title? : string;
 
-    constructor(section: HeuteBoardSection, props: HeuteBoardCardProps) {
+    constructor(section: HeuteBoardSection, position: GridRect) {
         this.#section = section;
-        this.#position = props.position;
-        this.#content = props.content;
+        this.#position = position;
     }
+
+    //
 
     public get section(): HeuteBoardSection {
         return this.#section;
@@ -20,20 +21,23 @@ export class HeuteBoardCard {
         return this.#position;
     }
 
-    public get content(): string | undefined {
-        return this.#content;
+    public get title(): string | undefined {
+        return this.#title;
     }
 
-    public setContent(content: string) {
-        this.#content = content;
+    //
+
+    public setSection(section: HeuteBoardSection) {
+        this.#section = section;
+    }
+
+    public setPosition(position: GridRect) {
+        this.#position = position;
+    }
+
+    public setTitle(title: string | undefined) {
+        this.#title = title;
     }
 }
 
 export default HeuteBoardCard;
-
-//
-
-export interface HeuteBoardCardProps {
-    position: GridRect;
-    content?: string;
-}
