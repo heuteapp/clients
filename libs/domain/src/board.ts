@@ -45,7 +45,7 @@ export class HeuteBoard {
         this.#cards.set(card.id, cardEntity);
     }
 
-    public addCards(cards: HeuteBoardCardSnapshot[]) {
+    public addCards(cards: readonly HeuteBoardCardSnapshot[]) {
         for (const card of cards) {
             this.addCard(card);
         }
@@ -57,6 +57,12 @@ export class HeuteBoard {
         }
 
         this.#cards.delete(cardId);
+    }
+
+    public removeCards(cardIds: readonly string[]) {
+        for (const cardId of cardIds) {
+            this.removeCard(cardId);
+        }
     }
 
     public getCard(cardId: string): HeuteBoardCardSnapshot {
