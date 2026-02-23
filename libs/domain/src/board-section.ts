@@ -130,8 +130,11 @@ export default HeuteBoardSection;
 
 //
 
-export interface HeuteBoardSectionProps {
+export interface HeuteBoardSectionSnapshot {
+    id: string;
     size: GridSize;
     position: Rect;
-    placement?: Placement;
+    placement: Placement;
 }
+
+export type HeuteBoardSectionProps = Omit<HeuteBoardSectionSnapshot, "id">;
