@@ -130,17 +130,6 @@ export class HeuteBoardSection {
             placement: { ...snapshot.placement }
         });
     }
-
-    public static copy(section: HeuteBoardSection): HeuteBoardSection {
-        const id = section.id;
-        const props = {
-            size: section.size,
-            position: section.position,
-            placement: section.placement
-        }
-
-        return new HeuteBoardSection(id, props);
-    }
 }
 
 export default HeuteBoardSection;
