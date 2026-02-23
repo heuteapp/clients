@@ -1,15 +1,14 @@
 import { HeuteBoardCard } from "./board-card";
-import { HeuteBoardLayout } from "./board-layout";
 
 export class HeuteBoard {
     readonly #id: string;
     
-    #layout: HeuteBoardLayout;
+    #layoutId: string;
     #cards: HeuteBoardCard[];
 
     constructor(id: string, props: HeuteBoardProps) {
         this.#id = id;
-        this.#layout = props.layout;
+        this.#layoutId = props.layoutId;
         this.#cards = props.cards ?? [];
     }
 
@@ -19,14 +18,14 @@ export class HeuteBoard {
         return this.#id;
     }
 
-    public get layout(): HeuteBoardLayout {
-        return this.#layout;
+    public get layoutId(): string {
+        return this.#layoutId;
     }
     
     //
 
-    public changeLayout(layout: HeuteBoardLayout) {
-        this.#layout = HeuteBoardLayout.copy(layout);
+    public changeLayout(layoutId: string) {
+        this.#layoutId = layoutId;
     }
 
     public addCard(card: HeuteBoardCard) {
@@ -41,6 +40,6 @@ export class HeuteBoard {
 export default HeuteBoard;
 
 export interface HeuteBoardProps {
-    layout: HeuteBoardLayout;
+    layoutId: string;
     cards?: HeuteBoardCard[];
 }
