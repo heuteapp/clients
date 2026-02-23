@@ -153,8 +153,11 @@ export default HeuteBoardCard;
 
 //
 
-export interface HeuteBoardCardProps {
+export interface HeuteBoardCardSnapshot {
+    id: string;
     sectionId: string | null;
     position: GridRect | null;
     title: string | null;
 }
+
+export type HeuteBoardCardProps = Omit<HeuteBoardCardSnapshot, "id">;
