@@ -12,6 +12,11 @@ export class HeuteBoardCard {
         this.#sectionId = this.validateSectionId(props.sectionId);
         this.#position = this.normalizePosition(props.position);
         this.#title = this.normalizeTitle(props.title);
+
+        if(this.#sectionId === null || this.#position === null) {
+            this.#sectionId = null;
+            this.#position = null;
+        }
     }
 
     //
@@ -88,19 +93,16 @@ export class HeuteBoardCard {
         return sectionId ?? null;
     }
 
-    private normalizePosition(position?: GridRect | null) : GridRect {
-        position = position ?? { col: 0, row: 0, colSpan: 1, rowSpan: 1 };
-
-        const col = Math.max(0, position.col);
-        const row = Math.max(0, position.row);
-        const colSpan = Math.max(1, position.colSpan);
-        const rowSpan = Math.max(1, position.rowSpan);
-
-        if (position) {
-            return Object.freeze({ col, row, colSpan, rowSpan });
+    private normalizePosition(position?: GridRect | null) : GridRect | null {
+        if(!position) {
+            return null;
         }
-
-        throw new Error("Position is required for board card.");
+        return Object.freeze({ 
+            col: Math.max(0, position.col),
+            row: Math.max(0, position.row),
+            colSpan: Math.max(1, position.colSpan),
+            rowSpan: Math.max(1, position.rowSpan)
+        });
     }
 
     private normalizeTitle(title?: string | null) : string | null {
