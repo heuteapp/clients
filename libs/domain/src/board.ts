@@ -15,9 +15,11 @@ export class HeuteBoard {
     public get layout(): HeuteBoardLayout {
         return this.#layout;
     }
+    
+    //
 
-    public get cards(): ReadonlyArray<HeuteBoardCard> {
-        return this.#cards;
+    public getCards(): ReadonlyArray<HeuteBoardCard> {
+        return [...this.#cards];
     }
 
     //
