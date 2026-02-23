@@ -8,7 +8,7 @@ export class HeuteBoardCard {
     #title : string | null;
 
     constructor(id: string, props: HeuteBoardCardProps) {
-        this.#id = id;
+        this.#id = this.doId(id);
         this.#section = this.doSection(props.section);
         this.#position = this.doPosition(props.position);
         this.#title = this.doTitle(props.title);
@@ -48,12 +48,20 @@ export class HeuteBoardCard {
 
     //
 
-    public doSection(section?: HeuteBoardSection) : HeuteBoardSection {
-        if (section) {
-            return section;
+    public doId(id?: string) : string {
+        if (!id) {
+            throw new Error("ID is required for board card.");
         }
 
-        throw new Error("Section is required for board card.");
+        return id;
+    }
+
+    public doSection(section?: HeuteBoardSection) : HeuteBoardSection {
+        if (!section) {
+            throw new Error("Section is required for board card.");
+        }
+
+        return section;
     }
 
     public doPosition(position?: GridRect) : GridRect {
