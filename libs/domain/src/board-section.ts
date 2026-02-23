@@ -34,19 +34,19 @@ export class HeuteBoardSection {
 
     //
 
-    public set id(id: string) {
+    private set id(id: string) {
         this.#id = this.doId(id);
     }
 
-    public set size(size: GridSize) {
+    private set size(size: GridSize) {
         this.#size = this.doSize(size);
     }
 
-    public set position(position: Rect) {
+    private set position(position: Rect) {
         this.#position = this.doPosition(position);
     }
 
-    public set placement(placement: Placement) {
+    private set placement(placement: Placement) {
         this.#placement = this.doPlacement(placement);
     }
 
