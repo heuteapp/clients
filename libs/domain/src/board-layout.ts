@@ -21,7 +21,16 @@ export class HeuteBoardLayout {
 
     //
 
-    public listSections(): ReadonlyArray<HeuteBoardSectionSnapshot> {
+    public getSection(sectionId: string): HeuteBoardSectionSnapshot {
+        const section = this.#sections.find(sec => sec.id === sectionId);
+        if (!section) {
+            throw new Error("Section does not exist in board layout.");
+        }
+
+        return HeuteBoardSection.toSnapshot(section);
+    }
+
+    public getSections(): ReadonlyArray<HeuteBoardSectionSnapshot> {
         return this.#sections.map(section => HeuteBoardSection.toSnapshot(section));
     }
 
@@ -36,7 +45,7 @@ export class HeuteBoardLayout {
     public static toSnapshot(layout: HeuteBoardLayout): HeuteBoardLayoutSnapshot {
         return {
             id: layout.id,
-            sections: layout.listSections()
+            sections: layout.getSections()
         };
     }
 }
