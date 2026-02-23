@@ -8,10 +8,10 @@ export class HeuteBoardCard {
     #title : string | null;
 
     constructor(id: string, props: HeuteBoardCardProps) {
-        this.#id = this.validateId(id);
-        this.#sectionId = this.validateSectionId(props.sectionId);
-        this.#position = this.normalizePosition(props.position);
-        this.#title = this.normalizeTitle(props.title);
+        this.#id = this.#validateId(id);
+        this.#sectionId = this.#validateSectionId(props.sectionId);
+        this.#position = this.#normalizePosition(props.position);
+        this.#title = this.#normalizeTitle(props.title);
 
         this.#syncPlacement();
     }
@@ -37,15 +37,15 @@ export class HeuteBoardCard {
     //
 
     private set sectionId(value: string | null) {
-        this.#sectionId = this.validateSectionId(value);
+        this.#sectionId = this.#validateSectionId(value);
     }
 
     private set position(value: GridRect | null) {
-        this.#position = value ? this.normalizePosition(value) : null;
+        this.#position = value ? this.#normalizePosition(value) : null;
     }
 
     private set title(value: string | null) {
-        this.#title = this.normalizeTitle(value);
+        this.#title = this.#normalizeTitle(value);
     }
 
     //
@@ -114,7 +114,7 @@ export class HeuteBoardCard {
 
     //
 
-    private validateId(id?: string) : string {
+    #validateId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board card.");
         }
@@ -122,11 +122,11 @@ export class HeuteBoardCard {
         return id;
     }
 
-    private validateSectionId(sectionId?: string | null) : string | null {
+    #validateSectionId(sectionId?: string | null) : string | null {
         return sectionId ?? null;
     }
 
-    private normalizePosition(position?: GridRect | null) : GridRect | null {
+    #normalizePosition(position?: GridRect | null) : GridRect | null {
         if(!position) {
             return null;
         }
@@ -138,7 +138,7 @@ export class HeuteBoardCard {
         });
     }
 
-    private normalizeTitle(title?: string | null) : string | null {
+    #normalizeTitle(title?: string | null) : string | null {
         return title ?? null;
     }
 
