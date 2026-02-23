@@ -48,6 +48,16 @@ export class HeuteBoardCard {
 
     //
 
+    public get isPlaceable() : boolean {
+        return this.#sectionId === null && this.#position === null;
+    }
+
+    public get isPlaced() : boolean {
+        return this.#sectionId !== null && this.#position !== null;
+    }
+
+    //
+
     /**
      * @internal
      */
