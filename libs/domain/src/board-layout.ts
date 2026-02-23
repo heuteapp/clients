@@ -2,11 +2,15 @@ import HeuteBoardSection, { HeuteBoardSectionSnapshot } from "./board-section";
 
 export class HeuteBoardLayout {
     #id: string;
-    #sections: HeuteBoardSection[];
+    #sections: Map<string, HeuteBoardSection> = new Map();
 
     constructor(id: string, props: HeuteBoardLayoutProps) {
         this.#id = id;
-        this.#sections = props.sections.map(section => HeuteBoardSection.fromSnapshot(section));
+
+        for (const section of props.sections) {
+            const sectionEntity = HeuteBoardSection.fromSnapshot(section);
+            this.#sections.set(sectionEntity.id, sectionEntity);
+        }
     }
 
     public get id() : string {
@@ -22,7 +26,7 @@ export class HeuteBoardLayout {
     //
 
     public getSection(sectionId: string): HeuteBoardSectionSnapshot {
-        const section = this.#sections.find(sec => sec.id === sectionId);
+        const section = this.#sections.get(sectionId);
         if (!section) {
             throw new Error("Section does not exist in board layout.");
         }
@@ -31,7 +35,7 @@ export class HeuteBoardLayout {
     }
 
     public getSections(): ReadonlyArray<HeuteBoardSectionSnapshot> {
-        return this.#sections.map(section => HeuteBoardSection.toSnapshot(section));
+        return [...this.#sections.values()].map(section => HeuteBoardSection.toSnapshot(section));
     }
 
     //
