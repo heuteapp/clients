@@ -147,6 +147,25 @@ export class HeuteBoardCard {
             this.#position = null;
         }
     }
+
+    //
+
+    public static toSnapshot(card: HeuteBoardCard): HeuteBoardCardSnapshot {
+        return {
+            id: card.id,
+            sectionId: card.sectionId,
+            position: card.position,
+            title: card.title
+        };
+    }
+
+    public static fromSnapshot(snapshot: HeuteBoardCardSnapshot): HeuteBoardCard {
+        return new HeuteBoardCard(snapshot.id, {
+            sectionId: snapshot.sectionId,
+            position: snapshot.position,
+            title: snapshot.title
+        });
+    }
 }
 
 export default HeuteBoardCard;
