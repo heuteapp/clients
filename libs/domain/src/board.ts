@@ -16,7 +16,7 @@ export class HeuteBoard {
         return this.#layout;
     }
 
-    public get cards(): HeuteBoardCard[] {
+    public get cards(): ReadonlyArray<HeuteBoardCard> {
         return this.#cards;
     }
 
