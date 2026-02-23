@@ -52,22 +52,20 @@ export class HeuteBoardSection {
 
     //
 
-    _changeId(id?: string) {
+    _changeId(id: string | undefined) {
         this.id = id;
     }
 
-    _redesign(props: Partial<HeuteBoardSectionProps>) {
-        if (props.size) {
-            this.size = props.size;
-        }
+    _resize(size: GridSize | undefined) {
+        this.size = size;
+    }
+    
+    _move(position: Rect | undefined) {
+        this.position = position;
+    }
 
-        if (props.position) {
-            this.position = props.position;
-        }
-
-        if (props.placement) {
-            this.placement = props.placement;
-        }
+    _changePlacement(placement: Placement | undefined) {
+        this.placement = placement;
     }
 
     //
