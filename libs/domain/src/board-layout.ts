@@ -1,4 +1,4 @@
-import HeuteBoardSection from "./board-section";
+import HeuteBoardSection, { HeuteBoardSectionSnapshot } from "./board-section";
 
 export class HeuteBoardLayout {
     #id: string;
@@ -6,7 +6,7 @@ export class HeuteBoardLayout {
 
     constructor(id: string, props: HeuteBoardLayoutProps) {
         this.#id = id;
-        this.#sections = props.sections;
+        this.#sections = props.sections.map(section => HeuteBoardSection.fromSnapshot(section));
     }
 
     public get id() : string {
@@ -35,6 +35,9 @@ export class HeuteBoardLayout {
 
 export default HeuteBoardLayout;
 
-export interface HeuteBoardLayoutProps {
-    sections: HeuteBoardSection[];
+export interface HeuteBoardLayoutSnapshot {
+    id: string;
+    sections: HeuteBoardSectionSnapshot[];
 }
+
+export type HeuteBoardLayoutProps = Omit<HeuteBoardLayoutSnapshot, "id">;
