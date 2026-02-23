@@ -8,10 +8,10 @@ export class HeuteBoardCard {
     #title : string | null;
 
     constructor(id: string, props: HeuteBoardCardProps) {
-        this.#id = this.doId(id);
-        this.#section = this.doSection(props.section);
-        this.#position = this.doPosition(props.position);
-        this.#title = this.doTitle(props.title);
+        this.#id = this.validateId(id);
+        this.#section = this.validateSection(props.section);
+        this.#position = this.normalizePosition(props.position);
+        this.#title = this.normalizeTitle(props.title);
     }
 
     //
@@ -35,15 +35,15 @@ export class HeuteBoardCard {
     //
 
     private set section(section: HeuteBoardSection) {
-        this.#section = this.doSection(section);
+        this.#section = this.validateSection(section);
     }
 
     private set position(position: GridRect) {
-        this.#position = this.doPosition(position);
+        this.#position = this.normalizePosition(position);
     }
 
     private set title(title: string | null) {
-        this.#title = this.doTitle(title);
+        this.#title = this.normalizeTitle(title);
     }
 
     //
@@ -63,7 +63,7 @@ export class HeuteBoardCard {
 
     //
 
-    private doId(id?: string) : string {
+    private validateId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board card.");
         }
@@ -71,7 +71,7 @@ export class HeuteBoardCard {
         return id;
     }
 
-    private doSection(section?: HeuteBoardSection) : HeuteBoardSection {
+    private validateSection(section?: HeuteBoardSection) : HeuteBoardSection {
         if (!section) {
             throw new Error("Section is required for board card.");
         }
@@ -79,7 +79,7 @@ export class HeuteBoardCard {
         return section;
     }
 
-    private doPosition(position?: GridRect) : GridRect {
+    private normalizePosition(position?: GridRect) : GridRect {
         position = position ?? { col: 0, row: 0, colSpan: 1, rowSpan: 1 };
 
         const col = Math.max(0, position.col);
@@ -94,7 +94,7 @@ export class HeuteBoardCard {
         throw new Error("Position is required for board card.");
     }
 
-    private doTitle(title?: string | null) : string | null {
+    private normalizeTitle(title?: string | null) : string | null {
         title = title ?? null;
 
         return title;
