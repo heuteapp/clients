@@ -12,12 +12,10 @@ export class HeuteBoard {
 
     //
 
-    public get layout(): HeuteBoardLayout {
+    public getLayout(): HeuteBoardLayout {
         return this.#layout;
     }
     
-    //
-
     public getCards(): ReadonlyArray<HeuteBoardCard> {
         return [...this.#cards];
     }
