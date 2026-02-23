@@ -3,6 +3,7 @@ import { HeuteBoardLayout } from "./board-layout";
 
 export class HeuteBoard {
     readonly #id: string;
+    
     #layout: HeuteBoardLayout;
     #cards: HeuteBoardCard[];
 
