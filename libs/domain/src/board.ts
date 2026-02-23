@@ -26,6 +26,12 @@ export class HeuteBoard {
 
     public changeLayout(layout: HeuteBoardLayoutSnapshot) {
         this.#layout = this.#processLayout(layout);
+
+        for (const card of this.#cards.values()) {
+            if (card.isPlaced) {
+                card._unplace();
+            }
+        }
     }
 
     public addCard(card: HeuteBoardCardSnapshot) {
