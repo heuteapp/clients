@@ -84,7 +84,7 @@ export class HeuteBoardCard {
      * @internal
     */
     _replace(sectionId: string, position: GridRect) {
-        if (this.isPlaceable) {
+        if (!this.isPlaced) {
             throw new Error("Card is not placed.");
         }
 
@@ -128,7 +128,7 @@ export class HeuteBoardCard {
 
     #normalizePosition(position?: GridRect | null) : GridRect | null {
         if(!position) return null;
-        
+
         return Object.freeze({ 
             col: Math.max(0, position.col),
             row: Math.max(0, position.row),
