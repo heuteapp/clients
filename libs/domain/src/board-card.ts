@@ -38,6 +38,31 @@ export class HeuteBoardCard {
     public set title(title: string | undefined) {
         this.#title = title;
     }
+
+    //
+
+    public doSection(section?: HeuteBoardSection) : HeuteBoardSection {
+        if (section) {
+            return section;
+        }
+
+        throw new Error("Section is required for board card.");
+    }
+
+    public doPosition(position?: GridRect) : GridRect {
+        position = position || { col: -1, row: -1, colSpan: 0, rowSpan: 0 };
+
+        const col = Math.max(0, position.col);
+        const row = Math.max(0, position.row);
+        const colSpan = Math.max(1, position.colSpan);
+        const rowSpan = Math.max(1, position.rowSpan);
+
+        if (position) {
+            return Object.freeze({ col, row, colSpan, rowSpan });
+        }
+
+        throw new Error("Position is required for board card.");
+    }
 }
 
 export default HeuteBoardCard;
