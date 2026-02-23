@@ -1,5 +1,6 @@
 import { HeuteBoardCard, HeuteBoardCardSnapshot } from "./board-card";
 import { HeuteBoardLayoutSnapshot } from "./board-layout";
+import { HeuteBoardSectionSnapshot } from "./board-section";
 
 export class HeuteBoard {
     readonly #id: string;
@@ -58,8 +59,34 @@ export class HeuteBoard {
         this.#cards.delete(cardId);
     }
 
+    public getCard(cardId: string): HeuteBoardCardSnapshot {
+        const card = this.#cards.get(cardId);
+        if (!card) {
+            throw new Error("Card does not exist in board.");
+        }
+        
+        return HeuteBoardCard.toSnapshot(card);
+    }
+
     public listCards(): ReadonlyArray<HeuteBoardCardSnapshot> {
         return [...this.#cards.values()].map(card => HeuteBoardCard.toSnapshot(card));
+    }
+
+
+    public getCardSection(cardId: string): HeuteBoardSectionSnapshot | null {
+        const card = this.#cards.get(cardId);
+        if (!card) {
+            throw new Error("Card does not exist in board.");
+        }
+
+        if (!card.isPlaced) {
+            return null;
+        }
+
+        const sectionId = card.sectionId;
+        const section = this.#layout.sections.find(sec => sec.id === sectionId);
+
+        return section ?? null;
     }
 
     //
