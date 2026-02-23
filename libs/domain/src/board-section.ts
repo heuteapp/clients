@@ -60,7 +60,7 @@ export class HeuteBoardSection {
         this.size = size;
     }
     
-    _move(position: Rect | undefined) {
+    _anchor(position: Rect | undefined) {
         this.position = position;
     }
 
