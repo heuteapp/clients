@@ -2,7 +2,7 @@ import { HeuteBoardCard } from "./board-card";
 import { HeuteBoardLayout } from "./board-layout";
 
 export class HeuteBoard {
-    #id: string;
+    readonly #id: string;
     #layout: HeuteBoardLayout;
     #cards: HeuteBoardCard[];
 
@@ -20,12 +20,6 @@ export class HeuteBoard {
 
     public get layout(): HeuteBoardLayout {
         return this.#layout;
-    }
-
-    //
-
-    public set id(id: string) {
-        this.#id = id;
     }
     
     //
