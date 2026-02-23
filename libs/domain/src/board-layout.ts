@@ -6,11 +6,7 @@ export class HeuteBoardLayout {
 
     constructor(id: string, props: HeuteBoardLayoutProps) {
         this.#id = id;
-
-        for (const section of props.sections) {
-            const sectionEntity = HeuteBoardSection.fromSnapshot(section);
-            this.#sections.set(sectionEntity.id, sectionEntity);
-        }
+        this.addSections(props.sections);
     }
 
     public get id() : string {
@@ -25,7 +21,22 @@ export class HeuteBoardLayout {
 
     //
 
-    public getSection(sectionId: string): HeuteBoardSectionSnapshot {
+    public addSection(section: HeuteBoardSectionSnapshot) {
+        if (this.#sections.has(section.id)) {
+            throw new Error("Section already exists in board layout.");
+        }
+
+        const sectionEntity = HeuteBoardSection.fromSnapshot(section);
+        this.#sections.set(sectionEntity.id, sectionEntity);
+    }
+
+    public addSections(sections: readonly HeuteBoardSectionSnapshot[]) {
+        for (const section of sections) {
+            this.addSection(section);
+        }
+    }
+
+    public getSection(sectionId: string) : HeuteBoardSectionSnapshot {
         const section = this.#sections.get(sectionId);
         if (!section) {
             throw new Error("Section does not exist in board layout.");
@@ -34,7 +45,7 @@ export class HeuteBoardLayout {
         return HeuteBoardSection.toSnapshot(section);
     }
 
-    public getSections(): ReadonlyArray<HeuteBoardSectionSnapshot> {
+    public getSections() : ReadonlyArray<HeuteBoardSectionSnapshot> {
         return [...this.#sections.values()].map(section => HeuteBoardSection.toSnapshot(section));
     }
 
