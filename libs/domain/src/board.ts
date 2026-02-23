@@ -4,12 +4,15 @@ export class HeuteBoard {
     readonly #id: string;
     
     #layoutId: string;
-    #cards: HeuteBoardCard[];
+    #cards: Map<string, HeuteBoardCard> = new Map();
 
     constructor(id: string, props: HeuteBoardProps) {
         this.#id = this.#validateId(id);
         this.#layoutId = this.#validateLayoutId(props.layoutId);
-        this.#cards = this.#normalizeCards(props.cards);
+
+        for (const card of props.cards ?? []) {
+            this.addCard(card);
+        }
     }
 
     //
@@ -29,11 +32,15 @@ export class HeuteBoard {
     }
 
     public addCard(card: HeuteBoardCard) {
-        this.#cards.push(card);
+        if (this.#cards.has(card.id)) {
+            throw new Error("Card already exists in board.");
+        }
+
+        this.#cards.set(card.id, card);
     }
 
     public listCards(): ReadonlyArray<HeuteBoardCard> {
-        return [...this.#cards];
+        return [...this.#cards.values()];
     }
 
     //
@@ -50,10 +57,6 @@ export class HeuteBoard {
             throw new Error("Layout ID is required for board.");
         }
         return layoutId;
-    }
-
-    #normalizeCards(cards?: HeuteBoardCard[]) : HeuteBoardCard[] {
-        return cards ? [...cards] : [];
     }
 }
 
