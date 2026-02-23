@@ -10,6 +10,7 @@ export class HeuteBoard {
     constructor(id: string, props: HeuteBoardProps) {
         this.#id = this.#processId(id);
         this.#layout = this.#processLayout(props.layout);
+        this.addCards(props.cards);
     }
 
     //
@@ -41,6 +42,12 @@ export class HeuteBoard {
 
         const cardEntity = HeuteBoardCard.fromSnapshot(card);
         this.#cards.set(card.id, cardEntity);
+    }
+
+    public addCards(cards: HeuteBoardCardSnapshot[]) {
+        for (const card of cards) {
+            this.addCard(card);
+        }
     }
 
     public listCards(): ReadonlyArray<HeuteBoardCardSnapshot> {
