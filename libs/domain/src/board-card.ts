@@ -67,6 +67,22 @@ export class HeuteBoardCard {
      * @internal
      */
     _place(sectionId: string, position: GridRect) {
+        if (this.isPlaced) {
+            throw new Error("Card is already placed.");
+        }
+        
+        this.sectionId = sectionId;
+        this.position = position;
+    }
+
+    /** 
+     * @internal
+    */
+    _replace(sectionId: string, position: GridRect) {
+        if (this.isPlaceable) {
+            throw new Error("Card is not placed.");
+        }
+
         this.sectionId = sectionId;
         this.position = position;
     }
@@ -75,6 +91,10 @@ export class HeuteBoardCard {
      * @internal
      */
     _unplace() {
+        if (this.isPlaceable) {
+            throw new Error("Card is not placed.");
+        }
+
         this.#sectionId = null;
         this.#position = null;
     }
