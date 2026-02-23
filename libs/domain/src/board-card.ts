@@ -6,9 +6,10 @@ export class HeuteBoardCard {
     #position : GridRect;
     #content : string | undefined;
 
-    constructor(section: HeuteBoardSection, position: GridRect) {
+    constructor(section: HeuteBoardSection, props: HeuteBoardCardProps) {
         this.#section = section;
-        this.#position = position;
+        this.#position = props.position;
+        this.#content = props.content;
     }
 
     public get section(): HeuteBoardSection {
@@ -29,3 +30,10 @@ export class HeuteBoardCard {
 }
 
 export default HeuteBoardCard;
+
+//
+
+export interface HeuteBoardCardProps {
+    position: GridRect;
+    content?: string;
+}
