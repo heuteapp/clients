@@ -10,7 +10,7 @@ export class HeuteBoardSection {
         id: string, 
         props: HeuteBoardSectionProps
     ) {        
-        this.#id = id;
+        this.#id = this.doId(id);
         this.#size = this.doSize(props.size);
         this.#position = this.doPosition(props.position);
         this.#placement = this.doPlacement(props.placement || { horizontal: "center", vertical: "center" });
