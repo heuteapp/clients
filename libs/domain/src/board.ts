@@ -18,7 +18,7 @@ export class HeuteBoard {
     
     //
 
-    public setLayout(layout: HeuteBoardLayout) {
+    public changeLayout(layout: HeuteBoardLayout) {
         this.#layout = HeuteBoardLayout.copy(layout);
     }
 
