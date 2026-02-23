@@ -7,11 +7,11 @@ export class HeuteBoardCard {
     #position : GridRect;
     #title : string | null;
 
-    constructor(id: string, section: HeuteBoardSection, position: GridRect) {
+    constructor(id: string, props: HeuteBoardCardProps) {
         this.#id = id;
-        this.#section = section;
-        this.#position = position;
-        this.#title = null;
+        this.#section = this.doSection(props.section);
+        this.#position = this.doPosition(props.position);
+        this.#title = this.doTitle(props.title);
     }
 
     public getId(): string {
@@ -57,7 +57,7 @@ export class HeuteBoardCard {
     }
 
     public doPosition(position?: GridRect) : GridRect {
-        position = position || { col: -1, row: -1, colSpan: 0, rowSpan: 0 };
+        position = position || { col: 0, row: 0, colSpan: 1, rowSpan: 1 };
 
         const col = Math.max(0, position.col);
         const row = Math.max(0, position.row);
@@ -84,4 +84,6 @@ export default HeuteBoardCard;
 
 export interface HeuteBoardCardProps {
     section: HeuteBoardSection;
+    position: GridRect;
+    title: string | null;
 }
