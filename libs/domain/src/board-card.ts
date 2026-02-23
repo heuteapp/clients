@@ -27,15 +27,15 @@ export class HeuteBoardCard {
 
     //
 
-    public setSection(section: HeuteBoardSection) {
+    public set section(section: HeuteBoardSection) {
         this.#section = section;
     }
 
-    public setPosition(position: GridRect) {
+    public set position(position: GridRect) {
         this.#position = position;
     }
 
-    public setTitle(title: string | undefined) {
+    public set title(title: string | undefined) {
         this.#title = title;
     }
 }
