@@ -50,6 +50,14 @@ export class HeuteBoard {
         }
     }
 
+    public removeCard(cardId: string) {
+        if (!this.#cards.has(cardId)) {
+            throw new Error("Card does not exist in board.");
+        }
+
+        this.#cards.delete(cardId);
+    }
+
     public listCards(): ReadonlyArray<HeuteBoardCardSnapshot> {
         return [...this.#cards.values()].map(card => HeuteBoardCard.toSnapshot(card));
     }
