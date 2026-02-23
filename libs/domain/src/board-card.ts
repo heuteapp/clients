@@ -70,6 +70,14 @@ export class HeuteBoardCard {
         if (this.isPlaced) {
             throw new Error("Card is already placed.");
         }
+
+        if(!sectionId) {
+            throw new Error("Section ID is required to place card.");
+        }
+
+        if(!position) {
+            throw new Error("Position is required to place card.");
+        }
         
         this.sectionId = sectionId;
         this.position = position;
@@ -81,6 +89,14 @@ export class HeuteBoardCard {
     _replace(sectionId: string, position: GridRect) {
         if (this.isPlaceable) {
             throw new Error("Card is not placed.");
+        }
+
+        if(!sectionId) {
+            throw new Error("Section ID is required to replace card.");
+        }
+
+        if(!position) {
+            throw new Error("Position is required to replace card.");
         }
 
         this.sectionId = sectionId;
