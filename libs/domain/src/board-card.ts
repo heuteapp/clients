@@ -2,14 +2,20 @@ import { GridRect } from "@heuteapp/common";
 import { HeuteBoardSection } from "./board-section";
 
 export class HeuteBoardCard {
+    #id : string;
     #section : HeuteBoardSection;
     #position : GridRect;
     #title : string | null;
 
-    constructor(section: HeuteBoardSection, position: GridRect) {
+    constructor(id: string, section: HeuteBoardSection, position: GridRect) {
+        this.#id = id;
         this.#section = section;
         this.#position = position;
         this.#title = null;
+    }
+
+    public getId(): string {
+        return this.#id;
     }
 
     //
@@ -73,3 +79,9 @@ export class HeuteBoardCard {
 }
 
 export default HeuteBoardCard;
+
+//
+
+export interface HeuteBoardCardProps {
+    section: HeuteBoardSection;
+}
