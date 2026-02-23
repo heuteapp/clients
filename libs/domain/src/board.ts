@@ -23,7 +23,7 @@ export class HeuteBoard {
     //
 
     public setLayout(layout: HeuteBoardLayout) {
-        this.#layout = layout;
+        this.#layout = HeuteBoardLayout.copy(layout);
     }
 }
 
