@@ -1,4 +1,4 @@
-import { HeuteBoardCard } from "./board-card";
+import { HeuteBoardCard, HeuteBoardCardSnapshot } from "./board-card";
 
 export class HeuteBoard {
     readonly #id: string;
@@ -57,6 +57,12 @@ export class HeuteBoard {
 }
 
 export default HeuteBoard;
+
+export interface HeuteBoardSnapshot {
+    id: string;
+    layoutId: string;
+    cards: HeuteBoardCardSnapshot[];
+}
 
 export interface HeuteBoardProps {
     layoutId: string;
