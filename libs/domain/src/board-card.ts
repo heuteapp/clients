@@ -8,10 +8,10 @@ export class HeuteBoardCard {
     #title : string | null;
 
     constructor(id: string, props: HeuteBoardCardProps) {
-        this.#id = this.#validateId(id);
-        this.#sectionId = this.#validateSectionId(props.sectionId);
-        this.#position = this.#normalizePosition(props.position);
-        this.#title = this.#normalizeTitle(props.title);
+        this.#id = this.#processId(id);
+        this.#sectionId = this.#processSectionId(props.sectionId);
+        this.#position = this.#processPosition(props.position);
+        this.#title = this.#processTitle(props.title);
 
         this.#syncPlacement();
     }
@@ -37,15 +37,15 @@ export class HeuteBoardCard {
     //
 
     private set sectionId(value: string | null) {
-        this.#sectionId = this.#validateSectionId(value);
+        this.#sectionId = this.#processSectionId(value);
     }
 
     private set position(value: GridRect | null) {
-        this.#position = value ? this.#normalizePosition(value) : null;
+        this.#position = value ? this.#processPosition(value) : null;
     }
 
     private set title(value: string | null) {
-        this.#title = this.#normalizeTitle(value);
+        this.#title = this.#processTitle(value);
     }
 
     //
@@ -114,7 +114,7 @@ export class HeuteBoardCard {
 
     //
 
-    #validateId(id?: string) : string {
+    #processId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board card.");
         }
@@ -122,11 +122,11 @@ export class HeuteBoardCard {
         return id;
     }
 
-    #validateSectionId(sectionId?: string | null) : string | null {
+    #processSectionId(sectionId?: string | null) : string | null {
         return sectionId ?? null;
     }
 
-    #normalizePosition(position?: GridRect | null) : GridRect | null {
+    #processPosition(position?: GridRect | null) : GridRect | null {
         if(!position) return null;
 
         return Object.freeze({ 
@@ -137,7 +137,7 @@ export class HeuteBoardCard {
         });
     }
 
-    #normalizeTitle(title?: string | null) : string | null {
+    #processTitle(title?: string | null) : string | null {
         return title ?? null;
     }
 
