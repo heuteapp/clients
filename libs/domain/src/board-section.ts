@@ -79,19 +79,27 @@ export class HeuteBoardSection {
     }
 
     private normalizeSize(size?: GridSize) : GridSize {
-        return Object.freeze({ 
-            cols: size ? Math.max(1, size.cols) : 1, 
-            rows: size ? Math.max(1, size.rows) : 1 
+        if (!size) {
+            throw new Error("Size is required for board section.");
+        }
+        
+        return Object.freeze({
+            cols: Math.max(1, size.cols),
+            rows: Math.max(1, size.rows)
         });
     }
 
     private normalizePosition(position?: Rect) : Rect {
+        if(!position) {
+            throw new Error("Position is required for board section.");
+        }
+
         return Object.freeze({ 
-            x: position ? position.x : 0, 
-            y: position ? position.y : 0, 
-            width: position ? Math.max(0, position.width) : 0,
-            height: position ? Math.max(0, position.height) : 0
-        });
+            x: Math.max(0, position.x),
+            y: Math.max(0, position.y),
+            width: Math.max(1, position.width),
+            height: Math.max(1, position.height)
+         });
     }
 
     private normalizePlacement(placement?: Placement) : Placement {
