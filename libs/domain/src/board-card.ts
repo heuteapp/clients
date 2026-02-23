@@ -51,20 +51,15 @@ export class HeuteBoardCard {
     /**
      * @internal
      */
-    _move(sectionId: string | null, position: GridRect | null) {
-        if (sectionId) {
-            this.sectionId = sectionId;
-        }
-
-        if (position) {
-            this.position = position;
-        }
+    _place(sectionId: string, position: GridRect) {
+        this.sectionId = sectionId;
+        this.position = position;
     }
 
     /**
      * @internal
      */
-    _moveIdle() {
+    _unplace() {
         this.#sectionId = null;
         this.#position = null;
     }
