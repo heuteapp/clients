@@ -56,16 +56,18 @@ export class HeuteBoardSection {
         this.id = id;
     }
 
-    _setSize(size?: GridSize) {
-        this.size = size;
-    }
+    _redesign(props: Partial<HeuteBoardSectionProps>) {
+        if (props.size) {
+            this.size = props.size;
+        }
 
-    _setPosition(position?: Rect) {
-        this.position = position;
-    }
+        if (props.position) {
+            this.position = props.position;
+        }
 
-    _setPlacement(placement?: Placement) {
-        this.placement = placement;
+        if (props.placement) {
+            this.placement = props.placement;
+        }
     }
 
     //
