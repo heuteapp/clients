@@ -13,10 +13,7 @@ export class HeuteBoardCard {
         this.#position = this.normalizePosition(props.position);
         this.#title = this.normalizeTitle(props.title);
 
-        if(this.#sectionId === null || this.#position === null) {
-            this.#sectionId = null;
-            this.#position = null;
-        }
+        this.#syncPlacement();
     }
 
     //
@@ -143,6 +140,13 @@ export class HeuteBoardCard {
 
     private normalizeTitle(title?: string | null) : string | null {
         return title ?? null;
+    }
+
+    #syncPlacement() {
+        if ((this.#sectionId === null) !== (this.#position === null)) {
+            this.#sectionId = null;
+            this.#position = null;
+        }
     }
 }
 
