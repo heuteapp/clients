@@ -127,9 +127,8 @@ export class HeuteBoardCard {
     }
 
     #normalizePosition(position?: GridRect | null) : GridRect | null {
-        if(!position) {
-            return null;
-        }
+        if(!position) return null;
+        
         return Object.freeze({ 
             col: Math.max(0, position.col),
             row: Math.max(0, position.row),
