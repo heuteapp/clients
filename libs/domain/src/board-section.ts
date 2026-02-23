@@ -56,6 +56,18 @@ export class HeuteBoardSection {
         this.id = id;
     }
 
+    _setSize(size?: GridSize) {
+        this.size = size;
+    }
+
+    _setPosition(position?: Rect) {
+        this.position = position;
+    }
+
+    _setPlacement(placement?: Placement) {
+        this.placement = placement;
+    }
+
     //
 
     private doId(id?: string) : string {
