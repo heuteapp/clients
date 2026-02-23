@@ -10,10 +10,10 @@ export class HeuteBoardSection {
         id: string, 
         props: HeuteBoardSectionProps
     ) {        
-        this.#id = this.validateId(id);
-        this.#size = this.normalizeSize(props.size);
-        this.#position = this.normalizePosition(props.position);
-        this.#placement = this.normalizePlacement(props.placement);
+        this.#id = this.#ensureId(id);
+        this.#size = this.#ensureSize(props.size);
+        this.#position = this.#ensurePosition(props.position);
+        this.#placement = this.#ensurePlacement(props.placement);
     }
 
     public get id() : string {
@@ -35,19 +35,19 @@ export class HeuteBoardSection {
     //
 
     private set id(id: string | undefined) {
-        this.#id = this.validateId(id);
+        this.#id = this.#ensureId(id);
     }
 
     private set size(size: GridSize | undefined) {
-        this.#size = this.normalizeSize(size);
+        this.#size = this.#ensureSize(size);
     }
 
     private set position(position: Rect | undefined) {
-        this.#position = this.normalizePosition(position);
+        this.#position = this.#ensurePosition(position);
     }
 
     private set placement(placement: Placement | undefined) {
-        this.#placement = this.normalizePlacement(placement);
+        this.#placement = this.#ensurePlacement(placement);
     }
 
     //
@@ -70,7 +70,7 @@ export class HeuteBoardSection {
 
     //
 
-    private validateId(id?: string) : string {
+    #ensureId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board section.");
         }
@@ -78,18 +78,18 @@ export class HeuteBoardSection {
         return id;
     }
 
-    private normalizeSize(size?: GridSize) : GridSize {
+    #ensureSize(size?: GridSize) : GridSize {
         if (!size) {
             throw new Error("Size is required for board section.");
         }
-        
+
         return Object.freeze({
             cols: Math.max(1, size.cols),
             rows: Math.max(1, size.rows)
         });
     }
 
-    private normalizePosition(position?: Rect) : Rect {
+    #ensurePosition(position?: Rect) : Rect {
         if(!position) {
             throw new Error("Position is required for board section.");
         }
@@ -102,7 +102,7 @@ export class HeuteBoardSection {
          });
     }
 
-    private normalizePlacement(placement?: Placement) : Placement {
+    #ensurePlacement(placement?: Placement) : Placement {
         const horizontal = placement?.horizontal ?? "center";
         const vertical = placement?.vertical ?? "center";
 
