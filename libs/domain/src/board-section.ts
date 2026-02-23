@@ -73,6 +73,16 @@ export class HeuteBoardSection {
 
         return Object.freeze({ horizontal, vertical });
     }
+
+    //
+
+    public static copy(section: HeuteBoardSection): HeuteBoardSection {
+        return new HeuteBoardSection(section.getId(), {
+            size: section.size,
+            position: section.position,
+            placement: section.placement
+        });
+    }
 }
 
 export default HeuteBoardSection;

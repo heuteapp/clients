@@ -16,6 +16,13 @@ export class HeuteBoardLayout {
     public get sections(): HeuteBoardSection[] {
         return this.#sections;
     }
+
+    //
+
+    public static copy(layout: HeuteBoardLayout): HeuteBoardLayout {
+        const sectionsCopy = layout.sections.map(section => HeuteBoardSection.copy(section));
+        return new HeuteBoardLayout(layout.id, sectionsCopy);
+    }
 }
 
 export default HeuteBoardLayout;
