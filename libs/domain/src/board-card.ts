@@ -2,7 +2,7 @@ import { GridRect } from "@heuteapp/common";
 import { HeuteBoardSection } from "./board-section";
 
 export class HeuteBoardCard {
-    #id : string;
+    readonly #id : string;
     #section : HeuteBoardSection;
     #position : GridRect;
     #title : string | null;
@@ -33,10 +33,6 @@ export class HeuteBoardCard {
     }
 
     //
-
-    private set id(id: string) {
-        this.#id = this.doId(id);
-    }
 
     private set section(section: HeuteBoardSection) {
         this.#section = this.doSection(section);
