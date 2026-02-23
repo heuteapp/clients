@@ -3,6 +3,7 @@ import { HeuteBoardSection } from "./board-section";
 
 export class HeuteBoardCard {
     readonly #id : string;
+    
     #section : HeuteBoardSection;
     #position : GridRect;
     #title : string | null;
