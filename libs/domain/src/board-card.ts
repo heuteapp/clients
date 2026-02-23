@@ -34,25 +34,40 @@ export class HeuteBoardCard {
 
     //
 
-    public set id(id: string) {
+    private set id(id: string) {
         this.#id = this.doId(id);
     }
 
-    public set section(section: HeuteBoardSection) {
+    private set section(section: HeuteBoardSection) {
         this.#section = this.doSection(section);
     }
 
-    public set position(position: GridRect) {
+    private set position(position: GridRect) {
         this.#position = this.doPosition(position);
     }
 
-    public set title(title: string | null) {
+    private set title(title: string | null) {
         this.#title = this.doTitle(title);
     }
 
     //
 
-    public doId(id?: string) : string {
+    /**
+     * @internal
+     */
+    _move(section?: HeuteBoardSection, position?: GridRect) {
+        if (section) {
+            this.section = section;
+        }
+
+        if (position) {
+            this.position = position;
+        }
+    }
+
+    //
+
+    private doId(id?: string) : string {
         if (!id) {
             throw new Error("ID is required for board card.");
         }
@@ -60,7 +75,7 @@ export class HeuteBoardCard {
         return id;
     }
 
-    public doSection(section?: HeuteBoardSection) : HeuteBoardSection {
+    private doSection(section?: HeuteBoardSection) : HeuteBoardSection {
         if (!section) {
             throw new Error("Section is required for board card.");
         }
@@ -68,7 +83,7 @@ export class HeuteBoardCard {
         return section;
     }
 
-    public doPosition(position?: GridRect) : GridRect {
+    private doPosition(position?: GridRect) : GridRect {
         position = position || { col: 0, row: 0, colSpan: 1, rowSpan: 1 };
 
         const col = Math.max(0, position.col);
@@ -83,7 +98,7 @@ export class HeuteBoardCard {
         throw new Error("Position is required for board card.");
     }
 
-    public doTitle(title?: string | null) : string | null {
+    private doTitle(title?: string | null) : string | null {
         title = title || null;
 
         return title;
