@@ -13,14 +13,16 @@ export class HeuteBoardLayout {
         return this.#id;
     }
 
-    public get sections(): HeuteBoardSection[] {
-        return this.#sections;
+    //
+
+    public getSections(): ReadonlyArray<HeuteBoardSection> {
+        return [...this.#sections];
     }
 
     //
 
     public static copy(layout: HeuteBoardLayout): HeuteBoardLayout {
-        const sectionsCopy = layout.sections.map(section => HeuteBoardSection.copy(section));
+        const sectionsCopy = layout.getSections().map(section => HeuteBoardSection.copy(section));
         return new HeuteBoardLayout(layout.id, sectionsCopy);
     }
 }
