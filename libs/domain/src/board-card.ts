@@ -76,6 +76,14 @@ export class HeuteBoardCard {
         this.position = position;
     }
 
+    _move(position: GridRect) {
+        if (!this.isPlaced) {
+            throw new Error("Card must be placed to move.");
+        }
+
+        this.position = position;
+    }
+
     /**
      * @internal
      */
