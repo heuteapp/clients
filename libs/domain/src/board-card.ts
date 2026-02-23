@@ -4,11 +4,12 @@ import { HeuteBoardSection } from "./board-section";
 export class HeuteBoardCard {
     #section : HeuteBoardSection;
     #position : GridRect;
-    #title? : string;
+    #title : string | null;
 
     constructor(section: HeuteBoardSection, position: GridRect) {
         this.#section = section;
         this.#position = position;
+        this.#title = null;
     }
 
     //
@@ -21,7 +22,7 @@ export class HeuteBoardCard {
         return this.#position;
     }
 
-    public get title(): string | undefined {
+    public get title(): string | null {
         return this.#title;
     }
 
@@ -35,7 +36,7 @@ export class HeuteBoardCard {
         this.#position = position;
     }
 
-    public set title(title: string | undefined) {
+    public set title(title: string | null) {
         this.#title = title;
     }
 
@@ -62,6 +63,12 @@ export class HeuteBoardCard {
         }
 
         throw new Error("Position is required for board card.");
+    }
+
+    public doTitle(title?: string | null) : string | null {
+        title = title || null;
+
+        return title;
     }
 }
 
