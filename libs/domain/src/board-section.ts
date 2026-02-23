@@ -114,6 +114,23 @@ export class HeuteBoardSection {
 
     //
 
+    public static toSnapshot(section: HeuteBoardSection): HeuteBoardSectionSnapshot {
+        return {
+            id: section.id,
+            size: { ...section.size },
+            position: { ...section.position },
+            placement: { ...section.placement }
+        };
+    }
+
+    public static fromSnapshot(snapshot: HeuteBoardSectionSnapshot): HeuteBoardSection {
+        return new HeuteBoardSection(snapshot.id, {
+            size: { ...snapshot.size },
+            position: { ...snapshot.position },
+            placement: { ...snapshot.placement }
+        });
+    }
+
     public static copy(section: HeuteBoardSection): HeuteBoardSection {
         const id = section.id;
         const props = {
