@@ -1,4 +1,4 @@
-import { GridRect } from "@heuteapp/common";
+import { GridRect, isGridRectOverlapping } from "@heuteapp/common";
 import { HeuteBoardCard, HeuteBoardCardSnapshot } from "./board-card";
 import { HeuteBoardLayoutSnapshot } from "./board-layout";
 import { HeuteBoardSectionSnapshot } from "./board-section";
@@ -164,13 +164,9 @@ export class HeuteBoard {
             if (!existingCard.isPlaced) continue;
             if (existingCard.sectionId !== section.id) continue;
             if (existingCard.id === card.id) continue;
-            const existingRect = existingCard.position!;
             
-            const isOverlapping =
-                position.col < existingRect.col + existingRect.colSpan &&
-                position.col + position.colSpan > existingRect.col &&
-                position.row < existingRect.row + existingRect.rowSpan &&
-                position.row + position.rowSpan > existingRect.row;
+            const existingRect = existingCard.position!;
+            const isOverlapping = isGridRectOverlapping(existingRect, position);
 
             if (isOverlapping) {
                 return false;
