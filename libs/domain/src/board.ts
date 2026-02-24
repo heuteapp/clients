@@ -1,3 +1,4 @@
+import { GridRect } from "@heuteapp/common";
 import { HeuteBoardCard, HeuteBoardCardSnapshot } from "./board-card";
 import { HeuteBoardLayoutSnapshot } from "./board-layout";
 import { HeuteBoardSectionSnapshot } from "./board-section";
@@ -95,13 +96,45 @@ export class HeuteBoard {
     }
 
     public getSectionCards(sectionId: string): ReadonlyArray<HeuteBoardCardSnapshot> {
-        const section = this.#layout.sections.find(sec => sec.id === sectionId);
-        if (!section) {
+        if (!this.#layout.sections.some(sec => sec.id === sectionId)) {
             throw new Error("Section does not exist in board layout.");
         }
 
         const cardsInSection = [...this.#cards.values()].filter(card => card.sectionId === sectionId);
         return cardsInSection.map(card => HeuteBoardCard.toSnapshot(card));
+    }
+
+    //
+
+    public placeCard(cardId: string, sectionId: string, position: GridRect) {
+        const card = this.#cards.get(cardId);
+        if (!card) {
+            throw new Error("Card does not exist in board.");
+        }
+
+        if (!this.#layout.sections.some(sec => sec.id === sectionId)) {
+            throw new Error("Section does not exist in board layout.");
+        }
+
+        const sectionCards = this.getSectionCards(sectionId);
+        const isOverlapping = sectionCards.some(existingCard => {
+            if (!existingCard.position) {
+                return false;
+            }
+            const existingRect = existingCard.position;
+            return (
+                position.col < existingRect.col + existingRect.colSpan &&
+                position.col + position.colSpan > existingRect.col &&
+                position.row < existingRect.row + existingRect.rowSpan &&
+                position.row + position.rowSpan > existingRect.row
+            );
+        });
+
+        if (isOverlapping) {
+            throw new Error("Card position overlaps with existing card.");
+        }
+
+        card._place(sectionId, position);
     }
 
     //
