@@ -158,14 +158,31 @@ export class HeuteBoard {
         }
         return layout;
     }
+
+    //
+
+    public static fromSnapshot(snapshot: HeuteBoardSnapshot): HeuteBoard {
+        return new HeuteBoard(snapshot.id, {
+            layout: snapshot.layout,
+            cards: snapshot.cards
+        });
+    }
+
+    public static toSnapshot(board: HeuteBoard): HeuteBoardSnapshot {
+        return {
+            id: board.id,
+            layout: board.layout,
+            cards: board.getCards()
+        };
+    }
 }
 
 export default HeuteBoard;
 
 export interface HeuteBoardSnapshot {
-    id: string;
-    layout: HeuteBoardLayoutSnapshot;
-    cards: HeuteBoardCardSnapshot[];
+    readonly id: string;
+    readonly layout: HeuteBoardLayoutSnapshot;
+    readonly cards: readonly HeuteBoardCardSnapshot[];
 }
 
 export type HeuteBoardProps = Omit<HeuteBoardSnapshot, "id">;
