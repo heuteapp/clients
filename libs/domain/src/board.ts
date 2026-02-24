@@ -123,22 +123,21 @@ export class HeuteBoard {
             throw new Error("Section does not exist in board layout.");
         }
 
-        const sectionCards = this.getSectionCards(sectionId);
-        const isOverlapping = sectionCards.some(existingCard => {
-            if (!existingCard.position) {
-                return false;
-            }
-            const existingRect = existingCard.position;
-            return (
+        for (const existingCard of this.#cards.values()) {
+            if (!existingCard.isPlaced) continue;
+            if (existingCard.sectionId !== sectionId) continue;
+
+            const existingRect = existingCard.position!;
+            
+            const isOverlapping =
                 position.col < existingRect.col + existingRect.colSpan &&
                 position.col + position.colSpan > existingRect.col &&
                 position.row < existingRect.row + existingRect.rowSpan &&
-                position.row + position.rowSpan > existingRect.row
-            );
-        });
+                position.row + position.rowSpan > existingRect.row;
 
-        if (isOverlapping) {
-            throw new Error("Card position overlaps with existing card.");
+            if (isOverlapping) {
+                throw new Error("Card position overlaps with existing card.");
+            }
         }
 
         card._place(sectionId, position);
