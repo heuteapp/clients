@@ -68,8 +68,8 @@ export class HeuteBoardLayout {
 export default HeuteBoardLayout;
 
 export interface HeuteBoardLayoutSnapshot {
-    id: string;
-    sections: readonly HeuteBoardSectionSnapshot[];
+    readonly id: string;
+    readonly sections: readonly HeuteBoardSectionSnapshot[];
 }
 
 export type HeuteBoardLayoutProps = Omit<HeuteBoardLayoutSnapshot, "id">;

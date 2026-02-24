@@ -137,10 +137,10 @@ export default HeuteBoardSection;
 //
 
 export interface HeuteBoardSectionSnapshot {
-    id: string;
-    size: GridSize;
-    position: Rect;
-    placement: Placement;
+    readonly id: string;
+    readonly size: GridSize;
+    readonly position: Rect;
+    readonly placement: Placement;
 }
 
 export type HeuteBoardSectionProps = Omit<HeuteBoardSectionSnapshot, "id">;
