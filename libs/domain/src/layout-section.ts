@@ -1,6 +1,6 @@
 import { GridSize, Placement, Rect } from "@heuteapp/common";
 
-export class HeuteBoardSection {
+export class HeuteLayoutSection {
     #id : string;
     #size: GridSize;
     #position : Rect;
@@ -8,7 +8,7 @@ export class HeuteBoardSection {
 
     constructor(
         id: string, 
-        props: HeuteBoardSectionProps
+        props: HeuteLayoutSectionProps
     ) {        
         this.#id = this.#processId(id);
         this.#size = this.#processSize(props.size);
@@ -114,7 +114,7 @@ export class HeuteBoardSection {
 
     //
 
-    public static toSnapshot(section: HeuteBoardSection): HeuteBoardSectionSnapshot {
+    public static toSnapshot(section: HeuteLayoutSection): HeuteLayoutSectionSnapshot {
         return {
             id: section.id,
             size: { ...section.size },
@@ -123,8 +123,8 @@ export class HeuteBoardSection {
         };
     }
 
-    public static fromSnapshot(snapshot: HeuteBoardSectionSnapshot): HeuteBoardSection {
-        return new HeuteBoardSection(snapshot.id, {
+    public static fromSnapshot(snapshot: HeuteLayoutSectionSnapshot): HeuteLayoutSection {
+        return new HeuteLayoutSection(snapshot.id, {
             size: { ...snapshot.size },
             position: { ...snapshot.position },
             placement: { ...snapshot.placement }
@@ -132,15 +132,15 @@ export class HeuteBoardSection {
     }
 }
 
-export default HeuteBoardSection;
+export default HeuteLayoutSection;
 
 //
 
-export interface HeuteBoardSectionSnapshot {
+export interface HeuteLayoutSectionSnapshot {
     readonly id: string;
     readonly size: GridSize;
     readonly position: Rect;
     readonly placement: Placement;
 }
 
-export type HeuteBoardSectionProps = Omit<HeuteBoardSectionSnapshot, "id">;
+export type HeuteLayoutSectionProps = Omit<HeuteLayoutSectionSnapshot, "id">;

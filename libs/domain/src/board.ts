@@ -1,12 +1,12 @@
 import { GridRect, isGridRectOverlapping } from "@heuteapp/common";
 import { HeuteBoardCard, HeuteBoardCardSnapshot } from "./board-card";
-import { HeuteBoardLayoutSnapshot } from "./board-layout";
-import { HeuteBoardSectionSnapshot } from "./board-section";
+import { HeuteLayoutSnapshot } from "./layout";
+import { HeuteLayoutSectionSnapshot } from "./layout-section";
 
 export class HeuteBoard {
     readonly #id: string;
     
-    #layout: HeuteBoardLayoutSnapshot;
+    #layout: HeuteLayoutSnapshot;
     #cards: Map<string, HeuteBoardCard> = new Map();
 
     constructor(id: string, props: HeuteBoardProps) {
@@ -21,13 +21,13 @@ export class HeuteBoard {
         return this.#id;
     }
 
-    public get layout(): HeuteBoardLayoutSnapshot {
+    public get layout(): HeuteLayoutSnapshot {
         return this.#layout;
     }
     
     //
 
-    public changeLayout(layout: HeuteBoardLayoutSnapshot) {
+    public changeLayout(layout: HeuteLayoutSnapshot) {
         this.#layout = this.#processLayout(layout);
 
         for (const card of this.#cards.values()) {
@@ -75,7 +75,7 @@ export class HeuteBoard {
         return HeuteBoardCard.toSnapshot(card);
     }
 
-    public getCardSection(cardId: string): HeuteBoardSectionSnapshot | null {
+    public getCardSection(cardId: string): HeuteLayoutSectionSnapshot | null {
         const card = this.#cards.get(cardId);
         if (!card) {
             throw new Error("Card does not exist in board.");
@@ -146,7 +146,7 @@ export class HeuteBoard {
         return id;
     }
 
-    #processLayout(layout: HeuteBoardLayoutSnapshot | undefined) : HeuteBoardLayoutSnapshot {
+    #processLayout(layout: HeuteLayoutSnapshot | undefined) : HeuteLayoutSnapshot {
         if (!layout) {
             throw new Error("Layout is required for board.");
         }
@@ -155,11 +155,11 @@ export class HeuteBoard {
 
     //
 
-    #placeCard(card: HeuteBoardCard, section: HeuteBoardSectionSnapshot, position: GridRect) {
+    #placeCard(card: HeuteBoardCard, section: HeuteLayoutSectionSnapshot, position: GridRect) {
         card._place(section.id, position);
     }
 
-    #canPlaceCard(card: HeuteBoardCard, section: HeuteBoardSectionSnapshot, position: GridRect): boolean {
+    #canPlaceCard(card: HeuteBoardCard, section: HeuteLayoutSectionSnapshot, position: GridRect): boolean {
         for (const existingCard of this.#cards.values()) {
             if (!existingCard.isPlaced) continue;
             if (existingCard.sectionId !== section.id) continue;
@@ -198,7 +198,7 @@ export default HeuteBoard;
 
 export interface HeuteBoardSnapshot {
     readonly id: string;
-    readonly layout: HeuteBoardLayoutSnapshot;
+    readonly layout: HeuteLayoutSnapshot;
     readonly cards: readonly HeuteBoardCardSnapshot[];
 }
 
