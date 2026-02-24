@@ -115,32 +115,26 @@ export class HeuteBoard {
 
     public placeCard(cardId: string, sectionId: string, position: GridRect) {
         const card = this.#cards.get(cardId);
-        if (!card) {
-            throw new Error("Card does not exist in board.");
+        if (!card) throw new Error("Card does not exist in board.");
+        
+        const section = this.#layout.sections.find(sec => sec.id === sectionId);
+        if (!section) throw new Error("Section does not exist in board layout.");
+
+        if (!this.#canPlaceCard(card, section, position)) {
+            throw new Error("Card cannot be placed at the specified position.");
         }
 
-        if (!this.#layout.sections.some(sec => sec.id === sectionId)) {
-            throw new Error("Section does not exist in board layout.");
-        }
+        this.#placeCard(card, section, position);
+    }
 
-        for (const existingCard of this.#cards.values()) {
-            if (!existingCard.isPlaced) continue;
-            if (existingCard.sectionId !== sectionId) continue;
+    public canPlaceCard(cardId: string, sectionId: string, position: GridRect): boolean {
+        const card = this.#cards.get(cardId);
+        if (!card) throw new Error("Card does not exist in board.");
 
-            const existingRect = existingCard.position!;
-            
-            const isOverlapping =
-                position.col < existingRect.col + existingRect.colSpan &&
-                position.col + position.colSpan > existingRect.col &&
-                position.row < existingRect.row + existingRect.rowSpan &&
-                position.row + position.rowSpan > existingRect.row;
+        const section = this.#layout.sections.find(sec => sec.id === sectionId);
+        if (!section) throw new Error("Section does not exist in board layout.");
 
-            if (isOverlapping) {
-                throw new Error("Card position overlaps with existing card.");
-            }
-        }
-
-        card._place(sectionId, position);
+        return this.#canPlaceCard(card, section, position);
     }
 
     //
@@ -157,6 +151,33 @@ export class HeuteBoard {
             throw new Error("Layout is required for board.");
         }
         return layout;
+    }
+
+    //
+
+    #placeCard(card: HeuteBoardCard, section: HeuteBoardSectionSnapshot, position: GridRect) {
+        card._place(section.id, position);
+    }
+
+    #canPlaceCard(card: HeuteBoardCard, section: HeuteBoardSectionSnapshot, position: GridRect): boolean {
+        for (const existingCard of this.#cards.values()) {
+            if (!existingCard.isPlaced) continue;
+            if (existingCard.sectionId !== section.id) continue;
+            if (existingCard.id === card.id) continue;
+            const existingRect = existingCard.position!;
+            
+            const isOverlapping =
+                position.col < existingRect.col + existingRect.colSpan &&
+                position.col + position.colSpan > existingRect.col &&
+                position.row < existingRect.row + existingRect.rowSpan &&
+                position.row + position.rowSpan > existingRect.row;
+
+            if (isOverlapping) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //
