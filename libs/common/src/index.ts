@@ -12,4 +12,5 @@ export type { Placement } from "./placement";
 export type { UniqueData } from "./uniqueData";
 export type { DataProps } from "./dataProps";
 
+export { isGridRectOverlapping } from "./grid-rect";
 export { createData, createDataWithId } from "./dataProps";
