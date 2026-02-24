@@ -10,5 +10,8 @@
   "keywords": [],
   "author": "k4yr2",
   "license": "MIT",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@heuteapp/domain": "^0.1.6"
+  }
 }

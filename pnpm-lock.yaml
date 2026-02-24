@@ -68,7 +68,11 @@ importers:
         specifier: ^5
         version: 5.9.3
 
-  libs/application: {}
+  libs/application:
+    dependencies:
+      '@heuteapp/domain':
+        specifier: ^0.1.6
+        version: 0.1.6
 
   libs/common: {}
 
@@ -270,6 +274,9 @@ packages:
 
   '@heuteapp/common@0.1.6':
     resolution: {integrity: sha512-+sETaFmeX51k/KFqEbk0/JuZ/0G+Y4c4KUnropFbVx0KU6v/h0YKgzU/LJQcXdwgaei7VWEfDTKuF1Jq1pOv4Q==}
+
+  '@heuteapp/domain@0.1.6':
+    resolution: {integrity: sha512-INY1+zKwnVqm+syBiIOmgdI2eKIXbtThS03Iwt1RQdv+5OGOGQBAr+nrKKfjymhk66UPhWtk5HOyYCu01CK+Gw==}
 
   '@heuteapp/introduction@0.1.1':
     resolution: {integrity: sha512-bu4wnVSKB4to2PBD/rfRknwJcUWNqaaZ/jKGqSh4P95XgCZeAvxclp6zbGbmIsb3Gb5yYGh8NauZDCbvUwn+Jg==}
@@ -2301,6 +2308,10 @@ snapshots:
   '@heuteapp/common@0.1.5': {}
 
   '@heuteapp/common@0.1.6': {}
+
+  '@heuteapp/domain@0.1.6':
+    dependencies:
+      '@heuteapp/common': 0.1.6
 
   '@heuteapp/introduction@0.1.1': {}
 
