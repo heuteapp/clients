@@ -1,1 +1,0 @@
-export { clampNumber } from "./clampNumber";
