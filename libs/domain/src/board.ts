@@ -100,8 +100,15 @@ export class HeuteBoard {
             throw new Error("Section does not exist in board layout.");
         }
 
-        const cardsInSection = [...this.#cards.values()].filter(card => card.sectionId === sectionId);
-        return cardsInSection.map(card => HeuteBoardCard.toSnapshot(card));
+        const result: HeuteBoardCardSnapshot[] = [];
+
+        for (const card of this.#cards.values()) {
+            if (card.sectionId === sectionId) {
+                result.push(HeuteBoardCard.toSnapshot(card));
+            }
+        }
+
+        return result;
     }
 
     //
