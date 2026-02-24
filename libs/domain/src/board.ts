@@ -5,12 +5,14 @@ import { HeuteLayoutSectionSnapshot } from "./layout-section";
 
 export class HeuteBoard {
     readonly #id: string;
+    readonly #ownerId: string;
     
     #layout: HeuteLayoutSnapshot;
     #cards: Map<string, HeuteBoardCard> = new Map();
 
     constructor(id: string, props: HeuteBoardProps) {
         this.#id = this.#processId(id);
+        this.#ownerId = this.#processOwnerId(props.ownerId);
         this.#layout = this.#processLayout(props.layout);
         this.addCards(props.cards);
     }
@@ -19,6 +21,10 @@ export class HeuteBoard {
 
     public get id() : string {
         return this.#id;
+    }
+
+    public get ownerId() : string {
+        return this.#ownerId;
     }
 
     public get layout(): HeuteLayoutSnapshot {
@@ -146,6 +152,13 @@ export class HeuteBoard {
         return id;
     }
 
+    #processOwnerId(ownerId: string | undefined) : string {
+        if (!ownerId) {
+            throw new Error("Board owner ID is required.");
+        }
+        return ownerId;
+    }
+
     #processLayout(layout: HeuteLayoutSnapshot | undefined) : HeuteLayoutSnapshot {
         if (!layout) {
             throw new Error("Layout is required for board.");
@@ -180,6 +193,7 @@ export class HeuteBoard {
 
     public static fromSnapshot(snapshot: HeuteBoardSnapshot): HeuteBoard {
         return new HeuteBoard(snapshot.id, {
+            ownerId: snapshot.ownerId,
             layout: snapshot.layout,
             cards: snapshot.cards
         });
@@ -188,6 +202,7 @@ export class HeuteBoard {
     public static toSnapshot(board: HeuteBoard): HeuteBoardSnapshot {
         return {
             id: board.id,
+            ownerId: board.ownerId, 
             layout: board.layout,
             cards: board.getCards()
         };
@@ -198,6 +213,7 @@ export default HeuteBoard;
 
 export interface HeuteBoardSnapshot {
     readonly id: string;
+    readonly ownerId: string;
     readonly layout: HeuteLayoutSnapshot;
     readonly cards: readonly HeuteBoardCardSnapshot[];
 }
