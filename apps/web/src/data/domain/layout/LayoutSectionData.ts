@@ -5,4 +5,4 @@ export interface LayoutSectionData {
     rowSpan: number
 }
 
-export default LayoutSectionData
+export default LayoutSectionData;
