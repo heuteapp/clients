@@ -1,7 +1,7 @@
 "use client"
 
-import style from "@/src/styles/domain/board/HeuteBoard.module.css"
-import HeuteLayout from "@/src/components/domain/layout/HeuteLayout";
+import style from "@/src/styles/domain/HeuteBoard.module.css"
+import HeuteLayout from "@/src/components/domain/HeuteLayout";
 
 //
 

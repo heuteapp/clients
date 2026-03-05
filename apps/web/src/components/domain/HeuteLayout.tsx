@@ -1,6 +1,6 @@
 "use client"
 
-import style from "@/src/styles/domain/layout/HeuteLayout.module.css"
+import style from "@/src/styles/domain/HeuteLayout.module.css"
 
 //
 
