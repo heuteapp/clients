@@ -1,4 +1,5 @@
 "use client"
+import HeuteBoard from "@/src/components/domain/board/HeuteBoard";
 import { Params } from "next/dist/server/request/params";
 import { useParams, redirect } from "next/navigation"
 
@@ -22,8 +23,7 @@ export default function BoardPage() {
 
     return (
         <div style={{ padding: 24 }}>
-        <h1>Board: {params.category}</h1>
-        <p>Date: {finalDate.toISOString().split("T")[0]}</p>
+            <HeuteBoard category={params.category} date={finalDate} />
         </div>
     )
 }
