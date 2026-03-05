@@ -1,9 +1,20 @@
 .layout {
     background-color: #8d3c3c;
+    width: 100%;
+    height: 100%;
     position: relative;
+
 }
 
 .layoutSection {
     position: absolute;
     background-color: #3c4f8d;
+    display: grid;
+    gap: 4px;
+    padding: 4px;
+}
+
+.layoutSection > * {
+    background-color: rgb(84, 113, 54);
+    border: 1px solid #000000;
 }
