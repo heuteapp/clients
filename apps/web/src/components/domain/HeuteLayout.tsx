@@ -1,7 +1,7 @@
 "use client"
 
 import style from "@/src/styles/domain/HeuteLayout.module.css"
-import { useMemo, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface HeuteLayoutProps {
   columns: number
@@ -14,17 +14,28 @@ export default function HeuteLayout({
   rows,
   sections,
 }: HeuteLayoutProps) {
+
   const containerRef = useRef<HTMLDivElement>(null)
+  const [squareSize, setSquareSize] = useState(0)
 
-  const squareSize = useMemo(() => {
-    if (!containerRef.current) return 0
+  useEffect(() => {
+    const element = containerRef.current
+    if (!element) return
 
-    const { clientWidth, clientHeight } = containerRef.current
+    const observer = new ResizeObserver(() => {
+      const { clientWidth, clientHeight } = element
 
-    return Math.min(
-      clientWidth / columns,
-      clientHeight / rows
-    )
+      setSquareSize(
+        Math.min(
+          clientWidth / columns,
+          clientHeight / rows
+        )
+      )
+    })
+
+    observer.observe(element)
+
+    return () => observer.disconnect()
   }, [columns, rows])
 
   return (
@@ -66,8 +77,8 @@ function LayoutSection({
         position: "absolute",
         left: (colIndex -1)* squareSize,
         top: (rowIndex -1)* squareSize,
-        width: (colSpan * squareSize) - 8,
-        height: (rowSpan * squareSize) - 8,
+        width: (colSpan * squareSize) - 16,
+        height: (rowSpan * squareSize) - 16,
         gridTemplateColumns: `repeat(${colSpan}, 1fr)`,
         gridTemplateRows: `repeat(${rowSpan}, 1fr)`,
       }}

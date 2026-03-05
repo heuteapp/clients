@@ -10,8 +10,8 @@
     position: absolute;
     background-color: #3c4f8d;
     display: grid;
-    gap: 4px;
-    padding: 4px;
+    gap: 8px;
+    padding: 8px;
 }
 
 .layoutSection > * {

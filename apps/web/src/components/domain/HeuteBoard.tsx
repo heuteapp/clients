@@ -16,13 +16,18 @@ export default function HeuteBoard({ category, date }: HeuteBoardProps) {
       <HeuteLayout columns={18} rows={8} sections={[{
         colIndex: 1,
         rowIndex: 1,
-        colSpan: 18,
+        colSpan: 13,
         rowSpan: 4
       }, {
         colIndex: 1,
         rowIndex: 5,
-        colSpan: 18,
+        colSpan: 13,
         rowSpan: 4
+      }, {
+        colIndex: 14,
+        rowIndex: 1,
+        colSpan: 5,
+        rowSpan: 8
       }]} />
     </div>
   )
