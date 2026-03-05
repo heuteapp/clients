@@ -70,8 +70,11 @@ function LayoutSection({
   colSpan,
   rowSpan,
 }: LayoutSectionProps) {
+  const ref = useRef<HTMLDivElement>(null)
+
   return (
     <div
+      ref={ref}
       className={style.layoutSection}
       style={{
         position: "absolute",
@@ -81,6 +84,16 @@ function LayoutSection({
         height: (rowSpan * squareSize) - 16,
         gridTemplateColumns: `repeat(${colSpan}, 1fr)`,
         gridTemplateRows: `repeat(${rowSpan}, 1fr)`,
+      }}
+      onMouseEnter={() => {
+        if (ref.current) {
+          ref.current.classList.add(style.highlighted)
+        }
+      }}
+      onMouseLeave={() => {
+        if (ref.current) {
+          ref.current.classList.remove(style.highlighted)
+        }
       }}
     >
       {// do grid items
