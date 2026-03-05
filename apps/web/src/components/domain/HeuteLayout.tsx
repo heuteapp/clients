@@ -28,15 +28,19 @@ export default function HeuteLayout({
     const observer = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = element
 
-      setSquareSize({
-        full:         Math.min(
-          (clientWidth - (padding * 0)) / columnCount,
-          (clientHeight - (padding * 0)) / rowCount
-        ),
-        inner: Math.min(
-          (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
-          (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
-        )
+      const full = Math.min(
+        clientWidth / columnCount,
+        clientHeight / rowCount
+      )
+
+      const inner = Math.min(
+        (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
+        (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
+      )
+
+      setSquareSize(prev => {
+        if (prev.full === full && prev.inner === inner) return prev
+        return { full, inner }
       })
     })
 
@@ -47,15 +51,20 @@ export default function HeuteLayout({
 
   return (
     <div ref={containerRef} className={style.layout}>
-      {containerRef.current &&
-        sections.map((section, index) => (
-          <LayoutSection
-            key={index}
-            squareSize={squareSize}
-            analyze={analyze}
-            {...section}
-          />
-        ))}
+      <div className={style.container} style={{
+        width: (squareSize.full * columnCount),
+        height: (squareSize.full * rowCount),
+      }}>
+        {containerRef.current &&
+          sections.map((section, index) => (
+            <LayoutSection
+              key={index}
+              squareSize={squareSize}
+              analyze={analyze}
+              {...section}
+            />
+          ))}
+      </div>
     </div>
   )
 }
