@@ -1,17 +1,16 @@
 "use client"
 
+import HeuteLayoutData from "@/src/data/domain/layout/HeuteLayoutData"
 import style from "@/src/styles/domain/HeuteLayout.module.css"
 import { useEffect, useRef, useState } from "react"
 
-interface HeuteLayoutProps {
-  columns: number
-  rows: number
-  sections: LayoutSectionData[]
+interface HeuteLayoutProps extends HeuteLayoutData {
+  
 }
 
 export default function HeuteLayout({
-  columns,
-  rows,
+  columnCount,
+  rowCount,
   sections,
 }: HeuteLayoutProps) {
 
@@ -27,8 +26,8 @@ export default function HeuteLayout({
 
       setSquareSize(
         Math.min(
-          clientWidth / columns,
-          clientHeight / rows
+          clientWidth / columnCount,
+          clientHeight / rowCount
         )
       )
     })
@@ -36,7 +35,7 @@ export default function HeuteLayout({
     observer.observe(element)
 
     return () => observer.disconnect()
-  }, [columns, rows])
+  }, [columnCount, rowCount])
 
   return (
     <div ref={containerRef} className={style.layout}>
