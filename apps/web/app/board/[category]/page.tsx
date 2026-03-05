@@ -1,7 +1,11 @@
 "use client"
-import HeuteBoard from "@/src/components/domain/board/HeuteBoard"
+
 import { Params } from "next/dist/server/request/params";
 import { useParams } from "next/navigation";
+
+import HeuteBoard from "@/src/components/domain/board/HeuteBoard"
+
+//
 
 export default function BoardTodayPage(){
     const params = useParams<BoardTodayPageParams>();
