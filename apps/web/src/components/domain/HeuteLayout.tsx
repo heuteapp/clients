@@ -6,13 +6,21 @@ import { forwardRef } from "react"
 //
 
 interface HeuteLayoutProps {
-
+  sections: LayoutSectionProps[];
 }
 
-export default function HeuteLayout({  }: HeuteLayoutProps) {
+export default function HeuteLayout({ sections }: HeuteLayoutProps) {
   return (
     <div className={style.layout}>
-
+      {sections.map((section, index) => (
+        <LayoutSection
+          key={index}
+          colIndex={section.colIndex}
+          rowIndex={section.rowIndex}
+          colSpan={section.colSpan}
+          rowSpan={section.rowSpan}
+        />
+      ))}
     </div>
   )
 }
