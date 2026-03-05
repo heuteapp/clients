@@ -79,7 +79,7 @@ function LayoutSection({
   return (
     <div
       ref={ref}
-      className={style.layoutSection}
+      className={style.section}
       style={{
         position: "absolute",
         left: (colIndex -1)* squareSize,

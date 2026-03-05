@@ -6,7 +6,9 @@
 
 }
 
-.layoutSection {
+.layout .section {
+    align-items: center;
+    justify-content: center;
     position: absolute;
     background-color: #3c4f8d;
     display: grid;
@@ -14,11 +16,11 @@
     padding: 8px;
 }
 
-.layoutSection.highlighted {
+.layout .section.highlighted {
     background-color: #8d3c8d;
 }
 
-.layoutSection > * {
+.layout .section > * {
     background-color: rgb(84, 113, 54);
     border: 1px solid #000000;
 }
