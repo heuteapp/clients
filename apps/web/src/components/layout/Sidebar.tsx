@@ -1,6 +1,8 @@
+import style from '@/src/styles/layout/Sidebar.module.css';
+
 function Sidebar() {
   return (
-    <div>
+    <div className={style.sidebar}>
         
     </div>
   )
