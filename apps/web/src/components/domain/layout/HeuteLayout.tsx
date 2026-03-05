@@ -1,5 +1,7 @@
 "use client"
 
+import style from "@/src/styles/domain/layout/HeuteLayout.module.css"
+
 //
 
 interface HeuteLayoutProps {
@@ -8,8 +10,8 @@ interface HeuteLayoutProps {
 
 export default function HeuteLayout({  }: HeuteLayoutProps) {
   return (
-    <div>
-        
+    <div className={style.layout}>
+
     </div>
   )
 }
