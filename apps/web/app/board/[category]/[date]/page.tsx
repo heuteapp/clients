@@ -1,6 +1,6 @@
 "use client"
 import { Params } from "next/dist/server/request/params";
-import { notFound, useParams } from "next/navigation"
+import { useParams, redirect } from "next/navigation"
 
 export default function BoardPage() {
     const params = useParams<BoardPageParams>();
@@ -11,7 +11,7 @@ export default function BoardPage() {
         const parsedDate = parseYYMMDD(params.date);
 
         if (!parsedDate) {
-            return notFound();
+          redirect("/board/" + params.category);
         }
 
         finalDate = parsedDate;
