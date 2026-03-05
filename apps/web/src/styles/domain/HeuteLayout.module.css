@@ -19,6 +19,7 @@
     background-color: #3c4f8d;
     align-content: center;
     justify-items: center;
+    transition: background-color 0.2s ease;
 }
 
 .layout .section.highlighted {
@@ -29,11 +30,13 @@
     display: grid;
     align-items: center;
     justify-items: center;
-    border: 1px solid #000000;
+    border: 2px solid #000000;
+    border-radius: 4px;
     overflow: none;
 }
 
 .layout .section .container .item {
     background-color: rgb(84, 113, 54);
     border: 1px solid #000000;
+    border-radius: 4px;
 }

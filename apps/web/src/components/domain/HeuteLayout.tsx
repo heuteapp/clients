@@ -28,14 +28,15 @@ export default function HeuteLayout({
     const observer = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = element
 
-      const full = Math.min(
-        clientWidth / columnCount,
-        clientHeight / rowCount
+      const full = Math.floor(
+        Math.min(clientWidth / columnCount, clientHeight / rowCount)
       )
 
-      const inner = Math.min(
-        (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
-        (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
+      const inner = Math.floor(
+        Math.min(
+          (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
+          (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
+        )
       )
 
       setSquareSize(prev => {
@@ -123,8 +124,8 @@ function LayoutSection({
             <div key={i} 
               className={style.item} 
                 style={{
-                  width: squareSize.inner * 0.6,
-                  height: squareSize.inner * 0.6,
+                  width: squareSize.inner * 0.9,
+                  height: squareSize.inner * 0.9,
                 }}
             >
               {squareSize.full.toFixed(1)}x{squareSize.inner.toFixed(1)}
