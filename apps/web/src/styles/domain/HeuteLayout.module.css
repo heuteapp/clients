@@ -1,3 +1,9 @@
 .layout {
     background-color: #8d3c3c;
+    position: relative;
+}
+
+.layoutSection {
+    position: absolute;
+    background-color: #3c4f8d;
 }
