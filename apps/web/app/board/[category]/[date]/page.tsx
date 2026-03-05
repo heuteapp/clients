@@ -22,9 +22,9 @@ export default function BoardPage() {
     }
 
     return (
-        <div style={{ padding: 24 }}>
+        <>
             <HeuteBoard category={params.category} date={finalDate} />
-        </div>
+        </>
     )
 }
 
