@@ -1,5 +1,7 @@
 "use client"
 
+const padding = 8;
+
 import HeuteLayoutData from "@/src/data/domain/layout/HeuteLayoutData"
 import style from "@/src/styles/domain/HeuteLayout.module.css"
 import { analyzeLayout } from "@/src/utils"
@@ -16,7 +18,7 @@ export default function HeuteLayout({
 }: HeuteLayoutProps) {
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const [squareSize, setSquareSize] = useState(0);
+  const [squareSize, setSquareSize] = useState<{ full: number, inner: number }>({ full: 0, inner: 0 });
   const analyze = analyzeLayout(sections);
 
   useEffect(() => {
@@ -26,12 +28,16 @@ export default function HeuteLayout({
     const observer = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = element
 
-      setSquareSize(
-        Math.min(
-          (clientWidth + (analyze.maxHorizontal * 16)) / columnCount,
-          (clientHeight + (analyze.maxVertical * 16)) / rowCount
+      setSquareSize({
+        full:         Math.min(
+          (clientWidth) / columnCount,
+          (clientHeight) / rowCount
+        ),
+        inner: Math.min(
+          (clientWidth - ((analyze.maxHorizontal + 1) * padding * 2)) / columnCount,
+          (clientHeight - ((analyze.maxVertical + 1) * padding * 2)) / rowCount
         )
-      )
+      })
     })
 
     observer.observe(element)
@@ -41,7 +47,7 @@ export default function HeuteLayout({
 
   return (
     <div ref={containerRef} className={style.layout}>
-      {squareSize > 0 &&
+      {containerRef.current &&
         sections.map((section, index) => (
           <LayoutSection
             key={index}
@@ -63,7 +69,7 @@ interface LayoutSectionData {
 
 interface LayoutSectionProps extends LayoutSectionData {
   analyze: ReturnType<typeof analyzeLayout>
-  squareSize: number
+  squareSize: { full: number, inner: number }
 }
 
 function LayoutSection({
@@ -82,12 +88,11 @@ function LayoutSection({
       className={style.section}
       style={{
         position: "absolute",
-        left: (colIndex -1)* squareSize,
-        top: (rowIndex -1)* squareSize,
-        width: (colSpan * squareSize) - 16,
-        height: (rowSpan * squareSize) - 16,
-        gridTemplateColumns: `repeat(${colSpan}, 1fr)`,
-        gridTemplateRows: `repeat(${rowSpan}, 1fr)`,
+        left: (colIndex -1)* squareSize.full,
+        top: (rowIndex -1)* squareSize.full,
+        width: (colSpan * squareSize.full) - (padding * 2),
+        height: (rowSpan * squareSize.full) - (padding * 2),
+        padding: padding,
       }}
       onMouseEnter={() => {
         if (ref.current) {
@@ -100,17 +105,27 @@ function LayoutSection({
         }
       }}
     >
-      {// do grid items
-        Array.from({ length: colSpan * rowSpan }, (_, i) => (
-          <div key={i} 
-            className={style.layoutSectionItem} 
-              style={{
-                width: squareSize - 16,
-                height: squareSize - 16,
-              }}
-            />
-        ))
-      }
+      <div className={style.container} style={{
+        width: (colSpan * (squareSize.inner)),
+        height: (rowSpan * (squareSize.inner)),
+        gridTemplateColumns: `repeat(${colSpan}, 1fr)`,
+        gridTemplateRows: `repeat(${rowSpan}, 1fr)`,
+      }}>
+        {
+          Array.from({ length: colSpan * rowSpan }, (_, i) => (
+            <div key={i} 
+              className={style.item} 
+                style={{
+                  width: squareSize.inner - (padding * 2),
+                  height: squareSize.inner - (padding * 2),
+                }}
+            >
+              {squareSize.full.toFixed(1)}x{squareSize.inner.toFixed(1)}
+            </div>
+          ))
+        }
+      </div>
+
     </div>
   )
 }

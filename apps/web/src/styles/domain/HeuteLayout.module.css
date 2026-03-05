@@ -7,20 +7,23 @@
 }
 
 .layout .section {
-    align-items: center;
-    justify-content: center;
     position: absolute;
     background-color: #3c4f8d;
-    display: grid;
-    gap: 8px;
-    padding: 8px;
+    align-content: center;
+    justify-items: center;
 }
 
 .layout .section.highlighted {
     background-color: #8d3c8d;
 }
 
-.layout .section > * {
+.layout .section .container {
+    display: grid;
+        align-items: center;
+        justify-items: center;
+}
+
+.layout .section .container .item {
     background-color: rgb(84, 113, 54);
     border: 1px solid #000000;
 }
