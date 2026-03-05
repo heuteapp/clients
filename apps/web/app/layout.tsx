@@ -1,5 +1,4 @@
-import Monitor from "@/src/components/layout/Monitor";
-import Sidebar from "@/src/components/layout/Sidebar";
+import Panel from "@/src/components/layout/Panel";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -28,10 +27,9 @@ export default function RootLayout({
       <body
         style={{ display: "flex", flexDirection: "row" }}
       >
-        <Sidebar />
-        <Monitor>
+        <Panel>
           {children}
-        </Monitor>
+        </Panel>
       </body>
     </html>
   );
