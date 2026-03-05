@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        style={{ display: "flex", flexDirection: "row" }}
-      >
+      <body>
         <Panel>
           {children}
         </Panel>
