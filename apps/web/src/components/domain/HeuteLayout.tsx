@@ -2,6 +2,7 @@
 
 import HeuteLayoutData from "@/src/data/domain/layout/HeuteLayoutData"
 import style from "@/src/styles/domain/HeuteLayout.module.css"
+import { analyzeLayout } from "@/src/utils"
 import { useEffect, useRef, useState } from "react"
 
 interface HeuteLayoutProps extends HeuteLayoutData {
@@ -15,7 +16,8 @@ export default function HeuteLayout({
 }: HeuteLayoutProps) {
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const [squareSize, setSquareSize] = useState(0)
+  const [squareSize, setSquareSize] = useState(0);
+  const analyze = analyzeLayout(sections);
 
   useEffect(() => {
     const element = containerRef.current
@@ -26,8 +28,8 @@ export default function HeuteLayout({
 
       setSquareSize(
         Math.min(
-          clientWidth / columnCount,
-          clientHeight / rowCount
+          (clientWidth + (analyze.maxHorizontal * 16)) / columnCount,
+          (clientHeight + (analyze.maxVertical * 16)) / rowCount
         )
       )
     })
@@ -44,6 +46,7 @@ export default function HeuteLayout({
           <LayoutSection
             key={index}
             squareSize={squareSize}
+            analyze={analyze}
             {...section}
           />
         ))}
@@ -59,6 +62,7 @@ interface LayoutSectionData {
 }
 
 interface LayoutSectionProps extends LayoutSectionData {
+  analyze: ReturnType<typeof analyzeLayout>
   squareSize: number
 }
 
@@ -68,6 +72,7 @@ function LayoutSection({
   rowIndex,
   colSpan,
   rowSpan,
+  analyze
 }: LayoutSectionProps) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -97,7 +102,13 @@ function LayoutSection({
     >
       {// do grid items
         Array.from({ length: colSpan * rowSpan }, (_, i) => (
-          <div key={i} className={style.layoutSectionItem} />
+          <div key={i} 
+            className={style.layoutSectionItem} 
+              style={{
+                width: squareSize - 16,
+                height: squareSize - 16,
+              }}
+            />
         ))
       }
     </div>

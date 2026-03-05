@@ -13,7 +13,7 @@ interface HeuteBoardProps {
 export default function HeuteBoard({ category, date }: HeuteBoardProps) {
   return (
     <div className={style.board}>
-      <HeuteLayout columns={18} rows={8} sections={[{
+      <HeuteLayout columnCount={18} rowCount={8} sections={[{
         colIndex: 1,
         rowIndex: 1,
         colSpan: 12,
