@@ -1,3 +1,4 @@
+"use client";
 import style from '@/src/styles/layout/Monitor.module.css';
 
 interface MonitorProps {
