@@ -30,12 +30,12 @@ export default function HeuteLayout({
 
       setSquareSize({
         full:         Math.min(
-          (clientWidth) / columnCount,
-          (clientHeight) / rowCount
+          (clientWidth - (padding * 0)) / columnCount,
+          (clientHeight - (padding * 0)) / rowCount
         ),
         inner: Math.min(
-          (clientWidth - ((analyze.maxHorizontal + 1) * padding * 2)) / columnCount,
-          (clientHeight - ((analyze.maxVertical + 1) * padding * 2)) / rowCount
+          (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
+          (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
         )
       })
     })
@@ -106,18 +106,16 @@ function LayoutSection({
       }}
     >
       <div className={style.container} style={{
-        width: (colSpan * (squareSize.inner)),
-        height: (rowSpan * (squareSize.inner)),
-        gridTemplateColumns: `repeat(${colSpan}, 1fr)`,
-        gridTemplateRows: `repeat(${rowSpan}, 1fr)`,
+        gridTemplateColumns: `repeat(${colSpan}, ${squareSize.inner}px)`,
+        gridTemplateRows: `repeat(${rowSpan}, ${squareSize.inner}px)`,
       }}>
         {
           Array.from({ length: colSpan * rowSpan }, (_, i) => (
             <div key={i} 
               className={style.item} 
                 style={{
-                  width: squareSize.inner - (padding * 2),
-                  height: squareSize.inner - (padding * 2),
+                  width: squareSize.inner * 0.6,
+                  height: squareSize.inner * 0.6,
                 }}
             >
               {squareSize.full.toFixed(1)}x{squareSize.inner.toFixed(1)}
