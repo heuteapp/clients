@@ -1,3 +1,5 @@
+import Monitor from "@/src/components/layout/Monitor";
+import Sidebar from "@/src/components/layout/Sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -26,7 +28,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Sidebar />
+        <Monitor>
+          {children}
+        </Monitor>
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import style from '@/src/styles/layout/Panel.module.css';
+import style from '@/src/styles/layout/Monitor.module.css';
 
 interface MonitorProps {
     children: React.ReactNode;
