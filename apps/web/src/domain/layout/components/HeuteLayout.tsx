@@ -2,13 +2,13 @@
 
 const padding = 12;
 
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 
 import style from "../layout.module.css"
 
 import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
-import { useLayoutMeasurements } from "../layout.hooks";
+import { useLayoutMeasurements, useLayoutRegistry } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
 
@@ -21,6 +21,8 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   const rootRef = useRef<HTMLDivElement>(null)
   const analyze = analyzeLayout(sections);
 
+  const registry = useLayoutRegistry()
+
   const measurements = useLayoutMeasurements({
     containerRef: rootRef,
     columnCount,
@@ -29,13 +31,21 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
     padding
   })
 
-  console.log("render layout", { measurements })
+  const contextValue = useMemo(
+    () => ({
+      rootRef,
+      analyze,
+      measurements,
+      registry,
+    }),
+    [analyze, measurements, registry]
+  )
 
   return (
     <div ref={rootRef} className={style.layout} style={{
       visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
     }}>
-      <HeuteLayoutContext.Provider value={{ rootRef, analyze, measurements }}>
+      <HeuteLayoutContext.Provider value={contextValue}>
         <LayoutSectionContainer sections={sections} />
       </HeuteLayoutContext.Provider>
     </div>
