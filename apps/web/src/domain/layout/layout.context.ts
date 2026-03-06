@@ -5,6 +5,7 @@ export const HeuteLayoutContext = createContext<LayoutContext | null>(null);
 
 export interface LayoutContext {
   rootRef: React.RefObject<HTMLDivElement | null>
+  registry: LayoutRegistry
   analyze: LayoutAnalyze
   measurements: LayoutMeasurements
 }
