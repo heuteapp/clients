@@ -3,7 +3,7 @@
 import { Params } from "next/dist/server/request/params";
 import { useParams } from "next/navigation";
 
-import HeuteBoard from "@/src/components/domain/HeuteBoard"
+import HeuteBoard from "@/src/domain/board/components/HeuteBoard"
 
 //
 
