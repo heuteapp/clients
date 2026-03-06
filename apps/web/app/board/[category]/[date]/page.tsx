@@ -4,7 +4,7 @@ import { Params } from "next/dist/server/request/params";
 import { useParams, redirect } from "next/navigation"
 
 import HeuteBoard from "@/src/domain/board/components/HeuteBoard";
-import { parseYYMMDD } from "@/src/utils";
+import { parseYYMMDD } from "@/src/domain/board/board.utils";
 
 //
 

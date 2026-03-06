@@ -1,4 +1,4 @@
-export default function parseYYMMDD(date: string): Date | null {
+export function parseYYMMDD(date: string): Date | null {
     if (!/^\d{6}$/.test(date)) return null
 
     const year = 2000 + Number(date.slice(0, 2))
