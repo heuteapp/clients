@@ -30,13 +30,16 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
     padding
   })
 
+  console.log("render layout", { measurements })
+
   return (
     <div ref={rootRef} className={style.layout} style={{
-      display: rootRef.current ? "flex" : "none"
+      visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
     }}>
       <HeuteLayoutContext.Provider value={{ rootRef, analyze, measurements }}>
         <LayoutContainer sections={sections} />
       </HeuteLayoutContext.Provider>
+      <div>{measurements.containerSize.width}</div>
     </div>
   )
 }
