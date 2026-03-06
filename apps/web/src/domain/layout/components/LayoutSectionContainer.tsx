@@ -1,12 +1,11 @@
-import { useContext, useRef } from "react"
 import style from "../layout.module.css"
 
-import { HeuteLayoutContext } from "../layout.context";
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionData } from "../layout.types";
+import { useLayoutContext } from "../layout.hooks";
 
 function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
-    const context = useContext(HeuteLayoutContext);
+    const context = useLayoutContext();
 
     const { rootRef, measurements } = context!;
 

@@ -5,7 +5,7 @@ import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
 
 //
 
-export function useHeuteLayout() {
+export function useLayoutContext() {
     const ctx = useContext(HeuteLayoutContext)
 
     if (!ctx) {

@@ -1,10 +1,9 @@
-import { useContext } from "react"
 import style from "../layout.module.css"
 
-import { HeuteLayoutContext } from "../layout.context";
+import { useLayoutContext } from "../layout.hooks";
 
 function LayoutGridCell(props : LayoutGridCellProps) {
-    const context = useContext(HeuteLayoutContext);
+    const context = useLayoutContext();
 
     const { measurements } = context!;
 
