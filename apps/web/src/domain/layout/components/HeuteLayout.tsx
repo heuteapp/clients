@@ -9,7 +9,7 @@ import style from "../layout.module.css"
 import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
 import LayoutSection from "./LayoutSection";
-import { useLayoutSize } from "../layout.hooks";
+import { useLayoutMeasurements } from "../layout.hooks";
 
 interface HeuteLayoutProps extends HeuteLayoutData {
   
@@ -20,7 +20,7 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   const containerRef = useRef<HTMLDivElement>(null)
   const analyze = analyzeLayout(sections);
 
-  const squareSize = useLayoutSize({
+  const { cellSize } = useLayoutMeasurements({
     containerRef,
     columnCount,
     rowCount,
@@ -31,14 +31,14 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   return (
     <div ref={containerRef} className={style.layout}>
       <div className={style.container} style={{
-        width: (squareSize.full * columnCount),
-        height: (squareSize.full * rowCount),
+        width: (cellSize.full * columnCount),
+        height: (cellSize.full * rowCount),
       }}>
         {containerRef.current &&
           sections.map((section, index) => (
             <LayoutSection
               key={index}
-              squareSize={squareSize}
+              squareSize={cellSize}
               padding={padding}
               {...section}
             />

@@ -17,3 +17,18 @@ export interface HeuteLayoutAnalyze {
   maxHorizontal: number
   maxVertical: number
 }
+
+export interface LayoutMeasurements {
+  cellSize: {
+    full: number,
+    inner: number
+  }
+}
+
+export interface LayoutMeasurementsParams {
+  containerRef: React.RefObject<HTMLDivElement | null>
+  columnCount: number
+  rowCount: number
+  analyze: HeuteLayoutAnalyze
+  padding: number
+}

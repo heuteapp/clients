@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 
 import { HeuteLayoutContext } from "./layout.context";
-import { HeuteLayoutAnalyze } from "./layout.types";
+import { LayoutMeasurements, LayoutMeasurementsParams } from "./layout.types";
 
 //
 
@@ -14,9 +14,10 @@ export function useHeuteLayout() {
 
     return ctx
 }
-export function useLayoutSize({ containerRef, columnCount, rowCount, analyze, padding }: UseLayoutSizeParams) {
 
-    const [squareSize, setSquareSize] = useState({
+export function useLayoutMeasurements({ containerRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+
+    const [cellSize, setCellSize] = useState({
         full: 0,
         inner: 0
     })
@@ -26,37 +27,31 @@ export function useLayoutSize({ containerRef, columnCount, rowCount, analyze, pa
         if (!element) return
 
         const observer = new ResizeObserver(() => {
-        const { clientWidth, clientHeight } = element
+            const { clientWidth, clientHeight } = element
 
-        const full = Math.min(
-            clientWidth / columnCount,
-            clientHeight / rowCount
-        )
+            const full = Math.min(
+                clientWidth / columnCount,
+                clientHeight / rowCount
+            )
 
-        const inner = Math.min(
-            (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
-            (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
-        )
+            const inner = Math.min(
+                (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
+                (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
+            )
 
-        setSquareSize(prev =>
-            prev.full === full && prev.inner === inner
-            ? prev
-            : { full, inner }
-        )
-    })
+            setCellSize(prev =>
+                prev.full === full && prev.inner === inner
+                ? prev
+                : { full, inner }
+            )
+        })
 
-    observer.observe(element)
+        observer.observe(element)
 
-    return () => observer.disconnect()
-  }, [columnCount, rowCount, analyze, padding])
+        return () => observer.disconnect()
+    }, [columnCount, rowCount, analyze, padding])
 
-  return squareSize
-}
-
-interface UseLayoutSizeParams {
-    containerRef: React.RefObject<HTMLDivElement | null>
-    columnCount: number
-    rowCount: number
-    analyze: HeuteLayoutAnalyze
-    padding: number
+  return {
+    cellSize
+  }
 }
