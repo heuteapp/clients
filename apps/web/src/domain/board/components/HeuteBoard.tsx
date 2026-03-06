@@ -3,7 +3,7 @@
 import style from "./HeuteBoard.module.css"
 
 import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
-import { sectionExamples } from "@/src/data/sectionExamples";
+import { sectionExamples } from "../board.examples";
 
 //
 
