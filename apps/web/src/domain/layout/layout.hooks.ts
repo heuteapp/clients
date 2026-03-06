@@ -56,10 +56,11 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
                 : { full, inner }
             );
 
-            setContainerSize(prev =>
-                prev.width === clientWidth && prev.height === clientHeight
-                ? prev
-                : { width: clientWidth, height: clientHeight }
+            setContainerSize(
+                {
+                    width: cellSize.full * cellCount.horizontal,
+                    height: cellSize.full * cellCount.vertical
+                }
             );
         })
 
