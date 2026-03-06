@@ -13,9 +13,11 @@ export interface LayoutSectionData {
 
 //
 
-export interface HeuteLayoutAnalyze {
-  maxHorizontal: number
-  maxVertical: number
+export interface LayoutAnalyze {
+  sectionCount : {
+    horizontal: number,
+    vertical: number
+  }
 }
 
 export interface LayoutMeasurements {
@@ -29,6 +31,6 @@ export interface LayoutMeasurementsParams {
   containerRef: React.RefObject<HTMLDivElement | null>
   columnCount: number
   rowCount: number
-  analyze: HeuteLayoutAnalyze
+  analyze: LayoutAnalyze
   padding: number
 }

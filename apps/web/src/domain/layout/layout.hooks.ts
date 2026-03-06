@@ -28,6 +28,7 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 
         const observer = new ResizeObserver(() => {
             const { clientWidth, clientHeight } = element
+            const { sectionCount } = analyze;
 
             const full = Math.min(
                 clientWidth / columnCount,
@@ -35,8 +36,8 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
             )
 
             const inner = Math.min(
-                (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
-                (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
+                (clientWidth - ((sectionCount.horizontal + 4) * padding * 2)) / columnCount,
+                (clientHeight - ((sectionCount.vertical + 4) * padding * 2)) / rowCount
             )
 
             setCellSize(prev =>

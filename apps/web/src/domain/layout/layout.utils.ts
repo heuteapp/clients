@@ -1,32 +1,47 @@
-import { HeuteLayoutAnalyze, LayoutSectionData } from "./layout.types"
+import { LayoutAnalyze, LayoutSectionData } from "./layout.types"
 
-export function analyzeLayout(sections : LayoutSectionData[]) : HeuteLayoutAnalyze {
-    let maxHorizontal = 0
-    let maxVertical = 0
+export function analyzeLayout(sections: LayoutSectionData[]): LayoutAnalyze {
 
-    const maxRow = Math.max(...sections.map(s => s.rowIndex + s.rowSpan))
-    const maxCol = Math.max(...sections.map(s => s.colIndex + s.colSpan))
-
-    for (let row = 1; row <= maxRow; row++) {
-        const count = sections.filter(s =>
-        row >= s.rowIndex &&
-        row < s.rowIndex + s.rowSpan
-        ).length
-
-        maxHorizontal = Math.max(maxHorizontal, count)
+    if (sections.length === 0) {
+        return {
+            sectionCount: {
+                horizontal: 0,
+                vertical: 0
+            }
+        }
     }
 
-    for (let col = 1; col <= maxCol; col++) {
-        const count = sections.filter(s =>
-        col >= s.colIndex &&
-        col < s.colIndex + s.colSpan
-        ).length
+    let sectionCount = { horizontal: 0, vertical: 0 }
+    {
+        const maxRow = Math.max(...sections.map(s => s.rowIndex + s.rowSpan))
+        const maxCol = Math.max(...sections.map(s => s.colIndex + s.colSpan))
 
-        maxVertical = Math.max(maxVertical, count)
+        for (let row = 1; row <= maxRow; row++) {
+            let count = 0
+
+            for (const s of sections) {
+                if (row >= s.rowIndex && row < s.rowIndex + s.rowSpan) {
+                    count++
+                }
+            }
+
+            sectionCount.horizontal = Math.max(sectionCount.horizontal, count)
+        }
+
+        for (let col = 1; col <= maxCol; col++) {
+            let count = 0
+
+            for (const s of sections) {
+                if (col >= s.colIndex && col < s.colIndex + s.colSpan) {
+                    count++
+                }
+            }
+
+            sectionCount.vertical = Math.max(sectionCount.vertical, count)
+        }
     }
 
     return {
-        maxHorizontal,
-        maxVertical
+        sectionCount
     }
 }
