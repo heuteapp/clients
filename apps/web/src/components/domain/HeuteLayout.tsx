@@ -28,16 +28,16 @@ export default function HeuteLayout({
     const observer = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = element
 
-      const full = Math.floor(
+      const full = 
         Math.min(clientWidth / columnCount, clientHeight / rowCount)
-      )
+      
 
-      const inner = Math.floor(
+      const inner =
         Math.min(
           (clientWidth - ((analyze.maxHorizontal + 4) * padding * 2)) / columnCount,
           (clientHeight - ((analyze.maxVertical + 4) * padding * 2)) / rowCount
         )
-      )
+      
 
       setSquareSize(prev => {
         if (prev.full === full && prev.inner === inner) return prev
