@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 
 import { HeuteLayoutContext } from "./layout.context";
-import type { LayoutAnalyze } from "./layout.utils";
+import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
 
 //
 
@@ -64,17 +64,6 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 }
 
 
-
-export interface LayoutMeasurements {
-    cellCount: {
-        horizontal: number,
-        vertical: number
-    }
-    cellSize: {
-        full: number,
-        inner: number
-    }
-}
 
 export interface LayoutMeasurementsParams {
     containerRef: React.RefObject<HTMLDivElement | null>

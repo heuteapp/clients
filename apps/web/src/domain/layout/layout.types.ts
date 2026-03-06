@@ -10,3 +10,23 @@ export interface LayoutSectionData {
   colSpan: number
   rowSpan: number
 }
+
+//
+
+export interface LayoutAnalyze {
+  sectionCount : {
+    horizontal: number,
+    vertical: number
+  }
+}
+
+export interface LayoutMeasurements {
+    cellCount: {
+        horizontal: number,
+        vertical: number
+    }
+    cellSize: {
+        full: number,
+        inner: number
+    }
+}

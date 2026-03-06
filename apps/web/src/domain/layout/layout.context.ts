@@ -1,6 +1,5 @@
 import { createContext } from "react"
-import { LayoutAnalyze } from "./layout.utils";
-import { LayoutMeasurements } from "./layout.hooks";
+import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
 
 export const HeuteLayoutContext = createContext<LayoutContext | null>(null);
 

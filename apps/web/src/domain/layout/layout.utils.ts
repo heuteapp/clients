@@ -1,4 +1,4 @@
-import { LayoutSectionData } from "./layout.types"
+import { LayoutAnalyze, LayoutSectionData } from "./layout.types"
 
 export function analyzeLayout(sections: LayoutSectionData[]): LayoutAnalyze {
 
@@ -44,11 +44,4 @@ export function analyzeLayout(sections: LayoutSectionData[]): LayoutAnalyze {
     return {
         sectionCount
     }
-}
-
-export interface LayoutAnalyze {
-  sectionCount : {
-    horizontal: number,
-    vertical: number
-  }
 }
