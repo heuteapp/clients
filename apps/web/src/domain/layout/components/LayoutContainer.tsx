@@ -13,8 +13,8 @@ function LayoutContainer({ sections }: LayoutContainerProps) {
 
     return (
         <div className={style.container} style={{
-          width: (measurements.cellSize.full * measurements.cellCount.horizontal),
-          height: (measurements.cellSize.full * measurements.cellCount.vertical),
+          width: (measurements.containerSize.width),
+          height: (measurements.containerSize.height),
         }}>
           {rootRef.current &&
             sections.map((section, index) => (
