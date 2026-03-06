@@ -4,7 +4,7 @@ const padding = 12;
 
 import style from "./HeuteLayout.module.css"
 
-import HeuteLayoutData from "@/src/data/domain/layout/HeuteLayoutData"
+import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
 import { useEffect, useRef, useState } from "react"
 
