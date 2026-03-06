@@ -17,6 +17,11 @@ export function useHeuteLayout() {
 
 export function useLayoutMeasurements({ containerRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
+    const cellCount = {
+        horizontal: columnCount,
+        vertical: rowCount
+    }
+
     const [cellSize, setCellSize] = useState({
         full: 0,
         inner: 0
@@ -53,6 +58,7 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
     }, [columnCount, rowCount, analyze, padding])
 
   return {
+    cellCount,
     cellSize
   }
 }
@@ -60,16 +66,20 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 
 
 export interface LayoutMeasurements {
-  cellSize: {
-    full: number,
-    inner: number
-  }
+    cellCount: {
+        horizontal: number,
+        vertical: number
+    }
+    cellSize: {
+        full: number,
+        inner: number
+    }
 }
 
 export interface LayoutMeasurementsParams {
-  containerRef: React.RefObject<HTMLDivElement | null>
-  columnCount: number
-  rowCount: number
-  analyze: LayoutAnalyze
-  padding: number
+    containerRef: React.RefObject<HTMLDivElement | null>
+    columnCount: number
+    rowCount: number
+    analyze: LayoutAnalyze
+    padding: number
 }
