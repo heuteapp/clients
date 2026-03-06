@@ -31,7 +31,9 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   })
 
   return (
-    <div ref={rootRef} className={style.layout}>
+    <div ref={rootRef} className={style.layout} style={{
+      display: rootRef.current ? "flex" : "none"
+    }}>
       <HeuteLayoutContext.Provider value={{ rootRef, analyze, measurements }}>
         <LayoutContainer sections={sections} />
       </HeuteLayoutContext.Provider>

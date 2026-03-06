@@ -14,7 +14,6 @@ function LayoutContainer({ sections }: LayoutContainerProps) {
         <div className={style.container} style={{
           width: (measurements.containerSize.width),
           height: (measurements.containerSize.height),
-          display: rootRef.current ? "block" : "block"
         }}>
           {
             sections.map((section, index) => (
