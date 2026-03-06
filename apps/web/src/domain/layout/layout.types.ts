@@ -27,7 +27,8 @@ export interface LayoutMeasurements {
     },
     cellSize: {
       full: number,
-      inner: number
+      inner: number,
+      compact: number,
     },
     containerSize: {
       width: number,

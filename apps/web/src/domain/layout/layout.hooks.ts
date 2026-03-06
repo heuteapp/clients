@@ -24,7 +24,8 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 
     const [cellSize, setCellSize] = useState({
         full: 0,
-        inner: 0
+        inner: 0,
+        compact: 0
     });
 
     const [containerSize, setContainerSize] = useState({
@@ -50,14 +51,17 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
                 (clientHeight - ((sectionCount.vertical + 4) * padding * 2)) / rowCount
             );
 
+            const compact = inner * 0.9;
+
             const _cellSize =
             {
                 full,
-                inner
+                inner,
+                compact
             }
 
             setCellSize(prev =>
-                prev.full === _cellSize.full && prev.inner === _cellSize.inner
+                prev.full === _cellSize.full && prev.inner === _cellSize.inner && prev.compact === _cellSize.compact
                 ? prev
                 : _cellSize
             );
