@@ -39,7 +39,6 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
       <HeuteLayoutContext.Provider value={{ rootRef, analyze, measurements }}>
         <LayoutContainer sections={sections} />
       </HeuteLayoutContext.Provider>
-      <div>{measurements.containerSize.width}</div>
     </div>
   )
 }
