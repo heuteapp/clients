@@ -1,5 +1,5 @@
-import { analyzeLayout } from "@/src/utils"
 import { createContext } from "react"
+import { analyzeLayout } from "./layout.utils"
 
 export interface HeuteLayoutContextType {
   squareSize: { full: number, inner: number }

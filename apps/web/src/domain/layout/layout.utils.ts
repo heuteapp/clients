@@ -1,6 +1,6 @@
 import LayoutSectionData from "@/src/data/domain/layout/LayoutSectionData"
 
-export default function analyzeLayout(sections : LayoutSectionData[]) {
+export function analyzeLayout(sections : LayoutSectionData[]) {
     let maxHorizontal = 0
     let maxVertical = 0
 

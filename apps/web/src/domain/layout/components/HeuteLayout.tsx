@@ -2,9 +2,10 @@
 
 const padding = 12;
 
+import style from "./HeuteLayout.module.css"
+
 import HeuteLayoutData from "@/src/data/domain/layout/HeuteLayoutData"
-import style from "@/src/styles/domain/HeuteLayout.module.css"
-import { analyzeLayout } from "@/src/utils"
+import { analyzeLayout } from "../layout.utils"
 import { useEffect, useRef, useState } from "react"
 
 interface HeuteLayoutProps extends HeuteLayoutData {
