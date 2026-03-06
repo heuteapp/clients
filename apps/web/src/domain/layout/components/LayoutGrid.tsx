@@ -12,10 +12,10 @@ function LayoutGrid(props : LayoutGridProps) {
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        registry.registerCell(props.sectionId, ref)
+        registry.registerGrid(props.sectionId, ref)
 
         return () => {
-        registry.unregisterCell(props.sectionId)
+        registry.unregisterGrid(props.sectionId)
         }
     }, [props.sectionId, registry])
 
@@ -24,9 +24,17 @@ function LayoutGrid(props : LayoutGridProps) {
             gridTemplateColumns: `repeat(${props.colSpan}, ${measurements.cellSize.inner}px)`,
             gridTemplateRows: `repeat(${props.rowSpan}, ${measurements.cellSize.inner}px)`,
         }}>
-            {[...Array(props.colSpan * props.rowSpan)].map((_, index) => (
-                <LayoutGridCell key={index} />
-            ))}
+            {
+                Array.from({ length: props.rowSpan }).map((_, rowIndex) => (
+                    Array.from({ length: props.colSpan }).map((_, colIndex) => (
+                        <LayoutGridCell
+                            key={rowIndex + "-" + colIndex}
+                            rowIndex={rowIndex + 1}
+                            colIndex={colIndex + 1}
+                        />
+                    ))
+                ))
+            }
         </div>
     )
 }
