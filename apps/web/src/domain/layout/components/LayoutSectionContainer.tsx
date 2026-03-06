@@ -5,7 +5,7 @@ import { HeuteLayoutContext } from "../layout.context";
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionData } from "../layout.types";
 
-function LayoutContainer({ sections }: LayoutContainerProps) {
+function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
     const context = useContext(HeuteLayoutContext);
 
     const { rootRef, measurements } = context!;
@@ -27,11 +27,11 @@ function LayoutContainer({ sections }: LayoutContainerProps) {
     )
 }
 
-export default LayoutContainer
+export default LayoutSectionContainer
 
 
-interface LayoutContainerProps {
+interface LayoutSectionContainerProps {
     sections: LayoutSectionData[]
 }
 
-export type { LayoutContainerProps }
+export type { LayoutSectionContainerProps as LayoutContainerProps }

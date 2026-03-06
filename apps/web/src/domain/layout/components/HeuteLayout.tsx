@@ -8,10 +8,9 @@ import style from "../layout.module.css"
 
 import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
-import LayoutSection from "./LayoutSection";
 import { useLayoutMeasurements } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
-import LayoutContainer from "./LayoutContainer";
+import LayoutSectionContainer from "./LayoutSectionContainer";
 
 interface HeuteLayoutProps extends HeuteLayoutData {
   
@@ -37,7 +36,7 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
       visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
     }}>
       <HeuteLayoutContext.Provider value={{ rootRef, analyze, measurements }}>
-        <LayoutContainer sections={sections} />
+        <LayoutSectionContainer sections={sections} />
       </HeuteLayoutContext.Provider>
     </div>
   )
