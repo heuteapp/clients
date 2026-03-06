@@ -42,9 +42,13 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   )
 
   return (
-    <div ref={rootRef} className={style.layout} style={{
-      visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
-    }}>
+    <div 
+      ref={rootRef} 
+      className={style.layout} 
+      style={{
+        visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
+      }}
+    >
       <HeuteLayoutContext.Provider value={contextValue}>
         <LayoutSectionContainer sections={sections} />
       </HeuteLayoutContext.Provider>
