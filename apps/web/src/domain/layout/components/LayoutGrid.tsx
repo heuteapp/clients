@@ -48,4 +48,4 @@ interface LayoutGridProps  {
     rowSpan: number,
 }
 
-export type { LayoutGrid }
+export type { LayoutGridProps }
