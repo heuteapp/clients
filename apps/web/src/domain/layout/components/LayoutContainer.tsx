@@ -6,7 +6,6 @@ import LayoutSection from "./LayoutSection";
 import { LayoutSectionData } from "../layout.types";
 
 function LayoutContainer({ sections }: LayoutContainerProps) {
-    const ref = useRef<HTMLDivElement>(null);
     const context = useContext(HeuteLayoutContext);
 
     const { rootRef, measurements } = context!;
@@ -15,12 +14,12 @@ function LayoutContainer({ sections }: LayoutContainerProps) {
         <div className={style.container} style={{
           width: (measurements.containerSize.width),
           height: (measurements.containerSize.height),
+          display: rootRef.current ? "block" : "block"
         }}>
-          {rootRef.current &&
+          {
             sections.map((section, index) => (
               <LayoutSection
                 key={index}
-                squareSize={measurements.cellSize}
                 padding={12}
                 {...section}
               />
