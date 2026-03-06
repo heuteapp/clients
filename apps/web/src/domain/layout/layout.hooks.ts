@@ -50,17 +50,28 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
                 (clientHeight - ((sectionCount.vertical + 4) * padding * 2)) / rowCount
             );
 
+            const _cellSize =
+            {
+                full,
+                inner
+            }
+
             setCellSize(prev =>
-                prev.full === full && prev.inner === inner
+                prev.full === _cellSize.full && prev.inner === _cellSize.inner
                 ? prev
-                : { full, inner }
+                : _cellSize
             );
 
+            const _containerSize = 
+            {
+                width: cellSize.full * cellCount.horizontal,
+                height: cellSize.full * cellCount.vertical
+            }
+
             setContainerSize(
-                {
-                    width: cellSize.full * cellCount.horizontal,
-                    height: cellSize.full * cellCount.vertical
-                }
+                prev => prev.width === _containerSize.width && prev.height === _containerSize.height
+                ? prev
+                : _containerSize
             );
         })
 
