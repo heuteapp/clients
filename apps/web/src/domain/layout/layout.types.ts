@@ -13,6 +13,11 @@ export interface LayoutSectionData {
 
 //
 
+export interface LayoutContext {
+  analyze: LayoutAnalyze
+  measurements: LayoutMeasurements
+}
+
 export interface LayoutAnalyze {
   sectionCount : {
     horizontal: number,
