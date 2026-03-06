@@ -2,7 +2,7 @@
 
 const padding = 12;
 
-import style from "./HeuteLayout.module.css"
+import style from "../layout.module.css"
 
 import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
