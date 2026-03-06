@@ -3,6 +3,7 @@ import style from "../layout.module.css"
 
 import { LayoutSectionData } from "../layout.types"
 import { HeuteLayoutContext } from "../layout.context";
+import LayoutGrid from "./LayoutGrid";
 
 function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
@@ -23,10 +24,7 @@ function LayoutSection(props : LayoutSectionProps) {
             padding: props.padding,
         }}
         >
-            <div className={style.container} style={{
-                gridTemplateColumns: `repeat(${props.colSpan}, ${measurements.cellSize.inner}px)`,
-                gridTemplateRows: `repeat(${props.rowSpan}, ${measurements.cellSize.inner}px)`,
-            }}/>
+            <LayoutGrid colSpan={props.colSpan} rowSpan={props.rowSpan} />
         </div>
     )
 }
