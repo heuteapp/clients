@@ -6,54 +6,62 @@ import { LayoutGridProps } from "./components/LayoutGrid"
 import { LayoutGridCellProps } from "./components/LayoutGridCell"
 
 export interface RegistryNode {
-  id: string
-  ref: React.RefObject<HTMLDivElement | null>
+  ref?: React.RefObject<HTMLDivElement | null> | null
 }
 
 export interface LayoutRegistry {
   container: RegistryNode | null
-
   sections: Map<string, LayoutSectionNode>
 
-  registerContainer(node: RegistryNode): void
+  registerContainer(
+    ref: React.RefObject<HTMLDivElement | null>
+  ): void
+
   unregisterContainer(): void
+
 
   registerSection(
     id: string,
     ref: React.RefObject<HTMLDivElement | null>,
     props: LayoutSectionProps
-  ): void
+  ): LayoutSectionNode
 
   unregisterSection(id: string): void
+
 
   registerGrid(
     sectionId: string,
     ref: React.RefObject<HTMLDivElement | null>,
     props: LayoutGridProps
-  ): void
+  ): LayoutGridNode
 
   unregisterGrid(sectionId: string): void
 
+
   registerCell(
-    gridId: string,
+    sectionId: string,
     id: string,
     ref: React.RefObject<HTMLDivElement | null>,
     props: LayoutGridCellProps
-  ): void
+  ): LayoutCellNode
 
-  unregisterCell(gridId: string, id: string): void
+  unregisterCell(sectionId: string, id: string): void
+
+
+  getSection(id: string): LayoutSectionNode | undefined
+  getGrid(sectionId: string): LayoutGridNode | undefined
 }
 
 export interface LayoutSectionNode extends RegistryNode {
-  props: LayoutSectionProps
+  props?: LayoutSectionProps
   grid: LayoutGridNode | null
 }
 
 export interface LayoutGridNode extends RegistryNode {
-  props: LayoutGridProps
+  props?: LayoutGridProps
   cells: Map<string, LayoutCellNode>
 }
 
 export interface LayoutCellNode extends RegistryNode {
-  props: LayoutGridCellProps
+  props?: LayoutGridCellProps
 }
