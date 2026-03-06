@@ -1,5 +1,5 @@
 "use client";
-import style from '@/src/styles/layout/Sidebar.module.css';
+import style from '../body.module.css';
 
 function Sidebar() {
   return (

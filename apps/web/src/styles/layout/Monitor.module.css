@@ -1,7 +1,0 @@
-.monitor {
-    flex: 1;
-    min-width: 384px;
-    overflow: hidden;
-    display: flex;
-    position: relative;
-}

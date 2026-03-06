@@ -1,5 +1,5 @@
 "use client";
-import style from '@/src/styles/layout/Panel.module.css';
+import style from '../body.module.css';
 import Sidebar from './Sidebar';
 import Monitor from './Monitor';
 
