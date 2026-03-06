@@ -1,6 +1,6 @@
 "use client"
 
-const padding = 8;
+const padding = 12;
 
 import HeuteLayoutData from "@/src/data/domain/layout/HeuteLayoutData"
 import style from "@/src/styles/domain/HeuteLayout.module.css"
@@ -104,36 +104,11 @@ function LayoutSection({
         height: (rowSpan * squareSize.full) - (padding * 2),
         padding: padding,
       }}
-      onMouseEnter={() => {
-        if (ref.current) {
-          ref.current.classList.add(style.highlighted)
-        }
-      }}
-      onMouseLeave={() => {
-        if (ref.current) {
-          ref.current.classList.remove(style.highlighted)
-        }
-      }}
     >
       <div className={style.container} style={{
         gridTemplateColumns: `repeat(${colSpan}, ${squareSize.inner}px)`,
         gridTemplateRows: `repeat(${rowSpan}, ${squareSize.inner}px)`,
-      }}>
-        {
-          Array.from({ length: colSpan * rowSpan }, (_, i) => (
-            <div key={i} 
-              className={style.item} 
-                style={{
-                  width: squareSize.inner * 0.9,
-                  height: squareSize.inner * 0.9,
-                }}
-            >
-              {squareSize.full.toFixed(1)}x{squareSize.inner.toFixed(1)}
-            </div>
-          ))
-        }
-      </div>
-
+      }}/>
     </div>
   )
 }

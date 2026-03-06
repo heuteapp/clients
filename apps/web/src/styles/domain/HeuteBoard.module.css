@@ -1,6 +1,5 @@
 .board {
     flex: 1;
     margin: 12px;
-    background-color: #674949;
     overflow: hidden;
 }
