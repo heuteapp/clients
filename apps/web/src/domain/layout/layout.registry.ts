@@ -28,7 +28,6 @@ export interface LayoutRegistry {
 
   registerGrid(
     sectionId: string,
-    id: string,
     ref: React.RefObject<HTMLDivElement | null>,
     props: LayoutGridProps
   ): void

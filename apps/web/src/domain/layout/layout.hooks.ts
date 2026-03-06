@@ -1,7 +1,8 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 
-import { HeuteLayoutContext, LayoutRegistry } from "./layout.context";
+import { HeuteLayoutContext } from "./layout.context";
 import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
+import { LayoutRegistry, LayoutSectionNode } from "./layout.registry";
 
 //
 
@@ -16,51 +17,73 @@ export function useLayoutContext() {
 }
 
 export function useLayoutRegistry(): LayoutRegistry {
-    const registry = useMemo<LayoutRegistry>(() => {
-        const sections = new Map<
-            string,
-            React.RefObject<HTMLDivElement | null>
-        >()
-
-        const grids = new Map<
-            string,
-            React.RefObject<HTMLDivElement | null>
-        >()
-
-        const cells = new Map<
-            string,
-            React.RefObject<HTMLDivElement | null>
-        >()
+    return useMemo<LayoutRegistry>(() => {
+        const sections = new Map<string, LayoutSectionNode>()
 
         return {
+            container: null,
             sections,
-            grids,
-            cells,
 
-            registerSection(id, ref) {
-                sections.set(id, ref)
+            registerContainer(node) {
+                this.container = node
             },
+
+            unregisterContainer() {
+                this.container = null
+            },
+
+            registerSection(id, ref, props) {
+                sections.set(id, {
+                id,
+                ref,
+                props,
+                grid: null,
+                })
+            },
+
             unregisterSection(id) {
                 sections.delete(id)
             },
 
-            registerGrid(id, ref) {
-                grids.set(id, ref)
-            },
-            unregisterGrid(id) {
-                grids.delete(id)
+            registerGrid(sectionId, ref, props) {
+                const section = sections.get(sectionId)
+                if (!section) return
+
+                section.grid = {
+                id: sectionId,
+                ref,
+                props,
+                cells: new Map(),
+                }
             },
 
-            registerCell(id, ref) {
-                cells.set(id, ref)
+            unregisterGrid(sectionId) {
+                const section = sections.get(sectionId)
+                if (!section) return
+                section.grid = null
             },
-            unregisterCell(id) {
-                cells.delete(id)
+
+            registerCell(gridId, id, ref, props) {
+                for (const section of sections.values()) {
+                if (section.grid?.id === gridId) {
+                    section.grid.cells.set(id, {
+                    id,
+                    ref,
+                    props,
+                    })
+                }
+                }
+            },
+
+            unregisterCell(gridId, id) {
+                for (const section of sections.values()) {
+                if (section.grid?.id === gridId) {
+                    section.grid.cells.delete(id)
+                }
+                }
             },
         }
     }, [])
-
-  return registry
 }
 
 export function useLayoutMeasurements({ containerRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {

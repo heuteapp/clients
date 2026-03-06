@@ -12,10 +12,10 @@ function LayoutGridCell(props : LayoutGridCellProps) {
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        registry.registerGrid(id, ref)
+        registry.registerCell(props.sectionId, id, ref, props)
 
         return () => {
-        registry.unregisterGrid(id)
+            registry.unregisterCell(props.sectionId, id)
         }
     }, [id, registry])
 
@@ -31,6 +31,7 @@ export default LayoutGridCell
 
 
 interface LayoutGridCellProps {
+    sectionId: string,
     rowIndex: number,
     colIndex: number,
 }

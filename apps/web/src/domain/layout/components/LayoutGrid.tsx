@@ -12,7 +12,7 @@ function LayoutGrid(props : LayoutGridProps) {
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        registry.registerGrid(props.sectionId, ref)
+        registry.registerGrid(props.sectionId, ref, props)
 
         return () => {
         registry.unregisterGrid(props.sectionId)
@@ -29,6 +29,7 @@ function LayoutGrid(props : LayoutGridProps) {
                     Array.from({ length: props.colSpan }).map((_, colIndex) => (
                         <LayoutGridCell
                             key={rowIndex + "-" + colIndex}
+                            sectionId={props.sectionId}
                             rowIndex={rowIndex + 1}
                             colIndex={colIndex + 1}
                         />
