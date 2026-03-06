@@ -11,6 +11,7 @@ import { analyzeLayout } from "../layout.utils"
 import LayoutSection from "./LayoutSection";
 import { useLayoutMeasurements } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
+import LayoutContainer from "./LayoutContainer";
 
 interface HeuteLayoutProps extends HeuteLayoutData {
   
@@ -18,11 +19,11 @@ interface HeuteLayoutProps extends HeuteLayoutData {
 
 export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLayoutProps) {
 
-  const containerRef = useRef<HTMLDivElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
   const analyze = analyzeLayout(sections);
 
   const measurements = useLayoutMeasurements({
-    containerRef,
+    containerRef: rootRef,
     columnCount,
     rowCount,
     analyze,
@@ -30,22 +31,9 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   })
 
   return (
-    <div ref={containerRef} className={style.layout}>
-      <HeuteLayoutContext.Provider value={{ analyze, measurements }}>
-        <div className={style.container} style={{
-          width: (measurements.cellSize.full * columnCount),
-          height: (measurements.cellSize.full * rowCount),
-        }}>
-          {containerRef.current &&
-            sections.map((section, index) => (
-              <LayoutSection
-                key={index}
-                squareSize={measurements.cellSize}
-                padding={padding}
-                {...section}
-              />
-            ))}
-        </div>
+    <div ref={rootRef} className={style.layout}>
+      <HeuteLayoutContext.Provider value={{ rootRef, analyze, measurements }}>
+        <LayoutContainer sections={sections} />
       </HeuteLayoutContext.Provider>
     </div>
   )
