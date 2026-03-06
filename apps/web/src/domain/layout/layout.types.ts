@@ -10,3 +10,10 @@ export interface LayoutSectionData {
   colSpan: number
   rowSpan: number
 }
+
+//
+
+export interface HeuteLayoutAnalyze {
+  maxHorizontal: number
+  maxVertical: number
+}

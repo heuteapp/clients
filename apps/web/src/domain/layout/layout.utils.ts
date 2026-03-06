@@ -1,6 +1,6 @@
-import { LayoutSectionData } from "./layout.types"
+import { HeuteLayoutAnalyze, LayoutSectionData } from "./layout.types"
 
-export function analyzeLayout(sections : LayoutSectionData[]) {
+export function analyzeLayout(sections : LayoutSectionData[]) : HeuteLayoutAnalyze {
     let maxHorizontal = 0
     let maxVertical = 0
 
