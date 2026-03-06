@@ -25,7 +25,7 @@
     justify-items: center;
     transition: background-color 0.2s ease;
 }
-.layout .section .container {
+.layout .section .grid {
     display: grid;
     align-items: center;
     justify-items: center;
@@ -44,11 +44,17 @@
         box-shadow 0.2s ease;
 }
 
-.layout .section  .container:hover {
+.layout .section  .grid:hover {
     background: #212630;
     border-color: #3a4150;
 
     box-shadow: 
         0 6px 20px rgba(0,0,0,0.45),
         0 0 0 1px rgba(90,124,255,0.15);
+}
+
+.layout .section .grid .cell {
+    background: #2a2f3a;
+    border: 1px solid #3a4150;
+    border-radius: 5px;
 }
