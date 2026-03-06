@@ -1,5 +1,8 @@
-import { HeuteLayoutContext } from "@/src/domain/layout/layout.context"
 import { useContext } from "react"
+
+import { HeuteLayoutContext } from "./layout.context"
+
+//
 
 export function useHeuteLayout() {
     const ctx = useContext(HeuteLayoutContext)
