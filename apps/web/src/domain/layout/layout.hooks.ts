@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 
-import { HeuteLayoutContext } from "./layout.context";
+import { HeuteLayoutContext, LayoutRegistry } from "./layout.context";
 import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
 
 //
@@ -13,6 +13,54 @@ export function useHeuteLayout() {
     }
 
     return ctx
+}
+
+export function useLayoutRegistry(): LayoutRegistry {
+    const registry = useMemo<LayoutRegistry>(() => {
+        const sections = new Map<
+            string,
+            React.RefObject<HTMLDivElement | null>
+        >()
+
+        const grids = new Map<
+            string,
+            React.RefObject<HTMLDivElement | null>
+        >()
+
+        const cells = new Map<
+            string,
+            React.RefObject<HTMLDivElement | null>
+        >()
+
+        return {
+            sections,
+            grids,
+            cells,
+
+            registerSection(id, ref) {
+                sections.set(id, ref)
+            },
+            unregisterSection(id) {
+                sections.delete(id)
+            },
+
+            registerGrid(id, ref) {
+                grids.set(id, ref)
+            },
+            unregisterGrid(id) {
+                grids.delete(id)
+            },
+
+            registerCell(id, ref) {
+                cells.set(id, ref)
+            },
+            unregisterCell(id) {
+                cells.delete(id)
+            },
+        }
+    }, [])
+
+  return registry
 }
 
 export function useLayoutMeasurements({ containerRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
