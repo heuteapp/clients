@@ -22,11 +22,15 @@ export interface LayoutAnalyze {
 
 export interface LayoutMeasurements {
     cellCount: {
-        horizontal: number,
-        vertical: number
-    }
+      horizontal: number,
+      vertical: number
+    },
     cellSize: {
-        full: number,
-        inner: number
+      full: number,
+      inner: number
+    },
+    containerSize: {
+      width: number,
+      height: number
     }
 }

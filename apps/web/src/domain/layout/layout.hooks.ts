@@ -20,11 +20,16 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
     const cellCount = {
         horizontal: columnCount,
         vertical: rowCount
-    }
+    };
 
     const [cellSize, setCellSize] = useState({
         full: 0,
         inner: 0
+    });
+
+    const [containerSize, setContainerSize] = useState({
+        width: 0,
+        height: 0
     })
 
     useEffect(() => {
@@ -38,18 +43,24 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
             const full = Math.min(
                 clientWidth / columnCount,
                 clientHeight / rowCount
-            )
+            );
 
             const inner = Math.min(
                 (clientWidth - ((sectionCount.horizontal + 4) * padding * 2)) / columnCount,
                 (clientHeight - ((sectionCount.vertical + 4) * padding * 2)) / rowCount
-            )
+            );
 
             setCellSize(prev =>
                 prev.full === full && prev.inner === inner
                 ? prev
                 : { full, inner }
-            )
+            );
+
+            setContainerSize(prev =>
+                prev.width === clientWidth && prev.height === clientHeight
+                ? prev
+                : { width: clientWidth, height: clientHeight }
+            );
         })
 
         observer.observe(element)
@@ -59,7 +70,8 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 
   return {
     cellCount,
-    cellSize
+    cellSize,
+    containerSize
   }
 }
 
