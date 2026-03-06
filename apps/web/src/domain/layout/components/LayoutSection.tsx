@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useLayoutEffect, useRef } from "react"
 import style from "../layout.module.css"
 
 import { LayoutSectionData } from "../layout.types"
@@ -9,7 +9,15 @@ function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useLayoutContext();
 
-    const { measurements } = context!;
+    const { registry, measurements } = context!;
+
+    useLayoutEffect(() => {
+        registry.registerSection(props.id, ref, props)
+
+        return () => {
+        registry.unregisterSection(props.id)
+        }
+    }, [props.id, registry])
 
     return (
         <div
