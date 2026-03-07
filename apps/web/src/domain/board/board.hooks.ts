@@ -52,7 +52,6 @@ export function useBoardPointerEvents(
             currentSession.pointerId = e.pointerId;
 
             if (currentSession.cardCreate) {
-                console.log("Card Create");
                 return;
             }
 
@@ -122,19 +121,15 @@ export function useBoardPointerEvents(
                                 const cardRows = session.cardCreate!.startSize.rowSpan;
                                 const cardCols = session.cardCreate!.startSize.colSpan;
 
-                                // Mouse’u merkeze almak için kart boyutunu yarı hücre olarak çıkarıyoruz
                                 const centeredX = mouseX - (cardCols * cellSize) / 2;
                                 const centeredY = mouseY - (cardRows * cellSize) / 2;
 
-                                // 1-based index
-                                let rawCol = Math.floor(centeredX / cellSize) + 1;
-                                let rawRow = Math.floor(centeredY / cellSize) + 1;
+                                let rawCol = Math.round(centeredX / cellSize) + 1;
+                                let rawRow = Math.round(centeredY / cellSize) + 1;
 
-                                // Max pozisyon: kart grid dışına taşmasın
                                 const maxRow = sectionProps.rowSpan - cardRows + 1;
                                 const maxCol = sectionProps.colSpan - cardCols + 1;
 
-                                // Clamp ile sınırla
                                 const row = clamp(rawRow, 1, maxRow);
                                 const col = clamp(rawCol, 1, maxCol);
 

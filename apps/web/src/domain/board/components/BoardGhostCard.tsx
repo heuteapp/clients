@@ -3,7 +3,7 @@ import style from "../board.module.css"
 import { useBoardContext } from "../board.hooks";
 
 function BoardGhostCard(props : BoardGhostCardProps) {
-    const { session, layoutRegistry } = useBoardContext();
+    const { interaction, session, layoutRegistry } = useBoardContext();
 
     const section = layoutRegistry.getSection(session.cardCreate?.currentSectionId!);
 
@@ -14,11 +14,13 @@ function BoardGhostCard(props : BoardGhostCardProps) {
     const layoutMeasurements = layoutRegistry.measurements!;
 
     const position = {
-        left : gridRect.left + (props.rect.colIndex - 2) * layoutMeasurements.cellSize.inner,
+        left: gridRect.left + (props.rect.colIndex - 1) * layoutMeasurements.cellSize.inner,
         top: gridRect.top + (props.rect.rowIndex - 1) * layoutMeasurements.cellSize.inner,
         width: layoutMeasurements.cellSize.inner * props.rect.colSpan,
         height: layoutMeasurements.cellSize.inner * props.rect.rowSpan,
-    }
+    };
+
+    console.log(interaction.pointer, gridRect);
 
     return (
         <div 
