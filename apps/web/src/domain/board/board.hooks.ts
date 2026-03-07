@@ -76,14 +76,18 @@ export function useBoardPointerEvents(
 
         const handlers: Array<{
             el: HTMLElement;
-            enter: any;
-            leave: any;
+            events: {
+                [key: string]: EventListenerOrEventListenerObject | null
+            }
         }> = [];
 
         function cleanupHandlers() {
-            for(const { el, enter, leave } of handlers) {
-                el.removeEventListener("pointerenter", enter);
-                el.removeEventListener("pointerleave", leave);
+            for(const { el, events } of handlers) {
+                for(const [name, handler] of Object.entries(events)) {
+                    if(handler) {
+                        el.removeEventListener(name, handler);
+                    }
+                }
             }
             handlers.length = 0;
         }
@@ -100,18 +104,26 @@ export function useBoardPointerEvents(
                             const el = grid!.ref?.current;
                             if(!el) continue;
 
-                            const enter = () => {
+                            const pointerenter = () => {
                                 interaction.updateCardCreate(grid!.props!.sectionId, null);
                             }
 
-                            const leave = () => {
+                            const pointermove = () => {
+                                const mouseRow = Math.ceil((interaction.pointer!.y - el.getBoundingClientRect().top) / layoutRegistry.measurements!.cellSize.full);
+                                const mouseCol = Math.ceil((interaction.pointer!.x - el.getBoundingClientRect().left) / layoutRegistry.measurements!.cellSize.full);
+
+                                interaction.updateCardCreate(grid!.props!.sectionId, { rowIndex: mouseRow, colIndex: mouseCol });
+                            }
+
+                            const pointerleave = () => {
                                 interaction.updateCardCreate(null, null);
                             }
 
-                            el.addEventListener("pointerenter", enter);
-                            el.addEventListener("pointerleave", leave);
+                            el.addEventListener("pointerenter", pointerenter);
+                            el.addEventListener("pointermove", pointermove);
+                            el.addEventListener("pointerleave", pointerleave);
 
-                            handlers.push({ el, enter, leave });
+                            handlers.push({ el, events: { pointerenter, pointermove, pointerleave } });
                         }
                         break;
                     case "move":
