@@ -22,3 +22,43 @@ export function useBoardInteraction({ session }: { session: BoardSession }) : Bo
 
     return interactionRef.current;
 }
+
+export function useBoardPointerEvents(
+  rootRef: React.RefObject<HTMLDivElement | null>,
+  interaction: BoardInteraction
+) {
+    useEffect(() => {
+        const root = rootRef.current;
+        if (!root) return;
+
+        function handlePointerMove(e: PointerEvent) {
+            interaction.session.pointer = {
+                x: e.clientX,
+                y: e.clientY
+            };
+
+            const cardMove = interaction.session.cardMove;
+            if (cardMove) {
+                return;
+            }
+
+            const resize = interaction.session.cardResize;
+            if (resize) {
+                return;
+            }
+        }
+
+        function handlePointerUp() {
+            interaction.endInteraction();
+        }
+
+        root.addEventListener("pointermove", handlePointerMove);
+        root.addEventListener("pointerup", handlePointerUp);
+        
+        return () => {
+            root.removeEventListener("pointermove", handlePointerMove);
+            root.removeEventListener("pointerup", handlePointerUp);
+        };
+
+    }, [rootRef, interaction]);
+}
