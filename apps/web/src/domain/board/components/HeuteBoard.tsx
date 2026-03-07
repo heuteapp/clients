@@ -3,11 +3,10 @@
 import style from "../board.module.css"
 
 import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
-import { sectionExamples } from "../board.examples";
 import { useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 import BoardCardContainer from "./BoardCardContainer";
 import { HeuteBoardContext } from "../board.context";
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { BoardData } from "../board.types";
 import { useBoardInteraction } from "../board.hooks";
 
