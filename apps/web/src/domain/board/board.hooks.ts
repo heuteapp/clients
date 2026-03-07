@@ -34,6 +34,7 @@ export function useBoardPointerEvents(
         // Event listenerları başlat / durdur fonksiyonları
         function handlePointerMove(e: PointerEvent) {
             interaction.session.pointer = { x: e.clientX, y: e.clientY };
+            interaction.session.pointerId = e.pointerId;
 
             if (interaction.session.cardCreate) return;
             if (interaction.session.cardMove) return;
