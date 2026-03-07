@@ -6,30 +6,33 @@ function BoardGhostCard(props : BoardGhostCardProps) {
     const { interaction, session, layoutRegistry } = useBoardContext();
 
     const section = layoutRegistry.getSection(session.cardCreate?.currentSectionId!);
+    const cellSize = layoutRegistry.measurements!.cellSize.inner;
 
-    if(!section) return null;
+    let stylePosition: React.CSSProperties;
 
-    const gridEl = section.grid!.ref?.current!;
-    const gridRect = gridEl.getBoundingClientRect();
-    const layoutMeasurements = layoutRegistry.measurements!;
+    if (section) {
+        const gridEl = section.grid!.ref!.current!;
+        const rect = gridEl.getBoundingClientRect();
 
-    const position = {
-        left: gridRect.left + (props.rect.colIndex - 1) * layoutMeasurements.cellSize.inner,
-        top: gridRect.top + (props.rect.rowIndex - 1) * layoutMeasurements.cellSize.inner,
-        width: layoutMeasurements.cellSize.inner * props.rect.colSpan,
-        height: layoutMeasurements.cellSize.inner * props.rect.rowSpan,
-    };
+        stylePosition = {
+            left: rect.left + (props.rect.colIndex - 1) * cellSize,
+            top: rect.top + (props.rect.rowIndex - 1) * cellSize,
+        };
 
-    console.log(interaction.pointer, gridRect);
+    } else {
+        stylePosition = {
+            left: "var(--ghost-card-x)",
+            top: "var(--ghost-card-y)",
+        };
+    }
 
     return (
         <div 
             className={style.ghostCard} 
             style={{
-                left: position.left,
-                top: position.top,
-                width: position.width,
-                height: position.height,
+                ...stylePosition,
+                width: props.rect.colSpan * cellSize,
+                height: props.rect.rowSpan * cellSize,
             }}
         >
         </div>
