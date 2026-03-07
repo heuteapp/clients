@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { BoardContext } from "../board.context";
 import { createBoardSession } from "../board.session";
 import { createBoardInteraction } from "../board.interaction";
-import { useBoardPointerEvents } from "../board.hooks";
+import { useBoardInteraction, useBoardPointerEvents } from "../board.hooks";
 import { useLayoutMeasurements, useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
@@ -12,23 +12,17 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
 
     const layoutRegistry = useLayoutRegistry();
 
-    const session = useMemo(() => createBoardSession(), []);
-
-    const interaction = useMemo(
-        () => createBoardInteraction(session),
-        [session]
-    );
+    const interaction = useBoardInteraction();
 
     useBoardPointerEvents(rootRef, interaction);
 
     const value = useMemo(
         () => ({
             rootRef,
-            session,
             interaction,
             layoutRegistry,
         }),
-        [session, interaction, layoutRegistry]
+        [interaction, layoutRegistry]
     );
 
     return (

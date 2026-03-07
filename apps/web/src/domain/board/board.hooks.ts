@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
 import { BoardInteraction, createBoardInteraction } from "./board.interaction"
-import { BoardSession } from "./board.session"
+import { BoardSession, createBoardSession } from "./board.session"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -13,11 +13,13 @@ export function useBoardContext() {
     return ctx
 }
 
-export function useBoardInteraction({ session }: { session: BoardSession }) : BoardInteraction {
+export function useBoardInteraction() : BoardInteraction {
+    const [session, setSession] = useState(createBoardSession())
+
     const interactionRef = useRef<BoardInteraction | null>(null);
 
     if(!interactionRef.current) {
-        interactionRef.current = createBoardInteraction(session);
+        interactionRef.current = createBoardInteraction(() => session, setSession);
     }
 
     return interactionRef.current;
@@ -32,41 +34,46 @@ export function useBoardPointerEvents(
         if (!root) return;
 
         function handlePointerMove(e: PointerEvent) {
-            interaction.session.pointer = { x: e.clientX, y: e.clientY };
-            interaction.session.pointerId = e.pointerId;
+            interaction.pointer = { x: e.clientX, y: e.clientY };
 
-            if (interaction.session.cardCreate) {
+            const session = interaction.getSession();  
+            session.pointerId = e.pointerId;
+
+            if (session.cardCreate) {
                 console.log("Card Create Move");
                 return;
             }
 
-            if (interaction.session.cardMove) {
+            if (session.cardMove) {
                 console.log("Card Move");
                 return;
             }
 
-            if (interaction.session.cardResize) {
+            if (session.cardResize) {
                 console.log("Card Resize");
                 return;
             }
         }
 
         function handlePointerUp() {
-            if(interaction.session.cardCreate || interaction.session.cardMove || interaction.session.cardResize) {
+            const session = interaction.getSession();
+            if(session.cardCreate || session.cardMove || session.cardResize) {
                 interaction.endInteraction();
             }
         }
 
         interaction.setEventHandlers({
             OnStart: () => {
-                if(interaction.session.cardCreate) {
+                const session = interaction.getSession();
+                if(session.cardCreate) {
                     root.dataset.interactionCardCreate = "true";
                     console.log("Card Create Start");
                     return;
                 }
             },
             OnEnd: () => {
-                if(interaction.session.cardCreate) {
+                const session = interaction.getSession();
+                if(session.cardCreate) {
                     delete root.dataset.interactionCardCreate;
                     console.log("Card Create End");
                     return;

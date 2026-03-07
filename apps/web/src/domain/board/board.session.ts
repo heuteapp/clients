@@ -4,7 +4,6 @@ import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types";
 
 export function createBoardSession(): BoardSession {
     return {
-        pointer: null,
         pointerId: null,
         cardCreate: null,
         cardResize: null,
@@ -15,7 +14,6 @@ export function createBoardSession(): BoardSession {
 //
 
 export interface BoardSession {
-    pointer: Pointer | null;
     pointerId?: number | null;
     cardCreate: CardCreateState | null;
     cardResize: CardResizeState | null;
