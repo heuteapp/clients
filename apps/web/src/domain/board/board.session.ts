@@ -2,6 +2,16 @@ import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types";
 
 //
 
+export function createBoardSession(): BoardSession {
+    return {
+        cardResize: null,
+        cardMove: null,
+        pointer: null,
+    }
+}
+
+//
+
 export interface BoardSession {
     cardResize: CardResizeState | null;
     cardMove: CardMoveState | null;
