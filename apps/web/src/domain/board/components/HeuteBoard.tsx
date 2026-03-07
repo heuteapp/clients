@@ -3,43 +3,25 @@
 import style from "../board.module.css"
 
 import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
-import { useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 import BoardCardContainer from "./BoardCardContainer";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { BoardData } from "../board.types";
-import { useBoardInteraction } from "../board.hooks";
+import { useBoardContext } from "../board.hooks";
 
 //
 
-interface HeuteBoardProps extends BoardData {
-
-}
-
-export default function HeuteBoard({ category, date, layout }: HeuteBoardProps) {
-
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  const layoutRegistry = useLayoutRegistry();
-  const session = useMemo(() => ({
-    cardResize: null,
-    cardMove: null,
-    pointer: null
-  }), [])
-  const interaction = useBoardInteraction({ session });
-
-  const contextValue = useMemo(
-    () => ({
-      rootRef,
-      layoutRegistry,
-    }),
-    [layoutRegistry]
-  );
+export default function HeuteBoard({ layout }: HeuteBoardProps) {
+  const context = useBoardContext();
+  const boardRef = useRef<HTMLDivElement>(null);
   
   return (
-    <div ref={rootRef} className={style.board}>
-      <HeuteLayout {...layout} registry={layoutRegistry} />
+    <div ref={boardRef} className={style.board}>
+      <HeuteLayout {...layout} registry={context.layoutRegistry} />
       <BoardCardContainer />
     </div>
   )
 }
 
+interface HeuteBoardProps extends BoardData {
+
+}
