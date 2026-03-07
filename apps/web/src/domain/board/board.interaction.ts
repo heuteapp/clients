@@ -27,3 +27,48 @@ export interface CardMoveState extends CardBaseState {
     currentSectionId: string;
     currentPosition: GridPosition;
 }
+
+//
+
+export function createBoardInteraction(): BoardInteraction {
+
+    const interaction: BoardInteraction = {
+        pointer: null,
+        cardMove: null,
+        cardResize: null,
+
+        startCardMove(cardId, sectionId, pointer, position) {
+            interaction.cardResize = null
+
+            interaction.cardMove = {
+                cardId,
+                startSectionId: sectionId,
+                startPointer: pointer,
+                startPosition: position,
+                currentSectionId: sectionId,
+                currentPosition: position
+            }
+        },
+
+        startCardResize(cardId, sectionId, pointer, size, handle) {
+            interaction.cardMove = null
+
+            interaction.cardResize = {
+                cardId,
+                startSectionId: sectionId,
+                startPointer: pointer,
+                startSize: size,
+                currentSize: size,
+                resizeHandle: handle
+            }
+        },
+
+        endInteraction() {
+            interaction.cardMove = null
+            interaction.cardResize = null
+            interaction.pointer = null
+        }
+    }
+
+    return interaction
+}
