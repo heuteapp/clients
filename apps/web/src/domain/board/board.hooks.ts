@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
 import { BoardInteraction, BoardInteractionEventType, createBoardInteraction } from "./board.interaction"
 import { BoardSession, BoardSessionSetter, BoardSessionTuple, createBoardSession } from "./board.session"
+import { LayoutRegistry } from "../layout/layout.registry"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -29,6 +30,7 @@ export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardIn
 
 export function useBoardPointerEvents(
   rootRef: React.RefObject<HTMLDivElement | null>,
+  layoutRegistry: LayoutRegistry,
   session: BoardSession,
   interaction: BoardInteraction
 ) {
@@ -72,12 +74,40 @@ export function useBoardPointerEvents(
             }
         }
 
+        const handlers: Array<{
+            el: HTMLElement;
+            enter: any;
+            leave: any;
+        }> = [];
+
+        function cleanupHandlers() {
+            for(const { el, enter, leave } of handlers) {
+                el.removeEventListener("pointerenter", enter);
+                el.removeEventListener("pointerleave", leave);
+            }
+            handlers.length = 0;
+        }
+
             // !! do not use session or its ref inside !!
         interaction.setEventHandlers({
             OnStart: (type: BoardInteractionEventType) => {
                 switch(type) {
                     case "create":
                         root.dataset.interactionCardCreate = "true";
+
+                        const sections = layoutRegistry.sections.values();
+                        for(const section of sections) {
+                            const el = section.ref?.current;
+                            if(!el) continue;
+
+                            const enter = () => console.log("enter", section.props?.id);
+                            const leave = () => console.log("leave", section.props?.id);
+
+                            el.addEventListener("pointerenter", enter);
+                            el.addEventListener("pointerleave", leave);
+
+                            handlers.push({ el, enter, leave });
+                        }
                         break;
                     case "move":
                         root.dataset.interactionCardMove = "true";
@@ -99,6 +129,8 @@ export function useBoardPointerEvents(
                         delete root.dataset.interactionCardResize;
                         break;
                 }
+
+                cleanupHandlers();
             }
         });
 
@@ -108,6 +140,7 @@ export function useBoardPointerEvents(
         return () => {
             root.removeEventListener("pointermove", handlePointerMove);
             root.removeEventListener("pointerup", handlePointerUp);
+            cleanupHandlers();
         }
 
     }, [rootRef, interaction]);

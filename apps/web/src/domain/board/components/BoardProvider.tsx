@@ -13,7 +13,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     const [session, sessionSetter] = useBoardSession();
     const interaction = useBoardInteraction(sessionSetter);
 
-    useBoardPointerEvents(rootRef, session, interaction);
+    useBoardPointerEvents(rootRef, layoutRegistry, session, interaction);
 
     const value = useMemo(
         () => ({
