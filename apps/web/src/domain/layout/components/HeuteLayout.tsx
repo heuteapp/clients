@@ -2,7 +2,7 @@
 
 const padding = 12;
 
-import { useMemo, useRef } from "react"
+import { useLayoutEffect, useMemo, useRef } from "react"
 
 import style from "../layout.module.css"
 
@@ -36,6 +36,14 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
     }),
     [analyze, measurements, registry]
   )
+
+  useLayoutEffect(() => {
+    registry.registerRoot(rootRef)
+
+    return () => {
+    registry.unregisterRoot()
+    }
+  }, [registry])
 
   return (
     <div 
