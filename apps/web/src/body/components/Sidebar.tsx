@@ -14,7 +14,7 @@ function Sidebar() {
           backgroundColor: '#ffffff',
           border: '1px solid #cccccc',
         }}
-        onPointerDown={() => {
+        onClick={() => {
           context.interaction.startCardCreate({ colSpan: 3, rowSpan: 2 });
         }}
       >
