@@ -14,10 +14,12 @@ import LayoutSectionContainer from "./LayoutSectionContainer";
 import { LayoutRegistry } from "../layout.registry";
 
 export default function HeuteLayout({ columnCount, rowCount, sections, registry }: HeuteLayoutProps) {
+  if(!registry) {
+    registry = useLayoutRegistry()
+  }
+
   const rootRef = useRef<HTMLDivElement>(null)
   const analyze = analyzeLayout(sections);
-
-  const layoutRegistry = registry || useLayoutRegistry()
 
   const measurements = useLayoutMeasurements({
     rootRef,
@@ -32,16 +34,16 @@ export default function HeuteLayout({ columnCount, rowCount, sections, registry 
       rootRef,
       analyze,
       measurements,
-      registry: layoutRegistry,
+      registry: registry,
     }),
-    [analyze, measurements, layoutRegistry]
+    [analyze, measurements, registry]
   )
 
   useLayoutEffect(() => {
-    layoutRegistry.registerRoot(rootRef)
+    registry.registerRoot(rootRef)
 
     return () => {
-    layoutRegistry.unregisterRoot()
+    registry.unregisterRoot()
     }
   }, [registry])
 
