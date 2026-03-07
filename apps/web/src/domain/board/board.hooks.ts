@@ -60,14 +60,14 @@ export function useBoardPointerEvents(
         interaction.setEventHandlers({
             OnStart: () => {
                 if(interaction.session.cardCreate) {
-                    root!.style.setProperty("--interaction-card-create", "true");
+                    root.dataset.interactionCardCreate = "true";
                     console.log("Card Create Start");
                     return;
                 }
             },
             OnEnd: () => {
                 if(interaction.session.cardCreate) {
-                    root!.style.setProperty("--interaction-card-create", "false");
+                    delete root.dataset.interactionCardCreate;
                     console.log("Card Create End");
                     return;
                 }

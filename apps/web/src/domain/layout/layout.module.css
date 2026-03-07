@@ -45,7 +45,7 @@
         box-shadow 0.2s ease;
 }
 
-.layout .section  .grid:hover {
+[data-interaction-card-create="true"] .layout .section .grid:hover {
     background: #212630;
     border-color: #3a4150;
 
