@@ -2,7 +2,7 @@
 
 const padding = 12;
 
-import { useLayoutEffect, useMemo, useRef } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
 
 import style from "../layout.module.css"
 
@@ -20,20 +20,22 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
   const { columnCount, rowCount, sections } = props;
   const { layoutRegistry } = context!;
 
-  const rootRef = useRef<HTMLDivElement>(null)
+  const layoutRef = useRef<HTMLDivElement>(null);
   const analyze = analyzeLayout(sections);
 
   const measurements = useLayoutMeasurements({
-    rootRef,
+    layoutRef,
     columnCount,
     rowCount,
     analyze,
     padding
   })
+  
+  context.layoutRegistry.measurements = measurements;
 
   const contextValue = useMemo(
     () => ({
-      rootRef,
+      layoutRef,
       analyze,
       measurements,
       registry: layoutRegistry,
@@ -42,7 +44,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
   )
 
   useLayoutEffect(() => {
-    layoutRegistry.registerRoot(rootRef, props, measurements)
+    layoutRegistry.registerRoot(layoutRef, props)
 
     return () => {
     layoutRegistry.unregisterRoot()
@@ -51,7 +53,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
 
   return (
     <div 
-      ref={rootRef} 
+      ref={layoutRef} 
       className={style.layout} 
       style={{
         visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"

@@ -12,6 +12,8 @@ export interface RegistryNode {
 }
 
 export interface LayoutRegistry {
+  measurements: LayoutMeasurements | null
+
   root: LayoutRootNode | null
   container: RegistryNode | null
   sections: Map<string, LayoutSectionNode>
@@ -19,7 +21,6 @@ export interface LayoutRegistry {
   registerRoot(
     ref: React.RefObject<HTMLDivElement | null>,
     props: HeuteLayoutProps,
-    measurements: LayoutMeasurements
   ): void
 
   unregisterRoot(): void
@@ -67,7 +68,6 @@ export interface LayoutRegistry {
 
 export interface LayoutRootNode extends RegistryNode {
   props?: HeuteLayoutProps
-  measurements?: LayoutMeasurements
 }
 
 export interface LayoutSectionNode extends RegistryNode {

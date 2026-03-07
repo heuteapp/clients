@@ -23,12 +23,13 @@ export function useLayoutRegistry(): LayoutRegistry {
     const sections = new Map<string, LayoutSectionNode>()
 
     registryRef.current = {
+      measurements: null,
       root: null,
       container: null,
       sections,
 
-      registerRoot(ref, props, measurements) {
-        this.root = { ref, props, measurements }
+      registerRoot(ref, props) {
+        this.root = { ref, props }
       },
 
       unregisterRoot() {
@@ -135,7 +136,7 @@ export function useLayoutRegistry(): LayoutRegistry {
   return registryRef.current
 }
 
-export function useLayoutMeasurements({ rootRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
     const cellCount = {
         horizontal: columnCount,
@@ -154,7 +155,7 @@ export function useLayoutMeasurements({ rootRef, columnCount, rowCount, analyze,
     })
 
     useEffect(() => {
-        const element = rootRef.current
+        const element = layoutRef.current
         if (!element) return
 
         const observer = new ResizeObserver(() => {
@@ -214,7 +215,7 @@ export function useLayoutMeasurements({ rootRef, columnCount, rowCount, analyze,
 
 
 export interface LayoutMeasurementsParams {
-    rootRef: React.RefObject<HTMLDivElement | null>
+    layoutRef: React.RefObject<HTMLDivElement | null>
     columnCount: number
     rowCount: number
     analyze: LayoutAnalyze

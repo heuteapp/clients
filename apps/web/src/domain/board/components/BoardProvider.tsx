@@ -5,9 +5,11 @@ import { BoardContext } from "../board.context";
 import { createBoardSession } from "../board.session";
 import { createBoardInteraction } from "../board.interaction";
 import { useBoardPointerEvents } from "../board.hooks";
-import { useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
+import { useLayoutMeasurements, useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
+
+
     const layoutRegistry = useLayoutRegistry();
 
     const session = useMemo(() => createBoardSession(), []);
