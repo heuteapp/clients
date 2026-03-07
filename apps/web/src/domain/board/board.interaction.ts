@@ -3,10 +3,12 @@ import { BoardSession } from "./board.session";
 
 export interface BoardInteraction {
     session: BoardSession
+    startCardCreate: (size: GridSize) => void;
     startCardResize: (cardId: string, sectionId: string, pointer: Pointer, size: GridSize, resizeHandle: ResizeHandle) => void;
     startCardMove: (cardId: string, sectionId: string, pointer: Pointer, position: GridPosition) => void;
     endInteraction: () => void;
 }
+
 //
 
 export function createBoardInteraction(session: BoardSession): BoardInteraction {
@@ -14,8 +16,22 @@ export function createBoardInteraction(session: BoardSession): BoardInteraction 
     const interaction: BoardInteraction = {
         session,
 
-        startCardMove(cardId, sectionId, pointer, position) {
+        startCardCreate(size) {
+            interaction.session.cardMove = null
             interaction.session.cardResize = null
+
+            interaction.session.cardCreate = {
+                cardId: "temp",
+                startPointer: session.pointer!,
+                startSize: size,
+                currentSectionId: null
+            }
+        },
+
+        startCardMove(cardId, sectionId, pointer, position) {
+            interaction.session.cardCreate = null
+            interaction.session.cardResize = null
+
 
             interaction.session.cardMove = {
                 cardId,
@@ -28,6 +44,7 @@ export function createBoardInteraction(session: BoardSession): BoardInteraction 
         },
 
         startCardResize(cardId, sectionId, pointer, size, handle) {
+            interaction.session.cardCreate = null
             interaction.session.cardMove = null
 
             interaction.session.cardResize = {
