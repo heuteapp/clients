@@ -31,34 +31,38 @@ export function useBoardPointerEvents(
         const root = rootRef.current;
         if (!root) return;
 
+        // Event listenerları başlat / durdur fonksiyonları
         function handlePointerMove(e: PointerEvent) {
-            interaction.session.pointer = {
-                x: e.clientX,
-                y: e.clientY
-            };
+            interaction.session.pointer = { x: e.clientX, y: e.clientY };
 
-            const cardMove = interaction.session.cardMove;
-            if (cardMove) {
-                return;
-            }
-
-            const resize = interaction.session.cardResize;
-            if (resize) {
-                return;
-            }
+            if (interaction.session.cardCreate) return;
+            if (interaction.session.cardMove) return;
+            if (interaction.session.cardResize) return;
         }
 
         function handlePointerUp() {
             interaction.endInteraction();
+            removeListeners();
         }
 
-        root.addEventListener("pointermove", handlePointerMove);
-        root.addEventListener("pointerup", handlePointerUp);
-        
-        return () => {
+        function addListeners() {
+            if(!root) return;
+            root.addEventListener("pointermove", handlePointerMove);
+            root.addEventListener("pointerup", handlePointerUp);
+        }
+
+        function removeListeners() {
+            if(!root) return;
             root.removeEventListener("pointermove", handlePointerMove);
             root.removeEventListener("pointerup", handlePointerUp);
-        };
+        }
+
+        interaction.setEventHandlers({
+            OnStart: addListeners,
+            OnEnd: removeListeners
+        });
+
+        return () => removeListeners();
 
     }, [rootRef, interaction]);
 }
