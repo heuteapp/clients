@@ -1,7 +1,8 @@
-import { GridSize, Pointer } from "@/src/types";
+import { GridSize, Pointer, ResizeHandle } from "@/src/types";
 
 export interface BoardIntroduction {
-    pointer: Pointer;
+    cardResize: CardResizeState | null;
+    pointer?: Pointer;
 }
 
 export interface CardBaseState {
@@ -14,4 +15,5 @@ export interface CardResizeState extends CardBaseState {
     currentSectionId: string;
     startSize: GridSize;
     currentSize: GridSize;
+    resizeHandle: ResizeHandle;
 }
