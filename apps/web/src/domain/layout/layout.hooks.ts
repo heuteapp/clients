@@ -116,6 +116,10 @@ export function useLayoutRegistry(): LayoutRegistry {
       getGrid(sectionId) {
         return sections.get(sectionId)?.grid || undefined
       },
+
+      getCell(sectionId, id) {
+        return sections.get(sectionId)?.grid?.cells.get(id) || undefined
+      }
     }
   }
 

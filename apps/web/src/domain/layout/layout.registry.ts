@@ -50,6 +50,7 @@ export interface LayoutRegistry {
 
   getSection(id: string): LayoutSectionNode | undefined
   getGrid(sectionId: string): LayoutGridNode | undefined
+  getCell(sectionId: string, id: string): LayoutCellNode | undefined
 }
 
 export interface LayoutSectionNode extends RegistryNode {
