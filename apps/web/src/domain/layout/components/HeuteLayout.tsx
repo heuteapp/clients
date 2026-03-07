@@ -8,19 +8,17 @@ import style from "../layout.module.css"
 
 import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
-import { useLayoutMeasurements, useLayoutRegistry } from "../layout.hooks";
+import { useLayoutMeasurements } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { LayoutRegistry } from "../layout.registry";
+import { useBoardContext } from "../../board/board.hooks";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
+  const context = useBoardContext();
   
   const { columnCount, rowCount, sections } = props;
-  let { registry } = props;
-
-  if(!registry) {
-    registry = useLayoutRegistry()
-  }
+  const { layoutRegistry } = context!;
 
   const rootRef = useRef<HTMLDivElement>(null)
   const analyze = analyzeLayout(sections);
@@ -38,18 +36,18 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
       rootRef,
       analyze,
       measurements,
-      registry: registry,
+      registry: layoutRegistry,
     }),
-    [analyze, measurements, registry]
+    [analyze, measurements, layoutRegistry]
   )
 
   useLayoutEffect(() => {
-    registry.registerRoot(rootRef, props, measurements)
+    layoutRegistry.registerRoot(rootRef, props, measurements)
 
     return () => {
-    registry.unregisterRoot()
+    layoutRegistry.unregisterRoot()
     }
-  }, [registry])
+  }, [layoutRegistry])
 
   return (
     <div 

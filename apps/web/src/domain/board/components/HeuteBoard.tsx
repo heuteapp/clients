@@ -16,7 +16,7 @@ export default function HeuteBoard({ layout }: HeuteBoardProps) {
   
   return (
     <div ref={boardRef} className={style.board}>
-      <HeuteLayout {...layout} registry={context.layoutRegistry} />
+      <HeuteLayout {...layout} />
       <BoardCardContainer />
     </div>
   )
