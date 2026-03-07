@@ -13,7 +13,11 @@ import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { LayoutRegistry } from "../layout.registry";
 
-export default function HeuteLayout({ columnCount, rowCount, sections, registry }: HeuteLayoutProps) {
+export default function HeuteLayout(props: HeuteLayoutProps) {
+  
+  const { columnCount, rowCount, sections } = props;
+  let { registry } = props;
+
   if(!registry) {
     registry = useLayoutRegistry()
   }
@@ -40,7 +44,7 @@ export default function HeuteLayout({ columnCount, rowCount, sections, registry 
   )
 
   useLayoutEffect(() => {
-    registry.registerRoot(rootRef)
+    registry.registerRoot(rootRef, props, measurements)
 
     return () => {
     registry.unregisterRoot()

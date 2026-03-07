@@ -5,6 +5,7 @@ import { LayoutSectionProps } from "./components/LayoutSection"
 import { LayoutGridProps } from "./components/LayoutGrid"
 import { LayoutGridCellProps } from "./components/LayoutGridCell"
 import { HeuteLayoutProps } from "./components/HeuteLayout"
+import { LayoutMeasurements } from "./layout.types"
 
 export interface RegistryNode {
   ref?: React.RefObject<HTMLDivElement | null> | null
@@ -16,9 +17,11 @@ export interface LayoutRegistry {
   sections: Map<string, LayoutSectionNode>
 
   registerRoot(
-    ref: React.RefObject<HTMLDivElement | null>
+    ref: React.RefObject<HTMLDivElement | null>,
+    props: HeuteLayoutProps,
+    measurements: LayoutMeasurements
   ): void
-  
+
   unregisterRoot(): void
 
 
@@ -64,6 +67,7 @@ export interface LayoutRegistry {
 
 export interface LayoutRootNode extends RegistryNode {
   props?: HeuteLayoutProps
+  measurements?: LayoutMeasurements
 }
 
 export interface LayoutSectionNode extends RegistryNode {

@@ -27,8 +27,8 @@ export function useLayoutRegistry(): LayoutRegistry {
       container: null,
       sections,
 
-      registerRoot(ref) {
-        this.root = { ref }
+      registerRoot(ref, props, measurements) {
+        this.root = { ref, props, measurements }
       },
 
       unregisterRoot() {
