@@ -1,6 +1,6 @@
 "use client"
 
-import style from "./HeuteBoard.module.css"
+import style from "../board.module.css"
 
 import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
 import { sectionExamples } from "../board.examples";
