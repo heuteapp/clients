@@ -52,7 +52,7 @@ export function useBoardPointerEvents(
             currentSession.pointerId = e.pointerId;
 
             if (currentSession.cardCreate) {
-                console.log("Card Create Move");
+                console.log("Card Create");
                 return;
             }
 
@@ -101,13 +101,11 @@ export function useBoardPointerEvents(
                             if(!el) continue;
 
                             const enter = () => {
-                                const sessionState = sessionRef.current!.cardCreate!;
-                                interaction.updateCardCreate(sessionState.startSize, grid!.props!.sectionId);
+                                interaction.updateCardCreate(grid!.props!.sectionId, null);
                             }
 
                             const leave = () => {
-                                const sessionState = sessionRef.current!.cardCreate!;
-                                interaction.updateCardCreate(sessionState.startSize, null);
+                                interaction.updateCardCreate(null, null);
                             }
 
                             el.addEventListener("pointerenter", enter);

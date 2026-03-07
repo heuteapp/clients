@@ -34,6 +34,7 @@ export interface CardBaseState {
 export interface CardCreateState extends CardBaseState {
     startSize: GridSize;
     currentSectionId: string | null;
+    currentPosition: GridPosition | null;
 }
 
 export interface CardResizeState extends CardBaseState {

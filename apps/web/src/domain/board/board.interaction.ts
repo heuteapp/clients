@@ -14,8 +14,8 @@ export interface BoardInteraction {
     ) => void
 
     updateCardCreate: (
-        size: GridSize,
-        sectionId: string | null
+        sectionId: string | null,
+        position: GridPosition | null
     ) => void
 
     startCardResize: (
@@ -69,7 +69,8 @@ export function createBoardInteraction(
                     cardId: "temp",
                     startPointer: interaction.pointer!,
                     startSize: size,
-                    currentSectionId: null
+                    currentSectionId: null,
+                    currentPosition: null
                 }
             }))
             
@@ -77,7 +78,7 @@ export function createBoardInteraction(
             interaction.eventHandlers?.OnStart(interaction.eventType)
         },
 
-        updateCardCreate(size, sectionId) {
+        updateCardCreate(sectionId, position) {
             interaction.setSession(prev => {
                 if(!prev.cardCreate) return prev;
 
@@ -86,8 +87,7 @@ export function createBoardInteraction(
                     cardCreate: {
                         ...prev.cardCreate,
                         currentSectionId: sectionId,
-                        startSize: prev.cardCreate.startSize,
-                        currentSize: size
+                        currentPosition: position,
                     }
                 }
             })
