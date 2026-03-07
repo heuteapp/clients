@@ -1,7 +1,10 @@
+import { HeuteLayoutData } from "../layout/layout.types";
+
 export interface BoardData {
     id: string;
     category: string;
     date: Date;
+    layout: HeuteLayoutData;
     cards: BoardCardData[];
 }
 
