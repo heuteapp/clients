@@ -100,8 +100,15 @@ export function useBoardPointerEvents(
                             const el = section.ref?.current;
                             if(!el) continue;
 
-                            const enter = () => console.log("enter", section.props?.id);
-                            const leave = () => console.log("leave", section.props?.id);
+                            const enter = () => {
+                                const sessionState = sessionRef.current!.cardCreate!;
+                                interaction.updateCardCreate(sessionState.startSize, section.props!.id!);
+                            }
+
+                            const leave = () => {
+                                const sessionState = sessionRef.current!.cardCreate!;
+                                interaction.updateCardCreate(sessionState.startSize, null);
+                            }
 
                             el.addEventListener("pointerenter", enter);
                             el.addEventListener("pointerleave", leave);
