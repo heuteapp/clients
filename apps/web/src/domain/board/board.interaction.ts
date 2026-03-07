@@ -58,6 +58,7 @@ export function createBoardInteraction(session: BoardSession): BoardInteraction 
         },
 
         endInteraction() {
+            interaction.session.cardCreate = null
             interaction.session.cardMove = null
             interaction.session.cardResize = null
             interaction.session.pointer = null
