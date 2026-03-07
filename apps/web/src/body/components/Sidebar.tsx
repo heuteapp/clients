@@ -13,8 +13,10 @@ function Sidebar() {
           height:48,
           backgroundColor: '#ffffff',
           border: '1px solid #cccccc',
+          userSelect: 'none',
+          cursor: context.interaction.eventType === "create" ? "default" : "pointer",
         }}
-        onClick={() => {
+        onPointerDown={() => {
           context.interaction.startCardCreate({ colSpan: 3, rowSpan: 2 });
         }}
       >
