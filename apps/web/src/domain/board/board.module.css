@@ -19,4 +19,5 @@
     background-color: rgba(90,124,255,1);
     border: 2px dashed rgba(90,124,255,1);
     border-radius: 6px;
+    pointer-events: none;
 }

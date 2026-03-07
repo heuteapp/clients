@@ -95,14 +95,14 @@ export function useBoardPointerEvents(
                     case "create":
                         root.dataset.interactionCardCreate = "true";
 
-                        const sections = layoutRegistry.sections.values();
-                        for(const section of sections) {
-                            const el = section.ref?.current;
+                        const grids = layoutRegistry.sections.values().map(s => s.grid);
+                        for(const grid of grids) {
+                            const el = grid!.ref?.current;
                             if(!el) continue;
 
                             const enter = () => {
                                 const sessionState = sessionRef.current!.cardCreate!;
-                                interaction.updateCardCreate(sessionState.startSize, section.props!.id!);
+                                interaction.updateCardCreate(sessionState.startSize, grid!.props!.sectionId);
                             }
 
                             const leave = () => {
