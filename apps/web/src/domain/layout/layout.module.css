@@ -33,7 +33,7 @@
     background: #1a1d24;
 
     border: 1px solid #2a2f3a;
-    border-radius: 10px;
+    border-radius: 6px;
 
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 
@@ -56,5 +56,5 @@
 .layout .section .grid .cell {
     background: #2a2f3a;
     border: 1px solid #3a4150;
-    border-radius: 5px;
+    border-radius: 6px;
 }
