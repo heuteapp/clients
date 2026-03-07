@@ -13,7 +13,7 @@ export function useBoardContext() {
 }
 
 export function useBoardInteraction() : BoardInteraction {
-    const interaction = useRef<BoardInteraction>(null);
+    const interaction = useRef<BoardInteraction | null>(null);
 
     if(!interaction.current) {
         interaction.current = createBoardInteraction();
