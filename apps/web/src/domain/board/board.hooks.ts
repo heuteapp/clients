@@ -13,35 +13,12 @@ export function useBoardContext() {
     return ctx
 }
 
-export function useBoardInteraction({ rootRef, session }: { rootRef: React.RefObject<HTMLDivElement | null>, session: BoardSession }) : BoardInteraction {
+export function useBoardInteraction({ session }: { session: BoardSession }) : BoardInteraction {
     const interactionRef = useRef<BoardInteraction | null>(null);
 
     if(!interactionRef.current) {
-        interactionRef.current = createBoardInteraction(rootRef, session);
+        interactionRef.current = createBoardInteraction(session);
     }
 
-    const interaction = interactionRef.current;
-
-    useEffect(() => {
-        const root = rootRef.current;
-        if (!root) return;
-        
-        function handlePointerMove(e: PointerEvent) {
-            session.pointer = { x: e.clientX, y: e.clientY };
-        }
-
-        function handlePointerUp() {
-            interaction.endInteraction();
-        }
-
-        root.addEventListener("pointermove", handlePointerMove);
-        root.addEventListener("pointerup", handlePointerUp);
-
-        return () => {
-            root.removeEventListener("pointermove", handlePointerMove);
-            root.removeEventListener("pointerup", handlePointerUp);
-        };
-    }, [interaction]);
-
-    return interaction;
+    return interactionRef.current;
 }

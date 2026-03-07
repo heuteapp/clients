@@ -27,7 +27,7 @@ export default function HeuteBoard({ category, date, layout }: HeuteBoardProps) 
     cardMove: null,
     pointer: null
   }), [])
-  const interaction = useBoardInteraction({ rootRef, session });
+  const interaction = useBoardInteraction({ session });
 
   const contextValue = useMemo(
     () => ({
