@@ -1,46 +1,23 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types";
+import { BoardSession } from "./board.session";
 
 export interface BoardInteraction {
-    cardResize: CardResizeState | null;
-    cardMove: CardMoveState | null;
-    pointer: Pointer | null;
-
+    session: BoardSession
     startCardResize: (cardId: string, sectionId: string, pointer: Pointer, size: GridSize, resizeHandle: ResizeHandle) => void;
     startCardMove: (cardId: string, sectionId: string, pointer: Pointer, position: GridPosition) => void;
     endInteraction: () => void;
 }
-
-export interface CardBaseState {
-    cardId: string;
-    startSectionId: string;
-    startPointer: Pointer;
-}
-
-export interface CardResizeState extends CardBaseState {
-    startSize: GridSize;
-    currentSize: GridSize;
-    resizeHandle: ResizeHandle;
-}
-
-export interface CardMoveState extends CardBaseState {
-    startPosition: GridPosition;
-    currentSectionId: string;
-    currentPosition: GridPosition;
-}
-
 //
 
-export function createBoardInteraction(): BoardInteraction {
+export function createBoardInteraction(session: BoardSession): BoardInteraction {
 
     const interaction: BoardInteraction = {
-        pointer: null,
-        cardMove: null,
-        cardResize: null,
+        session,
 
         startCardMove(cardId, sectionId, pointer, position) {
-            interaction.cardResize = null
+            interaction.session.cardResize = null
 
-            interaction.cardMove = {
+            interaction.session.cardMove = {
                 cardId,
                 startSectionId: sectionId,
                 startPointer: pointer,
@@ -51,9 +28,9 @@ export function createBoardInteraction(): BoardInteraction {
         },
 
         startCardResize(cardId, sectionId, pointer, size, handle) {
-            interaction.cardMove = null
+            interaction.session.cardMove = null
 
-            interaction.cardResize = {
+            interaction.session.cardResize = {
                 cardId,
                 startSectionId: sectionId,
                 startPointer: pointer,
@@ -64,9 +41,9 @@ export function createBoardInteraction(): BoardInteraction {
         },
 
         endInteraction() {
-            interaction.cardMove = null
-            interaction.cardResize = null
-            interaction.pointer = null
+            interaction.session.cardMove = null
+            interaction.session.cardResize = null
+            interaction.session.pointer = null
         }
     }
 
