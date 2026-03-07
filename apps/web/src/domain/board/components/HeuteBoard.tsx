@@ -6,6 +6,8 @@ import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
 import { sectionExamples } from "../board.examples";
 import { useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 import BoardCardContainer from "./BoardCardContainer";
+import { HeuteBoardContext } from "../board.context";
+import { useMemo, useRef } from "react";
 
 //
 
@@ -16,12 +18,23 @@ interface HeuteBoardProps {
 
 export default function HeuteBoard({ category, date }: HeuteBoardProps) {
 
-  const layoutRegistry = useLayoutRegistry()
+  const rootRef = useRef<HTMLDivElement>(null);
+  const layoutRegistry = useLayoutRegistry();
+
+  const contextValue = useMemo(
+    () => ({
+      rootRef,
+      layoutRegistry,
+    }),
+    [layoutRegistry]
+  );
   
   return (
-    <div className={style.board}>
+    <div ref={rootRef} className={style.board}>
       <HeuteLayout columnCount={18} rowCount={8} sections={(sectionExamples as any)[category] ?? sectionExamples.two} registry={layoutRegistry} />
-      <BoardCardContainer />
+      <HeuteBoardContext.Provider value={contextValue}>
+        <BoardCardContainer />
+      </HeuteBoardContext.Provider>
     </div>
   )
 }
