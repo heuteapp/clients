@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
 import { BoardInteraction, BoardInteractionEventType, createBoardInteraction } from "./board.interaction"
-import { BoardSession, BoardSessionSetter, BoardSessionTuple, createBoardSession } from "./board.session"
+import { BoardSession, BoardSessionSetter, BoardSessionTuple, CardBaseState, CardCreateState, createBoardSession } from "./board.session"
 import { LayoutRegistry } from "../layout/layout.registry"
 
 export function useBoardContext() {
@@ -52,6 +52,7 @@ export function useBoardPointerEvents(
             currentSession.pointerId = e.pointerId;
 
             if (currentSession.cardCreate) {
+                cardCreateStyle(currentSession.cardCreate);
                 return;
             }
 
@@ -93,10 +94,11 @@ export function useBoardPointerEvents(
 
             // !! do not use session or its ref inside !!
         interaction.setEventHandlers({
-            OnStart: (type: BoardInteractionEventType) => {
+            OnStart: (type: BoardInteractionEventType, state: CardBaseState) => {
                 switch(type) {
                     case "create":
                         root.dataset.interactionCardCreate = "true";
+                        cardCreateStyle(state as CardCreateState);
 
                         const grids = layoutRegistry.sections.values().map(s => s.grid);
                         for(const grid of grids) {
@@ -171,6 +173,21 @@ export function useBoardPointerEvents(
                 cleanupHandlers();
             }
         });
+
+        function cardCreateStyle(state: CardCreateState) {
+            const root = rootRef.current;
+            if(!root) return;
+
+            const pointer = interaction.pointer!;
+
+            const size = state.startSize;
+
+            const cardX = pointer.x - (size.colSpan * layoutRegistry.measurements!.cellSize.full) / 2;
+            const cardY = pointer.y - (size.rowSpan * layoutRegistry.measurements!.cellSize.full) / 2;
+
+            root.style.setProperty("--ghost-card-x", `${cardX}px`);
+            root.style.setProperty("--ghost-card-y", `${cardY}px`);
+        }
 
         root.addEventListener("pointermove", handlePointerMove);
         root.addEventListener("pointerup", handlePointerUp);

@@ -1,5 +1,5 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types";
-import { BoardSession, BoardSessionSetter } from "./board.session";
+import { BoardSession, BoardSessionSetter, CardBaseState } from "./board.session";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
@@ -37,7 +37,7 @@ export interface BoardInteraction {
 }
 
 export interface BoardInteractionEventHandlers {
-    OnStart: (type: BoardInteractionEventType) => void;
+    OnStart: (type: BoardInteractionEventType, state: CardBaseState) => void;
     OnEnd: (type: BoardInteractionEventType) => void;
 }
 
@@ -62,20 +62,22 @@ export function createBoardInteraction(
         },
 
         startCardCreate(size) {
+            const state = {
+                cardId: "temp",
+                startPointer: interaction.pointer!,
+                startSize: size,
+                currentSectionId: null,
+                currentPosition: null
+            }
+
             interaction.setSession(() => ({
                 cardMove: null,
                 cardResize: null,
-                cardCreate: {
-                    cardId: "temp",
-                    startPointer: interaction.pointer!,
-                    startSize: size,
-                    currentSectionId: null,
-                    currentPosition: null
-                }
+                cardCreate: state
             }))
             
             interaction.eventType = "create";
-            interaction.eventHandlers?.OnStart(interaction.eventType)
+            interaction.eventHandlers?.OnStart(interaction.eventType, state)
         },
 
         updateCardCreate(sectionId, position) {
@@ -94,39 +96,43 @@ export function createBoardInteraction(
         },
 
         startCardMove(cardId, sectionId, pointer, position) {
+            const state = {
+                cardId,
+                startSectionId: sectionId,
+                startPointer: pointer,
+                startPosition: position,
+                currentSectionId: sectionId,
+                currentPosition: position
+            }
+
             interaction.setSession(() => ({
                 cardCreate: null,
                 cardResize: null,
-                cardMove: {
-                    cardId,
-                    startSectionId: sectionId,
-                    startPointer: pointer,
-                    startPosition: position,
-                    currentSectionId: sectionId,
-                    currentPosition: position
-                }
+                cardMove: state
             }))
 
             interaction.eventType = "move";
-            interaction.eventHandlers?.OnStart(interaction.eventType)
+            interaction.eventHandlers?.OnStart(interaction.eventType, state)
         },
 
         startCardResize(cardId, sectionId, pointer, size, handle) {
+            const state = {
+                cardId,
+                startSectionId: sectionId,
+                startPointer: pointer,
+                startSize: size,
+                currentSize: size,
+                resizeHandle: handle
+             }
+
             interaction.setSession(() => ({
                 cardCreate: null,
                 cardMove: null,
-                cardResize: {
-                    cardId,
-                    startSectionId: sectionId,
-                    startPointer: pointer,
-                    startSize: size,
-                    currentSize: size,
-                    resizeHandle: handle
-                }
+                cardResize: state
             }))
 
             interaction.eventType = "resize";
-            interaction.eventHandlers?.OnStart(interaction.eventType)
+            interaction.eventHandlers?.OnStart(interaction.eventType, state)
         },
 
         endInteraction() {
