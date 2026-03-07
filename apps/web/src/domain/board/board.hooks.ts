@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
+import { useContext, useEffect, useMemo, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
 import { BoardInteraction, BoardInteractionEventType, createBoardInteraction } from "./board.interaction"
 import { BoardSession, BoardSessionSetter, BoardSessionTuple, createBoardSession } from "./board.session"
@@ -34,7 +34,7 @@ export function useBoardPointerEvents(
 ) {
     const sessionRef = useRef(session);
     
-    useLayoutEffect(() => {
+    useEffect(() => {
         sessionRef.current = session;
     }, [session]);
 
