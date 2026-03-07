@@ -3,9 +3,9 @@ import style from "../board.module.css"
 function BoardGhostCard(props : BoardGhostCardProps) {
     return (
         <div 
-            className={style.card} 
+            className={style.ghostCard} 
             style={{
-                
+
             }}
         >
         </div>

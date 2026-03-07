@@ -6,6 +6,7 @@ import { createContext } from "react";
 export const BoardContext = createContext<BoardContextValue | null>(null);
 
 export interface BoardContextValue {
+    session: BoardSession;
     interaction: BoardInteraction;
     layoutRegistry: LayoutRegistry;
 }

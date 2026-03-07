@@ -7,6 +7,7 @@ import BoardCardContainer from "./BoardCardContainer";
 import { useRef } from "react";
 import { BoardData } from "../board.types";
 import { useBoardContext } from "../board.hooks";
+import BoardGhostCard from "./BoardGhostCard";
 
 //
 
@@ -18,6 +19,7 @@ export default function HeuteBoard({ layout }: HeuteBoardProps) {
     <div ref={boardRef} className={style.board}>
       <HeuteLayout {...layout} />
       <BoardCardContainer />
+      { context.interaction.eventType === "create" && <BoardGhostCard /> }
     </div>
   )
 }
