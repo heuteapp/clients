@@ -11,13 +11,13 @@ import { analyzeLayout } from "../layout.utils"
 import { useLayoutMeasurements, useLayoutRegistry } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
+import { LayoutRegistry } from "../layout.registry";
 
-export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLayoutProps) {
-
+export default function HeuteLayout({ columnCount, rowCount, sections, registry }: HeuteLayoutProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const analyze = analyzeLayout(sections);
 
-  const registry = useLayoutRegistry()
+  const layoutRegistry = registry || useLayoutRegistry()
 
   const measurements = useLayoutMeasurements({
     rootRef,
@@ -32,16 +32,16 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
       rootRef,
       analyze,
       measurements,
-      registry,
+      registry: layoutRegistry,
     }),
-    [analyze, measurements, registry]
+    [analyze, measurements, layoutRegistry]
   )
 
   useLayoutEffect(() => {
-    registry.registerRoot(rootRef)
+    layoutRegistry.registerRoot(rootRef)
 
     return () => {
-    registry.unregisterRoot()
+    layoutRegistry.unregisterRoot()
     }
   }, [registry])
 
@@ -61,5 +61,5 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
 }
 
 export interface HeuteLayoutProps extends HeuteLayoutData {
-  
+  registry?: LayoutRegistry
 }
