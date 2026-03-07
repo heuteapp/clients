@@ -2,11 +2,11 @@
     flex: 1;
     margin: 12px;
     overflow: hidden;
+    position: relative;
 }
 
 .cardContainer {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
-    background-color: blueviolet;
 }
