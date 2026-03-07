@@ -52,26 +52,35 @@ export function useBoardPointerEvents(
         }
 
         function handlePointerUp() {
-            interaction.endInteraction();
-            removeListeners();
-        }
-
-        function addListeners() {
-            root!.addEventListener("pointermove", handlePointerMove);
-            root!.addEventListener("pointerup", handlePointerUp);
-        }
-
-        function removeListeners() {
-            root!.removeEventListener("pointermove", handlePointerMove);
-            root!.removeEventListener("pointerup", handlePointerUp);
+            if(interaction.session.cardCreate || interaction.session.cardMove || interaction.session.cardResize) {
+                interaction.endInteraction();
+            }
         }
 
         interaction.setEventHandlers({
-            OnStart: addListeners,
-            OnEnd: removeListeners
+            OnStart: () => {
+                if(interaction.session.cardCreate) {
+                    root!.style.setProperty("--interaction-card-create", "true");
+                    console.log("Card Create Start");
+                    return;
+                }
+            },
+            OnEnd: () => {
+                if(interaction.session.cardCreate) {
+                    root!.style.setProperty("--interaction-card-create", "false");
+                    console.log("Card Create End");
+                    return;
+                }
+            }
         });
 
-        return () => removeListeners();
+        root.addEventListener("pointermove", handlePointerMove);
+        root.addEventListener("pointerup", handlePointerUp);
+
+        return () => {
+            root.removeEventListener("pointermove", handlePointerMove);
+            root.removeEventListener("pointerup", handlePointerUp);
+        }
 
     }, [rootRef, interaction]);
 }
