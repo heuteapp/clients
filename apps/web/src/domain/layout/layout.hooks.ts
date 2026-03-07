@@ -23,8 +23,17 @@ export function useLayoutRegistry(): LayoutRegistry {
     const sections = new Map<string, LayoutSectionNode>()
 
     registryRef.current = {
+      root: null,
       container: null,
       sections,
+
+      registerRoot(ref) {
+        this.root = { ref }
+      },
+
+      unregisterRoot() {
+        this.root = null
+      },
 
       registerContainer(ref) {
         this.container = { ref }

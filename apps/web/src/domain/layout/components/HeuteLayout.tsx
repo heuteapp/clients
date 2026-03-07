@@ -12,10 +12,6 @@ import { useLayoutMeasurements, useLayoutRegistry } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
 
-interface HeuteLayoutProps extends HeuteLayoutData {
-  
-}
-
 export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLayoutProps) {
 
   const rootRef = useRef<HTMLDivElement>(null)
@@ -54,4 +50,8 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
       </HeuteLayoutContext.Provider>
     </div>
   )
+}
+
+export interface HeuteLayoutProps extends HeuteLayoutData {
+  
 }
