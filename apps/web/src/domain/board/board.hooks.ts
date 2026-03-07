@@ -1,6 +1,6 @@
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
-import { BoardInteraction, createBoardInteraction } from "./board.interaction"
+import { BoardInteraction, BoardInteractionEventType, createBoardInteraction } from "./board.interaction"
 import { BoardSession, BoardSessionSetter, BoardSessionTuple, createBoardSession } from "./board.session"
 
 export function useBoardContext() {
@@ -73,12 +73,19 @@ export function useBoardPointerEvents(
         }
 
         interaction.setEventHandlers({
-            OnStart: () => {
-                const currentSession = sessionRef.current;
 
-                if(currentSession.cardCreate) {
-                    root.dataset.interactionCardCreate = "true";
-                    return;
+            // !! do not use session inside or its ref !!
+            OnStart: (type: BoardInteractionEventType) => {
+                switch(type) {
+                    case "create":
+                        root.dataset.interactionCardCreate = "true";
+                        break;
+                    case "move":
+                        root.dataset.interactionCardMove = "true";
+                        break;
+                    case "resize":
+                        root.dataset.interactionCardResize = "true";
+                        break;
                 }
             },
             OnEnd: () => {

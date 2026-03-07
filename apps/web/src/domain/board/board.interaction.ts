@@ -31,9 +31,11 @@ export interface BoardInteraction {
 }
 
 export interface BoardInteractionEventHandlers {
-    OnStart: () => void;
+    OnStart: (type: BoardInteractionEventType) => void;
     OnEnd: () => void;
 }
+
+export type BoardInteractionEventType = "create" | "move" | "resize";
 
 //
 
@@ -64,7 +66,7 @@ export function createBoardInteraction(
                 }
             }))
             
-            interaction.eventHandlers?.OnStart()
+            interaction.eventHandlers?.OnStart("create")
         },
 
         startCardMove(cardId, sectionId, pointer, position) {
@@ -81,7 +83,7 @@ export function createBoardInteraction(
                 }
             }))
 
-            interaction.eventHandlers?.OnStart()
+            interaction.eventHandlers?.OnStart("move")
         },
 
         startCardResize(cardId, sectionId, pointer, size, handle) {
@@ -98,7 +100,7 @@ export function createBoardInteraction(
                 }
             }))
 
-            interaction.eventHandlers?.OnStart()
+            interaction.eventHandlers?.OnStart("resize")
         },
 
         endInteraction() {
