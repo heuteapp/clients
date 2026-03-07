@@ -110,6 +110,9 @@ export function useBoardPointerEvents(
 
                             const pointermove = () => {
                                 const session = sessionRef.current;
+                                const section = layoutRegistry.getSection(grid!.props!.sectionId)!;
+                                const sectionProps = section.props!;
+                                
                                 const rect = el.getBoundingClientRect();
                                 const cellSize = layoutRegistry.measurements!.cellSize.full;
 
@@ -119,15 +122,23 @@ export function useBoardPointerEvents(
                                 const cardRows = session.cardCreate!.startSize.rowSpan;
                                 const cardCols = session.cardCreate!.startSize.colSpan;
 
-                                const mouseCol = Math.floor(
-                                    (mouseX - (cardCols * cellSize) / 2) / cellSize
-                                );
+                                // Mouse’u merkeze almak için kart boyutunu yarı hücre olarak çıkarıyoruz
+                                const centeredX = mouseX - (cardCols * cellSize) / 2;
+                                const centeredY = mouseY - (cardRows * cellSize) / 2;
 
-                                const mouseRow = Math.floor(
-                                    (mouseY - (cardRows * cellSize) / 2) / cellSize
-                                );
+                                // 1-based index
+                                let rawCol = Math.floor(centeredX / cellSize) + 1;
+                                let rawRow = Math.floor(centeredY / cellSize) + 1;
 
-                                interaction.updateCardCreate(grid!.props!.sectionId, { rowIndex: mouseRow, colIndex: mouseCol });
+                                // Max pozisyon: kart grid dışına taşmasın
+                                const maxRow = sectionProps.rowSpan - cardRows + 1;
+                                const maxCol = sectionProps.colSpan - cardCols + 1;
+
+                                // Clamp ile sınırla
+                                const row = clamp(rawRow, 1, maxRow);
+                                const col = clamp(rawCol, 1, maxCol);
+
+                                interaction.updateCardCreate(grid!.props!.sectionId, { rowIndex: row, colIndex: col });
                             }
 
                             const pointerleave = () => {
@@ -176,4 +187,8 @@ export function useBoardPointerEvents(
         }
 
     }, [rootRef, interaction]);
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
 }

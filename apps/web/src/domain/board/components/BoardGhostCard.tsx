@@ -13,14 +13,21 @@ function BoardGhostCard(props : BoardGhostCardProps) {
     const gridRect = gridEl.getBoundingClientRect();
     const layoutMeasurements = layoutRegistry.measurements!;
 
+    const position = {
+        left : gridRect.left + (props.rect.colIndex - 2) * layoutMeasurements.cellSize.inner,
+        top: gridRect.top + (props.rect.rowIndex - 1) * layoutMeasurements.cellSize.inner,
+        width: layoutMeasurements.cellSize.inner * props.rect.colSpan,
+        height: layoutMeasurements.cellSize.inner * props.rect.rowSpan,
+    }
+
     return (
         <div 
             className={style.ghostCard} 
             style={{
-                left: gridRect.left + (props.rect.colIndex - 1) * layoutMeasurements.cellSize.full,
-                top: gridRect.top + (props.rect.rowIndex - 1) * layoutMeasurements.cellSize.full,
-                width: layoutMeasurements.cellSize.full * props.rect.colSpan,
-                height: layoutMeasurements.cellSize.full * props.rect.rowSpan,
+                left: position.left,
+                top: position.top,
+                width: position.width,
+                height: position.height,
             }}
         >
         </div>
