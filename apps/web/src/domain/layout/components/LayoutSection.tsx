@@ -15,7 +15,7 @@ function LayoutSection(props : LayoutSectionProps) {
         registry.registerSection(props.id, ref, props)
 
         return () => {
-        registry.unregisterSection(props.id)
+            registry.unregisterSection(props.id)
         }
     }, [props.id, registry])
 

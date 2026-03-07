@@ -15,7 +15,7 @@ function Sidebar() {
           border: '1px solid #cccccc',
         }}
         onClick={() => {
-          context.interaction.startCardCreate({ colSpan: 3, rowSpan: 2 });
+          context.interaction.startCardCreate({ colSpan: 9, rowSpan: 2 });
         }}
       >
 
