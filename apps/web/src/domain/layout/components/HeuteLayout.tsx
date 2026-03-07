@@ -20,7 +20,7 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
   const registry = useLayoutRegistry()
 
   const measurements = useLayoutMeasurements({
-    containerRef: rootRef,
+    rootRef,
     columnCount,
     rowCount,
     analyze,

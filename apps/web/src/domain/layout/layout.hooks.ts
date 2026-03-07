@@ -135,7 +135,7 @@ export function useLayoutRegistry(): LayoutRegistry {
   return registryRef.current
 }
 
-export function useLayoutMeasurements({ containerRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ rootRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
     const cellCount = {
         horizontal: columnCount,
@@ -154,7 +154,7 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
     })
 
     useEffect(() => {
-        const element = containerRef.current
+        const element = rootRef.current
         if (!element) return
 
         const observer = new ResizeObserver(() => {
@@ -214,7 +214,7 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 
 
 export interface LayoutMeasurementsParams {
-    containerRef: React.RefObject<HTMLDivElement | null>
+    rootRef: React.RefObject<HTMLDivElement | null>
     columnCount: number
     rowCount: number
     analyze: LayoutAnalyze
