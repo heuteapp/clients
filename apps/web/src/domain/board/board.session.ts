@@ -20,6 +20,10 @@ export interface BoardSession {
     cardMove: CardMoveState | null;
 }
 
+export type BoardSessionUpdater = (prev: BoardSession) => BoardSession;
+
+//
+
 export interface CardBaseState {
     cardId: string;
     startPointer: Pointer;
