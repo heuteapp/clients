@@ -1,9 +1,13 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types";
 
-export interface BoardIntroduction {
+export interface BoardInteraction {
     cardResize: CardResizeState | null;
     cardMove: CardMoveState | null;
-    pointer?: Pointer;
+    pointer: Pointer | null;
+
+    startCardResize: (cardId: string, sectionId: string, pointer: Pointer, size: GridSize, resizeHandle: ResizeHandle) => void;
+    startCardMove: (cardId: string, sectionId: string, pointer: Pointer, position: GridPosition) => void;
+    endInteraction: () => void;
 }
 
 export interface CardBaseState {
