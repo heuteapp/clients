@@ -3,6 +3,7 @@ import { BoardSession, BoardSessionSetter } from "./board.session";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
+    eventType: BoardInteractionEventType | null;
     eventHandlers: BoardInteractionEventHandlers | null
 
     setSession: (updater: (prev: BoardSession) => BoardSession) => void
@@ -32,7 +33,7 @@ export interface BoardInteraction {
 
 export interface BoardInteractionEventHandlers {
     OnStart: (type: BoardInteractionEventType) => void;
-    OnEnd: () => void;
+    OnEnd: (type: BoardInteractionEventType) => void;
 }
 
 export type BoardInteractionEventType = "create" | "move" | "resize";
@@ -45,6 +46,7 @@ export function createBoardInteraction(
 
     const interaction: BoardInteraction = {
         pointer: null,
+        eventType: null,
         eventHandlers: null,
 
         setSession,
@@ -66,7 +68,8 @@ export function createBoardInteraction(
                 }
             }))
             
-            interaction.eventHandlers?.OnStart("create")
+            interaction.eventType = "create";
+            interaction.eventHandlers?.OnStart(interaction.eventType)
         },
 
         startCardMove(cardId, sectionId, pointer, position) {
@@ -83,7 +86,8 @@ export function createBoardInteraction(
                 }
             }))
 
-            interaction.eventHandlers?.OnStart("move")
+            interaction.eventType = "move";
+            interaction.eventHandlers?.OnStart(interaction.eventType)
         },
 
         startCardResize(cardId, sectionId, pointer, size, handle) {
@@ -100,11 +104,15 @@ export function createBoardInteraction(
                 }
             }))
 
-            interaction.eventHandlers?.OnStart("resize")
+            interaction.eventType = "resize";
+            interaction.eventHandlers?.OnStart(interaction.eventType)
         },
 
         endInteraction() {
-            interaction.eventHandlers?.OnEnd()
+            if(!interaction.eventType) return;
+
+            interaction.eventHandlers?.OnEnd(interaction.eventType);
+            interaction.eventType = null;
 
             interaction.setSession(() => ({
                 cardCreate: null,

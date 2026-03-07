@@ -72,9 +72,8 @@ export function useBoardPointerEvents(
             }
         }
 
+            // !! do not use session or its ref inside !!
         interaction.setEventHandlers({
-
-            // !! do not use session inside or its ref !!
             OnStart: (type: BoardInteractionEventType) => {
                 switch(type) {
                     case "create":
@@ -88,12 +87,17 @@ export function useBoardPointerEvents(
                         break;
                 }
             },
-            OnEnd: () => {
-                const currentSession = sessionRef.current;
-
-                if(currentSession.cardCreate) {
-                    delete root.dataset.interactionCardCreate;
-                    return;
+            OnEnd: (type: BoardInteractionEventType) => {
+                switch(type) {
+                    case "create":
+                        delete root.dataset.interactionCardCreate;
+                        break;
+                    case "move":
+                        delete root.dataset.interactionCardMove;
+                        break;
+                    case "resize":
+                        delete root.dataset.interactionCardResize;
+                        break;
                 }
             }
         });
