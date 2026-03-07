@@ -17,7 +17,7 @@ export function useBoardInteraction({ rootRef, session }: { rootRef: React.RefOb
     const interactionRef = useRef<BoardInteraction | null>(null);
 
     if(!interactionRef.current) {
-        interactionRef.current = createBoardInteraction(session);
+        interactionRef.current = createBoardInteraction(rootRef, session);
     }
 
     const interaction = interactionRef.current;
