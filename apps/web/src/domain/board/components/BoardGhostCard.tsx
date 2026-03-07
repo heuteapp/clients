@@ -17,8 +17,8 @@ function BoardGhostCard(props : BoardGhostCardProps) {
         <div 
             className={style.ghostCard} 
             style={{
-                left: gridRect.left,
-                top: gridRect.top,
+                left: gridRect.left + (props.rect.colIndex - 1) * layoutMeasurements.cellSize.full,
+                top: gridRect.top + (props.rect.rowIndex - 1) * layoutMeasurements.cellSize.full,
                 width: layoutMeasurements.cellSize.full * props.rect.colSpan,
                 height: layoutMeasurements.cellSize.full * props.rect.rowSpan,
             }}

@@ -109,8 +109,23 @@ export function useBoardPointerEvents(
                             }
 
                             const pointermove = () => {
-                                const mouseRow = Math.ceil((interaction.pointer!.y - el.getBoundingClientRect().top) / layoutRegistry.measurements!.cellSize.full);
-                                const mouseCol = Math.ceil((interaction.pointer!.x - el.getBoundingClientRect().left) / layoutRegistry.measurements!.cellSize.full);
+                                const session = sessionRef.current;
+                                const rect = el.getBoundingClientRect();
+                                const cellSize = layoutRegistry.measurements!.cellSize.full;
+
+                                const mouseX = interaction.pointer!.x - rect.left;
+                                const mouseY = interaction.pointer!.y - rect.top;
+
+                                const cardRows = session.cardCreate!.startSize.rowSpan;
+                                const cardCols = session.cardCreate!.startSize.colSpan;
+
+                                const mouseCol = Math.floor(
+                                    (mouseX - (cardCols * cellSize) / 2) / cellSize
+                                );
+
+                                const mouseRow = Math.floor(
+                                    (mouseY - (cardRows * cellSize) / 2) / cellSize
+                                );
 
                                 interaction.updateCardCreate(grid!.props!.sectionId, { rowIndex: mouseRow, colIndex: mouseCol });
                             }

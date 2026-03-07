@@ -17,13 +17,14 @@ export default function HeuteBoard({ layout }: HeuteBoardProps) {
 
   const { session } = context!;
   const size = session.cardCreate?.startSize;
+  const position = session.cardCreate?.currentPosition;
   
   return (
     <div ref={boardRef} className={style.board}>
       <HeuteLayout {...layout} />
       <BoardCardContainer />
       { context.interaction.eventType === "create" &&
-       <BoardGhostCard rect={{ rowIndex: 0, colIndex: 0, rowSpan: size!.rowSpan, colSpan: size!.colSpan }} /> }
+       <BoardGhostCard rect={{ rowIndex: position?.rowIndex ?? 0, colIndex: position?.colIndex ?? 0, rowSpan: size!.rowSpan, colSpan: size!.colSpan }} /> }
     </div>
   )
 }
