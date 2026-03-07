@@ -31,14 +31,24 @@ export function useBoardPointerEvents(
         const root = rootRef.current;
         if (!root) return;
 
-        // Event listenerları başlat / durdur fonksiyonları
         function handlePointerMove(e: PointerEvent) {
             interaction.session.pointer = { x: e.clientX, y: e.clientY };
             interaction.session.pointerId = e.pointerId;
 
-            if (interaction.session.cardCreate) return;
-            if (interaction.session.cardMove) return;
-            if (interaction.session.cardResize) return;
+            if (interaction.session.cardCreate) {
+                console.log("Card Create Move");
+                return;
+            }
+
+            if (interaction.session.cardMove) {
+                console.log("Card Move");
+                return;
+            }
+
+            if (interaction.session.cardResize) {
+                console.log("Card Resize");
+                return;
+            }
         }
 
         function handlePointerUp() {
@@ -47,15 +57,13 @@ export function useBoardPointerEvents(
         }
 
         function addListeners() {
-            if(!root) return;
-            root.addEventListener("pointermove", handlePointerMove);
-            root.addEventListener("pointerup", handlePointerUp);
+            root!.addEventListener("pointermove", handlePointerMove);
+            root!.addEventListener("pointerup", handlePointerUp);
         }
 
         function removeListeners() {
-            if(!root) return;
-            root.removeEventListener("pointermove", handlePointerMove);
-            root.removeEventListener("pointerup", handlePointerUp);
+            root!.removeEventListener("pointermove", handlePointerMove);
+            root!.removeEventListener("pointerup", handlePointerUp);
         }
 
         interaction.setEventHandlers({
