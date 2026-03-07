@@ -2,8 +2,6 @@ import { useBoardContext } from "../board.hooks"
 import style from "../board.module.css"
 
 function BoardCard(props : BoardCardProps) {
-    const context = useBoardContext();
-
     return (
         <div 
             className={style.card} 

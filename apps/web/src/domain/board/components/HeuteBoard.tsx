@@ -5,7 +5,6 @@ import style from "../board.module.css"
 import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
 import { useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 import BoardCardContainer from "./BoardCardContainer";
-import { HeuteBoardContext } from "../board.context";
 import { useMemo, useRef } from "react";
 import { BoardData } from "../board.types";
 import { useBoardInteraction } from "../board.hooks";
@@ -39,9 +38,7 @@ export default function HeuteBoard({ category, date, layout }: HeuteBoardProps) 
   return (
     <div ref={rootRef} className={style.board}>
       <HeuteLayout {...layout} registry={layoutRegistry} />
-      <HeuteBoardContext.Provider value={contextValue}>
-        <BoardCardContainer />
-      </HeuteBoardContext.Provider>
+      <BoardCardContainer />
     </div>
   )
 }

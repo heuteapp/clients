@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef } from "react"
-import { HeuteBoardContext } from "./board.context"
+import { BoardContext } from "./board.context"
 import { BoardInteraction, createBoardInteraction } from "./board.interaction"
 import { BoardSession } from "./board.session"
 
 export function useBoardContext() {
-    const ctx = useContext(HeuteBoardContext)
+    const ctx = useContext(BoardContext)
 
     if (!ctx) {
         throw new Error("useHeuteBoard must be used inside HeuteBoard")
