@@ -1,11 +1,17 @@
-import { Pointer } from "@/src/types";
+import { GridSize, Pointer } from "@/src/types";
 
 export interface BoardIntroduction {
-
+    pointer: Pointer;
 }
 
-export interface BoardBaseState {
+export interface CardBaseState {
     cardId: string;
-    sectionId: string;
+    startSectionId: string;
     startPointer: Pointer;
+}
+
+export interface CardResizeState extends CardBaseState {
+    currentSectionId: string;
+    startSize: GridSize;
+    currentSize: GridSize;
 }
