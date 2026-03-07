@@ -20,7 +20,9 @@ export interface BoardSession {
     cardMove: CardMoveState | null;
 }
 
-export type BoardSessionUpdater = (prev: BoardSession) => BoardSession;
+export type BoardSessionSetter = React.Dispatch<React.SetStateAction<BoardSession>>;
+
+export type BoardSessionTuple = [BoardSession, BoardSessionSetter];
 
 //
 

@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
 import { BoardInteraction, createBoardInteraction } from "./board.interaction"
-import { BoardSession, createBoardSession } from "./board.session"
+import { BoardSession, BoardSessionSetter, BoardSessionTuple, createBoardSession } from "./board.session"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -13,69 +13,79 @@ export function useBoardContext() {
     return ctx
 }
 
-export function useBoardInteraction() : BoardInteraction {
-    const [session, setSession] = useState(createBoardSession())
+export function useBoardSession() : BoardSessionTuple {
+    const tuple = useState(createBoardSession())
 
-    const interactionRef = useRef<BoardInteraction | null>(null);
+    return tuple;
+}
 
-    if(!interactionRef.current) {
-        interactionRef.current = createBoardInteraction(() => session, setSession);
-    }
+export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardInteraction {
+    const interaction = useMemo(() => {
+        return createBoardInteraction(sessionSetter);
+    }, [sessionSetter]);
 
-    return interactionRef.current;
+    return interaction;
 }
 
 export function useBoardPointerEvents(
   rootRef: React.RefObject<HTMLDivElement | null>,
+  session: BoardSession,
   interaction: BoardInteraction
 ) {
+    const sessionRef = useRef(session);
+    
+    useLayoutEffect(() => {
+        sessionRef.current = session;
+    }, [session]);
+
+
     useEffect(() => {
         const root = rootRef.current;
         if (!root) return;
 
         function handlePointerMove(e: PointerEvent) {
             interaction.pointer = { x: e.clientX, y: e.clientY };
+            const currentSession = sessionRef.current;
 
-            const session = interaction.getSession();  
-            session.pointerId = e.pointerId;
+            currentSession.pointerId = e.pointerId;
 
-            if (session.cardCreate) {
+            if (currentSession.cardCreate) {
                 console.log("Card Create Move");
                 return;
             }
 
-            if (session.cardMove) {
+            if (currentSession.cardMove) {
                 console.log("Card Move");
                 return;
             }
 
-            if (session.cardResize) {
+            if (currentSession.cardResize) {
                 console.log("Card Resize");
                 return;
             }
         }
 
         function handlePointerUp() {
-            const session = interaction.getSession();
-            if(session.cardCreate || session.cardMove || session.cardResize) {
+            const currentSession = sessionRef.current;
+            if(currentSession.cardCreate || currentSession.cardMove || currentSession.cardResize) {
                 interaction.endInteraction();
             }
         }
 
         interaction.setEventHandlers({
             OnStart: () => {
-                const session = interaction.getSession();
-                if(session.cardCreate) {
+                const currentSession = sessionRef.current;
+
+                if(currentSession.cardCreate) {
                     root.dataset.interactionCardCreate = "true";
-                    console.log("Card Create Start");
                     return;
                 }
             },
             OnEnd: () => {
-                const session = interaction.getSession();
-                if(session.cardCreate) {
+                const currentSession = sessionRef.current;
+
+                if(currentSession.cardCreate) {
                     delete root.dataset.interactionCardCreate;
-                    console.log("Card Create End");
                     return;
                 }
             }
