@@ -13,7 +13,7 @@ function Panel({ children }: PanelProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className={style.panel}>
+    <div ref={rootRef} className={style.panel}>
       <BoardProvider rootRef={rootRef}>
         <Sidebar />
         <Monitor>
