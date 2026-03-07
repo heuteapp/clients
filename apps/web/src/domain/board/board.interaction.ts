@@ -79,12 +79,12 @@ export function createBoardInteraction(session: BoardSession): BoardInteraction 
         },
 
         endInteraction() {
+            interaction.eventHandlers?.OnEnd();
+
             interaction.session.cardCreate = null
             interaction.session.cardMove = null
             interaction.session.cardResize = null
             interaction.session.pointer = null
-
-            interaction.eventHandlers?.OnEnd();
         }
     }
 
