@@ -7,12 +7,12 @@ import { useBoardContext } from "../../board/board.hooks";
 function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
     const context = useBoardContext();
 
-    const { layoutRegistry } = context!;
+    const { measurements } = context!;
 
     return (
         <div className={style.container} style={{
-          width: (layoutRegistry.measurements!.containerSize.width),
-          height: (layoutRegistry.measurements!.containerSize.height),
+          width: (measurements!.containerSize.width),
+          height: (measurements!.containerSize.height),
         }}>
           {
             sections.map((section, index) => (

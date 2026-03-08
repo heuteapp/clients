@@ -8,22 +8,22 @@ import { LayoutGridProps } from "../types/props";
 function LayoutGrid(props : LayoutGridProps) {
     const context = useBoardContext();
 
-    const { layoutRegistry } = context!;
+    const { registry, measurements } = context!;
 
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        layoutRegistry.registerGrid(props.sectionId, ref, props)
+        registry.registerLayoutGrid(props.sectionId, ref, props)
 
         return () => {
-            layoutRegistry.unregisterGrid(props.sectionId)
+            registry.unregisterLayoutGrid(props.sectionId)
         }
-    }, [props.sectionId, layoutRegistry])
+    }, [props.sectionId, registry])
 
     return (
         <div ref={ref} className={style.grid} style={{
-            gridTemplateColumns: `repeat(${props.colSpan}, ${layoutRegistry.measurements!.cellSize.inner}px)`,
-            gridTemplateRows: `repeat(${props.rowSpan}, ${layoutRegistry.measurements!.cellSize.inner}px)`,
+            gridTemplateColumns: `repeat(${props.colSpan}, ${measurements!.cellSize.inner}px)`,
+            gridTemplateRows: `repeat(${props.rowSpan}, ${measurements!.cellSize.inner}px)`,
         }}>
             {
                 Array.from({ length: props.rowSpan }).map((_, rowIndex) => (

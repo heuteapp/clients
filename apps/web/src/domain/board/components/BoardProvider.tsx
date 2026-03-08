@@ -2,15 +2,15 @@
 
 import { useMemo, useRef, useState } from "react";
 import { BoardContext } from "../board.context";
-import { useBoardInteraction, useBoardPointerEvents, useBoardSessionRef } from "../board.hooks";
-import { useLayoutMeasurements, useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
+import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../board.hooks";
+import { useLayoutMeasurements } from "@/src/domain/layout/layout.hooks";
 import { BoardData } from "../board.types";
 import { sectionExamples } from "../board.examples";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
 
     const layoutRef = useRef<HTMLDivElement>(null);
-    const layoutRegistry = useLayoutRegistry();
+    const registry = useBoardRegistry();
 
     const sessionRef = useBoardSessionRef();
     const interaction = useBoardInteraction((updater) => {
@@ -37,9 +37,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         padding: 12
     })
 
-    layoutRegistry.measurements = measurements;
-
-    useBoardPointerEvents(board, setBoard, rootRef, layoutRegistry, sessionRef, interaction);
+    useBoardPointerEvents(board, setBoard, rootRef, registry, sessionRef, interaction);
     const session = sessionRef.current;
 
     const value = useMemo(
@@ -49,10 +47,10 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
             rootRef,
             session,
             interaction,
-            layoutRegistry,
-            layoutRef
+            registry,
+            measurements
         }),
-        [session, interaction, layoutRegistry]
+        [session, interaction, registry, measurements]
     );
 
     return (

@@ -1,11 +1,11 @@
-import { LayoutRegistry } from "@/src/domain/layout/types/registry"
 import { Pointer } from "@/src/shared/types/common"
+import { BoardRegistry } from "../../board.registry"
 
 export function findSectionUnderPointer(
-    layoutRegistry: LayoutRegistry,
+    registry: BoardRegistry,
     pointer: Pointer
 ) {
-    for (const section of layoutRegistry.sections.values()) {
+    for (const section of registry.getLayoutSections() ?? []) {
         const el = section.grid?.ref?.current
         if (!el) continue
 

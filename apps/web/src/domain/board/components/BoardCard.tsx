@@ -4,12 +4,12 @@ import { BoardCardData } from "../board.types"
 
 function BoardCard(props : BoardCardProps) {
     const context = useBoardContext();
-    const { measurements } = context.layoutRegistry;
+    const { registry, measurements } = context;
 
-    const section = context.layoutRegistry.getSection(props.sectionId);
+    const section = registry.getLayoutSection(props.sectionId);
     if(!section) return null;
 
-    const rootRect = context.layoutRef.current!.getBoundingClientRect();
+    const rootRect = registry.layout!.ref!.current!.getBoundingClientRect();
     const sectionRect = section.ref!.current!.getBoundingClientRect();
 
     const left = sectionRect.left - rootRect.left;

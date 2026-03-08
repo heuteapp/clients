@@ -4,10 +4,10 @@ import { createBoardInteraction } from "./interaction/board.interaction"
 import { BoardInteraction } from "./interaction/board.interaction.types"
 import { createBoardSession } from "./session/board.session"
 import { BoardSession, BoardSessionSetter, CardCreateState } from "./session/board.session.types"
-import { LayoutRegistry } from "../layout/types/registry"
 import { setCreateMode } from "./interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/handler"
 import { BoardCardData, BoardData } from "./board.types"
+import { BoardRegistry, createBoardRegistry } from "./board.registry"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -33,13 +33,23 @@ export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardIn
     return interaction;
 }
 
+export function useBoardRegistry() : BoardRegistry {
+    const registryRef = useRef<BoardRegistry | null>(null)
+
+    if (!registryRef.current) {
+        registryRef.current = createBoardRegistry();
+    }
+
+    return registryRef.current;
+}
+
 export function useBoardPointerEvents(
     board: BoardData,
     setBoard: (updater: (prev: BoardData) => BoardData) => void,
-  rootRef: React.RefObject<HTMLDivElement | null>,
-  layoutRegistry: LayoutRegistry,
-  sessionRef: React.RefObject<BoardSession>,
-  interaction: BoardInteraction
+    rootRef: React.RefObject<HTMLDivElement | null>,
+    registry: BoardRegistry,
+    sessionRef: React.RefObject<BoardSession>,
+    interaction: BoardInteraction
 ) {
     useEffect(() => {
         const root = rootRef.current
@@ -70,7 +80,7 @@ export function useBoardPointerEvents(
 
 
             if (currentSession.cardCreate) {
-                handleCardCreateInteraction(rootRef.current!, layoutRegistry, interaction, currentSession.cardCreate)
+                handleCardCreateInteraction(rootRef.current!, registry, interaction, currentSession.cardCreate)
                 return
             }
 
@@ -104,7 +114,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, layoutRegistry, interaction, state as CardCreateState)
+                    handleCardCreateInteraction(root, registry, interaction, state as CardCreateState)
                 }
             },
 
@@ -130,7 +140,7 @@ export function useBoardPointerEvents(
                         }
                     })
 
-                    endCardCreateInteraction(root, layoutRegistry, interaction);
+                    endCardCreateInteraction(root, registry, interaction);
                 }
             }
 
@@ -148,5 +158,5 @@ export function useBoardPointerEvents(
 
         }
 
-    }, [rootRef, interaction, layoutRegistry])
+    }, [rootRef, interaction, registry])
 }

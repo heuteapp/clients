@@ -7,23 +7,23 @@ import { LayoutGridCellProps } from "../types/props";
 function LayoutGridCell(props : LayoutGridCellProps) {
     const context = useBoardContext();
 
-    const { layoutRegistry } = context!;
+    const { registry, measurements } = context!;
     const id = props.rowIndex + "-" + props.colIndex;
 
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        layoutRegistry.registerCell(props.sectionId, id, ref, props)
+        registry.registerLayoutGridCell(props.sectionId, id, ref, props)
 
         return () => {
-            layoutRegistry.unregisterCell(props.sectionId, id)
+            registry.unregisterLayoutGridCell(props.sectionId, id)
         }
-    }, [id, layoutRegistry])
+    }, [id, registry])
 
     return (
         <div className={style.cell} style={{
-            width: layoutRegistry.measurements!.cellSize.compact,
-            height: layoutRegistry.measurements!.cellSize.compact,
+            width: measurements!.cellSize.compact,
+            height: measurements!.cellSize.compact,
             visibility: "hidden"
         }}/>
     )

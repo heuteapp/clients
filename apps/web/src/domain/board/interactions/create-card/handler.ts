@@ -1,14 +1,14 @@
-import { LayoutRegistry } from "@/src/domain/layout/types/registry"
 import { BoardInteraction } from "@/src/domain/board/interaction/board.interaction.types"
 import { CardCreateState } from "@/src/domain/board/session/board.session.types"
 
 import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./dom"
+import { BoardRegistry } from "../../board.registry"
 
 export function handleCardCreateInteraction(
     root: HTMLDivElement,
-    layoutRegistry: LayoutRegistry,
+    registry: BoardRegistry,
     interaction: BoardInteraction,
     state: CardCreateState) 
 {
@@ -18,11 +18,11 @@ export function handleCardCreateInteraction(
     // !! Hardcoded cell size
     const cellSize = 10; //layoutRegistry.measurements!.cellSize.inner
 
-    const result = findSectionUnderPointer(layoutRegistry, pointer)
+    const result = findSectionUnderPointer(registry, pointer)
 
     if (!result) {
         interaction.updateCardCreate(null, null)
-        clearGridHover(layoutRegistry)
+        clearGridHover(registry)
         
         const width = state.startSize.colSpan * cellSize
         const height = state.startSize.rowSpan * cellSize
@@ -40,7 +40,7 @@ export function handleCardCreateInteraction(
 
     const { section, rect } = result
 
-    clearGridHover(layoutRegistry)
+    clearGridHover(registry)
     setGridHover(section.grid!.ref!.current!)
 
     const sectionProps = section.props!
@@ -74,10 +74,10 @@ export function handleCardCreateInteraction(
 
 export function endCardCreateInteraction(
     root: HTMLDivElement,
-    layoutRegistry: LayoutRegistry,
+    registry: BoardRegistry,
     interaction: BoardInteraction
 ) {
-    clearGridHover(layoutRegistry);
+    clearGridHover(registry);
     clearGhostCard(root);
     interaction.updateCardCreate(null, null);
 }

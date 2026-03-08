@@ -9,15 +9,15 @@ function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
-    const { layoutRegistry } = context!;
+    const { registry, measurements } = context!;
 
     useLayoutEffect(() => {
-        layoutRegistry.registerSection(props.id, ref, props)
+        registry.registerLayoutSection(props.id, ref, props)
 
         return () => {
-            layoutRegistry.unregisterSection(props.id)
+            registry.unregisterLayoutSection(props.id)
         }
-    }, [props.id, layoutRegistry])
+    }, [props.id, registry])
 
     return (
         <div
@@ -25,10 +25,10 @@ function LayoutSection(props : LayoutSectionProps) {
         className={style.section}
         style={{
             position: "absolute",
-            left: (props.colIndex -1)* layoutRegistry.measurements!.cellSize.full,
-            top: (props.rowIndex -1)* layoutRegistry.measurements!.cellSize.full,
-            width: (props.colSpan * layoutRegistry.measurements!.cellSize.full) - (props.padding * 2),
-            height: (props.rowSpan * layoutRegistry.measurements!.cellSize.full) - (props.padding * 2),
+            left: (props.colIndex -1)* measurements!.cellSize.full,
+            top: (props.rowIndex -1)* measurements!.cellSize.full,
+            width: (props.colSpan * measurements!.cellSize.full) - (props.padding * 2),
+            height: (props.rowSpan * measurements!.cellSize.full) - (props.padding * 2),
             padding: props.padding,
         }}
         >

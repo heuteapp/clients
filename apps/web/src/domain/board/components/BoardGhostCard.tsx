@@ -3,9 +3,9 @@ import style from "../board.module.css"
 import { useBoardContext } from "../board.hooks";
 
 function BoardGhostCard(props : BoardGhostCardProps) {
-    const { layoutRegistry } = useBoardContext();
+    const { measurements } = useBoardContext();
 
-    const cellSize = layoutRegistry.measurements!.cellSize.inner;
+    const cellSize = measurements!.cellSize.inner;
 
     return (
         <div 
