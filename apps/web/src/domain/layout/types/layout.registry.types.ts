@@ -2,7 +2,7 @@ import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellPr
 
 export interface LayoutRegistry {
     root: LayoutRootNode | null
-    container: RegistryNode | null
+    container: LayoutBaseNode | null
     sections: Map<string, LayoutSectionNode>
 
     registerRoot(
@@ -55,24 +55,24 @@ export interface LayoutRegistry {
 
 //
 
-export interface RegistryNode {
+export interface LayoutBaseNode {
     ref?: React.RefObject<HTMLDivElement | null> | null
 }
 
-export interface LayoutRootNode extends RegistryNode {
+export interface LayoutRootNode extends LayoutBaseNode {
     props?: HeuteLayoutProps
 }
 
-export interface LayoutSectionNode extends RegistryNode {
+export interface LayoutSectionNode extends LayoutBaseNode {
     props?: LayoutSectionProps
     grid: LayoutGridNode | null
 }
 
-export interface LayoutGridNode extends RegistryNode {
+export interface LayoutGridNode extends LayoutBaseNode {
     props?: LayoutGridProps
     cells: Map<string, LayoutCellNode>
 }
 
-export interface LayoutCellNode extends RegistryNode {
+export interface LayoutCellNode extends LayoutBaseNode {
     props?: LayoutGridCellProps
 }
