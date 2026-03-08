@@ -17,7 +17,7 @@ function Sidebar() {
           cursor: context.interaction.eventType === "create" ? "default" : "pointer",
         }}
         onPointerDown={() => {
-          context.interaction.startCardCreate({ colSpan: 3, rowSpan: 2 });
+          context.interaction.startCardCreate({ colSpan: 9, rowSpan: 2 });
         }}
       >
 
