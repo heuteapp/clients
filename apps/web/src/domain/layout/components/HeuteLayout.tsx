@@ -12,10 +12,11 @@ import { HeuteLayoutProps } from "../types/props";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
-  const layoutRef = useRef<HTMLDivElement>(null);
-  
+
   const { columnCount, rowCount, sections } = props;
   const { registry, measurements } = context!;
+
+  const layoutRef = registry.layout!.ref!;
 
   useLayoutEffect(() => {
     registry.registerLayout(layoutRef, props)
@@ -27,7 +28,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
 
   return (
     <div 
-      ref={layoutRef} 
+      ref={registry.layout!.ref} 
       className={style.layout} 
       style={{
         visibility: measurements!.containerSize.width > 0 ? "visible" : "hidden"

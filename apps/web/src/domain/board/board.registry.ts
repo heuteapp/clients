@@ -75,8 +75,8 @@ export function createBoardRegistry(): BoardRegistry {
     const sections = new Map<string, LayoutSectionNode>()
 
     const registry: BoardRegistry = {
-        board: null,
-        layout: null,
+        board: { },
+        layout: { },
 
         registerLayout(ref, props) {
             if(!this.layout) {
@@ -190,7 +190,7 @@ export function createBoardRegistry(): BoardRegistry {
         },
 
         unregisterLayout() {
-            this.layout = null;
+            this.layout = { };
         },
 
         unregisterLayoutSectionContainer() {

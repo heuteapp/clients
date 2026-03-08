@@ -9,8 +9,13 @@ import { sectionExamples } from "../board.examples";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
 
+    const boardRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
+
     const registry = useBoardRegistry();
+
+    registry.board = { ref: boardRef };
+    registry.layout = { ref: layoutRef };
 
     const sessionRef = useBoardSessionRef();
     const interaction = useBoardInteraction((updater) => {
