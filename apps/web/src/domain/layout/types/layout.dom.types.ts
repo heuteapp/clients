@@ -1,21 +1,27 @@
 export interface LayoutMeasurements {
-    sectionCount : LayoutSectionCountMeasurements,
-    cellCount: {
-      horizontal: number,
-      vertical: number
-    },
-    cellSize: {
-      full: number,
-      inner: number,
-      compact: number,
-    },
-    containerSize: {
-      width: number,
-      height: number
-    }
+    sectionCount : LayoutSectionCountMeasurements
+    cellCount: LayoutCellCountMeasurements
+    cellSize: LayoutCellSizeMeasurements
+    containerSize: LayoutContainerSizeMeasurements
 }
 
 export interface LayoutSectionCountMeasurements {
-    horizontal: number,
+    horizontal: number
     vertical: number
+}
+
+export interface LayoutCellCountMeasurements {
+    horizontal: number
+    vertical: number
+}
+
+export interface LayoutCellSizeMeasurements {
+    full: number
+    inner: number
+    compact: number
+}
+
+export interface LayoutContainerSizeMeasurements {
+    width: number
+    height: number
 }
