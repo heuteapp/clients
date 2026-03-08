@@ -6,7 +6,7 @@ function BoardCard(props : BoardCardProps) {
     const context = useBoardContext();
     const { registry, measurements } = context;
 
-    const section = registry.getLayoutSection(props.sectionId);
+    const section = registry.getLayoutGrid(props.sectionId);
     if(!section) return null;
 
     const rootRect = registry.layout!.ref!.current!.getBoundingClientRect();
@@ -19,8 +19,8 @@ function BoardCard(props : BoardCardProps) {
         <div 
             className={style.card} 
             style={{
-                left: left + props.colIndex * measurements!.cellSize.inner,
-                top: top + props.rowIndex * measurements!.cellSize.inner,
+                left: left + (props.colIndex - 1) * measurements!.cellSize.inner,
+                top: top + (props.rowIndex - 1) * measurements!.cellSize.inner,
                 width: props.colSpan * measurements!.cellSize.inner,
                 height: props.rowSpan * measurements!.cellSize.inner,
             }}

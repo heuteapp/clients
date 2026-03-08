@@ -29,6 +29,7 @@ export const useBoardStore = create<BoardStore>()(
 
         addCard: (card) => set(state => {
             if (state.board) {
+                console.log("Adding card", card);
                 state.board.cards.push({ ...card, id: crypto.randomUUID() })
             }
         })
