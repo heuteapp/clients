@@ -1,8 +1,8 @@
 "use client"
 
-const padding = 12;
+const padding = 8;
 
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
+import { useLayoutEffect, useMemo, useRef } from "react"
 
 import style from "../layout.module.css"
 
