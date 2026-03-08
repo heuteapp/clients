@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import { immer } from "zustand/middleware/immer"
 import { BoardCardData, BoardData } from "./board.types"
+import { sectionExamples } from "./board.examples"
 
 type BoardStore = {
     board: BoardData | null
@@ -10,7 +11,17 @@ type BoardStore = {
 
 export const useBoardStore = create<BoardStore>()(
     immer(set => ({
-        board: null,
+        board: {
+            id: "test",
+            category: "test",
+            date: new Date(),
+            layout: {
+                columnCount: 18,
+                rowCount: 8,
+                sections: sectionExamples.two
+            },
+            cards: []
+        },
 
         setBoard: (updater) => set(state => {
             state.board = updater(state.board)
