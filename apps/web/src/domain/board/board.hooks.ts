@@ -144,6 +144,7 @@ export function useBoardPointerEvents(
             if (!foundSection) {
                 interaction.updateCardCreate(null, null);
             }
+
             const width = state.startSize.colSpan * cellSize;
             const height = state.startSize.rowSpan * cellSize;
 
@@ -157,6 +158,20 @@ export function useBoardPointerEvents(
                 `${pointer.y - height / 2}px`
             );
         }
+
+        interaction.setEventHandlers({
+            OnStart: (type, state) => {
+                if (type === "create") {
+                    root.dataset.interactionCardCreate = "true";
+                    handleCardCreate(state as CardCreateState);
+                }
+            },
+            OnEnd: (type) => {
+                if(type === "create") {
+                    delete root.dataset.interactionCardCreate;
+                }
+            },
+        });
 
         root.addEventListener("pointerdown", handlePointerDown);
         root.addEventListener("pointermove", handlePointerMove);
