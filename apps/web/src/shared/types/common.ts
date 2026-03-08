@@ -13,6 +13,11 @@ export interface GridSize {
     colSpan: number;
 }
 
+export interface GridDimensions {
+    rowCount: number;
+    columnCount: number;
+}
+
 export interface GridRect extends GridPosition, GridSize {}
 
 export type ResizeHandle = "n" | "e" | "s" | "w" | "ne" | "nw" | "se" | "sw"
