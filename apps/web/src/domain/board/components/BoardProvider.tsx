@@ -1,11 +1,10 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import { BoardContext } from "../board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../board.hooks";
 import { useLayoutMeasurements } from "@/src/domain/layout/layout.hooks";
-import { BoardData } from "../board.types";
-import { sectionExamples } from "../board.examples";
+import { useBoardStore } from "../board.store";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
     const registry = useBoardRegistry();
@@ -15,17 +14,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         sessionRef.current = updater(sessionRef.current);
     });
 
-    const [board, setBoard] = useState<BoardData>({
-        id: "test",
-        category: "test",
-        date: new Date(),
-        layout: {
-            columnCount: 18,
-            rowCount: 8,
-            sections: (sectionExamples as any).two
-        },
-        cards: []
-    });
+    const board = useBoardStore(state => state.board)!;
 
     const measurements = useLayoutMeasurements({
         layoutRef: registry.layout.ref,
@@ -37,13 +26,11 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         padding: 4
     })
 
-    useBoardPointerEvents(board, setBoard, rootRef, registry, measurements, sessionRef, interaction);
+    useBoardPointerEvents(rootRef, registry, measurements, sessionRef, interaction);
     const session = sessionRef.current;
 
     const value = useMemo(
         () => ({
-            board,
-            setBoard,
             rootRef,
             session,
             interaction,

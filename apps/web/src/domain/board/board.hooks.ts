@@ -9,6 +9,7 @@ import { endCardCreateInteraction, handleCardCreateInteraction } from "./interac
 import { BoardCardData, BoardData } from "./board.types"
 import { BoardRegistry, createBoardRegistry } from "./board.registry"
 import { LayoutMeasurements } from "../layout/types/dom"
+import { useBoardStore } from "./board.store"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -47,14 +48,14 @@ export function useBoardRegistry() : BoardRegistry {
 }
 
 export function useBoardPointerEvents(
-    board: BoardData,
-    setBoard: (updater: (prev: BoardData) => BoardData) => void,
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
     measurements: LayoutMeasurements,
     sessionRef: React.RefObject<BoardSession>,
     interaction: BoardInteraction
 ) {
+    const addCard = useBoardStore(state => state.addCard);
+
     useEffect(() => {
         const root = rootRef.current
         if (!root) return
@@ -125,23 +126,15 @@ export function useBoardPointerEvents(
             OnEnd: (type) => {
 
                 if (type === "create") {
-                    setBoard(prev => {
-                        const cardCreateState = sessionRef.current.cardCreate
-                        if (!cardCreateState) return prev
+                    const cardCreateState = sessionRef.current.cardCreate!;
 
-                        const newCard : BoardCardData = {
-                            id: crypto.randomUUID(),
-                            sectionId: cardCreateState.currentSectionId!,
-                            rowIndex: cardCreateState.currentPosition!.rowIndex,
-                            colIndex: cardCreateState.currentPosition!.colIndex,
-                            rowSpan: cardCreateState.startSize.rowSpan,
-                            colSpan: cardCreateState.startSize.colSpan,
-                        }
-
-                        return {
-                            ...prev,
-                            cards: [...prev.cards, newCard]
-                        }
+                    addCard({
+                        id: crypto.randomUUID(),
+                        sectionId: cardCreateState.currentSectionId!,
+                        rowIndex: cardCreateState.currentPosition!.rowIndex,
+                        colIndex: cardCreateState.currentPosition!.colIndex,
+                        rowSpan: cardCreateState.startSize.rowSpan,
+                        colSpan: cardCreateState.startSize.colSpan,
                     })
 
                     endCardCreateInteraction(root, registry, interaction);
