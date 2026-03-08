@@ -20,7 +20,7 @@ export default function HeuteBoard(props: HeuteBoardProps) {
   return (
     <div ref={boardRef} className={style.board}>
       <HeuteLayout {...props.layout} />
-      <BoardCardContainer />
+      <BoardCardContainer cards={props.cards} />
       <BoardGhostCard />
     </div>
   )

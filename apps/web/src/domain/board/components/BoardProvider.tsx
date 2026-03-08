@@ -28,6 +28,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         },
         cards: []
     });
+                    console.log(board);
 
 
     useBoardPointerEvents(board, setBoard, rootRef, layoutRegistry, sessionRef, interaction);

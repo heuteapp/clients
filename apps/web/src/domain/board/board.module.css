@@ -13,6 +13,19 @@
     pointer-events: none;
 }
 
+.card {
+    position: fixed;
+    background: #2a2f3a;
+    border: 1px solid #3a4150;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    transition: 
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
 .ghostCard {
     position: fixed;
     width: 360px;

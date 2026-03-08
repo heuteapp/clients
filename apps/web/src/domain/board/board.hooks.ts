@@ -111,8 +111,6 @@ export function useBoardPointerEvents(
             OnEnd: (type) => {
 
                 if (type === "create") {
-                    endCardCreateInteraction(root, layoutRegistry, interaction);
-
                     setBoard(prev => {
                         const cardCreateState = sessionRef.current.cardCreate
                         if (!cardCreateState) return prev
@@ -131,6 +129,8 @@ export function useBoardPointerEvents(
                             cards: [...prev.cards, newCard]
                         }
                     })
+
+                    endCardCreateInteraction(root, layoutRegistry, interaction);
                 }
             }
 
