@@ -1,10 +1,10 @@
 "use client"
 
 import React from "react"
-import { LayoutSectionProps } from "./components/LayoutSection"
-import { LayoutGridProps } from "./components/LayoutGrid"
-import { LayoutGridCellProps } from "./components/LayoutGridCell"
-import { HeuteLayoutProps } from "./components/HeuteLayout"
+import { LayoutSectionProps } from "./layout.types"
+import { LayoutGridProps } from "./layout.types"
+import { LayoutGridCellProps } from "./layout.types"
+import { HeuteLayoutProps } from "./layout.types"
 import { LayoutMeasurements } from "./layout.types"
 
 export interface RegistryNode {

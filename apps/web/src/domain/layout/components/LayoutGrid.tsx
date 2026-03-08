@@ -3,6 +3,7 @@ import style from "../layout.module.css"
 import LayoutGridCell from "./LayoutGridCell";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "../../board/board.hooks";
+import { LayoutGridProps } from "../layout.types";
 
 function LayoutGrid(props : LayoutGridProps) {
     const context = useBoardContext();
@@ -41,12 +42,3 @@ function LayoutGrid(props : LayoutGridProps) {
 }
 
 export default LayoutGrid
-
-
-interface LayoutGridProps  {
-    sectionId: string,
-    colSpan: number,
-    rowSpan: number,
-}
-
-export type { LayoutGridProps }

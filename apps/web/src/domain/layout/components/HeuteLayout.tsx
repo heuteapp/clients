@@ -6,10 +6,9 @@ import { useLayoutEffect } from "react"
 
 import style from "../layout.module.css"
 
-import { HeuteLayoutData } from "../layout.types"
 import LayoutSectionContainer from "./LayoutSectionContainer";
-import { LayoutRegistry } from "../layout.registry";
 import { useBoardContext } from "../../board/board.hooks";
+import { HeuteLayoutProps } from "../layout.types";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
@@ -36,8 +35,4 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
         <LayoutSectionContainer sections={sections} />
     </div>
   )
-}
-
-export interface HeuteLayoutProps extends HeuteLayoutData {
-  registry?: LayoutRegistry
 }

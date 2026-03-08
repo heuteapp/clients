@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from "react"
 import style from "../layout.module.css"
 
-import { LayoutSectionData } from "../layout.types"
+import { LayoutSectionProps } from "../layout.types"
 import LayoutGrid from "./LayoutGrid";
 import { useBoardContext } from "../../board/board.hooks";
 
@@ -38,10 +38,3 @@ function LayoutSection(props : LayoutSectionProps) {
 }
 
 export default LayoutSection
-
-
-interface LayoutSectionProps extends LayoutSectionData {
-    padding: number
-}
-
-export type { LayoutSectionProps }

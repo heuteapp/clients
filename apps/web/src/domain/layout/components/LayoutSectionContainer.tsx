@@ -1,7 +1,7 @@
 import style from "../layout.module.css"
 
 import LayoutSection from "./LayoutSection";
-import { LayoutSectionData } from "../layout.types";
+import { LayoutSectionContainerProps } from "../layout.types";
 import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
@@ -27,10 +27,3 @@ function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
 }
 
 export default LayoutSectionContainer
-
-
-interface LayoutSectionContainerProps {
-    sections: LayoutSectionData[]
-}
-
-export type { LayoutSectionContainerProps as LayoutContainerProps }
