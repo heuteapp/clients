@@ -2,11 +2,11 @@ import { LayoutRegistry } from "@/src/domain/layout/layout.registry"
 import { BoardInteraction } from "@/src/domain/board/interaction/board.interaction.types"
 import { CardCreateState } from "@/src/domain/board/session/board.session.types"
 
-import { findSectionUnderPointer } from "./create-card.resolve"
+import { findSectionUnderPointer } from "./create-card.detecter"
 import { computeCardCreatePosition } from "./create-card.logic"
 import { clearGridHover, setGridHover, setGhostCardPosition } from "./create-card.dom"
 
-export function handleCreateCardInteraction(
+export function handleCardCreateInteraction(
     root: HTMLDivElement,
     layoutRegistry: LayoutRegistry,
     interaction: BoardInteraction,

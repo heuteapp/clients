@@ -2,8 +2,8 @@ import { LayoutRegistry } from "@/src/domain/layout/layout.registry"
 import { Pointer } from "@/src/types"
 
 export function findSectionUnderPointer(
-  layoutRegistry: LayoutRegistry,
-  pointer: Pointer
+    layoutRegistry: LayoutRegistry,
+    pointer: Pointer
 ) {
     for (const section of layoutRegistry.sections.values()) {
         const el = section.grid?.ref?.current

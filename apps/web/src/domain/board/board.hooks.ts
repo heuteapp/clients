@@ -7,7 +7,7 @@ import { BoardSession, BoardSessionSetter, BoardSessionTuple, CardCreateState } 
 import { LayoutRegistry } from "../layout/layout.registry"
 import { clearGridHover, setCreateMode, setGhostCardPosition, setGridHover } from "./interactions/create-card/create-card.dom"
 import { computeCardCreatePosition } from "./interactions/create-card/create-card.logic"
-import { handleCreateCardInteraction } from "./interactions/create-card/create-card.handler"
+import { handleCardCreateInteraction } from "./interactions/create-card/create-card.handler"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -73,7 +73,7 @@ export function useBoardPointerEvents(
             const currentSession = sessionRef.current
 
             if (currentSession.cardCreate) {
-                handleCreateCardInteraction(rootRef.current!, layoutRegistry, interaction, currentSession.cardCreate)
+                handleCardCreateInteraction(rootRef.current!, layoutRegistry, interaction, currentSession.cardCreate)
                 return
             }
 
@@ -107,7 +107,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCreateCardInteraction(root, layoutRegistry, interaction, state as CardCreateState)
+                    handleCardCreateInteraction(root, layoutRegistry, interaction, state as CardCreateState)
                 }
             },
 
