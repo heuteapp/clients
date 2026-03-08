@@ -3,19 +3,33 @@ import style from "../layout.module.css"
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionContainerProps } from "../types/props";
 import { useBoardContext } from "../../board/board.hooks";
+import { useLayoutEffect, useRef } from "react";
 
-function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
+function LayoutSectionContainer(props: LayoutSectionContainerProps) {
+    const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
-    const { measurements } = context!;
+    const { measurements, registry } = context!;
+
+    useLayoutEffect(() => {
+        registry.registerLayoutSectionContainer(ref, props)
+
+        return () => {
+          registry.unregisterLayoutSectionContainer()
+        }
+    }, [registry])
 
     return (
-        <div className={style.container} style={{
-          width: (measurements!.containerSize.width),
-          height: (measurements!.containerSize.height),
-        }}>
+        <div 
+          ref={ref} 
+          className={style.container} 
+          style={{
+            width: (measurements!.containerSize.width),
+            height: (measurements!.containerSize.height),
+          }}
+        >
           {
-            sections.map((section, index) => (
+            props.sections.map((section, index) => (
               <LayoutSection
                 key={index}
                 padding={12}

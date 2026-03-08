@@ -35,10 +35,12 @@ export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardIn
 }
 
 export function useBoardRegistry() : BoardRegistry {
+    const boardRef = useRef<HTMLDivElement>(null);
+    const layoutRef = useRef<HTMLDivElement>(null);
     const registryRef = useRef<BoardRegistry | null>(null)
 
     if (!registryRef.current) {
-        registryRef.current = createBoardRegistry();
+        registryRef.current = createBoardRegistry(boardRef, layoutRef);
     }
 
     return registryRef.current;

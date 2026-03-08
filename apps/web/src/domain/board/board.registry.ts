@@ -6,8 +6,8 @@ import { LayoutRootNode, LayoutSectionNode, LayoutGridCellNode, LayoutGridNode, 
 import { RegistryBaseNode } from "@/src/shared/types/registry";
 
 export interface BoardRegistry {
-    board: BoardRootNode | null
-    layout: LayoutRootNode | null
+    board: BoardRootNode
+    layout: LayoutRootNode
 
     registerLayout(
         ref: React.RefObject<HTMLDivElement | null>,
@@ -71,178 +71,150 @@ export interface BoardRootNode extends RegistryBaseNode {
 
 //
 
-export function createBoardRegistry(): BoardRegistry {
-    const sections = new Map<string, LayoutSectionNode>()
+export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | null>, layoutRef: React.RefObject<HTMLDivElement | null>): BoardRegistry {
 
     const registry: BoardRegistry = {
-        board: { },
-        layout: { },
+        board: { ref: boardRef },
+        layout: { ref: layoutRef },
 
         registerLayout(ref, props) {
-            if(!this.layout) {
-                this.layout = { ref, props, sectionContainer: null }
-            }
-            else {
-                this.layout.ref = ref
-                this.layout.props = props
-            }
+            registry.layout.ref = ref
+            registry.layout.props = props
 
-            return this.layout
+            return registry.layout
         },
 
         registerLayoutSectionContainer(ref, props) {
-            if (!this.layout) {
-                this.layout = { };
+            if (!registry.layout.sectionContainer) {
+                registry.layout.sectionContainer = {
+                    ref,
+                    props,
+                    sections: new Map()
+                }
+            } else {
+                registry.layout.sectionContainer.ref = ref
+                registry.layout.sectionContainer.props = props
             }
 
-            if(!this.layout.sectionContainer) {
-                this.layout.sectionContainer = { ref, props, sections: new Map() }
-            }
-            else {
-                this.layout.sectionContainer.ref = ref
-                this.layout.sectionContainer.props = props
-            }
-
-            return this.layout.sectionContainer
+            return registry.layout.sectionContainer
         },
 
         registerLayoutSection(id, ref, props) {
-            if (!this.layout) {
-                this.layout = { };
+
+            if (!registry.layout.sectionContainer) {
+                registry.layout.sectionContainer = { sections: new Map() }
             }
 
-            if(!this.layout.sectionContainer) {
-                this.layout.sectionContainer = { sections: new Map() };
+            const sections = registry.layout.sectionContainer.sections
+
+            if (!sections.has(id)) {
+                sections.set(id, { ref, props })
             }
 
-            if(!this.layout.sectionContainer.sections) {
-                this.layout.sectionContainer.sections = new Map();
-            }
+            const section = sections.get(id)!
 
-            const section = { ref, props };
-            this.layout.sectionContainer.sections.set(id, section);
+            section.ref = ref
+            section.props = props
 
-            return section;
+            return section
         },
 
         registerLayoutGrid(sectionId, ref, props) {
-            if (!this.layout) {
-                this.layout = { };
-            }
 
-            if(!this.layout.sectionContainer) {
-                this.layout.sectionContainer = { sections: new Map() };
-            }
-
-            if(!this.layout.sectionContainer.sections) {
-                this.layout.sectionContainer.sections = new Map();
-            }
-
-            if(!this.layout.sectionContainer.sections.has(sectionId)) {
-                this.layout.sectionContainer.sections.set(sectionId, { });
-            }
-
-            const section = this.layout.sectionContainer.sections.get(sectionId)!;
+            const section = registry.registerLayoutSection(sectionId, { current: null }, {} as any)
 
             if (!section.grid) {
-                section.grid = { ref, props, cells: new Map() }
+                section.grid = {
+                    ref,
+                    props,
+                    cells: new Map()
+                }
             } else {
                 section.grid.ref = ref
                 section.grid.props = props
             }
 
-            return section.grid;
+            return section.grid
         },
 
         registerLayoutGridCell(sectionId, id, ref, props) {
-            if (!this.layout) {
-                this.layout = { };
+
+            const grid = registry.registerLayoutGrid(sectionId, { current: null }, {} as any)
+
+            if (!grid.cells.has(id)) {
+                grid.cells.set(id, { ref, props })
             }
 
-            if(!this.layout.sectionContainer) {
-                this.layout.sectionContainer = { sections: new Map() };
-            }
-
-            if(!this.layout.sectionContainer.sections) {
-                this.layout.sectionContainer.sections = new Map();
-            }
-
-            if(!this.layout.sectionContainer.sections.has(sectionId)) {
-                this.layout.sectionContainer.sections.set(sectionId, { });
-            }
-
-            const section = this.layout.sectionContainer.sections.get(sectionId)!;
-
-            if (!section.grid) {
-                section.grid = { cells: new Map() }
-            }
-
-            if (!section.grid.cells.has(id)) {
-                section.grid.cells.set(id, { ref, props })
-            } 
-
-            const cell = section.grid.cells.get(id)!;
+            const cell = grid.cells.get(id)!
 
             cell.ref = ref
             cell.props = props
 
-            return cell;
+            return cell
         },
 
         unregisterLayout() {
-            this.layout = { };
+            registry.layout.ref.current = null
         },
 
         unregisterLayoutSectionContainer() {
-            if (this.layout) {
-                this.layout.sectionContainer = null;
+            if (registry.layout) {
+                registry.layout.sectionContainer = null
             }
         },
 
         unregisterLayoutSection(id) {
-            this.layout?.sectionContainer?.sections.delete(id);
+            registry.layout?.sectionContainer?.sections.delete(id)
         },
 
         unregisterLayoutGrid(sectionId) {
-            const section = this.layout?.sectionContainer?.sections.get(sectionId);
-            if (section) {
-                section.grid = null;
-            }
+            const section = registry.layout?.sectionContainer?.sections.get(sectionId)
+            if (section) section.grid = null
         },
 
         unregisterLayoutGridCell(sectionId, id) {
-            const section = this.layout?.sectionContainer?.sections.get(sectionId);
-            if (section?.grid) {
-                section.grid.cells.delete(id);
-            }
+            registry.layout?.sectionContainer?.sections
+                .get(sectionId)?.grid?.cells.delete(id)
         },
 
         getLayoutSection(id) {
-            return this.layout?.sectionContainer?.sections.get(id) ?? undefined;
+            return registry.layout?.sectionContainer?.sections.get(id)
         },
 
         getLayoutSections() {
-            return this.layout?.sectionContainer?.sections ? Array.from(this.layout.sectionContainer.sections.values()) : undefined;
-        },
-        
-        getLayoutGrid(sectionId) {
-            return this.layout?.sectionContainer?.sections.get(sectionId)?.grid ?? undefined;
+            const map = registry.layout?.sectionContainer?.sections
+            return map ? Array.from(map.values()) : undefined
         },
 
-        getLayoutGrids(sectionId) {
-            const grid = this.layout?.sectionContainer?.sections.get(sectionId)?.grid;
-            return grid ? [grid] : undefined;
+        getLayoutGrid(sectionId) {
+            return registry.layout?.sectionContainer?.sections.get(sectionId)?.grid ?? undefined
         },
-        
+
+        getLayoutGrids() {
+            const sections = registry.layout?.sectionContainer?.sections
+            if (!sections) return undefined
+
+            const grids: LayoutGridNode[] = []
+
+            for (const section of sections.values()) {
+                if (section.grid) grids.push(section.grid)
+            }
+
+            return grids
+        },
+
         getLayoutGridCell(sectionId, id) {
-            return this.layout?.sectionContainer?.sections.get(sectionId)?.grid?.cells.get(id) ?? undefined;
+            return registry.layout?.sectionContainer?.sections
+                .get(sectionId)?.grid?.cells.get(id)
         },
 
         getLayoutGridCells(sectionId) {
-            const cellsMap = this.layout?.sectionContainer?.sections.get(sectionId)?.grid?.cells;
-            return cellsMap ? Array.from(cellsMap.values()) : undefined;
+            const cells = registry.layout?.sectionContainer?.sections
+                .get(sectionId)?.grid?.cells
+
+            return cells ? Array.from(cells.values()) : undefined
         }
     }
 
-    return registry;
+    return registry
 }

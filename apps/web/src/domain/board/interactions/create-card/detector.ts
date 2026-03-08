@@ -9,7 +9,7 @@ export function findSectionUnderPointer(
         const el = section.grid?.ref?.current
         if (!el) continue
 
-        const rect = el.getBoundingClientRect()
+        const rect = el.getBoundingClientRect();
 
         const inside =
             pointer.x >= rect.left &&
