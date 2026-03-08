@@ -113,6 +113,13 @@ export function useBoardPointerEvents(
                 if (!inside) continue;
 
                 foundSection = true;
+
+                for (const section of layoutRegistry.sections.values()) {
+                    const el = section.grid!.ref?.current;
+                    if (!el) continue;
+
+                    delete el.dataset.gridHover;
+                }
                 el.dataset.gridHover = "";
 
                 const sectionProps = section.props!;
