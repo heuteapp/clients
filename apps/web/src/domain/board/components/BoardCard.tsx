@@ -19,10 +19,10 @@ function BoardCard(props : BoardCardProps) {
         <div 
             className={style.card} 
             style={{
-                left: left + (props.colIndex - 1) * measurements!.cellSize.inner,
-                top: top + (props.rowIndex - 1) * measurements!.cellSize.inner,
-                width: props.colSpan * measurements!.cellSize.inner,
-                height: props.rowSpan * measurements!.cellSize.inner,
+                left: 8 + left + (props.colIndex - 1) * measurements!.cellSize.inner,
+                top: 8 + top + (props.rowIndex - 1) * measurements!.cellSize.inner,
+                width: props.colSpan * measurements!.cellSize.inner - 16,
+                height: props.rowSpan * measurements!.cellSize.inner - 16,
             }}
         >
         </div>

@@ -16,7 +16,9 @@
 .card {
     position: absolute;
     background: #252a35;
-    border: 1px solid #000000;
+    border: 1.5px solid #000000;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
 .ghostCard {
