@@ -7,6 +7,7 @@ import { BoardSession, BoardSessionSetter, CardCreateState } from "./session/boa
 import { LayoutRegistry } from "../layout/layout.registry"
 import { setCreateMode } from "./interactions/create-card/create-card.dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/create-card.handler"
+import { BoardCardData, BoardData } from "./board.types"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -33,6 +34,8 @@ export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardIn
 }
 
 export function useBoardPointerEvents(
+    board: BoardData,
+    setBoard: (updater: (prev: BoardData) => BoardData) => void,
   rootRef: React.RefObject<HTMLDivElement | null>,
   layoutRegistry: LayoutRegistry,
   sessionRef: React.RefObject<BoardSession>,
@@ -108,7 +111,26 @@ export function useBoardPointerEvents(
             OnEnd: (type) => {
 
                 if (type === "create") {
-                    endCardCreateInteraction(root, layoutRegistry, interaction)
+                    endCardCreateInteraction(root, layoutRegistry, interaction);
+
+                    setBoard(prev => {
+                        const cardCreateState = sessionRef.current.cardCreate
+                        if (!cardCreateState) return prev
+
+                        const newCard : BoardCardData = {
+                            id: crypto.randomUUID(),
+                            sectionId: cardCreateState.currentSectionId!,
+                            rowIndex: cardCreateState.currentPosition!.rowIndex,
+                            colIndex: cardCreateState.currentPosition!.colIndex,
+                            rowSpan: cardCreateState.startSize.rowSpan,
+                            colSpan: cardCreateState.startSize.colSpan,
+                        }
+
+                        return {
+                            ...prev,
+                            cards: [...prev.cards, newCard]
+                        }
+                    })
                 }
             }
 

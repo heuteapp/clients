@@ -11,7 +11,7 @@ import BoardGhostCard from "./BoardGhostCard";
 
 //
 
-export default function HeuteBoard({ layout }: HeuteBoardProps) {
+export default function HeuteBoard(props: HeuteBoardProps) {
   const context = useBoardContext();
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -19,7 +19,7 @@ export default function HeuteBoard({ layout }: HeuteBoardProps) {
   
   return (
     <div ref={boardRef} className={style.board}>
-      <HeuteLayout {...layout} />
+      <HeuteLayout {...props.layout} />
       <BoardCardContainer />
       <BoardGhostCard />
     </div>
