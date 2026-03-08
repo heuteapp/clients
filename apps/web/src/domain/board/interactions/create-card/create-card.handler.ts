@@ -4,7 +4,7 @@ import { CardCreateState } from "@/src/domain/board/session/board.session.types"
 
 import { findSectionUnderPointer } from "./create-card.detecter"
 import { computeCardCreatePosition } from "./create-card.logic"
-import { clearGridHover, setGridHover, setGhostCardPosition } from "./create-card.dom"
+import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./create-card.dom"
 
 export function handleCardCreateInteraction(
     root: HTMLDivElement,
@@ -19,7 +19,6 @@ export function handleCardCreateInteraction(
 
     const result = findSectionUnderPointer(layoutRegistry, pointer)
 
-    console.log("sdfsa");
     if (!result) {
         interaction.updateCardCreate(null, null)
         clearGridHover(layoutRegistry)
@@ -70,4 +69,14 @@ export function handleCardCreateInteraction(
     )
 
     interaction.updateCardCreate(sectionProps.id, pos)
+}
+
+export function endCardCreateInteraction(
+    root: HTMLDivElement,
+    layoutRegistry: LayoutRegistry,
+    interaction: BoardInteraction
+) {
+    clearGridHover(layoutRegistry);
+    clearGhostCard(root);
+    interaction.updateCardCreate(null, null);
 }

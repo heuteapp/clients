@@ -6,7 +6,7 @@ import { createBoardSession } from "./session/board.session"
 import { BoardSession, BoardSessionSetter, CardCreateState } from "./session/board.session.types"
 import { LayoutRegistry } from "../layout/layout.registry"
 import { setCreateMode } from "./interactions/create-card/create-card.dom"
-import { handleCardCreateInteraction } from "./interactions/create-card/create-card.handler"
+import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/create-card.handler"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -108,7 +108,7 @@ export function useBoardPointerEvents(
             OnEnd: (type) => {
 
                 if (type === "create") {
-                    setCreateMode(root, false)
+                    endCardCreateInteraction(root, layoutRegistry, interaction)
                 }
             }
 

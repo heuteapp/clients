@@ -28,8 +28,17 @@ export function setGhostCardPosition(
     width: number,
     height: number
 ) {
+    root.style.setProperty("--ghost-card-visible", "visible");
     root.style.setProperty("--ghost-card-x", `${x}px`)
     root.style.setProperty("--ghost-card-y", `${y}px`)
     root.style.setProperty("--ghost-card-width", `${width}px`)
     root.style.setProperty("--ghost-card-height", `${height}px`)
+}
+
+export function clearGhostCard(root: HTMLElement) {
+    root.style.setProperty("--ghost-card-visible", "hidden");
+    root.style.removeProperty("--ghost-card-x")
+    root.style.removeProperty("--ghost-card-y")
+    root.style.removeProperty("--ghost-card-width")
+    root.style.removeProperty("--ghost-card-height")
 }

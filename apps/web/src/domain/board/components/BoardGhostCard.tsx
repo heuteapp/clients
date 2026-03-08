@@ -11,6 +11,7 @@ function BoardGhostCard(props : BoardGhostCardProps) {
         <div 
             className={style.ghostCard} 
             style={{
+                visibility: "var(--ghost-card-visible)" as any,
                 left: "var(--ghost-card-x)",
                 top: "var(--ghost-card-y)",
                 width: `var(--ghost-card-width)`,
