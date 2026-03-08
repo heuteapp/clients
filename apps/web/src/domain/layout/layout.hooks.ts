@@ -3,6 +3,7 @@ import { LayoutMeasurements } from "./types/dom"
 import { LayoutSectionData } from "./types/data"
 import { calculateSectionCount } from "./calculations/section-count"
 import { calculateCellSize } from "./calculations/cell-size";
+import { calculateContainerSize } from "./calculations/container-size";
 
 export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
@@ -36,17 +37,11 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sectio
                 prev.full === _cellSize.full && prev.inner === _cellSize.inner && prev.compact === _cellSize.compact
                 ? prev : _cellSize
             );
-
-            const _containerSize = 
-            {
-                width: cellSize.full * cellCount.horizontal,
-                height: cellSize.full * cellCount.vertical
-            }
-
+            
+            const _containerSize = calculateContainerSize(cellCount, _cellSize.full);
             setContainerSize(
                 prev => prev.width === _containerSize.width && prev.height === _containerSize.height
-                ? prev
-                : _containerSize
+                ? prev : _containerSize
             );
         })
 
