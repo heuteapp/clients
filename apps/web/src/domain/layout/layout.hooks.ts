@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { LayoutRegistry } from "../board/board.registry"
 import { LayoutMeasurements } from "./types/layout.dom.types"
 import { LayoutSectionData } from "./types/layout.data.types"
-import { calculateSectionCount } from "./utils/section-count.utils"
+import { calculateSectionCount } from "./utils/section-count"
 import { LayoutCellNode, LayoutGridNode, LayoutSectionNode } from "./types/layout.registry.types"
 
 export function useLayoutRegistry(): LayoutRegistry {
