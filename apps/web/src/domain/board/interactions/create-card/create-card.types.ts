@@ -1,4 +1,4 @@
-import { Pointer } from "@/src/shared/types/common.types"
+import { Pointer } from "@/src/shared/types/common"
 
 export interface CardCreateComputeInput {
     pointer: Pointer
