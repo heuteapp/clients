@@ -113,6 +113,7 @@ export function useBoardPointerEvents(
                 if (!inside) continue;
 
                 foundSection = true;
+                el.dataset.gridHover = "";
 
                 const sectionProps = section.props!;
                 const cardRows = state.startSize.rowSpan;
@@ -143,6 +144,13 @@ export function useBoardPointerEvents(
 
             if (!foundSection) {
                 interaction.updateCardCreate(null, null);
+
+                for (const section of layoutRegistry.sections.values()) {
+                    const el = section.grid!.ref?.current;
+                    if (!el) continue;
+
+                    delete el.dataset.gridHover;
+                }
             }
 
             const width = state.startSize.colSpan * cellSize;
