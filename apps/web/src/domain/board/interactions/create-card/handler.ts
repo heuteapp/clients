@@ -5,18 +5,19 @@ import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./dom"
 import { BoardRegistry } from "../../board.registry"
+import { LayoutMeasurements } from "@/src/domain/layout/types/dom"
 
 export function handleCardCreateInteraction(
     root: HTMLDivElement,
     registry: BoardRegistry,
+    measurements: LayoutMeasurements,
     interaction: BoardInteraction,
     state: CardCreateState) 
 {
     const pointer = interaction.pointer
     if (!pointer) return
 
-    // !! Hardcoded cell size
-    const cellSize = 10; //layoutRegistry.measurements!.cellSize.inner
+    const cellSize = measurements.cellSize.inner
 
     const result = findSectionUnderPointer(registry, pointer)
 

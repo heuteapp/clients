@@ -8,6 +8,7 @@ import { setCreateMode } from "./interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/handler"
 import { BoardCardData, BoardData } from "./board.types"
 import { BoardRegistry, createBoardRegistry } from "./board.registry"
+import { LayoutMeasurements } from "../layout/types/dom"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -48,6 +49,7 @@ export function useBoardPointerEvents(
     setBoard: (updater: (prev: BoardData) => BoardData) => void,
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
+    measurements: LayoutMeasurements,
     sessionRef: React.RefObject<BoardSession>,
     interaction: BoardInteraction
 ) {
@@ -80,7 +82,7 @@ export function useBoardPointerEvents(
 
 
             if (currentSession.cardCreate) {
-                handleCardCreateInteraction(rootRef.current!, registry, interaction, currentSession.cardCreate)
+                handleCardCreateInteraction(rootRef.current!, registry, measurements, interaction, currentSession.cardCreate)
                 return
             }
 
@@ -114,7 +116,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, registry, interaction, state as CardCreateState)
+                    handleCardCreateInteraction(root, registry, measurements, interaction, state as CardCreateState)
                 }
             },
 

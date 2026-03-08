@@ -42,7 +42,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         padding: 12
     })
 
-    useBoardPointerEvents(board, setBoard, rootRef, registry, sessionRef, interaction);
+    useBoardPointerEvents(board, setBoard, rootRef, registry, measurements, sessionRef, interaction);
     const session = sessionRef.current;
 
     const value = useMemo(

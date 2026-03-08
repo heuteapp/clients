@@ -1,12 +1,6 @@
-import { GridRect, GridSize } from "@/src/shared/types/common"
 import style from "../board.module.css"
-import { useBoardContext } from "../board.hooks";
 
 function BoardGhostCard(props : BoardGhostCardProps) {
-    const { measurements } = useBoardContext();
-
-    const cellSize = measurements!.cellSize.inner;
-
     return (
         <div 
             className={style.ghostCard} 
