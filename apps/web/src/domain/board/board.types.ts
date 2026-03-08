@@ -1,4 +1,4 @@
-import { HeuteLayoutData } from "../layout/layout.types";
+import { HeuteLayoutData } from "../layout/types/layout.data.types";
 
 export interface BoardData {
     id: string;
