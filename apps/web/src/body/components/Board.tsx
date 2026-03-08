@@ -1,8 +1,7 @@
 "use client";
 import HeuteBoard from '@/src/domain/board/components/HeuteBoard';
 import style from '../body.module.css';
-import { sectionExamples } from '@/src/domain/board/board.examples';
-import { useBoardContext } from '@/src/domain/board/board.hooks';
+import { useBoardStore } from '@/src/domain/board/board.store';
 
 interface BoardProps {
     category: string;
@@ -10,9 +9,9 @@ interface BoardProps {
 }
 
 function Board({ category, date }: BoardProps) {
-    const context = useBoardContext();
+    const board = useBoardStore(state => state.board)
 
-    const board = context.board;
+    if(!board) return null;
 
     return (
         <>
