@@ -35,170 +35,139 @@ export function useBoardPointerEvents(
   interaction: BoardInteraction
 ) {
     const sessionRef = useRef(session);
-    
+
     useEffect(() => {
         sessionRef.current = session;
     }, [session]);
-
 
     useEffect(() => {
         const root = rootRef.current;
         if (!root) return;
 
+        function handlePointerDown(e: PointerEvent) {
+            e.preventDefault();
+            const root = rootRef.current;
+            if (!root) return;
+
+            root.setPointerCapture(e.pointerId);
+            interaction.pointer = { x: e.clientX, y: e.clientY };
+        }
+
         function handlePointerMove(e: PointerEvent) {
             interaction.pointer = { x: e.clientX, y: e.clientY };
+
             const currentSession = sessionRef.current;
 
-            currentSession.pointerId = e.pointerId;
-
             if (currentSession.cardCreate) {
-                cardCreateStyle(currentSession.cardCreate);
+                handleCardCreate(currentSession.cardCreate);
                 return;
             }
 
             if (currentSession.cardMove) {
-                console.log("Card Move");
                 return;
             }
 
             if (currentSession.cardResize) {
-                console.log("Card Resize");
                 return;
             }
         }
 
-        function handlePointerUp() {
+        function handlePointerUp(e: PointerEvent) {      
+            const root = rootRef.current;
+            if (!root) return;
+            root.releasePointerCapture(e.pointerId);
+
             const currentSession = sessionRef.current;
-            if(currentSession.cardCreate || currentSession.cardMove || currentSession.cardResize) {
+
+            if (
+                currentSession.cardCreate ||
+                currentSession.cardMove ||
+                currentSession.cardResize
+            ) {
                 interaction.endInteraction();
             }
         }
 
-        const handlers: Array<{
-            el: HTMLElement;
-            events: {
-                [key: string]: EventListenerOrEventListenerObject | null
-            }
-        }> = [];
+        function handleCardCreate(state: CardCreateState) {
+            const pointer = interaction.pointer;
+            if (!pointer) return;
 
-        function cleanupHandlers() {
-            for(const { el, events } of handlers) {
-                for(const [name, handler] of Object.entries(events)) {
-                    if(handler) {
-                        el.removeEventListener(name, handler);
-                    }
-                }
-            }
-            handlers.length = 0;
-        }
-
-            // !! do not use session or its ref inside !!
-        interaction.setEventHandlers({
-            OnStart: (type: BoardInteractionEventType, state: CardBaseState) => {
-                switch(type) {
-                    case "create":
-                        root.dataset.interactionCardCreate = "true";
-                        cardCreateStyle(state as CardCreateState);
-
-                        const grids = layoutRegistry.sections.values().map(s => s.grid);
-                        for(const grid of grids) {
-                            const el = grid!.ref?.current;
-                            if(!el) continue;
-
-                            const pointerenter = () => {
-                                interaction.updateCardCreate(grid!.props!.sectionId, null);
-                            }
-
-                            const pointermove = () => {
-                                const session = sessionRef.current;
-                                const section = layoutRegistry.getSection(grid!.props!.sectionId)!;
-                                const sectionProps = section.props!;
-                                
-                                const rect = el.getBoundingClientRect();
-                                const cellSize = layoutRegistry.measurements!.cellSize.full;
-
-                                const mouseX = interaction.pointer!.x - rect.left;
-                                const mouseY = interaction.pointer!.y - rect.top;
-
-                                const cardRows = session.cardCreate!.startSize.rowSpan;
-                                const cardCols = session.cardCreate!.startSize.colSpan;
-
-                                const centeredX = mouseX - (cardCols * cellSize) / 2;
-                                const centeredY = mouseY - (cardRows * cellSize) / 2;
-
-                                let rawCol = Math.round(centeredX / cellSize) + 1;
-                                let rawRow = Math.round(centeredY / cellSize) + 1;
-
-                                const maxRow = sectionProps.rowSpan - cardRows + 1;
-                                const maxCol = sectionProps.colSpan - cardCols + 1;
-
-                                const row = clamp(rawRow, 1, maxRow);
-                                const col = clamp(rawCol, 1, maxCol);
-
-                                interaction.updateCardCreate(grid!.props!.sectionId, { rowIndex: row, colIndex: col });
-                            }
-
-                            const pointerleave = () => {
-                                interaction.updateCardCreate(null, null);
-                            }
-
-                            el.addEventListener("pointerenter", pointerenter);
-                            el.addEventListener("pointermove", pointermove);
-                            el.addEventListener("pointerleave", pointerleave);
-
-                            handlers.push({ el, events: { pointerenter, pointermove, pointerleave } });
-                        }
-                        break;
-                    case "move":
-                        root.dataset.interactionCardMove = "true";
-                        break;
-                    case "resize":
-                        root.dataset.interactionCardResize = "true";
-                        break;
-                }
-            },
-            OnEnd: (type: BoardInteractionEventType) => {
-                switch(type) {
-                    case "create":
-                        delete root.dataset.interactionCardCreate;
-                        break;
-                    case "move":
-                        delete root.dataset.interactionCardMove;
-                        break;
-                    case "resize":
-                        delete root.dataset.interactionCardResize;
-                        break;
-                }
-
-                cleanupHandlers();
-            }
-        });
-
-        function cardCreateStyle(state: CardCreateState) {
+            const cellSize = layoutRegistry.measurements!.cellSize.inner;
             const root = rootRef.current;
-            if(!root) return;
+            if (!root) return;
+        
+            let foundSection: boolean = false;
 
-            const pointer = interaction.pointer!;
+            for (const section of layoutRegistry.sections.values()) {
+                const el = section.grid!.ref?.current;
+                if (!el) continue;
 
-            const size = state.startSize;
+                const rect = el.getBoundingClientRect();
 
-            const cardX = pointer.x - (size.colSpan * layoutRegistry.measurements!.cellSize.full) / 2;
-            const cardY = pointer.y - (size.rowSpan * layoutRegistry.measurements!.cellSize.full) / 2;
+                const inside =
+                    pointer.x >= rect.left &&
+                    pointer.x <= rect.right &&
+                    pointer.y >= rect.top &&
+                    pointer.y <= rect.bottom;
 
-            root.style.setProperty("--ghost-card-x", `${cardX}px`);
-            root.style.setProperty("--ghost-card-y", `${cardY}px`);
+                if (!inside) continue;
+
+                foundSection = true;
+
+                const sectionProps = section.props!;
+                const cardRows = state.startSize.rowSpan;
+                const cardCols = state.startSize.colSpan;
+
+                const mouseX = pointer.x - rect.left;
+                const mouseY = pointer.y - rect.top;
+
+                const centeredX = mouseX - (cardCols * cellSize) / 2;
+                const centeredY = mouseY - (cardRows * cellSize) / 2;
+
+                const rawCol = Math.round(centeredX / cellSize) + 1;
+                const rawRow = Math.round(centeredY / cellSize) + 1;
+
+                const maxRow = sectionProps.rowSpan - cardRows + 1;
+                const maxCol = sectionProps.colSpan - cardCols + 1;
+
+                const row = clamp(rawRow, 1, maxRow);
+                const col = clamp(rawCol, 1, maxCol);
+
+                interaction.updateCardCreate(section.props!.id, {
+                    rowIndex: row,
+                    colIndex: col,
+                });
+
+                return;
+            }
+
+            if (!foundSection) {
+                interaction.updateCardCreate(null, null);
+            }
+            const width = state.startSize.colSpan * cellSize;
+            const height = state.startSize.rowSpan * cellSize;
+
+            root.style.setProperty(
+                "--ghost-card-x",
+                `${pointer.x - width / 2}px`
+            );
+
+            root.style.setProperty(
+                "--ghost-card-y",
+                `${pointer.y - height / 2}px`
+            );
         }
 
+        root.addEventListener("pointerdown", handlePointerDown);
         root.addEventListener("pointermove", handlePointerMove);
         root.addEventListener("pointerup", handlePointerUp);
 
         return () => {
+            root.removeEventListener("pointerdown", handlePointerDown);
             root.removeEventListener("pointermove", handlePointerMove);
             root.removeEventListener("pointerup", handlePointerUp);
-            cleanupHandlers();
-        }
-
-    }, [rootRef, interaction]);
+        };
+    }, [rootRef, interaction, layoutRegistry]);
 }
 
 function clamp(value: number, min: number, max: number) {
