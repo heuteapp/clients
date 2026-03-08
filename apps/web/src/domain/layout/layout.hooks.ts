@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { LayoutMeasurements } from "./types/dom"
 import { LayoutSectionData } from "./types/data"
 import { calculateSectionCount } from "./calculations/section-count"
+import { calculateCellSize } from "./calculations/cell-size";
 
 export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
@@ -30,29 +31,10 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sectio
         const observer = new ResizeObserver(() => {
             const { clientWidth, clientHeight } = element
 
-            const full = Math.min(
-                clientWidth / columnCount,
-                clientHeight / rowCount
-            );
-
-            const inner = Math.min(
-                (clientWidth - ((sectionCount.horizontal + 4) * padding * 2)) / columnCount,
-                (clientHeight - ((sectionCount.vertical + 4) * padding * 2)) / rowCount
-            );
-
-            const compact = inner * 0.9;
-
-            const _cellSize =
-            {
-                full,
-                inner,
-                compact
-            }
-
+            const _cellSize = calculateCellSize(clientWidth, clientHeight, columnCount, rowCount, padding);
             setCellSize(prev =>
                 prev.full === _cellSize.full && prev.inner === _cellSize.inner && prev.compact === _cellSize.compact
-                ? prev
-                : _cellSize
+                ? prev : _cellSize
             );
 
             const _containerSize = 
