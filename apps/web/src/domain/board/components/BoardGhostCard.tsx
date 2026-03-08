@@ -1,4 +1,4 @@
-import { GridRect } from "@/src/types"
+import { GridRect } from "@/src/shared/types"
 import style from "../board.module.css"
 import { useBoardContext } from "../board.hooks";
 

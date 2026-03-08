@@ -1,4 +1,4 @@
-import "@/src/global.css";
+import "@/src/shared/global.css";
 import Panel from "@/src/body/components/Panel";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
