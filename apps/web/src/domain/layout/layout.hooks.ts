@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import { LayoutRegistry } from "../board/board.registry"
-import { LayoutMeasurements } from "./types/layout.dom.types"
-import { LayoutSectionData } from "./types/layout.data.types"
+import { LayoutMeasurements } from "./types/dom"
+import { LayoutSectionData } from "./types/data"
 import { calculateSectionCount } from "./utils/section-count"
-import { LayoutCellNode, LayoutGridNode, LayoutSectionNode } from "./types/layout.registry.types"
+import { LayoutCellNode, LayoutGridNode, LayoutSectionNode } from "./types/registry"
 
 export function useLayoutRegistry(): LayoutRegistry {
   const registryRef = useRef<LayoutRegistry | null>(null)

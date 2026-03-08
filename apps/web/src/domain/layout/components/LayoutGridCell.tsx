@@ -2,7 +2,7 @@ import style from "../layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "../../board/board.hooks";
-import { LayoutGridCellProps } from "../types/layout.props.types";
+import { LayoutGridCellProps } from "../types/props";
 
 function LayoutGridCell(props : LayoutGridCellProps) {
     const context = useBoardContext();

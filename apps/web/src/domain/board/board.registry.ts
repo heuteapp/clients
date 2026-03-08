@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionProps } from "@/src/domain/layout/types/layout.props.types";
-import { LayoutMeasurements } from "../layout/types/layout.dom.types";
+import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionProps } from "@/src/domain/layout/types/props";
+import { LayoutMeasurements } from "../layout/types/dom";
 
 export interface RegistryNode {
   ref?: React.RefObject<HTMLDivElement | null> | null

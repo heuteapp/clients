@@ -1,5 +1,5 @@
 import { RegistryBaseNode } from "@/src/shared/types/registry.types"
-import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "./layout.props.types"
+import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "./props"
 
 export interface LayoutRegistry {
     root: LayoutRootNode | null
