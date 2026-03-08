@@ -1,7 +1,8 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react"
-
-import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
-import { LayoutCellNode, LayoutGridNode, LayoutRegistry, LayoutSectionNode } from "./layout.registry";
+import { useEffect, useRef, useState } from "react"
+import { LayoutRegistry, LayoutSectionNode, LayoutGridNode, LayoutCellNode } from "../board/board.registry"
+import { LayoutMeasurements } from "./types/layout.dom.types"
+import { LayoutSectionData } from "./types/layout.data.types"
+import { calculateSectionCount } from "./layout.utils"
 
 export function useLayoutRegistry(): LayoutRegistry {
   const registryRef = useRef<LayoutRegistry | null>(null)
@@ -123,7 +124,9 @@ export function useLayoutRegistry(): LayoutRegistry {
   return registryRef.current
 }
 
-export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+
+    const sectionCount = calculateSectionCount(sections);
 
     const cellCount = {
         horizontal: columnCount,
@@ -147,7 +150,6 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, analyz
 
         const observer = new ResizeObserver(() => {
             const { clientWidth, clientHeight } = element
-            const { sectionCount } = analyze;
 
             const full = Math.min(
                 clientWidth / columnCount,
@@ -190,9 +192,10 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, analyz
         observer.observe(element)
 
         return () => observer.disconnect()
-    }, [columnCount, rowCount, analyze, padding])
+    }, [columnCount, rowCount, sectionCount, padding])
 
   return {
+    sectionCount,
     cellCount,
     cellSize,
     containerSize
@@ -205,6 +208,6 @@ export interface LayoutMeasurementsParams {
     layoutRef: React.RefObject<HTMLDivElement | null>
     columnCount: number
     rowCount: number
-    analyze: LayoutAnalyze
+    sections: LayoutSectionData[]
     padding: number
 }

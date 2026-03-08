@@ -1,13 +1,12 @@
-import { LayoutAnalyze, LayoutSectionData } from "./layout.types"
+import { LayoutSectionData } from "./types/layout.data.types"
+import { LayoutSectionCountMeasurements } from "./types/layout.dom.types"
 
-export function analyzeLayout(sections: LayoutSectionData[]): LayoutAnalyze {
+export function calculateSectionCount(sections: LayoutSectionData[]): LayoutSectionCountMeasurements {
 
     if (sections.length === 0) {
         return {
-            sectionCount: {
-                horizontal: 0,
-                vertical: 0
-            }
+            horizontal: 0,
+            vertical: 0
         }
     }
 
@@ -41,7 +40,5 @@ export function analyzeLayout(sections: LayoutSectionData[]): LayoutAnalyze {
         }
     }
 
-    return {
-        sectionCount
-    }
+    return sectionCount;
 }

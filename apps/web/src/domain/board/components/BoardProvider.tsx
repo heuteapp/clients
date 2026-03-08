@@ -6,7 +6,6 @@ import { useBoardInteraction, useBoardPointerEvents, useBoardSessionRef } from "
 import { useLayoutMeasurements, useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 import { BoardData } from "../board.types";
 import { sectionExamples } from "../board.examples";
-import { analyzeLayout } from "../../layout/layout.utils";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
 
@@ -30,13 +29,11 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         cards: []
     });
 
-    const analyze = analyzeLayout(board.layout.sections);
-
     const measurements = useLayoutMeasurements({
         layoutRef,
         columnCount: board.layout.columnCount,
         rowCount: board.layout.rowCount,
-        analyze,
+        sections: board.layout.sections,
         padding: 12
     })
 
