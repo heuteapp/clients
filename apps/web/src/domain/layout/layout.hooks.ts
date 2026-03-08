@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { LayoutMeasurements } from "./types/dom"
 import { LayoutSectionData } from "./types/data"
-import { calculateSectionCount } from "./utils/section-count"
+import { calculateSectionCount } from "./calculations/section-count"
 
 export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
