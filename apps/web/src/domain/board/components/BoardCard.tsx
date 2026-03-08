@@ -9,16 +9,18 @@ function BoardCard(props : BoardCardProps) {
     const section = context.layoutRegistry.getSection(props.sectionId);
     if(!section) return null;
 
-    const rect = section.ref!.current!.getBoundingClientRect();
+    const rootRect = context.layoutRef.current!.getBoundingClientRect();
+    const sectionRect = section.ref!.current!.getBoundingClientRect();
 
+    const left = sectionRect.left - rootRect.left;
+    const top = sectionRect.top - rootRect.top;
 
-    console.log(measurements);
     return (
         <div 
             className={style.card} 
             style={{
-                left: rect.left + props.colIndex * measurements!.cellSize.inner,
-                top: rect.top + props.rowIndex * measurements!.cellSize.inner,
+                left: left + props.colIndex * measurements!.cellSize.inner,
+                top: top + props.rowIndex * measurements!.cellSize.inner,
                 width: props.colSpan * measurements!.cellSize.inner,
                 height: props.rowSpan * measurements!.cellSize.inner,
             }}

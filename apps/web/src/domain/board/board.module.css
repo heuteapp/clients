@@ -14,7 +14,7 @@
 }
 
 .card {
-    position: fixed;
+    position: absolute;
     background: #2a2f3a;
     border: 1px solid #3a4150;
     border-radius: 6px;
