@@ -1,20 +1,7 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react"
 
-import { HeuteLayoutContext } from "./layout.context";
 import { LayoutAnalyze, LayoutMeasurements } from "./layout.types";
 import { LayoutCellNode, LayoutGridNode, LayoutRegistry, LayoutSectionNode } from "./layout.registry";
-
-//
-
-export function useLayoutContext() {
-    const ctx = useContext(HeuteLayoutContext)
-
-    if (!ctx) {
-        throw new Error("useHeuteLayout must be used inside HeuteLayout")
-    }
-
-    return ctx
-}
 
 export function useLayoutRegistry(): LayoutRegistry {
   const registryRef = useRef<LayoutRegistry | null>(null)

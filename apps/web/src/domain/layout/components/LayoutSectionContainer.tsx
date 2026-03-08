@@ -2,7 +2,6 @@ import style from "../layout.module.css"
 
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionData } from "../layout.types";
-import { useLayoutContext } from "../layout.hooks";
 import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
