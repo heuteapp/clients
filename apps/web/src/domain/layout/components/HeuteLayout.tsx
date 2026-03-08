@@ -2,14 +2,11 @@
 
 const padding = 8;
 
-import { useLayoutEffect, useMemo, useRef } from "react"
+import { useLayoutEffect } from "react"
 
 import style from "../layout.module.css"
 
 import { HeuteLayoutData } from "../layout.types"
-import { analyzeLayout } from "../layout.utils"
-import { useLayoutMeasurements } from "../layout.hooks";
-import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { LayoutRegistry } from "../layout.registry";
 import { useBoardContext } from "../../board/board.hooks";
@@ -36,9 +33,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
         visibility: layoutRegistry.measurements!.containerSize.width > 0 ? "visible" : "hidden"
       }}
     >
-      <HeuteLayoutContext.Provider value={{} as any}>
         <LayoutSectionContainer sections={sections} />
-      </HeuteLayoutContext.Provider>
     </div>
   )
 }

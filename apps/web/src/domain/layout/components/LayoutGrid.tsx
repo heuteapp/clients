@@ -1,7 +1,6 @@
 import style from "../layout.module.css"
 
 import LayoutGridCell from "./LayoutGridCell";
-import { useLayoutContext } from "../layout.hooks";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "../../board/board.hooks";
 

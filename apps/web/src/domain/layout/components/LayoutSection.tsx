@@ -3,7 +3,6 @@ import style from "../layout.module.css"
 
 import { LayoutSectionData } from "../layout.types"
 import LayoutGrid from "./LayoutGrid";
-import { useLayoutContext } from "../layout.hooks";
 import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutSection(props : LayoutSectionProps) {
