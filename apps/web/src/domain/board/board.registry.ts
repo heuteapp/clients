@@ -1,82 +1,64 @@
 "use client"
 
 import React from "react"
-import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionProps } from "@/src/domain/layout/types/props";
-import { LayoutMeasurements } from "../layout/types/dom";
+import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionContainerProps, LayoutSectionProps } from "@/src/domain/layout/types/props";
+import { LayoutRootNode, LayoutSectionNode, LayoutGridCellNode, LayoutGridNode, LayoutSectionContainerNode } from "../layout/types/nodes";
+import { RegistryBaseNode } from "@/src/shared/types/registry";
 
-export interface RegistryNode {
-  ref?: React.RefObject<HTMLDivElement | null> | null
-}
+export interface BoardRegistry {
+    board: BoardRootNode | null
+    layout: LayoutRootNode | null
 
-export interface LayoutRegistry {
-    measurements: LayoutMeasurements | null
-
-    root: LayoutRootNode | null
-    container: RegistryNode | null
-    sections: Map<string, LayoutSectionNode>
-
-    registerRoot(
+    registerLayout(
         ref: React.RefObject<HTMLDivElement | null>,
         props: HeuteLayoutProps,
-    ): void
+    ): LayoutRootNode
 
-    unregisterRoot(): void
-
-
-    registerContainer(
-        ref: React.RefObject<HTMLDivElement | null>
-    ): void
-
-    unregisterContainer(): void
-
-
-    registerSection(
+    registerLayoutSectionContainer(
+        ref: React.RefObject<HTMLDivElement | null>,
+        props: LayoutSectionContainerProps
+    ): LayoutSectionContainerNode
+    
+    registerLayoutSection(
         id: string,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutSectionProps
     ): LayoutSectionNode
 
-    unregisterSection(id: string): void
-
-
-    registerGrid(
+    registerLayoutGrid(
         sectionId: string,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutGridProps
     ): LayoutGridNode
 
-    unregisterGrid(sectionId: string): void
-
-
-    registerCell(
+    registerLayoutGridCell(
         sectionId: string,
         id: string,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutGridCellProps
-    ): LayoutCellNode
+    ): LayoutGridCellNode
 
-    unregisterCell(sectionId: string, id: string): void
+    //
 
+    unregisterLayout(): void
 
-    getSection(id: string): LayoutSectionNode | undefined
-    getGrid(sectionId: string): LayoutGridNode | undefined
-    getCell(sectionId: string, id: string): LayoutCellNode | undefined
+    unregisterLayoutSectionContainer(): void
+
+    unregisterLayoutSection(id: string): void
+
+    unregisterLayoutGrid(sectionId: string): void
+
+    unregisterLayoutGridCell(sectionId: string, id: string): void
+
+    //
+
+    getLayoutSection(id: string): LayoutSectionNode | undefined
+
+    getLayoutGrid(sectionId: string): LayoutGridNode | undefined
+
+    getLayoutGridCell(sectionId: string, id: string): LayoutGridCellNode | undefined
 }
 
-export interface LayoutRootNode extends RegistryNode {
-    props?: HeuteLayoutProps
-}
+export interface BoardRootNode extends RegistryBaseNode {
 
-export interface LayoutSectionNode extends RegistryNode {
-    props?: LayoutSectionProps
-    grid: LayoutGridNode | null
-}
-
-export interface LayoutGridNode extends RegistryNode {
-    props?: LayoutGridProps
-    cells: Map<string, LayoutCellNode>
-}
-
-export interface LayoutCellNode extends RegistryNode {
-    props?: LayoutGridCellProps
 }
