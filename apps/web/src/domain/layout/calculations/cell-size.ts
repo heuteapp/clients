@@ -1,20 +1,22 @@
-import { LayoutCellSizeMeasurements } from "../types/dom";
+import { LayoutCellCountMeasurements, LayoutCellSizeMeasurements } from "../types/dom";
 
 export function calculateCellSize(
     containerWidth: number, 
     containerHeight: number, 
-    columnCount: number, 
-    rowCount: number, 
+    cellCount: LayoutCellCountMeasurements,
     padding: number
 ) : LayoutCellSizeMeasurements {
 
+    const colCount = cellCount.horizontal;
+    const rowCount = cellCount.vertical;
+
     const full = Math.min(
-        containerWidth / columnCount,
+        containerWidth / colCount,
         containerHeight / rowCount
     );
 
     const inner = Math.min(
-        (containerWidth - ((columnCount + 4) * padding * 2)) / columnCount,
+        (containerWidth - ((colCount + 4) * padding * 2)) / colCount,
         (containerHeight - ((rowCount + 4) * padding * 2)) / rowCount
     );
 

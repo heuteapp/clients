@@ -1,3 +1,6 @@
+import { GridDimensions } from "@/src/shared/types/common"
+import { LayoutSectionData } from "./data"
+
 export interface LayoutMeasurements {
     sectionCount : LayoutSectionCountMeasurements
     cellCount: LayoutCellCountMeasurements
@@ -24,4 +27,13 @@ export interface LayoutCellSizeMeasurements {
 export interface LayoutContainerSizeMeasurements {
     width: number
     height: number
+}
+
+//
+
+export interface LayoutMeasurementsParams {
+    layoutRef: React.RefObject<HTMLDivElement | null>
+    gridDimensions: GridDimensions
+    sections: LayoutSectionData[]
+    padding: number
 }

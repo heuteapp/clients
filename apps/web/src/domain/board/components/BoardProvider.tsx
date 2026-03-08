@@ -29,10 +29,12 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
 
     const measurements = useLayoutMeasurements({
         layoutRef: registry.layout.ref,
-        columnCount: board.layout.columnCount,
-        rowCount: board.layout.rowCount,
+        gridDimensions: {
+            columnCount: board.layout.columnCount,
+            rowCount: board.layout.rowCount
+        },
         sections: board.layout.sections,
-        padding: 12
+        padding: 4
     })
 
     useBoardPointerEvents(board, setBoard, rootRef, registry, measurements, sessionRef, interaction);

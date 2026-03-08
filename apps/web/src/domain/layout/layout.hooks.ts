@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react"
-import { LayoutMeasurements } from "./types/dom"
-import { LayoutSectionData } from "./types/data"
+import { LayoutMeasurements, LayoutMeasurementsParams } from "./types/dom"
 import { calculateSectionCount } from "./calculations/section-count"
 import { calculateCellSize } from "./calculations/cell-size";
 import { calculateContainerSize } from "./calculations/container-size";
 
-export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
     const sectionCount = calculateSectionCount(sections);
 
     const cellCount = {
-        horizontal: columnCount,
-        vertical: rowCount
+        horizontal: gridDimensions.columnCount,
+        vertical: gridDimensions.rowCount
     };
 
     const [cellSize, setCellSize] = useState({
@@ -32,7 +31,7 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sectio
         const observer = new ResizeObserver(() => {
             const { clientWidth, clientHeight } = element
 
-            const _cellSize = calculateCellSize(clientWidth, clientHeight, columnCount, rowCount, padding);
+            const _cellSize = calculateCellSize(clientWidth, clientHeight, cellCount, padding);
             setCellSize(prev =>
                 prev.full === _cellSize.full && prev.inner === _cellSize.inner && prev.compact === _cellSize.compact
                 ? prev : _cellSize
@@ -48,7 +47,7 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sectio
         observer.observe(element)
 
         return () => observer.disconnect()
-    }, [columnCount, rowCount, sectionCount, padding])
+    }, [cellCount, sectionCount, padding])
 
   return {
     sectionCount,
@@ -56,14 +55,4 @@ export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, sectio
     cellSize,
     containerSize
   }
-}
-
-
-
-export interface LayoutMeasurementsParams {
-    layoutRef: React.RefObject<HTMLDivElement | null>
-    columnCount: number
-    rowCount: number
-    sections: LayoutSectionData[]
-    padding: number
 }
