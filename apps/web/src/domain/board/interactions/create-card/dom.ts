@@ -1,4 +1,4 @@
-import { LayoutRegistry } from "@/src/domain/layout/layout.registry"
+import { LayoutRegistry } from "@/src/domain/layout/types/registry"
 
 export function clearGridHover(layoutRegistry: LayoutRegistry) {
     for (const section of layoutRegistry.sections.values()) {

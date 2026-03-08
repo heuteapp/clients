@@ -5,8 +5,8 @@ import { BoardInteraction } from "./interaction/board.interaction.types"
 import { createBoardSession } from "./session/board.session"
 import { BoardSession, BoardSessionSetter, CardCreateState } from "./session/board.session.types"
 import { LayoutRegistry } from "../layout/layout.registry"
-import { setCreateMode } from "./interactions/create-card/create-card.dom"
-import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/create-card.handler"
+import { setCreateMode } from "./interactions/create-card/dom"
+import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/handler"
 import { BoardCardData, BoardData } from "./board.types"
 
 export function useBoardContext() {
