@@ -1,4 +1,4 @@
-import { GridRect, GridSize } from "@/src/shared/types"
+import { GridRect, GridSize } from "@/src/shared/types/common.types"
 import style from "../board.module.css"
 import { useBoardContext } from "../board.hooks";
 

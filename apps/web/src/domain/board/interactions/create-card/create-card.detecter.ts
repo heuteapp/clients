@@ -1,5 +1,5 @@
-import { LayoutRegistry } from "@/src/domain/layout/layout.registry"
-import { Pointer } from "@/src/shared/types"
+import { LayoutRegistry } from "@/src/domain/layout/types/layout.registry.types"
+import { Pointer } from "@/src/shared/types/common.types"
 
 export function findSectionUnderPointer(
     layoutRegistry: LayoutRegistry,
