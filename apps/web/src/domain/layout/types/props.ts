@@ -1,8 +1,7 @@
-import { LayoutRegistry } from "./registry"
 import { HeuteLayoutData, LayoutSectionData } from "./data"
 
 export interface HeuteLayoutProps extends HeuteLayoutData {
-  registry?: LayoutRegistry
+
 }
 
 export interface LayoutSectionContainerProps {
