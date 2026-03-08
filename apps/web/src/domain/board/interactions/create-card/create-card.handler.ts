@@ -19,6 +19,7 @@ export function handleCardCreateInteraction(
 
     const result = findSectionUnderPointer(layoutRegistry, pointer)
 
+    console.log("sdfsa");
     if (!result) {
         interaction.updateCardCreate(null, null)
         clearGridHover(layoutRegistry)
@@ -29,7 +30,9 @@ export function handleCardCreateInteraction(
         setGhostCardPosition(
             root,
             pointer.x - width / 2,
-            pointer.y - height / 2
+            pointer.y - height / 2,
+            width,
+            height
         )
 
         return
@@ -51,7 +54,20 @@ export function handleCardCreateInteraction(
         cardCols: state.startSize.colSpan,
         sectionRowSpan: sectionProps.rowSpan,
         sectionColSpan: sectionProps.colSpan
-    })
+    });
+
+    const x = rect.left + (pos.colIndex - 1) * cellSize
+    const y = rect.top + (pos.rowIndex - 1) * cellSize
+    const width = state.startSize.colSpan * cellSize
+    const height = state.startSize.rowSpan * cellSize
+
+    setGhostCardPosition(
+        root,
+        x,
+        y,
+        width,
+        height
+    )
 
     interaction.updateCardCreate(sectionProps.id, pos)
 }

@@ -24,8 +24,12 @@ export function setCreateMode(root: HTMLElement, active: boolean) {
 export function setGhostCardPosition(
     root: HTMLElement,
     x: number,
-    y: number
+    y: number,
+    width: number,
+    height: number
 ) {
     root.style.setProperty("--ghost-card-x", `${x}px`)
     root.style.setProperty("--ghost-card-y", `${y}px`)
+    root.style.setProperty("--ghost-card-width", `${width}px`)
+    root.style.setProperty("--ghost-card-height", `${height}px`)
 }

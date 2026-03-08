@@ -1,38 +1,20 @@
-import { GridRect } from "@/src/shared/types"
+import { GridRect, GridSize } from "@/src/shared/types"
 import style from "../board.module.css"
 import { useBoardContext } from "../board.hooks";
 
 function BoardGhostCard(props : BoardGhostCardProps) {
-    const { interaction, session, layoutRegistry } = useBoardContext();
+    const { layoutRegistry } = useBoardContext();
 
-    const section = layoutRegistry.getSection(session.cardCreate?.currentSectionId!);
     const cellSize = layoutRegistry.measurements!.cellSize.inner;
-
-    let stylePosition: React.CSSProperties;
-
-    if (section) {
-        const gridEl = section.grid!.ref!.current!;
-        const rect = gridEl.getBoundingClientRect();
-
-        stylePosition = {
-            left: rect.left + (props.rect.colIndex - 1) * cellSize,
-            top: rect.top + (props.rect.rowIndex - 1) * cellSize,
-        };
-
-    } else {
-        stylePosition = {
-            left: "var(--ghost-card-x)",
-            top: "var(--ghost-card-y)",
-        };
-    }
 
     return (
         <div 
             className={style.ghostCard} 
             style={{
-                ...stylePosition,
-                width: props.rect.colSpan * cellSize,
-                height: props.rect.rowSpan * cellSize,
+                left: "var(--ghost-card-x)",
+                top: "var(--ghost-card-y)",
+                width: `var(--ghost-card-width)`,
+                height: `var(--ghost-card-height)`
             }}
         >
         </div>
@@ -43,5 +25,5 @@ export default BoardGhostCard
 
 
 export interface BoardGhostCardProps {
-    rect: GridRect;
+
 }

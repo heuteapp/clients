@@ -1,12 +1,11 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react"
+import { useContext, useEffect, useMemo, useRef } from "react"
 import { BoardContext } from "./board.context"
 import { createBoardInteraction } from "./interaction/board.interaction"
 import { BoardInteraction } from "./interaction/board.interaction.types"
 import { createBoardSession } from "./session/board.session"
-import { BoardSession, BoardSessionSetter, BoardSessionTuple, CardCreateState } from "./session/board.session.types"
+import { BoardSession, BoardSessionSetter, CardCreateState } from "./session/board.session.types"
 import { LayoutRegistry } from "../layout/layout.registry"
-import { clearGridHover, setCreateMode, setGhostCardPosition, setGridHover } from "./interactions/create-card/create-card.dom"
-import { computeCardCreatePosition } from "./interactions/create-card/create-card.logic"
+import { setCreateMode } from "./interactions/create-card/create-card.dom"
 import { handleCardCreateInteraction } from "./interactions/create-card/create-card.handler"
 
 export function useBoardContext() {
@@ -19,10 +18,10 @@ export function useBoardContext() {
     return ctx
 }
 
-export function useBoardSession() : BoardSessionTuple {
-    const tuple = useState(createBoardSession())
+export function useBoardSessionRef() : React.RefObject<BoardSession> {
+    const sessionRef = useRef(createBoardSession());
 
-    return tuple;
+    return sessionRef;
 }
 
 export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardInteraction {
@@ -36,15 +35,9 @@ export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardIn
 export function useBoardPointerEvents(
   rootRef: React.RefObject<HTMLDivElement | null>,
   layoutRegistry: LayoutRegistry,
-  session: BoardSession,
+  sessionRef: React.RefObject<BoardSession>,
   interaction: BoardInteraction
 ) {
-    const sessionRef = useRef(session)
-
-    useEffect(() => {
-        sessionRef.current = session
-    }, [session])
-
     useEffect(() => {
         const root = rootRef.current
         if (!root) return
@@ -71,6 +64,7 @@ export function useBoardPointerEvents(
             }
 
             const currentSession = sessionRef.current
+
 
             if (currentSession.cardCreate) {
                 handleCardCreateInteraction(rootRef.current!, layoutRegistry, interaction, currentSession.cardCreate)
