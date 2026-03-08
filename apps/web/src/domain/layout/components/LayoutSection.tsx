@@ -4,20 +4,21 @@ import style from "../layout.module.css"
 import { LayoutSectionData } from "../layout.types"
 import LayoutGrid from "./LayoutGrid";
 import { useLayoutContext } from "../layout.hooks";
+import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
-    const context = useLayoutContext();
+    const context = useBoardContext();
 
-    const { registry, measurements } = context!;
+    const { layoutRegistry } = context!;
 
     useLayoutEffect(() => {
-        registry.registerSection(props.id, ref, props)
+        layoutRegistry.registerSection(props.id, ref, props)
 
         return () => {
-            registry.unregisterSection(props.id)
+            layoutRegistry.unregisterSection(props.id)
         }
-    }, [props.id, registry])
+    }, [props.id, layoutRegistry])
 
     return (
         <div
@@ -25,10 +26,10 @@ function LayoutSection(props : LayoutSectionProps) {
         className={style.section}
         style={{
             position: "absolute",
-            left: (props.colIndex -1)* measurements.cellSize.full,
-            top: (props.rowIndex -1)* measurements.cellSize.full,
-            width: (props.colSpan * measurements.cellSize.full) - (props.padding * 2),
-            height: (props.rowSpan * measurements.cellSize.full) - (props.padding * 2),
+            left: (props.colIndex -1)* layoutRegistry.measurements!.cellSize.full,
+            top: (props.rowIndex -1)* layoutRegistry.measurements!.cellSize.full,
+            width: (props.colSpan * layoutRegistry.measurements!.cellSize.full) - (props.padding * 2),
+            height: (props.rowSpan * layoutRegistry.measurements!.cellSize.full) - (props.padding * 2),
             padding: props.padding,
         }}
         >

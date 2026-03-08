@@ -11,5 +11,6 @@ export interface BoardContextValue {
     setBoard: (board: BoardData) => void;
     session: BoardSession;
     interaction: BoardInteraction;
+    layoutRef: React.RefObject<HTMLDivElement | null>;
     layoutRegistry: LayoutRegistry;
 }

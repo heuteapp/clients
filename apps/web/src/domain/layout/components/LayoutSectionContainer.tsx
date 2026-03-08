@@ -3,16 +3,17 @@ import style from "../layout.module.css"
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionData } from "../layout.types";
 import { useLayoutContext } from "../layout.hooks";
+import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
-    const context = useLayoutContext();
+    const context = useBoardContext();
 
-    const { measurements } = context!;
+    const { layoutRegistry } = context!;
 
     return (
         <div className={style.container} style={{
-          width: (measurements.containerSize.width),
-          height: (measurements.containerSize.height),
+          width: (layoutRegistry.measurements!.containerSize.width),
+          height: (layoutRegistry.measurements!.containerSize.height),
         }}>
           {
             sections.map((section, index) => (

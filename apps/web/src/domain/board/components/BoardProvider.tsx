@@ -1,15 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { BoardContext } from "../board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardSessionRef } from "../board.hooks";
-import { useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
+import { useLayoutMeasurements, useLayoutRegistry } from "@/src/domain/layout/layout.hooks";
 import { BoardData } from "../board.types";
 import { sectionExamples } from "../board.examples";
+import { analyzeLayout } from "../../layout/layout.utils";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
 
-
+    const layoutRef = useRef<HTMLDivElement>(null);
     const layoutRegistry = useLayoutRegistry();
 
     const sessionRef = useBoardSessionRef();
@@ -28,8 +29,18 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         },
         cards: []
     });
-                    console.log(board);
 
+    const analyze = analyzeLayout(board.layout.sections);
+
+    const measurements = useLayoutMeasurements({
+        layoutRef,
+        columnCount: board.layout.columnCount,
+        rowCount: board.layout.rowCount,
+        analyze,
+        padding: 12
+    })
+
+    layoutRegistry.measurements = measurements;
 
     useBoardPointerEvents(board, setBoard, rootRef, layoutRegistry, sessionRef, interaction);
     const session = sessionRef.current;
@@ -42,6 +53,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
             session,
             interaction,
             layoutRegistry,
+            layoutRef
         }),
         [session, interaction, layoutRegistry]
     );

@@ -2,27 +2,28 @@ import style from "../layout.module.css"
 
 import { useLayoutContext } from "../layout.hooks";
 import { useLayoutEffect, useRef } from "react";
+import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutGridCell(props : LayoutGridCellProps) {
-    const context = useLayoutContext();
+    const context = useBoardContext();
 
-    const { registry, measurements } = context!;
+    const { layoutRegistry } = context!;
     const id = props.rowIndex + "-" + props.colIndex;
 
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        registry.registerCell(props.sectionId, id, ref, props)
+        layoutRegistry.registerCell(props.sectionId, id, ref, props)
 
         return () => {
-            registry.unregisterCell(props.sectionId, id)
+            layoutRegistry.unregisterCell(props.sectionId, id)
         }
-    }, [id, registry])
+    }, [id, layoutRegistry])
 
     return (
         <div className={style.cell} style={{
-            width: measurements.cellSize.compact,
-            height: measurements.cellSize.compact,
+            width: layoutRegistry.measurements!.cellSize.compact,
+            height: layoutRegistry.measurements!.cellSize.compact,
             visibility: "hidden"
         }}/>
     )

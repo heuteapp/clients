@@ -18,30 +18,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
   
   const { columnCount, rowCount, sections } = props;
-  const { layoutRegistry } = context!;
-
-  const layoutRef = useRef<HTMLDivElement>(null);
-  const analyze = analyzeLayout(sections);
-
-  const measurements = useLayoutMeasurements({
-    layoutRef,
-    columnCount,
-    rowCount,
-    analyze,
-    padding
-  })
-  
-  context.layoutRegistry.measurements = measurements;
-
-  const contextValue = useMemo(
-    () => ({
-      layoutRef,
-      analyze,
-      measurements,
-      registry: layoutRegistry,
-    }),
-    [analyze, measurements, layoutRegistry]
-  )
+  const { layoutRegistry, layoutRef } = context!;
 
   useLayoutEffect(() => {
     layoutRegistry.registerRoot(layoutRef, props)
@@ -56,10 +33,10 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
       ref={layoutRef} 
       className={style.layout} 
       style={{
-        visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
+        visibility: layoutRegistry.measurements!.containerSize.width > 0 ? "visible" : "hidden"
       }}
     >
-      <HeuteLayoutContext.Provider value={contextValue}>
+      <HeuteLayoutContext.Provider value={{} as any}>
         <LayoutSectionContainer sections={sections} />
       </HeuteLayoutContext.Provider>
     </div>

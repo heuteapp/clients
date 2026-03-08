@@ -3,26 +3,27 @@ import style from "../layout.module.css"
 import LayoutGridCell from "./LayoutGridCell";
 import { useLayoutContext } from "../layout.hooks";
 import { useLayoutEffect, useRef } from "react";
+import { useBoardContext } from "../../board/board.hooks";
 
 function LayoutGrid(props : LayoutGridProps) {
-    const context = useLayoutContext();
+    const context = useBoardContext();
 
-    const { registry, measurements } = context!;
+    const { layoutRegistry } = context!;
 
     const ref = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        registry.registerGrid(props.sectionId, ref, props)
+        layoutRegistry.registerGrid(props.sectionId, ref, props)
 
         return () => {
-            registry.unregisterGrid(props.sectionId)
+            layoutRegistry.unregisterGrid(props.sectionId)
         }
-    }, [props.sectionId, registry])
+    }, [props.sectionId, layoutRegistry])
 
     return (
         <div ref={ref} className={style.grid} style={{
-            gridTemplateColumns: `repeat(${props.colSpan}, ${measurements.cellSize.inner}px)`,
-            gridTemplateRows: `repeat(${props.rowSpan}, ${measurements.cellSize.inner}px)`,
+            gridTemplateColumns: `repeat(${props.colSpan}, ${layoutRegistry.measurements!.cellSize.inner}px)`,
+            gridTemplateRows: `repeat(${props.rowSpan}, ${layoutRegistry.measurements!.cellSize.inner}px)`,
         }}>
             {
                 Array.from({ length: props.rowSpan }).map((_, rowIndex) => (
