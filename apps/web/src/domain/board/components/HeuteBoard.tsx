@@ -1,22 +1,34 @@
 "use client"
 
-import style from "./HeuteBoard.module.css"
+import style from "../board.module.css"
 
 import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
-import { sectionExamples } from "../board.examples";
+import BoardCardContainer from "./BoardCardContainer";
+import { useRef } from "react";
+import { BoardData } from "../board.types";
+import { useBoardContext } from "../board.hooks";
+import BoardGhostCard from "./BoardGhostCard";
 
 //
 
-interface HeuteBoardProps {
-  category: string;
-  date: Date;
-}
+export default function HeuteBoard({ layout }: HeuteBoardProps) {
+  const context = useBoardContext();
+  const boardRef = useRef<HTMLDivElement>(null);
 
-export default function HeuteBoard({ category, date }: HeuteBoardProps) {
+  const { session } = context!;
+  const size = session.cardCreate?.startSize;
+  const position = session.cardCreate?.currentPosition;
+  
   return (
-    <div className={style.board}>
-      <HeuteLayout columnCount={18} rowCount={8} sections={(sectionExamples as any)[category] ?? sectionExamples.two} />
+    <div ref={boardRef} className={style.board}>
+      <HeuteLayout {...layout} />
+      <BoardCardContainer />
+      { context.interaction.eventType === "create" &&
+       <BoardGhostCard rect={{ rowIndex: position?.rowIndex ?? 0, colIndex: position?.colIndex ?? 0, rowSpan: size!.rowSpan, colSpan: size!.colSpan }} /> }
     </div>
   )
 }
 
+interface HeuteBoardProps extends BoardData {
+
+}

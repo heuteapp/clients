@@ -7,7 +7,7 @@ import { useLayoutContext } from "../layout.hooks";
 function LayoutSectionContainer({ sections }: LayoutSectionContainerProps) {
     const context = useLayoutContext();
 
-    const { rootRef, measurements } = context!;
+    const { measurements } = context!;
 
     return (
         <div className={style.container} style={{

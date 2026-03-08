@@ -15,12 +15,12 @@ function LayoutGrid(props : LayoutGridProps) {
         registry.registerGrid(props.sectionId, ref, props)
 
         return () => {
-        registry.unregisterGrid(props.sectionId)
+            registry.unregisterGrid(props.sectionId)
         }
     }, [props.sectionId, registry])
 
     return (
-        <div className={style.grid} style={{
+        <div ref={ref} className={style.grid} style={{
             gridTemplateColumns: `repeat(${props.colSpan}, ${measurements.cellSize.inner}px)`,
             gridTemplateRows: `repeat(${props.rowSpan}, ${measurements.cellSize.inner}px)`,
         }}>

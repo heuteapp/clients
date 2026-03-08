@@ -23,6 +23,7 @@ function LayoutGridCell(props : LayoutGridCellProps) {
         <div className={style.cell} style={{
             width: measurements.cellSize.compact,
             height: measurements.cellSize.compact,
+            visibility: "hidden"
         }}/>
     )
 }

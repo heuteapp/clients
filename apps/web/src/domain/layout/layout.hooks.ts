@@ -23,8 +23,18 @@ export function useLayoutRegistry(): LayoutRegistry {
     const sections = new Map<string, LayoutSectionNode>()
 
     registryRef.current = {
+      measurements: null,
+      root: null,
       container: null,
       sections,
+
+      registerRoot(ref, props) {
+        this.root = { ref, props }
+      },
+
+      unregisterRoot() {
+        this.root = null
+      },
 
       registerContainer(ref) {
         this.container = { ref }
@@ -116,13 +126,17 @@ export function useLayoutRegistry(): LayoutRegistry {
       getGrid(sectionId) {
         return sections.get(sectionId)?.grid || undefined
       },
+
+      getCell(sectionId, id) {
+        return sections.get(sectionId)?.grid?.cells.get(id) || undefined
+      }
     }
   }
 
   return registryRef.current
 }
 
-export function useLayoutMeasurements({ containerRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ layoutRef, columnCount, rowCount, analyze, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
     const cellCount = {
         horizontal: columnCount,
@@ -141,7 +155,7 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
     })
 
     useEffect(() => {
-        const element = containerRef.current
+        const element = layoutRef.current
         if (!element) return
 
         const observer = new ResizeObserver(() => {
@@ -201,7 +215,7 @@ export function useLayoutMeasurements({ containerRef, columnCount, rowCount, ana
 
 
 export interface LayoutMeasurementsParams {
-    containerRef: React.RefObject<HTMLDivElement | null>
+    layoutRef: React.RefObject<HTMLDivElement | null>
     columnCount: number
     rowCount: number
     analyze: LayoutAnalyze

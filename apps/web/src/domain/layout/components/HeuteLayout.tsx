@@ -2,48 +2,58 @@
 
 const padding = 12;
 
-import { useMemo, useRef } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
 
 import style from "../layout.module.css"
 
 import { HeuteLayoutData } from "../layout.types"
 import { analyzeLayout } from "../layout.utils"
-import { useLayoutMeasurements, useLayoutRegistry } from "../layout.hooks";
+import { useLayoutMeasurements } from "../layout.hooks";
 import { HeuteLayoutContext } from "../layout.context";
 import LayoutSectionContainer from "./LayoutSectionContainer";
+import { LayoutRegistry } from "../layout.registry";
+import { useBoardContext } from "../../board/board.hooks";
 
-interface HeuteLayoutProps extends HeuteLayoutData {
+export default function HeuteLayout(props: HeuteLayoutProps) {
+  const context = useBoardContext();
   
-}
+  const { columnCount, rowCount, sections } = props;
+  const { layoutRegistry } = context!;
 
-export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLayoutProps) {
-
-  const rootRef = useRef<HTMLDivElement>(null)
+  const layoutRef = useRef<HTMLDivElement>(null);
   const analyze = analyzeLayout(sections);
 
-  const registry = useLayoutRegistry()
-
   const measurements = useLayoutMeasurements({
-    containerRef: rootRef,
+    layoutRef,
     columnCount,
     rowCount,
     analyze,
     padding
   })
+  
+  context.layoutRegistry.measurements = measurements;
 
   const contextValue = useMemo(
     () => ({
-      rootRef,
+      layoutRef,
       analyze,
       measurements,
-      registry,
+      registry: layoutRegistry,
     }),
-    [analyze, measurements, registry]
+    [analyze, measurements, layoutRegistry]
   )
+
+  useLayoutEffect(() => {
+    layoutRegistry.registerRoot(layoutRef, props)
+
+    return () => {
+    layoutRegistry.unregisterRoot()
+    }
+  }, [layoutRegistry])
 
   return (
     <div 
-      ref={rootRef} 
+      ref={layoutRef} 
       className={style.layout} 
       style={{
         visibility: measurements.containerSize.width > 0 ? "visible" : "hidden"
@@ -54,4 +64,8 @@ export default function HeuteLayout({ columnCount, rowCount, sections }: HeuteLa
       </HeuteLayoutContext.Provider>
     </div>
   )
+}
+
+export interface HeuteLayoutProps extends HeuteLayoutData {
+  registry?: LayoutRegistry
 }

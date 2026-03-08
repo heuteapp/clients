@@ -4,14 +4,27 @@ import React from "react"
 import { LayoutSectionProps } from "./components/LayoutSection"
 import { LayoutGridProps } from "./components/LayoutGrid"
 import { LayoutGridCellProps } from "./components/LayoutGridCell"
+import { HeuteLayoutProps } from "./components/HeuteLayout"
+import { LayoutMeasurements } from "./layout.types"
 
 export interface RegistryNode {
   ref?: React.RefObject<HTMLDivElement | null> | null
 }
 
 export interface LayoutRegistry {
+  measurements: LayoutMeasurements | null
+
+  root: LayoutRootNode | null
   container: RegistryNode | null
   sections: Map<string, LayoutSectionNode>
+
+  registerRoot(
+    ref: React.RefObject<HTMLDivElement | null>,
+    props: HeuteLayoutProps,
+  ): void
+
+  unregisterRoot(): void
+
 
   registerContainer(
     ref: React.RefObject<HTMLDivElement | null>
@@ -50,6 +63,11 @@ export interface LayoutRegistry {
 
   getSection(id: string): LayoutSectionNode | undefined
   getGrid(sectionId: string): LayoutGridNode | undefined
+  getCell(sectionId: string, id: string): LayoutCellNode | undefined
+}
+
+export interface LayoutRootNode extends RegistryNode {
+  props?: HeuteLayoutProps
 }
 
 export interface LayoutSectionNode extends RegistryNode {

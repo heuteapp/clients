@@ -3,7 +3,7 @@
 import { Params } from "next/dist/server/request/params";
 import { useParams } from "next/navigation";
 
-import HeuteBoard from "@/src/domain/board/components/HeuteBoard"
+import Board from "@/src/body/components/Board";
 
 //
 
@@ -13,7 +13,7 @@ export default function BoardTodayPage(){
 
     return (
         <>
-            <HeuteBoard category={params.category} date={date} />
+            <Board category={params.category} date={date} />
         </>
     )
 }

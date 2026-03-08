@@ -3,8 +3,8 @@
 import { Params } from "next/dist/server/request/params";
 import { useParams, redirect } from "next/navigation"
 
-import HeuteBoard from "@/src/domain/board/components/HeuteBoard";
 import { parseYYMMDD } from "@/src/domain/board/board.utils";
+import Board from "@/src/body/components/Board";
 
 //
 
@@ -28,7 +28,7 @@ export default function BoardPage() {
 
     return (
         <>
-            <HeuteBoard category={params.category} date={finalDate} />
+            <Board category={params.category} date={finalDate} />
         </>
     )
 }
