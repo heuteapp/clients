@@ -1,7 +1,8 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react"
 import { BoardContext } from "./board.context"
-import { BoardInteraction, BoardInteractionEventType, createBoardInteraction } from "./board.interaction"
-import { BoardSession, BoardSessionSetter, BoardSessionTuple, CardBaseState, CardCreateState, createBoardSession } from "./board.session"
+import { BoardInteraction, createBoardInteraction } from "./board.interaction"
+import { createBoardSession } from "./session/board.session"
+import { BoardSession, BoardSessionSetter, BoardSessionTuple, CardCreateState } from "./session/board.session.types"
 import { LayoutRegistry } from "../layout/layout.registry"
 
 export function useBoardContext() {

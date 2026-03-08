@@ -1,17 +1,4 @@
-import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types";
-
-//
-
-export function createBoardSession(): BoardSession {
-    return {
-        pointerId: null,
-        cardCreate: null,
-        cardResize: null,
-        cardMove: null,
-    }
-}
-
-//
+import { Pointer, GridSize, GridPosition, ResizeHandle } from "@/src/types";
 
 export interface BoardSession {
     pointerId?: number | null;
