@@ -3,12 +3,17 @@ import { Draft } from "immer";
 
 export interface BoardSession {
     pointerId?: number | null;
+    status: BoardSessionStatus;
     cardCreate: CardCreateState | null;
     cardResize: CardResizeState | null;
     cardMove: CardMoveState | null;
 }
+
+export type BoardSessionStatus = "idle" | "progress" | "executing" | "success" | "error";
     
 export type BoardSessionUpdater = (updater: (draft: Draft<BoardSession>) => void) => void;
+
+//
 
 export interface CardBaseState {
     cardId: string;

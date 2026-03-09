@@ -1,10 +1,11 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types/shared/common";
-import { BoardSessionUpdater, CardBaseState } from "@/src/ui/types/board/board.session";
+import { BoardSession, BoardSessionUpdater, CardBaseState } from "@/src/ui/types/board/board.session";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
     eventType: BoardInteractionEventType | null;
     eventHandlers: BoardInteractionEventHandlers | null
+    sessionRef: React.RefObject<BoardSession>;
 
     sessionUpdater: BoardSessionUpdater;
     setEventHandlers: (handlers: BoardInteractionEventHandlers | null) => void
@@ -33,11 +34,27 @@ export interface BoardInteraction {
         position: GridPosition
     ) => void
 
+    executeInteraction: () => void
+
+    successInteraction: () => void
+
+    cancelInteraction: () => void
+
+    errorInteraction: (error: Error) => void
+
     endInteraction: () => void
+
+    //
+
+    getCurrentState: () => CardBaseState | null
 }
 
 export interface BoardInteractionEventHandlers {
     OnStart: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnExecute: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnSuccess: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnCancel: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnError: (type: BoardInteractionEventType, state: CardBaseState, error: Error) => void;
     OnEnd: (type: BoardInteractionEventType) => void;
 }
 

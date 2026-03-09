@@ -1,8 +1,9 @@
-import { BoardSessionUpdater } from "@/src/ui/types/board/board.session"
+import { BoardSession, BoardSessionUpdater } from "@/src/ui/types/board/board.session"
 import { BoardInteraction } from "./board.interaction.types"
 
 
 export function createBoardInteraction(
+    sessionRef: React.RefObject<BoardSession>,
     sessionUpdater: BoardSessionUpdater
 ): BoardInteraction {
 
@@ -10,6 +11,7 @@ export function createBoardInteraction(
         pointer: null,
         eventType: null,
         eventHandlers: null,
+        sessionRef,
 
         sessionUpdater,
 
@@ -28,6 +30,7 @@ export function createBoardInteraction(
             }
 
             interaction.sessionUpdater((draft) => {
+                draft.status = "progress";
                 draft.cardCreate = state;
                 draft.cardMove = null;
                 draft.cardResize = null;
@@ -38,16 +41,10 @@ export function createBoardInteraction(
         },
 
         updateCardCreate(sectionId, position) {
-            interaction.sessionUpdater(prev => {
-                if(!prev.cardCreate) return prev;
-
-                return {
-                    ...prev,
-                    cardCreate: {
-                        ...prev.cardCreate,
-                        currentSectionId: sectionId,
-                        currentPosition: position,
-                    }
+            interaction.sessionUpdater((draft) => {
+                if(draft.cardCreate) {
+                    draft.cardCreate.currentSectionId = sectionId;
+                    draft.cardCreate.currentPosition = position;
                 }
             })
         },
@@ -63,6 +60,7 @@ export function createBoardInteraction(
             }
 
             interaction.sessionUpdater((draft) => {
+                draft.status = "progress";
                 draft.cardMove = state;
                 draft.cardCreate = null;
                 draft.cardResize = null;
@@ -83,6 +81,7 @@ export function createBoardInteraction(
             }
 
             interaction.sessionUpdater((draft) => {
+                draft.status = "progress";
                 draft.cardResize = state;
                 draft.cardCreate = null;
                 draft.cardMove = null;
@@ -92,6 +91,43 @@ export function createBoardInteraction(
             interaction.eventHandlers?.OnStart(interaction.eventType, state)
         },
 
+        executeInteraction() {
+            if(!interaction.eventType) return;
+
+            interaction.sessionUpdater((draft) => {
+                draft.status = "executing";
+            })
+        },
+
+        successInteraction() {
+            if(!interaction.eventType) return;
+
+            interaction.sessionUpdater((draft) => {
+                draft.status = "success";
+            })
+
+            interaction.eventHandlers?.OnSuccess(interaction.eventType, interaction.getCurrentState()!);
+            interaction.endInteraction();
+        },
+
+        cancelInteraction() {
+            if(!interaction.eventType) return;
+
+            interaction.eventHandlers?.OnCancel(interaction.eventType, interaction.getCurrentState()!);
+            interaction.endInteraction();
+        },
+
+        errorInteraction(error) {
+            if(!interaction.eventType) return;
+
+            interaction.sessionUpdater((draft) => {
+                draft.status = "error";
+            })
+
+            interaction.eventHandlers?.OnError(interaction.eventType, interaction.getCurrentState()!, error);
+            interaction.endInteraction();
+        },
+
         endInteraction() {
             if(!interaction.eventType) return;
 
@@ -99,10 +135,29 @@ export function createBoardInteraction(
             interaction.eventType = null;
 
             interaction.sessionUpdater((draft) => {
+                draft.status = "idle";
                 draft.cardCreate = null;
                 draft.cardMove = null;
                 draft.cardResize = null;
             })
+        },
+
+        getCurrentState() {
+            if(!interaction.eventType) return null;
+
+            const session = sessionRef.current;
+            if(!session) return null;
+
+            switch(interaction.eventType) {
+                case "create":
+                    return session.cardCreate;
+                case "move":
+                    return session.cardMove;
+                case "resize":
+                    return session.cardResize;
+                default:
+                    return null;
+            }
         }
     }
 
