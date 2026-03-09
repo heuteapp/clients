@@ -18,7 +18,7 @@ export const useBoardStore = create<BoardStore>()(
             state.board = updater(state.board)
         }),
 
-        addCard: async (interaction, card) => set(async state => {
+        addCard: async (interaction, card) => {
             interaction.executeInteraction();
 
             try {
@@ -49,7 +49,7 @@ export const useBoardStore = create<BoardStore>()(
                 console.log("Error adding card", error);
                 interaction.throwInteraction(error as Error);
             }
-        }),
+        },
 
         layout: null,
         sections: [],
