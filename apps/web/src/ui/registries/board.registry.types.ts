@@ -1,6 +1,6 @@
-import { RegistryBaseNode } from "@/src/ui/types/shared/registry"
 import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContainerNode, LayoutSectionNode } from "@/src/ui/types/layout/nodes"
 import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/props"
+import { BoardRootNode } from "../types/board/nodes"
 
 export interface BoardRegistry {
     board: BoardRootNode
@@ -60,8 +60,4 @@ export interface BoardRegistry {
     getLayoutGridCell(sectionId: string, id: string): LayoutGridCellNode | undefined
 
     getLayoutGridCells(sectionId: string): LayoutGridCellNode[] | undefined
-}
-
-export interface BoardRootNode extends RegistryBaseNode {
-
 }
