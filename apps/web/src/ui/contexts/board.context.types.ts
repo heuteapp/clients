@@ -1,11 +1,11 @@
 import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types";
-import { LayoutMeasurements } from "@/src/ui/types/layout/dom";
+import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardSession } from "@/src/ui/sessions/board/BoardSession";
+import { BoardSession } from "../types/board/board.session";
 
 export interface BoardContextValue {
     session: BoardSession;
     interaction: BoardInteraction;
     registry: BoardRegistry;
-    measurements: LayoutMeasurements | null;
+    measurements: BoardMetrics | null;
 }
