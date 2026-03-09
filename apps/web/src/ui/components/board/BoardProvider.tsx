@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { BoardContext } from "../../contexts/board.context";
-import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../hooks/board.hooks";
+import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "@/src/ui/hooks/board";
 import { useBoardMetrics } from "@/src/ui/hooks/board";
 import { useBoardStore } from "@/src/stores/board";
 import { produce } from "immer";

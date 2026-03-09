@@ -5,7 +5,7 @@ import style from "@/src/ui/styles/board.module.css"
 import HeuteLayout from "@/src/ui/components/layout/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useLayoutEffect, useRef } from "react";
-import { useBoardContext } from "../../hooks/board.hooks";
+import { useBoardContext } from "@/src/ui/hooks/board";
 import BoardGhostCard from "./BoardGhostCard";
 import { useBoardStore } from "@/src/stores/board";
 import { HeuteBoardProps } from "@/src/ui/types/board/board.props";

@@ -1,51 +1,11 @@
-import { useContext, useEffect, useMemo, useRef } from "react"
-import { BoardContext } from "../contexts/board.context"
-import { createBoardInteraction } from "../interactions/board.interaction"
-import { BoardInteraction } from "../interactions/board.interaction.types"
-import { setCreateMode } from "../interactions/create-card/dom"
-import { endCardCreateInteraction, handleCardCreateInteraction } from "../interactions/create-card/handler"
 import { useBoardStore } from "@/src/stores/board";
-import { createBoardRegistry } from "@/src/ui/registries/board.registry"
-import { BoardRegistry } from "@/src/ui/registries/board.registry.types"
-import { BoardSession, BoardSessionUpdater, CardCreateState } from "../types/board/board.session"
-import { createBoardSession } from "../utils/board/board.session"
-import { BoardMetrics } from "../types/board/board.dom"
-
-export function useBoardContext() {
-    const ctx = useContext(BoardContext)
-
-    if (!ctx) {
-        throw new Error("useHeuteBoard must be used inside HeuteBoard")
-    }
-
-    return ctx
-}
-
-export function useBoardSessionRef() : React.RefObject<BoardSession> {
-    const sessionRef = useRef(createBoardSession());
-
-    return sessionRef;
-}
-
-export function useBoardInteraction(sessionUpdater: BoardSessionUpdater) : BoardInteraction {
-    const interaction = useMemo(() => {
-        return createBoardInteraction(sessionUpdater);
-    }, [sessionUpdater]);
-
-    return interaction;
-}
-
-export function useBoardRegistry() : BoardRegistry {
-    const boardRef = useRef<HTMLDivElement>(null);
-    const layoutRef = useRef<HTMLDivElement>(null);
-    const registryRef = useRef<BoardRegistry | null>(null)
-
-    if (!registryRef.current) {
-        registryRef.current = createBoardRegistry(boardRef, layoutRef);
-    }
-
-    return registryRef.current;
-}
+import { useEffect } from "react";
+import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types";
+import { setCreateMode } from "@/src/ui/interactions/create-card/dom";
+import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/create-card/handler";
+import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
+import { BoardMetrics } from "@/src/ui/types/board/board.dom";
+import { BoardSession, CardCreateState } from "@/src/ui/types/board/board.session";
 
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,

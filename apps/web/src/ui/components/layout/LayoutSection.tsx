@@ -3,7 +3,7 @@ import style from "@/src/ui/styles/layout.module.css"
 
 import { LayoutSectionProps } from "@/src/ui/types/layout/layout.props";
 import LayoutGrid from "./LayoutGrid";
-import { useBoardContext } from "../../hooks/board.hooks";
+import { useBoardContext } from "@/src/ui/hooks/board";
 
 function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)

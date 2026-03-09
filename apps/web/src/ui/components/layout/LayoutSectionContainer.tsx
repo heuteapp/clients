@@ -2,7 +2,7 @@ import style from "@/src/ui/styles/layout.module.css"
 
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionContainerProps } from "@/src/ui/types/layout/layout.props";
-import { useBoardContext } from "../../hooks/board.hooks";
+import { useBoardContext } from "@/src/ui/hooks/board";
 import { useLayoutEffect, useRef } from "react";
 
 function LayoutSectionContainer(props: LayoutSectionContainerProps) {
