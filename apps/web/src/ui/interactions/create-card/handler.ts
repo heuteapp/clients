@@ -4,7 +4,7 @@ import { CardCreateState } from "@/src/core/domain/board/session/board.session.t
 import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./dom"
-import { BoardRegistry } from "../../board.registry"
+import { BoardRegistry } from "../../../core/domain/board/board.registry"
 import { LayoutMeasurements } from "@/src/core/domain/layout/types/dom"
 
 export function handleCardCreateInteraction(
