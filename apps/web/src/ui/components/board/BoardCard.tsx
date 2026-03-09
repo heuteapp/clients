@@ -4,34 +4,14 @@ import { BoardCardData } from "../../../types/board/data"
 
 function BoardCard(props : BoardCardProps) {
     const context = useBoardContext();
-    const { registry, measurements } = context;
+    const { registry } = context;
 
     const section = registry.getLayoutGrid(props.sectionId);
     if(!section) return null;
 
-
-    if(!measurements) return null;
-
-    const rootRect = registry.layout!.ref!.current!.getBoundingClientRect();
-    const sectionRect = section.ref!.current!.getBoundingClientRect();
-
     const gap = 6;
 
-    const gridRect = {
-        left: (sectionRect.left - rootRect.left) + gap,
-        top: (sectionRect.top - rootRect.top) + gap,
-        width: sectionRect.width - gap * 2,
-        height: sectionRect.height - gap * 2
-    }
-
-    console.log("GRID RECT", gridRect);
-
-    const stepSize = {
-        width: gridRect.width / section.props!.colSpan,
-        height: gridRect.height / section.props!.rowSpan
-    }
-
-    const rawPosition = {
+    /*const rawPosition = {
         left: gridRect.left + (props.colIndex - 1) * stepSize.width,
         top: gridRect.top + (props.rowIndex - 1) * stepSize.height,
         width: props.colSpan * stepSize.width,
@@ -43,17 +23,26 @@ function BoardCard(props : BoardCardProps) {
         top: rawPosition.top + gap,
         width: rawPosition.width - gap * 2,
         height: rawPosition.height - gap * 2
-    }
+    }*/
+
+    const current = section.ref!.current;
+
+    current?.style.setProperty("--step-size-width", `var(--layout-grid-inner-width) / ${section.props!.colSpan}`);
+    current?.style.setProperty("--step-size-height", `var(--layout-grid-inner-height) / ${section.props!.rowSpan}`);
+
+    current?.style.setProperty("--card-left", `calc(var(--layout-grid-relative-inner-left) + (var(--step-size-width) * ${props.colIndex - 1}) + ${gap}px)`);
+    current?.style.setProperty("--card-top", `calc(var(--layout-grid-relative-inner-top) + (var(--step-size-height) * ${props.rowIndex - 1}) + ${gap}px)`);
+    current?.style.setProperty("--card-width", `calc((var(--step-size-width) * ${props.colSpan}) - ${gap * 2}px)`);
+    current?.style.setProperty("--card-height", `calc((var(--step-size-height) * ${props.rowSpan}) - ${gap * 2}px)`);
 
     return (
         <div 
             className={style.card} 
             style={{
-
-                left: position.left,
-                top: position.top,
-                width: position.width,
-                height: position.height
+                left: "var(--card-left)",
+                top: "var(--card-top)",
+                width: "var(--card-width)",
+                height: "var(--card-height)",
             }}
         >
         </div>
