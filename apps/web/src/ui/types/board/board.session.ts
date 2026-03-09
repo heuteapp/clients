@@ -9,7 +9,7 @@ export interface BoardSession {
     cardMove: CardMoveState | null;
 }
 
-export type BoardSessionStatus = "idle" | "progress" | "executing" | "success" | "error";
+export type BoardSessionStatus = "idle" | "progress" | "executing" | "succeeded" | "cancelled" | "failed";
     
 export type BoardSessionUpdater = (updater: (draft: Draft<BoardSession>) => void) => void;
 

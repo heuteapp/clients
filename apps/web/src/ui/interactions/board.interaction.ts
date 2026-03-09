@@ -105,7 +105,7 @@ export function createBoardInteraction(
             if(!interaction.eventType) return;
 
             interaction.sessionUpdater((draft) => {
-                draft.status = "success";
+                draft.status = "succeeded";
             })
 
             interaction.eventHandlers?.OnSuccess(interaction.eventType, interaction.getCurrentState()!);
@@ -115,18 +115,22 @@ export function createBoardInteraction(
         cancelInteraction() {
             if(!interaction.eventType) return;
 
+            interaction.sessionUpdater((draft) => {
+                draft.status = "cancelled";
+            })
+
             interaction.eventHandlers?.OnCancel(interaction.eventType, interaction.getCurrentState()!);
             interaction.endInteraction();
         },
 
-        errorInteraction(error) {
+        throwInteraction(error) {
             if(!interaction.eventType) return;
 
             interaction.sessionUpdater((draft) => {
-                draft.status = "error";
+                draft.status = "failed";
             })
 
-            interaction.eventHandlers?.OnError(interaction.eventType, interaction.getCurrentState()!, error);
+            interaction.eventHandlers?.OnThrow(interaction.eventType, interaction.getCurrentState()!, error);
             interaction.endInteraction();
         },
 

@@ -40,7 +40,7 @@ export interface BoardInteraction {
 
     cancelInteraction: () => void
 
-    errorInteraction: (error: Error) => void
+    throwInteraction: (error: Error) => void
 
     endInteraction: () => void
 
@@ -54,7 +54,7 @@ export interface BoardInteractionEventHandlers {
     OnExecute: (type: BoardInteractionEventType, state: CardBaseState) => void;
     OnSuccess: (type: BoardInteractionEventType, state: CardBaseState) => void;
     OnCancel: (type: BoardInteractionEventType, state: CardBaseState) => void;
-    OnError: (type: BoardInteractionEventType, state: CardBaseState, error: Error) => void;
+    OnThrow: (type: BoardInteractionEventType, state: CardBaseState, error: Error) => void;
     OnEnd: (type: BoardInteractionEventType) => void;
 }
 
