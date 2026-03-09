@@ -106,6 +106,34 @@ export function useLayoutMeasurements({ registry, gridDimensions, sections, padd
                                     sectionGridElement.style.setProperty("--layout-grid-top", `${sectionGridRect.top}px`);
                                     sectionGridElement.style.setProperty("--layout-grid-width", `${sectionGridRect.width}px`);
                                     sectionGridElement.style.setProperty("--layout-grid-height", `${sectionGridRect.height}px`);
+
+                                    const gap = 6;
+
+                                    const gridInnerRect = {
+                                        left: sectionRect.left + gap,
+                                        top: sectionRect.top + gap,
+                                        width: sectionRect.width - gap * 2,
+                                        height: sectionRect.height - gap * 2
+                                    }
+
+                                    const gridRelativePosition = {
+                                        left: sectionGridRect.left - sectionRect.left,
+                                        top: sectionGridRect.top - sectionRect.top,
+                                    }
+
+                                    const gridRelativeInnerPosition = {
+                                        left: gridRelativePosition.left - gap,
+                                        top: gridRelativePosition.top - gap,
+                                    }
+
+                                    sectionGridElement.style.setProperty("--layout-grid-inner-left", `${gridInnerRect.left}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-inner-top", `${gridInnerRect.top}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-inner-width", `${gridInnerRect.width}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-inner-height", `${gridInnerRect.height}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-relative-left", `${gridRelativePosition.left}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-relative-top", `${gridRelativePosition.top}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-relative-inner-left", `${gridRelativeInnerPosition.left}px`);
+                                    sectionGridElement.style.setProperty("--layout-grid-relative-inner-top", `${gridRelativeInnerPosition.top}px`);
                                 }
                             }
                         }
