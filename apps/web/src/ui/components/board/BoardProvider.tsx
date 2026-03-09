@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { BoardContext } from "../board.context";
-import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../board.hooks";
+import { BoardContext } from "../../../core/domain/board/board.context";
+import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../../core/domain/board/board.hooks";
 import { useLayoutMeasurements } from "@/src/core/domain/layout/layout.hooks";
 import { useBoardStore } from "@/src/core/stores/board.store";
 

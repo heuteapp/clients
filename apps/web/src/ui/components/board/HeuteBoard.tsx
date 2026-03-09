@@ -5,8 +5,8 @@ import style from "../board.module.css"
 import HeuteLayout from "@/src/core/domain/layout/components/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useRef } from "react";
-import { BoardData } from "../board.types";
-import { useBoardContext } from "../board.hooks";
+import { BoardData } from "../../../core/domain/board/board.types";
+import { useBoardContext } from "../../../core/domain/board/board.hooks";
 import BoardGhostCard from "./BoardGhostCard";
 import { useBoardStore } from "@/src/core/stores/board.store";
 

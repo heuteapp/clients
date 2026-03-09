@@ -1,5 +1,5 @@
 "use client";
-import HeuteBoard from '@/src/core/domain/board/components/HeuteBoard';
+import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
 import { useBoardStore } from '@/src/core/stores/board.store';
 import { sectionExamples } from '@/src/core/domain/board/board.examples';
 import { useEffect } from 'react';

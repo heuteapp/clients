@@ -1,6 +1,6 @@
-import { useBoardContext } from "../board.hooks"
+import { useBoardContext } from "../../../core/domain/board/board.hooks"
 import style from "../board.module.css"
-import { BoardCardData } from "../board.types"
+import { BoardCardData } from "../../../core/domain/board/board.types"
 import BoardCard from "./BoardCard"
 
 function BoardCardContainer(props : BoardCardContainerProps) {
