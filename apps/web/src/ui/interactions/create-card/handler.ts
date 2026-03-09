@@ -10,14 +10,17 @@ import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 export function handleCardCreateInteraction(
     root: HTMLDivElement,
     registry: BoardRegistry,
-    measurements: BoardMetrics,
+    metricsRef: React.RefObject<BoardMetrics>,
     interaction: BoardInteraction,
     state: CardCreateState) 
 {
     const pointer = interaction.pointer
     if (!pointer) return
 
-    const cellSize = measurements.layoutGridCellSize.inner
+    const metrics = metricsRef.current;
+    if (!metrics) return;
+
+    const cellSize = metrics.layoutGridCellSize.inner
 
     const result = findSectionUnderPointer(registry, pointer)
 

@@ -10,7 +10,7 @@ import { BoardSession, CardCreateState } from "@/src/ui/types/board/board.sessio
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
-    measurements: BoardMetrics,
+    metricsRef: React.RefObject<BoardMetrics>,
     sessionRef: React.RefObject<BoardSession>,
     interaction: BoardInteraction
 ) {
@@ -44,7 +44,7 @@ export function useBoardPointerEvents(
             const currentSession = sessionRef.current
 
             if (currentSession.cardCreate) {
-                handleCardCreateInteraction(rootRef.current!, registry, measurements, interaction, currentSession.cardCreate)
+                handleCardCreateInteraction(rootRef.current!, registry, metricsRef, interaction, currentSession.cardCreate)
                 return
             }
 
@@ -78,7 +78,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, registry, measurements, interaction, state as CardCreateState)
+                    handleCardCreateInteraction(root, registry, metricsRef, interaction, state as CardCreateState)
                 }
             },
 

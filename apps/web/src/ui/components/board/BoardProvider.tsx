@@ -18,7 +18,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     const layout = useBoardStore(state => state.layout);
     const sections = useBoardStore(state => state.sections);
 
-    const measurements = useBoardMetrics({
+    const metricsRef = useBoardMetrics({
         registry,
         gridDimensions: {
             columnCount: layout?.columnCount ?? 0,
@@ -28,7 +28,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
         padding: 4
     })
 
-    useBoardPointerEvents(rootRef, registry, measurements, sessionRef, interaction);
+    useBoardPointerEvents(rootRef, registry, metricsRef, sessionRef, interaction);
     const session = sessionRef.current;
 
     const value = useMemo(
@@ -37,9 +37,9 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
             session,
             interaction,
             registry,
-            measurements
+            measurements: metricsRef.current
         }),
-        [session, interaction, registry, measurements]
+        [session, interaction, registry, metricsRef]
     );
 
     return (

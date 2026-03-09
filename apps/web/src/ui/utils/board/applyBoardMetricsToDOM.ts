@@ -6,7 +6,7 @@ export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardR
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
 
-    const { layoutGridCellsCount, layoutGridCellSize, layoutGridSize, layoutSectionContainerSize } = metrics;
+    const { layoutGridCellSize, layoutGridSize, layoutSectionContainerSize } = metrics;
 
     layoutElement.style.setProperty("--cell-size-full", `${layoutGridCellSize.full}px`);
     layoutElement.style.setProperty("--cell-size-inner", `${layoutGridCellSize.inner}px`);
@@ -20,6 +20,7 @@ export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardR
 
     const rootRect = layoutElement.getBoundingClientRect();
     const layoutSectionContainer = layout.sectionContainer;
+
     if (!layoutSectionContainer?.ref?.current) return;
 
     layoutSectionContainer.sections.forEach(section => {
@@ -29,30 +30,44 @@ export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardR
         const sectionRect = sectionGrid.ref.current.getBoundingClientRect();
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
+        const gridSize = {
+            width: metrics.layoutGridSize.width / (metrics.layoutGridCellsCount.horizontal / section.props!.colSpan),
+            height: metrics.layoutGridSize.height / (metrics.layoutGridCellsCount.vertical / section.props!.rowSpan)
+        }
+
         const gap = 6;
+
+        const gridRect = {
+            left: (sectionRect.left - rootRect.left) + gap,
+            top: (sectionRect.top - rootRect.top) + gap,
+            width: gridSize.width - gap * 2,
+            height: gridSize.height - gap * 2
+        }
+
         const stepSize = {
-            width: layoutGridSize.width / (layoutGridCellsCount.horizontal / section.props!.colSpan),
-            height: layoutGridSize.height / (layoutGridCellsCount.vertical / section.props!.rowSpan)
-        };
+            width: gridRect.width / section.props!.colSpan,
+            height: gridRect.height / section.props!.rowSpan
+        }
 
         cards.forEach(card => {
             const cardElement = card.ref?.current;
             if (!cardElement) return;
 
             const props = card.props!;
+
             const rawPosition = {
-                left: sectionRect.left - rootRect.left + (props.colIndex - 1) * stepSize.width,
-                top: sectionRect.top - rootRect.top + (props.rowIndex - 1) * stepSize.height,
+                left: gridRect.left + (props.colIndex - 1) * stepSize.width,
+                top: gridRect.top + (props.rowIndex - 1) * stepSize.height,
                 width: props.colSpan * stepSize.width,
-                height: props.rowSpan * stepSize.height
-            };
+                height: props.rowSpan * stepSize.height,
+            }
 
             const position = {
                 left: rawPosition.left + gap,
                 top: rawPosition.top + gap,
                 width: rawPosition.width - gap * 2,
                 height: rawPosition.height - gap * 2
-            };
+            }
 
             cardElement.style.setProperty("--card-left", `${position.left}px`);
             cardElement.style.setProperty("--card-top", `${position.top}px`);

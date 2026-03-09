@@ -4,7 +4,7 @@ import { calculateSectionsCount } from "@/src/ui/calculations/layout/sections-co
 import { applyBoardMetricsToDOM } from "@/src/ui/utils/board/applyBoardMetricsToDOM";
 import { calculateBoardMetrics } from "../../calculations/board/board-metrics";
 
-export function useBoardMetrics({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : BoardMetrics {
+export function useBoardMetrics({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : React.RefObject<BoardMetrics> {
     const layout = registry.layout;
     const layoutRef = layout.ref!;
 
@@ -76,5 +76,5 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         return () => observer.disconnect()
     }, [registry, gridDimensions, sections, padding])
 
-  return metrics
+  return metricsRef;
 }
