@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { immer } from "zustand/middleware/immer"
-import { BoardCardData, BoardData } from "@/src/core/domain/board/board.types"
+import { BoardCardData, BoardData } from "@/src/types/board/data"
 import { HeuteLayoutData, LayoutSectionData } from "@/src/types/layout/data"
 
 type BoardStore = {

@@ -1,6 +1,6 @@
 import { useBoardContext } from "../../../core/domain/board/board.hooks"
 import style from "@/src/ui/styles/board.module.css"
-import { BoardCardData } from "../../../core/domain/board/board.types"
+import { BoardCardData } from "../../../types/board/data"
 
 function BoardCard(props : BoardCardProps) {
     const context = useBoardContext();
