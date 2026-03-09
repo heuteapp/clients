@@ -29,7 +29,7 @@ export const useBoardStore = create<BoardStore>()(
 
                 }
 
-                await addCardToServer("temp", "mihr", new Date().toISOString(), card);
+                await addCardToServer("temp", "mihr", new Date().toISOString().split('T')[0], card);
 
                 set(state => {
                     if (!state.board) {
