@@ -1,4 +1,4 @@
-import { LayoutCellCountMeasurements, LayoutCellSizeMeasurements } from "../../../../types/layout/dom";
+import { LayoutCellCountMeasurements, LayoutCellSizeMeasurements } from "../../../types/layout/dom";
 
 export function calculateCellSize(
     containerWidth: number, 

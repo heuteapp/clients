@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { LayoutMeasurements, LayoutMeasurementsParams } from "../../types/layout/dom"
-import { calculateSectionCount } from "../../core/domain/layout/calculations/section-count"
-import { calculateCellSize } from "../../core/domain/layout/calculations/cell-size";
-import { calculateContainerSize } from "../../core/domain/layout/calculations/container-size";
+import { calculateSectionCount } from "../calculations/layout/section-count"
+import { calculateCellSize } from "../calculations/layout/cell-size";
+import { calculateContainerSize } from "../calculations/layout/container-size";
 
 export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
 
