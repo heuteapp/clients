@@ -1,74 +1,8 @@
 "use client"
 
 import React from "react"
-import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionContainerProps, LayoutSectionProps } from "@/src/types/layout/props";
-import { LayoutRootNode, LayoutSectionNode, LayoutGridCellNode, LayoutGridNode, LayoutSectionContainerNode } from "../../../types/layout/nodes";
-import { RegistryBaseNode } from "@/src/shared/types/registry";
-
-export interface BoardRegistry {
-    board: BoardRootNode
-    layout: LayoutRootNode
-
-    registerLayout(
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: HeuteLayoutProps,
-    ): LayoutRootNode
-
-    registerLayoutSectionContainer(
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: LayoutSectionContainerProps
-    ): LayoutSectionContainerNode
-    
-    registerLayoutSection(
-        id: string,
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: LayoutSectionProps
-    ): LayoutSectionNode
-
-    registerLayoutGrid(
-        sectionId: string,
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: LayoutGridProps
-    ): LayoutGridNode
-
-    registerLayoutGridCell(
-        sectionId: string,
-        id: string,
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: LayoutGridCellProps
-    ): LayoutGridCellNode
-
-    //
-
-    unregisterLayout(): void
-
-    unregisterLayoutSectionContainer(): void
-
-    unregisterLayoutSection(id: string): void
-
-    unregisterLayoutGrid(sectionId: string): void
-
-    unregisterLayoutGridCell(sectionId: string, id: string): void
-
-    //
-
-    getLayoutSection(id: string): LayoutSectionNode | undefined
-
-    getLayoutSections(): LayoutSectionNode[] | undefined
-
-    getLayoutGrid(sectionId: string): LayoutGridNode | undefined
-
-    getLayoutGrids(sectionId: string): LayoutGridNode[] | undefined
-
-    getLayoutGridCell(sectionId: string, id: string): LayoutGridCellNode | undefined
-
-    getLayoutGridCells(sectionId: string): LayoutGridCellNode[] | undefined
-}
-
-export interface BoardRootNode extends RegistryBaseNode {
-
-}
-
+import { LayoutGridNode } from "@/src/types/layout/nodes"
+import { BoardRegistry } from "./board.registry.types"
 //
 
 export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | null>, layoutRef: React.RefObject<HTMLDivElement | null>): BoardRegistry {

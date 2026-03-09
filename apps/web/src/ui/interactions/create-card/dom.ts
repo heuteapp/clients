@@ -1,4 +1,4 @@
-import { BoardRegistry } from "../../../core/domain/board/board.registry"
+import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 
 export function clearGridHover(registry: BoardRegistry) {
     for (const section of registry.getLayoutSections() ?? []) {
