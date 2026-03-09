@@ -120,8 +120,17 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         registerLayoutGrid(sectionId, ref, props) {
+            if (!registry.layout.sectionContainer) {
+                registry.layout.sectionContainer = { sections: new Map() }
+            }
 
-            const section = registry.registerLayoutSection(sectionId, { current: null }, {} as any)
+            const sections = registry.layout.sectionContainer.sections
+
+            if (!sections.has(sectionId)) {
+                sections.set(sectionId, {  })
+            }
+
+            const section = sections.get(sectionId)!
 
             if (!section.grid) {
                 section.grid = {
@@ -139,7 +148,25 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
         registerLayoutGridCell(sectionId, id, ref, props) {
 
-            const grid = registry.registerLayoutGrid(sectionId, { current: null }, {} as any)
+            if (!registry.layout.sectionContainer) {
+                registry.layout.sectionContainer = { sections: new Map() }
+            }
+
+            const sections = registry.layout.sectionContainer.sections
+
+            if (!sections.has(sectionId)) {
+                sections.set(sectionId, {  })
+            }
+
+            const section = sections.get(sectionId)!
+
+            if (!section.grid) {
+                section.grid = {
+                    cells: new Map()
+                }
+            }
+
+            const grid = section.grid!
 
             if (!grid.cells.has(id)) {
                 grid.cells.set(id, { ref, props })
