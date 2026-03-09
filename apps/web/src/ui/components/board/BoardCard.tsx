@@ -1,10 +1,11 @@
 import { useBoardContext } from "../../hooks/board.hooks"
 import style from "@/src/ui/styles/board.module.css"
 import { BoardCardProps } from "@/src/ui/types/board/props/BoardCardProps";
+import { useLayoutEffect, useRef } from "react";
 
 function BoardCard(props : BoardCardProps) {
-    const context = useBoardContext();
-    const { registry } = context;
+    const { registry} = useBoardContext();
+    const ref = useRef<HTMLDivElement>(null);
 
     const section = registry.getLayoutGrid(props.sectionId);
     if(!section) return null;
@@ -35,6 +36,14 @@ function BoardCard(props : BoardCardProps) {
     current?.style.setProperty("--card-width", `calc((var(--step-size-width) * ${props.colSpan}) - ${gap * 2}px)`);
     current?.style.setProperty("--card-height", `calc((var(--step-size-height) * ${props.rowSpan}) - ${gap * 2}px)`);
 
+    useLayoutEffect(() => {
+        registry.registerBoardCard(props.id, ref, props)
+
+        return () => {
+            registry.unregisterBoardCard(props.id)
+        }
+    }, [registry])  
+
     return (
         <div 
             className={style.card} 
@@ -44,6 +53,7 @@ function BoardCard(props : BoardCardProps) {
                 width: "var(--card-width)",
                 height: "var(--card-height)",
             }}
+            ref={ref}
         >
         </div>
     )
