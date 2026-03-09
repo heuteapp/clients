@@ -1,9 +1,9 @@
 import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { calculateGridCellSize } from "@/src/ui/calculations/layout/grid-cell-size";
-import { calculateSectionContainerSize } from "@/src/ui/calculations/layout/section-container-size";
+import { calculateGridCellSize } from "@/src/ui/dom/calculations/layout/grid-cell-size";
+import { calculateSectionContainerSize } from "@/src/ui/dom/calculations/layout/section-container-size";
 import { calculateSectionsCount } from "../layout/sections-count";
-import { LayoutSectionProps } from "../../types/layout/layout.props";
+import { LayoutSectionProps } from "../../../types/layout/layout.props";
 
 export function calculateBoardMetrics(registry: BoardRegistry) : BoardMetrics | undefined {
     const layout = registry.layout;

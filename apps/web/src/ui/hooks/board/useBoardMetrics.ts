@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react"
 import { BoardMetrics, BoardMetricsParams } from "@/src/ui/types/board/board.dom"
-import { calculateSectionsCount } from "@/src/ui/calculations/layout/sections-count"
+import { calculateSectionsCount } from "@/src/ui/dom/calculations/layout/sections-count"
 import { applyBoardMetricsToDOM } from "@/src/ui/utils/board/applyBoardMetricsToDOM";
-import { calculateBoardMetrics } from "../../calculations/board/board-metrics";
+import { calculateBoardMetrics } from "../../dom/calculations/board/board-metrics";
 
 export function useBoardMetrics({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : React.RefObject<BoardMetrics> {
     const layout = registry.layout;
