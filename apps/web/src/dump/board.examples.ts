@@ -2,6 +2,7 @@ export const sectionExamples = {
   two:[
     {
       id: "first",
+      name: "first",
       colIndex: 1,
       rowIndex: 1,
       colSpan: 18,
@@ -9,6 +10,7 @@ export const sectionExamples = {
     },
     {
       id: "second",
+      name: "second",
       colIndex: 1,
       rowIndex: 5,
       colSpan: 18,

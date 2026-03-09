@@ -23,13 +23,17 @@ export const useBoardStore = create<BoardStore>()(
 
             try {
 
-                const session = interaction.sessionRef.current;
-
-                const response = {
-
+                const request = {
+                    sectionName: card.sectionName,
+                    rowIndex: card.rowIndex,
+                    colIndex: card.colIndex,
+                    rowSpan: card.rowSpan,
+                    colSpan: card.colSpan
                 }
 
-                await addCardToServer("temp", "mihr", new Date().toISOString().split('T')[0], card);
+                console.log(request);
+
+                await addCardToServer("temp", "mihr", new Date().toISOString().split('T')[0], request);
 
                 set(state => {
                     if (!state.board) {
