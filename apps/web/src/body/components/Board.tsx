@@ -25,14 +25,7 @@ function Board({ category, date }: BoardProps) {
                 rowCount: 8,
                 sections: (sectionExamples as any)[category] ?? sectionExamples.two,
             },
-            cards: [{
-                id: "card-1",
-                sectionId: "0-0",
-                rowIndex: 0,
-                colIndex: 0,
-                rowSpan: 2,
-                colSpan: 3
-            }]
+            cards: []
         };
         });
     }, [])
