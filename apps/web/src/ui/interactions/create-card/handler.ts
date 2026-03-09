@@ -1,5 +1,5 @@
 import { BoardInteraction } from "@/src/core/domain/board/interaction/board.interaction.types"
-import { CardCreateState } from "@/src/core/domain/board/session/board.session.types"
+import { CardCreateState } from "@/src/ui/sessions/board.session.types"
 
 import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
