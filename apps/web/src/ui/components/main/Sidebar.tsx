@@ -1,7 +1,7 @@
 "use client";
-import { useBoardContext } from '@/src/ui/hooks/board.hooks';
+import { useBoardContext } from '@/src/ui/hooks/board';
 import style from "@/src/ui/styles/main.module.css"
-import { BoardContextValue } from '@/src/ui/contexts/board.context.types';
+import { BoardContextValue } from '@/src/ui/types/board/board.context';
 
 function Sidebar() {
 
