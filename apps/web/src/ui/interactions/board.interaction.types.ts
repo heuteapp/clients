@@ -7,7 +7,7 @@ export interface BoardInteraction {
     eventType: BoardInteractionEventType | null;
     eventHandlers: BoardInteractionEventHandlers | null
 
-    setSession: BoardSessionUpdater;
+    sessionUpdater: BoardSessionUpdater;
     setEventHandlers: (handlers: BoardInteractionEventHandlers | null) => void
 
     startCardCreate: (

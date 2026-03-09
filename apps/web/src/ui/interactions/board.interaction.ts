@@ -3,7 +3,7 @@ import { BoardInteraction } from "./board.interaction.types"
 
 
 export function createBoardInteraction(
-    setSession: BoardSessionUpdater
+    sessionUpdater: BoardSessionUpdater
 ): BoardInteraction {
 
     const interaction: BoardInteraction = {
@@ -11,7 +11,7 @@ export function createBoardInteraction(
         eventType: null,
         eventHandlers: null,
 
-        setSession,
+        sessionUpdater,
 
         setEventHandlers(handlers) {
             interaction.endInteraction()
@@ -27,7 +27,7 @@ export function createBoardInteraction(
                 currentPosition: null
             }
 
-            interaction.setSession((draft) => {
+            interaction.sessionUpdater((draft) => {
                 draft.cardCreate = state;
                 draft.cardMove = null;
                 draft.cardResize = null;
@@ -38,7 +38,7 @@ export function createBoardInteraction(
         },
 
         updateCardCreate(sectionId, position) {
-            interaction.setSession(prev => {
+            interaction.sessionUpdater(prev => {
                 if(!prev.cardCreate) return prev;
 
                 return {
@@ -62,7 +62,7 @@ export function createBoardInteraction(
                 currentPosition: position
             }
 
-            interaction.setSession((draft) => {
+            interaction.sessionUpdater((draft) => {
                 draft.cardMove = state;
                 draft.cardCreate = null;
                 draft.cardResize = null;
@@ -82,7 +82,7 @@ export function createBoardInteraction(
                 resizeHandle: handle
             }
 
-            interaction.setSession((draft) => {
+            interaction.sessionUpdater((draft) => {
                 draft.cardResize = state;
                 draft.cardCreate = null;
                 draft.cardMove = null;
@@ -98,7 +98,7 @@ export function createBoardInteraction(
             interaction.eventHandlers?.OnEnd(interaction.eventType);
             interaction.eventType = null;
 
-            interaction.setSession((draft) => {
+            interaction.sessionUpdater((draft) => {
                 draft.cardCreate = null;
                 draft.cardMove = null;
                 draft.cardResize = null;
