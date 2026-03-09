@@ -1,4 +1,4 @@
-import { LayoutSectionContainerProps } from "@/src/types/layout/props"
+import { LayoutSectionContainerProps } from "@/src/ui/types/layout/props"
 import { RegistryBaseNode } from "@/src/ui/types/shared/registry";
 import { LayoutSectionNode } from "./LayoutSectionNode"
 

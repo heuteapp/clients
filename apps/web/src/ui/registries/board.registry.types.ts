@@ -1,6 +1,6 @@
 import { RegistryBaseNode } from "@/src/ui/types/shared/registry"
 import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContainerNode, LayoutSectionNode } from "@/src/ui/types/layout/nodes"
-import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/types/layout/props"
+import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/props"
 
 export interface BoardRegistry {
     board: BoardRootNode
