@@ -18,25 +18,6 @@ function BoardCard(props : BoardCardProps) {
     const section = registry.getLayoutGrid(props.sectionId);
     if(!section) return null;
 
-    const gap = 6;
-
-    /*const rawPosition = {
-        left: gridRect.left + (props.colIndex - 1) * stepSize.width,
-        top: gridRect.top + (props.rowIndex - 1) * stepSize.height,
-        width: props.colSpan * stepSize.width,
-        height: props.rowSpan * stepSize.height,
-    }
-
-    const position = {
-        left: rawPosition.left + gap,
-        top: rawPosition.top + gap,
-        width: rawPosition.width - gap * 2,
-        height: rawPosition.height - gap * 2
-    }*/
-
-    const current = section.ref!.current;
-
-
     return (
         <div 
             className={style.card} 
