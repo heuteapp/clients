@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionContainerProps, LayoutSectionProps } from "@/src/ui/core/domain/layout/types/props";
+import { HeuteLayoutProps, LayoutGridCellProps, LayoutGridProps, LayoutSectionContainerProps, LayoutSectionProps } from "@/src/core/domain/layout/types/props";
 import { LayoutRootNode, LayoutSectionNode, LayoutGridCellNode, LayoutGridNode, LayoutSectionContainerNode } from "../layout/types/nodes";
 import { RegistryBaseNode } from "@/src/shared/types/registry";
 

@@ -3,7 +3,7 @@ import style from '../main.module.css';
 import Sidebar from './Sidebar';
 import Monitor from './Monitor';
 import { useRef } from 'react';
-import BoardProvider from '@/src/ui/core/domain/board/components/BoardProvider';
+import BoardProvider from '@/src/core/domain/board/components/BoardProvider';
 
 interface PanelProps {
     children: React.ReactNode;

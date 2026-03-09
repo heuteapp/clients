@@ -3,8 +3,8 @@
 import { useMemo } from "react";
 import { BoardContext } from "../board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../board.hooks";
-import { useLayoutMeasurements } from "@/src/ui/core/domain/layout/layout.hooks";
-import { useBoardStore } from "@/src/ui/core/stores/board.store";
+import { useLayoutMeasurements } from "@/src/core/domain/layout/layout.hooks";
+import { useBoardStore } from "@/src/core/stores/board.store";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
     const registry = useBoardRegistry();
