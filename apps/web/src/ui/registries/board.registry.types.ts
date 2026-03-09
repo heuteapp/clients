@@ -6,6 +6,10 @@ export interface BoardRegistry {
     board: BoardRootNode
     layout: LayoutRootNode
 
+    registerBoard(
+        ref: React.RefObject<HTMLDivElement | null>
+    ): BoardRootNode
+
     registerLayout(
         ref: React.RefObject<HTMLDivElement | null>,
         props: HeuteLayoutProps,

@@ -1,6 +1,6 @@
 import { useBoardContext } from "../../hooks/board.hooks"
 import style from "@/src/ui/styles/board.module.css"
-import { BoardCardData } from "../../../types/board/data"
+import { BoardCardProps } from "@/src/ui/types/board/props/BoardCardProps";
 
 function BoardCard(props : BoardCardProps) {
     const context = useBoardContext();
@@ -50,7 +50,3 @@ function BoardCard(props : BoardCardProps) {
 }
 
 export default BoardCard
-
-
-export interface BoardCardProps extends BoardCardData {
-}

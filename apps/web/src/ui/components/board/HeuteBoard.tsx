@@ -5,10 +5,10 @@ import style from "@/src/ui/styles/board.module.css"
 import HeuteLayout from "@/src/ui/components/layout/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useRef } from "react";
-import { BoardData } from "../../../types/board/data";
 import { useBoardContext } from "../../hooks/board.hooks";
 import BoardGhostCard from "./BoardGhostCard";
 import { useBoardStore } from "@/src/stores/board";
+import { HeuteBoardProps } from "@/src/ui/types/board/props";
 
 //
 
@@ -31,8 +31,4 @@ export default function HeuteBoard(props: HeuteBoardProps) {
       <BoardGhostCard />
     </div>
   )
-}
-
-interface HeuteBoardProps extends BoardData {
-
 }

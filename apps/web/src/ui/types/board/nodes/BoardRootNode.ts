@@ -4,5 +4,6 @@ import { BoardCardContainerNode } from "./BoardCardContainerNode";
 
 export interface BoardRootNode extends RegistryBaseNode {
     ref: React.RefObject<HTMLDivElement | null>
+    props?: any
     cardContainer?: BoardCardContainerNode
 }
