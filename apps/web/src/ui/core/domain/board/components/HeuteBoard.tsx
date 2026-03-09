@@ -2,13 +2,13 @@
 
 import style from "../board.module.css"
 
-import HeuteLayout from "@/src/ui/core/layout/components/HeuteLayout";
+import HeuteLayout from "@/src/ui/core/domain/layout/components/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useRef } from "react";
 import { BoardData } from "../board.types";
 import { useBoardContext } from "../board.hooks";
 import BoardGhostCard from "./BoardGhostCard";
-import { useBoardStore } from "@/src/stores/board.store";
+import { useBoardStore } from "@/src/ui/core/stores/board.store";
 
 //
 

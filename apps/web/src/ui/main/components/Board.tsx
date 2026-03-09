@@ -1,7 +1,7 @@
 "use client";
-import HeuteBoard from '@/src/ui/core/board/components/HeuteBoard';
-import { useBoardStore } from '@/src/stores/board.store';
-import { sectionExamples } from '@/src/ui/core/board/board.examples';
+import HeuteBoard from '@/src/ui/core/domain/board/components/HeuteBoard';
+import { useBoardStore } from '@/src/ui/core/stores/board.store';
+import { sectionExamples } from '@/src/ui/core/domain/board/board.examples';
 import { useEffect } from 'react';
 
 interface BoardProps {
