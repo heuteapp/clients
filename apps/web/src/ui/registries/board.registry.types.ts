@@ -72,6 +72,14 @@ export interface BoardRegistry {
 
     //
 
+    getBoardCardContainer(): BoardCardContainerNode | undefined
+
+    getBoardCard(id: string): BoardCardNode | undefined
+
+    getBoardCards(): BoardCardNode[] | undefined
+
+    getBoardCardsForSection(sectionId: string): BoardCardNode[] | undefined
+
     getLayoutSection(id: string): LayoutSectionNode | undefined
 
     getLayoutSections(): LayoutSectionNode[] | undefined

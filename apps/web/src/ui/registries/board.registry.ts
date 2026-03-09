@@ -3,6 +3,7 @@
 import React from "react"
 import { LayoutGridNode } from "@/src/ui/types/layout/nodes"
 import { BoardRegistry } from "./board.registry.types"
+import { BoardCardNode } from "../types/board/nodes"
 //
 
 export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | null>, layoutRef: React.RefObject<HTMLDivElement | null>): BoardRegistry {
@@ -197,6 +198,36 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         unregisterLayoutGridCell(sectionId, id) {
             registry.layout?.sectionContainer?.sections
                 .get(sectionId)?.grid?.cells.delete(id)
+        },
+
+        //
+
+        getBoardCardContainer() {
+            return registry.board.cardContainer
+        },
+
+        getBoardCard(id) {
+            return registry.board.cardContainer?.cards.get(id)
+        },
+        
+        getBoardCards() {
+            const cards = registry.board.cardContainer?.cards
+            return cards ? Array.from(cards.values()) : undefined
+        },
+
+        getBoardCardsForSection(sectionId) {
+            const cards = registry.board.cardContainer?.cards
+            if (!cards) return undefined
+
+            const sectionCards: BoardCardNode[] = []
+
+            for (const card of cards.values()) {
+                if (card.props.sectionId === sectionId) {
+                    sectionCards.push(card)
+                }
+            }
+
+            return sectionCards
         },
 
         getLayoutSection(id) {
