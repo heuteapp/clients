@@ -19,6 +19,18 @@ function Sidebar() {
             rowSpan: 4,
           });
       }} />
+      <SidebarItem onPointerDown={(context) => {
+          context.interaction.startCardCreate({
+            colSpan: 9,
+            rowSpan: 2,
+          });
+      }} />
+      <SidebarItem onPointerDown={(context) => {
+          context.interaction.startCardCreate({
+            colSpan: 6,
+            rowSpan: 2,
+          });
+      }} />
     </div>
   )
 }

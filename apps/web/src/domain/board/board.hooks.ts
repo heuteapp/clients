@@ -130,14 +130,16 @@ export function useBoardPointerEvents(
                 if (type === "create") {
                     const cardCreateState = sessionRef.current.cardCreate!;
 
-                    addCard({
-                        id: crypto.randomUUID(),
-                        sectionId: cardCreateState.currentSectionId!,
-                        rowIndex: cardCreateState.currentPosition!.rowIndex,
-                        colIndex: cardCreateState.currentPosition!.colIndex,
-                        rowSpan: cardCreateState.startSize.rowSpan,
-                        colSpan: cardCreateState.startSize.colSpan,
-                    })
+                    if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
+                        addCard({
+                            id: crypto.randomUUID(),
+                            sectionId: cardCreateState.currentSectionId!,
+                            rowIndex: cardCreateState.currentPosition!.rowIndex,
+                            colIndex: cardCreateState.currentPosition!.colIndex,
+                            rowSpan: cardCreateState.startSize.rowSpan,
+                            colSpan: cardCreateState.startSize.colSpan,
+                        })
+                    }
 
                     endCardCreateInteraction(root, registry, interaction);
                 }
