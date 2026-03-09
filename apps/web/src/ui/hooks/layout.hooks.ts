@@ -3,6 +3,7 @@ import { LayoutMeasurements, LayoutMeasurementsParams } from "../types/layout/do
 import { calculateSectionCount } from "../calculations/layout/section-count"
 import { calculateCellSize } from "../calculations/layout/cell-size";
 import { calculateContainerSize } from "../calculations/layout/container-size";
+import { BoardRegistry } from "../registries/board.registry.types";
 
 export function useLayoutMeasurements({ registry, gridDimensions, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
     const layout = registry.layout;
@@ -45,101 +46,7 @@ export function useLayoutMeasurements({ registry, gridDimensions, sections, padd
         if (!element) return
 
         const observer = new ResizeObserver(() => {
-            const { clientWidth, clientHeight } = element
-
-            const cellSize = calculateCellSize(clientWidth, clientHeight, measurements.cellCount, padding);
-            measurementsRef.current.cellSize = cellSize;
-
-            const gridSize = {
-                maxWidth: measurements.cellCount.horizontal * cellSize.inner,
-                maxHeight: measurements.cellCount.vertical * cellSize.inner
-            }
-            
-            measurementsRef.current.gridSize = gridSize;
-            
-            const containerSize = calculateContainerSize(measurements.cellCount, cellSize.full);
-            measurementsRef.current.containerSize = containerSize;
-
-            element.style.setProperty("--cell-size-full", `${cellSize.full}px`);
-            element.style.setProperty("--cell-size-inner", `${cellSize.inner}px`);
-            element.style.setProperty("--cell-size-compact", `${cellSize.compact}px`);
-
-            element.style.setProperty("--grid-max-width", `${gridSize.maxWidth}px`);
-            element.style.setProperty("--grid-max-height", `${gridSize.maxHeight}px`);
-
-            element.style.setProperty("--container-width", `${containerSize.width}px`);
-            element.style.setProperty("--container-height", `${containerSize.height}px`);
-
-            //
-
-            const layoutElement = layoutRef.current;
-            if(layoutElement) {
-                const layoutRect = layoutElement.getBoundingClientRect();
-                layoutElement.style.setProperty("--layout-root-left", `${layoutRect.left}px`);
-                layoutElement.style.setProperty("--layout-root-top", `${layoutRect.top}px`);
-                layoutElement.style.setProperty("--layout-root-width", `${layoutRect.width}px`);
-                layoutElement.style.setProperty("--layout-root-height", `${layoutRect.height}px`);
-
-                const layoutSectionContainer = layout.sectionContainer;
-                if(layoutSectionContainer) {
-                    const containerRect = layoutSectionContainer.ref!.current!.getBoundingClientRect();
-                    layoutSectionContainer.ref!.current!.style.setProperty("--layout-section-container-left", `${containerRect.left}px`);
-                    layoutSectionContainer.ref!.current!.style.setProperty("--layout-section-container-top", `${containerRect.top}px`);
-                    layoutSectionContainer.ref!.current!.style.setProperty("--layout-section-container-width", `${containerRect.width}px`);
-                    layoutSectionContainer.ref!.current!.style.setProperty("--layout-section-container-height", `${containerRect.height}px`);
-
-                    layoutSectionContainer.sections.forEach(section => {
-                        const sectionElement = section.grid?.ref?.current;
-                        if(sectionElement) {
-                            const sectionRect = sectionElement.getBoundingClientRect();
-                            sectionElement.style.setProperty("--layout-section-left", `${sectionRect.left}px`);
-                            sectionElement.style.setProperty("--layout-section-top", `${sectionRect.top}px`);
-                            sectionElement.style.setProperty("--layout-section-width", `${sectionRect.width}px`);
-                            sectionElement.style.setProperty("--layout-section-height", `${sectionRect.height}px`);
-
-                            const sectionGrid = section.grid;
-                            if(sectionGrid) {
-                                const sectionGridElement = sectionGrid.ref?.current;
-                                if(sectionGridElement) {
-                                    const sectionGridRect = sectionGridElement.getBoundingClientRect();
-                                    sectionGridElement.style.setProperty("--layout-grid-left", `${sectionGridRect.left}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-top", `${sectionGridRect.top}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-width", `${sectionGridRect.width}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-height", `${sectionGridRect.height}px`);
-
-                                    const gap = 6;
-
-                                    const gridInnerRect = {
-                                        left: sectionRect.left + gap,
-                                        top: sectionRect.top + gap,
-                                        width: sectionRect.width - gap * 2,
-                                        height: sectionRect.height - gap * 2
-                                    }
-
-                                    const gridRelativePosition = {
-                                        left: sectionGridRect.left - sectionRect.left,
-                                        top: sectionGridRect.top - sectionRect.top,
-                                    }
-
-                                    const gridRelativeInnerPosition = {
-                                        left: gridRelativePosition.left - gap,
-                                        top: gridRelativePosition.top - gap,
-                                    }
-
-                                    sectionGridElement.style.setProperty("--layout-grid-inner-left", `${gridInnerRect.left}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-inner-top", `${gridInnerRect.top}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-inner-width", `${gridInnerRect.width}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-inner-height", `${gridInnerRect.height}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-relative-left", `${gridRelativePosition.left}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-relative-top", `${gridRelativePosition.top}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-relative-inner-left", `${gridRelativeInnerPosition.left}px`);
-                                    sectionGridElement.style.setProperty("--layout-grid-relative-inner-top", `${gridRelativeInnerPosition.top}px`);
-                                }
-                            }
-                        }
-                    })
-                }
-            }
+            paint({ element, registry, measurementsRef })
         })
 
         observer.observe(element)
@@ -148,4 +55,99 @@ export function useLayoutMeasurements({ registry, gridDimensions, sections, padd
     }, [measurements.cellCount, measurements.sectionCount, padding])
 
   return measurements
+}
+
+// 
+function paint({ element, registry, measurementsRef } : { element: HTMLDivElement, registry: BoardRegistry, measurementsRef: React.RefObject<LayoutMeasurements> }) {
+    const layout = registry.layout;
+    const layoutRef = layout.ref;
+    
+    const { clientWidth, clientHeight } = element
+    const measurements = measurementsRef.current;
+    const padding = 6;
+
+    const cellSize = calculateCellSize(clientWidth, clientHeight, measurements.cellCount, padding);
+    measurementsRef.current.cellSize = cellSize;
+
+    const gridSize = {
+        maxWidth: measurements.cellCount.horizontal * cellSize.inner,
+        maxHeight: measurements.cellCount.vertical * cellSize.inner
+    }
+    
+    measurementsRef.current.gridSize = gridSize;
+    
+    const containerSize = calculateContainerSize(measurements.cellCount, cellSize.full);
+    measurementsRef.current.containerSize = containerSize;
+
+    element.style.setProperty("--cell-size-full", `${cellSize.full}px`);
+    element.style.setProperty("--cell-size-inner", `${cellSize.inner}px`);
+    element.style.setProperty("--cell-size-compact", `${cellSize.compact}px`);
+
+    element.style.setProperty("--grid-max-width", `${gridSize.maxWidth}px`);
+    element.style.setProperty("--grid-max-height", `${gridSize.maxHeight}px`);
+
+    element.style.setProperty("--container-width", `${containerSize.width}px`);
+    element.style.setProperty("--container-height", `${containerSize.height}px`);
+
+    //
+
+    const layoutElement = layoutRef.current;
+    if(layoutElement) {        
+        const layoutSectionContainer = layout.sectionContainer;
+        if(!layoutSectionContainer?.ref?.current) return;
+
+        layoutSectionContainer.sections.forEach(section => {
+            const sectionGrid = section.grid;
+            if(!sectionGrid?.ref?.current) return;
+
+            const sectionGridElement = sectionGrid.ref.current;
+            const sectionRect = sectionGridElement.getBoundingClientRect();
+            const rootRect = layoutElement.getBoundingClientRect();
+
+            registry.getBoardCardsForSection(section.props!.id)?.forEach(card => {
+                const cardElement = card.ref?.current;
+                if(!cardElement) return;
+
+                const props = card.props!;
+
+                const gridSize = {
+                    width: measurements.gridSize.maxWidth / (measurements.cellCount.horizontal / section.props!.colSpan),
+                    height: measurements.gridSize.maxHeight / (measurements.cellCount.vertical / section.props!.rowSpan)
+                }
+
+                const gap = 6;
+
+                const gridRect = {
+                    left: (sectionRect.left - rootRect.left) + gap,
+                    top: (sectionRect.top - rootRect.top) + gap,
+                    width: gridSize.width - gap * 2,
+                    height: gridSize.height - gap * 2
+                }
+
+                const stepSize = {
+                    width: gridRect.width / section.props!.colSpan,
+                    height: gridRect.height / section.props!.rowSpan
+                }
+
+                const rawPosition = {
+                    left: gridRect.left + (props.colIndex - 1) * stepSize.width,
+                    top: gridRect.top + (props.rowIndex - 1) * stepSize.height,
+                    width: props.colSpan * stepSize.width,
+                    height: props.rowSpan * stepSize.height,
+                }
+
+                const position = {
+                    left: rawPosition.left + gap,
+                    top: rawPosition.top + gap,
+                    width: rawPosition.width - gap * 2,
+                    height: rawPosition.height - gap * 2
+                }
+
+                cardElement.style.setProperty("--card-left", `${position.left}px`);
+                cardElement.style.setProperty("--card-top", `${position.top}px`);
+                cardElement.style.setProperty("--card-width", `${position.width}px`);
+                cardElement.style.setProperty("--card-height", `${position.height}px`);
+            })
+        })
+    }
 }

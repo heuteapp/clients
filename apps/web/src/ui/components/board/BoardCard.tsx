@@ -6,7 +6,7 @@ import { useLayoutEffect, useRef } from "react";
 function BoardCard(props : BoardCardProps) {
     const { registry} = useBoardContext();
     const ref = useRef<HTMLDivElement>(null);
-    
+
     useLayoutEffect(() => {
         registry.registerBoardCard(props.id, ref, props)
 
@@ -36,15 +36,6 @@ function BoardCard(props : BoardCardProps) {
 
     const current = section.ref!.current;
 
-    current?.style.setProperty("--step-size-width", `var(--layout-grid-inner-width) / ${section.props!.colSpan}`);
-    current?.style.setProperty("--step-size-height", `var(--layout-grid-inner-height) / ${section.props!.rowSpan}`);
-
-    current?.style.setProperty("--card-left", `calc(var(--layout-grid-relative-inner-left) + (var(--step-size-width) * ${props.colIndex - 1}) + ${gap}px)`);
-    current?.style.setProperty("--card-top", `calc(var(--layout-grid-relative-inner-top) + (var(--step-size-height) * ${props.rowIndex - 1}) + ${gap}px)`);
-    current?.style.setProperty("--card-width", `calc((var(--step-size-width) * ${props.colSpan}) - ${gap * 2}px)`);
-    current?.style.setProperty("--card-height", `calc((var(--step-size-height) * ${props.rowSpan}) - ${gap * 2}px)`);
-
- 
 
     return (
         <div 
