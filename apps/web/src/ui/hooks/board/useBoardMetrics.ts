@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
 import { BoardMetrics, BoardMetricsParams } from "@/src/ui/types/board/board.dom"
 import { calculateSectionsCount } from "@/src/ui/calculations/layout/sections-count"
-import { applyBoardMeasurements } from "@/src/ui/utils/board/applyBoardMeasurements";
+import { applyBoardMetricsToDOM } from "@/src/ui/utils/board/applyBoardMetricsToDOM";
+import { calculateBoardMetrics } from "../../calculations/board/board-metrics";
 
 export function useBoardMetrics({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : BoardMetrics {
     const layout = registry.layout;
@@ -46,11 +47,21 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         if (!element) return
 
         const observer = new ResizeObserver(() => {
-            applyBoardMeasurements({ registry, metricsRef: metricsRef })
+            const newMetrics = calculateBoardMetrics(registry);
+
+            if (newMetrics) {
+                metricsRef.current = newMetrics;
+                applyBoardMetricsToDOM({ registry, metrics: newMetrics })
+            }
         })
 
         const mutationObserver = new MutationObserver(() => {
-            applyBoardMeasurements({ registry, metricsRef: metricsRef })
+            const newMetrics = calculateBoardMetrics(registry);
+
+            if (newMetrics) {
+                metricsRef.current = newMetrics;
+                applyBoardMetricsToDOM({ registry, metrics: newMetrics })
+            }        
         })
 
         mutationObserver.observe(element, {

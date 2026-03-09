@@ -28,14 +28,15 @@ export function calculateBoardMetrics(registry: BoardRegistry) : BoardMetrics | 
         horizontal: layoutProps.columnCount,
         vertical: layoutProps.rowCount
     };
-
-    const layoutSectionContainerSize = calculateSectionContainerSize(layoutGridCellsCount, { full: 0, inner: 0, compact: 0 });
+    
     const layoutGridCellSize = calculateGridCellSize(clientWidth, clientHeight, layoutGridCellsCount, padding);
     const layoutGridSize = {
         width: layoutGridCellsCount.horizontal * layoutGridCellSize.inner,
         height: layoutGridCellsCount.vertical * layoutGridCellSize.inner
     }
 
+    const layoutSectionContainerSize = calculateSectionContainerSize(layoutGridCellsCount, layoutGridCellSize);
+    
     return {
         layoutSectionsCount,
         layoutGridCellsCount,
