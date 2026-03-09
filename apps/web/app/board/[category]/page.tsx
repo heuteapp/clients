@@ -3,7 +3,7 @@
 import { Params } from "next/dist/server/request/params";
 import { useParams } from "next/navigation";
 
-import Board from "@/src/main/components/Board";
+import Board from "@/src/ui/components/main/Board";
 
 //
 
