@@ -22,7 +22,7 @@ export function createBoardInteraction(
 
         startCardCreate(size) {
             const state = {
-                cardId: "temp",
+                cardId: ":ghost-card",
                 startPointer: interaction.pointer!,
                 startSize: size,
                 currentSectionId: null,
@@ -97,6 +97,8 @@ export function createBoardInteraction(
             interaction.sessionUpdater((draft) => {
                 draft.status = "executing";
             })
+
+            interaction.eventHandlers?.OnExecute(interaction.eventType, interaction.getCurrentState()!)
         },
 
         successInteraction() {
