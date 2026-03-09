@@ -44,11 +44,11 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         if (!element) return
 
         const observer = new ResizeObserver(() => {
-            applyBoardMeasurements({ registry, measurementsRef })
+            applyBoardMeasurements({ registry, metricsRef: measurementsRef })
         })
 
         const mutationObserver = new MutationObserver(() => {
-            applyBoardMeasurements({ registry, measurementsRef })
+            applyBoardMeasurements({ registry, metricsRef: measurementsRef })
         })
 
         mutationObserver.observe(element, {

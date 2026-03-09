@@ -1,9 +1,9 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { LayoutMeasurements } from "@/src/ui/types/layout/dom";
+import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 import { calculateGridCellSize } from "@/src/ui/calculations/layout/grid-cell-size";
 import { calculateSectionContainerSize } from "@/src/ui/calculations/layout/section-container-size";
 
-export function applyBoardMeasurements({ registry, measurementsRef } : { registry: BoardRegistry, measurementsRef: React.RefObject<LayoutMeasurements> }) {
+export function applyBoardMeasurements({ registry, metricsRef } : { registry: BoardRegistry, metricsRef: React.RefObject<BoardMetrics> }) {
     const layout = registry.layout;
     const layoutRef = layout.ref;
     const layoutElement = layoutRef.current;
@@ -11,28 +11,28 @@ export function applyBoardMeasurements({ registry, measurementsRef } : { registr
     if (!layoutElement) return;
     
     const { clientWidth, clientHeight } = layoutElement
-    const measurements = measurementsRef.current;
+    const measurements = metricsRef.current;
     const padding = 6;
 
-    const cellSize = calculateGridCellSize(clientWidth, clientHeight, measurements.cellCount, padding);
-    measurementsRef.current.cellSize = cellSize;
+    const cellSize = calculateGridCellSize(clientWidth, clientHeight, measurements.layoutGridCellsCount, padding);
+    metricsRef.current.layoutGridCellSize = cellSize;
 
     const gridSize = {
-        maxWidth: measurements.cellCount.horizontal * cellSize.inner,
-        maxHeight: measurements.cellCount.vertical * cellSize.inner
+        width: measurements.layoutGridCellsCount.horizontal * cellSize.inner,
+        height: measurements.layoutGridCellsCount.vertical * cellSize.inner
     }
     
-    measurementsRef.current.gridSize = gridSize;
+    metricsRef.current.layoutGridSize = gridSize;
     
-    const containerSize = calculateSectionContainerSize(measurements.cellCount, cellSize.full);
-    measurementsRef.current.containerSize = containerSize;
+    const containerSize = calculateSectionContainerSize(measurements.layoutGridCellsCount, cellSize);
+    metricsRef.current.layoutSectionContainerSize = containerSize;
 
     layoutElement.style.setProperty("--cell-size-full", `${cellSize.full}px`);
     layoutElement.style.setProperty("--cell-size-inner", `${cellSize.inner}px`);
     layoutElement.style.setProperty("--cell-size-compact", `${cellSize.compact}px`);
 
-    layoutElement.style.setProperty("--grid-max-width", `${gridSize.maxWidth}px`);
-    layoutElement.style.setProperty("--grid-max-height", `${gridSize.maxHeight}px`);
+    layoutElement.style.setProperty("--grid-max-width", `${gridSize.width}px`);
+    layoutElement.style.setProperty("--grid-max-height", `${gridSize.height}px`);
 
     layoutElement.style.setProperty("--container-width", `${containerSize.width}px`);
     layoutElement.style.setProperty("--container-height", `${containerSize.height}px`);
@@ -58,8 +58,8 @@ export function applyBoardMeasurements({ registry, measurementsRef } : { registr
                 const props = card.props!;
 
                 const gridSize = {
-                    width: measurements.gridSize.maxWidth / (measurements.cellCount.horizontal / section.props!.colSpan),
-                    height: measurements.gridSize.maxHeight / (measurements.cellCount.vertical / section.props!.rowSpan)
+                    width: measurements.layoutGridSize.width / (measurements.layoutGridCellsCount.horizontal / section.props!.colSpan),
+                    height: measurements.layoutGridSize.height / (measurements.layoutGridCellsCount.vertical / section.props!.rowSpan)
                 }
 
                 const gap = 6;
