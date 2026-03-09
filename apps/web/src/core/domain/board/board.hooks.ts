@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef } from "react"
-import { BoardContext } from "./board.context"
+import { BoardContext } from "../../../ui/contexts/board.context"
 import { createBoardInteraction } from "./interaction/board.interaction"
 import { BoardInteraction } from "./interaction/board.interaction.types"
 import { createBoardSession } from "../../../ui/sessions/board.session"
