@@ -6,9 +6,10 @@ import { createBoardSession } from "../../../ui/sessions/board.session"
 import { BoardSession, BoardSessionSetter, CardCreateState } from "../../../ui/sessions/board.session.types"
 import { setCreateMode } from "../../../ui/interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "../../../ui/interactions/create-card/handler"
-import { BoardRegistry, createBoardRegistry } from "../../../ui/registries/board.registry"
 import { LayoutMeasurements } from "../../../types/layout/dom"
 import { useBoardStore } from "@/src/stores/board.store"
+import { createBoardRegistry } from "@/src/ui/registries/board.registry"
+import { BoardRegistry } from "@/src/ui/registries/board.registry.types"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
