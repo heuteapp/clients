@@ -44,7 +44,7 @@ export function useBoardPointerEvents(
             const currentSession = sessionRef.current
 
             if (currentSession.cardCreate) {
-                handleCardCreateInteraction(rootRef.current!, registry, metricsRef, interaction, currentSession.cardCreate)
+                handleCardCreateInteraction(rootRef.current!, registry, sessionRef, metricsRef, interaction, currentSession.cardCreate)
                 return
             }
 
@@ -92,7 +92,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, registry, metricsRef, interaction, state as CardCreateState)
+                    handleCardCreateInteraction(root, registry, sessionRef, metricsRef, interaction, state as CardCreateState)
                 }
             },
 
