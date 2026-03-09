@@ -2,15 +2,14 @@ import { useContext, useEffect, useMemo, useRef } from "react"
 import { BoardContext } from "../contexts/board.context"
 import { createBoardInteraction } from "../interactions/board.interaction"
 import { BoardInteraction } from "../interactions/board.interaction.types"
-import { BoardSessionUpdater, createBoardSession } from "../sessions/board"
-import { BoardSession } from "../sessions/board"
-import { CardCreateState } from "../sessions/board/states"
 import { setCreateMode } from "../interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "../interactions/create-card/handler"
-import { LayoutMeasurements } from "../types/layout/dom"
 import { useBoardStore } from "@/src/stores/board";
 import { createBoardRegistry } from "@/src/ui/registries/board.registry"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types"
+import { BoardSession, BoardSessionUpdater, CardCreateState } from "../types/board/board.session"
+import { createBoardSession } from "../utils/board/board.session"
+import { BoardMetrics } from "../types/board/board.dom"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
@@ -51,7 +50,7 @@ export function useBoardRegistry() : BoardRegistry {
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
-    measurements: LayoutMeasurements,
+    measurements: BoardMetrics,
     sessionRef: React.RefObject<BoardSession>,
     interaction: BoardInteraction
 ) {

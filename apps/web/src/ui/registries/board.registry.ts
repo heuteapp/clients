@@ -1,9 +1,7 @@
 "use client"
 
 import React from "react"
-import { LayoutGridNode } from "@/src/ui/types/layout/nodes"
 import { BoardRegistry } from "./board.registry.types"
-import { BoardCardNode } from "../types/board/nodes"
 //
 
 export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | null>, layoutRef: React.RefObject<HTMLDivElement | null>): BoardRegistry {
@@ -219,7 +217,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             const cards = registry.board.cardContainer?.cards
             if (!cards) return undefined
 
-            const sectionCards: BoardCardNode[] = []
+            const sectionCards = []
 
             for (const card of cards.values()) {
                 if (card.props.sectionId === sectionId) {
@@ -247,7 +245,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             const sections = registry.layout?.sectionContainer?.sections
             if (!sections) return undefined
 
-            const grids: LayoutGridNode[] = []
+            const grids = []
 
             for (const section of sections.values()) {
                 if (section.grid) grids.push(section.grid)

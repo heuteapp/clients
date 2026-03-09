@@ -1,4 +1,4 @@
-import { BoardSession } from "./BoardSession";
+import { BoardSession } from "@/src/ui/types/board/board.session";
 
 export function createBoardSession(): BoardSession {
     return {
