@@ -1,4 +1,4 @@
-import { useBoardContext } from "../../../core/domain/board/board.hooks"
+import { useBoardContext } from "../../hooks/board.hooks"
 import style from "@/src/ui/styles/board.module.css"
 import { BoardCardData } from "../../../types/board/data"
 

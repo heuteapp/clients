@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { BoardContext } from "../../contexts/board.context";
-import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../../core/domain/board/board.hooks";
+import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../hooks/board.hooks";
 import { useLayoutMeasurements } from "@/src/ui/hooks/layout.hooks";
 import { useBoardStore } from "@/src/stores/board.store";
 

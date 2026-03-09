@@ -6,7 +6,7 @@ import HeuteLayout from "@/src/ui/components/layout/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useRef } from "react";
 import { BoardData } from "../../../types/board/data";
-import { useBoardContext } from "../../../core/domain/board/board.hooks";
+import { useBoardContext } from "../../hooks/board.hooks";
 import BoardGhostCard from "./BoardGhostCard";
 import { useBoardStore } from "@/src/stores/board.store";
 
