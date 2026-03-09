@@ -7,7 +7,7 @@ import { BoardSession, BoardSessionSetter, CardCreateState } from "../../../ui/s
 import { setCreateMode } from "../../../ui/interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "../../../ui/interactions/create-card/handler"
 import { BoardRegistry, createBoardRegistry } from "./board.registry"
-import { LayoutMeasurements } from "../layout/types/dom"
+import { LayoutMeasurements } from "../../../types/layout/dom"
 import { useBoardStore } from "@/src/stores/board.store"
 
 export function useBoardContext() {
