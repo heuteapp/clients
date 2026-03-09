@@ -220,7 +220,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             const sectionCards = []
 
             for (const card of cards.values()) {
-                if (card.props.sectionId === sectionId) {
+                if (card.props?.sectionId === sectionId) {
                     sectionCards.push(card)
                 }
             }
