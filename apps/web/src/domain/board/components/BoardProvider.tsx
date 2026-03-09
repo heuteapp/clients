@@ -5,6 +5,7 @@ import { BoardContext } from "../board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../board.hooks";
 import { useLayoutMeasurements } from "@/src/domain/layout/layout.hooks";
 import { useBoardStore } from "../board.store";
+import { useLayoutStore } from "../../layout/layout.store";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
     const registry = useBoardRegistry();
@@ -15,14 +16,16 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     });
 
     const board = useBoardStore(state => state.board)!;
+    const layout = useLayoutStore(state => state.layout);
+    const sections = useLayoutStore(state => state.sections);
 
     const measurements = useLayoutMeasurements({
         layoutRef: registry.layout.ref,
         gridDimensions: {
-            columnCount: board.layout.columnCount,
-            rowCount: board.layout.rowCount
+            columnCount: layout?.columnCount ?? 0,
+            rowCount: layout?.rowCount ?? 0
         },
-        sections: board.layout.sections,
+        sections,
         padding: 4
     })
 

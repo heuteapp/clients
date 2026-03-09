@@ -29,6 +29,8 @@ export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, pad
         height: 0
     })
 
+    console.log(gridDimensions, cellCount, gridSize);
+
     useEffect(() => {
         const element = layoutRef.current
         if (!element) return

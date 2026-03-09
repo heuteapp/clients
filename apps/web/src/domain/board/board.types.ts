@@ -1,11 +1,8 @@
-import { HeuteLayoutData } from "../layout/types/data";
-
 export interface BoardData {
     id: string;
     category: string;
     date: Date;
-    layout: HeuteLayoutData;
-    cards: BoardCardData[];
+    layoutId: string;
 }
 
 export interface BoardCardData {

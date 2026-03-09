@@ -4,6 +4,7 @@ import style from '../body.module.css';
 import { useBoardStore } from '@/src/domain/board/board.store';
 import { sectionExamples } from '@/src/domain/board/board.examples';
 import { useEffect } from 'react';
+import { useLayoutStore } from '@/src/domain/layout/layout.store';
 
 interface BoardProps {
     category: string;
@@ -13,21 +14,28 @@ interface BoardProps {
 function Board({ category, date }: BoardProps) {
     const board = useBoardStore(state => state.board);
     const setBoard = useBoardStore(state => state.setBoard)
+    const setLayout = useLayoutStore(state => state.setLayout);
+    const setSections = useLayoutStore(state => state.setSections);
 
     useEffect(() => {
         setBoard(() => {
             return {
-            id: "board-1",
-            category,
-            date,
-            layout: {                
-                columnCount: 18,
-                rowCount: 8,
-                sections: (sectionExamples as any)[category] ?? sectionExamples.two,
-            },
-            cards: []
-        };
+                id: "board-1",
+                category,
+                date,
+                layoutId: category,
+            };
         });
+
+        setLayout(() => {
+            return {
+                id: category,
+                columnCount: 18,
+                rowCount: 8
+            }
+        });
+
+        setSections((sectionExamples as any)[category ?? "two"] ?? sectionExamples.two);
     }, [])
 
     if(!board) return null;

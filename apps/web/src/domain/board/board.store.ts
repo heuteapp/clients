@@ -5,6 +5,7 @@ import { sectionExamples } from "./board.examples"
 
 type BoardStore = {
     board: BoardData | null
+    cards: BoardCardData[]
     setBoard: (updater: (board: BoardData | null) => BoardData | null) => void
     addCard: (card: BoardCardData) => void
 }
@@ -15,13 +16,10 @@ export const useBoardStore = create<BoardStore>()(
             id: "test",
             category: "test",
             date: new Date(),
-            layout: {
-                columnCount: 18,
-                rowCount: 8,
-                sections: sectionExamples.two
-            },
-            cards: []
+            layoutId: "two",
         },
+
+        cards: [],
 
         setBoard: (updater) => set(state => {
             state.board = updater(state.board)
@@ -30,7 +28,7 @@ export const useBoardStore = create<BoardStore>()(
         addCard: (card) => set(state => {
             if (state.board) {
                 console.log("Adding card", card);
-                state.board.cards.push({ ...card, id: crypto.randomUUID() })
+                state.cards.push({ ...card, id: crypto.randomUUID() })
             }
         })
     }))
