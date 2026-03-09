@@ -1,13 +1,13 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types/shared/common";
 import { CardBaseState } from "@/src/ui/sessions/board/states";
-import { BoardSessionSetter } from "../sessions/board";
+import { BoardSessionUpdater } from "../sessions/board";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
     eventType: BoardInteractionEventType | null;
     eventHandlers: BoardInteractionEventHandlers | null
 
-    setSession: BoardSessionSetter;
+    setSession: BoardSessionUpdater;
     setEventHandlers: (handlers: BoardInteractionEventHandlers | null) => void
 
     startCardCreate: (

@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useRef } from "react"
 import { BoardContext } from "../contexts/board.context"
 import { createBoardInteraction } from "../interactions/board.interaction"
 import { BoardInteraction } from "../interactions/board.interaction.types"
-import { BoardSessionSetter, createBoardSession } from "../sessions/board"
+import { BoardSessionUpdater, createBoardSession } from "../sessions/board"
 import { BoardSession } from "../sessions/board"
 import { CardCreateState } from "../sessions/board/states"
 import { setCreateMode } from "../interactions/create-card/dom"
@@ -28,10 +28,10 @@ export function useBoardSessionRef() : React.RefObject<BoardSession> {
     return sessionRef;
 }
 
-export function useBoardInteraction(sessionSetter: BoardSessionSetter) : BoardInteraction {
+export function useBoardInteraction(sessionUpdater: BoardSessionUpdater) : BoardInteraction {
     const interaction = useMemo(() => {
-        return createBoardInteraction(sessionSetter);
-    }, [sessionSetter]);
+        return createBoardInteraction(sessionUpdater);
+    }, [sessionUpdater]);
 
     return interaction;
 }

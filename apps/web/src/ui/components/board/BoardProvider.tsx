@@ -5,16 +5,16 @@ import { BoardContext } from "../../contexts/board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../hooks/board.hooks";
 import { useLayoutMeasurements } from "@/src/ui/hooks/layout.hooks";
 import { useBoardStore } from "@/src/stores/board";
+import { produce } from "immer";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
     const registry = useBoardRegistry();
 
     const sessionRef = useBoardSessionRef();
     const interaction = useBoardInteraction((updater) => {
-        sessionRef.current = updater(sessionRef.current);
+        sessionRef.current = produce(sessionRef.current, updater)
     });
 
-    const board = useBoardStore(state => state.board)!;
     const layout = useBoardStore(state => state.layout);
     const sections = useBoardStore(state => state.sections);
 

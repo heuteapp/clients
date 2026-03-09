@@ -1,9 +1,9 @@
-import { BoardSessionSetter } from "../sessions/board"
+import { BoardSessionUpdater } from "../sessions/board"
 import { BoardInteraction } from "./board.interaction.types"
 
 
 export function createBoardInteraction(
-    setSession: BoardSessionSetter
+    setSession: BoardSessionUpdater
 ): BoardInteraction {
 
     const interaction: BoardInteraction = {
