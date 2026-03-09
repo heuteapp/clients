@@ -6,10 +6,9 @@ import { createBoardSession } from "./session/board.session"
 import { BoardSession, BoardSessionSetter, CardCreateState } from "./session/board.session.types"
 import { setCreateMode } from "./interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "./interactions/create-card/handler"
-import { BoardCardData, BoardData } from "./board.types"
 import { BoardRegistry, createBoardRegistry } from "./board.registry"
 import { LayoutMeasurements } from "../layout/types/dom"
-import { useBoardStore } from "./board.store"
+import { useBoardStore } from "@/src/stores/board.store"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)

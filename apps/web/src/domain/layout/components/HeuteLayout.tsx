@@ -9,7 +9,7 @@ import style from "../layout.module.css"
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { useBoardContext } from "../../board/board.hooks";
 import { HeuteLayoutProps } from "../types/props";
-import { useBoardStore } from "../../board/board.store";
+import { useBoardStore } from "@/src/stores/board.store";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
