@@ -15,10 +15,10 @@
 
 .card {
     position: absolute;
-    background: linear-gradient(145deg, #252a35, #2b303c);
+    background: linear-gradient(145deg, #252a35 0%, #272c39 60%, #2b303c 100%);    
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 6px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     box-sizing: border-box;
 }
 

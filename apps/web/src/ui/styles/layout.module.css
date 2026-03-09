@@ -7,11 +7,7 @@
     justify-content: center;
     overflow: hidden;
 
-    background: radial-gradient(
-        circle at center,
-        #141821 0%,
-        #0f1115 70%
-    );
+    background: #0f1115
 }
 
 .layout .container {
