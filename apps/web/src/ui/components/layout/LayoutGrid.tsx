@@ -8,7 +8,7 @@ import { LayoutGridProps } from "@/src/ui/types/layout/layout.props";
 function LayoutGrid(props : LayoutGridProps) {
     const context = useBoardContext();
 
-    const { registry, measurements } = context!;
+    const { registry } = context!;
 
     const ref = useRef<HTMLDivElement>(null)
 

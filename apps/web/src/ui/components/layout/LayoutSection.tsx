@@ -9,7 +9,7 @@ function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
-    const { registry, measurements } = context!;
+    const { registry } = context!;
 
     useLayoutEffect(() => {
         registry.registerLayoutSection(props.id, ref, props)

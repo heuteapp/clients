@@ -7,7 +7,7 @@ import { LayoutGridCellProps } from "@/src/ui/types/layout/layout.props";
 function LayoutGridCell(props : LayoutGridCellProps) {
     const context = useBoardContext();
 
-    const { registry, measurements } = context!;
+    const { registry } = context!;
     const id = props.rowIndex + "-" + props.colIndex;
 
     const ref = useRef<HTMLDivElement>(null)
@@ -22,8 +22,8 @@ function LayoutGridCell(props : LayoutGridCellProps) {
 
     return (
         <div className={style.cell} style={{
-            width: measurements!.layoutGridCellSize.compact,
-            height: measurements!.layoutGridCellSize.compact,
+            width: "var(--cell-size-inner)",
+            height: "var(--cell-size-inner)",
             visibility: "hidden"
         }}/>
     )

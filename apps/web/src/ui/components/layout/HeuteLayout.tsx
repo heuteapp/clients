@@ -14,8 +14,7 @@ import { useBoardStore } from "@/src/stores/board";
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
 
-  const { columnCount, rowCount } = props;
-  const { registry, measurements } = context!;
+  const { registry } = context!;
 
   const sections = useBoardStore(state => state.sections);
 

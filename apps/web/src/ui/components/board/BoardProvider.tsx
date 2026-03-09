@@ -29,17 +29,16 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     })
 
     useBoardPointerEvents(rootRef, registry, metricsRef, sessionRef, interaction);
-    const session = sessionRef.current;
 
     const value = useMemo(
         () => ({
             rootRef,
-            session,
+            sessionRef,
+            metricsRef,
             interaction,
             registry,
-            measurements: metricsRef.current
         }),
-        [session, interaction, registry, metricsRef]
+        [sessionRef, interaction, registry, metricsRef]
     );
 
     return (

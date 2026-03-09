@@ -9,7 +9,7 @@ function LayoutSectionContainer(props: LayoutSectionContainerProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
-    const { measurements, registry } = context!;
+    const { registry } = context!;
 
     useLayoutEffect(() => {
         registry.registerLayoutSectionContainer(ref, props)
