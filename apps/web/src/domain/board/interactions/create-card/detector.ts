@@ -18,6 +18,8 @@ export function findSectionUnderPointer(
             pointer.y <= rect.bottom
 
         if (inside) {
+
+
             return { section, rect }
         }
     }
