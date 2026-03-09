@@ -1,6 +1,6 @@
 import { useBoardContext } from "../../hooks/board.hooks"
 import style from "@/src/ui/styles/board.module.css"
-import { BoardCardProps } from "@/src/ui/types/board/BoardProps";
+import { BoardCardProps } from "@/src/ui/types/board/board.props";
 import { useLayoutEffect, useRef } from "react";
 
 function BoardCard(props : BoardCardProps) {

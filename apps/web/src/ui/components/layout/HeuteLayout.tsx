@@ -8,7 +8,7 @@ import style from "@/src/ui/styles/layout.module.css"
 
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { useBoardContext } from "../../hooks/board.hooks";
-import { HeuteLayoutProps } from "@/src/ui/types/layout/LayoutProps";
+import { HeuteLayoutProps } from "@/src/ui/types/layout/layout.props";
 import { useBoardStore } from "@/src/stores/board";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {

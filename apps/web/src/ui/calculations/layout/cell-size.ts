@@ -1,4 +1,4 @@
-import { LayoutGridCellsCount, LayoutGridCellSize } from "@/src/ui/types/layout/LayoutDom";
+import { LayoutGridCellsCount, LayoutGridCellSize } from "@/src/ui/types/layout/layout.dom";
 
 export function calculateCellSize(
     containerWidth: number, 
