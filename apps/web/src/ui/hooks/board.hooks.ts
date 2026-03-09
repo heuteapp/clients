@@ -139,6 +139,8 @@ export function useBoardPointerEvents(
                         })
                     }
 
+                    console.log(registry);
+
                     endCardCreateInteraction(root, registry, interaction);
                 }
             }

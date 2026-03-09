@@ -19,9 +19,6 @@ export default function HeuteBoard(props: HeuteBoardProps) {
   const layout = useBoardStore(state => state.layout);
   const cards = useBoardStore(state => state.cards);
 
-  if(!layout) return null;
-  if(!cards) return null;
-
   useLayoutEffect(() => {
     registry.registerBoard(boardRef, props)
 
@@ -30,6 +27,9 @@ export default function HeuteBoard(props: HeuteBoardProps) {
     }
   }, [registry])
   
+  if(!layout) return null;
+  if(!cards) return null;
+
   return (
     <div ref={boardRef} className={style.board}>
       <HeuteLayout {...layout} />
