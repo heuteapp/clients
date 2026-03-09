@@ -37,7 +37,7 @@ export function createBoardInteraction(
             })
             
             interaction.eventType = "create";
-            interaction.eventHandlers?.OnStart(interaction.eventType, state)
+            interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 
         updateCardCreate(sectionId, position) {
@@ -67,7 +67,7 @@ export function createBoardInteraction(
             })
 
             interaction.eventType = "move";
-            interaction.eventHandlers?.OnStart(interaction.eventType, state)
+            interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 
         startCardResize(cardId, sectionId, pointer, size, handle) {
@@ -88,7 +88,7 @@ export function createBoardInteraction(
             })
 
             interaction.eventType = "resize";
-            interaction.eventHandlers?.OnStart(interaction.eventType, state)
+            interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 
         executeInteraction() {
@@ -98,7 +98,7 @@ export function createBoardInteraction(
                 draft.status = "executing";
             })
 
-            interaction.eventHandlers?.OnExecute(interaction.eventType, interaction.getCurrentState()!)
+            interaction.eventHandlers?.OnExecute?.(interaction.eventType, interaction.getCurrentState()!)
         },
 
         successInteraction() {
@@ -108,7 +108,7 @@ export function createBoardInteraction(
                 draft.status = "succeeded";
             })
 
-            interaction.eventHandlers?.OnSuccess(interaction.eventType, interaction.getCurrentState()!);
+            interaction.eventHandlers?.OnSuccess?.(interaction.eventType, interaction.getCurrentState()!);
             interaction.endInteraction();
         },
 
@@ -119,7 +119,7 @@ export function createBoardInteraction(
                 draft.status = "cancelled";
             })
 
-            interaction.eventHandlers?.OnCancel(interaction.eventType, interaction.getCurrentState()!);
+            interaction.eventHandlers?.OnCancel?.(interaction.eventType, interaction.getCurrentState()!);
             interaction.endInteraction();
         },
 
@@ -130,14 +130,14 @@ export function createBoardInteraction(
                 draft.status = "failed";
             })
 
-            interaction.eventHandlers?.OnThrow(interaction.eventType, interaction.getCurrentState()!, error);
+            interaction.eventHandlers?.OnThrow?.(interaction.eventType, interaction.getCurrentState()!, error);
             interaction.endInteraction();
         },
 
         endInteraction() {
             if(!interaction.eventType) return;
 
-            interaction.eventHandlers?.OnEnd(interaction.eventType);
+            interaction.eventHandlers?.OnEnd?.(interaction.eventType);
             interaction.eventType = null;
 
             interaction.sessionUpdater((draft) => {

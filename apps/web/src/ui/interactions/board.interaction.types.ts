@@ -50,12 +50,12 @@ export interface BoardInteraction {
 }
 
 export interface BoardInteractionEventHandlers {
-    OnStart: (type: BoardInteractionEventType, state: CardBaseState) => void;
-    OnExecute: (type: BoardInteractionEventType, state: CardBaseState) => void;
-    OnSuccess: (type: BoardInteractionEventType, state: CardBaseState) => void;
-    OnCancel: (type: BoardInteractionEventType, state: CardBaseState) => void;
-    OnThrow: (type: BoardInteractionEventType, state: CardBaseState, error: Error) => void;
-    OnEnd: (type: BoardInteractionEventType) => void;
+    OnStart?: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnExecute?: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnSuccess?: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnCancel?: (type: BoardInteractionEventType, state: CardBaseState) => void;
+    OnThrow?: (type: BoardInteractionEventType, state: CardBaseState, error: Error) => void;
+    OnEnd?: (type: BoardInteractionEventType) => void;
 }
 
 export type BoardInteractionEventType = "create" | "move" | "resize";
