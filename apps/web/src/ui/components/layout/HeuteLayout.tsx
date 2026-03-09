@@ -34,7 +34,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
       ref={registry.layout!.ref} 
       className={style.layout} 
       style={{
-        visibility: measurements!.containerSize.width > 0 ? "visible" : "hidden"
+        visibility: "visible"
       }}
     >
         <LayoutSectionContainer sections={sections} />

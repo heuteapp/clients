@@ -1,5 +1,6 @@
 import { GridDimensions } from "@/src/types/shared/common"
 import { LayoutSectionData } from "../../../types/layout/data"
+import { BoardRegistry } from "@/src/ui/registries/board.registry.types"
 
 export interface LayoutMeasurements {
     sectionCount : LayoutSectionCountMeasurements
@@ -38,7 +39,7 @@ export interface LayoutContainerSizeMeasurements {
 //
 
 export interface LayoutMeasurementsParams {
-    layoutRef: React.RefObject<HTMLDivElement | null>
+    registry: BoardRegistry
     gridDimensions: GridDimensions
     sections: LayoutSectionData[]
     padding: number

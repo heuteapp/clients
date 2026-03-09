@@ -25,10 +25,10 @@ function LayoutSection(props : LayoutSectionProps) {
         className={style.section}
         style={{
             position: "absolute",
-            left: (props.colIndex -1)* measurements!.cellSize.full,
-            top: (props.rowIndex -1)* measurements!.cellSize.full,
-            width: (props.colSpan * measurements!.cellSize.full) - (props.padding * 2),
-            height: (props.rowSpan * measurements!.cellSize.full) - (props.padding * 2),
+            left: `calc(${props.colIndex - 1} * var(--cell-size-full) + ${props.padding}px)`,
+            top: `calc(${props.rowIndex - 1} * var(--cell-size-full) + ${props.padding}px)`,
+            width: `calc(${props.colSpan} * var(--cell-size-full) - ${props.padding * 2}px)`,
+            height: `calc(${props.rowSpan} * var(--cell-size-full) - ${props.padding * 2}px)`,
             padding: props.padding,
         }}
         >

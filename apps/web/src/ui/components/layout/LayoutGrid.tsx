@@ -22,8 +22,8 @@ function LayoutGrid(props : LayoutGridProps) {
 
     return (
         <div ref={ref} className={style.grid} style={{
-            gridTemplateColumns: `repeat(${props.colSpan}, ${measurements!.cellSize.inner}px)`,
-            gridTemplateRows: `repeat(${props.rowSpan}, ${measurements!.cellSize.inner}px)`,
+            gridTemplateColumns: `repeat(${props.colSpan}, var(--cell-size-inner))`,
+            gridTemplateRows: `repeat(${props.rowSpan}, var(--cell-size-inner))`,
         }}>
             {
                 Array.from({ length: props.rowSpan }).map((_, rowIndex) => (

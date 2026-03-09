@@ -4,7 +4,9 @@ import { calculateSectionCount } from "../calculations/layout/section-count"
 import { calculateCellSize } from "../calculations/layout/cell-size";
 import { calculateContainerSize } from "../calculations/layout/container-size";
 
-export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ registry, gridDimensions, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+    const layoutRef = registry.layout.ref;
+
     const measurementsRef = useRef<LayoutMeasurements>({
         sectionCount: {
             horizontal: 0,
@@ -38,7 +40,7 @@ export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, pad
     };
 
     useEffect(() => {
-        const element = layoutRef.current
+        const element = layoutRef.current;
         if (!element) return
 
         const observer = new ResizeObserver(() => {
@@ -56,6 +58,16 @@ export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, pad
             
             const containerSize = calculateContainerSize(measurements.cellCount, cellSize.full);
             measurementsRef.current.containerSize = containerSize;
+
+            element.style.setProperty("--cell-size-full", `${cellSize.full}px`);
+            element.style.setProperty("--cell-size-inner", `${cellSize.inner}px`);
+            element.style.setProperty("--cell-size-compact", `${cellSize.compact}px`);
+
+            element.style.setProperty("--grid-max-width", `${gridSize.maxWidth}px`);
+            element.style.setProperty("--grid-max-height", `${gridSize.maxHeight}px`);
+
+            element.style.setProperty("--container-width", `${containerSize.width}px`);
+            element.style.setProperty("--container-height", `${containerSize.height}px`);
         })
 
         observer.observe(element)

@@ -19,7 +19,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     const sections = useBoardStore(state => state.sections);
 
     const measurements = useLayoutMeasurements({
-        layoutRef: registry.layout.ref,
+        registry,
         gridDimensions: {
             columnCount: layout?.columnCount ?? 0,
             rowCount: layout?.rowCount ?? 0

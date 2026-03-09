@@ -24,8 +24,8 @@ function LayoutSectionContainer(props: LayoutSectionContainerProps) {
           ref={ref} 
           className={style.container} 
           style={{
-            width: (measurements!.containerSize.width),
-            height: (measurements!.containerSize.height),
+            width: "var(--container-width)",
+            height: "var(--container-height)",
           }}
         >
           {
