@@ -38,6 +38,8 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         horizontal: gridDimensions.columnCount,
         vertical: gridDimensions.rowCount
     };
+    console.log(measurements);
+
 
     useEffect(() => {
         const element = layoutRef.current;
@@ -61,7 +63,7 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         observer.observe(element)
 
         return () => observer.disconnect()
-    }, [])
+    }, [registry, gridDimensions, sections, padding])
 
   return measurements
 }
