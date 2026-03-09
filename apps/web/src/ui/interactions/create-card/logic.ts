@@ -1,4 +1,4 @@
-import { clamp } from "@/src/shared/logic"
+import { clamp } from "@/src/utils/shared/clamp"
 import { CardCreateComputeInput, CardCreateComputeResult } from "./types"
 
 export function computeCardCreatePosition(
