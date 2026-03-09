@@ -7,7 +7,7 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
     const layout = registry.layout;
     const layoutRef = layout.ref!;
 
-    const measurementsRef = useRef<BoardMetrics>({
+    const metricsRef = useRef<BoardMetrics>({
         layoutSectionsCount: {
             horizontal: 0,
             vertical: 0
@@ -31,14 +31,14 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         }
     });
 
-    const measurements = measurementsRef.current;
+    const metrics = metricsRef.current;
 
-    measurements.layoutSectionsCount = calculateSectionsCount(sections);
-    measurements.layoutGridCellsCount = {
+    metrics.layoutSectionsCount = calculateSectionsCount(sections);
+    metrics.layoutGridCellsCount = {
         horizontal: gridDimensions.columnCount,
         vertical: gridDimensions.rowCount
     };
-    console.log(measurements);
+    console.log(metrics);
 
 
     useEffect(() => {
@@ -46,11 +46,11 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         if (!element) return
 
         const observer = new ResizeObserver(() => {
-            applyBoardMeasurements({ registry, metricsRef: measurementsRef })
+            applyBoardMeasurements({ registry, metricsRef: metricsRef })
         })
 
         const mutationObserver = new MutationObserver(() => {
-            applyBoardMeasurements({ registry, metricsRef: measurementsRef })
+            applyBoardMeasurements({ registry, metricsRef: metricsRef })
         })
 
         mutationObserver.observe(element, {
@@ -65,5 +65,5 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         return () => observer.disconnect()
     }, [registry, gridDimensions, sections, padding])
 
-  return measurements
+  return metrics
 }
