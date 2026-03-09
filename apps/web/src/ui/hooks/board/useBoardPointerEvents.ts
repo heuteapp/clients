@@ -61,11 +61,25 @@ export function useBoardPointerEvents(
             const currentSession = sessionRef.current
 
             if (
-                currentSession.cardCreate ||
-                currentSession.cardMove ||
-                currentSession.cardResize
+                currentSession.cardCreate
             ) {
-                interaction.endInteraction()
+                if(!currentSession.cardCreate.currentSectionId || !currentSession.cardCreate.currentPosition) {
+                    interaction.endInteraction();
+                }
+                else {
+                    const cardCreateState = sessionRef.current.cardCreate!;
+
+                    if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
+                        addCard(interaction, {
+                            id: crypto.randomUUID(),
+                            sectionId: cardCreateState.currentSectionId!,
+                            rowIndex: cardCreateState.currentPosition!.rowIndex,
+                            colIndex: cardCreateState.currentPosition!.colIndex,
+                            rowSpan: cardCreateState.startSize.rowSpan,
+                            colSpan: cardCreateState.startSize.colSpan,
+                        })
+                    }
+                }
             }
         }
 
@@ -85,21 +99,7 @@ export function useBoardPointerEvents(
             OnEnd: (type) => {
 
                 if (type === "create") {
-                    const cardCreateState = sessionRef.current.cardCreate!;
-
-                    if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
-                        addCard({
-                            id: crypto.randomUUID(),
-                            sectionId: cardCreateState.currentSectionId!,
-                            rowIndex: cardCreateState.currentPosition!.rowIndex,
-                            colIndex: cardCreateState.currentPosition!.colIndex,
-                            rowSpan: cardCreateState.startSize.rowSpan,
-                            colSpan: cardCreateState.startSize.colSpan,
-                        })
-                    }
-
-                    console.log(registry);
-
+                    setCreateMode(root, false)
                     endCardCreateInteraction(root, registry, interaction);
                 }
             }

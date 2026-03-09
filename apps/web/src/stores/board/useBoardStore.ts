@@ -17,10 +17,26 @@ export const useBoardStore = create<BoardStore>()(
             state.board = updater(state.board)
         }),
 
-        addCard: (card) => set(state => {
-            if (state.board) {
-                console.log("Adding card", card);
-                state.cards.push({ ...card, id: crypto.randomUUID() })
+        addCard: async (interaction, card) => set(async state => {
+            interaction.executeInteraction();
+
+            try {
+
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                set(state => {
+                    if (!state.board) {
+                        throw new Error("No board found");
+                    }
+
+                    state.cards.push({ ...card, id: crypto.randomUUID() })
+                });
+
+                interaction.endInteraction();
+            } catch (error) {
+
+                console.log("Error adding card", error);
+                interaction.throwInteraction(error as Error);
             }
         }),
 
