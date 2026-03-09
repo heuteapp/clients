@@ -83,9 +83,6 @@ export function useBoardPointerEvents(
 
             const currentSession = sessionRef.current
 
-            console.log(interaction.pointer)
-
-
             if (currentSession.cardCreate) {
                 handleCardCreateInteraction(rootRef.current!, registry, measurements, interaction, currentSession.cardCreate)
                 return

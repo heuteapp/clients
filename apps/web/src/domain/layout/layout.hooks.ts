@@ -19,6 +19,11 @@ export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, pad
         compact: 0
     });
 
+    const [gridSize, setGridSize] = useState({
+        maxWidth: 0,
+        maxHeight: 0
+    })
+
     const [containerSize, setContainerSize] = useState({
         width: 0,
         height: 0
@@ -35,6 +40,15 @@ export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, pad
             setCellSize(prev =>
                 prev.full === _cellSize.full && prev.inner === _cellSize.inner && prev.compact === _cellSize.compact
                 ? prev : _cellSize
+            );
+
+            const _gridSize = {
+                maxWidth: cellCount.horizontal * _cellSize.inner,
+                maxHeight: cellCount.vertical * _cellSize.inner
+            }
+            setGridSize(prev => 
+                prev.maxWidth === _gridSize.maxWidth && prev.maxHeight === _gridSize.maxHeight
+                ? prev : _gridSize
             );
             
             const _containerSize = calculateContainerSize(cellCount, _cellSize.full);
@@ -53,6 +67,7 @@ export function useLayoutMeasurements({ layoutRef, gridDimensions, sections, pad
     sectionCount,
     cellCount,
     cellSize,
+    gridSize,
     containerSize
   }
 }

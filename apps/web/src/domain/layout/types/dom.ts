@@ -5,6 +5,7 @@ export interface LayoutMeasurements {
     sectionCount : LayoutSectionCountMeasurements
     cellCount: LayoutCellCountMeasurements
     cellSize: LayoutCellSizeMeasurements
+    gridSize: LayoutGridSizeMeasurements
     containerSize: LayoutContainerSizeMeasurements
 }
 
@@ -22,6 +23,11 @@ export interface LayoutCellSizeMeasurements {
     full: number
     inner: number
     compact: number
+}
+
+export interface LayoutGridSizeMeasurements {
+    maxWidth: number
+    maxHeight: number
 }
 
 export interface LayoutContainerSizeMeasurements {
