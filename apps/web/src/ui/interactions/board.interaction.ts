@@ -27,11 +27,11 @@ export function createBoardInteraction(
                 currentPosition: null
             }
 
-            interaction.setSession(() => ({
-                cardMove: null,
-                cardResize: null,
-                cardCreate: state
-            }))
+            interaction.setSession((draft) => {
+                draft.cardCreate = state;
+                draft.cardMove = null;
+                draft.cardResize = null;
+            })
             
             interaction.eventType = "create";
             interaction.eventHandlers?.OnStart(interaction.eventType, state)
@@ -62,11 +62,11 @@ export function createBoardInteraction(
                 currentPosition: position
             }
 
-            interaction.setSession(() => ({
-                cardCreate: null,
-                cardResize: null,
-                cardMove: state
-            }))
+            interaction.setSession((draft) => {
+                draft.cardMove = state;
+                draft.cardCreate = null;
+                draft.cardResize = null;
+            })
 
             interaction.eventType = "move";
             interaction.eventHandlers?.OnStart(interaction.eventType, state)
@@ -80,13 +80,13 @@ export function createBoardInteraction(
                 startSize: size,
                 currentSize: size,
                 resizeHandle: handle
-             }
+            }
 
-            interaction.setSession(() => ({
-                cardCreate: null,
-                cardMove: null,
-                cardResize: state
-            }))
+            interaction.setSession((draft) => {
+                draft.cardResize = state;
+                draft.cardCreate = null;
+                draft.cardMove = null;
+            })
 
             interaction.eventType = "resize";
             interaction.eventHandlers?.OnStart(interaction.eventType, state)
@@ -98,12 +98,11 @@ export function createBoardInteraction(
             interaction.eventHandlers?.OnEnd(interaction.eventType);
             interaction.eventType = null;
 
-            interaction.setSession(() => ({
-                cardCreate: null,
-                cardMove: null,
-                cardResize: null,
-                pointer: null
-            }))
+            interaction.setSession((draft) => {
+                draft.cardCreate = null;
+                draft.cardMove = null;
+                draft.cardResize = null;
+            })
         }
     }
 
