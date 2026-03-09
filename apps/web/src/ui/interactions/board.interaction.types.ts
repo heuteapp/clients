@@ -1,4 +1,4 @@
-import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/shared/types/common";
+import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types/shared/common";
 import { BoardSession, CardBaseState } from "../sessions/board.session.types";
 
 export interface BoardInteraction {

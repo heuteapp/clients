@@ -1,4 +1,4 @@
-import { Pointer, GridSize, GridPosition, ResizeHandle } from "@/src/shared/types/common";
+import { Pointer, GridSize, GridPosition, ResizeHandle } from "@/src/types/shared/common";
 
 export interface BoardSession {
     pointerId?: number | null;

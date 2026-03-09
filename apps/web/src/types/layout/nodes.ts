@@ -1,4 +1,4 @@
-import { RegistryBaseNode } from "@/src/shared/types/registry"
+import { RegistryBaseNode } from "@/src/types/shared/registry"
 import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps, LayoutSectionContainerProps } from "./props"
 
 export interface LayoutRootNode extends RegistryBaseNode {

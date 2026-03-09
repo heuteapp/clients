@@ -1,4 +1,4 @@
-import { GridDimensions } from "@/src/shared/types/common"
+import { GridDimensions } from "@/src/types/shared/common"
 import { LayoutSectionData } from "./data"
 
 export interface LayoutMeasurements {
