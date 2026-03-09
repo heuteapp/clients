@@ -8,7 +8,7 @@ import { setCreateMode } from "../../../ui/interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "../../../ui/interactions/create-card/handler"
 import { BoardRegistry, createBoardRegistry } from "./board.registry"
 import { LayoutMeasurements } from "../layout/types/dom"
-import { useBoardStore } from "@/src/core/stores/board.store"
+import { useBoardStore } from "@/src/stores/board.store"
 
 export function useBoardContext() {
     const ctx = useContext(BoardContext)
