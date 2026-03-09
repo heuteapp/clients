@@ -3,7 +3,7 @@ import { BoardMetrics, BoardMetricsParams } from "@/src/ui/types/board/board.dom
 import { calculateSectionsCount } from "@/src/ui/calculations/layout/sections-count"
 import { applyBoardMeasurements } from "@/src/ui/utils/board/applyBoardMeasurements";
 
-export function useLayoutMeasurements({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : BoardMetrics {
+export function useBoardMetrics({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : BoardMetrics {
     const layout = registry.layout;
     const layoutRef = layout.ref!;
 

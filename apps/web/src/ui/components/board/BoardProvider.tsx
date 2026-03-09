@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { BoardContext } from "../../contexts/board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../hooks/board.hooks";
-import { useLayoutMeasurements } from "@/src/ui/hooks/layout.hooks";
+import { useBoardMetrics } from "@/src/ui/hooks/board";
 import { useBoardStore } from "@/src/stores/board";
 import { produce } from "immer";
 
@@ -18,7 +18,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     const layout = useBoardStore(state => state.layout);
     const sections = useBoardStore(state => state.sections);
 
-    const measurements = useLayoutMeasurements({
+    const measurements = useBoardMetrics({
         registry,
         gridDimensions: {
             columnCount: layout?.columnCount ?? 0,
