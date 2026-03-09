@@ -1,4 +1,4 @@
-import { BoardSessionUpdater } from "../sessions/board"
+import { BoardSessionUpdater } from "@/src/ui/types/board/board.session"
 import { BoardInteraction } from "./board.interaction.types"
 
 
