@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from "react"
 import style from "../layout.module.css"
 
-import { LayoutSectionProps } from "../types/props";
+import { LayoutSectionProps } from "../../../core/domain/layout/types/props";
 import LayoutGrid from "./LayoutGrid";
-import { useBoardContext } from "../../board/board.hooks";
+import { useBoardContext } from "../../../core/domain/board/board.hooks";
 
 function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)

@@ -1,8 +1,8 @@
 import style from "../layout.module.css"
 
 import LayoutSection from "./LayoutSection";
-import { LayoutSectionContainerProps } from "../types/props";
-import { useBoardContext } from "../../board/board.hooks";
+import { LayoutSectionContainerProps } from "../../../core/domain/layout/types/props";
+import { useBoardContext } from "../../../core/domain/board/board.hooks";
 import { useLayoutEffect, useRef } from "react";
 
 function LayoutSectionContainer(props: LayoutSectionContainerProps) {

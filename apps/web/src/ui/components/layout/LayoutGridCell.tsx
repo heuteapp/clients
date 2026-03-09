@@ -1,8 +1,8 @@
 import style from "../layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
-import { useBoardContext } from "../../board/board.hooks";
-import { LayoutGridCellProps } from "../types/props";
+import { useBoardContext } from "../../../core/domain/board/board.hooks";
+import { LayoutGridCellProps } from "../../../core/domain/layout/types/props";
 
 function LayoutGridCell(props : LayoutGridCellProps) {
     const context = useBoardContext();

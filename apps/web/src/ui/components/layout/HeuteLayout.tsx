@@ -7,8 +7,8 @@ import { useLayoutEffect, useRef } from "react"
 import style from "../layout.module.css"
 
 import LayoutSectionContainer from "./LayoutSectionContainer";
-import { useBoardContext } from "../../board/board.hooks";
-import { HeuteLayoutProps } from "../types/props";
+import { useBoardContext } from "../../../core/domain/board/board.hooks";
+import { HeuteLayoutProps } from "../../../core/domain/layout/types/props";
 import { useBoardStore } from "@/src/core/stores/board.store";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
