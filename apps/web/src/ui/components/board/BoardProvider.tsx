@@ -11,7 +11,7 @@ export default function BoardProvider({ children, rootRef }: BoardProviderProps)
     const registry = useBoardRegistry();
 
     const sessionRef = useBoardSessionRef();
-    const interaction = useBoardInteraction((updater) => {
+    const interaction = useBoardInteraction(sessionRef, (updater) => {
         sessionRef.current = produce(sessionRef.current, updater)
     });
 
