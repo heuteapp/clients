@@ -1,5 +1,5 @@
 import { GridDimensions } from "@/src/types/shared/common"
-import { LayoutSectionData } from "./data"
+import { LayoutSectionData } from "../../../types/layout/data"
 
 export interface LayoutMeasurements {
     sectionCount : LayoutSectionCountMeasurements

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { LayoutMeasurements, LayoutMeasurementsParams } from "../../types/layout/dom"
+import { LayoutMeasurements, LayoutMeasurementsParams } from "../types/layout/dom"
 import { calculateSectionCount } from "../calculations/layout/section-count"
 import { calculateCellSize } from "../calculations/layout/cell-size";
 import { calculateContainerSize } from "../calculations/layout/container-size";

@@ -5,7 +5,7 @@ import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { LayoutMeasurements } from "@/src/types/layout/dom"
+import { LayoutMeasurements } from "@/src/ui/types/layout/dom"
 
 export function handleCardCreateInteraction(
     root: HTMLDivElement,

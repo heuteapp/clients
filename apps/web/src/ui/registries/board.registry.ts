@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { LayoutGridNode } from "@/src/types/layout/nodes"
+import { LayoutGridNode } from "@/src/ui/types/layout/nodes"
 import { BoardRegistry } from "./board.registry.types"
 //
 

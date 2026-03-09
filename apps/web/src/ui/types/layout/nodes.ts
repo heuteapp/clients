@@ -1,5 +1,5 @@
-import { RegistryBaseNode } from "@/src/types/shared/registry"
-import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps, LayoutSectionContainerProps } from "./props"
+import { RegistryBaseNode } from "@/src/ui/types/shared/registry"
+import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps, LayoutSectionContainerProps } from "../../../types/layout/props"
 
 export interface LayoutRootNode extends RegistryBaseNode {
     ref: React.RefObject<HTMLDivElement | null>
