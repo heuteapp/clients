@@ -1,5 +1,5 @@
 import { RegistryBaseNode } from "@/src/ui/types/shared/registry";
-import { HeuteBoardProps, BoardCardProps, BoardCardContainerProps } from "./props";
+import { HeuteBoardProps, BoardCardProps, BoardCardContainerProps } from "./board.props";
 
 export interface BoardRootNode extends RegistryBaseNode {
     ref: React.RefObject<HTMLDivElement | null>
