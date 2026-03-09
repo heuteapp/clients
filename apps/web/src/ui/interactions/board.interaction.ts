@@ -1,4 +1,4 @@
-import { BoardSessionSetter } from "../../../../ui/sessions/board.session.types"
+import { BoardSessionSetter } from "../sessions/board.session.types"
 import { BoardInteraction } from "./board.interaction.types"
 
 

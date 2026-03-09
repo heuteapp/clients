@@ -1,4 +1,4 @@
-import { BoardInteraction } from "@/src/core/domain/board/interaction/board.interaction.types"
+import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types"
 import { CardCreateState } from "@/src/ui/sessions/board.session.types"
 
 import { findSectionUnderPointer } from "./detector"
