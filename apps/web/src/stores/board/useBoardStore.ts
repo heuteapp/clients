@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { BoardStore } from "./BoardStore";
+import { api } from "@/src/utils/api";
 
 export const useBoardStore = create<BoardStore>()(
     immer(set => ({
@@ -22,7 +23,13 @@ export const useBoardStore = create<BoardStore>()(
 
             try {
 
-                await new Promise(resolve => setTimeout(resolve, 500));
+                const session = interaction.sessionRef.current;
+
+                const response = {
+
+                }
+
+                await addCardToServer("temp", "mihr", new Date().toISOString(), card);
 
                 set(state => {
                     if (!state.board) {
@@ -52,3 +59,14 @@ export const useBoardStore = create<BoardStore>()(
         })
     }))
 )
+
+//
+
+async function addCardToServer(ownerName: string, category: string, date: string, card: any) {
+    const response = await api.post(
+        `/users/${ownerName}/boards/${category}/${date}/add-card`,
+        card
+    );
+
+    return response.data;
+}

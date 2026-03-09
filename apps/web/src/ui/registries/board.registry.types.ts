@@ -82,6 +82,8 @@ export interface BoardRegistry {
 
     getLayoutSection(id: string): LayoutSectionNode | undefined
 
+    getLayoutSectionByName(name: string): LayoutSectionNode | undefined
+
     getLayoutSections(): LayoutSectionNode[] | undefined
 
     getLayoutGrid(sectionId: string): LayoutGridNode | undefined

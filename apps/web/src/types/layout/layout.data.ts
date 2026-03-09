@@ -5,6 +5,7 @@ export interface HeuteLayoutData {
 
 export interface LayoutSectionData {
     id: string
+    name: string
     colIndex: number
     rowIndex: number
     colSpan: number

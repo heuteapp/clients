@@ -219,8 +219,10 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sectionCards = []
 
+            const section = registry.layout?.sectionContainer?.sections.get(sectionId);
+
             for (const card of cards.values()) {
-                if (card.props?.sectionId === sectionId) {
+                if (card.props?.sectionName === section?.props?.name) {
                     sectionCards.push(card)
                 }
             }
@@ -230,6 +232,19 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
         getLayoutSection(id) {
             return registry.layout?.sectionContainer?.sections.get(id)
+        },
+
+        getLayoutSectionByName(name) {
+            const sections = registry.layout?.sectionContainer?.sections
+            if (!sections) return undefined
+
+            for (const section of sections.values()) {
+                if (section.props?.name === name) {
+                    return section
+                }
+            }
+
+            return undefined
         },
 
         getLayoutSections() {

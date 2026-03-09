@@ -15,9 +15,6 @@ function BoardCard(props : BoardCardProps) {
         }
     }, [registry]) 
 
-    const section = registry.getLayoutGrid(props.sectionId);
-    if(!section) return null;
-
     return (
         <div 
             className={style.card} 

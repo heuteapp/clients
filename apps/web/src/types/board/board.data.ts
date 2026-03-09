@@ -7,7 +7,7 @@ export interface BoardData {
 
 export interface BoardCardData {
     id: string;
-    sectionId: string;
+    sectionName: string;
     rowIndex: number;
     colIndex: number;
     rowSpan: number;

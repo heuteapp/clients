@@ -70,9 +70,12 @@ export function useBoardPointerEvents(
                     const cardCreateState = sessionRef.current.cardCreate!;
 
                     if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
+                        const section = registry.getLayoutSection(cardCreateState.currentSectionId);
+                        if(!section) return;
+
                         addCard(interaction, {
                             id: crypto.randomUUID(),
-                            sectionId: cardCreateState.currentSectionId!,
+                            sectionName: section.props!.name,
                             rowIndex: cardCreateState.currentPosition!.rowIndex,
                             colIndex: cardCreateState.currentPosition!.colIndex,
                             rowSpan: cardCreateState.startSize.rowSpan,
