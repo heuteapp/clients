@@ -1,23 +1,23 @@
 import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types"
-import { CardCreateState } from "@/src/ui/sessions/board.session.types"
 
 import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { LayoutMeasurements } from "@/src/ui/types/layout/dom"
+import { CardCreateState } from "@/src/ui/types/board/board.session";
+import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 
 export function handleCardCreateInteraction(
     root: HTMLDivElement,
     registry: BoardRegistry,
-    measurements: LayoutMeasurements,
+    measurements: BoardMetrics,
     interaction: BoardInteraction,
     state: CardCreateState) 
 {
     const pointer = interaction.pointer
     if (!pointer) return
 
-    const cellSize = measurements.cellSize.inner
+    const cellSize = measurements.layoutGridCellSize.inner
 
     const result = findSectionUnderPointer(registry, pointer)
 
