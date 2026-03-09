@@ -1,5 +1,5 @@
 "use client";
-import style from '../body.module.css';
+import style from '../main.module.css';
 
 interface MonitorProps {
     children: React.ReactNode;
