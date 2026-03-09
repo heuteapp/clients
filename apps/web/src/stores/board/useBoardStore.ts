@@ -22,7 +22,7 @@ export const useBoardStore = create<BoardStore>()(
 
             try {
 
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                await new Promise(resolve => setTimeout(resolve, 500));
 
                 set(state => {
                     if (!state.board) {
