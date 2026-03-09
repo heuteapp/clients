@@ -9,7 +9,7 @@ import style from "../layout.module.css"
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { useBoardContext } from "../../board/board.hooks";
 import { HeuteLayoutProps } from "../types/props";
-import { useLayoutStore } from "../layout.store";
+import { useBoardStore } from "../../board/board.store";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
@@ -17,7 +17,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
   const { columnCount, rowCount } = props;
   const { registry, measurements } = context!;
 
-  const sections = useLayoutStore(state => state.sections);
+  const sections = useBoardStore(state => state.sections);
 
   const layoutRef = registry.layout!.ref!;
 

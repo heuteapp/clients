@@ -1,10 +1,8 @@
 "use client";
 import HeuteBoard from '@/src/domain/board/components/HeuteBoard';
-import style from '../body.module.css';
 import { useBoardStore } from '@/src/domain/board/board.store';
 import { sectionExamples } from '@/src/domain/board/board.examples';
 import { useEffect } from 'react';
-import { useLayoutStore } from '@/src/domain/layout/layout.store';
 
 interface BoardProps {
     category: string;
@@ -14,8 +12,8 @@ interface BoardProps {
 function Board({ category, date }: BoardProps) {
     const board = useBoardStore(state => state.board);
     const setBoard = useBoardStore(state => state.setBoard)
-    const setLayout = useLayoutStore(state => state.setLayout);
-    const setSections = useLayoutStore(state => state.setSections);
+    const setLayout = useBoardStore(state => state.setLayout);
+    const setSections = useBoardStore(state => state.setSections);
 
     useEffect(() => {
         setBoard(() => {
