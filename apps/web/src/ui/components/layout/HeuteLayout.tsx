@@ -32,10 +32,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
   return (
     <div 
       ref={registry.layout!.ref} 
-      className={style.layout} 
-      style={{
-        visibility: "visible"
-      }}
+      className={style.layout}
     >
         <LayoutSectionContainer sections={sections} />
     </div>

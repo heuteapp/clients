@@ -15,19 +15,16 @@ function BoardCard(props : BoardCardProps) {
     const rootRect = registry.layout!.ref!.current!.getBoundingClientRect();
     const sectionRect = section.ref!.current!.getBoundingClientRect();
 
-    const gridSize = {
-        width: measurements.gridSize.maxWidth / (measurements.cellCount.horizontal / section.props!.colSpan),
-        height: measurements.gridSize.maxHeight / (measurements.cellCount.vertical / section.props!.rowSpan)
-    }
-
     const gap = 6;
 
     const gridRect = {
         left: (sectionRect.left - rootRect.left) + gap,
         top: (sectionRect.top - rootRect.top) + gap,
-        width: gridSize.width - gap * 2,
-        height: gridSize.height - gap * 2
+        width: sectionRect.width - gap * 2,
+        height: sectionRect.height - gap * 2
     }
+
+    console.log("GRID RECT", gridRect);
 
     const stepSize = {
         width: gridRect.width / section.props!.colSpan,
@@ -52,6 +49,7 @@ function BoardCard(props : BoardCardProps) {
         <div 
             className={style.card} 
             style={{
+
                 left: position.left,
                 top: position.top,
                 width: position.width,
