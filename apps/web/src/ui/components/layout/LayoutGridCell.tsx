@@ -1,4 +1,4 @@
-import style from "../layout.module.css"
+import style from "@/src/ui/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "../../../core/domain/board/board.hooks";

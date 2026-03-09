@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react"
-import style from "../layout.module.css"
+import style from "@/src/ui/styles/layout.module.css"
 
 import { LayoutSectionProps } from "../../../core/domain/layout/types/props";
 import LayoutGrid from "./LayoutGrid";

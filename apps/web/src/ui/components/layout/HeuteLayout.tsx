@@ -4,7 +4,7 @@ const padding = 8;
 
 import { useLayoutEffect, useRef } from "react"
 
-import style from "../layout.module.css"
+import style from "@/src/ui/styles/layout.module.css"
 
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { useBoardContext } from "../../../core/domain/board/board.hooks";

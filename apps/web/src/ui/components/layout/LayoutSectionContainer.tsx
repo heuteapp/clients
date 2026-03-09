@@ -1,4 +1,4 @@
-import style from "../layout.module.css"
+import style from "@/src/ui/styles/layout.module.css"
 
 import LayoutSection from "./LayoutSection";
 import { LayoutSectionContainerProps } from "../../../core/domain/layout/types/props";

@@ -1,4 +1,4 @@
-import style from "../board.module.css"
+import style from "@/src/ui/styles/board.module.css"
 
 function BoardGhostCard(props : BoardGhostCardProps) {
     return (

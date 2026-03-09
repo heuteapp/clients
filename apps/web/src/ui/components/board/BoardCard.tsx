@@ -1,5 +1,5 @@
 import { useBoardContext } from "../../../core/domain/board/board.hooks"
-import style from "../board.module.css"
+import style from "@/src/ui/styles/board.module.css"
 import { BoardCardData } from "../../../core/domain/board/board.types"
 
 function BoardCard(props : BoardCardProps) {

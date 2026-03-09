@@ -1,6 +1,6 @@
 "use client"
 
-import style from "../board.module.css"
+import style from "@/src/ui/styles/board.module.css"
 
 import HeuteLayout from "@/src/ui/components/layout/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
