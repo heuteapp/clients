@@ -1,11 +1,11 @@
-import { LayoutCellCountMeasurements, LayoutCellSizeMeasurements } from "../../types/layout/dom";
+import { LayoutGridCellsCount, LayoutGridCellSize } from "@/src/ui/types/layout/LayoutDom";
 
 export function calculateCellSize(
     containerWidth: number, 
     containerHeight: number, 
-    cellCount: LayoutCellCountMeasurements,
+    cellCount: LayoutGridCellsCount,
     padding: number
-) : LayoutCellSizeMeasurements {
+) : LayoutGridCellSize {
 
     const colCount = cellCount.horizontal;
     const rowCount = cellCount.vertical;

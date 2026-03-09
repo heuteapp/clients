@@ -1,7 +1,7 @@
-import { LayoutSectionData } from "../../../types/layout/data"
-import { LayoutSectionCountMeasurements } from "../../types/layout/dom"
+import { LayoutSectionData } from "@/src/types/layout/data"
+import { LayoutSectionsCount } from "@/src/ui/types/layout/LayoutDom";
 
-export function calculateSectionCount(sections: LayoutSectionData[]): LayoutSectionCountMeasurements {
+export function calculateSectionCount(sections: LayoutSectionData[]): LayoutSectionsCount {
 
     if (sections.length === 0) {
         return {

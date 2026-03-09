@@ -1,8 +1,8 @@
-import { LayoutCellCountMeasurements, LayoutContainerSizeMeasurements } from "../../types/layout/dom";
+import { LayoutGridCellsCount, LayoutGridCellSize } from "@/src/ui/types/layout/LayoutDom";
 
-export function calculateContainerSize(cellCount: LayoutCellCountMeasurements, cellSize: number) : LayoutContainerSizeMeasurements {
-    const width = cellCount.horizontal * cellSize;
-    const height = cellCount.vertical * cellSize;
+export function calculateContainerSize(cellsCount: LayoutGridCellsCount, cellSize: LayoutGridCellSize) : { width: number; height: number } {
+    const width = cellsCount.horizontal * cellSize.full;
+    const height = cellsCount.vertical * cellSize.full;
 
     return {
         width,
