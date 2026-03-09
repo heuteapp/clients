@@ -49,6 +49,17 @@ export function useLayoutMeasurements({ registry, gridDimensions, sections, padd
             paint({ element, registry, measurementsRef })
         })
 
+        const mutationObserver = new MutationObserver(() => {
+            paint({ element, registry, measurementsRef })
+        })
+
+        mutationObserver.observe(element, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            characterData: true
+        })
+
         observer.observe(element)
 
         return () => observer.disconnect()
