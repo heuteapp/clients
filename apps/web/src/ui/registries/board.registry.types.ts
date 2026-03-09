@@ -1,7 +1,7 @@
-import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContainerNode, LayoutSectionNode } from "@/src/ui/types/layout/nodes"
-import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/props"
-import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui/types/board/nodes"
-import { BoardCardContainerProps, BoardCardProps, HeuteBoardProps } from "@/src/ui/types/board/props"
+import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContainerNode, LayoutSectionNode } from "@/src/ui/types/layout/layout.nodes"
+import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/layout.props"
+import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui/types/board/board.nodes"
+import { BoardCardContainerProps, BoardCardProps, HeuteBoardProps } from "@/src/ui/types/board/board.props"
 
 export interface BoardRegistry {
     board: BoardRootNode
