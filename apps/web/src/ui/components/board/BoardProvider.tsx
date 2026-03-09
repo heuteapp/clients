@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { BoardContext } from "../../contexts/board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "../../hooks/board.hooks";
 import { useLayoutMeasurements } from "@/src/ui/hooks/layout.hooks";
-import { useBoardStore } from "@/src/stores/board.store";
+import { useBoardStore } from "@/src/stores/board";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {
     const registry = useBoardRegistry();

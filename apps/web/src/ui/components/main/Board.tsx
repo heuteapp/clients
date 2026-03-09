@@ -1,6 +1,6 @@
 "use client";
 import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
-import { useBoardStore } from '@/src/stores/board.store';
+import { useBoardStore } from "@/src/stores/board";
 import { sectionExamples } from '@/src/dump/board.examples';
 import { useEffect } from 'react';
 

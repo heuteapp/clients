@@ -1,20 +1,6 @@
-import { create } from "zustand"
-import { immer } from "zustand/middleware/immer"
-import { BoardCardData, BoardData } from "@/src/types/board/data"
-import { HeuteLayoutData, LayoutSectionData } from "@/src/types/layout/data"
-
-type BoardStore = {
-    board: BoardData | null
-    cards: BoardCardData[]    
-    layout: HeuteLayoutData | null
-    sections: LayoutSectionData[]
-
-    setBoard: (updater: (board: BoardData | null) => BoardData | null) => void
-    addCard: (card: BoardCardData) => void
-
-    setLayout: (updater: (layout: HeuteLayoutData | null) => HeuteLayoutData | null) => void
-    setSections: (sections: LayoutSectionData[]) => void
-}
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
+import { BoardStore } from "./BoardStore";
 
 export const useBoardStore = create<BoardStore>()(
     immer(set => ({

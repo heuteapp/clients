@@ -7,7 +7,7 @@ import { BoardSession, BoardSessionSetter, CardCreateState } from "../sessions/b
 import { setCreateMode } from "../interactions/create-card/dom"
 import { endCardCreateInteraction, handleCardCreateInteraction } from "../interactions/create-card/handler"
 import { LayoutMeasurements } from "../types/layout/dom"
-import { useBoardStore } from "@/src/stores/board.store"
+import { useBoardStore } from "@/src/stores/board";
 import { createBoardRegistry } from "@/src/ui/registries/board.registry"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types"
 

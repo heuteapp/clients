@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { BoardData } from "../../../types/board/data";
 import { useBoardContext } from "../../hooks/board.hooks";
 import BoardGhostCard from "./BoardGhostCard";
-import { useBoardStore } from "@/src/stores/board.store";
+import { useBoardStore } from "@/src/stores/board";
 
 //
 
