@@ -1,31 +1,31 @@
 import { useEffect, useRef } from "react"
-import { LayoutMeasurements, LayoutMeasurementsParams } from "@/src/ui/types/layout/dom"
-import { calculateSectionCount } from "@/src/ui/calculations/layout/section-count"
+import { BoardMetrics, BoardMetricsParams } from "@/src/ui/types/board/board.dom"
+import { calculateSectionsCount } from "@/src/ui/calculations/layout/sections-count"
 import { applyBoardMeasurements } from "@/src/ui/utils/board/applyBoardMeasurements";
 
-export function useLayoutMeasurements({ registry, gridDimensions, sections, padding }: LayoutMeasurementsParams) : LayoutMeasurements {
+export function useLayoutMeasurements({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : BoardMetrics {
     const layout = registry.layout;
     const layoutRef = layout.ref!;
 
-    const measurementsRef = useRef<LayoutMeasurements>({
-        sectionCount: {
+    const measurementsRef = useRef<BoardMetrics>({
+        layoutSectionsCount: {
             horizontal: 0,
             vertical: 0
         },
-        cellCount: {
+        layoutGridCellsCount: {
             horizontal: 0,
             vertical: 0
         },
-        cellSize: {
+        layoutGridCellSize: {
             full: 0,
             inner: 0,
             compact: 0
         },
-        gridSize: {
-            maxWidth: 0,
-            maxHeight: 0
+        layoutGridSize: {
+            width: 0,
+            height: 0
         },
-        containerSize: {
+        layoutSectionContainerSize: {
             width: 0,
             height: 0
         }
@@ -33,8 +33,8 @@ export function useLayoutMeasurements({ registry, gridDimensions, sections, padd
 
     const measurements = measurementsRef.current;
 
-    measurements.sectionCount = calculateSectionCount(sections);
-    measurements.cellCount = {
+    measurements.layoutSectionsCount = calculateSectionsCount(sections);
+    measurements.layoutGridCellsCount = {
         horizontal: gridDimensions.columnCount,
         vertical: gridDimensions.rowCount
     };
@@ -61,7 +61,7 @@ export function useLayoutMeasurements({ registry, gridDimensions, sections, padd
         observer.observe(element)
 
         return () => observer.disconnect()
-    }, [measurements.cellCount, measurements.sectionCount, padding])
+    }, [])
 
   return measurements
 }

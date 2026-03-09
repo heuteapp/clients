@@ -1,7 +1,7 @@
 import { LayoutSectionData } from "@/src/types/layout/data"
 import { LayoutSectionsCount } from "@/src/ui/types/layout/layout.dom";
 
-export function calculateSectionCount(sections: LayoutSectionData[]): LayoutSectionsCount {
+export function calculateSectionsCount(sections: LayoutSectionData[]): LayoutSectionsCount {
 
     if (sections.length === 0) {
         return {

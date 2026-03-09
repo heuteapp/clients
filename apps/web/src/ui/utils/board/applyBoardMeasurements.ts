@@ -1,7 +1,7 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { LayoutMeasurements } from "@/src/ui/types/layout/dom";
-import { calculateCellSize } from "@/src/ui/calculations/layout/cell-size";
-import { calculateContainerSize } from "@/src/ui/calculations/layout/container-size";
+import { calculateGridCellSize } from "@/src/ui/calculations/layout/grid-cell-size";
+import { calculateSectionContainerSize } from "@/src/ui/calculations/layout/section-container-size";
 
 export function applyBoardMeasurements({ registry, measurementsRef } : { registry: BoardRegistry, measurementsRef: React.RefObject<LayoutMeasurements> }) {
     const layout = registry.layout;
@@ -14,7 +14,7 @@ export function applyBoardMeasurements({ registry, measurementsRef } : { registr
     const measurements = measurementsRef.current;
     const padding = 6;
 
-    const cellSize = calculateCellSize(clientWidth, clientHeight, measurements.cellCount, padding);
+    const cellSize = calculateGridCellSize(clientWidth, clientHeight, measurements.cellCount, padding);
     measurementsRef.current.cellSize = cellSize;
 
     const gridSize = {
@@ -24,7 +24,7 @@ export function applyBoardMeasurements({ registry, measurementsRef } : { registr
     
     measurementsRef.current.gridSize = gridSize;
     
-    const containerSize = calculateContainerSize(measurements.cellCount, cellSize.full);
+    const containerSize = calculateSectionContainerSize(measurements.cellCount, cellSize.full);
     measurementsRef.current.containerSize = containerSize;
 
     layoutElement.style.setProperty("--cell-size-full", `${cellSize.full}px`);
