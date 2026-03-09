@@ -2,7 +2,7 @@
 
 import style from "../board.module.css"
 
-import HeuteLayout from "@/src/domain/layout/components/HeuteLayout";
+import HeuteLayout from "@/src/core/layout/components/HeuteLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useRef } from "react";
 import { BoardData } from "../board.types";
