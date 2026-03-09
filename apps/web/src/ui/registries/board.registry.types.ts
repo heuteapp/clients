@@ -1,14 +1,27 @@
 import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContainerNode, LayoutSectionNode } from "@/src/ui/types/layout/nodes"
 import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/props"
-import { BoardRootNode } from "../types/board/nodes"
+import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui/types/board/nodes"
+import { BoardCardContainerProps, BoardCardProps, HeuteBoardProps } from "@/src/ui/types/board/props"
 
 export interface BoardRegistry {
     board: BoardRootNode
     layout: LayoutRootNode
 
     registerBoard(
-        ref: React.RefObject<HTMLDivElement | null>
+        ref: React.RefObject<HTMLDivElement | null>,
+        props: HeuteBoardProps
     ): BoardRootNode
+
+    registerBoardCardContainer(
+        ref: React.RefObject<HTMLDivElement | null>,
+        props: BoardCardContainerProps  
+    ): BoardCardContainerNode
+
+    registerBoardCard(
+        id: string,
+        ref: React.RefObject<HTMLDivElement | null>,
+        props: BoardCardProps
+    ): BoardCardNode
 
     registerLayout(
         ref: React.RefObject<HTMLDivElement | null>,
@@ -40,6 +53,12 @@ export interface BoardRegistry {
     ): LayoutGridCellNode
 
     //
+
+    unregisterBoard(): void
+
+    unregisterBoardCardContainer(): void
+
+    unregisterBoardCard(id: string): void
 
     unregisterLayout(): void
 

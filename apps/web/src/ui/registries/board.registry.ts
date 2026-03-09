@@ -11,6 +11,48 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         board: { ref: boardRef },
         layout: { ref: layoutRef },
 
+        registerBoard(ref, props) {
+            registry.board.ref = ref
+            registry.board.props = props
+
+            return registry.board
+        },
+
+        registerBoardCardContainer(ref, props) {
+            if (!registry.board.cardContainer) {
+                registry.board.cardContainer = {
+                    ref,
+                    props,
+                    cards: new Map()
+                }
+            } else {
+                registry.board.cardContainer.ref = ref
+                registry.board.cardContainer.props = props
+            }
+
+            return registry.board.cardContainer
+        },
+
+        registerBoardCard(id, ref, props) {
+
+            if (!registry.board.cardContainer) {
+                registry.board.cardContainer = { cards: new Map() }
+            }
+
+            const cards = registry.board.cardContainer.cards
+
+            if (!cards.has(id)) {
+                cards.set(id, { ref, props })
+            }
+
+            const card = cards.get(id)!
+
+            card.ref = ref
+            card.props = props
+
+            return card
+        },
+
         registerLayout(ref, props) {
             registry.layout.ref = ref
             registry.layout.props = props
@@ -112,6 +154,25 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             cell.props = props
 
             return cell
+        },
+
+        //
+
+        unregisterBoard() {
+            registry.board.ref.current = null
+            registry.board.cardContainer = undefined
+        },
+
+        unregisterBoardCardContainer() {
+            if (registry.board.cardContainer) {
+                registry.board.cardContainer.ref = null
+                registry.board.cardContainer.cards.clear()
+                registry.board.cardContainer = undefined
+            }
+        },
+
+        unregisterBoardCard(id) {
+            registry.board.cardContainer?.cards.delete(id)
         },
 
         unregisterLayout() {
