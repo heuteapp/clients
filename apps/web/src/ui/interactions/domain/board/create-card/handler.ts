@@ -1,10 +1,10 @@
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction"
 
 import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/layout.detector"
-import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
+import { calculateCardPositionByPointer } from "../board.calc";
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
@@ -50,16 +50,20 @@ export function handleCardCreateInteraction(context: BoardContextValue)
 
     const sectionProps = section.props!
 
-    const pos = computeCardCreatePosition({
-        pointer,
-        rectLeft: rect.left,
-        rectTop: rect.top,
+    const localPointer = {
+        x: pointer.x - rect.left,
+        y: pointer.y - rect.top
+    }
+
+    const pos = calculateCardPositionByPointer(
+        localPointer,
         cellSize,
-        cardRows: state.startSize.rowSpan,
-        cardCols: state.startSize.colSpan,
-        sectionRowSpan: sectionProps.rowSpan,
-        sectionColSpan: sectionProps.colSpan
-    });
+        state.startSize,
+        {
+            colSpan: sectionProps.colSpan,
+            rowSpan: sectionProps.rowSpan
+        }
+    );
 
     const x = rect.left + (pos.colIndex - 1) * cellSize
     const y = rect.top + (pos.rowIndex - 1) * cellSize
