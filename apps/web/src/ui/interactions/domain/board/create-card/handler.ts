@@ -1,6 +1,6 @@
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction"
 
-import { findSectionUnderPointer } from "../board.detector"
+import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/layout.detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
