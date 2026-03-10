@@ -1,5 +1,5 @@
 import { useRef, useMemo } from "react";
-import { BoardActions } from "@/src/core/types/domain/board/board.store";
+import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.store";
 import { useBoardStore } from "@/src/stores/board.store";
 import debounce from "lodash.debounce";
 import { api } from "@/src/core/utils/api";
@@ -9,46 +9,47 @@ export function useBoardActions(): BoardActions {
     const deleteCardLocal = useBoardStore((state) => state.deleteCard);
     const setState = useBoardStore((state) => state.setState);
 
-    const lastSnapshotRef = useRef<any | null>(null);
+    const lastSnapshotRef = useRef<BoardState | null>(null);
+    const pendingActionsRef = useRef(0);
+    const FLUSH_THRESHOLD = 8;
 
     const syncBoardToServer = useMemo(
         () =>
-            debounce(async (cardsSnapshot: any[]) => {
+            debounce(async () => {
+                const snapshot = lastSnapshotRef.current;
                 try {
-                    await api.post("/board/sync", { cards: cardsSnapshot });
+                    await api.post("/board/sync", { cards: useBoardStore.getState().cards.slice() });
                     lastSnapshotRef.current = null;
+                    pendingActionsRef.current = 0;
                 } catch (err) {
-                    if (lastSnapshotRef.current) setState(lastSnapshotRef.current);
+                    if (snapshot) setState(snapshot);
+                    pendingActionsRef.current = 0;
                 }
             }, 2000),
         [setState]
     );
 
-    const actions: BoardActions = useMemo(() => ({
-        createCard: (content) => {
-            if (!lastSnapshotRef.current) {
-                lastSnapshotRef.current = useBoardStore.getState();
-            }
+    const runAction = <T>(fn: () => T): T => {
+        if (!lastSnapshotRef.current) lastSnapshotRef.current = useBoardStore.getState();
 
-            const card = createCardLocal(content);
+        pendingActionsRef.current += 1;
 
-            syncBoardToServer(useBoardStore.getState().cards.slice());
-
-            return card;
-        },
-
-        deleteCard: (id) => {
-            if (!lastSnapshotRef.current) {
-                lastSnapshotRef.current = useBoardStore.getState();
-            }
-
-            const deleted = deleteCardLocal(id);
-
-            syncBoardToServer(useBoardStore.getState().cards.slice());
-
-            return deleted;
+        if (pendingActionsRef.current >= FLUSH_THRESHOLD) {
+            syncBoardToServer.flush();
+        } else {
+            syncBoardToServer();
         }
-    }), [createCardLocal, deleteCardLocal, syncBoardToServer]);
+
+        return fn();
+    };
+
+    const actions: BoardActions = useMemo(
+        () => ({
+            createCard: (content) => runAction(() => createCardLocal(content)),
+            deleteCard: (id) => runAction(() => deleteCardLocal(id)),
+        }),
+        [createCardLocal, deleteCardLocal, syncBoardToServer]
+    );
 
     return actions;
 }
