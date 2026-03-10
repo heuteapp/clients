@@ -19,10 +19,11 @@ export function useBoardActions(): BoardActions {
                 const snapshot = lastSnapshotRef.current;
                 try {
                     await api.post("/board/sync", { cards: useBoardStore.getState().cards.slice() });
-                    lastSnapshotRef.current = null;
-                    pendingActionsRef.current = 0;
                 } catch (err) {
                     if (snapshot) setState(snapshot);
+                }
+                finally {
+                    lastSnapshotRef.current = null;
                     pendingActionsRef.current = 0;
                 }
             }, 2000),
