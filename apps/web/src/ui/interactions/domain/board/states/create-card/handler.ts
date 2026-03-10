@@ -84,9 +84,9 @@ export function finishCardCreationState(context: BoardContextValue) {
 }
 
 export function finalizeCardCreationState(context : BoardContextValue) {
-    const { registry, session } = context;
+    const { registry, session, actions } = context;
 
-    const createCard = useBoardStore(state => state.createCard);
+    const { createCard } = actions;
 
     const cardCreationState = session.current.cardCreation!;
     const currentPlacement = cardCreationState.currentPlacement;
