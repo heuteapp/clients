@@ -45,6 +45,12 @@ export function createBoardInteraction(
                     draft.cardCreation.currentPlacement = placement;
                 }
             })
+
+            const currentState = interaction.getCurrentState();
+
+            if(currentState) {
+                interaction.eventHandlers?.OnUpdate?.(interaction.eventType!, currentState)
+            }
         },
 
         startCardMovement(cardId, placement) {

@@ -33,6 +33,7 @@ export interface BoardInteraction {
 
 export interface BoardInteractionEventHandlers {
     OnStart?: (type: BoardInteractionEventType, state: CardBaseSession) => void;
+    OnUpdate?: (type: BoardInteractionEventType, state: CardBaseSession) => void;
     OnFinish?: (type: BoardInteractionEventType, state: CardBaseSession) => void;
 }
 
