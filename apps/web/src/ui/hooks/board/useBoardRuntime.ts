@@ -6,7 +6,7 @@ import { useBoardSessionRef } from "./useBoardSessionRef"
 import { useBoardPointerEvents } from "./useBoardPointerEvents";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 
-export function useBoardRuntime({ rootRef }: { rootRef: React.RefObject<HTMLDivElement | null> }) : BoardContextValue {
+export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>) : BoardContextValue {
     const registry = useBoardRegistry();
 
     const sessionRef = useBoardSessionRef();
