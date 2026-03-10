@@ -73,7 +73,7 @@ export function useBoardPointerEvents(
                         const section = registry.getLayoutSection(cardCreateState.currentSectionId);
                         if(!section) return;
 
-                        addCard(interaction, {
+                        addCard({
                             id: crypto.randomUUID(),
                             sectionName: section.props!.name,
                             rowIndex: cardCreateState.currentPosition!.rowIndex,
