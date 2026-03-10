@@ -1,5 +1,5 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardMetricsValue } from "@/src/ui/types/board/board.metrics";
+import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
 
 export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegistry, metrics: BoardMetricsValue }) {
     const layout = registry.layout;

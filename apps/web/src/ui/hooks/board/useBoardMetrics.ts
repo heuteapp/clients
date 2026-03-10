@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
-import { BoardMetrics, BoardMetricsValue } from "@/src/ui/types/board/board.metrics"
+import { BoardMetrics } from "@/src/ui/types/board/board.metrics"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { updateBoardMetrics } from "@/src/ui/metrics/domain/board/update";
+import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
 
 export function useBoardMetrics(
     rootRef: React.RefObject<HTMLDivElement | null>,

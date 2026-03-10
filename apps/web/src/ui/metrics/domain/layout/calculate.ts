@@ -1,6 +1,6 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { LayoutSectionProps } from "@/src/ui/types/layout/layout.props";
-import { LayoutGridCellsCount, LayoutGridCellSize, LayoutMetricsValue, LayoutSectionContainerSize, LayoutSectionsCount } from "@/src/ui/types/layout/layout.metrics";
+import { LayoutGridCellsCount, LayoutGridCellSize, LayoutMetricsValue, LayoutSectionContainerSize, LayoutSectionsCount } from "@/src/core/types/domain/layout/layout.metrics";
 import { LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
 
 export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
