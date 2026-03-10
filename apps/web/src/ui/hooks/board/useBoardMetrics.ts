@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react"
-import { BoardMetrics, BoardMetricsParams } from "@/src/ui/types/board/board.dom"
-import { calculateSectionsCount } from "@/src/ui/dom/calculations/layout/sections-count"
-import { updateBoardMetrics } from "../../dom/sync/board/updateBoardMetrics";
+import { BoardMetrics } from "@/src/ui/types/board/board.dom"
+import { updateBoardMetrics } from "@/src/ui/dom/sync/board/updateBoardMetrics";
+import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 
-export function useBoardMetrics({ registry, gridDimensions, sections, padding }: BoardMetricsParams) : React.RefObject<BoardMetrics> {
-    const layout = registry.layout;
-    const layoutRef = layout.ref!;
+export function useBoardMetrics(
+    rootRef: React.RefObject<HTMLDivElement | null>,
+    registry: BoardRegistry,
+) : React.RefObject<BoardMetrics> {
 
     const metricsRef = useRef<BoardMetrics>({
         layoutSectionsCount: {
@@ -31,26 +32,15 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         }
     });
 
-    const metrics = metricsRef.current;
-
-    metrics.layoutSectionsCount = calculateSectionsCount(sections);
-    metrics.layoutGridCellsCount = {
-        horizontal: gridDimensions.columnCount,
-        vertical: gridDimensions.rowCount
-    };
-    console.log(metrics);
-
-
     useEffect(() => {
-        const element = registry.board.ref.current;
-        if (!element) return
+        const element = rootRef.current;
+        if(!element) return;
 
         const observer = new ResizeObserver(() => {
             updateBoardMetrics(registry, metricsRef);
         })
 
         const mutationObserver = new MutationObserver(() => {
-            console.log("Mutation observed, updating metrics...");
             updateBoardMetrics(registry, metricsRef);    
         })
 
@@ -62,7 +52,7 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         observer.observe(element)
 
         return () => observer.disconnect()
-    }, [registry, gridDimensions, sections, padding])
+    }, [rootRef, registry])
 
-  return metricsRef;
+    return metricsRef;
 }
