@@ -76,11 +76,15 @@ export function useBoardPointerEvents(
 
                         addCard({
                             id: createClientId(),
-                            sectionName: section.props!.name,
-                            rowIndex: cardCreateState.currentPosition!.rowIndex,
-                            colIndex: cardCreateState.currentPosition!.colIndex,
-                            rowSpan: cardCreateState.startSize.rowSpan,
-                            colSpan: cardCreateState.startSize.colSpan,
+                            placement: {
+                                sectionName: section.props!.name,
+                                position: {
+                                    colIndex: cardCreateState.currentPosition.colIndex,
+                                    rowIndex: cardCreateState.currentPosition.rowIndex,
+                                    colSpan: cardCreateState.startSize.colSpan,
+                                    rowSpan: cardCreateState.startSize.rowSpan,
+                                }
+                            }
                         })
                     }
                 }

@@ -1,4 +1,5 @@
 import { BaseData } from "@/src/core/types/shared/data";
+import { GridRect } from "../../shared/common";
 
 export interface BoardData extends BaseData {
     category: string;
@@ -7,9 +8,10 @@ export interface BoardData extends BaseData {
 }
 
 export interface BoardCardData extends BaseData {
+    placement: CardPlacement | null;
+}
+
+export interface CardPlacement {
     sectionName: string;
-    rowIndex: number;
-    colIndex: number;
-    rowSpan: number;
-    colSpan: number;
+    position: GridRect;
 }
