@@ -20,19 +20,14 @@ export interface CardBaseSession{
 
 export interface CardCreationSession extends CardBaseSession {
     startSize: GridSize;
-    currentPlacement: CardMovementPlacement | null;
+    currentPlacement: CardPositionInfo | null;
 }
 
 //
 
 export interface CardMovementSession extends CardBaseSession {
-    startPlacement: CardMovementPlacement;
-    currentPlacement: CardMovementPlacement | null;
-}
-
-export interface CardMovementPlacement {
-    sectionId: Identifier;
-    position: GridPosition;
+    startPlacement: CardPositionInfo;
+    currentPlacement: CardPositionInfo | null;
 }
 
 export interface CardResizeSession extends CardBaseSession {
@@ -40,4 +35,11 @@ export interface CardResizeSession extends CardBaseSession {
     startSize: GridSize;
     currentSize: GridSize;
     resizeHandle: ResizeHandle;
+}
+
+//
+
+export interface CardPositionInfo {
+    sectionId: Identifier;
+    position: GridPosition;
 }

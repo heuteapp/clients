@@ -1,6 +1,6 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
 import { Identifier } from "@/src/core/types/shared/data";
-import { BoardSessionState, BoardSessionUpdater, CardBaseSession, CardMovementPlacement } from "@/src/core/types/domain/board/board.session";
+import { BoardSessionState, BoardSessionUpdater, CardBaseSession, CardPositionInfo } from "@/src/core/types/domain/board/board.session";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
@@ -16,12 +16,12 @@ export interface BoardInteraction {
     ) => void
 
     updateCardCreation: (
-        placement: CardMovementPlacement | null
+        placement: CardPositionInfo | null
     ) => void
 
     startCardMovement: (
         cardId: Identifier,
-        placement: CardMovementPlacement
+        placement: CardPositionInfo
     ) => void
 
     finishInteraction: () => void
