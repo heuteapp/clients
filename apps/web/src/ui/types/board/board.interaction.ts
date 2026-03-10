@@ -1,15 +1,15 @@
 import { GridSize, Pointer } from "@/src/core/types/shared/common";
 import { Identifier } from "@/src/core/types/shared/data";
-import { BoardSessionState, BoardSessionUpdater, CardBaseSession } from "@/src/core/types/domain/board/board.session";
+import { CardBaseSession } from "@/src/core/types/domain/board/board.session";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
+import { BoardSession } from "./board.session";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
     eventType: BoardInteractionEventType | null;
     eventHandlers: BoardInteractionEventHandlers | null
-    sessionRef: React.RefObject<BoardSessionState>;
+    session: BoardSession
 
-    sessionUpdater: BoardSessionUpdater;
     setEventHandlers: (handlers: BoardInteractionEventHandlers | null) => void
 
     startCardCreate: (

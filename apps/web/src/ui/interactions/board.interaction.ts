@@ -1,20 +1,17 @@
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction"
 import { createIdentifier } from "@/src/core/utils/shared/data"
-import { BoardSessionState, BoardSessionUpdater } from "@/src/core/types/domain/board/board.session"
+import { BoardSession } from "@/src/ui/types/board/board.session"
 
 
 export function createBoardInteraction(
-    sessionRef: React.RefObject<BoardSessionState>,
-    sessionUpdater: BoardSessionUpdater
+    session: BoardSession
 ): BoardInteraction {
 
     const interaction: BoardInteraction = {
         pointer: null,
         eventType: null,
         eventHandlers: null,
-        sessionRef,
-
-        sessionUpdater,
+        session,
 
         setEventHandlers(handlers) {
             interaction.finishInteraction()
@@ -29,7 +26,7 @@ export function createBoardInteraction(
                 currentPlacement: null
             }
 
-            interaction.sessionUpdater((draft) => {
+            interaction.session.updater((draft) => {
                 draft.cardCreation = state;
                 draft.cardMovement = null;
                 draft.cardResize = null;
@@ -40,7 +37,7 @@ export function createBoardInteraction(
         },
 
         updateCardCreation(placement) {
-            interaction.sessionUpdater((draft) => {
+            interaction.session.updater((draft) => {
                 if(draft.cardCreation) {
                     draft.cardCreation.currentPlacement = placement;
                 }
@@ -57,7 +54,7 @@ export function createBoardInteraction(
                 currentPlacement: null,
             }
 
-            interaction.sessionUpdater((draft) => {
+            interaction.session.updater((draft) => {
                 draft.cardMovement = state;
                 draft.cardCreation = null;
                 draft.cardResize = null;
@@ -73,7 +70,7 @@ export function createBoardInteraction(
             interaction.eventHandlers?.OnFinish?.(interaction.eventType, interaction.getCurrentState()!);
             interaction.eventType = null;
 
-            interaction.sessionUpdater((draft) => {
+            interaction.session.updater((draft) => {
                 draft.cardCreation = null;
                 draft.cardMovement = null;
                 draft.cardResize = null;
@@ -83,7 +80,7 @@ export function createBoardInteraction(
         getCurrentState() {
             if(!interaction.eventType) return null;
 
-            const session = sessionRef.current;
+            const session = interaction.session.ref.current;
             if(!session) return null;
 
             switch(interaction.eventType) {
