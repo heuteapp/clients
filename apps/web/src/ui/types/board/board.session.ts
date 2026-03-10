@@ -1,6 +1,5 @@
 import { BoardSessionState, BoardSessionUpdater } from "@/src/core/types/domain/board/board.session";
 
-export interface BoardSession {
-    ref: React.RefObject<BoardSessionState>;
+export type BoardSession = React.RefObject<BoardSessionState> &{
     updater: BoardSessionUpdater;
 }

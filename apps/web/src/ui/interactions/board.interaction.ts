@@ -80,7 +80,7 @@ export function createBoardInteraction(
         getCurrentState() {
             if(!interaction.eventType) return null;
 
-            const session = interaction.session.ref.current;
+            const session = interaction.session.current;
             if(!session) return null;
 
             switch(interaction.eventType) {

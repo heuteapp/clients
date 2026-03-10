@@ -1,25 +1,19 @@
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { BoardSession } from "@/src/ui/types/board/board.session";
 import { produce } from "immer";
+import { BoardSessionState, BoardSessionUpdater } from "@/src/core/types/domain/board/board.session";
 
 export function useBoardSession() : BoardSession {
-    const sessionRef = useRef({
+    const ref = useRef<BoardSessionState>({
         pointerId: null,
         cardCreation: null,
         cardMovement: null,
         cardResize: null,
     });
-    
-    const sessionUpdater = (updater: (draft: any) => void) => {
-        sessionRef.current = produce(sessionRef.current, updater)
-    }
 
-    const session = useMemo (() => {
-        return {
-            ref: sessionRef,
-            updater: sessionUpdater
-        }
-    }, []);
+    const updater: BoardSessionUpdater = (fn) => {
+        ref.current = produce(ref.current, fn);
+    };
 
-    return session;
+    return Object.assign(ref, { updater });
 }
