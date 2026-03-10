@@ -1,15 +1,15 @@
 import { Identifier, ClientId, ServerId, DataIdentifier } from "@/src/core/types/shared/data";
 
-export function createIdentifier(serverId: ServerId | null = null): Identifier {
+export function createIdentifier(id?: Partial<Identifier>): Identifier {
     return {
-        client: createClientId(),
+        client: id?.client ?? createClientId(),
     };
 }
 
-export function createDataIdentifier(serverId: ServerId | null = null): DataIdentifier {
+export function createDataIdentifier(id?: Partial<DataIdentifier>): DataIdentifier {
     return {
-        client: createClientId(),
-        server: serverId
+        client: id?.client ?? createClientId(),
+        server: id?.server ?? null
     };
 }
 
