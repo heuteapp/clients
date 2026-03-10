@@ -3,14 +3,19 @@ import { Identifier } from "@/src/core/types/shared/data";
 import { SessionBaseState } from "@/src/core/types/domain/board/board.session";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
 import { BoardSession } from "./board.session";
+import { BoardInteractionCallbacks, BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
-    eventType: BoardInteractionEventType | null;
-    eventHandlers: BoardInteractionEventHandlers | null
+    type: BoardInteractionType;
+    callbacks: BoardInteractionCallbacks | null;
     session: BoardSession
 
-    setEventHandlers: (handlers: BoardInteractionEventHandlers | null) => void
+    //
+
+    setCallbacks: (callbacks: BoardInteractionCallbacks | null) => void;
+
+    //
 
     startCardCreate: (
         size: GridSize
@@ -31,11 +36,3 @@ export interface BoardInteraction {
 
     getCurrentState: () => SessionBaseState | null
 }
-
-export interface BoardInteractionEventHandlers {
-    OnStart?: (type: BoardInteractionEventType, state: SessionBaseState) => void;
-    OnUpdate?: (type: BoardInteractionEventType, state: SessionBaseState) => void;
-    OnFinish?: (type: BoardInteractionEventType, state: SessionBaseState) => void;
-}
-
-export type BoardInteractionEventType = "creation" | "movement" | "resize";

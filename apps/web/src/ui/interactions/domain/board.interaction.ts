@@ -1,7 +1,7 @@
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction"
 import { createIdentifier } from "@/src/core/utils/shared/data"
 import { BoardSession } from "@/src/ui/types/board/board.session"
-
+import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction"
 
 export function createBoardInteraction(
     session: BoardSession
@@ -9,13 +9,13 @@ export function createBoardInteraction(
 
     const interaction: BoardInteraction = {
         pointer: null,
-        eventType: null,
-        eventHandlers: null,
+        type: BoardInteractionType.Idle,
         session,
+        callbacks: null,
 
-        setEventHandlers(handlers) {
-            interaction.finishInteraction()
-            interaction.eventHandlers = handlers
+        setCallbacks(callbacks) {
+            interaction.finishInteraction();
+            interaction.callbacks = callbacks;
         },
 
         startCardCreate(size) {
@@ -32,8 +32,8 @@ export function createBoardInteraction(
                 draft.cardResize = null;
             })
             
-            interaction.eventType = "creation";
-            interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
+            interaction.type = BoardInteractionType.CardCreation;
+            interaction.callbacks?.OnStart?.(interaction.type, state)
         },
 
         updateCardCreation(placement) {
@@ -43,7 +43,7 @@ export function createBoardInteraction(
                 }
             })
 
-            interaction.eventHandlers?.OnUpdate?.(interaction.eventType!, interaction.getCurrentState()!)
+            interaction.callbacks?.OnUpdate?.(interaction.type, interaction.getCurrentState()!)
         },
 
         startCardMovement(cardId, placement) {
@@ -60,15 +60,15 @@ export function createBoardInteraction(
                 draft.cardResize = null;
             })
 
-            interaction.eventType = "movement";
-            interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
+            interaction.type = BoardInteractionType.CardMovement;
+            interaction.callbacks?.OnStart?.(interaction.type, state)
         },
 
         finishInteraction() {
-            if(!interaction.eventType) return;
+            if(!interaction.type) return;
 
-            interaction.eventHandlers?.OnFinish?.(interaction.eventType, interaction.getCurrentState()!);
-            interaction.eventType = null;
+            interaction.callbacks?.OnFinish?.(interaction.type, interaction.getCurrentState()!);
+            interaction.type = BoardInteractionType.Idle;
 
             interaction.session.updater((draft) => {
                 draft.cardCreation = null;
@@ -78,17 +78,15 @@ export function createBoardInteraction(
         },
 
         getCurrentState() {
-            if(!interaction.eventType) return null;
-
             const session = interaction.session.current;
             if(!session) return null;
 
-            switch(interaction.eventType) {
-                case "creation":
+            switch(interaction.type) {
+                case BoardInteractionType.CardCreation:
                     return session.cardCreation;
-                case "movement":
+                case BoardInteractionType.CardMovement:
                     return session.cardMovement;
-                case "resize":
+                case BoardInteractionType.CardResize:
                     return session.cardResize;
                 default:
                     return null;
