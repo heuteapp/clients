@@ -1,6 +1,7 @@
-import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
+import { GridSize, Pointer } from "@/src/core/types/shared/common";
 import { Identifier } from "@/src/core/types/shared/data";
-import { BoardSessionState, BoardSessionUpdater, CardBaseSession, CardPositionInfo } from "@/src/core/types/domain/board/board.session";
+import { BoardSessionState, BoardSessionUpdater, CardBaseSession } from "@/src/core/types/domain/board/board.session";
+import { CardPositionInfo } from "@/src/core/types/shared/board";
 
 export interface BoardInteraction {
     pointer: Pointer | null;
