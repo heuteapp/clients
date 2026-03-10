@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { createBoardInteraction } from "@/src/ui/interactions/board.interaction";
+import { createBoardInteraction } from "@/src/ui/interactions/domain/board.interaction";
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
 import { BoardSession } from "@/src/ui/types/board/board.session";
 
