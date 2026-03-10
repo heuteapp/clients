@@ -2,14 +2,14 @@ import { Identifier, ClientId, ServerId, DataIdentifier } from "@/src/core/types
 
 export function createIdentifier(id?: Partial<Identifier>): Identifier {
     return {
-        client: id?.client ?? createClientId(),
+        client: id?.client ? ensureClientId(id.client) : createClientId(),
     };
 }
 
 export function createDataIdentifier(id?: Partial<DataIdentifier>): DataIdentifier {
     return {
-        client: id?.client ?? createClientId(),
-        server: id?.server ?? null
+        client: id?.client ? ensureClientId(id.client) : createClientId(),
+        server: id?.server ? ensureServerId(id.server) : null
     };
 }
 
