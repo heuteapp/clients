@@ -1,7 +1,7 @@
-import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
+import { useBoardStore } from "@/src/stores/board.store";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/sessions/create-card/handler";
-import { BoardContextValue } from "../../types/board/board.context";
+import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
 
 export function useBoardPointerEvents(
@@ -85,15 +85,13 @@ export function useBoardPointerEvents(
 
         interaction.setCallbacks({
             OnStart: (type) => {
-
                 if (type === BoardInteractionType.CardCreation) {
                     handleCardCreateInteraction(context)
                 }
             },
             OnFinish: (type) => {
-
                 if (type === BoardInteractionType.CardCreation) {
-                    endCardCreateInteraction(root, registry, interaction);
+                    endCardCreateInteraction(context);
                 }
             }
         });
