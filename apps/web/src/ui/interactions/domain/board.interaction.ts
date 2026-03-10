@@ -64,6 +64,16 @@ export function createBoardInteraction(
             interaction.callbacks?.OnStart?.(interaction.type, state)
         },
 
+        updateCardMovement(placement) {
+            interaction.session.updater((draft) => {
+                if(draft.cardMovement) {
+                    draft.cardMovement.currentPlacement = placement;
+                }
+            })
+
+            interaction.callbacks?.OnUpdate?.(interaction.type, interaction.getCurrentState()!)
+        },
+
         finishInteraction() {
             if(!interaction.type) return;
 

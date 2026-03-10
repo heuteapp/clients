@@ -30,6 +30,10 @@ export interface BoardInteraction {
         placement: CardPositionInfo
     ) => void
 
+    updateCardMovement: (
+        placement: CardPositionInfo | null
+    ) => void
+
     finishInteraction: () => void
 
     //
