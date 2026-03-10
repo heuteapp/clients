@@ -3,35 +3,33 @@ import { Identifier } from "@/src/core/types/shared/data";
 import { Draft } from "immer";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
 
-export interface BoardSessionState {
+export interface BoardSessionValue {
     pointerId?: number | null;
-    cardCreation: CardCreationSession | null;
-    cardMovement: CardMovementSession | null;
-    cardResize: CardResizeSession | null;
+    cardCreation: CardCreationState | null;
+    cardMovement: CardMovementState | null;
+    cardResize: CardResizeState | null;
 }
     
-export type BoardSessionUpdater = (updater: (draft: Draft<BoardSessionState>) => void) => void;
+export type BoardSessionUpdater = (updater: (draft: Draft<BoardSessionValue>) => void) => void;
 
 //
 
-export interface CardBaseSession{
+export interface CardBaseState{
     cardId: Identifier;
     startPointer: Pointer;
 }
 
-export interface CardCreationSession extends CardBaseSession {
+export interface CardCreationState extends CardBaseState {
     startSize: GridSize;
     currentPlacement: CardPositionInfo | null;
 }
 
-//
-
-export interface CardMovementSession extends CardBaseSession {
+export interface CardMovementState extends CardBaseState {
     startPlacement: CardPositionInfo;
     currentPlacement: CardPositionInfo | null;
 }
 
-export interface CardResizeSession extends CardBaseSession {
+export interface CardResizeState extends CardBaseState {
     startSectionId: Identifier;
     startSize: GridSize;
     currentSize: GridSize;
