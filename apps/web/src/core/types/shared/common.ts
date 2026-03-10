@@ -13,6 +13,8 @@ export interface GridSize {
     colSpan: number;
 }
 
+export interface GridRect extends GridPosition, GridSize {}
+
 export interface GridDimensions {
     rowCount: number;
     columnCount: number;
