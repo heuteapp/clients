@@ -1,3 +1,4 @@
+import { Rect } from "@/src/core/types/shared/common";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 
 export function clearGridHover(registry: BoardRegistry) {
@@ -15,16 +16,13 @@ export function setGridHover(el: HTMLElement) {
 
 export function setGhostCardPosition(
     root: HTMLElement,
-    x: number,
-    y: number,
-    width: number,
-    height: number
+    position: Rect
 ) {
     root.style.setProperty("--ghost-card-visible", "visible");
-    root.style.setProperty("--ghost-card-x", `${x}px`)
-    root.style.setProperty("--ghost-card-y", `${y}px`)
-    root.style.setProperty("--ghost-card-width", `${width}px`)
-    root.style.setProperty("--ghost-card-height", `${height}px`)
+    root.style.setProperty("--ghost-card-x", `${position.x}px`)
+    root.style.setProperty("--ghost-card-y", `${position.y}px`)
+    root.style.setProperty("--ghost-card-width", `${position.width}px`)
+    root.style.setProperty("--ghost-card-height", `${position.height}px`)
 }
 
 export function clearGhostCard(root: HTMLElement) {

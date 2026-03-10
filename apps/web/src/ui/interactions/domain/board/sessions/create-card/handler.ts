@@ -25,16 +25,15 @@ export function handleCardCreateInteraction(context: BoardContextValue)
     if (!result) {
         interaction.updateCardCreation(null)
         clearGridHover(registry)
-        
+
         const width = state.startSize.colSpan * cellSize
         const height = state.startSize.rowSpan * cellSize
+        const x = pointer.x - width / 2
+        const y = pointer.y - height / 2
 
         setGhostCardPosition(
             root,
-            pointer.x - width / 2,
-            pointer.y - height / 2,
-            width,
-            height
+            { x, y, width, height }
         )
 
         return
@@ -69,10 +68,7 @@ export function handleCardCreateInteraction(context: BoardContextValue)
 
     setGhostCardPosition(
         root,
-        x,
-        y,
-        width,
-        height
+        { x, y, width, height }
     )
 
     interaction.updateCardCreation({
