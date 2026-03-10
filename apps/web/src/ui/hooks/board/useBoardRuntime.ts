@@ -15,9 +15,11 @@ export function useBoardRuntime({ rootRef }: { rootRef: React.RefObject<HTMLDivE
 
     const sessionRef = useBoardSessionRef();
 
-    const interaction = useBoardInteraction(sessionRef, (updater) => {
+    const updateSession = (updater: (draft: any) => void) => {
         sessionRef.current = produce(sessionRef.current, updater)
-    });
+    }
+
+    const interaction = useBoardInteraction(sessionRef, updateSession);
 
     const metricsRef = useBoardMetrics({
         registry,
@@ -28,7 +30,6 @@ export function useBoardRuntime({ rootRef }: { rootRef: React.RefObject<HTMLDivE
         sections,
         padding: 4
     })
-
 
     useBoardPointerEvents(rootRef, registry, metricsRef, sessionRef, interaction);
 
