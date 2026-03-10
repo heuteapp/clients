@@ -1,4 +1,4 @@
-import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/types/shared/common";
+import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
 import { Draft } from "immer";
 
 export interface BoardSession {

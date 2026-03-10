@@ -1,4 +1,4 @@
-import { HeuteLayoutData, LayoutSectionData } from "@/src/types/layout/layout.data";
+import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/layout/layout.data";
 
 export interface HeuteLayoutProps extends HeuteLayoutData {
 

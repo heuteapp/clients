@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BoardStore } from "@/src/types/board/board.store";
-import { api } from "@/src/utils/api";
+import { BoardStore } from "@/src/core/types/board/board.store";
+import { api } from "@/src/core/utils/api";
 
 export const useBoardStore = create<BoardStore>()(
     immer(set => ({

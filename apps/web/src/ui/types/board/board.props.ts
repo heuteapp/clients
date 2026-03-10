@@ -1,4 +1,4 @@
-import { BoardCardData, BoardData } from "@/src/types/board/board.data";
+import { BoardCardData, BoardData } from "@/src/core/types/board/board.data";
 
 export interface HeuteBoardProps extends BoardData {
 

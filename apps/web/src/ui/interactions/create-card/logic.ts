@@ -1,4 +1,4 @@
-import { clamp } from "@/src/utils/shared/clamp"
+import { clamp } from "@/src/core/utils/shared/clamp"
 import { CardCreateComputeInput, CardCreateComputeResult } from "./types"
 
 export function computeCardCreatePosition(
