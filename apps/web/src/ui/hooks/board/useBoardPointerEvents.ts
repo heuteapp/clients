@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useBoardStore } from "@/src/stores/board.store";
-import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/sessions/create-card/handler";
+import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/states/create-card/handler";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
 
