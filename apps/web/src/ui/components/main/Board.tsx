@@ -23,12 +23,20 @@ function Board({ category, date }: BoardProps) {
                 layoutId: "",
             },
             cards: [],
-            layout: null,
+            layout: {
+                id: createDataIdentifier(),
+                columnCount: 18,
+                rowCount: 8
+            },
             sections: (sectionExamples as any)[category ?? "two"] ?? sectionExamples.two
         });
     }, [])
 
+    console.log(board);
+
     if(!board) return null;
+
+    console.log("hiha");
 
     return (
         <>

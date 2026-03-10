@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BoardStore } from "@/src/core/types/domain/board/board.store";
+import { BoardState, BoardStore } from "@/src/core/types/domain/board/board.store";
 import { createDataIdentifier } from "@/src/core/utils/shared/data";
 import { DataContent, Identifier } from "@/src/core/types/shared/data";
 import { BoardCardData } from "@/src/core/types/domain/board/board.data";
@@ -12,21 +12,14 @@ export const useBoardStore = create<BoardStore>()(
         sections: [],
         cards: [],
 
-        setBoard: (board) => set(state => {
-            state.board = board;
-        }),
-
-        setCards: (cards) => set(state => {
-            state.cards = cards;
-        }),
-
-        setLayout: (updater) => set(state => {
-            state.layout = updater;
-        }),
-
-        setSections: (sections) => set(state => {
-            state.sections = sections;
-        }),
+        setState: (state: BoardState) => {
+            set(s => {
+                s.board = state.board
+                s.layout = state.layout
+                s.sections = state.sections
+                s.cards = state.cards
+            })
+        },
 
         //
 
