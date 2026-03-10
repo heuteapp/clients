@@ -3,7 +3,7 @@ import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
 import { useBoardStore } from "@/src/stores/board.store";
 import { sectionExamples } from '@/src/dump/board.examples';
 import { useEffect } from 'react';
-import { createIdentifier } from '@/src/core/utils/shared/data';
+import { createDataIdentifier } from '@/src/core/utils/shared/data';
 
 interface BoardProps {
     category: string;
@@ -18,14 +18,14 @@ function Board({ category, date }: BoardProps) {
 
     useEffect(() => {
         setBoard({
-            id: createIdentifier(),
+            id: createDataIdentifier(),
             category,
             date,
             layoutId: "",
         });
 
         setLayout({
-            id: createIdentifier(),
+            id: createDataIdentifier(),
             columnCount: 18,
             rowCount: 8
         });

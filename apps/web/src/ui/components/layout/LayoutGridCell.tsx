@@ -11,7 +11,6 @@ function LayoutGridCell(props : LayoutGridCellProps) {
     const { registry } = context!;
     const id : Identifier = {
         client: `${props.rowIndex}-${props.colIndex}` as ClientId,
-        server: null
     };
 
     const ref = useRef<HTMLDivElement>(null)

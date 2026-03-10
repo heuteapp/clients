@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { BoardStore } from "@/src/core/types/domain/board/board.store";
-import { createIdentifier } from "@/src/core/utils/shared/data";
+import { createDataIdentifier } from "@/src/core/utils/shared/data";
 import { DataContent, Identifier } from "@/src/core/types/shared/data";
 import { BoardCardData } from "@/src/core/types/domain/board/board.data";
 
@@ -32,7 +32,7 @@ export const useBoardStore = create<BoardStore>()(
 
         createCard: (content : DataContent<BoardCardData>) => {
             const card = {
-                id: createIdentifier(),
+                id: createDataIdentifier(),
                 ...content,
             }
 

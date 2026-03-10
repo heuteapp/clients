@@ -1,13 +1,16 @@
 export interface BaseData {
-    id: Identifier;
+    id: DataIdentifier;
 }
 
 export type DataContent<T extends BaseData> = Omit<T, "id">;
 
-export type Identifier = {
+export interface Identifier {
     client: ClientId;
-    server: ServerId | null;
 };
+
+export interface DataIdentifier extends Identifier {
+    server: ServerId | null;
+}
 
 export type ClientId = string & { __brand: "ClientId" };
 
