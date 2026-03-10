@@ -17,21 +17,17 @@ function Board({ category, date }: BoardProps) {
     const setSections = useBoardStore(state => state.setSections);
 
     useEffect(() => {
-        setBoard(() => {
-            return {
-                id: createClientId(),
-                category,
-                date,
-                layoutId: category,
-            };
+        setBoard({
+            id: createClientId(),
+            category,
+            date,
+            layoutId: "",
         });
 
-        setLayout(() => {
-            return {
-                id: createClientId(),
-                columnCount: 18,
-                rowCount: 8
-            }
+        setLayout({
+            id: createClientId(),
+            columnCount: 18,
+            rowCount: 8
         });
 
         setSections((sectionExamples as any)[category ?? "two"] ?? sectionExamples.two);

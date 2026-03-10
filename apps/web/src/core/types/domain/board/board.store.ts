@@ -8,8 +8,9 @@ export type BoardStore = {
     layout: HeuteLayoutData | null
     sections: LayoutSectionData[]
 
-    setBoard: (updater: (board: BoardData | null) => BoardData | null) => void
-    setLayout: (updater: (layout: HeuteLayoutData | null) => HeuteLayoutData | null) => void
+    setBoard: (board: BoardData | null) => void
+    setCards: (cards: BoardCardData[]) => void
+    setLayout: (layout: HeuteLayoutData | null) => void
     setSections: (sections: LayoutSectionData[]) => void
 
     createCard: (content: DataContent<BoardCardData>) => BoardCardData

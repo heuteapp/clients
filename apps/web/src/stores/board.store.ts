@@ -12,12 +12,16 @@ export const useBoardStore = create<BoardStore>()(
         sections: [],
         cards: [],
 
-        setBoard: (updater) => set(state => {
-            state.board = updater(state.board)
+        setBoard: (board) => set(state => {
+            state.board = board;
+        }),
+
+        setCards: (cards) => set(state => {
+            state.cards = cards;
         }),
 
         setLayout: (updater) => set(state => {
-            state.layout = updater(state.layout)
+            state.layout = updater;
         }),
 
         setSections: (sections) => set(state => {
