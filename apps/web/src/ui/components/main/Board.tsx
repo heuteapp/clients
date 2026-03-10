@@ -12,25 +12,20 @@ interface BoardProps {
 
 function Board({ category, date }: BoardProps) {
     const board = useBoardStore(state => state.board);
-    const setBoard = useBoardStore(state => state.setBoard)
-    const setLayout = useBoardStore(state => state.setLayout);
-    const setSections = useBoardStore(state => state.setSections);
+    const setState = useBoardStore(state => state.setState);
 
     useEffect(() => {
-        setBoard({
-            id: createDataIdentifier(),
-            category,
-            date,
-            layoutId: "",
+        setState({
+            board: {
+                id: createDataIdentifier(),
+                category,
+                date,
+                layoutId: "",
+            },
+            cards: [],
+            layout: null,
+            sections: (sectionExamples as any)[category ?? "two"] ?? sectionExamples.two
         });
-
-        setLayout({
-            id: createDataIdentifier(),
-            columnCount: 18,
-            rowCount: 8
-        });
-
-        setSections((sectionExamples as any)[category ?? "two"] ?? sectionExamples.two);
     }, [])
 
     if(!board) return null;
