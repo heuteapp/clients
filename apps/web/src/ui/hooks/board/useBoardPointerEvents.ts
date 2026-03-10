@@ -1,8 +1,8 @@
 import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
 import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types";
-import { setCreateMode } from "@/src/ui/interactions/create-card/dom";
-import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/create-card/handler";
+import { setCreateMode } from "@/src/ui/interactions/board/create-card/dom";
+import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/board/create-card/handler";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 import { BoardSession, CardCreateState } from "@/src/ui/types/board/board.session";
