@@ -7,17 +7,16 @@ import { useBoardSession } from "./useBoardSessionRef";
 
 export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>) : BoardContextValue {
     const registry = useBoardRegistry();
-
     const session = useBoardSession();
     const interaction = useBoardInteraction(session);
     const metrics = useBoardMetrics(rootRef, registry);
 
-    useBoardPointerEvents(rootRef, registry, metrics, session, interaction);
+    useBoardPointerEvents(rootRef, registry, session, interaction, metrics);
 
     return {
-        session,
-        metrics,
         registry,
-        interaction
+        session,
+        interaction,
+        metrics,
     }
 }

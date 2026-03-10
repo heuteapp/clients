@@ -4,8 +4,8 @@ import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardSession } from "./board.session";
 
 export interface BoardContextValue {
-    interaction: BoardInteraction;
     registry: BoardRegistry;
     session: BoardSession;
+    interaction: BoardInteraction;
     metrics: BoardMetrics;
 }

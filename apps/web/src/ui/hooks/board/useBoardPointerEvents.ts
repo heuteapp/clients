@@ -5,14 +5,15 @@ import { setCreateMode } from "@/src/ui/interactions/board/create-card/dom";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/board/create-card/handler";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
-import { BoardSessionState, CardCreationSession } from "@/src/core/types/domain/board/board.session";
+import { CardCreationSession } from "@/src/core/types/domain/board/board.session";
+import { BoardSession } from "../../types/board/board.session";
 
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
+    session: BoardSession,
+    interaction: BoardInteraction,
     metrics: BoardMetrics,
-    sessionRef: React.RefObject<BoardSessionState>,
-    interaction: BoardInteraction
 ) {
     const createCard = useBoardStore(state => state.createCard);
 
@@ -41,10 +42,10 @@ export function useBoardPointerEvents(
                 y: e.clientY
             }
 
-            const currentSession = sessionRef.current
+            const currentSession = session.current
 
             if (currentSession.cardCreation) {
-                handleCardCreateInteraction(rootRef.current!, registry, sessionRef, metrics, interaction, currentSession.cardCreation)
+                handleCardCreateInteraction(rootRef.current!, registry, session, metrics, interaction, currentSession.cardCreation)
                 return
             }
 
@@ -58,7 +59,7 @@ export function useBoardPointerEvents(
 
             root.releasePointerCapture(e.pointerId)
 
-            const currentSession = sessionRef.current
+            const currentSession = session.current
 
             if (
                 currentSession.cardCreation
@@ -97,7 +98,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, registry, sessionRef, metrics, interaction, state as CardCreationSession)
+                    handleCardCreateInteraction(root, registry, session, metrics, interaction, state as CardCreationSession)
                 }
             },
 
