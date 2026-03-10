@@ -10,13 +10,13 @@ export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>)
 
     const session = useBoardSession();
     const interaction = useBoardInteraction(session);
-    const metricsRef = useBoardMetrics(rootRef, registry);
+    const metrics = useBoardMetrics(rootRef, registry);
 
-    useBoardPointerEvents(rootRef, registry, metricsRef, session.ref, interaction);
+    useBoardPointerEvents(rootRef, registry, metrics, session.ref, interaction);
 
     return {
         session,
-        metricsRef,
+        metrics,
         registry,
         interaction
     }

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react"
-import { BoardMetrics } from "@/src/ui/types/board/board.dom"
+import { BoardMetrics, BoardMetricsValue } from "@/src/ui/types/board/board.metrics"
 import { updateBoardMetrics } from "@/src/ui/dom/sync/board/updateBoardMetrics";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 
 export function useBoardMetrics(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
-) : React.RefObject<BoardMetrics> {
+) : BoardMetrics {
 
-    const metricsRef = useRef<BoardMetrics>({
+    const metrics = useRef<BoardMetricsValue>({
         layoutSectionsCount: {
             horizontal: 0,
             vertical: 0
@@ -37,11 +37,11 @@ export function useBoardMetrics(
         if(!element) return;
 
         const observer = new ResizeObserver(() => {
-            updateBoardMetrics(registry, metricsRef);
+            updateBoardMetrics(registry, metrics);
         })
 
         const mutationObserver = new MutationObserver(() => {
-            updateBoardMetrics(registry, metricsRef);    
+            updateBoardMetrics(registry, metrics);    
         })
 
         mutationObserver.observe(element, {
@@ -54,5 +54,5 @@ export function useBoardMetrics(
         return () => observer.disconnect()
     }, [rootRef, registry])
 
-    return metricsRef;
+    return metrics;
 }

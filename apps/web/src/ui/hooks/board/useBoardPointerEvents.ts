@@ -4,13 +4,13 @@ import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
 import { setCreateMode } from "@/src/ui/interactions/board/create-card/dom";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/board/create-card/handler";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardMetrics } from "@/src/ui/types/board/board.dom";
+import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
 import { BoardSessionState, CardCreationSession } from "@/src/core/types/domain/board/board.session";
 
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
-    metricsRef: React.RefObject<BoardMetrics>,
+    metrics: BoardMetrics,
     sessionRef: React.RefObject<BoardSessionState>,
     interaction: BoardInteraction
 ) {
@@ -44,7 +44,7 @@ export function useBoardPointerEvents(
             const currentSession = sessionRef.current
 
             if (currentSession.cardCreation) {
-                handleCardCreateInteraction(rootRef.current!, registry, sessionRef, metricsRef, interaction, currentSession.cardCreation)
+                handleCardCreateInteraction(rootRef.current!, registry, sessionRef, metrics, interaction, currentSession.cardCreation)
                 return
             }
 
@@ -97,7 +97,7 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, registry, sessionRef, metricsRef, interaction, state as CardCreationSession)
+                    handleCardCreateInteraction(root, registry, sessionRef, metrics, interaction, state as CardCreationSession)
                 }
             },
 
