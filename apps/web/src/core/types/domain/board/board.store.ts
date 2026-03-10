@@ -12,10 +12,10 @@ export type BoardStore = {
     setCards: (cards: BoardCardData[]) => void
     setLayout: (layout: HeuteLayoutData | null) => void
     setSections: (sections: LayoutSectionData[]) => void
-    
-} & BoardStoreActions;
 
-export type BoardStoreActions = {
+} & BoardActions;
+
+export type BoardActions = {
     createCard: (content: DataContent<BoardCardData>) => BoardCardData
     deleteCard: (id: Identifier) => BoardCardData | undefined
 }
