@@ -46,11 +46,7 @@ export function createBoardInteraction(
                 }
             })
 
-            const currentState = interaction.getCurrentState();
-
-            if(currentState) {
-                interaction.eventHandlers?.OnUpdate?.(interaction.eventType!, currentState)
-            }
+            interaction.eventHandlers?.OnUpdate?.(interaction.eventType!, interaction.getCurrentState()!)
         },
 
         startCardMovement(cardId, placement) {
