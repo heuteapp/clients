@@ -1,7 +1,7 @@
-import { calculateBoardMetrics } from "@/src/ui/dom/calculations/board/board-metrics";
-import { applyBoardMetricsToDOM } from "./applyBoardMetricsToDOM";
-import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
+import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
+import { calculateBoardMetrics } from "./calculate";
+import { applyBoardMetrics } from "./apply";
 
 export function updateBoardMetrics(registry: BoardRegistry, metrics: BoardMetrics) {
     const metricsValue = calculateBoardMetrics(registry);
@@ -9,5 +9,5 @@ export function updateBoardMetrics(registry: BoardRegistry, metrics: BoardMetric
     if (!metricsValue) return null;
 
     metrics.current = metricsValue;
-    applyBoardMetricsToDOM({ registry, metrics: metricsValue });
+    applyBoardMetrics({ registry, metrics: metricsValue });
 }

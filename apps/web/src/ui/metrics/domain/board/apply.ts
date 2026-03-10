@@ -1,7 +1,7 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetricsValue } from "@/src/ui/types/board/board.metrics";
 
-export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardRegistry, metrics: BoardMetricsValue }) {
+export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegistry, metrics: BoardMetricsValue }) {
     const layout = registry.layout;
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
