@@ -1,5 +1,5 @@
 export { useBoardContext } from "./useBoardContext";
-export { useBoardSession as useBoardSessionRef } from "./useBoardSessionRef";
+export { useBoardSession } from "./useBoardSession";
 export { useBoardInteraction } from "./useBoardInteraction";
 export { useBoardRegistry } from "./useBoardRegistry";
 export { useBoardMetrics } from "./useBoardMetrics";
