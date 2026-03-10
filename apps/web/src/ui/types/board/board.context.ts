@@ -1,11 +1,11 @@
-import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types";
+import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
 import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardSession } from "./board.session";
+import { BoardSessionState } from "@/src/core/types/domain/board/board.session";
 
 export interface BoardContextValue {
     interaction: BoardInteraction;
     registry: BoardRegistry;
-    sessionRef: React.RefObject<BoardSession>;
+    sessionRef: React.RefObject<BoardSessionState>;
     metricsRef: React.RefObject<BoardMetrics | null>;
 }

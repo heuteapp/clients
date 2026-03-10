@@ -1,19 +1,19 @@
-import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types"
+import { BoardInteraction } from "@/src/ui/types/board/board.interaction"
 
 import { findSectionUnderPointer } from "./detector"
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "./dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardSession, CardCreateState } from "@/src/ui/types/board/board.session";
 import { BoardMetrics } from "@/src/ui/types/board/board.dom";
+import { BoardSessionState, CardCreationSession } from "@/src/core/types/domain/board/board.session";
 
 export function handleCardCreateInteraction(
     root: HTMLDivElement,
     registry: BoardRegistry,
-    sessionRef: React.RefObject<BoardSession>,
+    sessionRef: React.RefObject<BoardSessionState>,
     metricsRef: React.RefObject<BoardMetrics>,
     interaction: BoardInteraction,
-    state: CardCreateState) 
+    state: CardCreationSession) 
 {
     const pointer = interaction.pointer
     if (!pointer) return
@@ -27,10 +27,6 @@ export function handleCardCreateInteraction(
     const cellSize = metrics.layoutGridCellSize.inner
 
     const result = findSectionUnderPointer(registry, pointer)
-
-    if(session.status == "executing") {
-        return
-    }
 
     if (!result) {
         interaction.updateCardCreate(null, null)

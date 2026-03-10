@@ -1,18 +1,17 @@
 import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
-import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types";
+import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
 import { setCreateMode } from "@/src/ui/interactions/board/create-card/dom";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/board/create-card/handler";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetrics } from "@/src/ui/types/board/board.dom";
-import { BoardSession, CardCreateState } from "@/src/ui/types/board/board.session";
-import { createClientId } from "@/src/core/utils/shared/data";
+import { BoardSessionState, CardCreationSession } from "@/src/core/types/domain/board/board.session";
 
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
     metricsRef: React.RefObject<BoardMetrics>,
-    sessionRef: React.RefObject<BoardSession>,
+    sessionRef: React.RefObject<BoardSessionState>,
     interaction: BoardInteraction
 ) {
     const createCard = useBoardStore(state => state.createCard);
@@ -44,12 +43,12 @@ export function useBoardPointerEvents(
 
             const currentSession = sessionRef.current
 
-            if (currentSession.cardCreate) {
-                handleCardCreateInteraction(rootRef.current!, registry, sessionRef, metricsRef, interaction, currentSession.cardCreate)
+            if (currentSession.cardCreation) {
+                handleCardCreateInteraction(rootRef.current!, registry, sessionRef, metricsRef, interaction, currentSession.cardCreation)
                 return
             }
 
-            if (currentSession.cardMove) return
+            if (currentSession.cardMovement) return
             if (currentSession.cardResize) return
         }
 
@@ -62,31 +61,28 @@ export function useBoardPointerEvents(
             const currentSession = sessionRef.current
 
             if (
-                currentSession.cardCreate
+                currentSession.cardCreation
             ) {
-                if(!currentSession.cardCreate.currentSectionId || !currentSession.cardCreate.currentPosition) {
-                    interaction.endInteraction();
-                }
-                else {
-                    const cardCreateState = sessionRef.current.cardCreate!;
+                const cardCreateState = currentSession.cardCreation!;
 
-                    if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
-                        const section = registry.getLayoutSection(cardCreateState.currentSectionId);
-                        if(!section) return;
+                if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
+                    const section = registry.getLayoutSection(cardCreateState.currentSectionId);
+                    if(!section) return;
 
-                        createCard({
-                            placement: {
-                                sectionName: section.props!.name,
-                                position: {
-                                    colIndex: cardCreateState.currentPosition.colIndex,
-                                    rowIndex: cardCreateState.currentPosition.rowIndex,
-                                    colSpan: cardCreateState.startSize.colSpan,
-                                    rowSpan: cardCreateState.startSize.rowSpan,
-                                }
+                    createCard({
+                        placement: {
+                            sectionName: section.props!.name,
+                            position: {
+                                colIndex: cardCreateState.currentPosition.colIndex,
+                                rowIndex: cardCreateState.currentPosition.rowIndex,
+                                colSpan: cardCreateState.startSize.colSpan,
+                                rowSpan: cardCreateState.startSize.rowSpan,
                             }
-                        })
-                    }
+                        }
+                    })
                 }
+
+                interaction.finishInteraction();
             }
         }
 
@@ -99,11 +95,11 @@ export function useBoardPointerEvents(
 
                     setCreateMode(root, true)
 
-                    handleCardCreateInteraction(root, registry, sessionRef, metricsRef, interaction, state as CardCreateState)
+                    handleCardCreateInteraction(root, registry, sessionRef, metricsRef, interaction, state as CardCreationSession)
                 }
             },
 
-            OnEnd: (type) => {
+            OnFinish: (type) => {
 
                 if (type === "create") {
                     setCreateMode(root, false)
