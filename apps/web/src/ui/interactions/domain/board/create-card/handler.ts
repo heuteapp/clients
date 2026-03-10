@@ -4,11 +4,9 @@ import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/lay
 import { computeCardCreatePosition } from "./logic"
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { CardCreationSession } from "@/src/core/types/domain/board/board.session";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 
-export function handleCardCreateInteraction(
-    context: BoardContextValue) 
+export function handleCardCreateInteraction(context: BoardContextValue) 
 {
     const { rootRef, registry, session, interaction, metrics } = context;
 
