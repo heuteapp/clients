@@ -6,7 +6,7 @@ export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardR
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
 
-    const { gridCellSize, gridSize, sectionContainerSize } = metrics.layout;
+    const { gridCellSize, gridSize, sectionContainerSize } = metrics.layout!;
 
     layoutElement.style.setProperty("--cell-size-full", `${gridCellSize.full}px`);
     layoutElement.style.setProperty("--cell-size-inner", `${gridCellSize.inner}px`);
@@ -31,8 +31,8 @@ export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardR
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
         const gridSize = {
-            width: metrics.layout.gridSize.width / (metrics.layout.gridCellsCount.horizontal / section.props!.colSpan),
-            height: metrics.layout.gridSize.height / (metrics.layout.gridCellsCount.vertical / section.props!.rowSpan)
+            width: metrics.layout!.gridSize.width / (metrics.layout!.gridCellsCount.horizontal / section.props!.colSpan),
+            height: metrics.layout!.gridSize.height / (metrics.layout!.gridCellsCount.vertical / section.props!.rowSpan)
         }
 
         const gap = 6;

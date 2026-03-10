@@ -1,49 +1,11 @@
 import { BoardMetricsValue } from "@/src/ui/types/board/board.metrics";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { calculateGridCellSize } from "@/src/ui/dom/calculations/layout/grid-cell-size";
-import { calculateSectionContainerSize } from "@/src/ui/dom/calculations/layout/section-container-size";
-import { calculateSectionsCount } from "@/src/ui/dom/calculations/layout/sections-count";
-import { LayoutSectionProps } from "@/src/ui/types/layout/layout.props";
+import { calculateLayoutMetrics } from "../layout/layout-metrics";
 
 export function calculateBoardMetrics(registry: BoardRegistry) : BoardMetricsValue | undefined {
-    const layout = registry.layout;
+    const layout = calculateLayoutMetrics(registry) ?? null;
 
-    const layoutProps = layout.props;
-    if(!layoutProps) return;
-
-    const layoutElement = layout.ref?.current;
-    if (!layoutElement) return;
-
-    const { clientWidth, clientHeight } = layoutElement;
-    const padding = 6;
-
-    const sections = registry.getLayoutSections();
-    if(!sections) return;
-
-    const sectionDatas = sections.map(section => section.props) as LayoutSectionProps[];
-    if(sectionDatas.some(props => !props)) return;
-
-    const layoutSectionsCount = calculateSectionsCount(sectionDatas);
-    const layoutGridCellsCount = {
-        horizontal: layoutProps.columnCount,
-        vertical: layoutProps.rowCount
-    };
-    
-    const layoutGridCellSize = calculateGridCellSize(clientWidth, clientHeight, layoutGridCellsCount, padding);
-    const layoutGridSize = {
-        width: layoutGridCellsCount.horizontal * layoutGridCellSize.inner,
-        height: layoutGridCellsCount.vertical * layoutGridCellSize.inner
-    }
-
-    const layoutSectionContainerSize = calculateSectionContainerSize(layoutGridCellsCount, layoutGridCellSize);
-    
     return {
-        layout: {
-            sectionsCount: layoutSectionsCount,
-            gridCellsCount: layoutGridCellsCount,
-            gridCellSize: layoutGridCellSize,
-            gridSize: layoutGridSize,
-            sectionContainerSize: layoutSectionContainerSize
-        }
+        layout
     };
 }
