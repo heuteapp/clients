@@ -13,14 +13,6 @@ export function setGridHover(el: HTMLElement) {
     el.dataset.gridHover = ""
 }
 
-export function setCreateMode(root: HTMLElement, active: boolean) {
-    if (active) {
-        root.dataset.interactionCardCreate = "true"
-    } else {
-        delete root.dataset.interactionCardCreate
-    }
-}
-
 export function setGhostCardPosition(
     root: HTMLElement,
     x: number,

@@ -1,7 +1,6 @@
 import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
-import { setCreateMode } from "@/src/ui/interactions/domain/board/create-card/dom";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/create-card/handler";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
@@ -95,9 +94,6 @@ export function useBoardPointerEvents(
             OnStart: (type, state) => {
 
                 if (type === "creation") {
-
-                    setCreateMode(root, true)
-
                     handleCardCreateInteraction(root, registry, session, metrics, interaction, state as CardCreationSession)
                 }
             },
@@ -105,7 +101,6 @@ export function useBoardPointerEvents(
             OnFinish: (type) => {
 
                 if (type === "creation") {
-                    setCreateMode(root, false)
                     endCardCreateInteraction(root, registry, interaction);
                 }
             }
