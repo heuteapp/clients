@@ -2,6 +2,7 @@ import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/lay
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { calculateCardPositionByPointer } from "@/src/ui/interactions/domain/board/board.calc";
+import { useBoardStore } from "@/src/stores/board.store";
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
@@ -77,7 +78,38 @@ export function handleCardCreateInteraction(context: BoardContextValue)
     })
 }
 
-export function endCardCreateInteraction(context : BoardContextValue) {
+export function finishCardCreationState(context: BoardContextValue) {
+    finalizeCardCreationState(context);
+    cleanupCardCreationState(context);
+}
+
+export function finalizeCardCreationState(context : BoardContextValue) {
+    const { registry, session } = context;
+
+    const createCard = useBoardStore(state => state.createCard);
+
+    const cardCreationState = session.current.cardCreation!;
+    const currentPlacement = cardCreationState.currentPlacement;
+
+    if(currentPlacement) {
+        const section = registry.getLayoutSection(currentPlacement.sectionId);
+        if(!section) return;
+
+        createCard({
+            placement: {
+                sectionName: section.props!.name,
+                position: {
+                    colIndex: currentPlacement.position.colIndex,
+                    rowIndex: currentPlacement.position.rowIndex,
+                    colSpan: cardCreationState.startSize.colSpan,
+                    rowSpan: cardCreationState.startSize.rowSpan,
+                }
+            }
+        })
+    }
+}
+
+export function cleanupCardCreationState(context : BoardContextValue) {
     const { registry, rootRef, interaction } = context;
 
     const root = rootRef.current

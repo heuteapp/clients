@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useBoardStore } from "@/src/stores/board.store";
-import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/states/create-card/handler";
+import { handleCardCreateInteraction, finishCardCreationState } from "@/src/ui/interactions/domain/board/states/create-card/handler";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
+import { CardCreationState } from "@/src/core/types/domain/board/board.session";
 
 export function useBoardPointerEvents(
     context: BoardContextValue
@@ -26,6 +27,12 @@ export function useBoardPointerEvents(
                 x: e.clientX,
                 y: e.clientY
             }
+
+            switch (interaction.type) {
+                case BoardInteractionType.Idle: {
+
+                }
+            }
         }
 
         function handlePointerMove(e: PointerEvent) {
@@ -37,13 +44,14 @@ export function useBoardPointerEvents(
 
             const currentSession = session.current
 
-            if (currentSession.cardCreation) {
-                handleCardCreateInteraction(context)
-                return
+            switch (interaction.type) {
+                case BoardInteractionType.CardCreation: {
+                    handleCardCreateInteraction(context)
+                }
+                case BoardInteractionType.Idle: {
+                    
+                }
             }
-
-            if (currentSession.cardMovement) return
-            if (currentSession.cardResize) return
         }
 
         function handlePointerUp(e: PointerEvent) {
@@ -52,31 +60,23 @@ export function useBoardPointerEvents(
 
             root.releasePointerCapture(e.pointerId)
 
+            switch (interaction.type) {
+                case BoardInteractionType.CardCreation: {
+                    handleCardCreateInteraction(context)
+                }
+                break;
+                case BoardInteractionType.Idle: {
+                    
+                }
+                break;
+            }
+
             const currentSession = session.current
 
             if (
                 currentSession.cardCreation
             ) {
-                const cardCreateState = currentSession.cardCreation!;
 
-                const currentPlacement = cardCreateState.currentPlacement;
-
-                if(currentPlacement && currentPlacement.sectionId && currentPlacement.position) {
-                    const section = registry.getLayoutSection(currentPlacement.sectionId);
-                    if(!section) return;
-
-                    createCard({
-                        placement: {
-                            sectionName: section.props!.name,
-                            position: {
-                                colIndex: currentPlacement.position.colIndex,
-                                rowIndex: currentPlacement.position.rowIndex,
-                                colSpan: cardCreateState.startSize.colSpan,
-                                rowSpan: cardCreateState.startSize.rowSpan,
-                            }
-                        }
-                    })
-                }
 
                 interaction.finishInteraction();
             }
@@ -89,9 +89,15 @@ export function useBoardPointerEvents(
                     handleCardCreateInteraction(context)
                 }
             },
-            OnFinish: (type) => {
+            OnFinish: (type, state) => {
+                switch (type) {
+                    case BoardInteractionType.CardCreation: {
+
+                    }
+                }
+
                 if (type === BoardInteractionType.CardCreation) {
-                    endCardCreateInteraction(context);
+                    finishCardCreationState(context);
                 }
             }
         });
