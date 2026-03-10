@@ -3,7 +3,7 @@ import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
 import { useBoardStore } from "@/src/stores/board.store";
 import { sectionExamples } from '@/src/dump/board.examples';
 import { useEffect } from 'react';
-import { createClientId } from '@/src/core/utils/shared/identifiers';
+import { createClientId } from '@/src/core/utils/shared/data';
 
 interface BoardProps {
     category: string;

@@ -6,7 +6,7 @@ import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetrics } from "@/src/ui/types/board/board.dom";
 import { BoardSession, CardCreateState } from "@/src/ui/types/board/board.session";
-import { createClientId } from "@/src/core/utils/shared/identifiers";
+import { createClientId } from "@/src/core/utils/shared/data";
 
 export function useBoardPointerEvents(
     rootRef: React.RefObject<HTMLDivElement | null>,

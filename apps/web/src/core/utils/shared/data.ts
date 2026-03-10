@@ -1,4 +1,4 @@
-import { ClientId, ServerId } from "@/src/core/types/shared/identifiers";
+import { ClientId, ServerId } from "@/src/core/types/shared/data";
 
 export function createClientId(): ClientId {
     return (`temp-${crypto.randomUUID()}`) as ClientId;
