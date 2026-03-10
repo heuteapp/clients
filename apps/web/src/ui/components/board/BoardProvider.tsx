@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { BoardContext } from "../../contexts/board.context";
 import { useBoardInteraction, useBoardPointerEvents, useBoardRegistry, useBoardSessionRef } from "@/src/ui/hooks/board";
 import { useBoardMetrics } from "@/src/ui/hooks/board";
-import { useBoardStore } from "@/src/stores/board";
+import { useBoardStore } from "@/src/stores/board.store";
 import { produce } from "immer";
 
 export default function BoardProvider({ children, rootRef }: BoardProviderProps) {

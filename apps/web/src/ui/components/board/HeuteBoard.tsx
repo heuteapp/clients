@@ -7,7 +7,7 @@ import BoardCardContainer from "./BoardCardContainer";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board";
 import BoardGhostCard from "./BoardGhostCard";
-import { useBoardStore } from "@/src/stores/board";
+import { useBoardStore } from "@/src/stores/board.store";
 import { HeuteBoardProps } from "@/src/ui/types/board/board.props";
 
 //

@@ -1,4 +1,4 @@
-import { useBoardStore } from "@/src/stores/board";
+import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
 import { BoardInteraction } from "@/src/ui/interactions/board.interaction.types";
 import { setCreateMode } from "@/src/ui/interactions/create-card/dom";

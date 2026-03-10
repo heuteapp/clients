@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BoardStore } from "./BoardStore";
+import { BoardStore } from "@/src/types/board/board.store";
 import { api } from "@/src/utils/api";
 
 export const useBoardStore = create<BoardStore>()(
