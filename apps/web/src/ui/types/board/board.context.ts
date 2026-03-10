@@ -4,6 +4,7 @@ import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardSession } from "./board.session";
 
 export interface BoardContextValue {
+    rootRef: React.RefObject<HTMLDivElement | null>;
     registry: BoardRegistry;
     session: BoardSession;
     interaction: BoardInteraction;

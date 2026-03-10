@@ -1,20 +1,14 @@
 import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
-import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/create-card/handler";
-import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
 import { CardCreationSession } from "@/src/core/types/domain/board/board.session";
-import { BoardSession } from "../../types/board/board.session";
+import { BoardContextValue } from "../../types/board/board.context";
 
 export function useBoardPointerEvents(
-    rootRef: React.RefObject<HTMLDivElement | null>,
-    registry: BoardRegistry,
-    session: BoardSession,
-    interaction: BoardInteraction,
-    metrics: BoardMetrics,
+    context: BoardContextValue
 ) {
     const createCard = useBoardStore(state => state.createCard);
+    const { rootRef, registry, session, interaction, metrics } = context;
 
     useEffect(() => {
         const root = rootRef.current
@@ -44,7 +38,7 @@ export function useBoardPointerEvents(
             const currentSession = session.current
 
             if (currentSession.cardCreation) {
-                handleCardCreateInteraction(rootRef.current!, registry, session, metrics, interaction, currentSession.cardCreation)
+                handleCardCreateInteraction(context)
                 return
             }
 
@@ -91,10 +85,10 @@ export function useBoardPointerEvents(
 
         interaction.setEventHandlers({
 
-            OnStart: (type, state) => {
+            OnStart: (type, session) => {
 
                 if (type === "creation") {
-                    handleCardCreateInteraction(root, registry, session, metrics, interaction, state as CardCreationSession)
+                    handleCardCreateInteraction(context)
                 }
             },
 
