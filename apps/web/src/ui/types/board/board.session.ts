@@ -1,4 +1,5 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
+import { Identifier } from "@/src/core/types/shared/data";
 import { Draft } from "immer";
 
 export interface BoardSession {
@@ -22,19 +23,19 @@ export interface CardBaseState {
 
 export interface CardCreateState extends CardBaseState {
     startSize: GridSize;
-    currentSectionId: string | null;
+    currentSectionId: Identifier | null;
     currentPosition: GridPosition | null;
 }
 
 export interface CardMoveState extends CardBaseState {
     startPosition: GridPosition;
-    startSectionId: string;
-    currentSectionId: string;
+    startSectionId: Identifier;
+    currentSectionId: Identifier;
     currentPosition: GridPosition;
 }
 
 export interface CardResizeState extends CardBaseState {
-    startSectionId: string;
+    startSectionId: Identifier;
     startSize: GridSize;
     currentSize: GridSize;
     resizeHandle: ResizeHandle;

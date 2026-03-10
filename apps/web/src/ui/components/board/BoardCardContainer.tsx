@@ -22,7 +22,7 @@ function BoardCardContainer(props : BoardCardContainerProps) {
             ref={ref}
         >
             {props.cards.map(card => (
-                <BoardCard key={card.id} {...card} />
+                <BoardCard key={card.id.client} {...card} />
             ))}
         </div>
     )

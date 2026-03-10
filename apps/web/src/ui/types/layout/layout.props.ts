@@ -1,4 +1,5 @@
 import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
+import { Identifier } from "@/src/core/types/shared/data";
 
 export interface HeuteLayoutProps extends HeuteLayoutData {
 
@@ -13,13 +14,13 @@ export interface LayoutSectionProps extends LayoutSectionData {
 }
 
 export interface LayoutGridProps  {
-    sectionId: string,
+    sectionId: Identifier,
     colSpan: number,
     rowSpan: number,
 }
 
 export interface LayoutGridCellProps {
-    sectionId: string,
+    sectionId: Identifier,
     rowIndex: number,
     colIndex: number,
 }

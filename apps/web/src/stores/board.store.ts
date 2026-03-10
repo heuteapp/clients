@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { BoardStore } from "@/src/core/types/domain/board/board.store";
-import { createClientId } from "@/src/core/utils/shared/data";
-import { DataContent } from "@/src/core/types/shared/data";
+import { createIdentifier } from "@/src/core/utils/shared/data";
+import { DataContent, Identifier } from "@/src/core/types/shared/data";
 import { BoardCardData } from "@/src/core/types/domain/board/board.data";
 
 export const useBoardStore = create<BoardStore>()(
@@ -32,7 +32,7 @@ export const useBoardStore = create<BoardStore>()(
 
         createCard: (content : DataContent<BoardCardData>) => {
             const card = {
-                id: createClientId(),
+                id: createIdentifier(),
                 ...content,
             }
 
@@ -43,7 +43,7 @@ export const useBoardStore = create<BoardStore>()(
             return card;
         },
 
-        deleteCard: (id: string) => {
+        deleteCard: (id: Identifier) => {
             let deletedCard;
 
             set(state => {

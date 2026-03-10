@@ -2,6 +2,7 @@ import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContai
 import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/layout.props"
 import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui/types/board/board.nodes"
 import { BoardCardContainerProps, BoardCardProps, HeuteBoardProps } from "@/src/ui/types/board/board.props"
+import { Identifier } from "@/src/core/types/shared/data"
 
 export interface BoardRegistry {
     board: BoardRootNode
@@ -18,7 +19,7 @@ export interface BoardRegistry {
     ): BoardCardContainerNode
 
     registerBoardCard(
-        id: string,
+        id: Identifier,
         ref: React.RefObject<HTMLDivElement | null>,
         props: BoardCardProps
     ): BoardCardNode
@@ -34,20 +35,20 @@ export interface BoardRegistry {
     ): LayoutSectionContainerNode
     
     registerLayoutSection(
-        id: string,
+        id: Identifier,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutSectionProps
     ): LayoutSectionNode
 
     registerLayoutGrid(
-        sectionId: string,
+        sectionId: Identifier,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutGridProps
     ): LayoutGridNode
 
     registerLayoutGridCell(
-        sectionId: string,
-        id: string,
+        sectionId: Identifier,
+        id: Identifier,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutGridCellProps
     ): LayoutGridCellNode
@@ -58,39 +59,39 @@ export interface BoardRegistry {
 
     unregisterBoardCardContainer(): void
 
-    unregisterBoardCard(id: string): void
+    unregisterBoardCard(id: Identifier): void
 
     unregisterLayout(): void
 
     unregisterLayoutSectionContainer(): void
 
-    unregisterLayoutSection(id: string): void
+    unregisterLayoutSection(id: Identifier): void
 
-    unregisterLayoutGrid(sectionId: string): void
+    unregisterLayoutGrid(sectionId: Identifier): void
 
-    unregisterLayoutGridCell(sectionId: string, id: string): void
+    unregisterLayoutGridCell(sectionId: Identifier, id: Identifier): void
 
     //
 
     getBoardCardContainer(): BoardCardContainerNode | undefined
 
-    getBoardCard(id: string): BoardCardNode | undefined
+    getBoardCard(id: Identifier): BoardCardNode | undefined
 
     getBoardCards(): BoardCardNode[] | undefined
 
-    getBoardCardsForSection(sectionId: string): BoardCardNode[] | undefined
+    getBoardCardsForSection(sectionId: Identifier): BoardCardNode[] | undefined
 
-    getLayoutSection(id: string): LayoutSectionNode | undefined
+    getLayoutSection(id: Identifier): LayoutSectionNode | undefined
 
     getLayoutSectionByName(name: string): LayoutSectionNode | undefined
 
     getLayoutSections(): LayoutSectionNode[] | undefined
 
-    getLayoutGrid(sectionId: string): LayoutGridNode | undefined
+    getLayoutGrid(sectionId: Identifier): LayoutGridNode | undefined
 
-    getLayoutGrids(sectionId: string): LayoutGridNode[] | undefined
+    getLayoutGrids(sectionId: Identifier): LayoutGridNode[] | undefined
 
-    getLayoutGridCell(sectionId: string, id: string): LayoutGridCellNode | undefined
+    getLayoutGridCell(sectionId: Identifier, id: Identifier): LayoutGridCellNode | undefined
 
-    getLayoutGridCells(sectionId: string): LayoutGridCellNode[] | undefined
+    getLayoutGridCells(sectionId: Identifier): LayoutGridCellNode[] | undefined
 }

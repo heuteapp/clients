@@ -4,7 +4,10 @@ export interface BaseData {
 
 export type DataContent<T extends BaseData> = Omit<T, "id">;
 
-export type Identifier = ClientId | ServerId;
+export type Identifier = {
+    client: ClientId;
+    server: ServerId | null;
+};
 
 export type ClientId = string & { __brand: "ClientId" };
 
