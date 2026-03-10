@@ -9,26 +9,28 @@ export function useBoardMetrics(
 ) : BoardMetrics {
 
     const metrics = useRef<BoardMetricsValue>({
-        layoutSectionsCount: {
-            horizontal: 0,
-            vertical: 0
-        },
-        layoutGridCellsCount: {
-            horizontal: 0,
-            vertical: 0
-        },
-        layoutGridCellSize: {
-            full: 0,
-            inner: 0,
-            compact: 0
-        },
-        layoutGridSize: {
-            width: 0,
-            height: 0
-        },
-        layoutSectionContainerSize: {
-            width: 0,
-            height: 0
+        layout: {
+            sectionsCount: {
+                horizontal: 0,
+                vertical: 0
+            },
+            gridCellsCount: {
+                horizontal: 0,
+                vertical: 0
+            },
+            sectionContainerSize: {
+                width: 0,
+                height: 0
+            },
+            gridSize: {
+                width: 0,
+                height: 0
+            },
+            gridCellSize: {
+                full: 0,
+                inner: 0,
+                compact: 0
+            }
         }
     });
 

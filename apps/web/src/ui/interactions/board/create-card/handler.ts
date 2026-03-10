@@ -24,7 +24,7 @@ export function handleCardCreateInteraction(
     const session = sessionRef.current;
     if (!session) return
 
-    const cellSize = metricsValue.layoutGridCellSize.inner
+    const cellSize = metricsValue.layout.gridCellSize.inner
 
     const result = findSectionUnderPointer(registry, pointer)
 

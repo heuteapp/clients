@@ -38,10 +38,12 @@ export function calculateBoardMetrics(registry: BoardRegistry) : BoardMetricsVal
     const layoutSectionContainerSize = calculateSectionContainerSize(layoutGridCellsCount, layoutGridCellSize);
     
     return {
-        layoutSectionsCount,
-        layoutGridCellsCount,
-        layoutGridCellSize,
-        layoutGridSize,
-        layoutSectionContainerSize
+        layout: {
+            sectionsCount: layoutSectionsCount,
+            gridCellsCount: layoutGridCellsCount,
+            gridCellSize: layoutGridCellSize,
+            gridSize: layoutGridSize,
+            sectionContainerSize: layoutSectionContainerSize
+        }
     };
 }

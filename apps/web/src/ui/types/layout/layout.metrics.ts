@@ -1,3 +1,12 @@
+export type LayoutMetricsValue = {
+    sectionsCount: LayoutSectionsCount
+    gridCellsCount: LayoutGridCellsCount
+
+    sectionContainerSize: LayoutSectionContainerSize
+    gridSize: LayoutGridSize
+    gridCellSize: LayoutGridCellSize
+}
+
 export interface LayoutSectionsCount {
     horizontal: number
     vertical: number
