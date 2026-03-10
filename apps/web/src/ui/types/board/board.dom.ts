@@ -1,7 +1,7 @@
 import { LayoutSectionContainerSize, LayoutGridCellsCount, LayoutGridCellSize, LayoutGridSize, LayoutSectionsCount } from "@/src/ui/types/layout/layout.dom";
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { GridDimensions } from "@/src/core/types/shared/common";
-import { LayoutSectionData } from "@/src/core/types/layout/layout.data";
+import { LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
 
 export type BoardMetrics = {
     layoutSectionsCount: LayoutSectionsCount

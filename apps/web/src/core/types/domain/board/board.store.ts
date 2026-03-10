@@ -1,5 +1,5 @@
-import { BoardData, BoardCardData } from "@/src/core/types/board/board.data"
-import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/layout/layout.data"
+import { BoardData, BoardCardData } from "@/src/core/types/domain/board/board.data"
+import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data"
 
 export type BoardStore = {
     board: BoardData | null

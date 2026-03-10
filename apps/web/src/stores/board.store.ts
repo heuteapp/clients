@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BoardStore } from "@/src/core/types/board/board.store";
+import { BoardStore } from "@/src/core/types/domain/board/board.store";
 
 export const useBoardStore = create<BoardStore>()(
     immer(set => ({
