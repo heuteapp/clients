@@ -1,4 +1,5 @@
 import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
+import { Identifier } from "@/src/core/types/shared/data";
 import { BoardSession, BoardSessionUpdater, CardBaseState } from "@/src/ui/types/board/board.session";
 
 export interface BoardInteraction {
@@ -15,21 +16,21 @@ export interface BoardInteraction {
     ) => void
 
     updateCardCreate: (
-        sectionId: string | null,
+        sectionId: Identifier | null,
         position: GridPosition | null
     ) => void
 
     startCardResize: (
-        cardId: string,
-        sectionId: string,
+        cardId: Identifier,
+        sectionId: Identifier,
         pointer: Pointer,
         size: GridSize,
         resizeHandle: ResizeHandle
     ) => void
 
     startCardMove: (
-        cardId: string,
-        sectionId: string,
+        cardId: Identifier,
+        sectionId: Identifier,
         pointer: Pointer,
         position: GridPosition
     ) => void

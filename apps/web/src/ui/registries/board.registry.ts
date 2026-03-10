@@ -40,11 +40,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const cards = registry.board.cardContainer.cards
 
-            if (!cards.has(id)) {
-                cards.set(id, { ref, props })
+            if (!cards.has(id.client)) {
+                cards.set(id.client, { ref, props })
             }
 
-            const card = cards.get(id)!
+            const card = cards.get(id.client)!
 
             card.ref = ref
             card.props = props
@@ -82,11 +82,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sections = registry.layout.sectionContainer.sections
 
-            if (!sections.has(id)) {
-                sections.set(id, { ref, props })
+            if (!sections.has(id.client)) {
+                sections.set(id.client, { ref, props })
             }
 
-            const section = sections.get(id)!
+            const section = sections.get(id.client)!
 
             section.ref = ref
             section.props = props
@@ -101,11 +101,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sections = registry.layout.sectionContainer.sections
 
-            if (!sections.has(sectionId)) {
-                sections.set(sectionId, {  })
+            if (!sections.has(sectionId.client)) {
+                sections.set(sectionId.client, {  })
             }
 
-            const section = sections.get(sectionId)!
+            const section = sections.get(sectionId.client)!
 
             if (!section.grid) {
                 section.grid = {
@@ -129,11 +129,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sections = registry.layout.sectionContainer.sections
 
-            if (!sections.has(sectionId)) {
-                sections.set(sectionId, {  })
+            if (!sections.has(sectionId.client)) {
+                sections.set(sectionId.client, {  })
             }
 
-            const section = sections.get(sectionId)!
+            const section = sections.get(sectionId.client)!
 
             if (!section.grid) {
                 section.grid = {
@@ -143,11 +143,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const grid = section.grid!
 
-            if (!grid.cells.has(id)) {
-                grid.cells.set(id, { ref, props })
+            if (!grid.cells.has(id.client)) {
+                grid.cells.set(id.client, { ref, props })
             }
 
-            const cell = grid.cells.get(id)!
+            const cell = grid.cells.get(id.client)!
 
             cell.ref = ref
             cell.props = props
@@ -171,7 +171,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         unregisterBoardCard(id) {
-            registry.board.cardContainer?.cards.delete(id)
+            registry.board.cardContainer?.cards.delete(id.client)
         },
 
         unregisterLayout() {
@@ -185,17 +185,17 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         unregisterLayoutSection(id) {
-            registry.layout?.sectionContainer?.sections.delete(id)
+            registry.layout?.sectionContainer?.sections.delete(id.client)
         },
 
         unregisterLayoutGrid(sectionId) {
-            const section = registry.layout?.sectionContainer?.sections.get(sectionId)
+            const section = registry.layout?.sectionContainer?.sections.get(sectionId.client)
             if (section) section.grid = null
         },
 
         unregisterLayoutGridCell(sectionId, id) {
             registry.layout?.sectionContainer?.sections
-                .get(sectionId)?.grid?.cells.delete(id)
+                .get(sectionId.client)?.grid?.cells.delete(id.client)
         },
 
         //
@@ -205,7 +205,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         getBoardCard(id) {
-            return registry.board.cardContainer?.cards.get(id)
+            return registry.board.cardContainer?.cards.get(id.client)
         },
         
         getBoardCards() {
@@ -219,7 +219,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sectionCards = []
 
-            const section = registry.layout?.sectionContainer?.sections.get(sectionId);
+            const section = registry.layout?.sectionContainer?.sections.get(sectionId.client);
 
             for (const card of cards.values()) {
                 const placement = card.props?.placement;
@@ -232,7 +232,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         getLayoutSection(id) {
-            return registry.layout?.sectionContainer?.sections.get(id)
+            return registry.layout?.sectionContainer?.sections.get(id.client)
         },
 
         getLayoutSectionByName(name) {
@@ -254,7 +254,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         getLayoutGrid(sectionId) {
-            return registry.layout?.sectionContainer?.sections.get(sectionId)?.grid ?? undefined
+            return registry.layout?.sectionContainer?.sections.get(sectionId.client)?.grid ?? undefined
         },
 
         getLayoutGrids() {
@@ -272,12 +272,12 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
         getLayoutGridCell(sectionId, id) {
             return registry.layout?.sectionContainer?.sections
-                .get(sectionId)?.grid?.cells.get(id)
+                .get(sectionId.client)?.grid?.cells.get(id.client)
         },
 
         getLayoutGridCells(sectionId) {
             const cells = registry.layout?.sectionContainer?.sections
-                .get(sectionId)?.grid?.cells
+                .get(sectionId.client)?.grid?.cells
 
             return cells ? Array.from(cells.values()) : undefined
         }

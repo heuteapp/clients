@@ -17,7 +17,7 @@ export type BoardSessionUpdater = (updater: (draft: Draft<BoardSession>) => void
 //
 
 export interface CardBaseState {
-    cardId: string;
+    cardId: Identifier;
     startPointer: Pointer;
 }
 

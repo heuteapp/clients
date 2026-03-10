@@ -10,12 +10,12 @@ export interface LayoutRootNode extends RegistryBaseNode {
 
 export interface LayoutSectionContainerNode extends RegistryBaseNode {
     props?: LayoutSectionContainerProps
-    sections: Map<Identifier, LayoutSectionNode>
+    sections: Map<string, LayoutSectionNode>
 }
 
 export interface LayoutGridNode extends RegistryBaseNode {
     props?: LayoutGridProps
-    cells: Map<Identifier, LayoutGridCellNode>
+    cells: Map<string, LayoutGridCellNode>
 }
 
 export interface LayoutSectionNode extends RegistryBaseNode {

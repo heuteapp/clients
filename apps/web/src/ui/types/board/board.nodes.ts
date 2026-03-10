@@ -10,7 +10,7 @@ export interface BoardRootNode extends RegistryBaseNode {
 
 export interface BoardCardContainerNode extends RegistryBaseNode {
     props?: BoardCardContainerProps; 
-    cards: Map<Identifier, BoardCardNode>
+    cards: Map<string, BoardCardNode>
 }
 
 export interface BoardCardNode extends RegistryBaseNode {

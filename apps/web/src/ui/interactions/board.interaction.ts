@@ -1,5 +1,6 @@
 import { BoardSession, BoardSessionUpdater } from "@/src/ui/types/board/board.session"
 import { BoardInteraction } from "./board.interaction.types"
+import { createIdentifier } from "@/src/core/utils/shared/data"
 
 
 export function createBoardInteraction(
@@ -22,7 +23,7 @@ export function createBoardInteraction(
 
         startCardCreate(size) {
             const state = {
-                cardId: ":ghost-card",
+                cardId: createIdentifier(),
                 startPointer: interaction.pointer!,
                 startSize: size,
                 currentSectionId: null,
