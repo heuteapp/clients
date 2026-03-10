@@ -36,7 +36,7 @@ export function createBoardInteraction(
                 draft.cardResize = null;
             })
             
-            interaction.eventType = "create";
+            interaction.eventType = "creation";
             interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 
@@ -65,7 +65,7 @@ export function createBoardInteraction(
                 draft.cardResize = null;
             })
 
-            interaction.eventType = "move";
+            interaction.eventType = "movement";
             interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 
@@ -109,9 +109,9 @@ export function createBoardInteraction(
             if(!session) return null;
 
             switch(interaction.eventType) {
-                case "create":
+                case "creation":
                     return session.cardCreation;
-                case "move":
+                case "movement":
                     return session.cardMovement;
                 case "resize":
                     return session.cardResize;

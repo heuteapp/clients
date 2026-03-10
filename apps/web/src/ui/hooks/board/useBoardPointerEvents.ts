@@ -91,7 +91,7 @@ export function useBoardPointerEvents(
 
             OnStart: (type, state) => {
 
-                if (type === "create") {
+                if (type === "creation") {
 
                     setCreateMode(root, true)
 
@@ -101,7 +101,7 @@ export function useBoardPointerEvents(
 
             OnFinish: (type) => {
 
-                if (type === "create") {
+                if (type === "creation") {
                     setCreateMode(root, false)
                     endCardCreateInteraction(root, registry, interaction);
                 }

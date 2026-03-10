@@ -47,4 +47,4 @@ export interface BoardInteractionEventHandlers {
     OnFinish?: (type: BoardInteractionEventType, state: CardBaseSession) => void;
 }
 
-export type BoardInteractionEventType = "create" | "move" | "resize";
+export type BoardInteractionEventType = "creation" | "movement" | "resize";

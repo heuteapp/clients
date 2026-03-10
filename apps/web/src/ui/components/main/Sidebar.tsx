@@ -48,7 +48,7 @@ function SidebarItem({ onPointerDown } : { onPointerDown: (context: BoardContext
         backgroundColor: '#ffffff',
         border: '1px solid #cccccc',
         userSelect: 'none',
-        cursor: context.interaction.eventType === "create" ? "default" : "pointer",
+        cursor: context.interaction.eventType === "creation" ? "default" : "pointer",
       }}
       onPointerDown={() => { onPointerDown(context); }}
     >
