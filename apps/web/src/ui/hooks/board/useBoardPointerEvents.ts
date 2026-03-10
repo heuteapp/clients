@@ -65,16 +65,18 @@ export function useBoardPointerEvents(
             ) {
                 const cardCreateState = currentSession.cardCreation!;
 
-                if(cardCreateState.currentSectionId && cardCreateState.currentPosition) {
-                    const section = registry.getLayoutSection(cardCreateState.currentSectionId);
+                const currentPlacement = cardCreateState.currentPlacement;
+
+                if(currentPlacement && currentPlacement.sectionId && currentPlacement.position) {
+                    const section = registry.getLayoutSection(currentPlacement.sectionId);
                     if(!section) return;
 
                     createCard({
                         placement: {
                             sectionName: section.props!.name,
                             position: {
-                                colIndex: cardCreateState.currentPosition.colIndex,
-                                rowIndex: cardCreateState.currentPosition.rowIndex,
+                                colIndex: currentPlacement.position.colIndex,
+                                rowIndex: currentPlacement.position.rowIndex,
                                 colSpan: cardCreateState.startSize.colSpan,
                                 rowSpan: cardCreateState.startSize.rowSpan,
                             }

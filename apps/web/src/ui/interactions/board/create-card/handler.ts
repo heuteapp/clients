@@ -29,7 +29,7 @@ export function handleCardCreateInteraction(
     const result = findSectionUnderPointer(registry, pointer)
 
     if (!result) {
-        interaction.updateCardCreate(null, null)
+        interaction.updateCardCreation(null)
         clearGridHover(registry)
         
         const width = state.startSize.colSpan * cellSize
@@ -77,7 +77,10 @@ export function handleCardCreateInteraction(
         height
     )
 
-    interaction.updateCardCreate(sectionProps.id, pos)
+    interaction.updateCardCreation({
+        sectionId: sectionProps.id,
+        position: pos
+    })
 }
 
 export function endCardCreateInteraction(
@@ -87,5 +90,5 @@ export function endCardCreateInteraction(
 ) {
     clearGridHover(registry);
     clearGhostCard(root);
-    interaction.updateCardCreate(null, null);
+    interaction.updateCardCreation(null);
 }

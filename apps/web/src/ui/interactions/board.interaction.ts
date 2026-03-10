@@ -26,8 +26,7 @@ export function createBoardInteraction(
                 cardId: createIdentifier(),
                 startPointer: interaction.pointer!,
                 startSize: size,
-                currentSectionId: null,
-                currentPosition: null
+                currentPlacement: null
             }
 
             interaction.sessionUpdater((draft) => {
@@ -40,23 +39,20 @@ export function createBoardInteraction(
             interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 
-        updateCardCreate(sectionId, position) {
+        updateCardCreation(placement) {
             interaction.sessionUpdater((draft) => {
                 if(draft.cardCreation) {
-                    draft.cardCreation.currentSectionId = sectionId;
-                    draft.cardCreation.currentPosition = position;
+                    draft.cardCreation.currentPlacement = placement;
                 }
             })
         },
 
-        startCardMove(cardId, sectionId, pointer, position) {
+        startCardMovement(cardId, placement) {
             const state = {
                 cardId,
-                startSectionId: sectionId,
-                startPointer: pointer,
-                startPosition: position,
-                currentSectionId: sectionId,
-                currentPosition: position
+                startPointer: interaction.pointer!,
+                startPlacement: placement,
+                currentPlacement: null,
             }
 
             interaction.sessionUpdater((draft) => {
@@ -66,26 +62,6 @@ export function createBoardInteraction(
             })
 
             interaction.eventType = "movement";
-            interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
-        },
-
-        startCardResize(cardId, sectionId, pointer, size, handle) {
-            const state = {
-                cardId,
-                startSectionId: sectionId,
-                startPointer: pointer,
-                startSize: size,
-                currentSize: size,
-                resizeHandle: handle
-            }
-
-            interaction.sessionUpdater((draft) => {
-                draft.cardResize = state;
-                draft.cardCreation = null;
-                draft.cardMovement = null;
-            })
-
-            interaction.eventType = "resize";
             interaction.eventHandlers?.OnStart?.(interaction.eventType, state)
         },
 

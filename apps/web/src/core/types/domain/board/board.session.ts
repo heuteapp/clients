@@ -1,4 +1,4 @@
-import { GridPosition, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
+import { GridPosition, GridRect, GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
 import { Identifier } from "@/src/core/types/shared/data";
 import { Draft } from "immer";
 
@@ -20,15 +20,19 @@ export interface CardBaseSession{
 
 export interface CardCreationSession extends CardBaseSession {
     startSize: GridSize;
-    currentSectionId: Identifier | null;
-    currentPosition: GridPosition | null;
+    currentPlacement: CardMovementPlacement | null;
 }
 
+//
+
 export interface CardMovementSession extends CardBaseSession {
-    startPosition: GridPosition;
-    startSectionId: Identifier;
-    currentSectionId: Identifier;
-    currentPosition: GridPosition;
+    startPlacement: CardMovementPlacement;
+    currentPlacement: CardMovementPlacement | null;
+}
+
+export interface CardMovementPlacement {
+    sectionId: Identifier;
+    position: GridPosition;
 }
 
 export interface CardResizeSession extends CardBaseSession {
