@@ -1,5 +1,6 @@
 import { BoardData, BoardCardData } from "@/src/core/types/domain/board/board.data"
 import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data"
+import { DataContent } from "@/src/core/types/shared/data"
 
 export type BoardStore = {
     board: BoardData | null
@@ -11,6 +12,6 @@ export type BoardStore = {
     setLayout: (updater: (layout: HeuteLayoutData | null) => HeuteLayoutData | null) => void
     setSections: (sections: LayoutSectionData[]) => void
 
-    addCard: (card: BoardCardData) => void
-    removeCard: (cardId: string) => void
+    createCard: (content: DataContent<BoardCardData>) => BoardCardData
+    deleteCard: (id: string) => BoardCardData | undefined
 }

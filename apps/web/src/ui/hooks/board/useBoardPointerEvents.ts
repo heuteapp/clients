@@ -15,7 +15,7 @@ export function useBoardPointerEvents(
     sessionRef: React.RefObject<BoardSession>,
     interaction: BoardInteraction
 ) {
-    const addCard = useBoardStore(state => state.addCard);
+    const createCard = useBoardStore(state => state.createCard);
 
     useEffect(() => {
         const root = rootRef.current
@@ -74,8 +74,7 @@ export function useBoardPointerEvents(
                         const section = registry.getLayoutSection(cardCreateState.currentSectionId);
                         if(!section) return;
 
-                        addCard({
-                            id: createClientId(),
+                        createCard({
                             placement: {
                                 sectionName: section.props!.name,
                                 position: {
