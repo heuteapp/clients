@@ -3,6 +3,13 @@ export interface Pointer {
     y: number;
 }
 
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
 export interface GridPosition {
     rowIndex: number;
     colIndex: number;
