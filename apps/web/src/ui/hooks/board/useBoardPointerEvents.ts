@@ -84,7 +84,7 @@ export function useBoardPointerEvents(
 
         interaction.setEventHandlers({
 
-            OnStart: (type, session) => {
+            OnStart: (type) => {
 
                 if (type === "creation") {
                     handleCardCreateInteraction(context)
