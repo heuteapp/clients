@@ -4,7 +4,7 @@ import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/lay
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
-import { calculateCardPositionByPointer } from "../board.calc";
+import { calculateCardPositionByPointer } from "../../board.calc";
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
