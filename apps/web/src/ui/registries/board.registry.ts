@@ -222,7 +222,8 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             const section = registry.layout?.sectionContainer?.sections.get(sectionId);
 
             for (const card of cards.values()) {
-                if (card.props?.sectionName === section?.props?.name) {
+                const placement = card.props?.placement;
+                if (placement?.sectionName === section?.props?.name) {
                     sectionCards.push(card)
                 }
             }

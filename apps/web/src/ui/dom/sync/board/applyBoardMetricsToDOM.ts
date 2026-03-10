@@ -55,11 +55,17 @@ export function applyBoardMetricsToDOM({ registry, metrics }: { registry: BoardR
 
             const props = card.props!;
 
+            const placement = props.placement;
+            if (!placement) return;
+
+            const gridPosition = placement.position;
+            if(!gridPosition) return;
+
             const rawPosition = {
-                left: gridRect.left + (props.colIndex - 1) * stepSize.width,
-                top: gridRect.top + (props.rowIndex - 1) * stepSize.height,
-                width: props.colSpan * stepSize.width,
-                height: props.rowSpan * stepSize.height,
+                left: gridRect.left + (gridPosition.colIndex - 1) * stepSize.width,
+                top: gridRect.top + (gridPosition.rowIndex - 1) * stepSize.height,
+                width: gridPosition.colSpan * stepSize.width,
+                height: gridPosition.rowSpan * stepSize.height,
             }
 
             const position = {
