@@ -42,7 +42,7 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
 
 
     useEffect(() => {
-        const element = layoutRef.current;
+        const element = registry.board.ref.current;
         if (!element) return
 
         const observer = new ResizeObserver(() => {
@@ -50,14 +50,13 @@ export function useBoardMetrics({ registry, gridDimensions, sections, padding }:
         })
 
         const mutationObserver = new MutationObserver(() => {
+            console.log("Mutation observed, updating metrics...");
             updateBoardMetrics(registry, metricsRef);    
         })
 
         mutationObserver.observe(element, {
             childList: true,
             subtree: true,
-            attributes: true,
-            characterData: true
         })
 
         observer.observe(element)
