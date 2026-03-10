@@ -1,14 +1,13 @@
 import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from "react";
 import { handleCardCreateInteraction, endCardCreateInteraction } from "@/src/ui/interactions/domain/board/create-card/handler";
-import { CardCreationSession } from "@/src/core/types/domain/board/board.session";
 import { BoardContextValue } from "../../types/board/board.context";
 
 export function useBoardPointerEvents(
     context: BoardContextValue
 ) {
     const createCard = useBoardStore(state => state.createCard);
-    const { rootRef, registry, session, interaction, metrics } = context;
+    const { rootRef, registry, session, interaction } = context;
 
     useEffect(() => {
         const root = rootRef.current
