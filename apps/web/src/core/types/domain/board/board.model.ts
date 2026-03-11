@@ -9,6 +9,10 @@ export interface BoardModel {
 
 export interface BoardCardModel {
     name: string;
-    title: string | null;
+    content: BoardCardContent;
     placement: CardPlacement | null;
+}
+
+export interface BoardCardContent {
+    title: string | null;
 }
