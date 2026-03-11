@@ -20,7 +20,7 @@ export function useBoardActions(): BoardActions {
             debounce(async () => {
                 const snapshot = lastSnapshotRef.current;
                 try {
-                    await api.post("/workspace/board/sync", 
+                    await api.post("/workspace/board/mihr/sync", 
                         { cards: useBoardStore.getState().cards.slice() },
                         {
                             headers: {
@@ -30,6 +30,8 @@ export function useBoardActions(): BoardActions {
                     );
                 } catch (err) {
                     if (snapshot) setState(snapshot);
+
+                    throw err;
                 }
                 finally {
                     lastSnapshotRef.current = null;
