@@ -18,7 +18,7 @@ export function useBoardActions(): BoardActions {
             debounce(async () => {
                 const snapshot = lastSnapshotRef.current;
                 try {
-                    await api.post("/board/sync", { cards: useBoardStore.getState().cards.slice() });
+                    await api.post("/workspace/board/sync", { cards: useBoardStore.getState().cards.slice() });
                 } catch (err) {
                     if (snapshot) setState(snapshot);
                 }
