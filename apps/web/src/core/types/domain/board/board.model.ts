@@ -2,7 +2,7 @@ import { CardPlacement } from "@/src/core/types/shared/board";
 
 export interface BoardModel {
     layoutId: string;
-    category: string;
+    categoryName: string;
     date: Date;
     cards: BoardCardModel[];
 }
