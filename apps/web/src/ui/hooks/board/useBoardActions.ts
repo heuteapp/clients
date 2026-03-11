@@ -9,7 +9,10 @@ export function useBoardActions(): BoardActions {
     const createCardLocal = useBoardStore((state) => state.createCard);
     const deleteCardLocal = useBoardStore((state) => state.deleteCard);
     const setState = useBoardStore((state) => state.setState);
+
     const accessToken = useAuthStore((state) => state.accessToken);
+
+    const cards = useBoardStore((state) => state.cards);
 
     const lastSnapshotRef = useRef<BoardState | null>(null);
     const pendingActionsRef = useRef(0);
@@ -21,7 +24,23 @@ export function useBoardActions(): BoardActions {
                 const snapshot = lastSnapshotRef.current;
                 try {
                     await api.post("/workspace/board/mihr/sync", 
-                        { cards: useBoardStore.getState().cards.slice() },
+                        { props: {
+                            cards: cards.map((card) => ({
+                                id: card.id,
+                                content: card.content,
+                                placement: {
+                                    section: {
+                                        name: card.placement?.sectionName || null
+                                    },
+                                    position: {
+                                        col: card.placement?.position.colIndex || null,
+                                        row: card.placement?.position.rowIndex || null,
+                                        colSpan: card.placement?.position.colSpan || null,
+                                        rowSpan: card.placement?.position.rowSpan || null,
+                                    }
+                                }
+                            }))
+                        } },
                         {
                             headers: {
                                 Authorization: `Bearer ${accessToken}`
