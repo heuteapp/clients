@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { AuthStore } from "../core/types/auth/auth.store";
 
-export const useAuthStore = create<AuthStore & { isLoaded: boolean }>((set) => ({
+export const useAuthStore = create<AuthStore>((set) => ({
     accessToken: null,
     profile: null,
     isLoaded: false,

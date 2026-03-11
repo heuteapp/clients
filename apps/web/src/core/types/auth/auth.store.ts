@@ -12,4 +12,5 @@ export interface AuthState {
 export interface AuthActions {
     setAuth: (accessToken: string, profile: ProfileData) => void;
     clearAuth: () => void;
+    hydrate: () => void;
 }
