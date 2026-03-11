@@ -9,6 +9,6 @@ export interface BoardData extends BaseData {
 
 export interface BoardCardData extends BaseData {
     name: string;
-    title: string | null;
+    content: { title: string | null };
     placement: CardPlacement | null;
 }

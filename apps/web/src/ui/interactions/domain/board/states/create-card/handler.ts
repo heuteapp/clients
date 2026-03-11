@@ -3,6 +3,7 @@ import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } fr
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { calculateCardPositionByPointer } from "@/src/ui/interactions/domain/board/board.calc";
 import { useBoardStore } from "@/src/stores/board.store";
+import { title } from "process";
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
@@ -96,6 +97,10 @@ export function finalizeCardCreationState(context : BoardContextValue) {
         if(!section) return;
 
         createCard({
+            name: "card-" + Date.now(),
+            content: {
+                title: "New Card"
+            },
             placement: {
                 sectionName: section.props!.name,
                 position: {
