@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { api } from "@/src/core/utils/api";
@@ -9,17 +9,15 @@ import axios from "axios";
 export default function LoginPage() {
   const router = useRouter();
   const { accessToken, isLoaded, setAuth } = useAuthStore();
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Sayfa yüklendiğinde store'ı hydrate et
   useEffect(() => {
     useAuthStore.getState().hydrate();
   }, []);
 
-  // Eğer login olmuşsa dashboard'a yönlendir
   useEffect(() => {
     if (isLoaded && accessToken) {
       router.push("/workspace");
@@ -32,7 +30,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await api.post("/auth/signin", { name, password });
       const { accessToken, profile } = res.data;
 
       setAuth(accessToken, profile);
@@ -58,10 +56,10 @@ export default function LoginPage() {
         style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
       >
         <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="name"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
           style={{ padding: "0.5rem", fontSize: "1rem" }}
         />
