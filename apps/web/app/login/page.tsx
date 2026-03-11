@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { accessToken, isLoaded, setAuth } = useAuthStore();
+  const { profile, accessToken, setAuth } = useAuthStore();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,10 +19,10 @@ export default function LoginPage() {
   }, []);
 
   useEffect(() => {
-    if (isLoaded && accessToken) {
+    if (profile && accessToken) {
       router.push("/workspace");
     }
-  }, [isLoaded, accessToken, router]);
+  }, [profile, accessToken, router]);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ export default function LoginPage() {
     }
   };
 
-  if (!isLoaded) return <p>Loading...</p>;
+  if (!profile) return <p>Loading...</p>;
 
   return (
     <div style={{ maxWidth: 400, margin: "auto", padding: "2rem" }}>
