@@ -1,13 +1,13 @@
-import { BaseData } from "@/src/core/types/shared/data";
 import { CardPlacement } from "@/src/core/types/shared/board";
 
-export interface BoardData extends BaseData {
+export interface BoardModel {
+    layoutId: string;
     category: string;
     date: Date;
-    layoutId: string;
+    cards: BoardCardModel[];
 }
 
-export interface BoardCardData extends BaseData {
+export interface BoardCardModel {
     name: string;
     title: string | null;
     placement: CardPlacement | null;
