@@ -1,35 +1,23 @@
-import "@/src/ui/styles/shared/global.css";
+'use client';
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Panel from "@/src/ui/components/main/Panel";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useAuthStore } from "@/src/stores/auth.store";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "HeuteApp",
-  description: "Daily learning journey",
-};
-
-export default function RootLayout({
+export default function WorkspaceLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body>
-        <Panel>
-          {children}
-        </Panel>
-      </body>
-    </html>
-  );
+}: Readonly<{ children: React.ReactNode }>) {
+  const { profile, isLoaded } = useAuthStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoaded && !profile) {
+      router.push("/login");
+    }
+  }, [profile, isLoaded, router]);
+
+  if (isLoaded && !profile) return null;
+
+  return <Panel>{children}</Panel>;
 }
