@@ -30,7 +30,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const res = await api.post("/auth/signin", { name, password });
+      const res = await api.post("/auth/login", { name, password });
       const { accessToken, profile } = res.data;
 
       setAuth(accessToken, profile);
