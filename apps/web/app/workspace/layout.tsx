@@ -8,16 +8,19 @@ import { useAuthStore } from "@/src/stores/auth.store";
 export default function WorkspaceLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const { profile, loadAuth } = useAuthStore();
+  const { profile, loadAuth, setAuth } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
     if(profile) return;
     const auth = loadAuth();
-
+    
     if(!auth || !auth.accessToken || !auth.profile) {
       router.push("/login");
+      return;
     }
+
+    setAuth(auth.accessToken, auth.profile);
   }, []);
 
   if (!profile) return null;
