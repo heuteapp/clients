@@ -3,11 +3,13 @@ import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.st
 import { useBoardStore } from "@/src/stores/board.store";
 import debounce from "lodash.debounce";
 import { api } from "@/src/core/utils/api";
+import { useAuthStore } from "@/src/stores/auth.store";
 
 export function useBoardActions(): BoardActions {
     const createCardLocal = useBoardStore((state) => state.createCard);
     const deleteCardLocal = useBoardStore((state) => state.deleteCard);
     const setState = useBoardStore((state) => state.setState);
+    const accessToken = useAuthStore((state) => state.accessToken);
 
     const lastSnapshotRef = useRef<BoardState | null>(null);
     const pendingActionsRef = useRef(0);
@@ -18,7 +20,14 @@ export function useBoardActions(): BoardActions {
             debounce(async () => {
                 const snapshot = lastSnapshotRef.current;
                 try {
-                    await api.post("/workspace/board/sync", { cards: useBoardStore.getState().cards.slice() });
+                    await api.post("/workspace/board/sync", 
+                        { cards: useBoardStore.getState().cards.slice() },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`
+                            },
+                        }
+                    );
                 } catch (err) {
                     if (snapshot) setState(snapshot);
                 }
@@ -27,7 +36,7 @@ export function useBoardActions(): BoardActions {
                     pendingActionsRef.current = 0;
                 }
             }, 2000),
-        [setState]
+        [accessToken, setState]
     );
 
     const runAction = <T>(fn: () => T): T => {
