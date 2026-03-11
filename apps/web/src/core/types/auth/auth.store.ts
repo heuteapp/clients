@@ -1,7 +1,7 @@
 import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 
 export interface AuthStore extends AuthState, AuthActions {
-
+    isLoaded: boolean;
 }
 
 export interface AuthState {
