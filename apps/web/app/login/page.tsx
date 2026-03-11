@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (profile && accessToken) {
-      router.push("/workspace");
+      router.push("/workspace/board/mihr");
     }
   }, [profile, accessToken, router]);
 
@@ -45,8 +45,6 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-
-  if (!profile) return <p>Loading...</p>;
 
   return (
     <div style={{ maxWidth: 400, margin: "auto", padding: "2rem" }}>
