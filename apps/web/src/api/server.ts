@@ -9,8 +9,8 @@ export const server = axios.create({
 });
 
 server.interceptors.request.use((config) => {
-    if(config.url?.startsWith("/workspace")) {
-        const accessToken = useAuthStore(state => state.accessToken);
+    if (config.url?.startsWith("/workspace")) {
+        const accessToken = useAuthStore.getState().accessToken;
 
         if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
