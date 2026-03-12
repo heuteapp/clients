@@ -1,4 +1,4 @@
-import { serverApi } from "@/src/api/server";
+import { serverApi } from "@/src/api/client/server";
 
 export const boardApi = {
     getBoard: (categoryName: string) =>
