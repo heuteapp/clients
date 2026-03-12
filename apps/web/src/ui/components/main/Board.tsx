@@ -1,7 +1,6 @@
 "use client";
 import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
 import { useBoardStore } from "@/src/stores/board.store";
-import { sectionExamples } from '@/src/dump/board.examples';
 import { useEffect } from 'react';
 import { createDataIdentifier } from '@/src/core/utils/shared/data';
 
@@ -28,7 +27,7 @@ function Board({ category, date }: BoardProps) {
                 columnCount: 18,
                 rowCount: 8
             },
-            sections: (sectionExamples as any)[category ?? "two"] ?? sectionExamples.two
+            sections: []
         });
     }, [])
 
