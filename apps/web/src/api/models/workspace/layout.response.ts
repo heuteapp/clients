@@ -1,4 +1,6 @@
 export interface LayoutResponse {
+    name: string;
+    version: number;
     colCount: number;
     rowCount: number;
     sections: LayoutSectionResponse[];
