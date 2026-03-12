@@ -32,11 +32,7 @@ function Board({ category, date }: BoardProps) {
         });
     }, [])
 
-    console.log(board);
-
     if(!board) return null;
-
-    console.log("hiha");
 
     return (
         <>
