@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/stores/auth.store";
-import { api } from "@/src/core/utils/api";
+import { server } from "@/src/api/client";
 import axios from "axios";
 
 export default function LoginPage() {
@@ -30,7 +30,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const res = await api.post("/auth/login", { name, password });
+      const res = await server.auth.login({ name, password });
       const { accessToken, profile } = res.data;
 
       setAuth(accessToken, profile);
