@@ -58,14 +58,14 @@ export function calculateLayoutSectionsCount(sections: LayoutSectionData[]): Lay
 
     let sectionCount = { horizontal: 0, vertical: 0 }
     {
-        const maxRow = Math.max(...sections.map(s => s.rowIndex + s.rowSpan))
-        const maxCol = Math.max(...sections.map(s => s.colIndex + s.colSpan))
+        const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan))
+        const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan))
 
         for (let row = 1; row <= maxRow; row++) {
             let count = 0
 
             for (const s of sections) {
-                if (row >= s.rowIndex && row < s.rowIndex + s.rowSpan) {
+                if (row >= s.position.rowIndex && row < s.position.rowIndex + s.position.rowSpan) {
                     count++
                 }
             }
@@ -77,7 +77,7 @@ export function calculateLayoutSectionsCount(sections: LayoutSectionData[]): Lay
             let count = 0
 
             for (const s of sections) {
-                if (col >= s.colIndex && col < s.colIndex + s.colSpan) {
+                if (col >= s.position.colIndex && col < s.position.colIndex + s.position.colSpan) {
                     count++
                 }
             }

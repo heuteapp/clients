@@ -31,8 +31,8 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
         const gridSize = {
-            width: metrics.layout!.gridSize.width / (metrics.layout!.gridCellsCount.horizontal / section.props!.colSpan),
-            height: metrics.layout!.gridSize.height / (metrics.layout!.gridCellsCount.vertical / section.props!.rowSpan)
+            width: metrics.layout!.gridSize.width / (metrics.layout!.gridCellsCount.horizontal / section.props!.position.colSpan),
+            height: metrics.layout!.gridSize.height / (metrics.layout!.gridCellsCount.vertical / section.props!.position.rowSpan)
         }
 
         const gap = 6;
@@ -45,8 +45,8 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
         }
 
         const stepSize = {
-            width: gridRect.width / section.props!.colSpan,
-            height: gridRect.height / section.props!.rowSpan
+            width: gridRect.width / section.props!.position.colSpan,
+            height: gridRect.height / section.props!.position.rowSpan
         }
 
         cards.forEach(card => {

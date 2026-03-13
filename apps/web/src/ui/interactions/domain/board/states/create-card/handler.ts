@@ -58,8 +58,8 @@ export function handleCardCreateInteraction(context: BoardContextValue)
         cellSize,
         state.startSize,
         {
-            colSpan: sectionProps.colSpan,
-            rowSpan: sectionProps.rowSpan
+            colSpan: sectionProps.position.colSpan,
+            rowSpan: sectionProps.position.rowSpan
         }
     );
 
