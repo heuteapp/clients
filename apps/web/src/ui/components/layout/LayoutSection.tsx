@@ -25,14 +25,14 @@ function LayoutSection(props : LayoutSectionProps) {
         className={style.section}
         style={{
             position: "absolute",
-            left: `calc(${props.colIndex - 1} * var(--cell-size-full) + ${props.padding}px)`,
-            top: `calc(${props.rowIndex - 1} * var(--cell-size-full) + ${props.padding}px)`,
-            width: `calc(${props.colSpan} * var(--cell-size-full) - ${props.padding * 2}px)`,
-            height: `calc(${props.rowSpan} * var(--cell-size-full) - ${props.padding * 2}px)`,
+            left: `calc(${props.position.colIndex - 1} * var(--cell-size-full) + ${props.padding}px)`,
+            top: `calc(${props.position.rowIndex - 1} * var(--cell-size-full) + ${props.padding}px)`,
+            width: `calc(${props.position.colSpan} * var(--cell-size-full) - ${props.padding * 2}px)`,
+            height: `calc(${props.position.rowSpan} * var(--cell-size-full) - ${props.padding * 2}px)`,
             padding: props.padding,
         }}
         >
-            <LayoutGrid colSpan={props.colSpan} rowSpan={props.rowSpan} sectionId={props.id} />
+            <LayoutGrid colSpan={props.position.colSpan} rowSpan={props.position.rowSpan} sectionId={props.id} />
         </div>
     )
 }
