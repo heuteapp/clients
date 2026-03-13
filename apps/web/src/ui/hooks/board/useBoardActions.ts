@@ -3,6 +3,8 @@ import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.st
 import { useBoardStore } from "@/src/stores/board.store";
 import debounce from "lodash.debounce";
 import { useAuthStore } from "@/src/stores/auth.store";
+import { BoardEvent, BoardEventType, CardCreatedEvent } from "@/src/core/types/domain/board/board.event";
+import { server } from "@/src/api/client";
 
 export function useBoardActions(): BoardActions {
     const createCardLocal = useBoardStore((state) => state.createCard);
@@ -11,51 +13,31 @@ export function useBoardActions(): BoardActions {
 
     const accessToken = useAuthStore((state) => state.accessToken);
 
-    const cards = useBoardStore((state) => state.cards);
-
     const lastSnapshotRef = useRef<BoardState | null>(null);
     const pendingActionsRef = useRef(0);
     const FLUSH_THRESHOLD = 8;
 
-    const syncBoardToServer = useMemo(
-        () =>
-            debounce(async () => {
-                /*const snapshot = lastSnapshotRef.current;
-                try {
-                    await api.post("/workspace/board/mihr/sync", 
-                        { props: {
-                            cards: cards.map((card) => ({
-                                id: card.id,
-                                content: card.content,
-                                placement: {
-                                    section: {
-                                        name: card.placement?.sectionName || null
-                                    },
-                                    position: {
-                                        col: card.placement?.position.colIndex || null,
-                                        row: card.placement?.position.rowIndex || null,
-                                        colSpan: card.placement?.position.colSpan || null,
-                                        rowSpan: card.placement?.position.rowSpan || null,
-                                    }
-                                }
-                            }))
-                        } },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`
-                            },
-                        }
-                    );
-                } catch (err) {
-                    if (snapshot) setState(snapshot);
+    const eventsRef = useRef<BoardEvent[]>([]);
 
-                    throw err;
-                }
-                finally {
-                    lastSnapshotRef.current = null;
-                    pendingActionsRef.current = 0;
-                }*/
-            }, 2000),
+    const dispatchEvents = useMemo(
+        () => debounce(() => {
+            const events = eventsRef.current;
+            if (events.length === 0) return;
+
+            const snapshot = lastSnapshotRef.current;
+            if (!snapshot) return;
+
+
+            server.workspace.board.postEvents("mihr", { events })
+            .catch(() => {
+                setState(snapshot);
+            }).finally(() => {
+                console.log("Dispatching events:", { events: [...eventsRef.current], length: eventsRef.current.length });
+                eventsRef.current.length = 0;
+                pendingActionsRef.current = 0;
+                lastSnapshotRef.current = null;
+            });
+        }, 1000),
         [accessToken, setState]
     );
 
@@ -65,9 +47,9 @@ export function useBoardActions(): BoardActions {
         pendingActionsRef.current += 1;
 
         if (pendingActionsRef.current >= FLUSH_THRESHOLD) {
-            syncBoardToServer.flush();
+            dispatchEvents.flush();
         } else {
-            syncBoardToServer();
+            dispatchEvents();
         }
 
         return fn();
@@ -75,10 +57,22 @@ export function useBoardActions(): BoardActions {
 
     const actions: BoardActions = useMemo(
         () => ({
-            createCard: (content) => runAction(() => createCardLocal(content)),
+            createCard: (content) => runAction(() => {
+                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardEventType.CardCreated, payload: {
+                    name: content.name,
+                    title: content.content?.title,
+                    sectionName: content.placement?.sectionName,
+                    colIndex: content.placement?.position.colIndex,
+                    rowIndex: content.placement?.position.rowIndex,
+                    colSpan: content.placement?.position.colSpan,
+                    rowSpan: content.placement?.position.rowSpan,
+                } } as CardCreatedEvent);
+                console.log("length: ", eventsRef.current.length);
+                return createCardLocal(content);
+            }),
             deleteCard: (id) => runAction(() => deleteCardLocal(id)),
         }),
-        [createCardLocal, deleteCardLocal, syncBoardToServer]
+        [createCardLocal, deleteCardLocal, dispatchEvents]
     );
 
     return actions;
