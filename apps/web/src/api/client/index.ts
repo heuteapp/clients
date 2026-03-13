@@ -1,5 +1,5 @@
-import { boardApi } from "./workspace/board.api";
-import { layoutApi } from "./workspace/layout.api";
+import { boardApi } from "./endpoints/workspace/board.api";
+import { layoutApi } from "./endpoints/workspace/layout.api";
 
 export const server = {
     workspace: {
