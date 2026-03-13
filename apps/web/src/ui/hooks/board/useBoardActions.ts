@@ -31,13 +31,12 @@ export function useBoardActions(): BoardActions {
             server.workspace.board.postEvents("mihr", { events })
             .catch(() => {
                 setState(snapshot);
-            }).finally(() => {
-                console.log("Dispatching events:", { events: [...eventsRef.current], length: eventsRef.current.length });
-                eventsRef.current.length = 0;
-                pendingActionsRef.current = 0;
-                lastSnapshotRef.current = null;
             });
-        }, 1000),
+
+            eventsRef.current.length = 0;
+            pendingActionsRef.current = 0;
+            lastSnapshotRef.current = null;
+        }, 0),
         [accessToken, setState]
     );
 
@@ -67,7 +66,6 @@ export function useBoardActions(): BoardActions {
                     colSpan: content.placement?.position.colSpan,
                     rowSpan: content.placement?.position.rowSpan,
                 } } as CardCreatedEvent);
-                console.log("length: ", eventsRef.current.length);
                 return createCardLocal(content);
             }),
             deleteCard: (id) => runAction(() => deleteCardLocal(id)),
