@@ -7,6 +7,7 @@ export interface LayoutResponse {
 }
 
 export interface LayoutSectionResponse {
+    name: string;
     colIndex: number;
     rowIndex: number;
     colSpan: number;

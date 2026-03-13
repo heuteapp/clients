@@ -1,3 +1,4 @@
+import { GridPosition } from "../../shared/common"
 import { BaseData } from "../../shared/data"
 
 export interface HeuteLayoutData extends BaseData {
@@ -7,8 +8,5 @@ export interface HeuteLayoutData extends BaseData {
 
 export interface LayoutSectionData extends BaseData {
     name: string
-    colIndex: number
-    rowIndex: number
-    colSpan: number
-    rowSpan: number
+    position: GridPosition;
 }
