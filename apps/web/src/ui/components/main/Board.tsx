@@ -18,6 +18,8 @@ function Board({ category, date }: BoardProps) {
         const fetchBoard = async () => {
             try {   
                 const response = await server.workspace.board.getBoard(category , /*date*/);
+
+                console.log("Board data received:", response.data);
                 
                 setState({
                     board: {

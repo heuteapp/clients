@@ -2,7 +2,6 @@ import { useRef, useMemo } from "react";
 import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.store";
 import { useBoardStore } from "@/src/stores/board.store";
 import debounce from "lodash.debounce";
-import { api } from "@/src/core/utils/api";
 import { useAuthStore } from "@/src/stores/auth.store";
 
 export function useBoardActions(): BoardActions {
@@ -21,7 +20,7 @@ export function useBoardActions(): BoardActions {
     const syncBoardToServer = useMemo(
         () =>
             debounce(async () => {
-                const snapshot = lastSnapshotRef.current;
+                /*const snapshot = lastSnapshotRef.current;
                 try {
                     await api.post("/workspace/board/mihr/sync", 
                         { props: {
@@ -55,7 +54,7 @@ export function useBoardActions(): BoardActions {
                 finally {
                     lastSnapshotRef.current = null;
                     pendingActionsRef.current = 0;
-                }
+                }*/
             }, 2000),
         [accessToken, setState]
     );
