@@ -1,6 +1,6 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
-import { LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue, LayoutGridMetricsValue, LayoutGridMetricsSpacing, LayoutGridCellMetricsCount, LayoutGridCellMetricsValue, LayoutGridCellMetricsSize, LayoutGridMetricsSize, LayoutSectionContainerMetricsValue, LayoutSectionContainerMetricsSize } from "@/src/core/types/domain/layout/layout.metrics";
+import { LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue, LayoutGridMetricsValue, LayoutGridMetricsSpacing, LayoutGridCellMetricsCount, LayoutGridCellMetricsValue, LayoutGridCellMetricsSize, LayoutGridMetricsSize, LayoutSectionContainerMetricsValue, LayoutSectionContainerMetricsSize, LayoutMetricsSpacing, LayoutSectionMetricsSpacing } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
     const layout = registry.layout;
@@ -18,11 +18,21 @@ export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsV
     const sectionDatas = sections.map(section => section.props) as LayoutSectionData[];
     if(sectionDatas.some(props => !props)) return;
 
+    metricsValue.spacing = calculateLayoutSpacing(layoutElement);
     metricsValue.sectionCount = calculateLayoutSectionMetricsCount(sectionDatas);
     metricsValue.sectionValue = calculateLayoutSectionMetricsValue(registry, layoutElement);
     metricsValue.sectionContainerValue = calculateLayoutSectionContainerMetricsValue(metricsValue);
     
     return metricsValue;
+}
+
+export function calculateLayoutSpacing(layoutElement: HTMLElement): LayoutMetricsSpacing {
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+    const padding = 0;
+
+    return {
+        padding
+    }
 }
 
 export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]): LayoutSectionMetricsCount {
@@ -70,9 +80,19 @@ export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]
 export function calculateLayoutSectionMetricsValue(registry: BoardRegistry, layoutElement: HTMLElement): LayoutSectionMetricsValue {
     const sectionMetricsValue = {} as LayoutSectionMetricsValue;
 
+    sectionMetricsValue.spacing = calculateLayoutSectionMetricsSpacing(layoutElement);
     sectionMetricsValue.gridValue = calculateLayoutGridMetricsValue(registry, layoutElement);
 
     return sectionMetricsValue;
+}
+
+export function calculateLayoutSectionMetricsSpacing(layoutElement: HTMLElement): LayoutSectionMetricsSpacing {
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+    const padding = 0;
+
+    return {
+        padding
+    }
 }
 
 export function calculateLayoutSectionContainerMetricsValue(metricsValue: LayoutMetricsValue) : LayoutSectionContainerMetricsValue {
