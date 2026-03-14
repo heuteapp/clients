@@ -15,5 +15,5 @@ export type BoardState = {
 
 export type BoardActions = {
     createCard: (content: DataContent<BoardCardData>) => BoardCardData
-    deleteCard: (id: Identifier) => BoardCardData | undefined
+    deleteCard: (name: string) => BoardCardData | undefined
 }

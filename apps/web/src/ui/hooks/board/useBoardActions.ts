@@ -3,7 +3,7 @@ import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.st
 import { useBoardStore } from "@/src/stores/board.store";
 import debounce from "lodash.debounce";
 import { useAuthStore } from "@/src/stores/auth.store";
-import { BoardCommand, BoardCommandType, CreateCardCommand } from "@/src/core/types/domain/board/board.command";
+import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/board.command";
 import { server } from "@/src/api/client";
 
 export function useBoardActions(): BoardActions {
@@ -70,7 +70,10 @@ export function useBoardActions(): BoardActions {
                 } });
                 return createCardLocal(content);
             }),
-            deleteCard: (id) => runAction(() => deleteCardLocal(id)),
+            deleteCard: (name) => runAction(() => {
+                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.DeleteCard, payload: { key: { name } } });
+                return deleteCardLocal(name);
+            }),
         }),
         [createCardLocal, deleteCardLocal, dispatchEvents]
     );
