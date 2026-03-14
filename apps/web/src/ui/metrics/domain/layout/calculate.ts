@@ -1,7 +1,81 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { LayoutSectionProps } from "@/src/ui/types/layout/layout.props";
-import { LayoutGridCellsCount, LayoutGridCellSize, LayoutMetricsValue, LayoutSectionContainerSize, LayoutSectionsCount } from "@/src/core/types/domain/layout/layout.metrics";
 import { LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
+import { LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue } from "@/src/core/types/domain/layout/layout.metrics";
+
+export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
+    const layout = registry.layout;
+    
+    const layoutProps = layout.props;
+    if(!layoutProps) return;
+
+    const layoutElement = layout.ref?.current;
+    if (!layoutElement) return;
+
+    const sections = registry.getLayoutSections();
+    if(!sections) return;
+
+    const metricsValue = {} as LayoutMetricsValue;
+    const sectionDatas = sections.map(section => section.props) as LayoutSectionData[];
+    if(sectionDatas.some(props => !props)) return;
+
+    metricsValue.sectionCount = calculateLayoutSectionMetricsCount(sectionDatas);
+    metricsValue.sectionValue = calculateLayoutSectionMetricsValue(layoutElement);
+
+    return metricsValue;
+}
+
+export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]): LayoutSectionMetricsCount {
+
+    if (sections.length === 0) {
+        return {
+            horizontal: 0,
+            vertical: 0
+        }
+    }
+
+    let sectionCount = { horizontal: 0, vertical: 0 }
+    {
+        const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan))
+        const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan))
+
+        for (let row = 1; row <= maxRow; row++) {
+            let count = 0
+
+            for (const s of sections) {
+                if (row >= s.position.rowIndex && row < s.position.rowIndex + s.position.rowSpan) {
+                    count++
+                }
+            }
+
+            sectionCount.horizontal = Math.max(sectionCount.horizontal, count)
+        }
+
+        for (let col = 1; col <= maxCol; col++) {
+            let count = 0
+
+            for (const s of sections) {
+                if (col >= s.position.colIndex && col < s.position.colIndex + s.position.colSpan) {
+                    count++
+                }
+            }
+
+            sectionCount.vertical = Math.max(sectionCount.vertical, count)
+        }
+    }
+
+    return sectionCount;
+}
+
+export function calculateLayoutSectionMetricsValue(layoutElement: HTMLElement): LayoutSectionMetricsValue {
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+
+    const sectionMetricsValue = {} as LayoutSectionMetricsValue;
+
+    return sectionMetricsValue;
+}
+
+
+/*
 
 export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
     const layout = registry.layout;
@@ -47,48 +121,6 @@ export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsV
 
 //
 
-export function calculateLayoutSectionsCount(sections: LayoutSectionData[]): LayoutSectionsCount {
-
-    if (sections.length === 0) {
-        return {
-            horizontal: 0,
-            vertical: 0
-        }
-    }
-
-    let sectionCount = { horizontal: 0, vertical: 0 }
-    {
-        const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan))
-        const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan))
-
-        for (let row = 1; row <= maxRow; row++) {
-            let count = 0
-
-            for (const s of sections) {
-                if (row >= s.position.rowIndex && row < s.position.rowIndex + s.position.rowSpan) {
-                    count++
-                }
-            }
-
-            sectionCount.horizontal = Math.max(sectionCount.horizontal, count)
-        }
-
-        for (let col = 1; col <= maxCol; col++) {
-            let count = 0
-
-            for (const s of sections) {
-                if (col >= s.position.colIndex && col < s.position.colIndex + s.position.colSpan) {
-                    count++
-                }
-            }
-
-            sectionCount.vertical = Math.max(sectionCount.vertical, count)
-        }
-    }
-
-    return sectionCount;
-}
-
 export function calculateLayoutGridCellSize(
     containerWidth: number, 
     containerHeight: number, 
@@ -126,4 +158,4 @@ export function calculateLayoutSectionContainerSize(cellsCount: LayoutGridCellsC
         width,
         height
     }
-}
+}*/
