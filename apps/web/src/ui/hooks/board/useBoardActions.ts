@@ -3,7 +3,7 @@ import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.st
 import { useBoardStore } from "@/src/stores/board.store";
 import debounce from "lodash.debounce";
 import { useAuthStore } from "@/src/stores/auth.store";
-import { BoardEvent, BoardEventType, CardCreatedEvent } from "@/src/core/types/domain/board/board.event";
+import { BoardCommand, BoardCommandType, CreateCardCommand } from "@/src/core/types/domain/board/board.command";
 import { server } from "@/src/api/client";
 
 export function useBoardActions(): BoardActions {
@@ -17,7 +17,7 @@ export function useBoardActions(): BoardActions {
     const pendingActionsRef = useRef(0);
     const FLUSH_THRESHOLD = 8;
 
-    const eventsRef = useRef<BoardEvent[]>([]);
+    const eventsRef = useRef<BoardCommand[]>([]);
 
     const dispatchEvents = useMemo(
         () => debounce(() => {
@@ -57,15 +57,17 @@ export function useBoardActions(): BoardActions {
     const actions: BoardActions = useMemo(
         () => ({
             createCard: (content) => runAction(() => {
-                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardEventType.CardCreated, payload: {
-                    name: content.name,
-                    title: content.content?.title,
-                    sectionName: content.placement?.sectionName,
-                    colIndex: content.placement?.position.colIndex,
-                    rowIndex: content.placement?.position.rowIndex,
-                    colSpan: content.placement?.position.colSpan,
-                    rowSpan: content.placement?.position.rowSpan,
-                } } as CardCreatedEvent);
+                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.CardCreated, payload: {
+                    definition: {
+                        name: content.name,
+                        title: content.content?.title,
+                        sectionName: content.placement?.sectionName,
+                        colIndex: content.placement?.position.colIndex,
+                        rowIndex: content.placement?.position.rowIndex,
+                        colSpan: content.placement?.position.colSpan,
+                        rowSpan: content.placement?.position.rowSpan,
+                    }
+                } });
                 return createCardLocal(content);
             }),
             deleteCard: (id) => runAction(() => deleteCardLocal(id)),
