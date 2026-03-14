@@ -1,15 +1,13 @@
 import { useEffect } from "react";
-import { useBoardStore } from "@/src/stores/board.store";
 import { handleCardCreateInteraction, finishCardCreationState } from "@/src/ui/interactions/domain/board/states/create-card/handler";
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
-import { CardCreationState } from "@/src/core/types/domain/board/board.session";
+import { findCardUnderPointer } from "../../interactions/domain/board/board.detector";
 
 export function useBoardPointerEvents(
     context: BoardContextValue
 ) {
-    const createCard = useBoardStore(state => state.createCard);
-    const { rootRef, registry, session, interaction } = context;
+    const { rootRef, registry, session, interaction, actions } = context;
 
     useEffect(() => {
         const root = rootRef.current
@@ -54,6 +52,9 @@ export function useBoardPointerEvents(
             }
         }
 
+        let lastClickTime = 0
+        const DOUBLE_CLICK_THRESHOLD = 300
+
         function handlePointerUp(e: PointerEvent) {
             const root = rootRef.current
             if (!root) return
@@ -66,7 +67,21 @@ export function useBoardPointerEvents(
                 }
                 break;
                 case BoardInteractionType.Idle: {
-                    
+
+                    const now = performance.now()
+                    if (now - lastClickTime < DOUBLE_CLICK_THRESHOLD) {
+                        const result = findCardUnderPointer(registry, { x: e.clientX, y: e.clientY });
+                        if (result) {
+                            const { card } = result;
+
+                            if(card.props?.name)
+                            actions.deleteCard(card.props?.name)
+                        }
+
+                        lastClickTime = 0 // sıfırla
+                    } else {
+                        lastClickTime = now
+                    }
                 }
                 break;
             }

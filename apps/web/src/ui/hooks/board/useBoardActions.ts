@@ -17,23 +17,23 @@ export function useBoardActions(): BoardActions {
     const pendingActionsRef = useRef(0);
     const FLUSH_THRESHOLD = 8;
 
-    const eventsRef = useRef<BoardCommand[]>([]);
+    const commandsRef = useRef<BoardCommand[]>([]);
 
     const dispatchEvents = useMemo(
         () => debounce(() => {
-            const events = eventsRef.current;
-            if (events.length === 0) return;
+            const commands = commandsRef.current;
+            if (commands.length === 0) return;
 
             const snapshot = lastSnapshotRef.current;
             if (!snapshot) return;
 
 
-            server.workspace.board.postEvents("mihr", { events })
+            server.workspace.board.postEvents("mihr", { commands })
             .catch(() => {
                 setState(snapshot);
             });
 
-            eventsRef.current.length = 0;
+            commandsRef.current.length = 0;
             pendingActionsRef.current = 0;
             lastSnapshotRef.current = null;
         }, 0),
@@ -57,7 +57,7 @@ export function useBoardActions(): BoardActions {
     const actions: BoardActions = useMemo(
         () => ({
             createCard: (content) => runAction(() => {
-                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.CreateCard, payload: {
+                commandsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.CreateCard, payload: {
                     definition: {
                         name: content.name,
                         title: content.content?.title,
@@ -71,7 +71,7 @@ export function useBoardActions(): BoardActions {
                 return createCardLocal(content);
             }),
             deleteCard: (name) => runAction(() => {
-                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.DeleteCard, payload: { key: { name } } });
+                commandsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.DeleteCard, payload: { key: { name } } });
                 return deleteCardLocal(name);
             }),
         }),

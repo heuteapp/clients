@@ -6,8 +6,8 @@ export const boardApi = {
     getBoard: (categoryName: string) =>
         serverApi.get<BoardResponse>(`/workspace/board/${categoryName}`),
 
-    postEvents: (categoryName: string, { events }: { events: BoardCommand[] }) =>
-        serverApi.post(`/workspace/board/${categoryName}/events`, {
-        events,
+    postEvents: (categoryName: string, { commands }: { commands: BoardCommand[] }) =>
+        serverApi.post(`/workspace/board/${categoryName}/commands`, {
+        commands,
     }),
 };
