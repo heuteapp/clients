@@ -38,7 +38,9 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
             height: sectionRect.height
         }
 
-        const gap = 0;
+        const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+
+        const gap = layoutWidth * 0.0075;
 
         const localGridRect = {
             left: (sectionRect.left - rootRect.left) + gap,
