@@ -6,17 +6,17 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
 
-    const { gridCellSize, gridSize, sectionContainerSize } = metrics.layout!;
+    const { sectionContainerValue, sectionValue } = metrics.layout!;
 
-    layoutElement.style.setProperty("--cell-size-full", `${gridCellSize.full}px`);
-    layoutElement.style.setProperty("--cell-size-inner", `${gridCellSize.inner}px`);
-    layoutElement.style.setProperty("--cell-size-compact", `${gridCellSize.compact}px`);
+    layoutElement.style.setProperty("--cell-size-full", `${sectionValue.gridValue.cellValue.size.full}px`);
+    layoutElement.style.setProperty("--cell-size-inner", `${sectionValue.gridValue.cellValue.size.inner}px`);
+    layoutElement.style.setProperty("--cell-size-compact", `${sectionValue.gridValue.cellValue.size.compact}px`);
 
-    layoutElement.style.setProperty("--grid-max-width", `${gridSize.width}px`);
-    layoutElement.style.setProperty("--grid-max-height", `${gridSize.height}px`);
+    layoutElement.style.setProperty("--grid-max-width", `${sectionValue.gridValue.size.width}px`);
+    layoutElement.style.setProperty("--grid-max-height", `${sectionValue.gridValue.size.height}px`);
 
-    layoutElement.style.setProperty("--container-width", `${sectionContainerSize.width}px`);
-    layoutElement.style.setProperty("--container-height", `${sectionContainerSize.height}px`);
+    layoutElement.style.setProperty("--container-width", `${sectionContainerValue.size.width}px`);
+    layoutElement.style.setProperty("--container-height", `${sectionContainerValue.size.height}px`);
 
     const rootRect = layoutElement.getBoundingClientRect();
     const layoutSectionContainer = layout.sectionContainer;
@@ -31,8 +31,8 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
         const gridSize = {
-            width: metrics.layout!.gridSize.width / (metrics.layout!.gridCellsCount.horizontal / section.props!.position.colSpan),
-            height: metrics.layout!.gridSize.height / (metrics.layout!.gridCellsCount.vertical / section.props!.position.rowSpan)
+            width: metrics.layout!.sectionValue.gridValue.size.width / (metrics.layout!.sectionValue.gridValue.cellCount.horizontal / section.props!.position.colSpan),
+            height: metrics.layout!.sectionValue.gridValue.size.height / (metrics.layout!.sectionValue.gridValue.cellCount.vertical / section.props!.position.rowSpan)
         }
 
         const gap = 6;

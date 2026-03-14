@@ -40,6 +40,12 @@ export function useBoardMetrics(
                     width: 0,
                     height: 0
                 }
+            },
+            sectionContainerValue: {
+                size: {
+                    width: 0,
+                    height: 0
+                }
             }
         }
     });

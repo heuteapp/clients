@@ -1,6 +1,7 @@
 export type LayoutMetricsValue = {
     sectionValue: LayoutSectionMetricsValue;
     sectionCount: LayoutSectionMetricsCount;
+    sectionContainerValue: LayoutSectionContainerMetricsValue;
 }
 
 export type LayoutSectionMetricsValue = {
@@ -16,6 +17,15 @@ export type LayoutSectionMetricsSize = {
 export type LayoutSectionMetricsCount = {
     horizontal: number;
     vertical: number;
+}
+
+export type LayoutSectionContainerMetricsValue = {
+    size: LayoutSectionContainerMetricsSize;
+}
+
+export type LayoutSectionContainerMetricsSize = {
+    width: number;
+    height: number;
 }
 
 export type LayoutGridMetricsValue = {
