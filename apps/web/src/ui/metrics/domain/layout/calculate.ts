@@ -1,6 +1,6 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
-import { LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue } from "@/src/core/types/domain/layout/layout.metrics";
+import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
+import { LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue, LayoutGridMetricsValue, LayoutGridMetricsSpacing, LayoutGridCellMetricsCount, LayoutGridCellMetricsValue, LayoutGridCellMetricsSize, LayoutGridMetricsSize } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
     const layout = registry.layout;
@@ -19,7 +19,7 @@ export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsV
     if(sectionDatas.some(props => !props)) return;
 
     metricsValue.sectionCount = calculateLayoutSectionMetricsCount(sectionDatas);
-    metricsValue.sectionValue = calculateLayoutSectionMetricsValue(layoutElement);
+    metricsValue.sectionValue = calculateLayoutSectionMetricsValue(registry, layoutElement);
 
     return metricsValue;
 }
@@ -66,79 +66,61 @@ export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]
     return sectionCount;
 }
 
-export function calculateLayoutSectionMetricsValue(layoutElement: HTMLElement): LayoutSectionMetricsValue {
-    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-
+export function calculateLayoutSectionMetricsValue(registry: BoardRegistry, layoutElement: HTMLElement): LayoutSectionMetricsValue {
     const sectionMetricsValue = {} as LayoutSectionMetricsValue;
 
     return sectionMetricsValue;
 }
 
+export function calculateLayoutGridMetricsValue(registry: BoardRegistry, layoutElement: HTMLElement): LayoutGridMetricsValue {
+    const gridMetricsValue = {} as LayoutGridMetricsValue;
 
-/*
+    gridMetricsValue.spacing = calculateLayoutGridMetricsSpacing(layoutElement);
+    gridMetricsValue.cellCount = calculateLayoutGridCellMetricsCount(registry.layout.props as HeuteLayoutData);
+    gridMetricsValue.cellValue = calculateLayoutGridCellMetricsValue(layoutElement, gridMetricsValue);
+    gridMetricsValue.size = calculateLayoutGridMetricsSize(gridMetricsValue.cellCount, gridMetricsValue.cellValue.size);
 
-export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
-    const layout = registry.layout;
-
-    const layoutProps = layout.props;
-    if(!layoutProps) return;
-
-    const layoutElement = layout.ref?.current;
-    if (!layoutElement) return;
-
-    const { clientWidth, clientHeight } = layoutElement;
-    const padding = 6;
-
-    const sections = registry.getLayoutSections();
-    if(!sections) return;
-
-    const sectionDatas = sections.map(section => section.props) as LayoutSectionProps[];
-    if(sectionDatas.some(props => !props)) return;
-
-    const layoutSectionsCount = calculateLayoutSectionsCount(sectionDatas);
-    const layoutGridCellsCount = {
-        horizontal: layoutProps.columnCount,
-        vertical: layoutProps.rowCount
-    };
-    
-    const layoutGridCellSize = calculateLayoutGridCellSize(clientWidth, clientHeight, layoutGridCellsCount, padding);
-    
-    const layoutGridSize = {
-        width: layoutGridCellsCount.horizontal * layoutGridCellSize.inner,
-        height: layoutGridCellsCount.vertical * layoutGridCellSize.inner
-    }
-
-    const layoutSectionContainerSize = calculateLayoutSectionContainerSize(layoutGridCellsCount, layoutGridCellSize);
-    
-    return {
-        sectionsCount: layoutSectionsCount,
-        gridCellsCount: layoutGridCellsCount,
-        gridCellSize: layoutGridCellSize,
-        gridSize: layoutGridSize,
-        sectionContainerSize: layoutSectionContainerSize
-    };
+    return gridMetricsValue;
 }
 
-//
+export function calculateLayoutGridMetricsSpacing(layoutElement: HTMLElement): LayoutGridMetricsSpacing {
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+    const padding = Math.min(layoutWidth, layoutHeight) * 0.05;    
 
-export function calculateLayoutGridCellSize(
-    containerWidth: number, 
-    containerHeight: number, 
-    cellCount: LayoutGridCellsCount,
-    padding: number
-) : LayoutGridCellSize {
+    return {
+        padding
+    }
+}
 
-    const colCount = cellCount.horizontal;
-    const rowCount = cellCount.vertical;
+export function calculateLayoutGridCellMetricsCount(layoutData: HeuteLayoutData): LayoutGridCellMetricsCount {
+    return {
+        horizontal: layoutData.columnCount,
+        vertical: layoutData.rowCount
+    }
+}
+
+export function calculateLayoutGridCellMetricsValue(layoutElement: HTMLElement, gridMetricsValue : LayoutGridMetricsValue) : LayoutGridCellMetricsValue {
+    const gridCellMetricsValue = {} as LayoutGridCellMetricsValue;
+
+    gridCellMetricsValue.size = calculateLayoutGridCellMetricsSize(layoutElement, gridMetricsValue);
+
+    return gridCellMetricsValue;
+}
+
+export function calculateLayoutGridCellMetricsSize(layoutElement: HTMLElement, gridMetricsValue : LayoutGridMetricsValue) : LayoutGridCellMetricsSize {
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+
+    const colCount = gridMetricsValue.cellCount.horizontal;
+    const rowCount = gridMetricsValue.cellCount.vertical;
 
     const full = Math.min(
-        containerWidth / colCount,
-        containerHeight / rowCount
+        layoutWidth / colCount,
+        layoutHeight / rowCount
     );
 
     const inner = Math.min(
-        (containerWidth - ((colCount + 4) * padding * 2)) / colCount,
-        (containerHeight - ((rowCount + 4) * padding * 2)) / rowCount
+        (layoutWidth - ((colCount + 4) * gridMetricsValue.spacing.padding * 2)) / colCount,
+        (layoutHeight - ((rowCount + 4) * gridMetricsValue.spacing.padding * 2)) / rowCount
     );
 
     const compact = inner * 0.9;
@@ -150,12 +132,12 @@ export function calculateLayoutGridCellSize(
     }
 }
 
-export function calculateLayoutSectionContainerSize(cellsCount: LayoutGridCellsCount, cellSize: LayoutGridCellSize) : LayoutSectionContainerSize {
-    const width = cellsCount.horizontal * cellSize.full;
-    const height = cellsCount.vertical * cellSize.full;
+export function calculateLayoutGridMetricsSize(cellCount: LayoutGridCellMetricsCount, cellSize: LayoutGridCellMetricsSize) : LayoutGridMetricsSize {
+    const width = cellCount.horizontal * cellSize.full;
+    const height = cellCount.vertical * cellSize.full;
 
     return {
         width,
         height
     }
-}*/
+}
