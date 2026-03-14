@@ -8,6 +8,7 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
 
     const { sectionContainerValue, sectionValue } = metrics.layout!;
 
+    layoutElement.style.setProperty("--section-padding", `${sectionValue.spacing.padding}px`);
 
     layoutElement.style.setProperty("--cell-size-full", `${sectionValue.gridValue.cellValue.size.full}px`);
     layoutElement.style.setProperty("--cell-size-inner", `${sectionValue.gridValue.cellValue.size.inner}px`);

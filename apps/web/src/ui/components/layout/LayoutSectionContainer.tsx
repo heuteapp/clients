@@ -32,7 +32,6 @@ function LayoutSectionContainer(props: LayoutSectionContainerProps) {
             props.sections.map((section, index) => (
               <LayoutSection
                 key={index}
-                padding={12}
                 {...section}
               />
             ))}

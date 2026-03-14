@@ -126,7 +126,7 @@ export function calculateLayoutGridMetricsValue(registry: BoardRegistry, layoutE
 
 export function calculateLayoutGridMetricsSpacing(layoutElement: HTMLElement): LayoutGridMetricsSpacing {
     const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-    const padding = 12;    
+    const padding = 0;    
 
     return {
         padding

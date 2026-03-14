@@ -10,7 +10,7 @@ export interface LayoutSectionContainerProps {
 }
 
 export interface LayoutSectionProps extends LayoutSectionData {
-    padding: number
+
 }
 
 export interface LayoutGridProps  {
