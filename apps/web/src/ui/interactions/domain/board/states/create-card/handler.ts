@@ -21,7 +21,7 @@ export function handleCardCreateInteraction(context: BoardContextValue)
     const metricsValue = metrics.current;
     if (!metricsValue) return;
 
-    const cellSize = metricsValue.layout!.gridCellSize.inner
+    const cellSize = metricsValue.layout!.sectionValue.gridValue.cellValue.size.inner
     const result = findSectionUnderPointer(registry, pointer)
 
     if (!result) {

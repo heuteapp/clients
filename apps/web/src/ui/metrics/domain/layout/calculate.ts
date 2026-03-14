@@ -106,7 +106,7 @@ export function calculateLayoutGridMetricsValue(registry: BoardRegistry, layoutE
 
 export function calculateLayoutGridMetricsSpacing(layoutElement: HTMLElement): LayoutGridMetricsSpacing {
     const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-    const padding = 0;    
+    const padding = 12;    
 
     return {
         padding
@@ -139,10 +139,12 @@ export function calculateLayoutGridCellMetricsSize(layoutElement: HTMLElement, g
         layoutHeight / rowCount
     );
 
-    const inner = Math.min(
-        (layoutWidth - ((colCount + 4) * gridMetricsValue.spacing.padding * 2)) / colCount,
-        (layoutHeight - ((rowCount + 4) * gridMetricsValue.spacing.padding * 2)) / rowCount
-    );
+    const totalPaddingX = (colCount - 1) * gridMetricsValue.spacing.padding;
+    const totalPaddingY = (rowCount - 1) * gridMetricsValue.spacing.padding;
+
+    const innerWidth = (layoutWidth - totalPaddingX) / colCount;
+    const innerHeight = (layoutHeight - totalPaddingY) / rowCount;
+    const inner = Math.min(innerWidth, innerHeight);
 
     const compact = inner * 0.9;
 
