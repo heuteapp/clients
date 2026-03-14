@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "../../stores/auth.store";
+import { useRouter } from "next/navigation";
 
 export const serverApi = axios.create({
     baseURL: "/api",
@@ -16,3 +17,16 @@ serverApi.interceptors.request.use((config) => {
     }
     return config;
 });
+
+serverApi.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            const router = useRouter();
+
+            useAuthStore.getState().logout?.();
+            router.push("/login"); 
+        }
+        return Promise.reject(error);
+    }
+);

@@ -10,6 +10,8 @@ export interface AuthState {
 }
 
 export interface AuthActions {
+    logout: () => void;
+
     loadAuth: () => AuthState | null;
     setAuth: (accessToken: string, profile: ProfileData) => void;
     clearAuth: () => void;

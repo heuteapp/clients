@@ -6,6 +6,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
     accessToken: null,
     profile: null,
 
+    logout: () => {
+        if (typeof window === "undefined") return;
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("profile");
+        set({ accessToken: null, profile: null });
+    },
+
     loadAuth: () => {
         if (typeof window === "undefined") return null;
         const accessToken = localStorage.getItem("accessToken");
