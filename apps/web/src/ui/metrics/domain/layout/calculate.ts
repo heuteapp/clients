@@ -69,6 +69,8 @@ export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]
 export function calculateLayoutSectionMetricsValue(registry: BoardRegistry, layoutElement: HTMLElement): LayoutSectionMetricsValue {
     const sectionMetricsValue = {} as LayoutSectionMetricsValue;
 
+    sectionMetricsValue.gridValue = calculateLayoutGridMetricsValue(registry, layoutElement);
+
     return sectionMetricsValue;
 }
 
