@@ -1,34 +1,50 @@
 export type LayoutMetricsValue = {
-    sectionsCount: LayoutSectionsCount
-    gridCellsCount: LayoutGridCellsCount
-
-    sectionContainerSize: LayoutSectionContainerSize
-    gridSize: LayoutGridSize
-    gridCellSize: LayoutGridCellSize
+    sectionValue: LayoutMetricsSectionValue;
+    sectionCount: LayoutMetricsSectionCount;
 }
 
-export interface LayoutSectionsCount {
-    horizontal: number
-    vertical: number
+export type LayoutMetricsSectionValue = {
+    grid: LayoutMetricsGrid;
+    size: LayoutMetricsSectionSize;
 }
 
-export interface LayoutGridCellsCount {
-    horizontal: number
-    vertical: number
+export type LayoutMetricsSectionSize = {
+    width: number;
+    height: number;
 }
 
-export interface LayoutSectionContainerSize {
-    width: number
-    height: number
+export type LayoutMetricsSectionCount = {
+    horizontal: number;
+    vertical: number;
 }
 
-export interface LayoutGridSize {
-    width: number
-    height: number
+export type LayoutMetricsGrid = {
+    spacing: LayoutMetricsGridSpacing;
+    size: LayoutMetricsGridSize;
+    cellValue: LayoutMetricsGridCellValue;
+    cellCount: LayoutMetricsGridCellCount;
 }
 
-export interface LayoutGridCellSize {
-    full: number
-    inner: number
-    compact: number
+export type LayoutMetricsGridSpacing = {
+    padding: number;
+}
+
+export type LayoutMetricsGridSize = {
+    width: number;
+    height: number;
+}
+
+export type LayoutMetricsGridCellValue = {
+    size: LayoutMetricsGridCellSize;
+}
+
+export type LayoutMetricsGridCellCount = {
+    horizontal: number;
+    vertical: number;
+}
+
+export type LayoutMetricsGridCellSize = {
+    full: number;
+    inner: number;
+    compact: number;
 }
