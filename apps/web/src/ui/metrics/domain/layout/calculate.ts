@@ -126,7 +126,7 @@ export function calculateLayoutGridMetricsValue(registry: BoardRegistry, layoutE
 
 export function calculateLayoutGridMetricsSpacing(layoutElement: HTMLElement): LayoutGridMetricsSpacing {
     const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-    const padding = 0;    
+    const padding = 12;    
 
     return {
         padding
@@ -153,19 +153,20 @@ export function calculateLayoutGridCellMetricsSize(layoutElement: HTMLElement, g
 
     const colCount = gridMetricsValue.cellCount.horizontal;
     const rowCount = gridMetricsValue.cellCount.vertical;
+    const gapX = gridMetricsValue.spacing.padding;
+    const gapY = gridMetricsValue.spacing.padding;
 
+    // Padding dahil edildi: toplam boşlukları çıkar
+    const usableWidth = layoutWidth - (colCount - 1) * gapX;
+    const usableHeight = layoutHeight - (rowCount - 1) * gapY;
+
+    // full hücre boyutu artık padding dahil edilmiş
     const full = Math.min(
-        layoutWidth / colCount,
-        layoutHeight / rowCount
+        usableWidth / colCount,
+        usableHeight / rowCount
     );
 
-    const totalPaddingX = (colCount - 1) * gridMetricsValue.spacing.padding;
-    const totalPaddingY = (rowCount - 1) * gridMetricsValue.spacing.padding;
-
-    const innerWidth = (layoutWidth - totalPaddingX) / colCount;
-    const innerHeight = (layoutHeight - totalPaddingY) / rowCount;
-    const inner = Math.min(innerWidth, innerHeight);
-
+    const inner = full; // istersen inner/compact ayrı ölçeklenebilir
     const compact = inner * 0.9;
 
     return {

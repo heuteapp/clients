@@ -38,7 +38,7 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
             height: metrics.layout!.sectionValue.gridValue.size.height / (metrics.layout!.sectionValue.gridValue.cellCount.vertical / section.props!.position.rowSpan)
         }
 
-        const gap = metrics.layout!.sectionValue.gridValue.spacing.padding;
+        const gap = 0;
 
         const localGridRect = {
             left: (sectionRect.left - rootRect.left) + gap,
