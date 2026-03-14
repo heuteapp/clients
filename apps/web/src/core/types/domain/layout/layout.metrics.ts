@@ -1,12 +1,22 @@
 export type LayoutMetricsValue = {
+    spacing: LayoutMetricsSpacing;
     sectionValue: LayoutSectionMetricsValue;
     sectionCount: LayoutSectionMetricsCount;
     sectionContainerValue: LayoutSectionContainerMetricsValue;
 }
 
+export type LayoutMetricsSpacing = {
+    padding: number;
+}
+
 export type LayoutSectionMetricsValue = {
+    spacing: LayoutSectionMetricsSpacing;
     gridValue: LayoutGridMetricsValue;
     size: LayoutSectionMetricsSize;
+}
+
+export type LayoutSectionMetricsSpacing = {
+    padding: number;
 }
 
 export type LayoutSectionMetricsSize = {
@@ -20,7 +30,12 @@ export type LayoutSectionMetricsCount = {
 }
 
 export type LayoutSectionContainerMetricsValue = {
+    spacing: LayoutSectionContainerMetricsSpacing;
     size: LayoutSectionContainerMetricsSize;
+}
+
+export type LayoutSectionContainerMetricsSpacing = {
+    padding: number;
 }
 
 export type LayoutSectionContainerMetricsSize = {

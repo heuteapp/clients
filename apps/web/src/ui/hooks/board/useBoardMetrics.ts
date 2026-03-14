@@ -11,11 +11,17 @@ export function useBoardMetrics(
 
     const metrics = useRef<BoardMetricsValue>({
         layout: {
+            spacing: {
+                padding: 0,
+            },
             sectionCount: {
                 horizontal: 0,
                 vertical: 0,
             },
             sectionValue: {
+                spacing: {
+                    padding: 0,
+                },
                 gridValue: {
                     spacing: {
                         padding: 0,
@@ -42,6 +48,9 @@ export function useBoardMetrics(
                 }
             },
             sectionContainerValue: {
+                spacing: {
+                    padding: 0,
+                },
                 size: {
                     width: 0,
                     height: 0
