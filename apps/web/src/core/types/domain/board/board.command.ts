@@ -5,18 +5,19 @@ export interface BoardCommand {
 }
 
 export enum BoardCommandType {
-    CardCreated = "CardCreated",
+    CreateCard = "CreateCard",
+    DeleteCard = "DeleteCard",
 }
 
 //
 
 export interface CreateCardCommand extends BoardCommand {
     occurredAt: string;
-    type: BoardCommandType.CardCreated;
-    payload: CardCreatedPayload;
+    type: BoardCommandType.CreateCard;
+    payload: CreateCardPayload;
 }
 
-export interface CardCreatedPayload {
+export interface CreateCardPayload {
     definition: {
         name: string;
         title?: string;
@@ -26,4 +27,14 @@ export interface CardCreatedPayload {
         colSpan?: number;
         rowSpan?: number;
     }
+}
+
+export interface DeleteCardCommand extends BoardCommand {
+    occurredAt: string;
+    type: BoardCommandType.DeleteCard;
+    payload: DeleteCardPayload;
+}
+
+export interface DeleteCardPayload {
+    key: { name: string };
 }

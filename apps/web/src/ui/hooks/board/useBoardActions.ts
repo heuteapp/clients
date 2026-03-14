@@ -57,7 +57,7 @@ export function useBoardActions(): BoardActions {
     const actions: BoardActions = useMemo(
         () => ({
             createCard: (content) => runAction(() => {
-                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.CardCreated, payload: {
+                eventsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.CreateCard, payload: {
                     definition: {
                         name: content.name,
                         title: content.content?.title,
