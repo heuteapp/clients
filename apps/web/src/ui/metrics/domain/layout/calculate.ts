@@ -1,187 +1,155 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
-import { LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue, LayoutGridMetricsValue, LayoutGridMetricsSpacing, LayoutGridCellMetricsCount, LayoutGridCellMetricsValue, LayoutGridCellMetricsSize, LayoutGridMetricsSize, LayoutSectionContainerMetricsValue, LayoutSectionContainerMetricsSize, LayoutMetricsSpacing, LayoutSectionMetricsSpacing } from "@/src/core/types/domain/layout/layout.metrics";
+import { 
+    LayoutSectionMetricsCount, LayoutSectionMetricsValue, LayoutMetricsValue, 
+    LayoutGridMetricsValue, LayoutGridMetricsSpacing, LayoutGridCellMetricsCount, 
+    LayoutGridCellMetricsValue, LayoutGridCellMetricsSize, LayoutGridMetricsSize, 
+    LayoutSectionContainerMetricsValue, LayoutSectionContainerMetricsSize, 
+    LayoutMetricsSpacing, LayoutSectionMetricsSpacing 
+} from "@/src/core/types/domain/layout/layout.metrics";
 
+// -------------------- Main --------------------
 export function calculateLayoutMetrics(registry: BoardRegistry) : LayoutMetricsValue | undefined {
     const layout = registry.layout;
-    
     const layoutProps = layout.props;
-    if(!layoutProps) return;
+    if (!layoutProps) return;
 
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
 
     const sections = registry.getLayoutSections();
-    if(!sections) return;
+    if (!sections) return;
+
+    const sectionDatas = sections.map(section => section.props) as LayoutSectionData[];
+    if (sectionDatas.some(props => !props)) return;
 
     const metricsValue = {} as LayoutMetricsValue;
-    const sectionDatas = sections.map(section => section.props) as LayoutSectionData[];
-    if(sectionDatas.some(props => !props)) return;
 
-    metricsValue.spacing = calculateLayoutSpacing(layoutElement);
-    metricsValue.sectionCount = calculateLayoutSectionMetricsCount(sectionDatas);
-    metricsValue.sectionValue = calculateLayoutSectionMetricsValue(registry, layoutElement);
-    metricsValue.sectionContainerValue = calculateLayoutSectionContainerMetricsValue(metricsValue);
-    
+    // spacing objelerini referans üzerinden hesapla
+    if (!metricsValue.spacing) metricsValue.spacing = {} as LayoutMetricsSpacing;
+    calculateLayoutSpacing(metricsValue.spacing, layoutElement);
+
+    if (!metricsValue.sectionCount) metricsValue.sectionCount = {} as LayoutSectionMetricsCount;
+    calculateLayoutSectionMetricsCount(sectionDatas, metricsValue.sectionCount);
+
+    if (!metricsValue.sectionValue) metricsValue.sectionValue = {} as LayoutSectionMetricsValue;
+    calculateLayoutSectionMetricsValue(registry, metricsValue, layoutElement);
+
+    if (!metricsValue.sectionContainerValue) metricsValue.sectionContainerValue = {} as LayoutSectionContainerMetricsValue;
+    calculateLayoutSectionContainerMetricsValue(metricsValue, metricsValue.sectionContainerValue);
+
     return metricsValue;
 }
 
-export function calculateLayoutSpacing(layoutElement: HTMLElement): LayoutMetricsSpacing {
-    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-    const padding = 0;
+// -------------------- Layout Spacing --------------------
+export function calculateLayoutSectionMetricsValue(registry: BoardRegistry, metricsValue: LayoutMetricsValue, layoutElement: HTMLElement) {
+    if (!metricsValue.sectionValue.spacing) metricsValue.sectionValue.spacing = {} as LayoutSectionMetricsSpacing;
+    calculateLayoutSectionMetricsSpacing(metricsValue.sectionValue.spacing, layoutElement);
 
-    return {
-        padding
+    if (!metricsValue.sectionValue.gridValue) metricsValue.sectionValue.gridValue = {} as LayoutGridMetricsValue;
+    calculateLayoutGridMetricsValue(registry, layoutElement, metricsValue.sectionValue.gridValue, metricsValue.sectionValue.spacing);
+}
+
+export function calculateLayoutSpacing(spacing: LayoutMetricsSpacing, layoutElement: HTMLElement) {
+    spacing.padding = 0;
+}
+
+export function calculateLayoutSectionMetricsSpacing(spacing: LayoutSectionMetricsSpacing, layoutElement: HTMLElement) {
+    spacing.padding = 12;
+}
+
+export function calculateLayoutGridMetricsSpacing(spacing: LayoutGridMetricsSpacing, layoutElement: HTMLElement) {
+    spacing.padding = 12;
+}
+
+// -------------------- Section Count --------------------
+export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[], sectionCount: LayoutSectionMetricsCount) {
+    sectionCount.horizontal = 0;
+    sectionCount.vertical = 0;
+
+    if (sections.length === 0) return;
+
+    const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan));
+    const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan));
+
+    for (let row = 1; row <= maxRow; row++) {
+        let count = 0;
+        for (const s of sections) if (row >= s.position.rowIndex && row < s.position.rowIndex + s.position.rowSpan) count++;
+        sectionCount.horizontal = Math.max(sectionCount.horizontal, count);
+    }
+
+    for (let col = 1; col <= maxCol; col++) {
+        let count = 0;
+        for (const s of sections) if (col >= s.position.colIndex && col < s.position.colIndex + s.position.colSpan) count++;
+        sectionCount.vertical = Math.max(sectionCount.vertical, count);
     }
 }
 
-export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]): LayoutSectionMetricsCount {
-
-    if (sections.length === 0) {
-        return {
-            horizontal: 0,
-            vertical: 0
-        }
-    }
-
-    let sectionCount = { horizontal: 0, vertical: 0 }
-    {
-        const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan))
-        const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan))
-
-        for (let row = 1; row <= maxRow; row++) {
-            let count = 0
-
-            for (const s of sections) {
-                if (row >= s.position.rowIndex && row < s.position.rowIndex + s.position.rowSpan) {
-                    count++
-                }
-            }
-
-            sectionCount.horizontal = Math.max(sectionCount.horizontal, count)
-        }
-
-        for (let col = 1; col <= maxCol; col++) {
-            let count = 0
-
-            for (const s of sections) {
-                if (col >= s.position.colIndex && col < s.position.colIndex + s.position.colSpan) {
-                    count++
-                }
-            }
-
-            sectionCount.vertical = Math.max(sectionCount.vertical, count)
-        }
-    }
-
-    return sectionCount;
+// -------------------- Section Container --------------------
+export function calculateLayoutSectionContainerMetricsValue(metricsValue: LayoutMetricsValue, containerValue: LayoutSectionContainerMetricsValue) {
+    containerValue.size = {} as LayoutSectionContainerMetricsSize;
+    containerValue.size.width = metricsValue.sectionValue.gridValue.cellCount.horizontal * metricsValue.sectionValue.gridValue.cellValue.size.full + metricsValue.sectionValue.gridValue.spacing.padding * 2;
+    containerValue.size.height = metricsValue.sectionValue.gridValue.cellCount.vertical * metricsValue.sectionValue.gridValue.cellValue.size.full + metricsValue.sectionValue.gridValue.spacing.padding * 4;
 }
 
-export function calculateLayoutSectionMetricsValue(registry: BoardRegistry, layoutElement: HTMLElement): LayoutSectionMetricsValue {
-    const sectionMetricsValue = {} as LayoutSectionMetricsValue;
+// -------------------- Grid --------------------
+export function calculateLayoutGridMetricsValue(
+    registry: BoardRegistry, 
+    layoutElement: HTMLElement, 
+    gridValue: LayoutGridMetricsValue, 
+    sectionSpacing: LayoutSectionMetricsSpacing
+) {
+    if (!gridValue.spacing) gridValue.spacing = {} as LayoutGridMetricsSpacing;
+    calculateLayoutGridMetricsSpacing(gridValue.spacing, layoutElement);
 
-    sectionMetricsValue.spacing = calculateLayoutSectionMetricsSpacing(layoutElement);
-    sectionMetricsValue.gridValue = calculateLayoutGridMetricsValue(registry, layoutElement);
 
-    return sectionMetricsValue;
+    if(!gridValue.cellCount) gridValue.cellCount = {} as LayoutGridCellMetricsCount;
+    calculateLayoutGridCellMetricsCount(gridValue.cellCount, registry.layout.props as HeuteLayoutData);
+
+    if (!gridValue.cellValue) gridValue.cellValue = {} as LayoutGridCellMetricsValue;
+    calculateLayoutGridCellMetricsValue(layoutElement, gridValue.cellValue, gridValue, sectionSpacing);
+
+    if (!gridValue.size) gridValue.size = {} as LayoutGridMetricsSize;
+    calculateLayoutGridMetricsSize(gridValue.size, gridValue.cellCount, gridValue.cellValue.size);
 }
 
-export function calculateLayoutSectionMetricsSpacing(layoutElement: HTMLElement): LayoutSectionMetricsSpacing {
-    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-    const padding = 0;
-
-    return {
-        padding
-    }
+export function calculateLayoutGridCellMetricsCount(count: LayoutGridCellMetricsCount , layoutData: HeuteLayoutData) {
+    count.horizontal = layoutData.columnCount ?? 0;
+    count.vertical = layoutData.rowCount ?? 0
 }
 
-export function calculateLayoutSectionContainerMetricsValue(metricsValue: LayoutMetricsValue) : LayoutSectionContainerMetricsValue {
-    const sectionContainerMetricsValue = {} as LayoutSectionContainerMetricsValue;
-
-    sectionContainerMetricsValue.size = calculateLayoutSectionContainerMetricsSize(metricsValue);
-
-    return sectionContainerMetricsValue;
+export function calculateLayoutGridCellMetricsValue(
+    layoutElement: HTMLElement, 
+    cellValue: LayoutGridCellMetricsValue,
+    gridValue: LayoutGridMetricsValue,
+    sectionSpacing: LayoutSectionMetricsSpacing
+) {
+    if (!cellValue.size) cellValue.size = {} as LayoutGridCellMetricsSize;
+    calculateLayoutGridCellMetricsSize(layoutElement, cellValue.size, gridValue, sectionSpacing);
 }
 
-export function calculateLayoutSectionContainerMetricsSize(metricsValue: LayoutMetricsValue) : LayoutSectionContainerMetricsSize {
-    const width = metricsValue.sectionValue.gridValue.cellCount.horizontal * metricsValue.sectionValue.gridValue.cellValue.size.full;
-    const height = metricsValue.sectionValue.gridValue.cellCount.vertical * metricsValue.sectionValue.gridValue.cellValue.size.full;
-
-    return {
-        width,
-        height
-    }
-}
-
-export function calculateLayoutGridMetricsValue(registry: BoardRegistry, layoutElement: HTMLElement): LayoutGridMetricsValue {
-    const gridMetricsValue = {} as LayoutGridMetricsValue;
-
-    gridMetricsValue.spacing = calculateLayoutGridMetricsSpacing(layoutElement);
-    gridMetricsValue.cellCount = calculateLayoutGridCellMetricsCount(registry.layout.props as HeuteLayoutData);
-    gridMetricsValue.cellValue = calculateLayoutGridCellMetricsValue(layoutElement, gridMetricsValue);
-    gridMetricsValue.size = calculateLayoutGridMetricsSize(gridMetricsValue.cellCount, gridMetricsValue.cellValue.size);
-
-    return gridMetricsValue;
-}
-
-export function calculateLayoutGridMetricsSpacing(layoutElement: HTMLElement): LayoutGridMetricsSpacing {
-    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-    const padding = 12;    
-
-    return {
-        padding
-    }
-}
-
-export function calculateLayoutGridCellMetricsCount(layoutData: HeuteLayoutData): LayoutGridCellMetricsCount {
-    return {
-        horizontal: layoutData.columnCount,
-        vertical: layoutData.rowCount
-    }
-}
-
-export function calculateLayoutGridCellMetricsValue(layoutElement: HTMLElement, gridMetricsValue : LayoutGridMetricsValue) : LayoutGridCellMetricsValue {
-    const gridCellMetricsValue = {} as LayoutGridCellMetricsValue;
-
-    gridCellMetricsValue.size = calculateLayoutGridCellMetricsSize(layoutElement, gridMetricsValue);
-
-    return gridCellMetricsValue;
-}
-
-export function calculateLayoutGridCellMetricsSize(layoutElement: HTMLElement, gridMetricsValue : LayoutGridMetricsValue) : LayoutGridCellMetricsSize {
+export function calculateLayoutGridCellMetricsSize(
+    layoutElement: HTMLElement, 
+    size: LayoutGridCellMetricsSize,
+    gridValue: LayoutGridMetricsValue,
+    sectionSpacing: LayoutSectionMetricsSpacing
+) {
     const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
 
-    const colCount = gridMetricsValue.cellCount.horizontal;
-    const rowCount = gridMetricsValue.cellCount.vertical;
-    const gapX = gridMetricsValue.spacing.padding;
-    const gapY = gridMetricsValue.spacing.padding;
+    const colCount = gridValue.cellCount.horizontal;
+    const rowCount = gridValue.cellCount.vertical;
+    const gapX = sectionSpacing.padding;
+    const gapY = sectionSpacing.padding;
 
-    // Padding dahil edildi: toplam boşlukları çıkar
     const usableWidth = layoutWidth - (colCount - 1) * gapX;
     const usableHeight = layoutHeight - (rowCount - 1) * gapY;
 
-    // full hücre boyutu artık padding dahil edilmiş
-    const full = Math.min(
-        usableWidth / colCount,
-        usableHeight / rowCount
-    );
-
-    const inner = full; // istersen inner/compact ayrı ölçeklenebilir
-    const compact = inner * 0.9;
-
-    return {
-        full,
-        inner,
-        compact
-    }
+    size.full = Math.min(usableWidth / colCount, usableHeight / rowCount);
+    size.inner = size.full;
+    size.compact = size.inner * 0.9;
 }
 
-export function calculateLayoutGridMetricsSize(cellCount: LayoutGridCellMetricsCount, cellSize: LayoutGridCellMetricsSize) : LayoutGridMetricsSize {
-    const width = cellCount.horizontal * cellSize.full;
-    const height = cellCount.vertical * cellSize.full;
-
-    return {
-        width,
-        height
-    }
+export function calculateLayoutGridMetricsSize(size: LayoutGridMetricsSize, cellCount: LayoutGridCellMetricsCount, cellSize: LayoutGridCellMetricsSize) {
+    size.width = cellCount.horizontal * cellSize.full;
+    size.height = cellCount.vertical * cellSize.full;
 }
