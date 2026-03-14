@@ -22,10 +22,12 @@ serverApi.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            const router = useRouter();
+        console.log("Unauthorized - logging out");
+        useAuthStore.getState().logout?.();
+                  if (typeof window !== "undefined") {
+        window.location.href = "/login"; // zorla yönlendir
+      }
 
-            useAuthStore.getState().logout?.();
-            router.push("/login"); 
         }
         return Promise.reject(error);
     }
