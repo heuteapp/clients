@@ -11,26 +11,35 @@ export function useBoardMetrics(
 
     const metrics = useRef<BoardMetricsValue>({
         layout: {
-            sectionsCount: {
+            sectionCount: {
                 horizontal: 0,
-                vertical: 0
+                vertical: 0,
             },
-            gridCellsCount: {
-                horizontal: 0,
-                vertical: 0
-            },
-            sectionContainerSize: {
-                width: 0,
-                height: 0
-            },
-            gridSize: {
-                width: 0,
-                height: 0
-            },
-            gridCellSize: {
-                full: 0,
-                inner: 0,
-                compact: 0
+            sectionValue: {
+                gridValue: {
+                    spacing: {
+                        padding: 0,
+                    },
+                    cellCount: {
+                        horizontal: 0,
+                        vertical: 0,
+                    },
+                    cellValue: {
+                        size: {
+                            full: 0,
+                            inner: 0,
+                            compact: 0,
+                        }
+                    },
+                    size: {
+                        width: 0,
+                        height: 0
+                    }
+                },
+                size: {
+                    width: 0,
+                    height: 0
+                }
             }
         }
     });
