@@ -36,12 +36,12 @@ export const useBoardStore = create<BoardStore>()(
             return card;
         },
 
-        deleteCard: (id: Identifier) => {
+        deleteCard: (name: string) => {
             let deletedCard;
 
             set(state => {
-                deletedCard = state.cards.find(card => card.id === id);
-                state.cards = state.cards.filter(card => card.id !== id);
+                deletedCard = state.cards.find(card => card.name === name);
+                state.cards = state.cards.filter(card => card.name !== name);
             })
 
             return deletedCard;
