@@ -4,7 +4,7 @@ export type LayoutMetricsValue = {
 }
 
 export type LayoutSectionMetricsValue = {
-    grid: LayoutGridMetrics;
+    gridValue: LayoutGridMetricsValue;
     size: LayoutSectionMetricsSize;
 }
 
@@ -18,7 +18,7 @@ export type LayoutSectionMetricsCount = {
     vertical: number;
 }
 
-export type LayoutGridMetrics = {
+export type LayoutGridMetricsValue = {
     spacing: LayoutGridMetricsSpacing;
     size: LayoutGridMetricsSize;
     cellValue: LayoutGridCellMetricsValue;
