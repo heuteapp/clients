@@ -59,7 +59,7 @@ export function calculateLayoutSectionMetricsSpacing(spacing: LayoutSectionMetri
 }
 
 export function calculateLayoutGridMetricsSpacing(spacing: LayoutGridMetricsSpacing, layoutElement: HTMLElement) {
-    spacing.padding = 12;
+    spacing.padding = 0;
 }
 
 // -------------------- Section Count --------------------
@@ -88,8 +88,8 @@ export function calculateLayoutSectionMetricsCount(sections: LayoutSectionData[]
 // -------------------- Section Container --------------------
 export function calculateLayoutSectionContainerMetricsValue(metricsValue: LayoutMetricsValue, containerValue: LayoutSectionContainerMetricsValue) {
     containerValue.size = {} as LayoutSectionContainerMetricsSize;
-    containerValue.size.width = metricsValue.sectionValue.gridValue.cellCount.horizontal * metricsValue.sectionValue.gridValue.cellValue.size.full + metricsValue.sectionValue.gridValue.spacing.padding * 2;
-    containerValue.size.height = metricsValue.sectionValue.gridValue.cellCount.vertical * metricsValue.sectionValue.gridValue.cellValue.size.full + metricsValue.sectionValue.gridValue.spacing.padding * 4;
+    containerValue.size.width = metricsValue.sectionValue.gridValue.cellCount.horizontal * metricsValue.sectionValue.gridValue.cellValue.size.full;
+    containerValue.size.height = metricsValue.sectionValue.gridValue.cellCount.vertical * metricsValue.sectionValue.gridValue.cellValue.size.full;
 }
 
 // -------------------- Grid --------------------
@@ -141,11 +141,12 @@ export function calculateLayoutGridCellMetricsSize(
     const gapX = sectionSpacing.padding;
     const gapY = sectionSpacing.padding;
 
+    size.full = Math.min(layoutWidth / colCount, layoutHeight / rowCount);
+
     const usableWidth = layoutWidth - (colCount - 1) * gapX;
     const usableHeight = layoutHeight - (rowCount - 1) * gapY;
 
-    size.full = Math.min(usableWidth / colCount, usableHeight / rowCount);
-    size.inner = size.full;
+    size.inner = Math.min(usableWidth / colCount, usableHeight / rowCount);
     size.compact = size.inner * 0.9;
 }
 

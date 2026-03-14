@@ -34,8 +34,8 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
         const gridSize = {
-            width: metrics.layout!.sectionValue.gridValue.size.width / (metrics.layout!.sectionValue.gridValue.cellCount.horizontal / section.props!.position.colSpan),
-            height: metrics.layout!.sectionValue.gridValue.size.height / (metrics.layout!.sectionValue.gridValue.cellCount.vertical / section.props!.position.rowSpan)
+            width: sectionRect.width,
+            height: sectionRect.height
         }
 
         const gap = 0;
@@ -77,8 +77,6 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
                 width: rawPosition.width - gap * 2,
                 height: rawPosition.height - gap * 2
             }
-
-            console.log(position);
 
             cardElement.style.setProperty("--card-left", `${position.left}px`);
             cardElement.style.setProperty("--card-top", `${position.top}px`);

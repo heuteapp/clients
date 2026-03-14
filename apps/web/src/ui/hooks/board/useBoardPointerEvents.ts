@@ -40,8 +40,6 @@ export function useBoardPointerEvents(
                 y: e.clientY
             }
 
-            console.log(interaction.pointer);
-
             const currentSession = session.current
 
             switch (interaction.type) {
