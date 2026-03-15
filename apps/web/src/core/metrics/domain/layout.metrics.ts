@@ -1,6 +1,7 @@
-import { LayoutMetricsContext, LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsTotalSpacingAxis } from "@/src/core/types/domain/layout/layout.metrics";
+import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
+import { LayoutMetricsValue, LayoutMetricsTotalSpacing } from "@/src/core/types/domain/layout/layout.metrics";
 
-export function computeLayoutMetrics(context: LayoutMetricsContext): LayoutMetricsValue | undefined {
+export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
     const { layoutSize, sections, sectionStyles } = context;
     if (sections.length === 0) return;
 

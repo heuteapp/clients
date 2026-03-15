@@ -1,16 +1,7 @@
-import { LayoutSectionData } from "./layout.data";
-import { LayoutSectionStyle } from "./layout.style";
-
 export type LayoutMetricsValue = {
     sectionCount: LayoutMetricsSectionCount;
     totalSpacing: LayoutMetricsTotalSpacing;
     gridCellSize: LayoutMetricsGridCellSize;
-}
-
-export type LayoutMetricsContext = {
-    layoutSize: { width: number; height: number };
-    sections: LayoutSectionData[];
-    sectionStyles: LayoutSectionStyle[];
 }
 
 export type LayoutMetricsSectionCount = {
