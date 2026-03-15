@@ -6,6 +6,8 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
     const { layout, sections } = content;
     const { sections: sectionStyles } = theme;
 
+    if(!layout) return;
+
     if (sections.length === 0) return;
 
     const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan - 1));
@@ -55,11 +57,11 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         totalSpacing.vertical.margin += vMargin;
     });
 
-    const totalWidth = layoutSize.width / sectionCount.vertical;
-    const totalHeight = layoutSize.height / sectionCount.horizontal;
+    const totalWidth = layoutSize.width / layout.columnCount;
+    const totalHeight = layoutSize.height / layout.rowCount;
 
-    const innerWidth = (layoutSize.width + totalSpacing.horizontal.padding + totalSpacing.horizontal.margin) / sectionCount.vertical;
-    const innerHeight = (layoutSize.height + totalSpacing.vertical.padding + totalSpacing.vertical.margin) / sectionCount.horizontal;
+    const innerWidth = (layoutSize.width + totalSpacing.horizontal.padding + totalSpacing.horizontal.margin) / layout.columnCount;
+    const innerHeight = (layoutSize.height + totalSpacing.vertical.padding + totalSpacing.vertical.margin) / layout.rowCount;
 
     const gridCellSize = {
         total: Math.min(totalWidth, totalHeight),
@@ -68,8 +70,8 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
     };
 
     const gridFullSize: LayoutMetricsGridFullSize = {
-        width: gridCellSize.inner * (layout?.columnCount || 0),
-        height: gridCellSize.inner * (layout?.rowCount || 0),
+        width: gridCellSize.inner * layout.columnCount,
+        height: gridCellSize.inner * layout.rowCount,
     };
 
     const sectionContainerFullSize: LayoutMetricsSectionContainerSize = {

@@ -1,14 +1,17 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
+import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
 
-export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegistry, metrics: BoardMetricsValue }) {
+export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardThemeManager, metricsValue: BoardMetricsValue) {
     const layout = registry.layout;
-    const layoutElement = layout.ref?.current;
+    if(!layout) return;
+
+    const layoutElement = layout.ref.current;
     if (!layoutElement) return;
 
-    if(!metrics.layout) return;
+    if(!metricsValue.layout) return;
 
-    const { gridCellSize, gridFullSize, sectionContainerSize } = metrics.layout!;
+    const { gridCellSize, gridFullSize, sectionContainerSize } = metricsValue.layout;
 
     layoutElement.style.setProperty("--cell-size-full", `${gridCellSize.total}px`);
     layoutElement.style.setProperty("--cell-size-inner", `${gridCellSize.inner}px`);
@@ -26,6 +29,24 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
     if (!layoutSectionContainer?.ref?.current) return;
 
     layoutSectionContainer.sections.forEach(section => {
+        const sectionElement = section.ref?.current;
+        if(!sectionElement) return;
+
+        const sectionStyle = themeManager.current!.sections.find(s => s.name === section.props!.name);
+
+        if(sectionStyle) {
+            sectionElement.style.setProperty("--section-padding-left", `${sectionStyle?.box.padding?.left || 0}px`);
+            sectionElement.style.setProperty("--section-padding-top", `${sectionStyle?.box.padding?.top || 0}px`);
+            sectionElement.style.setProperty("--section-padding-right", `${sectionStyle?.box.padding?.right || 0}px`);
+            sectionElement.style.setProperty("--section-padding-bottom", `${sectionStyle?.box.padding?.bottom || 0}px`);
+        }
+        else {
+            sectionElement.style.setProperty("--section-padding-left", `0px`);
+            sectionElement.style.setProperty("--section-padding-top", `0px`);
+            sectionElement.style.setProperty("--section-padding-right", `0px`);
+            sectionElement.style.setProperty("--section-padding-bottom", `0px`);
+        }
+        
         const sectionGrid = section.grid;
         if (!sectionGrid?.ref?.current) return;
 

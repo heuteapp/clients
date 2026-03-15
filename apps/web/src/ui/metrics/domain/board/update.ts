@@ -30,7 +30,7 @@ export function updateBoardMetrics(registry: BoardRegistry, contentManager: Boar
 
     if (!metricsValue) return false;
 
-    applyBoardMetrics({ registry, metrics: metricsValue });
+    applyBoardMetrics(registry, themeManager, metricsValue);
     metricsManager.current = metricsValue;
 
     return true;
