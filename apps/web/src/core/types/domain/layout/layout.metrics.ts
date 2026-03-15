@@ -1,4 +1,5 @@
 import { LayoutSectionData } from "./layout.data";
+import { LayoutSectionStyle } from "./layout.style";
 
 export type LayoutMetricsValue = {
     sectionCount: LayoutMetricsSectionCount;
@@ -8,6 +9,7 @@ export type LayoutMetricsValue = {
 
 export type LayoutMetricsContext = {
     sections: LayoutSectionData[];
+    sectionStyles: LayoutSectionStyle[];
 }
 
 export type LayoutMetricsSectionCount = {
