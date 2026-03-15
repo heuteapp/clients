@@ -1,5 +1,5 @@
 import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
-import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerFullSize } from "@/src/core/types/domain/layout/layout.metrics";
+import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerSize } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
     const { layoutSize, content, theme } = context;
@@ -72,7 +72,7 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         height: gridCellSize.inner * (layout?.rowCount || 0),
     };
 
-    const sectionContainerFullSize: LayoutMetricsSectionContainerFullSize = {
+    const sectionContainerFullSize: LayoutMetricsSectionContainerSize = {
         width: gridFullSize.width + totalSpacing.horizontal.padding + totalSpacing.horizontal.margin,
         height: gridFullSize.height + totalSpacing.vertical.padding + totalSpacing.vertical.margin,
     };
@@ -82,7 +82,7 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         totalSpacing,
         gridCellSize,
         gridFullSize,
-        sectionContainerFullSize
+        sectionContainerSize: sectionContainerFullSize
     };
 
     return metricsValue;

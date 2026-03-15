@@ -6,20 +6,17 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
 
-    const { sectionContainerValue, sectionValue } = metrics.layout!;
+    const { sectionCount, totalSpacing, gridCellSize, gridFullSize, sectionContainerSize } = metrics.layout!;
 
-    layoutElement.style.setProperty("--section-padding", `${sectionValue.spacing.padding}px`);
+    layoutElement.style.setProperty("--cell-size-full", `${gridCellSize.total}px`);
+    layoutElement.style.setProperty("--cell-size-inner", `${gridCellSize.inner}px`);
+    layoutElement.style.setProperty("--cell-size-compact", `${gridCellSize.compact}px`);
 
-    layoutElement.style.setProperty("--cell-size-full", `${sectionValue.gridValue.cellValue.size.full}px`);
-    layoutElement.style.setProperty("--cell-size-inner", `${sectionValue.gridValue.cellValue.size.inner}px`);
-    layoutElement.style.setProperty("--cell-size-compact", `${sectionValue.gridValue.cellValue.size.compact}px`);
+    layoutElement.style.setProperty("--grid-max-width", `${gridFullSize.width}px`);
+    layoutElement.style.setProperty("--grid-max-height", `${gridFullSize.height}px`);
 
-    layoutElement.style.setProperty("--grid-spacing-padding", `${sectionValue.gridValue.spacing.padding}px`);
-    layoutElement.style.setProperty("--grid-max-width", `${sectionValue.gridValue.size.width}px`);
-    layoutElement.style.setProperty("--grid-max-height", `${sectionValue.gridValue.size.height}px`);
-
-    layoutElement.style.setProperty("--container-width", `${sectionContainerValue.size.width}px`);
-    layoutElement.style.setProperty("--container-height", `${sectionContainerValue.size.height}px`);
+    layoutElement.style.setProperty("--container-width", `${sectionContainerSize.width}px`);
+    layoutElement.style.setProperty("--container-height", `${sectionContainerSize.height}px`);
 
     const rootRect = layoutElement.getBoundingClientRect();
     const layoutSectionContainer = layout.sectionContainer;
