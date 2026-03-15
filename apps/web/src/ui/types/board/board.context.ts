@@ -4,13 +4,15 @@ import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardActions } from "@/src/core/types/domain/board/board.store";
 import { BoardSession } from "./board.session";
 import { BoardTheme } from "./board.theme";
+import { BoardContent } from "./board.content";
 
 export interface BoardContextValue {
     rootRef: React.RefObject<HTMLDivElement | null>;
     registry: BoardRegistry;    
+    content: BoardContent;
+    theme: BoardTheme;
     actions: BoardActions;
     session: BoardSession;
     interaction: BoardInteraction;
     metrics: BoardMetrics;
-    theme: BoardTheme;
 }

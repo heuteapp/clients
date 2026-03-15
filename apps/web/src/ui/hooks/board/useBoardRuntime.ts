@@ -4,9 +4,13 @@ import { useBoardRegistry } from "./useBoardRegistry"
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { useBoardSession } from "./useBoardSession";
 import { useBoardActions } from "./useBoardActions";
+import { useBoardContent } from "./useBoardContent";
+import { useBoardTheme } from "./useBoardTheme";
 
 export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>) : BoardContextValue {
     const registry = useBoardRegistry();
+    const content = useBoardContent();
+    const theme = useBoardTheme();
     const actions = useBoardActions();
     const session = useBoardSession();
     const interaction = useBoardInteraction(session);
@@ -15,6 +19,8 @@ export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>)
     return {
         rootRef,
         registry,
+        content,
+        theme,
         actions,
         session,
         interaction,
