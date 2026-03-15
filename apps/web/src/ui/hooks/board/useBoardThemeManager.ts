@@ -3,7 +3,7 @@ import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
 import { useBoardThemeStore } from "@/src/stores/board.theme.store";
 import { BoardThemeValue } from "@/src/core/types/domain/board/board.theme";
 
-export function useBoardTheme() : BoardThemeManager {
+export function useBoardThemeManager() : BoardThemeManager {
     const board = useBoardThemeStore(state => state.board);
     const cards = useBoardThemeStore(state => state.cards);
     const layout = useBoardThemeStore(state => state.layout);

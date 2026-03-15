@@ -7,7 +7,7 @@ import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/bo
 import debounce from "lodash.debounce";
 import { server } from "@/src/api/client";
 
-export function useBoardContent() : BoardContentManager {
+export function useBoardContentManager() : BoardContentManager {
     const board = useBoardContentStore(state => state.board);
     const cards = useBoardContentStore(state => state.cards);
     const layout = useBoardContentStore(state => state.layout);
