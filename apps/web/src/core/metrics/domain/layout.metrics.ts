@@ -66,8 +66,8 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
     const totalWidth = layoutSize.width / layout.columnCount;
     const totalHeight = layoutSize.height / layout.rowCount;
 
-    const innerWidth = (layoutSize.width + totalSpacing.horizontal.padding + totalSpacing.horizontal.margin) / layout.columnCount;
-    const innerHeight = (layoutSize.height + totalSpacing.vertical.padding + totalSpacing.vertical.margin) / layout.rowCount;
+    const innerWidth = (layoutSize.width -(totalSpacing.horizontal.padding + totalSpacing.horizontal.margin)) / layout.columnCount;
+    const innerHeight = (layoutSize.height - (totalSpacing.vertical.padding + totalSpacing.vertical.margin)) / layout.rowCount;
 
     const gridCellSize = {
         total: Math.min(totalWidth, totalHeight),

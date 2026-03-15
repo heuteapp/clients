@@ -28,6 +28,26 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
     }
   }, [registry])
 
+  const matrix = Array.from({ length: props.rowCount }, () =>
+    Array.from({ length: props.columnCount }, () => ".")
+  );
+
+  sections.forEach(s => {
+    const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
+
+    for (let r = 0; r < rowSpan; r++) {
+      for (let c = 0; c < colSpan; c++) {
+        matrix[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
+      }
+    }
+  });
+
+  const gridTemplateAreas = matrix
+  .map(row => `"${row.join(" ")}"`)
+  .join(" ");
+
+  console.log(gridTemplateAreas);
+
   return (
     <div 
       ref={registry.layout!.ref} 
@@ -35,6 +55,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
       style={{
         gridTemplateColumns: `repeat(${props.columnCount}, var(--cell-size-inner))`,
         gridTemplateRows: `repeat(${props.rowCount}, var(--cell-size-inner))`,
+        gridTemplateAreas
       }}
     >
       {sections.map(section => (
