@@ -6,7 +6,7 @@ import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics
 import { BoardContentManager } from "@/src/ui/types/board/board.content";
 import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
 
-export function updateBoardMetrics(registry: BoardRegistry, metricsManager: BoardMetricsManager, contentManager: BoardContentManager, themeManager: BoardThemeManager) {
+export function updateBoardMetrics(registry: BoardRegistry, contentManager: BoardContentManager, themeManager: BoardThemeManager, metricsManager: BoardMetricsManager) {
     if(!registry || !metricsManager || !contentManager || !themeManager) return false;
     if(!contentManager.current || !themeManager.current) return false;
 
