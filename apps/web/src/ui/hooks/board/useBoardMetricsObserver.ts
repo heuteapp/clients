@@ -5,14 +5,13 @@ import { updateBoardMetrics } from "@/src/ui/metrics/domain/board/update";
 import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
 import { BoardContentManager } from "../../types/board/board.content";
 import { BoardThemeManager } from "../../types/board/board.theme";
+import { BoardContextValue } from "../../types/board/board.context";
 
 export function useBoardMetricsObserver(
-    rootRef: React.RefObject<HTMLDivElement | null>,
-    registry: BoardRegistry,
-    contentManager: BoardContentManager,
-    themeManager: BoardThemeManager,
-    metricsManager: BoardMetricsManager
-)  {
+    context: BoardContextValue) 
+{
+    const { rootRef, registry, contentManager, themeManager, metricsManager } = context;
+
     useEffect(() => {
         const element = rootRef.current;
         if(!element) return;
