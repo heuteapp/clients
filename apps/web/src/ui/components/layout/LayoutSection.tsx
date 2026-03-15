@@ -3,6 +3,7 @@ import style from "@/src/ui/styles/layout.module.css"
 
 import { LayoutSectionProps } from "@/src/ui/types/layout/layout.props";
 import { useBoardContext } from "@/src/ui/hooks/board";
+import LayoutGrid from "./LayoutGrid";
 
 function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
@@ -25,7 +26,9 @@ function LayoutSection(props : LayoutSectionProps) {
             style={{
                 gridArea: props.name
             }}
-        />
+        >
+            <LayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
+        </div>
     )
 }
 
