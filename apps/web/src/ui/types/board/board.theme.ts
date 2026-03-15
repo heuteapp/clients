@@ -1,3 +1,3 @@
-import { BoardThemeValue } from "@/src/core/types/domain/board/board.theme";
+import { BoardThemeActions, BoardThemeValue } from "@/src/core/types/domain/board/board.theme";
 
-export type BoardTheme = React.RefObject<BoardThemeValue | null>
+export type BoardThemeManager = React.RefObject<BoardThemeValue & BoardThemeActions | null>

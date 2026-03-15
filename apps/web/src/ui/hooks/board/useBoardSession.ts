@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { produce } from "immer";
-import { BoardSession } from "@/src/ui/types/board/board.session";
+import { BoardSessionManager } from "@/src/ui/types/board/board.session";
 
-export function useBoardSession(): BoardSession {
-    const session = useMemo<BoardSession>(() => {
-        const obj: BoardSession = {
+export function useBoardSession(): BoardSessionManager {
+    const session = useMemo<BoardSessionManager>(() => {
+        const obj: BoardSessionManager = {
             current: {
                 pointerId: null,
                 cardCreation: null,

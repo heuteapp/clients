@@ -1,5 +1,5 @@
 import { BoardSessionValue, BoardSessionUpdater } from "@/src/core/types/domain/board/board.session";
 
-export type BoardSession = React.RefObject<BoardSessionValue> &{
+export type BoardSessionManager = React.RefObject<BoardSessionValue> &{
     updater: BoardSessionUpdater;
 }

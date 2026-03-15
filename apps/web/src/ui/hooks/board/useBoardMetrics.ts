@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { BoardMetrics } from "@/src/ui/types/board/board.metrics"
+import { BoardMetricsManager } from "@/src/ui/types/board/board.metrics"
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { updateBoardMetrics } from "@/src/ui/metrics/domain/board/update";
 import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
@@ -7,7 +7,7 @@ import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
 export function useBoardMetrics(
     rootRef: React.RefObject<HTMLDivElement | null>,
     registry: BoardRegistry,
-) : BoardMetrics {
+) : BoardMetricsManager {
 
     const metrics = useRef<BoardMetricsValue>({
         layout: {
