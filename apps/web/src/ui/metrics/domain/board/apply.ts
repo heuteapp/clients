@@ -41,7 +41,15 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
             bottom: sectionStyle?.box.padding?.bottom || 0,
         };
 
+        const sectionMargin = {
+            left: sectionStyle?.box.margin?.left || 0,
+            top: sectionStyle?.box.margin?.top || 0,
+            right: sectionStyle?.box.margin?.right || 0,
+            bottom: sectionStyle?.box.margin?.bottom || 0,
+        }
+
         sectionElement.style.setProperty("--section-padding", `${sectionPadding.top}px ${sectionPadding.right}px ${sectionPadding.bottom}px ${sectionPadding.left}px`);
+        sectionElement.style.setProperty("--section-margin", `${sectionMargin.top}px ${sectionMargin.right}px ${sectionMargin.bottom}px ${sectionMargin.left}px`);
 
         const sectionGrid = section.grid;
         if (!sectionGrid?.ref?.current) return;

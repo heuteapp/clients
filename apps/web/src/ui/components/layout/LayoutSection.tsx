@@ -24,7 +24,9 @@ function LayoutSection(props : LayoutSectionProps) {
             ref={ref}
             className={style.section}
             style={{
-                gridArea: props.name
+                gridArea: props.name,
+                padding: "var(--section-padding)",
+                margin: "var(--section-margin)"
             }}
         >
             <LayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
