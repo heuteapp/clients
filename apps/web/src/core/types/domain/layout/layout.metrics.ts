@@ -1,7 +1,13 @@
+import { LayoutSectionData } from "./layout.data";
+
 export type LayoutMetricsValue = {
     sectionCount: LayoutMetricsSectionCount;
     totalSpacing: LayoutMetricsTotalSpacing;
     gridCellSize: LayoutMetricsGridCellSize;
+}
+
+export type LayoutMetricsContext = {
+    sections: LayoutSectionData[];
 }
 
 export type LayoutMetricsSectionCount = {
