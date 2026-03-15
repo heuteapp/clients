@@ -9,14 +9,14 @@ import style from "@/src/ui/styles/layout.module.css"
 import LayoutSectionContainer from "./LayoutSectionContainer";
 import { useBoardContext } from "@/src/ui/hooks/board";
 import { HeuteLayoutProps } from "@/src/ui/types/layout/layout.props";
-import { useBoardStore } from "@/src/stores/board.content.store";
+import { useBoardContentStore } from "@/src/stores/board.content.store";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
 
   const { registry } = context!;
 
-  const sections = useBoardStore(state => state.sections);
+  const sections = useBoardContentStore(state => state.sections);
 
   const layoutRef = registry.layout!.ref!;
 

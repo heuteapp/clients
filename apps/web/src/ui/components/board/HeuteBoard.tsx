@@ -7,7 +7,7 @@ import BoardCardContainer from "./BoardCardContainer";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board";
 import BoardGhostCard from "./BoardGhostCard";
-import { useBoardStore } from "@/src/stores/board.content.store";
+import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { HeuteBoardProps } from "@/src/ui/types/board/board.props";
 
 //
@@ -16,8 +16,8 @@ export default function HeuteBoard(props: HeuteBoardProps) {
   const { registry } = useBoardContext();
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const layout = useBoardStore(state => state.layout);
-  const cards = useBoardStore(state => state.cards);
+  const layout = useBoardContentStore(state => state.layout);
+  const cards = useBoardContentStore(state => state.cards);
 
   useLayoutEffect(() => {
     registry.registerBoard(boardRef, props)
