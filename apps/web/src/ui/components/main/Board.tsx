@@ -4,7 +4,7 @@ import { useBoardStore } from "@/src/stores/board.store";
 import { useEffect } from 'react';
 import { createDataIdentifier } from '@/src/core/utils/shared/data';
 import { server } from '@/src/api/client';
-import { useBoardStyleStore } from '@/src/stores/board.style.store';
+import { useBoardThemeStore } from '@/src/stores/board.theme.store';
 
 interface BoardProps {
     category: string;
@@ -15,7 +15,7 @@ function Board({ category, date }: BoardProps) {
     const board = useBoardStore(state => state.board);
     const setState = useBoardStore(state => state.setState);
 
-    const setStyleState = useBoardStyleStore(state => state.setState);
+    const setThemeState = useBoardThemeStore(state => state.setState);
     
     useEffect(() => {
         const fetchBoard = async () => {
@@ -65,7 +65,7 @@ function Board({ category, date }: BoardProps) {
                     }))
                 });
 
-                setStyleState({
+                setThemeState({
                     board: null,
                     cards: [],
                     layout: null,

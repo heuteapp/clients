@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BoardStyleState, BoardStyleStore } from "../core/types/domain/board/board.style.store";
+import { BoardThemeState, BoardThemeStore } from "../core/types/domain/board/board.theme.store";
 
-export const useBoardStyleStore = create<BoardStyleStore>()(
+export const useBoardThemeStore = create<BoardThemeStore>()(
     immer(set => ({
         board: null,
         cards: [],
         layout: null,
         sections: [],
 
-        setState: (state: BoardStyleState) => {
+        setState: (state: BoardThemeState) => {
             set(s => {
                 s.board = state.board
                 s.layout = state.layout
