@@ -1,5 +1,5 @@
 import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
-import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerSize, LayoutMetricsTotalSpacingAxisRecord } from "@/src/core/types/domain/layout/layout.metrics";
+import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerSize } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
     const { layoutSize, content, theme } = context;
@@ -44,11 +44,6 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         vertical: { padding: 0, margin: 0 },
     };
 
-    const totalSpacingAxisRecord : LayoutMetricsTotalSpacingAxisRecord = {
-        horizontal: Array.from({ length: sectionCount.horizontal }, () => ({ padding: 0, margin: 0 })),
-        vertical: Array.from({ length: sectionCount.vertical }, () => ({ padding: 0, margin: 0 })),
-    };
-
     sections.forEach(s => {
         const style = sectionStyles.find(st => st.name === s.name);
         if (!style) return;
@@ -61,19 +56,12 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         const hMargin = (box.margin?.left || 0) + (box.margin?.right || 0);
         const vMargin = (box.margin?.top || 0) + (box.margin?.bottom || 0);
 
-        for (let i = 0; i < sectionCount.horizontal; i++) {
-            totalSpacingAxisRecord.horizontal[i].padding += hPadding;
-            totalSpacingAxisRecord.horizontal[i].margin += hMargin;
-        }
+        totalSpacing.horizontal.padding = Math.max(totalSpacing.horizontal.padding, hPadding);
+        totalSpacing.vertical.padding = Math.max(totalSpacing.vertical.padding, vPadding);
 
-        for (let i = 0; i < sectionCount.vertical; i++) {
-            totalSpacingAxisRecord.vertical[i].padding += vPadding;
-            totalSpacingAxisRecord.vertical[i].margin += vMargin;
-        }
+        totalSpacing.horizontal.margin = Math.max(totalSpacing.horizontal.margin, hMargin);
+        totalSpacing.vertical.margin = Math.max(totalSpacing.vertical.margin, vMargin);
     });
-
-    totalSpacing.horizontal = totalSpacingAxisRecord.horizontal[sectionCount.horizontal - 1];
-    totalSpacing.vertical = totalSpacingAxisRecord.vertical[sectionCount.vertical - 1];
 
     const totalWidth = layoutSize.width / layout.columnCount;
     const totalHeight = layoutSize.height / layout.rowCount;
@@ -100,7 +88,6 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
     const metricsValue: LayoutMetricsValue = {
         sectionCount,
         totalSpacing,
-        totalSpacingAxisRecord,
         gridCellSize,
         gridFullSize,
         sectionContainerSize: sectionContainerFullSize

@@ -1,6 +1,5 @@
 import style from "@/src/ui/styles/layout.module.css"
 
-import LayoutGridCell from "./LayoutGridCell";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board";
 import { LayoutGridProps } from "@/src/ui/types/layout/layout.props";
@@ -24,20 +23,7 @@ function LayoutGrid(props : LayoutGridProps) {
         <div ref={ref} className={style.grid} style={{
             gridTemplateColumns: `repeat(${props.colSpan}, var(--cell-size-inner))`,
             gridTemplateRows: `repeat(${props.rowSpan}, var(--cell-size-inner))`,
-        }}>
-            {
-                Array.from({ length: props.rowSpan }).map((_, rowIndex) => (
-                    Array.from({ length: props.colSpan }).map((_, colIndex) => (
-                        <LayoutGridCell
-                            key={rowIndex + "-" + colIndex}
-                            sectionId={props.sectionId}
-                            rowIndex={rowIndex + 1}
-                            colIndex={colIndex + 1}
-                        />
-                    ))
-                ))
-            }
-        </div>
+        }}/>
     )
 }
 

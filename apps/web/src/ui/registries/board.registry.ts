@@ -59,21 +59,6 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             return registry.layout
         },
 
-        registerLayoutSectionContainer(ref, props) {
-            if (!registry.layout.sectionContainer) {
-                registry.layout.sectionContainer = {
-                    ref,
-                    props,
-                    sections: new Map()
-                }
-            } else {
-                registry.layout.sectionContainer.ref = ref
-                registry.layout.sectionContainer.props = props
-            }
-
-            return registry.layout.sectionContainer
-        },
-
         registerLayoutSection(id, ref, props) {
 
             if (!registry.layout.sectionContainer) {
@@ -121,40 +106,6 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             return section.grid
         },
 
-        registerLayoutGridCell(sectionId, id, ref, props) {
-
-            if (!registry.layout.sectionContainer) {
-                registry.layout.sectionContainer = { sections: new Map() }
-            }
-
-            const sections = registry.layout.sectionContainer.sections
-
-            if (!sections.has(sectionId.client)) {
-                sections.set(sectionId.client, {  })
-            }
-
-            const section = sections.get(sectionId.client)!
-
-            if (!section.grid) {
-                section.grid = {
-                    cells: new Map()
-                }
-            }
-
-            const grid = section.grid!
-
-            if (!grid.cells.has(id.client)) {
-                grid.cells.set(id.client, { ref, props })
-            }
-
-            const cell = grid.cells.get(id.client)!
-
-            cell.ref = ref
-            cell.props = props
-
-            return cell
-        },
-
         //
 
         unregisterBoard() {
@@ -178,12 +129,6 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
             registry.layout.ref.current = null
         },
 
-        unregisterLayoutSectionContainer() {
-            if (registry.layout) {
-                registry.layout.sectionContainer = null
-            }
-        },
-
         unregisterLayoutSection(id) {
             registry.layout?.sectionContainer?.sections.delete(id.client)
         },
@@ -191,11 +136,6 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         unregisterLayoutGrid(sectionId) {
             const section = registry.layout?.sectionContainer?.sections.get(sectionId.client)
             if (section) section.grid = null
-        },
-
-        unregisterLayoutGridCell(sectionId, id) {
-            registry.layout?.sectionContainer?.sections
-                .get(sectionId.client)?.grid?.cells.delete(id.client)
         },
 
         //
@@ -269,18 +209,6 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             return grids
         },
-
-        getLayoutGridCell(sectionId, id) {
-            return registry.layout?.sectionContainer?.sections
-                .get(sectionId.client)?.grid?.cells.get(id.client)
-        },
-
-        getLayoutGridCells(sectionId) {
-            const cells = registry.layout?.sectionContainer?.sections
-                .get(sectionId.client)?.grid?.cells
-
-            return cells ? Array.from(cells.values()) : undefined
-        }
     }
 
     return registry

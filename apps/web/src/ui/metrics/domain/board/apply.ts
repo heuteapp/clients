@@ -37,42 +37,25 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
 
         const sectionStyle = themeManager.current!.sections.find(s => s.name === section.props!.name);
 
-        const padding = {
+        const sectionPadding = {
             left: sectionStyle?.box.padding?.left || 0,
             top: sectionStyle?.box.padding?.top || 0,
             right: sectionStyle?.box.padding?.right || 0,
             bottom: sectionStyle?.box.padding?.bottom || 0,
         };
 
-        sectionElement.style.setProperty("--section-padding", `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`);
-        
-        const sectionRect = {
-            left: (section.props!.position.colIndex - 1) * gridCellSize.inner,
-            top: (section.props!.position.rowIndex - 1) * gridCellSize.inner,
-            width: section.props!.position.colSpan * gridCellSize.inner,
-            height: section.props!.position.rowSpan * gridCellSize.inner,
-        }
-
-        sectionElement.style.setProperty("--section-left", `${sectionRect.left}px`);
-        sectionElement.style.setProperty("--section-top", `${sectionRect.top}px`);
-        sectionElement.style.setProperty("--section-width", `${sectionRect.width}px`);
-        sectionElement.style.setProperty("--section-height", `${sectionRect.height}px`);
+        sectionElement.style.setProperty("--section-padding", `${sectionPadding.top}px ${sectionPadding.right}px ${sectionPadding.bottom}px ${sectionPadding.left}px`);
         
         const sectionGrid = section.grid;
         if (!sectionGrid?.ref?.current) return;
 
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
-        const { left: rootLeft, top: rootTop } = rootRect;
-        const { left: gridLeft, top: gridTop } = gridElement.getBoundingClientRect();
-        const localGridLeft = gridLeft - rootLeft;
-        const localGridTop = gridTop - rootTop;
-
         const gridRect = {
-            left: localGridLeft + padding.left,
-            top: localGridTop + padding.top,
-            width: sectionRect.width - padding.left - padding.right,
-            height: sectionRect.height - padding.top - padding.bottom
+            left: (section.props!.position.colIndex - 1) * gridCellSize.inner + sectionPadding.left,
+            top: (section.props!.position.rowIndex - 1) * gridCellSize.inner + sectionPadding.top,
+            width: (section.props!.position.colSpan * gridCellSize.inner) - sectionPadding.left - sectionPadding.right,
+            height: (section.props!.position.rowSpan * gridCellSize.inner) - sectionPadding.top - sectionPadding.bottom
         };
 
         const gap = rootRect.width * 0.0075;

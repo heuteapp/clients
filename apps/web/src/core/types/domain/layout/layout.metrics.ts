@@ -1,7 +1,6 @@
 export type LayoutMetricsValue = {
     sectionCount: LayoutMetricsSectionCount;
     totalSpacing: LayoutMetricsTotalSpacing;
-    totalSpacingAxisRecord: LayoutMetricsTotalSpacingAxisRecord;
     gridCellSize: LayoutMetricsGridCellSize;
     gridFullSize: LayoutMetricsGridFullSize;
     sectionContainerSize: LayoutMetricsSectionContainerSize;
@@ -15,11 +14,6 @@ export type LayoutMetricsSectionCount = {
 export type LayoutMetricsTotalSpacing = {
     horizontal: LayoutMetricsTotalSpacingAxis;
     vertical: LayoutMetricsTotalSpacingAxis;
-}
-
-export type LayoutMetricsTotalSpacingAxisRecord = {
-    horizontal: LayoutMetricsTotalSpacingAxis[];
-    vertical: LayoutMetricsTotalSpacingAxis[];
 }
 
 export type LayoutMetricsTotalSpacingAxis = {
