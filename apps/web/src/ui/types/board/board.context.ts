@@ -10,8 +10,8 @@ export interface BoardContextValue {
     rootRef: React.RefObject<HTMLDivElement | null>;
     registry: BoardRegistry;    
     content: BoardContent;
-    theme: BoardTheme;
     actions: BoardActions;
+    theme: BoardTheme;
     session: BoardSession;
     interaction: BoardInteraction;
     metrics: BoardMetrics;

@@ -10,8 +10,8 @@ import { useBoardTheme } from "./useBoardTheme";
 export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>) : BoardContextValue {
     const registry = useBoardRegistry();
     const content = useBoardContent();
-    const theme = useBoardTheme();
     const actions = useBoardActions();
+    const theme = useBoardTheme();
     const session = useBoardSession();
     const interaction = useBoardInteraction(session);
     const metrics = useBoardMetrics(rootRef, registry);
@@ -20,8 +20,8 @@ export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>)
         rootRef,
         registry,
         content,
-        theme,
         actions,
+        theme,
         session,
         interaction,
         metrics,
