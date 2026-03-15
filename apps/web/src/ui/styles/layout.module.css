@@ -3,7 +3,7 @@
     height: 100%;
     display: grid;
     position: absolute;
-    align-items: center;
+    align-content: center;
     justify-content: center;
     overflow: hidden;
 

@@ -73,10 +73,10 @@ function Board({ category, date }: BoardProps) {
                         name: "first",
                         box: {
                             padding: {
-                                left: 10,
-                                top: 10,
-                                right: 10,
-                                bottom: 10,
+                                left: 0,
+                                top: 0,
+                                right: 0,
+                                bottom: 0,
                             },                                
                         }
                     }]
