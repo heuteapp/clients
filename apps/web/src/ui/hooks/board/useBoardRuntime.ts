@@ -8,18 +8,18 @@ import { useBoardThemeManager } from "./useBoardThemeManager";
 
 export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>) : BoardContextValue {
     const registry = useBoardRegistry();
-    const content = useBoardContentManager();
-    const theme = useBoardThemeManager();
-    const session = useBoardSessionManager();
-    const interaction = useBoardInteraction(session);
+    const contentManager = useBoardContentManager();
+    const themeManager = useBoardThemeManager();
+    const sessionManager = useBoardSessionManager();
+    const interaction = useBoardInteraction(sessionManager);
     const metrics = useBoardMetrics(rootRef, registry);
 
     return {
         rootRef,
         registry,
-        content,
-        theme,
-        session,
+        contentManager,
+        themeManager,
+        sessionManager,
         interaction,
         metrics,
     }

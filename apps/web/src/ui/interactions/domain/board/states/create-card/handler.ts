@@ -5,7 +5,7 @@ import { calculateCardPositionByPointer } from "@/src/ui/interactions/domain/boa
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
-    const { rootRef, registry, session, interaction, metrics } = context;
+    const { rootRef, registry, sessionManager: session, interaction, metrics } = context;
 
     const state = session.current.cardCreation
     if (!state) return
@@ -83,7 +83,7 @@ export function finishCardCreationState(context: BoardContextValue) {
 }
 
 export function finalizeCardCreationState(context : BoardContextValue) {
-    const { registry, session, content } = context;
+    const { registry, sessionManager: session, contentManager: content } = context;
 
     const { createCard } = content.current!;
 

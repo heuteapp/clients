@@ -3,10 +3,10 @@ import { createBoardInteraction } from "@/src/ui/interactions/domain/board.inter
 import { BoardInteraction } from "@/src/ui/types/board/board.interaction";
 import { BoardSessionManager } from "@/src/ui/types/board/board.session";
 
-export function useBoardInteraction(session: BoardSessionManager) : BoardInteraction {
+export function useBoardInteraction(sessionManager: BoardSessionManager) : BoardInteraction {
     const interaction = useMemo(() => {
-        return createBoardInteraction(session);
-    }, [session]);
+        return createBoardInteraction(sessionManager);
+    }, [sessionManager]);
 
     return interaction;
 }

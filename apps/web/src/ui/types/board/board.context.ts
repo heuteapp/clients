@@ -8,9 +8,9 @@ import { BoardContentManager } from "./board.content";
 export interface BoardContextValue {
     rootRef: React.RefObject<HTMLDivElement | null>;
     registry: BoardRegistry;    
-    content: BoardContentManager;
-    theme: BoardThemeManager;
-    session: BoardSessionManager;
+    contentManager: BoardContentManager;
+    themeManager: BoardThemeManager;
+    sessionManager: BoardSessionManager;
     interaction: BoardInteraction;
     metrics: BoardMetricsManager;
 }

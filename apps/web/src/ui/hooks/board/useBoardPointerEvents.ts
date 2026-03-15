@@ -7,7 +7,7 @@ import { findCardUnderPointer } from "../../interactions/domain/board/board.dete
 export function useBoardPointerEvents(
     context: BoardContextValue
 ) {
-    const { rootRef, registry, content, session, interaction } = context;
+    const { rootRef, registry, contentManager: content, sessionManager: session, interaction } = context;
 
     useEffect(() => {
         const root = rootRef.current
