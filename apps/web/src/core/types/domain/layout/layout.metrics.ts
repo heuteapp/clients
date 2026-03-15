@@ -8,6 +8,7 @@ export type LayoutMetricsValue = {
 }
 
 export type LayoutMetricsContext = {
+    layoutSize: { width: number; height: number };
     sections: LayoutSectionData[];
     sectionStyles: LayoutSectionStyle[];
 }
