@@ -1,9 +1,9 @@
 import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
-import { LayoutMetricsValue, LayoutMetricsTotalSpacing } from "@/src/core/types/domain/layout/layout.metrics";
+import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
     const { layoutSize, content, theme } = context;
-    const { sections } = content;
+    const { layout, sections } = content;
     const { sections: sectionStyles } = theme;
 
     if (sections.length === 0) return;
@@ -67,10 +67,16 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         compact: Math.min(innerWidth, innerHeight) * 0.9,
     };
 
+    const gridTotalSize: LayoutMetricsGridFullSize = {
+        width: gridCellSize.inner * (layout?.columnCount || 0),
+        height: gridCellSize.inner * (layout?.rowCount || 0),
+    };
+
     const metricsValue: LayoutMetricsValue = {
         sectionCount,
         totalSpacing,
-        gridCellSize
+        gridCellSize,
+        gridTotalSize,
     };
 
     return metricsValue;
