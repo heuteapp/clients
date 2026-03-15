@@ -10,7 +10,7 @@ export interface BoardContextValue {
     registry: BoardRegistry;    
     contentManager: BoardContentManager;
     themeManager: BoardThemeManager;
+    metricsManager: BoardMetricsManager;
     sessionManager: BoardSessionManager;
     interaction: BoardInteraction;
-    metrics: BoardMetricsManager;
 }

@@ -5,9 +5,9 @@ import { calculateCardPositionByPointer } from "@/src/ui/interactions/domain/boa
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
-    const { rootRef, registry, sessionManager: session, interaction, metrics } = context;
+    const { rootRef, registry, sessionManager, metricsManager, interaction } = context;
 
-    const state = session.current.cardCreation
+    const state = sessionManager.current.cardCreation
     if (!state) return
 
     const root = rootRef.current
@@ -16,10 +16,10 @@ export function handleCardCreateInteraction(context: BoardContextValue)
     const pointer = interaction.pointer
     if (!pointer) return
 
-    const metricsValue = metrics.current;
+    const metricsValue = metricsManager.current;
     if (!metricsValue) return;
 
-    const cellSize = metricsValue.layout!.sectionValue.gridValue.cellValue.size.inner
+    const cellSize = metricsValue.layout!.gridCellSize.inner;
     const result = findSectionUnderPointer(registry, pointer)
 
     if (!result) {

@@ -21,6 +21,6 @@ export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>)
         themeManager,
         sessionManager,
         interaction,
-        metrics,
+        metricsManager: metrics,
     }
 }
