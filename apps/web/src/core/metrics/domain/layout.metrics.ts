@@ -2,7 +2,10 @@ import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics
 import { LayoutMetricsValue, LayoutMetricsTotalSpacing } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
-    const { layoutSize, sections, sectionStyles } = context;
+    const { layoutSize, state, theme } = context;
+    const { sections } = state;
+    const { sections: sectionStyles } = theme;
+    
     if (sections.length === 0) return;
 
     const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan - 1));

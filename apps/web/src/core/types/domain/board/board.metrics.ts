@@ -1,6 +1,6 @@
 import { LayoutMetricsValue } from "@/src/core/types/domain/layout/layout.metrics"
-import { LayoutSectionData } from "../layout/layout.data";
-import { LayoutSectionStyle } from "../layout/layout.style";
+import { BoardState } from "./board.store";
+import { BoardThemeValue } from "./board.theme";
 
 export type BoardMetricsValue = {
     layout: LayoutMetricsValue | null
@@ -8,6 +8,6 @@ export type BoardMetricsValue = {
 
 export type BoardMetricsContext = {
     layoutSize: { width: number; height: number };
-    sections: LayoutSectionData[];
-    sectionStyles: LayoutSectionStyle[];
+    state: BoardState;
+    theme: BoardThemeValue;
 }
