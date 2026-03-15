@@ -1,10 +1,10 @@
 export type LayoutMetricsValue = {
-    sectionCount: LayoutMetricsCellCount;
+    sectionCount: LayoutMetricsSectionCount;
     totalSpacing: LayoutMetricsTotalSpacing;
     gridCellSize: LayoutMetricsGridCellSize;
 }
 
-export type LayoutMetricsCellCount = {
+export type LayoutMetricsSectionCount = {
     horizontal: number;
     vertical: number;
 }
