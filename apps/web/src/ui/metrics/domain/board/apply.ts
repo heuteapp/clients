@@ -6,7 +6,9 @@ export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegist
     const layoutElement = layout.ref?.current;
     if (!layoutElement) return;
 
-    const { sectionCount, totalSpacing, gridCellSize, gridFullSize, sectionContainerSize } = metrics.layout!;
+    if(!metrics.layout) return;
+
+    const { gridCellSize, gridFullSize, sectionContainerSize } = metrics.layout!;
 
     layoutElement.style.setProperty("--cell-size-full", `${gridCellSize.total}px`);
     layoutElement.style.setProperty("--cell-size-inner", `${gridCellSize.inner}px`);
