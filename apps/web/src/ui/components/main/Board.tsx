@@ -69,7 +69,17 @@ function Board({ category, date }: BoardProps) {
                     board: null,
                     cards: [],
                     layout: null,
-                    sections: []
+                    sections: [{
+                        name: "first",
+                        box: {
+                            padding: {
+                                left: 10,
+                                top: 10,
+                                right: 10,
+                                bottom: 10,
+                            },                                
+                        }
+                    }]
                 });
 
             } catch (err) {

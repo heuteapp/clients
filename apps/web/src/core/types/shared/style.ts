@@ -1,6 +1,6 @@
 export type BoxStyle = {
-    padding: Padding;
-    margin: Margin;
+    padding?: Padding;
+    margin?: Margin;
 }
 
 export type Padding = Spacing;
