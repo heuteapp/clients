@@ -1,10 +1,5 @@
-import { useEffect, useRef } from "react"
-import { BoardMetricsManager } from "@/src/ui/types/board/board.metrics"
-import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
+import { useEffect } from "react"
 import { updateBoardMetrics } from "@/src/ui/metrics/domain/board/update";
-import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
-import { BoardContentManager } from "../../types/board/board.content";
-import { BoardThemeManager } from "../../types/board/board.theme";
 import { BoardContextValue } from "../../types/board/board.context";
 
 export function useBoardMetricsObserver(
