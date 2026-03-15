@@ -1,7 +1,7 @@
 import { LayoutMetricsContext, LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsTotalSpacingAxis } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: LayoutMetricsContext): LayoutMetricsValue | undefined {
-    const { sections, sectionStyles } = context;
+    const { layoutSize, sections, sectionStyles } = context;
     if (sections.length === 0) return;
 
     const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan - 1));
@@ -51,10 +51,22 @@ export function computeLayoutMetrics(context: LayoutMetricsContext): LayoutMetri
         totalSpacing.vertical.margin += vMargin;
     });
 
+    const totalWidth = layoutSize.width / sectionCount.vertical;
+    const totalHeight = layoutSize.height / sectionCount.horizontal;
+
+    const innerWidth = (layoutSize.width + totalSpacing.horizontal.padding + totalSpacing.horizontal.margin) / sectionCount.vertical;
+    const innerHeight = (layoutSize.height + totalSpacing.vertical.padding + totalSpacing.vertical.margin) / sectionCount.horizontal;
+
+    const gridCellSize = {
+        total: Math.min(totalWidth, totalHeight),
+        inner: Math.min(innerWidth, innerHeight),
+        compact: Math.min(innerWidth, innerHeight) * 0.9,
+    };
+
     const metricsValue: LayoutMetricsValue = {
         sectionCount,
         totalSpacing,
-        gridCellSize: {} as any,
+        gridCellSize
     };
 
     return metricsValue;
