@@ -2,8 +2,6 @@ import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/lay
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { calculateCardPositionByPointer } from "@/src/ui/interactions/domain/board/board.calc";
-import { useBoardStore } from "@/src/stores/board.store";
-import { title } from "process";
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
@@ -85,9 +83,9 @@ export function finishCardCreationState(context: BoardContextValue) {
 }
 
 export function finalizeCardCreationState(context : BoardContextValue) {
-    const { registry, session, actions } = context;
+    const { registry, session, content } = context;
 
-    const { createCard } = actions;
+    const { createCard } = content.current!;
 
     const cardCreationState = session.current.cardCreation!;
     const currentPlacement = cardCreationState.currentPlacement;
