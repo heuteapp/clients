@@ -32,41 +32,56 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
         const sectionElement = section.ref?.current;
         if(!sectionElement) return;
 
+        const gridElement = section.grid?.ref?.current;
+        if (!gridElement) return;
+
         const sectionStyle = themeManager.current!.sections.find(s => s.name === section.props!.name);
 
-        if(sectionStyle) {
-            sectionElement.style.setProperty("--section-padding-left", `${sectionStyle?.box.padding?.left || 0}px`);
-            sectionElement.style.setProperty("--section-padding-top", `${sectionStyle?.box.padding?.top || 0}px`);
-            sectionElement.style.setProperty("--section-padding-right", `${sectionStyle?.box.padding?.right || 0}px`);
-            sectionElement.style.setProperty("--section-padding-bottom", `${sectionStyle?.box.padding?.bottom || 0}px`);
+        const padding = {
+            left: sectionStyle?.box.padding?.left || 0,
+            top: sectionStyle?.box.padding?.top || 0,
+            right: sectionStyle?.box.padding?.right || 0,
+            bottom: sectionStyle?.box.padding?.bottom || 0,
+        };
+
+        sectionElement.style.setProperty("--section-padding", `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`);
+        
+        const sectionRect = {
+            left: (section.props!.position.colIndex - 1) * gridCellSize.inner,
+            top: (section.props!.position.rowIndex - 1) * gridCellSize.inner,
+            width: section.props!.position.colSpan * gridCellSize.inner,
+            height: section.props!.position.rowSpan * gridCellSize.inner,
         }
-        else {
-            sectionElement.style.setProperty("--section-padding-left", `0px`);
-            sectionElement.style.setProperty("--section-padding-top", `0px`);
-            sectionElement.style.setProperty("--section-padding-right", `0px`);
-            sectionElement.style.setProperty("--section-padding-bottom", `0px`);
-        }
+
+        sectionElement.style.setProperty("--section-left", `${sectionRect.left}px`);
+        sectionElement.style.setProperty("--section-top", `${sectionRect.top}px`);
+        sectionElement.style.setProperty("--section-width", `${sectionRect.width}px`);
+        sectionElement.style.setProperty("--section-height", `${sectionRect.height}px`);
         
         const sectionGrid = section.grid;
         if (!sectionGrid?.ref?.current) return;
 
-        const sectionRect = sectionGrid.ref.current.getBoundingClientRect();
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
-        const gridSize = {
-            width: sectionRect.width,
-            height: sectionRect.height
-        }
+        const { left: rootLeft, top: rootTop } = rootRect;
+        const { left: gridLeft, top: gridTop } = gridElement.getBoundingClientRect();
+        const localGridLeft = gridLeft - rootLeft;
+        const localGridTop = gridTop - rootTop;
 
-        const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
+        const gridRect = {
+            left: localGridLeft + padding.left,
+            top: localGridTop + padding.top,
+            width: sectionRect.width - padding.left - padding.right,
+            height: sectionRect.height - padding.top - padding.bottom
+        };
 
-        const gap = layoutWidth * 0.0075;
+        const gap = rootRect.width * 0.0075;
 
         const localGridRect = {
-            left: (sectionRect.left - rootRect.left) + gap,
-            top: (sectionRect.top - rootRect.top) + gap,
-            width: gridSize.width - gap * 2,
-            height: gridSize.height - gap * 2
+            left: (gridRect.left) + gap,
+            top: (gridRect.top) + gap,
+            width: gridRect.width - gap * 2,
+            height: gridRect.height - gap * 2
         }
 
         const stepSize = {
