@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BoardThemeState, BoardThemeStore } from "../core/types/domain/board/board.theme.store";
+import { BoardThemeStore, BoardThemeValue } from "../core/types/domain/board/board.theme";
 
 export const useBoardThemeStore = create<BoardThemeStore>()(
     immer(set => ({
@@ -9,12 +9,12 @@ export const useBoardThemeStore = create<BoardThemeStore>()(
         layout: null,
         sections: [],
 
-        setState: (state: BoardThemeState) => {
+        setState: (value: BoardThemeValue) => {
             set(s => {
-                s.board = state.board
-                s.layout = state.layout
-                s.sections = state.sections
-                s.cards = state.cards
+                s.board = value.board
+                s.layout = value.layout
+                s.sections = value.sections
+                s.cards = value.cards
             })
         },
     }))
