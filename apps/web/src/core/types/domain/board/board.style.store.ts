@@ -1,16 +1,10 @@
-import { BoardCardStyle, BoardStyle } from "./board.style";
-import { LayoutSectionStyle, LayoutStyle } from "../layout/layout.style";
+import { BoardThemeValue } from "./board.theme";
 
 export type BoardStyleStore = BoardStyleState & {
     setState: (state: BoardStyleState) => void
 } & BoardStyleActions;
 
-export type BoardStyleState = {
-    board: BoardStyle | null
-    cards: BoardCardStyle[]
-    layout: LayoutStyle | null
-    sections: LayoutSectionStyle[]
-}
+export type BoardStyleState = BoardThemeValue;
 
 export type BoardStyleActions = {
 
