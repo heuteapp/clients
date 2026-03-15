@@ -8,7 +8,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
     const registry: BoardRegistry = {
         board: { ref: boardRef },
-        layout: { ref: layoutRef },
+        layout: { ref: layoutRef, sections: new Map() },
 
         registerBoard(ref, props) {
             registry.board.ref = ref
@@ -61,11 +61,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
         registerLayoutSection(id, ref, props) {
 
-            if (!registry.layout.sectionContainer) {
-                registry.layout.sectionContainer = { sections: new Map() }
+            if (!registry.layout.sections) {
+                registry.layout.sections = new Map()
             }
 
-            const sections = registry.layout.sectionContainer.sections
+            const sections = registry.layout.sections
 
             if (!sections.has(id.client)) {
                 sections.set(id.client, { ref, props })
@@ -80,11 +80,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         registerLayoutGrid(sectionId, ref, props) {
-            if (!registry.layout.sectionContainer) {
-                registry.layout.sectionContainer = { sections: new Map() }
+            if (!registry.layout.sections) {
+                registry.layout.sections = new Map()
             }
 
-            const sections = registry.layout.sectionContainer.sections
+            const sections = registry.layout.sections
 
             if (!sections.has(sectionId.client)) {
                 sections.set(sectionId.client, {  })
@@ -96,7 +96,6 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
                 section.grid = {
                     ref,
                     props,
-                    cells: new Map()
                 }
             } else {
                 section.grid.ref = ref
@@ -130,11 +129,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         unregisterLayoutSection(id) {
-            registry.layout?.sectionContainer?.sections.delete(id.client)
+            registry.layout?.sections.delete(id.client)
         },
 
         unregisterLayoutGrid(sectionId) {
-            const section = registry.layout?.sectionContainer?.sections.get(sectionId.client)
+            const section = registry.layout?.sections.get(sectionId.client)
             if (section) section.grid = null
         },
 
@@ -159,7 +158,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sectionCards = []
 
-            const section = registry.layout?.sectionContainer?.sections.get(sectionId.client);
+            const section = registry.layout?.sections.get(sectionId.client);
 
             for (const card of cards.values()) {
                 const placement = card.props?.placement;
@@ -172,11 +171,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         getLayoutSection(id) {
-            return registry.layout?.sectionContainer?.sections.get(id.client)
+            return registry.layout?.sections.get(id.client)
         },
 
         getLayoutSectionByName(name) {
-            const sections = registry.layout?.sectionContainer?.sections
+            const sections = registry.layout?.sections
             if (!sections) return undefined
 
             for (const section of sections.values()) {
@@ -189,16 +188,16 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         getLayoutSections() {
-            const map = registry.layout?.sectionContainer?.sections
+            const map = registry.layout?.sections
             return map ? Array.from(map.values()) : undefined
         },
 
         getLayoutGrid(sectionId) {
-            return registry.layout?.sectionContainer?.sections.get(sectionId.client)?.grid ?? undefined
+            return registry.layout?.sections.get(sectionId.client)?.grid ?? undefined
         },
 
         getLayoutGrids() {
-            const sections = registry.layout?.sectionContainer?.sections
+            const sections = registry.layout?.sections
             if (!sections) return undefined
 
             const grids = []
