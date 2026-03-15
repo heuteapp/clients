@@ -3,6 +3,7 @@ export type LayoutMetricsValue = {
     totalSpacing: LayoutMetricsTotalSpacing;
     gridCellSize: LayoutMetricsGridCellSize;
     gridFullSize: LayoutMetricsGridFullSize;
+    sectionContainerFullSize: LayoutMetricsSectionContainerFullSize;
 }
 
 export type LayoutMetricsSectionCount = {
@@ -27,6 +28,11 @@ export type LayoutMetricsGridCellSize = {
 }
 
 export type LayoutMetricsGridFullSize = {
+    width: number;
+    height: number;
+}
+
+export type LayoutMetricsSectionContainerFullSize = {
     width: number;
     height: number;
 }

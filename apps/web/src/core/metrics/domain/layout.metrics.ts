@@ -1,5 +1,5 @@
 import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
-import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize } from "@/src/core/types/domain/layout/layout.metrics";
+import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerFullSize } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
     const { layoutSize, content, theme } = context;
@@ -67,16 +67,22 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         compact: Math.min(innerWidth, innerHeight) * 0.9,
     };
 
-    const gridTotalSize: LayoutMetricsGridFullSize = {
+    const gridFullSize: LayoutMetricsGridFullSize = {
         width: gridCellSize.inner * (layout?.columnCount || 0),
         height: gridCellSize.inner * (layout?.rowCount || 0),
+    };
+
+    const sectionContainerFullSize: LayoutMetricsSectionContainerFullSize = {
+        width: gridFullSize.width + totalSpacing.horizontal.padding + totalSpacing.horizontal.margin,
+        height: gridFullSize.height + totalSpacing.vertical.padding + totalSpacing.vertical.margin,
     };
 
     const metricsValue: LayoutMetricsValue = {
         sectionCount,
         totalSpacing,
         gridCellSize,
-        gridTotalSize,
+        gridFullSize,
+        sectionContainerFullSize
     };
 
     return metricsValue;
