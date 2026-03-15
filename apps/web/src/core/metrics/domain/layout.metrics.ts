@@ -1,0 +1,61 @@
+import { LayoutMetricsContext, LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsTotalSpacingAxis } from "@/src/core/types/domain/layout/layout.metrics";
+
+export function computeLayoutMetrics(context: LayoutMetricsContext): LayoutMetricsValue | undefined {
+    const { sections, sectionStyles } = context;
+    if (sections.length === 0) return;
+
+    const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan - 1));
+    const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan - 1));
+
+    const sectionCount = {
+        horizontal: 0,
+        vertical: 0,
+    };
+
+    sectionCount.horizontal = Array.from({ length: maxRow }, (_, rowIndex) => 
+        sections.reduce((count, s) => {
+            const rowStart = s.position.rowIndex;
+            const rowEnd = s.position.rowIndex + s.position.rowSpan - 1;
+            return count + (rowIndex + 1 >= rowStart && rowIndex + 1 <= rowEnd ? 1 : 0);
+        }, 0)
+    ).reduce((max, curr) => Math.max(max, curr), 0);
+
+    sectionCount.vertical = Array.from({ length: maxCol }, (_, colIndex) => 
+        sections.reduce((count, s) => {
+            const colStart = s.position.colIndex;
+            const colEnd = s.position.colIndex + s.position.colSpan - 1;
+            return count + (colIndex + 1 >= colStart && colIndex + 1 <= colEnd ? 1 : 0);
+        }, 0)
+    ).reduce((max, curr) => Math.max(max, curr), 0);
+
+    const totalSpacing: LayoutMetricsTotalSpacing = {
+        horizontal: { padding: 0, margin: 0 },
+        vertical: { padding: 0, margin: 0 },
+    };
+
+    sections.forEach((s) => {
+        const style = sectionStyles.find(st => st.name === s.name);
+        if (!style) return;
+
+        const box = style.box;
+
+        const hPadding = (box.padding?.left || 0) + (box.padding?.right || 0);
+        const vPadding = (box.padding?.top || 0) + (box.padding?.bottom || 0);
+
+        const hMargin = (box.margin?.left || 0) + (box.margin?.right || 0);
+        const vMargin = (box.margin?.top || 0) + (box.margin?.bottom || 0);
+
+        totalSpacing.horizontal.padding += hPadding;
+        totalSpacing.horizontal.margin += hMargin;
+        totalSpacing.vertical.padding += vPadding;
+        totalSpacing.vertical.margin += vMargin;
+    });
+
+    const metricsValue: LayoutMetricsValue = {
+        sectionCount,
+        totalSpacing,
+        gridCellSize: {} as any,
+    };
+
+    return metricsValue;
+}
