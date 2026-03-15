@@ -7,7 +7,7 @@ import { findCardUnderPointer } from "../../interactions/domain/board/board.dete
 export function useBoardPointerEvents(
     context: BoardContextValue
 ) {
-    const { rootRef, registry, session, interaction, actions } = context;
+    const { rootRef, registry, content, session, interaction } = context;
 
     useEffect(() => {
         const root = rootRef.current
@@ -75,7 +75,7 @@ export function useBoardPointerEvents(
                             const { card } = result;
 
                             if(card.props?.name)
-                            actions.deleteCard(card.props?.name)
+                            content.current!.deleteCard(card.props?.name)
                         }
 
                         lastClickTime = 0 // sıfırla
