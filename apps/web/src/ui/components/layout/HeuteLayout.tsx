@@ -46,8 +46,6 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
   .map(row => `"${row.join(" ")}"`)
   .join(" ");
 
-  console.log(gridTemplateAreas);
-
   return (
     <div 
       ref={registry.layout!.ref} 

@@ -45,7 +45,7 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
         };
 
         sectionElement.style.setProperty("--section-padding", `${sectionPadding.top}px ${sectionPadding.right}px ${sectionPadding.bottom}px ${sectionPadding.left}px`);
-        
+
         const sectionGrid = section.grid;
         if (!sectionGrid?.ref?.current) return;
 
@@ -71,6 +71,7 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
             width: localGridRect.width / section.props!.position.colSpan,
             height: localGridRect.height / section.props!.position.rowSpan
         }
+
 
         cards.forEach(card => {
             const cardElement = card.ref?.current;
