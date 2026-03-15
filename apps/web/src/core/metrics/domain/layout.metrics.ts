@@ -1,5 +1,5 @@
 import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
-import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerSize } from "@/src/core/types/domain/layout/layout.metrics";
+import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerSize, LayoutMetricsTotalSpacingAxisRecord } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {
     const { layoutSize, content, theme } = context;
@@ -10,36 +10,46 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
 
     if (sections.length === 0) return;
 
-    const maxRow = Math.max(...sections.map(s => s.position.rowIndex + s.position.rowSpan - 1));
-    const maxCol = Math.max(...sections.map(s => s.position.colIndex + s.position.colSpan - 1));
-
     const sectionCount = {
         horizontal: 0,
         vertical: 0,
     };
 
-    sectionCount.horizontal = Array.from({ length: maxRow }, (_, rowIndex) => 
-        sections.reduce((count, s) => {
-            const rowStart = s.position.rowIndex;
-            const rowEnd = s.position.rowIndex + s.position.rowSpan - 1;
-            return count + (rowIndex + 1 >= rowStart && rowIndex + 1 <= rowEnd ? 1 : 0);
-        }, 0)
-    ).reduce((max, curr) => Math.max(max, curr), 0);
+    const getMaxOverlap = (axis: 'row' | 'col') => {
+        const maxIndex = Math.max(...sections.map(s => 
+            axis === 'row' 
+                ? s.position.rowIndex + s.position.rowSpan - 1 
+                : s.position.colIndex + s.position.colSpan - 1
+        ));
 
-    sectionCount.vertical = Array.from({ length: maxCol }, (_, colIndex) => 
-        sections.reduce((count, s) => {
-            const colStart = s.position.colIndex;
-            const colEnd = s.position.colIndex + s.position.colSpan - 1;
-            return count + (colIndex + 1 >= colStart && colIndex + 1 <= colEnd ? 1 : 0);
-        }, 0)
-    ).reduce((max, curr) => Math.max(max, curr), 0);
+        return Math.max(
+            ...Array.from({ length: maxIndex }, (_, i) => 
+                sections.reduce((count, s) => {
+                    const start = axis === 'row' 
+                    ? s.position.rowIndex : s.position.colIndex;
+                    
+                    const end = axis === 'row' 
+                    ? s.position.rowIndex + s.position.rowSpan - 1 : s.position.colIndex + s.position.colSpan - 1;
+                    return count + (i + 1 >= start && i + 1 <= end ? 1 : 0);
+                }, 0)
+            )
+        );
+    };
+
+    sectionCount.horizontal = getMaxOverlap('row');
+    sectionCount.vertical = getMaxOverlap('col');
 
     const totalSpacing: LayoutMetricsTotalSpacing = {
         horizontal: { padding: 0, margin: 0 },
         vertical: { padding: 0, margin: 0 },
     };
 
-    sections.forEach((s) => {
+    const totalSpacingAxisRecord : LayoutMetricsTotalSpacingAxisRecord = {
+        horizontal: Array.from({ length: sectionCount.horizontal }, () => ({ padding: 0, margin: 0 })),
+        vertical: Array.from({ length: sectionCount.vertical }, () => ({ padding: 0, margin: 0 })),
+    };
+
+    sections.forEach(s => {
         const style = sectionStyles.find(st => st.name === s.name);
         if (!style) return;
 
@@ -51,11 +61,19 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         const hMargin = (box.margin?.left || 0) + (box.margin?.right || 0);
         const vMargin = (box.margin?.top || 0) + (box.margin?.bottom || 0);
 
-        totalSpacing.horizontal.padding += hPadding;
-        totalSpacing.horizontal.margin += hMargin;
-        totalSpacing.vertical.padding += vPadding;
-        totalSpacing.vertical.margin += vMargin;
+        for (let i = 0; i < sectionCount.horizontal; i++) {
+            totalSpacingAxisRecord.horizontal[i].padding += hPadding;
+            totalSpacingAxisRecord.horizontal[i].margin += hMargin;
+        }
+
+        for (let i = 0; i < sectionCount.vertical; i++) {
+            totalSpacingAxisRecord.vertical[i].padding += vPadding;
+            totalSpacingAxisRecord.vertical[i].margin += vMargin;
+        }
     });
+
+    totalSpacing.horizontal = totalSpacingAxisRecord.horizontal[sectionCount.horizontal - 1];
+    totalSpacing.vertical = totalSpacingAxisRecord.vertical[sectionCount.vertical - 1];
 
     const totalWidth = layoutSize.width / layout.columnCount;
     const totalHeight = layoutSize.height / layout.rowCount;
@@ -82,6 +100,7 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
     const metricsValue: LayoutMetricsValue = {
         sectionCount,
         totalSpacing,
+        totalSpacingAxisRecord,
         gridCellSize,
         gridFullSize,
         sectionContainerSize: sectionContainerFullSize
