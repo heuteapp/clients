@@ -57,7 +57,7 @@ function Sidebar() {
             border: "none",
             borderRadius: "4px",
           }}
-          onPointerUp={() => {
+          onPointerDown={() => {
             logout();
           }}
         >
