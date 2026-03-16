@@ -1,5 +1,5 @@
-import { AuthManager } from "./auth.manager";
+import { AuthManagerRef } from "./auth.manager";
 
 export interface AuthContextValue {
-    manager: AuthManager;
+    manager: AuthManagerRef;
 }
