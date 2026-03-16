@@ -56,9 +56,8 @@ function Sidebar() {
             color: "#ffffff",
             border: "none",
             borderRadius: "4px",
-            cursor: "pointer",
           }}
-          onPointerDown={() => {
+          onPointerUp={() => {
             logout();
           }}
         >
@@ -85,7 +84,7 @@ function SidebarCardItem({ onPointerDown } : { onPointerDown: (context: BoardCon
         userSelect: 'none',
         cursor: context.interaction.type === "creation" ? "default" : "pointer",
       }}
-      onPointerUp={() => { onPointerDown(context); }}
+      onPointerDown={() => { onPointerDown(context); }}
     >
     </div>
   )
