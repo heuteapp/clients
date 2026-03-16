@@ -3,10 +3,12 @@ import { useAuthStore } from '@/src/stores/auth.store';
 import { useBoardContext } from '@/src/ui/hooks/workspace/useBoardContext';
 import style from "@/src/ui/styles/main.module.css"
 import { BoardContextValue } from '@/src/ui/types/domain/board/board.context';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 function Sidebar() {
   const profile = useAuthStore(state => state.profile);
-  const logout = useAuthStore(state => state.signOut);
+
+  const { manager } = useAuthContext();
 
   return (
     <div className={style.sidebar}>
@@ -58,7 +60,7 @@ function Sidebar() {
             borderRadius: "4px",
           }}
           onPointerDown={() => {
-            logout();
+            manager.current?.signOut();
           }}
         >
           Log Out
