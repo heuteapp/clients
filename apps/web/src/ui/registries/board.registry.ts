@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { BoardRegistry } from "./board.registry.types"
+import { BoardRegistry } from "../types/board/board.registry"
 //
 
 export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | null>, layoutRef: React.RefObject<HTMLDivElement | null>): BoardRegistry {

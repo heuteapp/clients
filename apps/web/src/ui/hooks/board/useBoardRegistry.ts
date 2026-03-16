@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { createBoardRegistry } from "@/src/ui/registries/board.registry";
-import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
+import { BoardRegistry } from "@/src/ui/types/board/board.registry";
 
 export function useBoardRegistry() : BoardRegistry {
     const boardRef = useRef<HTMLDivElement>(null);

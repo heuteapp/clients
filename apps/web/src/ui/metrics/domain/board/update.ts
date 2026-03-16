@@ -1,4 +1,4 @@
-import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
+import { BoardRegistry } from "@/src/ui/types/board/board.registry";
 import { BoardMetricsManager } from "@/src/ui/types/board/board.metrics";
 import { applyBoardMetrics } from "./apply";
 import { computeBoardMetrics } from "@/src/core/metrics/domain/board.metrics";

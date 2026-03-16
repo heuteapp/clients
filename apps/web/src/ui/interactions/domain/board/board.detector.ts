@@ -1,5 +1,5 @@
 import { Pointer } from "@/src/core/types/shared/common"
-import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
+import { BoardRegistry } from "@/src/ui/types/board/board.registry";
 
 export function findCardUnderPointer(
     registry: BoardRegistry,
