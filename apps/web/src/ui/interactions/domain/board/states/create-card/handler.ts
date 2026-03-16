@@ -2,14 +2,12 @@ import { findSectionUnderPointer } from "@/src/ui/interactions/domain/layout/lay
 import { clearGridHover, setGridHover, setGhostCardPosition, clearGhostCard } from "@/src/ui/interactions/domain/board/board.dom"
 import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { calculateCardPositionByPointer } from "@/src/ui/interactions/domain/board/board.calc";
-import { useBoardStore } from "@/src/stores/board.store";
-import { title } from "process";
 
 export function handleCardCreateInteraction(context: BoardContextValue) 
 {
-    const { rootRef, registry, session, interaction, metrics } = context;
+    const { rootRef, registry, sessionManager, metricsManager, interaction } = context;
 
-    const state = session.current.cardCreation
+    const state = sessionManager.current.cardCreation
     if (!state) return
 
     const root = rootRef.current
@@ -18,10 +16,10 @@ export function handleCardCreateInteraction(context: BoardContextValue)
     const pointer = interaction.pointer
     if (!pointer) return
 
-    const metricsValue = metrics.current;
+    const metricsValue = metricsManager.current;
     if (!metricsValue) return;
 
-    const cellSize = metricsValue.layout!.sectionValue.gridValue.cellValue.size.inner
+    const cellSize = metricsValue.layout!.gridCellSize.inner;
     const result = findSectionUnderPointer(registry, pointer)
 
     if (!result) {
@@ -85,9 +83,9 @@ export function finishCardCreationState(context: BoardContextValue) {
 }
 
 export function finalizeCardCreationState(context : BoardContextValue) {
-    const { registry, session, actions } = context;
+    const { registry, sessionManager: session, contentManager: content } = context;
 
-    const { createCard } = actions;
+    const { createCard } = content.current!;
 
     const cardCreationState = session.current.cardCreation!;
     const currentPlacement = cardCreationState.currentPlacement;

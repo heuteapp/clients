@@ -1,23 +1,46 @@
-import { useRef, useMemo } from "react";
-import { BoardActions, BoardState } from "@/src/core/types/domain/board/board.store";
-import { useBoardStore } from "@/src/stores/board.store";
-import debounce from "lodash.debounce";
+import { useMemo, useRef } from "react";
+import { BoardContentActions, BoardContentValue } from "@/src/core/types/domain/board/board.content";
+import { useBoardContentStore } from "@/src/stores/board.content.store";
+import { BoardContentManager } from "@/src/ui/types/board/board.content";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/board.command";
+import debounce from "lodash.debounce";
 import { server } from "@/src/api/client";
 
-export function useBoardActions(): BoardActions {
-    const createCardLocal = useBoardStore((state) => state.createCard);
-    const deleteCardLocal = useBoardStore((state) => state.deleteCard);
-    const setState = useBoardStore((state) => state.setState);
+export function useBoardContentManager() : BoardContentManager {
+    const board = useBoardContentStore(state => state.board);
+    const cards = useBoardContentStore(state => state.cards);
+    const layout = useBoardContentStore(state => state.layout);
+    const sections = useBoardContentStore(state => state.sections);
+
+    const setState = useBoardContentStore((state) => state.setState);
+
+    const createCardLocal = useBoardContentStore((state) => state.createCard);
+    const deleteCardLocal = useBoardContentStore((state) => state.deleteCard);
+
+    //
 
     const accessToken = useAuthStore((state) => state.accessToken);
 
-    const lastSnapshotRef = useRef<BoardState | null>(null);
+    const lastSnapshotRef = useRef<BoardContentValue | null>(null);
     const pendingActionsRef = useRef(0);
     const FLUSH_THRESHOLD = 8;
 
     const commandsRef = useRef<BoardCommand[]>([]);
+
+    const runAction = <T>(fn: () => T): T => {
+        if (!lastSnapshotRef.current) lastSnapshotRef.current = useBoardContentStore.getState();
+
+        pendingActionsRef.current += 1;
+
+        if (pendingActionsRef.current >= FLUSH_THRESHOLD) {
+            dispatchEvents.flush();
+        } else {
+            dispatchEvents();
+        }
+
+        return fn();
+    };
 
     const dispatchEvents = useMemo(
         () => debounce(() => {
@@ -40,21 +63,16 @@ export function useBoardActions(): BoardActions {
         [accessToken, setState]
     );
 
-    const runAction = <T>(fn: () => T): T => {
-        if (!lastSnapshotRef.current) lastSnapshotRef.current = useBoardStore.getState();
+    const value: BoardContentValue = useMemo(() => {
+        return {
+            board,
+            cards,
+            layout,
+            sections
+        };
+    }, [board, cards, layout, sections]);
 
-        pendingActionsRef.current += 1;
-
-        if (pendingActionsRef.current >= FLUSH_THRESHOLD) {
-            dispatchEvents.flush();
-        } else {
-            dispatchEvents();
-        }
-
-        return fn();
-    };
-
-    const actions: BoardActions = useMemo(
+    const actions: BoardContentActions = useMemo(
         () => ({
             createCard: (content) => runAction(() => {
                 commandsRef.current.push({ occurredAt: new Date().toISOString(), type: BoardCommandType.CreateCard, payload: {
@@ -75,8 +93,17 @@ export function useBoardActions(): BoardActions {
                 return deleteCardLocal(name);
             }),
         }),
-        [createCardLocal, deleteCardLocal, dispatchEvents]
+        [dispatchEvents, createCardLocal, deleteCardLocal]
     );
 
-    return actions;
+    const content = useMemo(() => {
+        return {
+            current: {
+                ...value,
+                ...actions
+            }
+        };
+    }, [value, actions]);
+
+    return content;
 }

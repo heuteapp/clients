@@ -1,5 +1,5 @@
-import { LayoutGridCellNode, LayoutGridNode, LayoutRootNode, LayoutSectionContainerNode, LayoutSectionNode } from "@/src/ui/types/layout/layout.nodes"
-import { HeuteLayoutProps, LayoutSectionContainerProps, LayoutSectionProps, LayoutGridProps, LayoutGridCellProps } from "@/src/ui/types/layout/layout.props"
+import { LayoutGridNode, LayoutRootNode, LayoutSectionNode } from "@/src/ui/types/layout/layout.nodes"
+import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps } from "@/src/ui/types/layout/layout.props"
 import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui/types/board/board.nodes"
 import { BoardCardContainerProps, BoardCardProps, HeuteBoardProps } from "@/src/ui/types/board/board.props"
 import { Identifier } from "@/src/core/types/shared/data"
@@ -29,11 +29,6 @@ export interface BoardRegistry {
         props: HeuteLayoutProps,
     ): LayoutRootNode
 
-    registerLayoutSectionContainer(
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: LayoutSectionContainerProps
-    ): LayoutSectionContainerNode
-    
     registerLayoutSection(
         id: Identifier,
         ref: React.RefObject<HTMLDivElement | null>,
@@ -46,13 +41,6 @@ export interface BoardRegistry {
         props: LayoutGridProps
     ): LayoutGridNode
 
-    registerLayoutGridCell(
-        sectionId: Identifier,
-        id: Identifier,
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: LayoutGridCellProps
-    ): LayoutGridCellNode
-
     //
 
     unregisterBoard(): void
@@ -63,13 +51,9 @@ export interface BoardRegistry {
 
     unregisterLayout(): void
 
-    unregisterLayoutSectionContainer(): void
-
     unregisterLayoutSection(id: Identifier): void
 
     unregisterLayoutGrid(sectionId: Identifier): void
-
-    unregisterLayoutGridCell(sectionId: Identifier, id: Identifier): void
 
     //
 
@@ -90,8 +74,4 @@ export interface BoardRegistry {
     getLayoutGrid(sectionId: Identifier): LayoutGridNode | undefined
 
     getLayoutGrids(sectionId: Identifier): LayoutGridNode[] | undefined
-
-    getLayoutGridCell(sectionId: Identifier, id: Identifier): LayoutGridCellNode | undefined
-
-    getLayoutGridCells(sectionId: Identifier): LayoutGridCellNode[] | undefined
 }

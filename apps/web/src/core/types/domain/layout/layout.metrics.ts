@@ -1,75 +1,38 @@
 export type LayoutMetricsValue = {
-    spacing: LayoutMetricsSpacing;
-    sectionValue: LayoutSectionMetricsValue;
-    sectionCount: LayoutSectionMetricsCount;
-    sectionContainerValue: LayoutSectionContainerMetricsValue;
+    sectionCount: LayoutMetricsSectionCount;
+    totalSpacing: LayoutMetricsTotalSpacing;
+    gridCellSize: LayoutMetricsGridCellSize;
+    gridFullSize: LayoutMetricsGridFullSize;
+    sectionContainerSize: LayoutMetricsSectionContainerSize;
 }
 
-export type LayoutMetricsSpacing = {
-    padding: number;
-}
-
-export type LayoutSectionMetricsValue = {
-    spacing: LayoutSectionMetricsSpacing;
-    gridValue: LayoutGridMetricsValue;
-    size: LayoutSectionMetricsSize;
-}
-
-export type LayoutSectionMetricsSpacing = {
-    padding: number;
-}
-
-export type LayoutSectionMetricsSize = {
-    width: number;
-    height: number;
-}
-
-export type LayoutSectionMetricsCount = {
+export type LayoutMetricsSectionCount = {
     horizontal: number;
     vertical: number;
 }
 
-export type LayoutSectionContainerMetricsValue = {
-    spacing: LayoutSectionContainerMetricsSpacing;
-    size: LayoutSectionContainerMetricsSize;
+export type LayoutMetricsTotalSpacing = {
+    horizontal: LayoutMetricsTotalSpacingAxis;
+    vertical: LayoutMetricsTotalSpacingAxis;
 }
 
-export type LayoutSectionContainerMetricsSpacing = {
+export type LayoutMetricsTotalSpacingAxis = {
     padding: number;
+    margin: number;
 }
 
-export type LayoutSectionContainerMetricsSize = {
-    width: number;
-    height: number;
-}
-
-export type LayoutGridMetricsValue = {
-    spacing: LayoutGridMetricsSpacing;
-    size: LayoutGridMetricsSize;
-    cellValue: LayoutGridCellMetricsValue;
-    cellCount: LayoutGridCellMetricsCount;
-}
-
-export type LayoutGridMetricsSpacing = {
-    padding: number;
-}
-
-export type LayoutGridMetricsSize = {
-    width: number;
-    height: number;
-}
-
-export type LayoutGridCellMetricsValue = {
-    size: LayoutGridCellMetricsSize;
-}
-
-export type LayoutGridCellMetricsCount = {
-    horizontal: number;
-    vertical: number;
-}
-
-export type LayoutGridCellMetricsSize = {
-    full: number;
+export type LayoutMetricsGridCellSize = {
+    total: number;
     inner: number;
     compact: number;
+}
+
+export type LayoutMetricsGridFullSize = {
+    width: number;
+    height: number;
+}
+
+export type LayoutMetricsSectionContainerSize = {
+    width: number;
+    height: number;
 }

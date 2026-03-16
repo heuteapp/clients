@@ -1,6 +1,6 @@
 export { useBoardContext } from "./useBoardContext";
-export { useBoardSession } from "./useBoardSession";
+export { useBoardSessionManager as useBoardSession } from "./useBoardSessionManager";
 export { useBoardInteraction } from "./useBoardInteraction";
 export { useBoardRegistry } from "./useBoardRegistry";
-export { useBoardMetrics } from "./useBoardMetrics";
+export { useBoardMetrics } from "./useBoardMetricsObserver";
 export { useBoardPointerEvents } from "./useBoardPointerEvents";

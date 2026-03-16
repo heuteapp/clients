@@ -1,6 +1,7 @@
 "use client";
 import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
-import { useBoardStore } from "@/src/stores/board.store";
+import { useBoardContentStore } from "@/src/stores/board.content.store";
+import { useBoardThemeStore } from '@/src/stores/board.theme.store';
 import { useEffect } from 'react';
 import { createDataIdentifier } from '@/src/core/utils/shared/data';
 import { server } from '@/src/api/client';
@@ -11,15 +12,15 @@ interface BoardProps {
 }
 
 function Board({ category, date }: BoardProps) {
-    const board = useBoardStore(state => state.board);
-    const setState = useBoardStore(state => state.setState);
+    const board = useBoardContentStore(state => state.board);
+    const setState = useBoardContentStore(state => state.setState);
+
+    const setThemeState = useBoardThemeStore(state => state.setState);
     
     useEffect(() => {
         const fetchBoard = async () => {
             try {   
                 const response = await server.workspace.board.getBoard(category , /*date*/);
-
-                console.log("Board data received:", response.data);
                 
                 setState({
                     board: {
@@ -60,6 +61,34 @@ function Board({ category, date }: BoardProps) {
                             rowSpan: section.rowSpan,
                         }
                     }))
+                });
+
+                setThemeState({
+                    board: null,
+                    cards: [],
+                    layout: null,
+                    sections: [{
+                        name: "first",
+                        box: {
+                            margin: {
+                                left: 0,
+                                top: 10,
+                                right: 0,
+                                bottom: 10,
+                            },                                
+                        }
+                    },
+                    {
+                        name: "second",
+                        box: {
+                            margin: {
+                                left: 0,
+                                top: 0,
+                                right: 0,
+                                bottom: 0,
+                            },
+                        }
+                    },]
                 });
 
             } catch (err) {

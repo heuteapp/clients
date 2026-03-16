@@ -2,21 +2,21 @@
 
 const padding = 8;
 
-import { useLayoutEffect, useRef } from "react"
+import { useLayoutEffect } from "react"
 
 import style from "@/src/ui/styles/layout.module.css"
 
-import LayoutSectionContainer from "./LayoutSectionContainer";
 import { useBoardContext } from "@/src/ui/hooks/board";
 import { HeuteLayoutProps } from "@/src/ui/types/layout/layout.props";
-import { useBoardStore } from "@/src/stores/board.store";
+import { useBoardContentStore } from "@/src/stores/board.content.store";
+import LayoutSection from "./LayoutSection";
 
 export default function HeuteLayout(props: HeuteLayoutProps) {
   const context = useBoardContext();
 
   const { registry } = context!;
 
-  const sections = useBoardStore(state => state.sections);
+  const sections = useBoardContentStore(state => state.sections);
 
   const layoutRef = registry.layout!.ref!;
 
@@ -28,12 +28,37 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
     }
   }, [registry])
 
+  const matrix = Array.from({ length: props.rowCount }, () =>
+    Array.from({ length: props.columnCount }, () => ".")
+  );
+
+  sections.forEach(s => {
+    const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
+
+    for (let r = 0; r < rowSpan; r++) {
+      for (let c = 0; c < colSpan; c++) {
+        matrix[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
+      }
+    }
+  });
+
+  const gridTemplateAreas = matrix
+  .map(row => `"${row.join(" ")}"`)
+  .join(" ");
+
   return (
     <div 
       ref={registry.layout!.ref} 
       className={style.layout}
+      style={{
+        gridTemplateColumns: `repeat(${props.columnCount}, var(--cell-size-full))`,
+        gridTemplateRows: `repeat(${props.rowCount}, var(--cell-size-full))`,
+        gridTemplateAreas
+      }}
     >
-        <LayoutSectionContainer sections={sections} />
+      {sections.map(section => (
+        <LayoutSection key={section.name} {...section}/>
+      ))}
     </div>
   )
 }

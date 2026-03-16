@@ -1,58 +1,77 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
 import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
+import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
 
-export function applyBoardMetrics({ registry, metrics }: { registry: BoardRegistry, metrics: BoardMetricsValue }) {
+export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardThemeManager, metricsValue: BoardMetricsValue) {
     const layout = registry.layout;
-    const layoutElement = layout.ref?.current;
+    if(!layout) return;
+
+    const layoutElement = layout.ref.current;
     if (!layoutElement) return;
 
-    const { sectionContainerValue, sectionValue } = metrics.layout!;
+    if(!metricsValue.layout) return;
 
-    layoutElement.style.setProperty("--section-padding", `${sectionValue.spacing.padding}px`);
+    const { gridCellSize, gridFullSize, sectionContainerSize } = metricsValue.layout;
 
-    layoutElement.style.setProperty("--cell-size-full", `${sectionValue.gridValue.cellValue.size.full}px`);
-    layoutElement.style.setProperty("--cell-size-inner", `${sectionValue.gridValue.cellValue.size.inner}px`);
-    layoutElement.style.setProperty("--cell-size-compact", `${sectionValue.gridValue.cellValue.size.compact}px`);
+    layoutElement.style.setProperty("--cell-size-full", `${gridCellSize.total}px`);
+    layoutElement.style.setProperty("--cell-size-inner", `${gridCellSize.inner}px`);
+    layoutElement.style.setProperty("--cell-size-compact", `${gridCellSize.compact}px`);
 
-    layoutElement.style.setProperty("--grid-spacing-padding", `${sectionValue.gridValue.spacing.padding}px`);
-    layoutElement.style.setProperty("--grid-max-width", `${sectionValue.gridValue.size.width}px`);
-    layoutElement.style.setProperty("--grid-max-height", `${sectionValue.gridValue.size.height}px`);
+    layoutElement.style.setProperty("--grid-max-width", `${gridFullSize.width}px`);
+    layoutElement.style.setProperty("--grid-max-height", `${gridFullSize.height}px`);
 
-    layoutElement.style.setProperty("--container-width", `${sectionContainerValue.size.width}px`);
-    layoutElement.style.setProperty("--container-height", `${sectionContainerValue.size.height}px`);
+    layoutElement.style.setProperty("--container-width", `${sectionContainerSize.width}px`);
+    layoutElement.style.setProperty("--container-height", `${sectionContainerSize.height}px`);
 
-    const rootRect = layoutElement.getBoundingClientRect();
-    const layoutSectionContainer = layout.sectionContainer;
+    const layoutRect = layoutElement.getBoundingClientRect();
 
-    if (!layoutSectionContainer?.ref?.current) return;
+    layout.sections.forEach(section => {
+        const sectionElement = section.ref?.current;
+        if(!sectionElement) return;
 
-    layoutSectionContainer.sections.forEach(section => {
+        const gridElement = section.grid?.ref?.current;
+        if (!gridElement) return;
+
+        const sectionStyle = themeManager.current!.sections.find(s => s.name === section.props!.name);
+
+        const sectionPadding = {
+            left: sectionStyle?.box.padding?.left || 0,
+            top: sectionStyle?.box.padding?.top || 0,
+            right: sectionStyle?.box.padding?.right || 0,
+            bottom: sectionStyle?.box.padding?.bottom || 0,
+        };
+
+        const sectionMargin = {
+            left: sectionStyle?.box.margin?.left || 0,
+            top: sectionStyle?.box.margin?.top || 0,
+            right: sectionStyle?.box.margin?.right || 0,
+            bottom: sectionStyle?.box.margin?.bottom || 0,
+        }
+
+        sectionElement.style.setProperty("--section-padding", `${sectionPadding.top}px ${sectionPadding.right}px ${sectionPadding.bottom}px ${sectionPadding.left}px`);
+        sectionElement.style.setProperty("--section-margin", `${sectionMargin.top}px ${sectionMargin.right}px ${sectionMargin.bottom}px ${sectionMargin.left}px`);
+
         const sectionGrid = section.grid;
         if (!sectionGrid?.ref?.current) return;
 
-        const sectionRect = sectionGrid.ref.current.getBoundingClientRect();
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
-        const gridSize = {
-            width: sectionRect.width,
-            height: sectionRect.height
-        }
+        const gridRect = gridElement.getBoundingClientRect();
 
-        const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutElement;
-
-        const gap = layoutWidth * 0.0075;
+        const gap = layoutRect.width * 0.005; // 1% of layout width as gap
 
         const localGridRect = {
-            left: (sectionRect.left - rootRect.left) + gap,
-            top: (sectionRect.top - rootRect.top) + gap,
-            width: gridSize.width - gap * 2,
-            height: gridSize.height - gap * 2
+            left: (gridRect.left) + gap,
+            top: (gridRect.top) + gap,
+            width: gridRect.width - gap * 2,
+            height: gridRect.height - gap * 2
         }
 
         const stepSize = {
             width: localGridRect.width / section.props!.position.colSpan,
             height: localGridRect.height / section.props!.position.rowSpan
         }
+
 
         cards.forEach(card => {
             const cardElement = card.ref?.current;

@@ -1,13 +1,37 @@
 import { BoardRegistry } from "@/src/ui/registries/board.registry.types";
-import { BoardMetrics } from "@/src/ui/types/board/board.metrics";
-import { calculateBoardMetrics } from "./calculate";
+import { BoardMetricsManager } from "@/src/ui/types/board/board.metrics";
 import { applyBoardMetrics } from "./apply";
+import { computeBoardMetrics } from "@/src/core/metrics/domain/board.metrics";
+import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
+import { BoardContentManager } from "@/src/ui/types/board/board.content";
+import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
 
-export function updateBoardMetrics(registry: BoardRegistry, metrics: BoardMetrics) {
-    const metricsValue = calculateBoardMetrics(registry);
+export function updateBoardMetrics(registry: BoardRegistry, contentManager: BoardContentManager, themeManager: BoardThemeManager, metricsManager: BoardMetricsManager) {
+    if(!registry || !metricsManager || !contentManager || !themeManager) return false;
+    if(!contentManager.current || !themeManager.current) return false;
 
-    if (!metricsValue) return null;
+    const layout = registry.layout;
+    if(!layout) return false;
 
-    metrics.current = metricsValue;
-    applyBoardMetrics({ registry, metrics: metricsValue });
+    const layoutElement = layout.ref.current;
+    if (!layoutElement) return false;
+
+    const context : BoardMetricsContext = {
+        layoutSize: {
+            width: layoutElement.clientWidth,
+            height: layoutElement.clientHeight
+        },
+        content: contentManager.current,
+        theme: themeManager.current
+
+    }
+
+    const metricsValue = computeBoardMetrics(context);
+
+    if (!metricsValue) return false;
+
+    applyBoardMetrics(registry, themeManager, metricsValue);
+    metricsManager.current = metricsValue;
+
+    return true;
 }

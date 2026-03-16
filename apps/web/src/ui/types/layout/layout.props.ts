@@ -5,10 +5,6 @@ export interface HeuteLayoutProps extends HeuteLayoutData {
 
 }
 
-export interface LayoutSectionContainerProps {
-    sections: LayoutSectionData[]
-}
-
 export interface LayoutSectionProps extends LayoutSectionData {
 
 }
@@ -17,10 +13,4 @@ export interface LayoutGridProps  {
     sectionId: Identifier,
     colSpan: number,
     rowSpan: number,
-}
-
-export interface LayoutGridCellProps {
-    sectionId: Identifier,
-    rowIndex: number,
-    colIndex: number,
 }
