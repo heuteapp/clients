@@ -7,11 +7,11 @@ import { useLayoutEffect } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
-import { LayoutProps } from "@/src/ui/types/layout/layout.props";
+import { BoardLayoutProps } from "@/src/ui/types/board/board.props";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import BoardLayoutSection from "./BoardLayoutSection";
 
-export default function BoardLayout(props: LayoutProps) {
+export default function BoardLayout(props: BoardLayoutProps) {
   const context = useBoardContext();
 
   const { registry } = context!;

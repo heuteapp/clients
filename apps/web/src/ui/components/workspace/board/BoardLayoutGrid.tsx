@@ -2,9 +2,9 @@ import style from "@/src/ui/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
-import { LayoutGridProps } from "@/src/ui/types/layout/layout.props";
+import { BoardLayoutGridProps } from "@/src/ui/types/board/board.props";
 
-function BoardLayoutGrid(props : LayoutGridProps) {
+function BoardLayoutGrid(props : BoardLayoutGridProps) {
     const context = useBoardContext();
 
     const { registry } = context!;

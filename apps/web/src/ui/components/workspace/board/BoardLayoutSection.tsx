@@ -1,11 +1,11 @@
 import { useLayoutEffect, useRef } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
-import { LayoutSectionProps } from "@/src/ui/types/layout/layout.props";
+import { BoardLayoutSectionProps } from "@/src/ui/types/board/board.props";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import BoardLayoutGrid from "./BoardLayoutGrid";
 
-function BoardLayoutSection(props : LayoutSectionProps) {
+function BoardLayoutSection(props : BoardLayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
