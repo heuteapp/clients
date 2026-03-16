@@ -10,20 +10,18 @@ import BoardProvider from "@/src/ui/components/workspace/BoardProvider";
 export default function WorkspaceLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const { profile, loadAuth, setAuth } = useAuthStore();
+  const { profile, hydrate } = useAuthStore();
   const router = useRouter();
   const rootRef = useRef<HTMLDivElement | null>(null);
   
   useEffect(() => {
     if(profile) return;
-    const auth = loadAuth();
+    const auth = hydrate();
     
     if(!auth || !auth.accessToken || !auth.profile) {
-      router.push("/login");
+      router.push("/sign-in");
       return;
     }
-
-    setAuth(auth.accessToken, auth.profile);
   }, []);
 
   if (!profile) return null;

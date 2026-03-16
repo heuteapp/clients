@@ -10,6 +10,7 @@ export interface AuthState {
 }
 
 export interface AuthActions {
+    signIn: (accessToken: string, profile: ProfileData) => void;
     signOut: () => void;
-    hydrate: () => void;
+    hydrate: () => AuthState | null;
 }
