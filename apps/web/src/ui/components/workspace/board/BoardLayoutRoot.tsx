@@ -1,7 +1,5 @@
 "use client"
 
-const padding = 8;
-
 import { useLayoutEffect } from "react"
 
 import style from "@/src/ui/styles/layout.module.css"
@@ -9,9 +7,9 @@ import style from "@/src/ui/styles/layout.module.css"
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import { BoardLayoutRootProps } from "@/src/ui/types/board/board.props";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
-import BoardLayoutSection from "./BoardLayoutSection";
+import { BoardLayoutSection } from "./BoardLayoutSection";
 
-export default function BoardLayout(props: BoardLayoutRootProps) {
+export function BoardLayoutRoot(props: BoardLayoutRootProps) {
   const context = useBoardContext();
 
   const { registry } = context!;

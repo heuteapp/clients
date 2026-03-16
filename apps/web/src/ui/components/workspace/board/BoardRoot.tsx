@@ -2,7 +2,7 @@
 
 import style from "@/src/ui/styles/board.module.css"
 
-import BoardLayout from "@/src/ui/components/workspace/board/BoardLayout";
+import { BoardLayoutRoot } from "@/src/ui/components/workspace/board/BoardLayoutRoot";
 import BoardCardContainer from "./BoardCardContainer";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
@@ -12,7 +12,7 @@ import { BoardRootProps } from "@/src/ui/types/board/board.props";
 
 //
 
-export default function Board(props: BoardRootProps) {
+export function BoardRoot(props: BoardRootProps) {
   const { registry } = useBoardContext();
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ export default function Board(props: BoardRootProps) {
 
   return (
     <div ref={boardRef} className={style.board}>
-      <BoardLayout {...layout} />
+      <BoardLayoutRoot {...layout} />
       <BoardCardContainer cards={cards} />
       <BoardGhostCard />
     </div>

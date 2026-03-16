@@ -5,7 +5,7 @@ import { BoardLayoutSectionProps } from "@/src/ui/types/board/board.props";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import BoardLayoutGrid from "./BoardLayoutGrid";
 
-function BoardLayoutSection(props : BoardLayoutSectionProps) {
+export function BoardLayoutSection(props : BoardLayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
@@ -33,5 +33,3 @@ function BoardLayoutSection(props : BoardLayoutSectionProps) {
         </div>
     )
 }
-
-export default BoardLayoutSection
