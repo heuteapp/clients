@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Card, Typography, TextField, Button, Link } from "@mui/material";
 import { server } from "@/src/api/server";
-import { useAuthStore } from "@/src/stores/auth.store";
 
 export default function SignInCard() {
-  const loginIn = useAuthStore((state) => state.loginIn);
-  const [username, setUsername] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    server.auth.signIn({ username, password }).then((response) => {
+    server.auth.signIn({ identifier, password }).then((response) => {
       console.log("Sign in successful:", response);
     }).catch((error) => {
       console.error("Sign in failed:", error);
@@ -26,8 +24,8 @@ export default function SignInCard() {
         <TextField
           label="Username"
           type="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
           placeholder="your.username"
           required
         />
