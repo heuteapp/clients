@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/stores/auth.store";
 import Monitor from "@/src/ui/components/workspace/Monitor";
 import Sidebar from "@/src/ui/components/workspace/Sidebar";
-import BoardProvider from "@/src/ui/components/workspace/board/BoardProvider";
+import BoardProvider from "@/src/ui/components/workspace/BoardProvider";
 
 export default function WorkspaceLayout({
   children,
