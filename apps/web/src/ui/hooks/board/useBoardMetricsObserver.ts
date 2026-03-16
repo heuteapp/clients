@@ -5,7 +5,7 @@ import { useBoardContext } from "./useBoardContext";
 export function useBoardMetricsObserver() 
 {
     const context = useBoardContext();
-    
+
     const { rootRef, registry, contentManager, themeManager, metricsManager } = context;
 
     useEffect(() => {
@@ -27,6 +27,9 @@ export function useBoardMetricsObserver()
 
         observer.observe(element)
 
-        return () => observer.disconnect()
+        return () => {
+            observer.disconnect();
+            mutationObserver.disconnect();
+        }
     }, [rootRef, registry, contentManager, themeManager, metricsManager])
 }
