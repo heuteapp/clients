@@ -44,6 +44,14 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         vertical: { padding: 0, margin: 0 },
     };
 
+    const totalWidth = layoutSize.width / layout.columnCount;
+    const totalHeight = layoutSize.height / layout.rowCount;
+
+    const stepSize = Math.min(totalWidth, totalHeight);
+
+    let minInnerWidth = Infinity;
+    let minInnerHeight = Infinity;
+
     sections.forEach(s => {
         const style = sectionStyles.find(st => st.name === s.name);
         if (!style) return;
@@ -61,18 +69,26 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
 
         totalSpacing.horizontal.margin = Math.max(totalSpacing.horizontal.margin, hMargin);
         totalSpacing.vertical.margin = Math.max(totalSpacing.vertical.margin, vMargin);
+
+        const colSpan = s.position.colSpan;
+        const rowSpan = s.position.rowSpan;
+
+        const sectionWidth = colSpan * stepSize - (hPadding + hMargin);
+        const sectionHeight = rowSpan * stepSize - (vPadding + vMargin);
+
+        console.log(sectionWidth, sectionHeight, stepSize);
+
+        const innerWidth = (sectionWidth - (totalSpacing.horizontal.padding + totalSpacing.horizontal.margin)) / colSpan;
+        const innerHeight = (sectionHeight - (totalSpacing.vertical.padding + totalSpacing.vertical.margin)) / rowSpan;
+
+        minInnerWidth = Math.min(minInnerWidth, innerWidth);
+        minInnerHeight = Math.min(minInnerHeight, innerHeight);
     });
-
-    const totalWidth = layoutSize.width / layout.columnCount;
-    const totalHeight = layoutSize.height / layout.rowCount;
-
-    const innerWidth = (layoutSize.width -(totalSpacing.horizontal.padding + totalSpacing.horizontal.margin)) / layout.columnCount;
-    const innerHeight = (layoutSize.height - (totalSpacing.vertical.padding + totalSpacing.vertical.margin)) / layout.rowCount;
 
     const gridCellSize = {
         total: Math.min(totalWidth, totalHeight),
-        inner: Math.min(innerWidth, innerHeight),
-        compact: Math.min(innerWidth, innerHeight) * 0.9,
+        inner: Math.min(minInnerWidth, minInnerHeight),
+        compact: Math.min(minInnerWidth, minInnerHeight) * 0.9,
     };
 
     const gridFullSize: LayoutMetricsGridFullSize = {

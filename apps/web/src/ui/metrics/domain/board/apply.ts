@@ -59,7 +59,7 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
         const gridRect = gridElement.getBoundingClientRect();
         console.log("Grid Rect:", gridRect);
 
-        const gap = rootRect.width * 0.0075;
+        const gap = 0;
 
         const localGridRect = {
             left: (gridRect.left) + gap,

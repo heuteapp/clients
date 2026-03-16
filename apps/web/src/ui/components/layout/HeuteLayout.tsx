@@ -51,8 +51,8 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
       ref={registry.layout!.ref} 
       className={style.layout}
       style={{
-        gridTemplateColumns: `repeat(${props.columnCount}, var(--cell-size-inner))`,
-        gridTemplateRows: `repeat(${props.rowCount}, var(--cell-size-inner))`,
+        gridTemplateColumns: `repeat(${props.columnCount}, var(--cell-size-full))`,
+        gridTemplateRows: `repeat(${props.rowCount}, var(--cell-size-full))`,
         gridTemplateAreas
       }}
     >
