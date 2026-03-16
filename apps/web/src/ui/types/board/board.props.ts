@@ -1,6 +1,6 @@
 import { BoardCardData, BoardData } from "@/src/core/types/domain/board/board.data";
 
-export interface HeuteBoardProps extends BoardData {
+export interface BoardProps extends BoardData {
 
 }
 

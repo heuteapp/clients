@@ -1,7 +1,7 @@
 import { LayoutGridNode, LayoutRootNode, LayoutSectionNode } from "@/src/ui/types/layout/layout.nodes"
-import { HeuteLayoutProps, LayoutSectionProps, LayoutGridProps } from "@/src/ui/types/layout/layout.props"
+import { LayoutProps, LayoutSectionProps, LayoutGridProps } from "@/src/ui/types/layout/layout.props"
 import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui/types/board/board.nodes"
-import { BoardCardContainerProps, BoardCardProps, HeuteBoardProps } from "@/src/ui/types/board/board.props"
+import { BoardCardContainerProps, BoardCardProps, BoardProps } from "@/src/ui/types/board/board.props"
 import { Identifier } from "@/src/core/types/shared/data"
 
 export interface BoardRegistry {
@@ -10,7 +10,7 @@ export interface BoardRegistry {
 
     registerBoard(
         ref: React.RefObject<HTMLDivElement | null>,
-        props: HeuteBoardProps
+        props: BoardProps
     ): BoardRootNode
 
     registerBoardCardContainer(
@@ -26,7 +26,7 @@ export interface BoardRegistry {
 
     registerLayout(
         ref: React.RefObject<HTMLDivElement | null>,
-        props: HeuteLayoutProps,
+        props: LayoutProps,
     ): LayoutRootNode
 
     registerLayoutSection(

@@ -7,11 +7,11 @@ import { useLayoutEffect } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
-import { HeuteLayoutProps } from "@/src/ui/types/layout/layout.props";
+import { LayoutProps } from "@/src/ui/types/layout/layout.props";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
-import LayoutSection from "./LayoutSection";
+import BoardLayoutSection from "./BoardLayoutSection";
 
-export default function HeuteLayout(props: HeuteLayoutProps) {
+export default function BoardLayout(props: LayoutProps) {
   const context = useBoardContext();
 
   const { registry } = context!;
@@ -57,7 +57,7 @@ export default function HeuteLayout(props: HeuteLayoutProps) {
       }}
     >
       {sections.map(section => (
-        <LayoutSection key={section.name} {...section}/>
+        <BoardLayoutSection key={section.name} {...section}/>
       ))}
     </div>
   )

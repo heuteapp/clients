@@ -1,7 +1,7 @@
 import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
 import { Identifier } from "@/src/core/types/shared/data";
 
-export interface HeuteLayoutProps extends HeuteLayoutData {
+export interface LayoutProps extends HeuteLayoutData {
 
 }
 

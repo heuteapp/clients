@@ -2,17 +2,17 @@
 
 import style from "@/src/ui/styles/board.module.css"
 
-import HeuteLayout from "@/src/ui/components/layout/HeuteLayout";
+import BoardLayout from "@/src/ui/components/workspace/board/BoardLayout";
 import BoardCardContainer from "./BoardCardContainer";
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import BoardGhostCard from "./BoardGhostCard";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
-import { HeuteBoardProps } from "@/src/ui/types/board/board.props";
+import { BoardProps } from "@/src/ui/types/board/board.props";
 
 //
 
-export default function HeuteBoard(props: HeuteBoardProps) {
+export default function Board(props: BoardProps) {
   const { registry } = useBoardContext();
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ export default function HeuteBoard(props: HeuteBoardProps) {
 
   return (
     <div ref={boardRef} className={style.board}>
-      <HeuteLayout {...layout} />
+      <BoardLayout {...layout} />
       <BoardCardContainer cards={cards} />
       <BoardGhostCard />
     </div>

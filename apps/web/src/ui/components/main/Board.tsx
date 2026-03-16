@@ -1,5 +1,5 @@
 "use client";
-import HeuteBoard from '@/src/ui/components/board/HeuteBoard';
+import BoardD from '@/src/ui/components/workspace/board/Board';
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { useBoardThemeStore } from '@/src/stores/board.theme.store';
 import { useEffect } from 'react';
@@ -103,7 +103,7 @@ function Board({ category, date }: BoardProps) {
 
     return (
         <>
-            <HeuteBoard 
+            <BoardD 
                 {...board}
             />
         </>
