@@ -1,9 +1,9 @@
 import { RegistryBaseNode } from "@/src/ui/types/shared/registry";
-import { BoardProps, BoardCardProps, BoardCardContainerProps, BoardLayoutProps, BoardLayoutGridProps, BoardLayoutSectionProps } from "./board.props";
+import { BoardRootProps, BoardCardProps, BoardCardContainerProps, BoardLayoutRootProps, BoardLayoutGridProps, BoardLayoutSectionProps } from "./board.props";
 
 export interface BoardRootNode extends RegistryBaseNode {
     ref: React.RefObject<HTMLDivElement | null>
-    props?: BoardProps
+    props?: BoardRootProps
     cardContainer?: BoardCardContainerNode
 }
 
@@ -16,16 +16,16 @@ export interface BoardCardNode extends RegistryBaseNode {
     props?: BoardCardProps; 
 }
 
-export interface LayoutRootNode extends RegistryBaseNode {
+export interface BoardLayoutRootNode extends RegistryBaseNode {
     ref: React.RefObject<HTMLDivElement | null>
-    props?: BoardLayoutProps
-    sections: Map<string, LayoutSectionNode>
+    props?: BoardLayoutRootProps
+    sections: Map<string, BoardLayoutSectionNode>
 }
-export interface LayoutGridNode extends RegistryBaseNode {
+export interface BoardLayoutGridNode extends RegistryBaseNode {
     props?: BoardLayoutGridProps
 }
 
-export interface LayoutSectionNode extends RegistryBaseNode {
+export interface BoardLayoutSectionNode extends RegistryBaseNode {
     props?: BoardLayoutSectionProps
-    grid?: LayoutGridNode | null
+    grid?: BoardLayoutGridNode | null
 }

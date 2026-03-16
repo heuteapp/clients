@@ -2,7 +2,7 @@ import { BoardCardData, BoardData } from "@/src/core/types/domain/board/board.da
 import { LayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
 import { Identifier } from "@/src/core/types/shared/data";
 
-export interface BoardProps extends BoardData {
+export interface BoardRootProps extends BoardData {
 
 }
 
@@ -14,7 +14,7 @@ export interface BoardCardProps extends BoardCardData {
 
 }
 
-export interface BoardLayoutProps extends LayoutData {
+export interface BoardLayoutRootProps extends LayoutData {
 
 }
 

@@ -8,11 +8,11 @@ import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import BoardGhostCard from "./BoardGhostCard";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
-import { BoardProps } from "@/src/ui/types/board/board.props";
+import { BoardRootProps } from "@/src/ui/types/board/board.props";
 
 //
 
-export default function Board(props: BoardProps) {
+export default function Board(props: BoardRootProps) {
   const { registry } = useBoardContext();
   const boardRef = useRef<HTMLDivElement>(null);
 
