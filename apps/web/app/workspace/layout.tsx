@@ -29,8 +29,8 @@ export default function WorkspaceLayout({
   return (
     <div ref={rootRef} style= {{
       display: "flex",
-      height: "100vh",
-      width: "100vw",
+      height: "100%",
+      width: "100%",
       overflow: "hidden",
       touchAction: "none",
       userSelect: "none",
