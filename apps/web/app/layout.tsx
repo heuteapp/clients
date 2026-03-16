@@ -1,5 +1,5 @@
-// app/layout.tsx  (genel ana layout)
 import "@/src/ui/styles/shared/global.css";
+import AppTheme from "@/src/ui/themes/mui/AppTheme";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -23,7 +23,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <AppTheme>
+          {children}
+        </AppTheme>
+      </body>
     </html>
   );
 }

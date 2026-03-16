@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AppThemeProps } from '@/src/ui/types/theme/mui/mui.props';
