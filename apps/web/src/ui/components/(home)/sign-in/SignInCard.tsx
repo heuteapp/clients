@@ -1,18 +1,26 @@
 import React, { useState } from "react";
 import { Card, Typography, TextField, Button, Link } from "@mui/material";
 import { server } from "@/src/api/server";
+import { useAuthContext } from "@/src/ui/hooks/useAuthContext";
 
 export default function SignInCard() {
+  const { manager: authManager } = useAuthContext();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    server.auth.signIn({ identifier, password }).then((response) => {
-      console.log("Sign in successful:", response);
-    }).catch((error) => {
-      console.error("Sign in failed:", error);
-    });
+    if(!authManager.current) {
+      console.error("Auth manager is not initialized.");
+      alert("Authentication system is not available. Please try again later.");
+      return;
+    };
+
+    authManager.current.signIn({ identifier, password })
+      .catch(error => {
+        console.error("Sign-in error:", error);
+        alert("Failed to sign in. Please check your credentials and try again.");
+      });
   };
 
   return (
