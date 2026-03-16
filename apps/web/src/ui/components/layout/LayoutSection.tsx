@@ -17,7 +17,7 @@ function LayoutSection(props : LayoutSectionProps) {
         return () => {
             registry.unregisterLayoutSection(props.id)
         }
-    }, [props, registry])
+    }, [props.id, registry])
 
     return (
         <div
