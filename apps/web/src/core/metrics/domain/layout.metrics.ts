@@ -44,8 +44,8 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         vertical: { padding: 0, margin: 0 },
     };
 
-    const totalWidth = layoutSize.width / layout.columnCount;
-    const totalHeight = layoutSize.height / layout.rowCount;
+    const totalWidth = (layoutSize.width - totalSpacing.horizontal.margin)  / layout.columnCount;
+    const totalHeight = (layoutSize.height - totalSpacing.vertical.margin) / layout.rowCount;
 
     const stepSize = Math.min(totalWidth, totalHeight);
 
@@ -73,8 +73,8 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         const colSpan = s.position.colSpan;
         const rowSpan = s.position.rowSpan;
 
-        const sectionWidth = colSpan * stepSize - (hPadding + hMargin);
-        const sectionHeight = rowSpan * stepSize - (vPadding + vMargin);
+        const sectionWidth = colSpan * stepSize;
+        const sectionHeight = rowSpan * stepSize;
 
         console.log(sectionWidth, sectionHeight, stepSize);
 
