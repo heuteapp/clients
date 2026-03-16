@@ -1,10 +1,11 @@
 import { useEffect } from "react"
 import { updateBoardMetrics } from "@/src/ui/metrics/domain/board/update";
-import { BoardContextValue } from "../../types/board/board.context";
+import { useBoardContext } from "./useBoardContext";
 
-export function useBoardMetricsObserver(
-    context: BoardContextValue) 
+export function useBoardMetricsObserver() 
 {
+    const context = useBoardContext();
+    
     const { rootRef, registry, contentManager, themeManager, metricsManager } = context;
 
     useEffect(() => {

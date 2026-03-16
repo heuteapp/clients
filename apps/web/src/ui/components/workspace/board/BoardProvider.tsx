@@ -8,8 +8,8 @@ import { useBoardMetricsObserver } from "@/src/ui/hooks/board/useBoardMetricsObs
 export default function BoardProvider({ rootRef, children }: BoardProviderProps) {
     const context = useBoardRuntime(rootRef);
     
-    useBoardMetricsObserver(context);
-    useBoardPointerEvents(context);
+    useBoardMetricsObserver();
+    useBoardPointerEvents();
 
     return (
         <BoardContext.Provider value={context}>

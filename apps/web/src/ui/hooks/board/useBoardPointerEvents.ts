@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { handleCardCreateInteraction, finishCardCreationState } from "@/src/ui/interactions/domain/board/states/create-card/handler";
-import { BoardContextValue } from "@/src/ui/types/board/board.context";
 import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
 import { findCardUnderPointer } from "../../interactions/domain/board/board.detector";
+import { useBoardContext } from "./useBoardContext";
 
-export function useBoardPointerEvents(
-    context: BoardContextValue
-) {
-    const { rootRef, registry, contentManager: content, sessionManager: session, interaction } = context;
+export function useBoardPointerEvents() {
+    const context = useBoardContext();
+
+    const { rootRef, interaction, registry, sessionManager, contentManager } = context
 
     useEffect(() => {
         const root = rootRef.current
@@ -40,7 +40,7 @@ export function useBoardPointerEvents(
                 y: e.clientY
             }
 
-            const currentSession = session.current
+            const currentSession = sessionManager.current
 
             switch (interaction.type) {
                 case BoardInteractionType.CardCreation: {
@@ -75,7 +75,7 @@ export function useBoardPointerEvents(
                             const { card } = result;
 
                             if(card.props?.name)
-                            content.current!.deleteCard(card.props?.name)
+                            contentManager.current!.deleteCard(card.props?.name)
                         }
 
                         lastClickTime = 0 // sıfırla
@@ -86,7 +86,7 @@ export function useBoardPointerEvents(
                 break;
             }
 
-            const currentSession = session.current
+            const currentSession = sessionManager.current
 
             if (
                 currentSession.cardCreation
