@@ -6,10 +6,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
     accessToken: null,
     profile: null,
 
-    signIn: (request) => {
-        
-    },
-
     signOut: () => {
         if (typeof window === "undefined") return;
         localStorage.removeItem("accessToken");
@@ -17,27 +13,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
         set({ accessToken: null, profile: null });
 
         window.location.href = "/";
-    },
-
-    loadAuth: () => {
-        if (typeof window === "undefined") return null;
-        const accessToken = localStorage.getItem("accessToken");
-        const profile = JSON.parse(localStorage.getItem("profile") || "null") as ProfileData;
-
-        const auth = { accessToken, profile };
-        return auth;
-    },
-
-    setAuth: (accessToken, profile) => {
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("profile", JSON.stringify(profile));
-        set({ accessToken, profile });
-    },
-
-    clearAuth: () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("profile");
-        set({ accessToken: null, profile: null });
     },
 
     hydrate: () => {
