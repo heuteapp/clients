@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Panel from "@/src/ui/components/main/Panel";
+import Panel from "@/src/ui/components/(home)/Panel";
 import { useAuthStore } from "@/src/stores/auth.store";
 
 export default function WorkspaceLayout({
