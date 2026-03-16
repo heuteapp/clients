@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
 import { BoardLayoutSectionProps } from "@/src/ui/types/domain/board/board.props";
-import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
+import { useBoardContext } from "@/src/ui/hooks/workspace/useBoardContext";
 import BoardLayoutGrid from "./BoardLayoutGrid";
 
 export function BoardLayoutSection(props : BoardLayoutSectionProps) {

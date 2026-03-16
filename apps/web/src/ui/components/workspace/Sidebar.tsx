@@ -1,6 +1,6 @@
 "use client";
 import { useAuthStore } from '@/src/stores/auth.store';
-import { useBoardContext } from '@/src/ui/hooks/board/useBoardContext';
+import { useBoardContext } from '@/src/ui/hooks/workspace/useBoardContext';
 import style from "@/src/ui/styles/main.module.css"
 import { BoardContextValue } from '@/src/ui/types/domain/board/board.context';
 

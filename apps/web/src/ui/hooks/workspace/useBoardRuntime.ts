@@ -1,10 +1,10 @@
-import { useBoardInteraction } from "./useBoardInteraction"
-import { useBoardRegistry } from "./useBoardRegistry"
+import { useBoardInteraction } from "./board/useBoardInteraction"
+import { useBoardRegistry } from "./board/useBoardRegistry"
 import { BoardContextValue } from "@/src/ui/types/domain/board/board.context";
-import { useBoardSessionManager } from "./useBoardSessionManager";
-import { useBoardContentManager } from "./useBoardContentManager";
-import { useBoardThemeManager } from "./useBoardThemeManager";
-import { useBoardMetricsManager } from "./useBoardMetricsManager";
+import { useBoardSessionManager } from "./board/useBoardSessionManager";
+import { useBoardContentManager } from "./board/useBoardContentManager";
+import { useBoardThemeManager } from "./board/useBoardThemeManager";
+import { useBoardMetricsManager } from "./board/useBoardMetricsManager";
 
 export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>) : BoardContextValue {
     const registry = useBoardRegistry();

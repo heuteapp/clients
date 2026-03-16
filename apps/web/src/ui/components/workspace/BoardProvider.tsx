@@ -1,7 +1,7 @@
 "use client";
 
 import { BoardContext } from "@/src/ui/contexts/board.context";
-import { useBoardRuntime } from "@/src/ui/hooks/board/useBoardRuntime";
+import { useBoardRuntime } from "@/src/ui/hooks/workspace/useBoardRuntime";
 import { BoardContextHooks } from "./BoardContextHooks";
 
 export default function BoardProvider({ rootRef, children }: BoardProviderProps) {
