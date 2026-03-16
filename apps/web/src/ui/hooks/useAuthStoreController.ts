@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { AuthManager } from "@/src/ui/types/auth/auth.manager";
+import { AuthStoreController } from "@/src/ui/types/auth/auth.store";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { AuthState, AuthActions } from "@/src/core/types/auth/auth.store";
 
-export function useAuthManager(): AuthManager {
+export function useAuthStoreController(): AuthStoreController {
     const { 
         accessToken, 
         profile, 
@@ -18,14 +18,10 @@ export function useAuthManager(): AuthManager {
     }), [accessToken, profile]);
 
     const actions: AuthActions = useMemo(() => ({
-        signIn: (token: string, userProfile: any) => {
-            localSignIn(token, userProfile)
-        },
-        signOut: () => {
-            localSignOut();
-        },
-        hydrate: () => localHydrate(),
+        signIn: (accessToken, profile) => localSignIn(accessToken, profile),
+        signOut: () => localSignOut(),
+        hydrate: () => localHydrate()
     }), [localSignIn, localSignOut, localHydrate]);
 
-    return useMemo<AuthManager>(() => ({ state, actions }), [state, actions]);
+    return useMemo<AuthStoreController>(() => ({ state, actions }), [state, actions]);
 }

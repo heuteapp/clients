@@ -1,6 +1,6 @@
 import { AuthActions, AuthState } from "@/src/core/types/auth/auth.store";
 
-export type AuthManager = {
+export type AuthStoreController = {
     state: AuthState;
     actions: AuthActions;
 }
