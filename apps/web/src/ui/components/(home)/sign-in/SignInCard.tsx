@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Typography, TextField, Button, Link } from "@mui/material";
-import { server } from "@/src/api/client";
+import { server } from "@/src/api/server";
 import { useAuthStore } from "@/src/stores/auth.store";
 
 export default function SignInCard() {

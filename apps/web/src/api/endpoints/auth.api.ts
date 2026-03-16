@@ -1,5 +1,5 @@
-import { serverApi } from "@/src/api/client/server";
-import { SignInRequest, SignUpRequest } from "../../models/auth.request";
+import { serverApi } from "@/src/api/server";
+import { SignInRequest, SignUpRequest } from "../models/auth.request";
 
 export const authApi = {
     signIn: (request: SignInRequest) =>

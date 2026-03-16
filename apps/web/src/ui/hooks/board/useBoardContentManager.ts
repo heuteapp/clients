@@ -5,7 +5,7 @@ import { BoardContentManager } from "@/src/ui/types/board/board.content";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/board.command";
 import debounce from "lodash.debounce";
-import { server } from "@/src/api/client";
+import { server } from "@/src/api/server";
 
 export function useBoardContentManager() : BoardContentManager {
     const board = useBoardContentStore(state => state.board);

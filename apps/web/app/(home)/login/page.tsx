@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/stores/auth.store";
-import { server } from "@/src/api/client";
+import { server } from "@/src/api/server";
 import axios from "axios";
 
 export default function LoginPage() {

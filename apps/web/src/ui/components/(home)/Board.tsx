@@ -4,7 +4,7 @@ import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { useBoardThemeStore } from '@/src/stores/board.theme.store';
 import { useEffect } from 'react';
 import { createDataIdentifier } from '@/src/core/utils/shared/data';
-import { server } from '@/src/api/client';
+import { server } from '@/src/api/server';
 
 interface BoardProps {
     category: string;

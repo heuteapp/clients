@@ -1,4 +1,4 @@
-import { serverApi } from "@/src/api/client/server";
+import { serverApi } from "@/src/api/server";
 import { LayoutResponse } from "../../../models/workspace/layout.response";
 
 export const layoutApi = {
