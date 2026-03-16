@@ -33,7 +33,7 @@ export default function SignupPage() {
     setMessage(null);
 
     try {
-      const res = await server.auth.signup({ name, email, password });
+      const res = await server.auth.signup({ username: name, email, password });
 
       // Eğer signup başarılı ise mail gönderildi mesajı
       setMessage("Ok! Mailine bir aktivasyon linki gönderildi.");

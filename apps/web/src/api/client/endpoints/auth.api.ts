@@ -1,9 +1,9 @@
 import { serverApi } from "@/src/api/client/server";
-import { SignInRequest, SignupRequest } from "../../models/auth.request";
+import { SignInRequest, SignUpRequest } from "../../models/auth.request";
 
 export const authApi = {
     signIn: (request: SignInRequest) =>
-        serverApi.post("/auth/login", { name: request.username, password: request.password }),
-    signup: (request: SignupRequest) =>
-        serverApi.post("/auth/signup", request),
+        serverApi.post("/auth/sign-in", { request.identifier, password: request.password }),
+    signUp: (request: SignUpRequest) =>
+        serverApi.post("/auth/sign-up", request),
 };

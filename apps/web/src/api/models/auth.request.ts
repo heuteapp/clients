@@ -1,10 +1,10 @@
 export interface SignInRequest {
-    username: string;
+    identifier: string;
     password: string;
 }
 
-export interface SignupRequest {
-    name: string;
+export interface SignUpRequest {
+    username: string;
     email: string;
     password: string;
 }

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { Card, Typography, TextField, Button, Link } from "@mui/material";
+import { server } from "@/src/api/client";
+import { useAuthStore } from "@/src/stores/auth.store";
 
 export default function SignInCard() {
+  const loginIn = useAuthStore((state) => state.loginIn);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ name, password });
+    server.auth.signIn({ username, password }).then((response) => {
+      console.log("Sign in successful:", response);
+    }).catch((error) => {
+      console.error("Sign in failed:", error);
+    });
   };
 
   return (

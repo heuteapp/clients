@@ -6,7 +6,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
     accessToken: null,
     profile: null,
 
-    logout: () => {
+    signIn: (request) => {
+        
+    },
+
+    signOut: () => {
         if (typeof window === "undefined") return;
         localStorage.removeItem("accessToken");
         localStorage.removeItem("profile");

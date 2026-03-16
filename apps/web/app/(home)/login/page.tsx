@@ -30,7 +30,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const res = await server.auth.login({ name, password });
+      const res = await server.auth.signIn({ name, password });
       const { accessToken, profile } = res.data;
 
       setAuth(accessToken, profile);

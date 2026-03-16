@@ -23,7 +23,7 @@ serverApi.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
         console.log("Unauthorized - logging out");
-        useAuthStore.getState().logout?.();
+        useAuthStore.getState().signOut?.();
                   if (typeof window !== "undefined") {
         window.location.href = "/login"; // zorla yönlendir
       }

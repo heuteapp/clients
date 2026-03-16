@@ -6,7 +6,7 @@ import { BoardContextValue } from '@/src/ui/types/board/board.context';
 
 function Sidebar() {
   const profile = useAuthStore(state => state.profile);
-  const logout = useAuthStore(state => state.logout);
+  const logout = useAuthStore(state => state.signOut);
 
   return (
     <div className={style.sidebar}>
