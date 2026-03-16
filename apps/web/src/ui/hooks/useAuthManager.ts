@@ -21,6 +21,10 @@ export function useAuthManager(): AuthManagerRef {
                     .then(response => {
                         const { accessToken, profile } = response.data;
                         storeSignIn(accessToken, profile);
+
+                        if(typeof window !== "undefined") {
+                            window.location.href = "/workspace/board/mihr";
+                        }
                     })
                     .catch(error => {
                         console.error("Sign-in failed:", error);

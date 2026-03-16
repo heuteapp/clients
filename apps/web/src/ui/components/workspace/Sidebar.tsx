@@ -46,7 +46,7 @@ function Sidebar() {
             borderRadius: "4px",
           }}
         >
-          {profile?.name}
+          {profile?.username}
         </button>
         <button 
           style={{
