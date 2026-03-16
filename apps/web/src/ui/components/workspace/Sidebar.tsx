@@ -39,7 +39,7 @@ function Sidebar() {
         }} />
       </div>
       <div>
-        <button
+        <div
           style={{
             width: "100%",
             padding: "8px",
@@ -49,8 +49,8 @@ function Sidebar() {
           }}
         >
           {profile?.username}
-        </button>
-        <button 
+        </div>
+        <div 
           style={{
             width: "100%",
             padding: "8px",
@@ -64,7 +64,7 @@ function Sidebar() {
           }}
         >
           Log Out
-        </button>
+        </div>
       </div>
     </div>
   )
