@@ -32,6 +32,8 @@ export default function WorkspaceLayout({
       height: "100vh",
       width: "100vw",
       overflow: "hidden",
+      touchAction: "none",
+      userSelect: "none",
     }}>
       <BoardProvider rootRef={rootRef}>
         <Sidebar />
