@@ -1,5 +1,5 @@
 import { Pointer } from "@/src/core/types/shared/common"
-import { BoardRegistry } from "@/src/ui/types/board/board.registry";
+import { BoardRegistry } from "@/src/ui/types/domain/board/board.registry";
 
 export function findSectionUnderPointer(
     registry: BoardRegistry,

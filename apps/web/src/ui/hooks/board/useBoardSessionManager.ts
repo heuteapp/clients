@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { produce } from "immer";
-import { BoardSessionManager } from "@/src/ui/types/board/board.session";
+import { BoardSessionManager } from "@/src/ui/types/domain/board/board.session";
 
 export function useBoardSessionManager(): BoardSessionManager {
     const session = useMemo<BoardSessionManager>(() => {

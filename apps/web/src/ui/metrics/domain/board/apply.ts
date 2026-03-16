@@ -1,6 +1,6 @@
-import { BoardRegistry } from "@/src/ui/types/board/board.registry";
+import { BoardRegistry } from "@/src/ui/types/domain/board/board.registry";
 import { BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
-import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
+import { BoardThemeManager } from "@/src/ui/types/domain/board/board.theme";
 
 export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardThemeManager, metricsValue: BoardMetricsValue) {
     const layout = registry.layout;

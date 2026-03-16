@@ -1,10 +1,10 @@
-import { BoardRegistry } from "@/src/ui/types/board/board.registry";
-import { BoardMetricsManager } from "@/src/ui/types/board/board.metrics";
+import { BoardRegistry } from "@/src/ui/types/domain/board/board.registry";
+import { BoardMetricsManager } from "@/src/ui/types/domain/board/board.metrics";
 import { applyBoardMetrics } from "./apply";
 import { computeBoardMetrics } from "@/src/core/metrics/domain/board.metrics";
 import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
-import { BoardContentManager } from "@/src/ui/types/board/board.content";
-import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
+import { BoardContentManager } from "@/src/ui/types/domain/board/board.content";
+import { BoardThemeManager } from "@/src/ui/types/domain/board/board.theme";
 
 export function updateBoardMetrics(registry: BoardRegistry, contentManager: BoardContentManager, themeManager: BoardThemeManager, metricsManager: BoardMetricsManager) {
     if(!registry || !metricsManager || !contentManager || !themeManager) return false;

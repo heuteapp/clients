@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
-import { BoardLayoutSectionProps } from "@/src/ui/types/board/board.props";
+import { BoardLayoutSectionProps } from "@/src/ui/types/domain/board/board.props";
 import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import BoardLayoutGrid from "./BoardLayoutGrid";
 

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { BoardThemeManager } from "@/src/ui/types/board/board.theme";
+import { BoardThemeManager } from "@/src/ui/types/domain/board/board.theme";
 import { useBoardThemeStore } from "@/src/stores/board.theme.store";
 import { BoardThemeValue } from "@/src/core/types/domain/board/board.theme";
 

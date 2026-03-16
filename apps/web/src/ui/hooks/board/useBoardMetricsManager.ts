@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { BoardMetricsManager } from "@/src/ui/types/board/board.metrics";
+import { BoardMetricsManager } from "@/src/ui/types/domain/board/board.metrics";
 
 export function useBoardMetricsManager(): BoardMetricsManager {
     const metrics = useMemo<BoardMetricsManager>(() => {

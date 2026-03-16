@@ -1,6 +1,6 @@
 import { useBoardInteraction } from "./useBoardInteraction"
 import { useBoardRegistry } from "./useBoardRegistry"
-import { BoardContextValue } from "@/src/ui/types/board/board.context";
+import { BoardContextValue } from "@/src/ui/types/domain/board/board.context";
 import { useBoardSessionManager } from "./useBoardSessionManager";
 import { useBoardContentManager } from "./useBoardContentManager";
 import { useBoardThemeManager } from "./useBoardThemeManager";

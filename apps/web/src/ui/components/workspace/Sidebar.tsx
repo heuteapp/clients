@@ -2,7 +2,7 @@
 import { useAuthStore } from '@/src/stores/auth.store';
 import { useBoardContext } from '@/src/ui/hooks/board/useBoardContext';
 import style from "@/src/ui/styles/main.module.css"
-import { BoardContextValue } from '@/src/ui/types/board/board.context';
+import { BoardContextValue } from '@/src/ui/types/domain/board/board.context';
 
 function Sidebar() {
   const profile = useAuthStore(state => state.profile);
