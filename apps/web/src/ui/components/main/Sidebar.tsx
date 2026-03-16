@@ -5,6 +5,7 @@ import style from "@/src/ui/styles/main.module.css"
 import { BoardContextValue } from '@/src/ui/types/board/board.context';
 
 function Sidebar() {
+  const profile = useAuthStore(state => state.profile);
   const logout = useAuthStore(state => state.logout);
 
   return (
@@ -36,6 +37,17 @@ function Sidebar() {
         }} />
       </div>
       <div>
+        <button
+          style={{
+            width: "100%",
+            padding: "8px",
+            backgroundColor: "#1890ff",
+            color: "#ffffff",
+            borderRadius: "4px",
+          }}
+        >
+          {profile?.name}
+        </button>
         <button 
           style={{
             width: "100%",
@@ -73,7 +85,7 @@ function SidebarCardItem({ onPointerDown } : { onPointerDown: (context: BoardCon
         userSelect: 'none',
         cursor: context.interaction.type === "creation" ? "default" : "pointer",
       }}
-      onPointerDown={() => { onPointerDown(context); }}
+      onPointerUp={() => { onPointerDown(context); }}
     >
     </div>
   )
