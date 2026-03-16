@@ -6,7 +6,7 @@ import { useLayoutEffect } from "react"
 
 import style from "@/src/ui/styles/layout.module.css"
 
-import { useBoardContext } from "@/src/ui/hooks/board";
+import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import { HeuteLayoutProps } from "@/src/ui/types/layout/layout.props";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import LayoutSection from "./LayoutSection";

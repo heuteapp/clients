@@ -2,8 +2,8 @@
 
 import { BoardContext } from "@/src/ui/contexts/board.context";
 import { useBoardRuntime } from "@/src/ui/hooks/board/useBoardRuntime";
-import { useBoardPointerEvents } from "../../hooks/board";
-import { useBoardMetricsObserver } from "../../hooks/board/useBoardMetricsObserver";
+import { useBoardPointerEvents } from "@/src/ui/hooks/board/useBoardPointerEvents";
+import { useBoardMetricsObserver } from "@/src/ui/hooks/board/useBoardMetricsObserver";
 
 export default function BoardProvider({ rootRef, children }: BoardProviderProps) {
     const context = useBoardRuntime(rootRef);

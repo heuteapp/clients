@@ -1,5 +1,5 @@
 "use client";
-import { useBoardContext } from '@/src/ui/hooks/board';
+import { useBoardContext } from '@/src/ui/hooks/board/useBoardContext';
 import style from "@/src/ui/styles/main.module.css"
 import { BoardContextValue } from '@/src/ui/types/board/board.context';
 

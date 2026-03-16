@@ -1,4 +1,4 @@
-import { useBoardContext } from "@/src/ui/hooks/board"
+import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext"
 import style from "@/src/ui/styles/board.module.css"
 import BoardCard from "./BoardCard"
 import { BoardCardContainerProps } from "@/src/ui/types/board/board.props";

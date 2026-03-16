@@ -1,7 +1,7 @@
 import style from "@/src/ui/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
-import { useBoardContext } from "@/src/ui/hooks/board";
+import { useBoardContext } from "@/src/ui/hooks/board/useBoardContext";
 import { LayoutGridProps } from "@/src/ui/types/layout/layout.props";
 
 function LayoutGrid(props : LayoutGridProps) {
