@@ -76,8 +76,6 @@ export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetric
         const sectionWidth = colSpan * stepSize;
         const sectionHeight = rowSpan * stepSize;
 
-        console.log(sectionWidth, sectionHeight, stepSize);
-
         const innerWidth = (sectionWidth - (totalSpacing.horizontal.padding + totalSpacing.horizontal.margin)) / colSpan;
         const innerHeight = (sectionHeight - (totalSpacing.vertical.padding + totalSpacing.vertical.margin)) / rowSpan;
 

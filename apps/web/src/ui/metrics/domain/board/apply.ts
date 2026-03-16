@@ -23,7 +23,7 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
     layoutElement.style.setProperty("--container-width", `${sectionContainerSize.width}px`);
     layoutElement.style.setProperty("--container-height", `${sectionContainerSize.height}px`);
 
-    const rootRect = layoutElement.getBoundingClientRect();
+    const layoutRect = layoutElement.getBoundingClientRect();
 
     layout.sections.forEach(section => {
         const sectionElement = section.ref?.current;
@@ -57,9 +57,8 @@ export function applyBoardMetrics(registry: BoardRegistry, themeManager: BoardTh
         const cards = registry.getBoardCardsForSection(section.props!.id) ?? [];
 
         const gridRect = gridElement.getBoundingClientRect();
-        console.log("Grid Rect:", gridRect);
 
-        const gap = 0;
+        const gap = layoutRect.width * 0.005; // 1% of layout width as gap
 
         const localGridRect = {
             left: (gridRect.left) + gap,
