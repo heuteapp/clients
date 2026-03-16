@@ -1,5 +1,5 @@
-import { AuthStoreController } from "./auth.store";
+import { AuthManager } from "./auth.manager";
 
 export interface AuthContextValue {
-    store: AuthStoreController;
+    manager: AuthManager;
 }
