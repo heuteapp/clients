@@ -1,5 +1,5 @@
-export interface LoginRequest {
-    name: string;
+export interface SignInRequest {
+    username: string;
     password: string;
 }
 
