@@ -71,10 +71,10 @@ function Board({ category, date }: BoardProps) {
                         name: "first",
                         box: {
                             margin: {
-                                left: 0,
-                                top: 10,
+                                left: 100,
+                                top: 20,
                                 right: 0,
-                                bottom: 10,
+                                bottom: 20,
                             },                                
                         }
                     },
@@ -83,9 +83,9 @@ function Board({ category, date }: BoardProps) {
                         box: {
                             margin: {
                                 left: 0,
-                                top: 0,
-                                right: 0,
-                                bottom: 0,
+                                top: 20,
+                                right: 100,
+                                bottom: 20,
                             },
                         }
                     },]
