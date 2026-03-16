@@ -11,15 +11,15 @@ const HomePage = () => {
       <div className="flex gap-4">
         <button
           className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          onClick={() => router.push("/login")}
+          onClick={() => router.push("/sign-in")}
         >
-          Login
+          Sign In
         </button>
         <button
           className="px-6 py-3 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
-          onClick={() => router.push("/signup")}
+          onClick={() => router.push("/sign-up")}
         >
-          Signup
+          Sign Up
         </button>
       </div>
     </div>
