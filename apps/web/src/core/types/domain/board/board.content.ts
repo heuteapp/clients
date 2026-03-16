@@ -1,5 +1,5 @@
 import { DataContent } from "@/src/core/types/shared/data"
-import { HeuteLayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data"
+import { LayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data"
 import { BoardData, BoardCardData } from "./board.data"
 
 export type BoardContentStore = BoardContentValue & {
@@ -9,7 +9,7 @@ export type BoardContentStore = BoardContentValue & {
 export type BoardContentValue = {
     board: BoardData | null
     cards: BoardCardData[]    
-    layout: HeuteLayoutData | null
+    layout: LayoutData | null
     sections: LayoutSectionData[]
 }
 

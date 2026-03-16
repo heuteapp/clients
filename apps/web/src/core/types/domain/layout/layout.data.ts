@@ -1,7 +1,7 @@
 import { GridRect } from "../../shared/common"
 import { BaseData } from "../../shared/data"
 
-export interface HeuteLayoutData extends BaseData {
+export interface LayoutData extends BaseData {
     columnCount: number
     rowCount: number
 }
