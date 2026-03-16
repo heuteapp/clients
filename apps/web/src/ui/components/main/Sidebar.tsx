@@ -1,50 +1,73 @@
 "use client";
+import { useAuthStore } from '@/src/stores/auth.store';
 import { useBoardContext } from '@/src/ui/hooks/board/useBoardContext';
 import style from "@/src/ui/styles/main.module.css"
 import { BoardContextValue } from '@/src/ui/types/board/board.context';
 
 function Sidebar() {
+  const logout = useAuthStore(state => state.logout);
 
   return (
     <div className={style.sidebar}>
-      <SidebarItem onPointerDown={(context) => {
-          context.interaction.startCardCreate({
-            colSpan: 9,
-            rowSpan: 4,
-          });
-      }} />
-      <SidebarItem onPointerDown={(context) => {
-          context.interaction.startCardCreate({
-            colSpan: 6,
-            rowSpan: 4,
-          });
-      }} />
-      <SidebarItem onPointerDown={(context) => {
-          context.interaction.startCardCreate({
-            colSpan: 9,
-            rowSpan: 2,
-          });
-      }} />
-      <SidebarItem onPointerDown={(context) => {
-          context.interaction.startCardCreate({
-            colSpan: 6,
-            rowSpan: 2,
-          });
-      }} />
+      <div>
+        <SidebarCardItem onPointerDown={(context) => {
+            context.interaction.startCardCreate({
+              colSpan: 9,
+              rowSpan: 4,
+            });
+        }} />
+        <SidebarCardItem onPointerDown={(context) => {
+            context.interaction.startCardCreate({
+              colSpan: 6,
+              rowSpan: 4,
+            });
+        }} />
+        <SidebarCardItem onPointerDown={(context) => {
+            context.interaction.startCardCreate({
+              colSpan: 9,
+              rowSpan: 2,
+            });
+        }} />
+        <SidebarCardItem onPointerDown={(context) => {
+            context.interaction.startCardCreate({
+              colSpan: 6,
+              rowSpan: 2,
+            });
+        }} />
+      </div>
+      <div>
+        <button 
+          style={{
+            width: "100%",
+            padding: "8px",
+            backgroundColor: "#ff4d4f",
+            color: "#ffffff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+          onPointerDown={() => {
+            logout();
+          }}
+        >
+          Log Out
+        </button>
+      </div>
     </div>
   )
 }
 
 export default Sidebar;
 
-function SidebarItem({ onPointerDown } : { onPointerDown: (context: BoardContextValue) => void }) {
+function SidebarCardItem({ onPointerDown } : { onPointerDown: (context: BoardContextValue) => void }) {
     const context = useBoardContext();
 
   return (
     <div
       style={{
-        width:48,
-        height:48,
+        width:36,
+        height:36,
+        margin: 12,
         backgroundColor: '#ffffff',
         border: '1px solid #cccccc',
         userSelect: 'none',

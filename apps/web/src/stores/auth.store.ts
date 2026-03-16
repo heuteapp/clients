@@ -11,6 +11,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         localStorage.removeItem("accessToken");
         localStorage.removeItem("profile");
         set({ accessToken: null, profile: null });
+
+        window.location.href = "/";
     },
 
     loadAuth: () => {
