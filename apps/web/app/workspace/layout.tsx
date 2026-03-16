@@ -1,16 +1,19 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Panel from "@/src/ui/components/(home)/Panel";
 import { useAuthStore } from "@/src/stores/auth.store";
+import Monitor from "@/src/ui/components/(home)/Monitor";
+import Sidebar from "@/src/ui/components/(home)/Sidebar";
+import BoardProvider from "@/src/ui/components/workspace/board/BoardProvider";
 
 export default function WorkspaceLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const { profile, loadAuth, setAuth } = useAuthStore();
   const router = useRouter();
-
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  
   useEffect(() => {
     if(profile) return;
     const auth = loadAuth();
@@ -25,5 +28,19 @@ export default function WorkspaceLayout({
 
   if (!profile) return null;
 
-  return <Panel>{children}</Panel>;
+  return (
+    <div ref={rootRef} style= {{
+      display: "flex",
+      height: "100vh",
+      width: "100vw",
+      overflow: "hidden",
+    }}>
+      <BoardProvider rootRef={rootRef}>
+        <Sidebar />
+        <Monitor>
+            {children}
+        </Monitor>
+      </BoardProvider>
+    </div>
+  )
 }
