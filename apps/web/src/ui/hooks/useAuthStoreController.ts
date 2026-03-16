@@ -1,27 +1,27 @@
-import { useMemo } from "react";
-import { AuthStoreController } from "@/src/ui/types/auth/auth.store";
+import { useEffect, useRef } from "react";
+import { AuthStoreController, AuthStoreContent } from "@/src/ui/types/auth/auth.store";
 import { useAuthStore } from "@/src/stores/auth.store";
-import { AuthState, AuthActions } from "@/src/core/types/auth/auth.store";
 
 export function useAuthStoreController(): AuthStoreController {
-    const { 
-        accessToken, 
-        profile, 
-        signIn: localSignIn, 
-        signOut: localSignOut, 
-        hydrate: localHydrate 
-    } = useAuthStore();
-
-    const state: AuthState = useMemo(() => ({
+    const {
         accessToken,
         profile,
-    }), [accessToken, profile]);
+        signIn,
+        signOut,
+        hydrate
+    } = useAuthStore();
 
-    const actions: AuthActions = useMemo(() => ({
-        signIn: (accessToken, profile) => localSignIn(accessToken, profile),
-        signOut: () => localSignOut(),
-        hydrate: () => localHydrate()
-    }), [localSignIn, localSignOut, localHydrate]);
+    const controllerRef = useRef<AuthStoreContent | null>(null);
 
-    return useMemo<AuthStoreController>(() => ({ state, actions }), [state, actions]);
+    useEffect(() => {
+        controllerRef.current = {
+            accessToken,
+            profile,
+            signIn,
+            signOut,
+            hydrate
+        };
+    }, [accessToken, profile, signIn, signOut, hydrate]);
+
+    return controllerRef;
 }
