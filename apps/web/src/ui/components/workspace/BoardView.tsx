@@ -23,10 +23,44 @@ function Board({ category, date }: BoardProps) {
                 const response = await server.workspace.board.getBoard(category , /*date*/);
                 
                 setState({
-                    board: null,
-                    cards: [],
-                    layout: null,
-                    sections: []
+                    board: {
+                        id: createDataIdentifier(),
+                        layoutName: response.data.layout.name,
+                        layoutVersion: response.data.layout.version,
+                        category: "mihr",
+                        date: new Date(response.data.date),
+                    },
+                    cards: response.data.cards.map(card => ({
+                        id: createDataIdentifier(),
+                        name: card.name,
+                        content: {
+                            title: card.title,
+                        },
+                        placement: card.sectionName && card.rowIndex !== null && card.colIndex !== null && card.rowSpan !== null && card.colSpan !== null ? {
+                            sectionName: card.sectionName,
+                            position: {               
+                                rowIndex: card.rowIndex,
+                                colIndex: card.colIndex,
+                                rowSpan: card.rowSpan,
+                                colSpan: card.colSpan,
+                            }
+                        } : null,
+                    })),
+                    layout: {
+                        id: createDataIdentifier(),
+                        columnCount: response.data.layout.colCount,
+                        rowCount: response.data.layout.rowCount,
+                    },
+                    sections: response.data.layout.sections.map(section => ({
+                        id: createDataIdentifier(),
+                        name: section.name,
+                        position: {
+                            colIndex: section.colIndex,
+                            rowIndex: section.rowIndex,
+                            colSpan: section.colSpan,
+                            rowSpan: section.rowSpan,
+                        }
+                    }))
                 });
 
                 setThemeState({
