@@ -1,26 +1,34 @@
 import React, { useState } from "react";
-import { Card, Typography, TextField, Button, Link } from "@mui/material";
-import { server } from "@/src/api/server";
+import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import { useAuthContext } from "@/src/ui/hooks/useAuthContext";
 
 export default function SignInCard() {
   const { manager: authManager } = useAuthContext();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if(!authManager.current) {
-      console.error("Auth manager is not initialized.");
-      alert("Authentication system is not available. Please try again later.");
-      return;
-    };
+    setError(null);
+    setLoading(true);
 
-    authManager.current.signIn({ identifier, password })
-      .catch(error => {
-        console.error("Sign-in error:", error);
-        alert("Failed to sign in. Please check your credentials and try again.");
-      });
+    if (!authManager.current) {
+      console.error("Auth manager is not initialized.");
+      setError("Authentication system is not available. Please try again later.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await authManager.current.signIn({ identifier, password });
+    } catch (err) {
+      console.error("Sign-in error:", err);
+      setError("Failed to sign in.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,11 +39,12 @@ export default function SignInCard() {
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <TextField
           label="Username"
-          type="username"
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
           placeholder="your.username"
           required
+          error={!!error}
+          disabled={loading}
         />
         <TextField
           label="Password"
@@ -44,11 +53,20 @@ export default function SignInCard() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••"
           required
+          error={!!error}
+          disabled={loading}
         />
-        <Button type="submit" variant="contained">
-          Sign in
+        <Button type="submit" variant="contained" disabled={loading} sx={{ position: "relative" }}>
+          {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Sign in"}
         </Button>
       </form>
+      <Box sx={{ mt: 2, textAlign: "center", minHeight: 24 }}>
+        {error && (
+          <Typography color="error" >
+            {error}
+          </Typography>
+        )}
+      </Box>
       <Typography sx={{ mt: 2, textAlign: "center" }}>
         Don’t have an account?{" "}
         <Link href="#" underline="hover">
