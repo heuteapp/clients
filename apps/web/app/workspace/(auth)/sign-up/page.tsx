@@ -1,14 +1,9 @@
 "use client";
 
-import SignInCard from "@/src/ui/components/workspace/(auth)/sign-in/SignInCard";
-import { useRouter } from "next/navigation";
+import SignUpCard from "@/src/ui/components/workspace/(auth)/sign-up/SignUpCard";
 
-const SignInPage = () => {
-  const router = useRouter();
-
+export const SignUpPage = () => {
   return (
-    <SignInCard/>
+    <SignUpCard/>
   );
 };
-
-export default SignInPage;
