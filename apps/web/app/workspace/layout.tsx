@@ -19,7 +19,7 @@ export default function WorkspaceLayout({
     const auth = hydrate();
     
     if(!auth || !auth.accessToken || !auth.profile) {
-      router.push("/sign-in");
+      router.push("/workspace/sign-in");
       return;
     }
   }, []);

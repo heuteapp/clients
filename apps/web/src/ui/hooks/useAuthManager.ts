@@ -34,7 +34,7 @@ export function useAuthManager(): AuthManagerRef {
             signOut: async () => {
                 storeSignOut();
                 if(typeof window !== "undefined") {
-                    window.location.href = "/sign-in";
+                    window.location.href = "/workspace/sign-in";
                 }
             },
             hydrate: async () => {

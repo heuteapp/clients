@@ -11,13 +11,13 @@ const HomePage = () => {
       <div className="flex gap-4">
         <button
           className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          onClick={() => router.push("/sign-in")}
+          onClick={() => router.push("/workspace/sign-in")}
         >
           Sign In
         </button>
         <button
           className="px-6 py-3 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
-          onClick={() => router.push("/sign-up")}
+          onClick={() => router.push("/workspace/sign-up")}
         >
           Sign Up
         </button>
