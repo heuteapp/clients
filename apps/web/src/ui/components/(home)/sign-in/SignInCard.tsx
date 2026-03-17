@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import { useAuthContext } from "@/src/ui/hooks/useAuthContext";
+import NextLink from 'next/link';
 
 export default function SignInCard() {
   const { manager: authManager } = useAuthContext();
@@ -32,7 +33,7 @@ export default function SignInCard() {
   };
 
   return (
-    <Card sx={{ padding: 3, maxWidth: 400, margin: "auto" }}>
+    <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign in
       </Typography>
@@ -69,7 +70,7 @@ export default function SignInCard() {
       </Box>
       <Typography sx={{ mt: 2, textAlign: "center" }}>
         Don’t have an account?{" "}
-        <Link href="/sign-up" underline="hover">
+        <Link component={NextLink} href="/workspace/sign-up" underline="hover">
           Sign up
         </Link>
       </Typography>
