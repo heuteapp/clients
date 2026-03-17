@@ -31,6 +31,13 @@ export function useAuthManager(): AuthManagerRef {
                         throw error;
                     });
             },
+            signUp: async (request) => {
+                await server.auth.signUp(request)
+                    .catch(error => {
+                        console.error("Sign-up failed:", error);
+                        throw error;
+                    });
+            },
             signOut: async () => {
                 storeSignOut();
                 if(typeof window !== "undefined") {
