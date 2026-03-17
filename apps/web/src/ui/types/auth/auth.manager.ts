@@ -1,7 +1,8 @@
-import { SignInRequest } from "@/src/api/models/auth.request";
+import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 
 export type AuthManager = {
     signIn: (request: SignInRequest) => Promise<void>;
+    signUp: (request: SignUpRequest) => Promise<void>;
     signOut: () => Promise<void>;
     hydrate: () => Promise<void>;
 }
