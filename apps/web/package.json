@@ -14,6 +14,7 @@
     "@mui/icons-material": "^7.3.9",
     "@mui/material": "^7.3.9",
     "@mui/system": "^7.3.9",
+    "@vercel/analytics": "^2.0.1",
     "axios": "^1.13.6",
     "immer": "^11.1.4",
     "lodash.debounce": "^4.0.8",
