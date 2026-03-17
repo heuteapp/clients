@@ -2,8 +2,10 @@
 
 import SignInCard from "@/src/ui/components/workspace/(auth)/sign-in/SignInCard";
 
-export const SignInPage = () => {
+const SignInPage = () => {
   return (
     <SignInCard/>
   );
 };
+
+export default SignInPage;
