@@ -41,7 +41,7 @@ export default function SignInCard() {
           label="Username"
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          placeholder="your.username"
+          placeholder="username or email"
           required
           error={!!error}
           disabled={loading}
@@ -69,7 +69,7 @@ export default function SignInCard() {
       </Box>
       <Typography sx={{ mt: 2, textAlign: "center" }}>
         Don’t have an account?{" "}
-        <Link href="#" underline="hover">
+        <Link href="/sign-up" underline="hover">
           Sign up
         </Link>
       </Typography>
