@@ -4,7 +4,7 @@ import { Identifier } from "@/src/core/types/shared/data";
 import { BoardBaseState, BoardSessionManager } from "./board.session";
 
 export interface BoardBaseInteraction<
-    TInteractionType, 
+    TInteractionType extends BoardBaseInteractionTypeValues, 
     TInteractionCallbacks extends BoardBaseInteractionCallbacks<TInteractionType>> {
 
     pointer: Pointer | null;
@@ -23,6 +23,17 @@ export interface BoardBaseInteractionCallbacks<TInteractionType> {
     OnUpdate?: (type: TInteractionType, state: BoardBaseState) => void;
     OnFinish?: (type: TInteractionType, state: BoardBaseState) => void;
 }
+
+//
+
+export enum BoardBaseInteractionType {
+    Idle = "idle",
+    CardCreation = "creation",
+    CardMovement = "movement",
+    CardResize = "resize",
+}
+
+export type BoardBaseInteractionTypeValues = `${BoardBaseInteractionType}`;
 
 //
 
