@@ -1,12 +1,13 @@
 import { useMemo, useRef } from "react";
-import { BoardContentStore, BoardContentActions, BoardContentState } from "@/src/core/types/domain/board/board.content";
+import { BoardContentActions, BoardContentState } from "@/src/core/types/domain/board/board.content";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/board.command";
 import debounce from "lodash.debounce";
 import { server } from "@/src/api/server";
+import { BoardContentStoreBridge } from "@/src/ui/types/domain/board/board.content";
 
-export function useBoardContentBridge() : BoardContentStore {
+export function useBoardContentBridge() : BoardContentStoreBridge {
     const board = useBoardContentStore(state => state.board);
     const cards = useBoardContentStore(state => state.cards);
     const layout = useBoardContentStore(state => state.layout);
@@ -95,7 +96,7 @@ export function useBoardContentBridge() : BoardContentStore {
         [dispatchEvents, createCardLocal, deleteCardLocal]
     );
 
-    const content = useMemo(() => ({ setState, ...value, ...actions }), [value, actions]);
+    const content = useMemo(() => ({ ...value, ...actions }), [value, actions]);
 
     return content;
 }
