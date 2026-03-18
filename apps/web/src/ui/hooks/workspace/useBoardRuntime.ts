@@ -1,4 +1,4 @@
-import { useBoardInteraction } from "./board/useBoardInteraction"
+import { useBoardUserInteraction } from "./board/useBoardUserInteraction"
 import { useBoardRegistry } from "./board/useBoardRegistry"
 import { BoardContextValue } from "@/src/ui/types/domain/board/board.context";
 import { useBoardSessionManager } from "./board/useBoardSessionManager";
@@ -12,7 +12,7 @@ export function useBoardRuntime(rootRef: React.RefObject<HTMLDivElement | null>)
     const themeManager = useBoardThemeManager();
     const metricsManager = useBoardMetricsManager();
     const sessionManager = useBoardSessionManager();
-    const interaction = useBoardInteraction(sessionManager);
+    const interaction = useBoardUserInteraction(sessionManager);
 
     return {
         rootRef,
