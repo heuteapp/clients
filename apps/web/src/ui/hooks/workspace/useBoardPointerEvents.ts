@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { handleCardCreateInteraction, finishCardCreationState } from "@/src/ui/interactions/domain/board/states/create-card/handler";
-import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
+import { BoardUserInteractionType } from "@/src/core/types/domain/board/board.interaction";
 import { findCardUnderPointer } from "../../interactions/domain/board/board.detector";
 import { useBoardContext } from "./useBoardContext";
 
@@ -27,7 +27,7 @@ export function useBoardPointerEvents() {
             }
 
             switch (interaction.type) {
-                case BoardInteractionType.Idle: {
+                case BoardUserInteractionType.Idle: {
 
                 }
             }
@@ -43,10 +43,10 @@ export function useBoardPointerEvents() {
             const currentSession = sessionManager.current
 
             switch (interaction.type) {
-                case BoardInteractionType.CardCreation: {
+                case BoardUserInteractionType.CardCreation: {
                     handleCardCreateInteraction(context)
                 }
-                case BoardInteractionType.Idle: {
+                case BoardUserInteractionType.Idle: {
                     
                 }
             }
@@ -62,11 +62,11 @@ export function useBoardPointerEvents() {
             root.releasePointerCapture(e.pointerId)
 
             switch (interaction.type) {
-                case BoardInteractionType.CardCreation: {
+                case BoardUserInteractionType.CardCreation: {
                     handleCardCreateInteraction(context)
                 }
                 break;
-                case BoardInteractionType.Idle: {
+                case BoardUserInteractionType.Idle: {
 
                     const now = performance.now()
                     if (now - lastClickTime < DOUBLE_CLICK_THRESHOLD) {
@@ -100,18 +100,18 @@ export function useBoardPointerEvents() {
 
         interaction.setCallbacks({
             OnStart: (type) => {
-                if (type === BoardInteractionType.CardCreation) {
+                if (type === BoardUserInteractionType.CardCreation) {
                     handleCardCreateInteraction(context)
                 }
             },
             OnFinish: (type, state) => {
                 switch (type) {
-                    case BoardInteractionType.CardCreation: {
+                    case BoardUserInteractionType.CardCreation: {
 
                     }
                 }
 
-                if (type === BoardInteractionType.CardCreation) {
+                if (type === BoardUserInteractionType.CardCreation) {
                     finishCardCreationState(context);
                 }
             }

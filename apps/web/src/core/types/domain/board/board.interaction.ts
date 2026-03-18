@@ -1,14 +1,14 @@
 import { BoardBaseState } from "./board.session";
 
-export enum BoardInteractionType {
+export enum BoardUserInteractionType {
     Idle = "idle",
     CardCreation = "creation",
     CardMovement = "movement",
     CardResize = "resize",
 }
 
-export interface BoardInteractionCallbacks {
-    OnStart?: (type: BoardInteractionType, state: BoardBaseState) => void;
-    OnUpdate?: (type: BoardInteractionType, state: BoardBaseState) => void;
-    OnFinish?: (type: BoardInteractionType, state: BoardBaseState) => void;
+export interface BoardUserInteractionCallbacks {
+    OnStart?: (type: BoardUserInteractionType, state: BoardBaseState) => void;
+    OnUpdate?: (type: BoardUserInteractionType, state: BoardBaseState) => void;
+    OnFinish?: (type: BoardUserInteractionType, state: BoardBaseState) => void;
 }

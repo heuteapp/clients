@@ -3,17 +3,17 @@ import { Identifier } from "@/src/core/types/shared/data";
 import { BoardBaseState } from "@/src/core/types/domain/board/board.session";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
 import { BoardSessionManager } from "./board.session";
-import { BoardInteractionCallbacks, BoardInteractionType } from "@/src/core/types/domain/board/board.interaction";
+import { BoardUserInteractionCallbacks, BoardUserInteractionType } from "@/src/core/types/domain/board/board.interaction";
 
-export interface BoardInteraction {
+export interface BoardUserInteraction {
     pointer: Pointer | null;
-    type: BoardInteractionType;
-    callbacks: BoardInteractionCallbacks | null;
+    type: BoardUserInteractionType;
+    callbacks: BoardUserInteractionCallbacks | null;
     session: BoardSessionManager
 
     //
 
-    setCallbacks: (callbacks: BoardInteractionCallbacks | null) => void;
+    setCallbacks: (callbacks: BoardUserInteractionCallbacks | null) => void;
 
     //
 

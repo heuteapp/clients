@@ -1,4 +1,4 @@
-import { BoardInteraction } from "@/src/ui/types/domain/board/board.interaction";
+import { BoardUserInteraction } from "@/src/ui/types/domain/board/board.interaction";
 import { BoardMetricsManager } from "@/src/ui/types/domain/board/board.metrics";
 import { BoardRegistry } from "@/src/ui/types/domain/board/board.registry";
 import { BoardSessionManager } from "./board.session";
@@ -12,5 +12,5 @@ export interface BoardContextValue {
     themeManager: BoardThemeManager;
     metricsManager: BoardMetricsManager;
     sessionManager: BoardSessionManager;
-    interaction: BoardInteraction;
+    interaction: BoardUserInteraction;
 }
