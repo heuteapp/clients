@@ -1,4 +1,4 @@
-import { Logo } from "@/src/ui/assets/logo";
+import { Brand } from "./Brand";
 
 export const StickyNavbar = () => {
   return (
@@ -9,8 +9,10 @@ export const StickyNavbar = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        color: "#FFF",
+        fontSize: "1.5rem",
     }}>
-        <Logo width={72} height={72} alt="HeuteApp Logo"/>
+      <Brand />
     </nav>
   );
 };
