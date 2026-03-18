@@ -5,3 +5,9 @@ export interface LayoutSessionValue {
 }
     
 export type LayoutSessionUpdater = (updater: (draft: Draft<LayoutSessionValue>) => void) => void;
+
+//
+
+export interface LayoutBaseState {
+
+}
