@@ -1,4 +1,5 @@
 import { Providers } from "@/src/ui/components/Providers";
+import { StickyNavbar } from "@/src/ui/components/StickyNavbar";
 import "@/src/ui/styles/shared/global.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+        <StickyNavbar />
         <Providers>
           {children}
         </Providers>
