@@ -15,7 +15,7 @@ export type BoardSessionUpdater = (updater: (draft: Draft<BoardSessionValue>) =>
 //
 
 export type BoardSessionManager = {
-    value: BoardSessionValue;
+    current: BoardSessionValue;
     updater: BoardSessionUpdater;
 }
 
