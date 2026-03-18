@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { LayoutContentStore, LayoutContentValue } from "../core/types/domain/layout/layout.content";
+import { LayoutContentStore, LayoutContentValue } from "@/src/core/types/domain/layout/layout.content";
 
-export const useBoardContentStore = create<LayoutContentStore>()(
+export const useLayoutContentStore = create<LayoutContentStore>()(
     immer(set => ({
         layout: null,
         sections: [],
