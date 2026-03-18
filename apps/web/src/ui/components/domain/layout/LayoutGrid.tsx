@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/workspace/useBoardContext";
 import { BoardLayoutGridProps } from "@/src/ui/types/domain/board/board.props";
 
-function BoardLayoutGrid(props : BoardLayoutGridProps) {
+function LayoutGrid(props : BoardLayoutGridProps) {
     const context = useBoardContext();
 
     const { registry } = context!;
@@ -27,4 +27,4 @@ function BoardLayoutGrid(props : BoardLayoutGridProps) {
     )
 }
 
-export default BoardLayoutGrid
+export default LayoutGrid

@@ -1,5 +1,5 @@
 "use client";
-import { BoardRoot } from '@/src/ui/components/workspace/board/BoardRoot';
+import { BoardRoot } from '@/src/ui/components/domain/board/BoardRoot';
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { useBoardThemeStore } from '@/src/stores/board.theme.store';
 import { useEffect } from 'react';

@@ -7,9 +7,9 @@ import style from "@/src/ui/styles/layout.module.css"
 import { useBoardContext } from "@/src/ui/hooks/workspace/useBoardContext";
 import { BoardLayoutRootProps } from "@/src/ui/types/domain/board/board.props";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
-import { BoardLayoutSection } from "./BoardLayoutSection";
+import { LayoutSection } from "./LayoutSection";
 
-export function BoardLayoutRoot(props: BoardLayoutRootProps) {
+export function LayoutRoot(props: BoardLayoutRootProps) {
   const context = useBoardContext();
 
   const { registry } = context!;
@@ -55,7 +55,7 @@ export function BoardLayoutRoot(props: BoardLayoutRootProps) {
       }}
     >
       {sections.map(section => (
-        <BoardLayoutSection key={section.name} {...section}/>
+        <LayoutSection key={section.name} {...section}/>
       ))}
     </div>
   )

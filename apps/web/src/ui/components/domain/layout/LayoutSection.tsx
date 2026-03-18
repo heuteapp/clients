@@ -3,9 +3,9 @@ import style from "@/src/ui/styles/layout.module.css"
 
 import { BoardLayoutSectionProps } from "@/src/ui/types/domain/board/board.props";
 import { useBoardContext } from "@/src/ui/hooks/workspace/useBoardContext";
-import BoardLayoutGrid from "./BoardLayoutGrid";
+import LayoutGrid from "./LayoutGrid";
 
-export function BoardLayoutSection(props : BoardLayoutSectionProps) {
+export function LayoutSection(props : BoardLayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
     const context = useBoardContext();
 
@@ -29,7 +29,7 @@ export function BoardLayoutSection(props : BoardLayoutSectionProps) {
                 margin: "var(--section-margin)"
             }}
         >
-            <BoardLayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
+            <LayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
         </div>
     )
 }
