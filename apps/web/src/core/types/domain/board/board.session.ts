@@ -5,34 +5,34 @@ import { CardPositionInfo } from "@/src/core/types/shared/board";
 
 export interface BoardSessionValue {
     pointerId?: number | null;
-    cardCreation: CardCreationState | null;
-    cardMovement: CardMovementState | null;
-    cardResize: CardResizeState | null;
+    cardCreation: BoardCardCreationState | null;
+    cardMovement: BoardCardMovementState | null;
+    cardResize: BoardCardResizeState | null;
 }
     
 export type BoardSessionUpdater = (updater: (draft: Draft<BoardSessionValue>) => void) => void;
 
 //
 
-export interface SessionBaseState {
+export interface BoardBaseState {
     startPointer: Pointer;
 }
 
-export interface CardBaseState extends SessionBaseState {
+export interface BoardCardBaseState extends BoardBaseState {
     cardId: Identifier;
 }
 
-export interface CardCreationState extends CardBaseState {
+export interface BoardCardCreationState extends BoardCardBaseState {
     startSize: GridSize;
     currentPlacement: CardPositionInfo | null;
 }
 
-export interface CardMovementState extends CardBaseState {
+export interface BoardCardMovementState extends BoardCardBaseState {
     startPlacement: CardPositionInfo;
     currentPlacement: CardPositionInfo | null;
 }
 
-export interface CardResizeState extends CardBaseState {
+export interface BoardCardResizeState extends BoardCardBaseState {
     startSectionId: Identifier;
     startSize: GridSize;
     currentSize: GridSize;

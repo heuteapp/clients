@@ -1,4 +1,4 @@
-import { SessionBaseState } from "./board.session";
+import { BoardBaseState } from "./board.session";
 
 export enum BoardInteractionType {
     Idle = "idle",
@@ -8,7 +8,7 @@ export enum BoardInteractionType {
 }
 
 export interface BoardInteractionCallbacks {
-    OnStart?: (type: BoardInteractionType, state: SessionBaseState) => void;
-    OnUpdate?: (type: BoardInteractionType, state: SessionBaseState) => void;
-    OnFinish?: (type: BoardInteractionType, state: SessionBaseState) => void;
+    OnStart?: (type: BoardInteractionType, state: BoardBaseState) => void;
+    OnUpdate?: (type: BoardInteractionType, state: BoardBaseState) => void;
+    OnFinish?: (type: BoardInteractionType, state: BoardBaseState) => void;
 }
