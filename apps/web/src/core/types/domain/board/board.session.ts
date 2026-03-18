@@ -6,8 +6,8 @@ import { CardPositionInfo } from "@/src/core/types/shared/board";
 //
 
 export interface BoardBaseSessionManager<
-    TValue extends BoardBaseSessionValue = BoardBaseSessionValue,
-    TUpdater extends BoardBaseSessionUpdater<TValue> = BoardBaseSessionUpdater<TValue>
+    TValue extends BoardBaseSessionValue,
+    TUpdater extends BoardBaseSessionUpdater<TValue>
 > {
     current: TValue;
     updater: TUpdater;
@@ -23,9 +23,9 @@ export type BoardBaseSessionUpdater<TValue extends BoardBaseSessionValue>
 //
 
 export interface BoardUserSessionValue extends BoardBaseSessionValue {
-    cardCreation: BoardCardCreationState | null;
-    cardMovement: BoardCardMovementState | null;
-    cardResize: BoardCardResizeState | null;
+    cardCreation: BoardUserCardCreationState | null;
+    cardMovement: BoardUserCardMovementState | null;
+    cardResize: BoardUserCardResizeState | null;
 }
     
 export type BoardUserSessionUpdater = BoardBaseSessionUpdater<BoardUserSessionValue>;
@@ -42,21 +42,27 @@ export interface BoardBaseState {
     startPointer: Pointer;
 }
 
-export interface BoardCardBaseState extends BoardBaseState {
+//
+
+export interface BoardUserBaseState extends BoardBaseState {
+
+}
+
+export interface BoardUserCardBaseState extends BoardUserBaseState {
     cardId: Identifier;
 }
 
-export interface BoardCardCreationState extends BoardCardBaseState {
+export interface BoardUserCardCreationState extends BoardUserBaseState {
     startSize: GridSize;
     currentPlacement: CardPositionInfo | null;
 }
 
-export interface BoardCardMovementState extends BoardCardBaseState {
+export interface BoardUserCardMovementState extends BoardUserBaseState {
     startPlacement: CardPositionInfo;
     currentPlacement: CardPositionInfo | null;
 }
 
-export interface BoardCardResizeState extends BoardCardBaseState {
+export interface BoardUserCardResizeState extends BoardUserBaseState {
     startSectionId: Identifier;
     startSize: GridSize;
     currentSize: GridSize;
