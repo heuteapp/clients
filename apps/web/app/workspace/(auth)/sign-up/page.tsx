@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import { useAuthContext } from "@/src/ui/hooks/useAuthContext";

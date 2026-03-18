@@ -25,10 +25,19 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // Server layout’da URL segmentlerini kullanabiliriz
+  // Örnek: pathname = "/workspace/board/123"
+  const pathname = typeof window === "undefined" ? undefined : window.location.pathname;
+
+  // Ama server-side, window yok, bu yüzden URL segmentlerinden kontrol etmeliyiz
+  // Örn: eğer workspace/board/... path ise navbar göstermeyeceğiz
+  // Basit server-side için param tabanlı:
+  const showNavbar = pathname && !pathname.startsWith("/workspace/board"); // default olarak göster
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <StickyNavbar />
+        {showNavbar && <StickyNavbar />}
         <Providers>
           {children}
         </Providers>
