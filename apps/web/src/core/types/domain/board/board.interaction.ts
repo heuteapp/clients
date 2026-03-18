@@ -1,16 +1,19 @@
 import { GridSize, Pointer } from "@/src/core/types/shared/common";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
 import { Identifier } from "@/src/core/types/shared/data";
-import { BoardBaseState, BoardUserSessionManager } from "./board.session";
+import { BoardBaseSessionManager, BoardBaseSessionUpdater, BoardBaseSessionValue, BoardBaseState, BoardUserSessionManager, BoardUserSessionUpdater, BoardUserSessionValue } from "./board.session";
 
 export interface BoardBaseInteraction<
+    TSessionValue extends BoardBaseSessionValue,
+    TSessionUpdater extends BoardBaseSessionUpdater<TSessionValue>,
+    TSessionManager extends BoardBaseSessionManager<TSessionValue, TSessionUpdater>,
     TInteractionType extends BoardBaseInteractionTypeValues, 
-    TInteractionCallbacks extends BoardBaseInteractionCallbacks<TInteractionType>> {
-
+    TInteractionCallbacks extends BoardBaseInteractionCallbacks<TInteractionType>
+> {
     pointer: Pointer | null;
     type: TInteractionType;
     callbacks: TInteractionCallbacks | null;
-    session: BoardUserSessionManager;
+    session: TSessionManager;
 
     setCallbacks: (callbacks: TInteractionCallbacks | null) => void;
     getCurrentState: () => BoardBaseState | null;
@@ -37,7 +40,13 @@ export type BoardBaseInteractionTypeValues = `${BoardBaseInteractionType}`;
 
 //
 
-export interface BoardUserInteraction extends BoardBaseInteraction<BoardUserInteractionType, BoardUserInteractionCallbacks> {
+export interface BoardUserInteraction extends BoardBaseInteraction<
+    BoardUserSessionValue,
+    BoardUserSessionUpdater,
+    BoardUserSessionManager,
+    BoardUserInteractionType, 
+    BoardUserInteractionCallbacks
+> {
     startCardCreate: (
         size: GridSize
     ) => void
