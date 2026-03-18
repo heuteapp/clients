@@ -3,20 +3,37 @@ import { Identifier } from "@/src/core/types/shared/data";
 import { Draft } from "immer";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
 
-export interface BoardSessionValue {
+//
+
+export interface BoardBaseSessionManager<
+    TValue extends BoardBaseSessionValue = BoardBaseSessionValue,
+    TUpdater extends BoardBaseSessionUpdater<TValue> = BoardBaseSessionUpdater<TValue>
+> {
+    current: TValue;
+    updater: TUpdater;
+}
+
+export interface BoardBaseSessionValue {
     pointerId?: number | null;
+}
+
+export type BoardBaseSessionUpdater<TValue extends BoardBaseSessionValue> 
+    = (updater: (draft: Draft<TValue>) => void) => void;
+
+//
+
+export interface BoardUserSessionValue extends BoardBaseSessionValue {
     cardCreation: BoardCardCreationState | null;
     cardMovement: BoardCardMovementState | null;
     cardResize: BoardCardResizeState | null;
 }
     
-export type BoardSessionUpdater = (updater: (draft: Draft<BoardSessionValue>) => void) => void;
+export type BoardUserSessionUpdater = BoardBaseSessionUpdater<BoardUserSessionValue>;
 
 //
 
-export type BoardSessionManager = {
-    current: BoardSessionValue;
-    updater: BoardSessionUpdater;
+export interface BoardUserSessionManager extends BoardBaseSessionManager<BoardUserSessionValue, BoardUserSessionUpdater> {
+    
 }
 
 //

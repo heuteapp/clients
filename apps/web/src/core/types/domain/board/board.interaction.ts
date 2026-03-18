@@ -1,7 +1,7 @@
 import { GridSize, Pointer } from "@/src/core/types/shared/common";
 import { CardPositionInfo } from "@/src/core/types/shared/board";
 import { Identifier } from "@/src/core/types/shared/data";
-import { BoardBaseState, BoardSessionManager } from "./board.session";
+import { BoardBaseState, BoardUserSessionManager } from "./board.session";
 
 export interface BoardBaseInteraction<
     TInteractionType extends BoardBaseInteractionTypeValues, 
@@ -10,7 +10,7 @@ export interface BoardBaseInteraction<
     pointer: Pointer | null;
     type: TInteractionType;
     callbacks: TInteractionCallbacks | null;
-    session: BoardSessionManager;
+    session: BoardUserSessionManager;
 
     setCallbacks: (callbacks: TInteractionCallbacks | null) => void;
     getCurrentState: () => BoardBaseState | null;

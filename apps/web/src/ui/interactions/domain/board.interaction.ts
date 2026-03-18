@@ -1,10 +1,10 @@
 import { BoardUserInteraction } from "@/src/core/types/domain/board/board.interaction"
 import { createIdentifier } from "@/src/core/utils/shared/data"
-import { BoardSessionManager } from "@/src/core/types/domain/board/board.session"
+import { BoardUserSessionManager } from "@/src/core/types/domain/board/board.session"
 import { BoardUserInteractionType } from "@/src/core/types/domain/board/board.interaction"
 
 export function createBoardUserInteraction(
-    session: BoardSessionManager
+    session: BoardUserSessionManager
 ): BoardUserInteraction {
 
     const interaction: BoardUserInteraction = {
