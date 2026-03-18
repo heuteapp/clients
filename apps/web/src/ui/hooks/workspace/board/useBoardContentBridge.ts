@@ -1,13 +1,12 @@
 import { useMemo, useRef } from "react";
-import { BoardContentActions, BoardContentValue } from "@/src/core/types/domain/board/board.content";
+import { BoardContentStore, BoardContentActions, BoardContentState } from "@/src/core/types/domain/board/board.content";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
-import { BoardContentManager } from "@/src/ui/types/domain/board/board.content";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/board.command";
 import debounce from "lodash.debounce";
 import { server } from "@/src/api/server";
 
-export function useBoardContentManager() : BoardContentManager {
+export function useBoardContentBridge() : BoardContentStore {
     const board = useBoardContentStore(state => state.board);
     const cards = useBoardContentStore(state => state.cards);
     const layout = useBoardContentStore(state => state.layout);
@@ -22,7 +21,7 @@ export function useBoardContentManager() : BoardContentManager {
 
     const accessToken = useAuthStore((state) => state.accessToken);
 
-    const lastSnapshotRef = useRef<BoardContentValue | null>(null);
+    const lastSnapshotRef = useRef<BoardContentState | null>(null);
     const pendingActionsRef = useRef(0);
     const FLUSH_THRESHOLD = 8;
 
@@ -63,7 +62,7 @@ export function useBoardContentManager() : BoardContentManager {
         [accessToken, setState]
     );
 
-    const value: BoardContentValue = useMemo(() => {
+    const value: BoardContentState = useMemo(() => {
         return {
             board,
             cards,
@@ -96,14 +95,7 @@ export function useBoardContentManager() : BoardContentManager {
         [dispatchEvents, createCardLocal, deleteCardLocal]
     );
 
-    const content = useMemo(() => {
-        return {
-            current: {
-                ...value,
-                ...actions
-            }
-        };
-    }, [value, actions]);
+    const content = useMemo(() => ({ setState, ...value, ...actions }), [value, actions]);
 
     return content;
 }

@@ -3,7 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { createDataIdentifier } from "@/src/core/utils/shared/data";
 import { DataContent } from "@/src/core/types/shared/data";
 import { BoardCardData } from "@/src/core/types/domain/board/board.data";
-import { BoardContentStore, BoardContentValue } from "@/src/core/types/domain/board/board.content";
+import { BoardContentStore, BoardContentState } from "@/src/core/types/domain/board/board.content";
 
 export const useBoardContentStore = create<BoardContentStore>()(
     immer(set => ({
@@ -12,7 +12,7 @@ export const useBoardContentStore = create<BoardContentStore>()(
         sections: [],
         cards: [],
 
-        setState: (state: BoardContentValue) => {
+        setState: (state: BoardContentState) => {
             set(s => {
                 s.board = state.board
                 s.layout = state.layout
