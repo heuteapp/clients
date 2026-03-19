@@ -94,16 +94,6 @@ export const authMachine = setup({
             identifier: event.identifier,
             password: event.password,
           };
-        },
-        onDone: {
-          actions: () => {
-            return { type: "SIGN_IN_SUCCESS" }
-          }
-        },
-        onError: {
-          actions: () => {
-            return { type: "SIGN_IN_FAILURE" }
-          }
         }
       },
       on: {
