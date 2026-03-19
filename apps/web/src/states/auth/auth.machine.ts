@@ -65,6 +65,10 @@ export const machine = setup({
         },
         onDone: {
           target: "authenticated",
+          actions: ({ event }) => {
+            const { accessToken, profile } = event.output;
+            useAuthStore.getState().signIn(accessToken, profile);
+          }
         },
         onError: {
           target: "unauthenticated",
