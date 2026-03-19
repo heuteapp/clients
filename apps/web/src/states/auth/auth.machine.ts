@@ -1,21 +1,11 @@
 import { assign, setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
-import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
+import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
 
 export const authMachine = setup({
   types: {
-    context: {} as {
-      accessToken: string | null;
-      profile: ProfileData | null;
-    },
-    events: {} as
-      | { type: "SIGN_IN"; identifier: string; password: string }
-      | { type: "SIGN_IN_SUCCESS", accessToken: string, profile: ProfileData }
-      | { type: "SIGN_IN_FAILURE" }
-      | { type: "SIGN_UP"; username: string; email: string; password: string }
-      | { type: "SIGN_UP_COMPLETED", accessToken: string, profile: ProfileData }
-      | { type: "SIGN_UP_EXPIRED" }
-      | { type: "SIGN_OUT" }
+    context: {} as AuthMachineContext,
+    events: {} as AuthMachineEvent,
 
   },
   actors: {
