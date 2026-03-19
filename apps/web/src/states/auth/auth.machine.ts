@@ -14,14 +14,27 @@ export const authMachine = setup({
     signUp: signUpActor
   },
   actions: {
-    updateAuthContext: ({ event }) => {
+    persistAuth: ({ event }) => {
       if (event.type !== "SIGN_IN_SUCCESS" && event.type !== "SIGN_UP_COMPLETED") {
         throw new Error("Invalid event");
       }
 
+      localStorage.setItem("auth", JSON.stringify({
+        accessToken: event.accessToken,
+        profile: event.profile
+      }));
+
       return assign({
         accessToken: event.accessToken,
         profile: event.profile
+      });
+    },
+    clearAuth: () => {
+      localStorage.removeItem("auth");
+
+      return assign({
+        accessToken: null,
+        profile: null
       });
     }
   },
@@ -51,6 +64,7 @@ export const authMachine = setup({
       on: {
         SIGN_OUT: {
           target: "unauthenticated",
+          actions: "clearAuth"
         },
       },
     },
@@ -81,7 +95,7 @@ export const authMachine = setup({
       on: {
         SIGN_IN_SUCCESS: { 
           target: "authenticated",
-          actions: "updateAuthContext"
+          actions: "persistAuth"
         },
         SIGN_IN_FAILURE: { target: "unauthenticated" }
       }
@@ -112,7 +126,7 @@ export const authMachine = setup({
       on: {
         SIGN_UP_COMPLETED: { 
           target: "authenticated",
-          actions: "updateAuthContext"
+          actions: "persistAuth"
         },
         SIGN_UP_EXPIRED: { target: "unauthenticated" },
       }
