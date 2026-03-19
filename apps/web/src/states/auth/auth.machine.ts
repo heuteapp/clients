@@ -1,13 +1,17 @@
 import { setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
 import { useAuthStore } from "@/src/stores/auth.store";
+import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 
 export const machine = setup({
   types: {
     events: {} as
       | { type: "SIGN_IN"; identifier: string; password: string }
       | { type: "SIGN_UP"; username: string; email: string; password: string }
-      | { type: "SIGN_OUT" },
+      | { type: "SIGN_UP_COMPLETED", accessToken: string, profile: ProfileData }
+      | { type: "SIGN_UP_EXPIRED" }
+      | { type: "SIGN_OUT" }
+
   },
   actors: {
     hydrate: hydrateActor,
@@ -49,10 +53,14 @@ export const machine = setup({
         SIGN_IN: {
           target: "signing in",
         },
+        SIGN_UP: {
+          target: "signing up",
+        },
       },
     },
     "signing in": {
-      invoke: {
+      invoke: {        
+        src: "signIn",
         input: ({ event }) => {
           if (event.type !== "SIGN_IN") {
             throw new Error("Invalid event");
@@ -73,8 +81,39 @@ export const machine = setup({
         onError: {
           target: "unauthenticated",
         },
-        src: "signIn",
       },
     },
+    "signing up": {
+      invoke: {
+        src: "signUp",
+        input: ({ event }) => {
+          if (event.type !== "SIGN_UP") {
+            throw new Error("Invalid event");
+          }
+
+          return {
+            username: event.username,
+            email: event.email,
+            password: event.password,
+          };
+        },
+        onDone: {
+          target: "awaiting sign up",
+        },
+        onError: {
+          target: "unauthenticated",
+        },
+      },
+    },
+    "awaiting sign up": {
+      on: {
+        SIGN_UP_COMPLETED: { 
+          target: "authenticated",
+          actions: ({ event }) => 
+            useAuthStore.getState().signIn(event.accessToken, event.profile)
+        },
+        SIGN_UP_EXPIRED: { target: "unauthenticated" },
+      }
+    }
   },
 });
