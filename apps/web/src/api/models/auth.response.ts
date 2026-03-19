@@ -5,4 +5,6 @@ export interface SignInResponse {
     profile: ProfileData;
 }
 
-export type SignUpResponse = boolean;
+export type SignUpResponse = {
+    message: string;
+}
