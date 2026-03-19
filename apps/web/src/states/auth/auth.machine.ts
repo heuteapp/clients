@@ -1,6 +1,5 @@
 import { assign, setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
-import { useAuthStore } from "@/src/stores/auth.store";
 import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 
 export const authMachine = setup({
@@ -37,7 +36,7 @@ export const authMachine = setup({
     }
   },
   guards: {
-    isUserLoggedIn: () => !!useAuthStore.getState().accessToken
+    isUserLoggedIn: ({ context }) => !!context.accessToken
   },
 }).createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygGIIB7MsbcgNxqIbSzwOPKgWZq5k6EnQDaABgC6kqYlAAHGrBIi68kAA9EAVgAsAdmwG9ATnN6AbAYMAmW5b0AaEAE9Et0wA5jZ819MdUwNLAGYDUIBfSJcOHHxCUgpqOgYBNmw4rkTefjIWITUyWTEARjkkECUVIo1tBH0jE3NTKxt7Rxd3BFsJUOMdCQlSvS9LB1GDHWjYjHjuJKowACdlmmXsBQAbYQAzdYBbTLnsngo8guFRYulZDWrVa7rdQ18WtrsJro8dUuxbQZDSymUqlXrjPQzEBZOJgMgiQqQSgAZQAkgBxAByAH0APIAVQAKndKg9apV6qUJADjKUvBFbAE9BJzKFvg0JHpsDpGqFmV4qYFpjFoSdUGRYfCSIiICiMTjUZiSYplI91BTEFS9LZsMzxizfsyLOypkYJPpLPTDKFvPSoVlxZKEcIkWisdj8QAFZVVVXk0CUvpGILhKmfKk6dkC7lDIa9AytPSlX72k4qKBkXgAAnIcvdiuxyPxAGFiwBRZHIn1kp4ahqvZoWayfTpuRBmHUGPpgyw6UKlUyhHSWVOcdOZig5sh5hU4gBiAEFUQAZfEAJTL1b9tYDLyaflazY6zjbCDClmwoU5wNsV8sw1Ko5w4+zqAUKXojHyrHYaZIGdfBQLkEK5xFuaR7m3dVdx6Ww-nGQEqQkMYDC8AF2T0cJ-jGKwkwcQZvCfbAX0nN9KBWNYNm2PZDmOMd-wnKAszfYDCmuEoINJKCyGeWD4IBIYkJQtDI1PelTEva89FGbV708IjkAAd2QR5J3HZj3zdHEvWxYtcQAWU9Zcy0JMsABEtxqHctD3N4m3aL5Tz5C8BOpBNflCLx+wU5TVKY9SyK0j1PWxMsAA1PVRDcLM4lUrOgmz633d4j0c7ppJ1Xp+1CSwByCLxzRHKEyBoCA4A0OJIPini6wAWksdlap0bAWlatrTEcYVZk4BIzigKq1RqmCcok29MLsTlmUGdDTw6AZYy8MYvD7cwFLmOFnXQSABv9RL6QkbBhmHIcJpy7V2UGZrzSsYJSk8vohyIx11qlGUdusyl7C5GTwjMUpHAHNkxPGXVzDu5DpN7PoiJIpjyHehL6l+7Be3GS0ky7O6+XZXLmoKm6+QkLtMK60V6IA0iFARobEvO08kwOxlHEse8vK8EmfJUkQ1IYjTqd45GxvCXppPNalRPSnLsMcKxfjBAq7uiaIgA */
