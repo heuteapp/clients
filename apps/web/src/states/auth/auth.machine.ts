@@ -3,7 +3,7 @@ import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 
-export const machine = setup({
+export const authMachine = setup({
   types: {
     events: {} as
       | { type: "SIGN_IN"; identifier: string; password: string }
