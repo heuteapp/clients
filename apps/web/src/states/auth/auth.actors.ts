@@ -1,10 +1,11 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { SignInResponse, SignUpResponse } from "@/src/api/models/auth.response";
 import { server } from "@/src/api/server";
+import { AuthState } from "@/src/core/types/auth/auth.store";
 import { useAuthStore } from "@/src/stores/auth.store";
 import { fromPromise } from "xstate";
 
-export const hydrateActor = fromPromise(async () => {
+export const hydrateActor = fromPromise<AuthState | null>(async () => {
     try {
         return useAuthStore.getState().hydrate();
     } 
