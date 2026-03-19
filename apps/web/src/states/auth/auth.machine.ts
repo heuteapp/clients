@@ -1,16 +1,16 @@
-import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 import { setup } from "xstate";
-import { signInActor, signUpActor } from "./auth.actors";
+import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
+import { useAuthStore } from "@/src/stores/auth.store";
 
 export const machine = setup({
   types: {
-    context: {} as { profile: ProfileData | null },
     events: {} as
       | { type: "SIGN_IN"; identifier: string; password: string }
       | { type: "SIGN_UP"; username: string; email: string; password: string }
       | { type: "SIGN_OUT" },
   },
   actors: {
+    hydrate: hydrateActor,
     signIn: signInActor,
     signUp: signUpActor
   },
@@ -20,7 +20,7 @@ export const machine = setup({
     },
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygGIBtABgF1FQAHAe1hPRNbKZAA9EAJgCMAVmy0AnAGYA7ABY5cgBxzaCpSoA0IAJ6IZModjG1zShVOsiZANjEBfR7rRY8BYuSrURjJCBsHFw8fIIIohLS8kqq6pqqugYImnaS5rRiUgpCtCoyCg7Orhg4bgRkXLjI6JCUAMoAkgDiAHIA+gDyAKoAKnT+LOyc3LwB4WIOpnZCVjJSYmIK4jJJhkIy6RkicnYqViJ2CsUg5dioZOVglSTVtRANLR2NrQN8QSOh44hiKiaz1jkkw2QjE8zWCBUIlMGVoe3UUhmMicLlOpWwHCgZG8AAJyJQIDwwNhyAA3VhEYlnTHYih4sgIMmsO6jAZvAIfEJjUDhSKSWSKZRqDRaCFCFRRDJSXJ5X75E7UkhY3H4sAAJzVrDV2GYABsagAzLUAW2wiuVdPIjLI5JZPDZDHewy5YWE4n5MSF8VF+mEtE2QPMs1oQnFQikmWcqLIrAgcD45SdwVGroQAFo7BCM1tYbn-YsFej8IRSBQk59uQJECoVB7FHYZCJQSJNGIIQp5Nh8gVaOJpHJZsdUWcrjc7pByy7vilpF2ssi4XYpDsIcZNmZtrt9su5IX3BdR1UahOOc6U9OBwpsMYoTshHYRCoI23fSljNgZeYn6IRTI9zgaRVStOXPHlEByCEdjSQMgybeInyjRwgA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygGIIB7MsbcgNxqIbSzwOPKgWZq5k6EnQDaABgC6kqYlAAHGrBIi68kAA9EAJh0TsAVgCMhgGw6ALGYmWAHAHY7lywBoQAT0QBmM5ewOlgCcQXbGQTp2QcbGAL6x7hw4+ISkFNR0DAJs2Elcqbz8ZCxCamSyYsZySCBKKmUa2gh6BibmVjb2Ti7uXgguhthWIZESIxKGvvGJGMncaVRgAE5LNEvYCgA2wgBmawC2ubP5PBRFJcKi5dKyGnWqV426+kamFta2js5unojBOgFgqEJL5ot4dEFpiA8kkwGQRKVIJQAMoASQA4gA5AD6AHkAKoAFVuNXuDRqTT8ZiMFhM3kMEhBlkCvR8emwIU5DjMZmMYzsdjMULyqDIsPhJEREBRGJxqMxJMUyge6gpiB53iGDIkOm8OvshkshlZCDCRkZFot3MMQQcwuOKigZF4AAJyBl6Ixiqx2A6SE7XeRzoJLuIbtI7sryaAmi1Xu0Pl1vibvMYHEMgQ4JIF3jZDPbOI7nRQ3WRKMtVustrsDkdC-7i1BS8HSlcKhHSVHHmrmi82rnPt0fn19JqHNrjDped5vLa7VCyDQIHANElI-VuzHEABaMwm3cFuYFCjrlVkJ79HQmywvQIhVM6cI6Bx6Q91ggSqWn6NaP5BAx2Da3gOEEwFps+44prq2BAnOMQ5uO+YJNCxyiuKCLCJA36br+pqmNg4J2I+D7cuE3gmqE2DGDyZg2iCQQ0fYb5FoG56dhuqpbv06Y3sYjg8hIMR8hIe6-AgabUneIQmFEdgzo+8TxEAA */
   context: {
     profile: null,
   },
@@ -28,17 +28,14 @@ export const machine = setup({
   initial: "checking",
   states: {
     "checking": {
-      always: [
-        {
-          target: "authenticated",
-          guard: {
-            type: "isUserLoggedIn",
-          },
-        },
-        {
-          target: "unauthenticated",
-        },
-      ],
+      invoke: {
+        src: "hydrate",
+        onDone: [
+          { target: "authenticated", guard: () => !!useAuthStore.getState().accessToken },
+          { target: "unauthenticated" },
+        ],
+        onError: { target: "unauthenticated" },
+      }
     },
     "authenticated": {
       on: {
