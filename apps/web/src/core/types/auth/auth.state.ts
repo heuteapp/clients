@@ -4,3 +4,8 @@ export interface AuthState {
     accessToken: string | null;
     profile: ProfileData | null;
 }
+
+export interface PendingSignUp {
+    email: string;
+    expiredAt: number;
+}
