@@ -1,8 +1,10 @@
+import { AuthRegistration } from "@/src/core/types/auth/auth.state";
+import { AuthState } from "@/src/core/types/auth/auth.store";
 import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 
 export interface AuthMachineContext {
-  accessToken: string | null;
-  profile: ProfileData | null;
+  auth: AuthState | null;
+  registration: AuthRegistration | null;
 }
 
 export type AuthMachineEvent =

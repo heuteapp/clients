@@ -5,7 +5,7 @@ export interface AuthState {
     profile: ProfileData | null;
 }
 
-export interface PendingSignUp {
+export interface AuthRegistration {
     email: string;
     expiredAt: number;
 }
