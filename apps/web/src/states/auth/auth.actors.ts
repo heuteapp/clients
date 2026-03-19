@@ -1,6 +1,16 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
+import { useAuthStore } from "@/src/stores/auth.store";
 import { fromPromise } from "xstate";
+
+export const hydrateActor = fromPromise(async () => {
+    try {
+        return useAuthStore.getState().hydrate();
+    } 
+    catch (err: any) {
+        throw new Error(err?.message || "Unknown error from hydration");
+    }
+});
 
 export const signInActor = fromPromise<unknown, SignInRequest>(async ({ input }) => {
     try {
