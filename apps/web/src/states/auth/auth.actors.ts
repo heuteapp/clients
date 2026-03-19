@@ -2,15 +2,18 @@ import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { SignInResponse, SignUpResponse } from "@/src/api/models/auth.response";
 import { server } from "@/src/api/server";
 import { AuthState } from "@/src/core/types/auth/auth.store";
-import { useAuthStore } from "@/src/stores/auth.store";
 import { fromPromise } from "xstate";
 
 export const hydrateActor = fromPromise<AuthState | null>(async () => {
+    if (typeof window === "undefined") return null;
+
+    const raw = localStorage.getItem("auth");
+    if (!raw) return null;
+
     try {
-        return useAuthStore.getState().hydrate();
-    } 
-    catch (err: any) {
-        throw new Error(err?.message || "Unknown error from hydration");
+        return JSON.parse(raw) as AuthState;
+    } catch {
+        return null;
     }
 });
 
