@@ -1,6 +1,13 @@
 {
     "compilerOptions": {
         "strictNullChecks": true,
-        "skipLibCheck": true,
+        "skipLibCheck": true
     },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build",
+        "out",
+        ".next"
+    ]
 }
