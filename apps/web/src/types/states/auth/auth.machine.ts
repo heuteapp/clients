@@ -1,5 +1,5 @@
 import { AuthRegistration } from "@/src/core/types/auth/auth.state";
-import { AuthState } from "@/src/core/types/auth/auth.store";
+import { AuthState } from "@/src/core/types/auth/auth.state";
 import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 
 export interface AuthMachineContext {

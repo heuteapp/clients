@@ -1,9 +1,8 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { SignInResponse, SignUpResponse } from "@/src/api/models/auth.response";
 import { server } from "@/src/api/server";
-import { AuthState } from "@/src/core/types/auth/auth.store";
-import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
-import { assign, fromPromise } from "xstate";
+import { AuthState } from "@/src/core/types/auth/auth.state";
+import { fromPromise } from "xstate";
 
 export const hydrateActor = fromPromise<AuthState | null>(async () => {
     if (typeof window === "undefined") return null;
