@@ -29,14 +29,10 @@ export const authMachine = setup({
         profile: event.profile
       });
     },
-    clearAuth: () => {
-      localStorage.removeItem("auth");
-
-      return assign({
-        accessToken: null,
-        profile: null
-      });
-    }
+    "clearAuth": assign({
+      accessToken: () => { localStorage.removeItem("auth"); return null; },
+      profile: () => null
+    })
   },
   guards: {
     isUserLoggedIn: ({ context }) => !!context.accessToken
