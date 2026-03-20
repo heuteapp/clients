@@ -126,4 +126,4 @@ export const authMachine = setup({
   },
 });
 
-export const authService = createActor(authMachine).start();
+export const authService = createActor(authMachine);
