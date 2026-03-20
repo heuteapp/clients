@@ -5,7 +5,9 @@ import { AuthData } from "@/src/types/core/auth/auth.data";
 import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/auth.actors";
 import { fromPromise } from "xstate";
 
-export const hydrateActor = fromPromise<AuthData | null>(
+export const hydrateActor = fromPromise<
+    AuthData | null
+>(
     async () => {
         if (typeof window === "undefined") return null;
 
@@ -20,7 +22,9 @@ export const hydrateActor = fromPromise<AuthData | null>(
     }
 );
 
-export const signInActor = fromPromise<SignInResponse, SignInRequest, SignInActorEvents>(
+export const signInActor = fromPromise<
+    SignInResponse, SignInRequest, SignInActorEvents
+>(
     async ({ input, emit }) => {
         try {
             const response = await server.auth.signIn(input);
@@ -44,7 +48,9 @@ export const signInActor = fromPromise<SignInResponse, SignInRequest, SignInActo
     }
 );
 
-export const signUpActor = fromPromise<SignUpResponse, SignUpRequest, SignUpActorEvents>(
+export const signUpActor = fromPromise<
+    SignUpResponse, SignUpRequest, SignUpActorEvents
+>(
     async ({ input, emit }) => {
         try {
             const response = await server.auth.signUp(input);
