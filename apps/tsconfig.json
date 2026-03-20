@@ -1,13 +1,15 @@
 {
-    "compilerOptions": {
-        "strictNullChecks": true,
-        "skipLibCheck": true
-    },
-    "exclude": [
-        "node_modules",
-        "dist",
-        "build",
-        "out",
-        ".next"
-    ]
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": ".next/tsconfig.tsbuildinfo",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    
+    "disableSourceOfProjectReferenceRedirect": true,
+    "disableSolutionSearching": true,
+    "disableReferencedProjectLoad": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".next", "dist", "build"]
 }
