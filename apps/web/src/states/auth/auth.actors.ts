@@ -2,7 +2,7 @@ import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { SignInResponse, SignUpResponse } from "@/src/api/models/auth.response";
 import { server } from "@/src/api/server";
 import { AuthState } from "@/src/core/types/auth/auth.state";
-import { SignInActorEvents } from "@/src/types/states/auth/auth.actors";
+import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/auth.actors";
 import { fromPromise } from "xstate";
 
 export const hydrateActor = fromPromise<AuthState | null>(async () => {
@@ -40,11 +40,22 @@ export const signInActor = fromPromise<SignInResponse, SignInRequest, SignInActo
     }
 });
 
-export const signUpActor = fromPromise<SignUpResponse, SignUpRequest>(async ({ input }) => {
+export const signUpActor = fromPromise<SignUpResponse, SignUpRequest, SignUpActorEvents>(async ({ input, emit }) => {
     try {
-        return await server.auth.signUp(input);
-    } 
+        const response = await server.auth.signUp(input);
+
+        emit({ 
+            type: 'SIGN_UP_COMPLETED'
+        });
+
+        return response;
+    }
     catch (err: any) {
+        emit({ 
+            type: 'SIGN_UP_FAILURE', 
+            error: err?.message || "Unknown error from sign up" 
+        });
+
         throw new Error(err?.message || "Unknown error from sign up");
     }
 });
