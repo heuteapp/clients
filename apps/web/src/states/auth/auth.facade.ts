@@ -1,22 +1,18 @@
 import { useAuthStore } from "@/src/stores/auth.store";
-import { authMachine } from "./auth.machine";
 import { AuthFacadeManagerInterface } from "@/src/types/core/auth/auth.facade";
 
 export class AuthFacadeManager implements AuthFacadeManagerInterface {
     public get auth() {
-        const { auth } = this.#getState();
+        const { auth } = this.#getStore();
         return auth;
     }
 
     public signOut() {
-        const machine = this.#getMachine();
+        const { service } = this.#getStore();
+        service.send({ type: "SIGN_OUT" });
     }
 
-    #getMachine() : typeof authMachine {
-        return authMachine;
-    }
-
-    #getState() {
+    #getStore() {
         return useAuthStore.getState();
     }
 }
