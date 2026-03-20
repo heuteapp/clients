@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { AuthStore } from "@/src/core/types/auth/auth.store";
+import { AuthStore } from "@/src/types/core/auth/auth.store";
 
 export const useAuthSttore = create<AuthStore>()(
     immer((set) => ({

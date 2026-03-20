@@ -1,18 +1,18 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { SignInResponse, SignUpResponse } from "@/src/api/models/auth.response";
 import { server } from "@/src/api/server";
-import { AuthState } from "@/src/core/types/auth/auth.state";
+import { AuthData } from "@/src/types/core/auth/auth.data";
 import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/auth.actors";
 import { fromPromise } from "xstate";
 
-export const hydrateActor = fromPromise<AuthState | null>(async () => {
+export const hydrateActor = fromPromise<AuthData | null>(async () => {
     if (typeof window === "undefined") return null;
 
     const raw = localStorage.getItem("auth");
     if (!raw) return null;
 
     try {
-        return JSON.parse(raw) as AuthState;
+        return JSON.parse(raw) as AuthData;
     } catch {
         return null;
     }
