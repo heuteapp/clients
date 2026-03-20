@@ -6,6 +6,7 @@ import { DONE_INVOKE_HYDRATE_EVENT, HYDRATE_EVENT, SIGN_IN_ALL_EVENTS, SIGN_OUT_
 export interface AuthMachineContext {
   auth: AuthState | null;
   registration: AuthRegistration | null;
+  error: string | null;
 }
 
 export type AuthMachineEvent =
