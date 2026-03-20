@@ -1,4 +1,4 @@
-import { useBoardContext } from "@/src/ui/hooks/workspace/useBoardContext"
+import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext"
 import style from "@/src/ui/styles/board.module.css"
 import { BoardCardProps } from "@/src/ui/types/domain/board/board.props";
 import { useLayoutEffect, useRef } from "react";

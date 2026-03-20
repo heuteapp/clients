@@ -1,5 +1,5 @@
-import { useBoardMetricsObserver } from "@/src/ui/hooks/workspace/useBoardMetricsObserver";
-import { useBoardPointerEvents } from "@/src/ui/hooks/workspace/useBoardPointerEvents";
+import { useBoardMetricsObserver } from "@/src/ui/hooks/core/domain/useBoardMetricsObserver";
+import { useBoardPointerEvents } from "@/src/ui/hooks/core/domain/useBoardPointerEvents";
 
 export function BoardContextHooks() {
     useBoardMetricsObserver();

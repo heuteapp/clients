@@ -4,7 +4,7 @@ import { useLayoutEffect } from "react"
 
 import style from "@/src/ui/styles/layout.module.css"
 
-import { useBoardContext } from "@/src/ui/hooks/workspace/useBoardContext";
+import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext";
 import { BoardLayoutRootProps } from "@/src/ui/types/domain/board/board.props";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { LayoutSection } from "./LayoutSection";

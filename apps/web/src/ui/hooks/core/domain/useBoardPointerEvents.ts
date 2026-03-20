@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { handleCardCreateInteraction, finishCardCreationState } from "@/src/ui/interactions/domain/board/states/create-card/handler";
 import { BoardUserInteractionType } from "@/src/types/core/domain/board/board.interaction";
-import { findCardUnderPointer } from "../../interactions/domain/board/board.detector";
+import { findCardUnderPointer } from "../../../interactions/domain/board/board.detector";
 import { useBoardContext } from "./useBoardContext";
 
 export function useBoardPointerEvents() {
