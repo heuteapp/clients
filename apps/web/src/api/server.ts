@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "../stores/auth.store";
+import { useAuthStore } from "../states/auth/auth.store";
 import { authApi } from "./endpoints/auth.api";
 import { boardApi } from "./endpoints/workspace/board.api";
 import { layoutApi } from "./endpoints/workspace/layout.api";

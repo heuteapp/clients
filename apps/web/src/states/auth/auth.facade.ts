@@ -1,10 +1,11 @@
-import { useAuthStore } from "@/src/stores/auth.store";
+import { useAuthStore } from "@/src/states/auth/auth.store";
 import { AuthFacadeManagerInterface } from "@/src/types/core/auth/auth.facade";
 
 export class AuthFacadeManager implements AuthFacadeManagerInterface {
     public get auth() {
-        const { auth } = this.#getStore();
-        return auth;
+        const { context } = this.#getSnapshot();
+        
+        return context.auth;
     }
 
     public signOut() {
@@ -14,5 +15,15 @@ export class AuthFacadeManager implements AuthFacadeManagerInterface {
 
     #getStore() {
         return useAuthStore.getState();
+    }
+
+    #getService() {
+        const { service } = this.#getStore();
+        return service;
+    }
+
+    #getSnapshot() {
+        const service = this.#getService();
+        return service.getSnapshot();
     }
 }
