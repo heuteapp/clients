@@ -4,12 +4,16 @@ import { AuthStore } from "@/src/types/core/auth/auth.store";
 
 export const useAuthSttore = create<AuthStore>()(
     immer((set) => ({
-        accessToken: null,
-        profile: null,
+        auth: null,
+
         setAuth: (auth) => {
             set((draft) => {
-                draft.accessToken = auth.accessToken;
-                draft.profile = auth.profile;
+                draft.auth = auth;
+            });
+        },
+        clearAuth: () => {
+            set((draft) => {
+                draft.auth = null;
             });
         }
     }))

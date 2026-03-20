@@ -1,6 +1,6 @@
 import { ProfileData } from "@/src/types/core/domain/profile/profile.data";
 
 export interface AuthData {
-    accessToken: string | null;
-    profile: ProfileData | null;
+    accessToken: string;
+    profile: ProfileData;
 }
