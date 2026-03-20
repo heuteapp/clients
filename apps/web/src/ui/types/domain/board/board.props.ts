@@ -11,7 +11,7 @@ export interface BoardCardContainerProps {
 }
 
 export interface BoardCardProps extends BoardCardData {
-
+    
 }
 
 export interface BoardLayoutRootProps extends LayoutData {

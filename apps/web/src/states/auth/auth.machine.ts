@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
-import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction } from "./auth.actions";
+import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, unsetAuthAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -15,6 +15,8 @@ export const authMachine = setup({
     signUp: signUpActor
   },
   actions: {
+    setAuth: setAuthAction,
+    unsetAuth: unsetAuthAction,
     persistAuth: persistAuthAction,
     clearAuth: clearAuthAction,
     persistRegistration: persistRegistrationAction,
@@ -24,7 +26,7 @@ export const authMachine = setup({
     isUserLoggedIn: ({ context }) => !!context.auth
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygGIIB7MsbcgNxqIbSzwOPKgWZq5k6EnQDaABgC6kqYlAAHGrBIi68kAA9EAVgAsAdmwG9ATnMA2HRb1WAzACYANCACeiPRJ3YJBgBwAjBIONgEWFn52OgC+0S4cOPiEpBTUdAwCbNgJXMm8-GQsQmpksmIBckggSiolGtoI+kYm5qZWNvbObogOwdgOOhJDegEBDgF2bXqx8RiJ3ClUYABOyzTL2AoANsIAZusAttlzuTwUBUXCoqXSsho1qtf1uobGZpbWtjqOLu4IDqZvL07EFfAFTAE-L4ZiAcgkwGQRMVIJQAMoASQA4gA5AD6AHkAKoAFTuVQedSqDSCAW8Bkh-gidiieh0XT+Iz02FZdgkpgMDgckQMEj8MJyqDI8MRJGREDRWLx6OxZMUyke6ipiCCjm5EgsvL8pgBfgcAt+iD8FgC2AZdj8nj8BgsvTFcVhJ0l0qRwhRGJxuMJAAVVdV1ZTQNTgkYdKZ7b42n4dJE9BaEIFsIMhhI9HZ6RYhhDxScVFAyLwAATkBUB5W41GEgDCjYAoqjUaGKU8tY1Xi0Ph1vuzEDYuXoHSDTQEBfS7MXOKXyxQq2Qa0q8QAxACC6IAMoSAEotzvh7uRl7Nd5tT6dNMmCTcvMjXn+Cb0+c4ReV1AKNL0RiFKw7AliQZbfgoFyCFc4i3NI9ynpq57-OM2AumYfhWhYBg6AYuE6GmbJ+KhJh6Ky46jFapgftgX7Lj+lArGsGzbHshzHAuoFLlAFY-pBxTXGUcHkghZDPMhNpoaYGHhNhuHYWmUl2I+Bh5hhgwGvo1HIAA7sgjzLouPG-v6eLBrijb4gAskGu4tsSLYACInrUZ5aBebytO0Xw-N0CDoT4ILjNY4SsmyWm6fp3GGfRJmBkGuItgAGkG6JHk5Qlqi5iFub2l6eTeQ4EXG2BSbmuZ2C6gQOHOMJkDQEBwBoCTwVlok9gAtBYaadT42Z9f10LujkSRnFALUam1SEVaY-R2LmBpRBEQr6mmZoPiKIJ8gYUn6sMWlzAiProJA40RjlVoPhItLWmMJG9Phvm5kYWHXgKII4XoDjUV6B0ynKp2udS4xjg6ubGoY2GmmmoLYLyOjwxhEwDC6BjUbR3HkAD2UNE+qHWOMFildYEh2He4IlXm8bVYCo5o5x4FY5NOWfQRV3EaR+jE-q1rhXpIgGZxRmM2JuPVfNzLWKaUJdb5bLPSRnMGgEhjTLE0RAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygGIIB7MsbcgNxqIf0KIFpMBPCAE7J0JOgG0ADAF1EoAA41YJEXVkgAHogDMO7ABYAnEa0B2CQEYATOZOWANCF6JrANmwAOAKwuTW93s8Jdy0XCUsAX3CHNCw8AmJyKjABARoBbDkAG2EAMzSAWzjOHn4hFTJJGSQQBSVytU0EHS19IwNTC2tbBycEd3NsQIlhlz0TFwMJca1I6IwcDgSKAAJkHPRk5b5BYVEySkq1WuU9hsQTEz1sS6NzF3cLiT1zcx7nPTcbg0utYb0tb6zEAxBbxUgrNYbARbUq7OgHcxVeSKE6qaqNC5XL53B5mZ6vRzOYbXIZPcwGdyWawzKLA+bYEFgMgiXDCSCUADKAEkAOIAOQA+gB5ACqABVDtVjvV0YgXhdsJZ+uZDFpzJ4lXo9G8EC4Qtg-CYDJ4Xi5yeMXECQdhUGRGcySKyNhBObzBVy+ZLkXVTrKEC9jdcDPdTHpLN5PMadcGJEGw1MtJYLEZLbTrbb7Sy2S7ufyBSKAApemoomWgRoB2MUsP9X5aTy-eyEpruWMSSPBEJmhMRNP0pRQMiJZbkV15j0CjkigDC04AohyOcXpb7y+dLtdDAYcY98TrRiZFS5LMb-sN23p3Fb+yRB8PR7n3YKAGIAQS5ABkRQAlOfL0urho65YluO54i8Or+G2WpdJSMbBtesQDkOKyoHI1B0AwzCsAw1rIcOaEINhTp7JU-4+mia5NLoW7tGYVg2E2vTeAMSqjBIExqiaNJzEht4oVAyxoZQySpOkWS5AUDI3neqFyERZAsCR4jSORqJkGc1EtLRHQMd0zbmEELRPM87heK2HHHohODIAA7sgJwrMhQnoY++YFgK05CgAsgWH5zmKc4ACJqWWQEIJim63Pcu4Qc2QweBIFJcVqWqjNZDL2Y5gnOcJbmFgKc4ABoFlyv4hdIRwAZR4WRdiMXgQSzHBtcx7fA25hmZcJiRLSZA0BAcBqCCVUURpfpcC4OpcJ42BtPNC0UqmvGgpwiSjepmlhjqSaxp2mr-AELieJeGWLOCgmQps2xlIBK41Y0J0tJ1lyWMdzwGEmU3NpYfiDMEb3kvW24PBlmaOtmG1hRWYQDJ4JitqYJg2Im23Nj4lgeM8UwnqM7SdRlGbzEyWbOlDgEVkjHg3CaKomrY329IZLhuL97h6gEQTI+lfZ8bJgnkOTD2IKEAzHWaZhKg2-yeJB5KDDBv0hgEBgZfhclC+NVHqi0DyGP8fgs5SDY6p48PYJ0wbVuqFxXrzNlZSITn8S5muaSdBiDIZHTvSqJ6m5GXsnuzx7I1q5i9eEQA */
   context: {
     auth: null,    
     registration: null,
@@ -36,25 +38,35 @@ export const authMachine = setup({
     "checking": {
       invoke: {
         src: "hydrate",
+        id: "check-hydration",
         onDone: [
-          { 
-            target: "authenticated", 
-            guard: "isUserLoggedIn",
-            actions: "persistAuth"
-          },
-          { 
-            target: "unauthenticated",
-            actions: "clearAuth"
-          },
+          {
+            target: "checking after hydration",
+            actions: "setAuth"
+          }
         ],
         onError: { target: "unauthenticated" },
       }
+    },
+    "checking after hydration": {
+      always: [
+        {
+          target: "authenticated",
+          guard: "isUserLoggedIn"
+        },
+        {
+          target: "unauthenticated"
+        }
+      ]
     },
     "authenticated": {
       on: {
         SIGN_OUT: {
           target: "unauthenticated",
-          actions: "clearAuth"
+          actions: [
+            "unsetAuth",
+            "clearAuth"
+          ]
         },
       },
     },
@@ -85,7 +97,10 @@ export const authMachine = setup({
       on: {
         SIGN_IN_SUCCESS: { 
           target: "authenticated",
-          actions: "persistAuth"
+          actions: [
+            "setAuth",
+            "persistAuth"
+          ]
         },
         SIGN_IN_FAILURE: { target: "unauthenticated" }
       }

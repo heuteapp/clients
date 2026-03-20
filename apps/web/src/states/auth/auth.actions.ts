@@ -1,41 +1,56 @@
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
 import { createAssign } from "@/src/utils/xstate/create-assign";
 
-export const persistAuthAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    ({ event }) => {
-        let data: { accessToken: string; profile: any };
-
-        if (event.type === "SIGN_IN_SUCCESS" || event.type === "SIGN_UP_COMPLETED") {
-        data = {
+export const resolveAuthData = (event: AuthMachineEvent) => {
+    if (event.type === "SIGN_IN_SUCCESS" || event.type === "SIGN_UP_COMPLETED") {
+        return {
             accessToken: event.accessToken,
             profile: event.profile,
         };
-        } else if (event.type === "done.invoke.hydrate") {
-        data = event.output;
-        } else {
-        throw new Error("Invalid event type for persistAuth action");
-        }
+    }
 
-        localStorage.setItem("auth", JSON.stringify(data));
+    if (event.type === "xstate.done.actor.check-hydration") {
+        return event.output;
+    }
 
+    throw new Error("Invalid event type for auth: " + event.type);
+};
+
+//
+
+export const setAuthAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    ({ event }) => {
         return {
-            auth: data,
+            auth: resolveAuthData(event),
+            error: null
         };
     }
 );
 
-export const clearAuthAction = createAssign<
+export const unsetAuthAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     () => {
-        localStorage.removeItem("auth");
         return {
             auth: null,
+            error: null,
         };
     }
 );
+
+export const persistAuthAction = ({ context }: { context: AuthMachineContext }) => {
+    if (!context.auth) return;
+
+    localStorage.setItem("auth", JSON.stringify(context.auth));
+};
+
+export const clearAuthAction = () => {
+    localStorage.removeItem("auth");
+};
+
+//
 
 export const persistRegistrationAction = createAssign<
     AuthMachineContext, AuthMachineEvent

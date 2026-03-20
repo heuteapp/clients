@@ -1,4 +1,5 @@
 import { ProfileData } from "@/src/types/core/domain/profile/profile.data";
+import { DoneActorEvent } from "xstate";
 
 //
 export type HYDRATE_EVENT = { type: "HYDRATE" };
@@ -33,4 +34,4 @@ export type SIGN_OUT_EVENT = { type: "SIGN_OUT" };
 
 //
 
-export type DONE_INVOKE_HYDRATE_EVENT = { type: "done.invoke.hydrate"; output: { accessToken: string; profile: ProfileData } };
+export type DONE_INVOKE_HYDRATE_EVENT = DoneActorEvent<{ accessToken: string, profile: ProfileData }, "check-hydration">;
