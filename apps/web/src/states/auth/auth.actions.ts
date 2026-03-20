@@ -25,3 +25,14 @@ export const persistAuth = createAssign<
         };
     }
 );
+
+export const clearAuth = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    () => {
+        localStorage.removeItem("auth");
+        return {
+            auth: null,
+        };
+    }
+);
