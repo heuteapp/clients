@@ -57,3 +57,14 @@ export const persistRegistrationAction = createAssign<
         };
     }
 );
+
+export const clearRegistrationAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    () => {
+        localStorage.removeItem("registration");
+        return {
+            registration: null,
+        };
+    }
+);
