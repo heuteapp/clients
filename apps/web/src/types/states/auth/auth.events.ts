@@ -17,7 +17,7 @@ export type SIGN_IN_ALL_EVENTS = SIGN_IN_EVENT | SIGN_IN_SUCCESS_EVENT | SIGN_IN
 
 export type SIGN_UP_EVENT = { type: "SIGN_UP"; username: string; email: string; password: string };
 
-export type SIGN_UP_AWAITING_EVENT = { type: "SIGN_UP_AWAITING" };
+export type SIGN_UP_AWAITING_EVENT = { type: "SIGN_UP_AWAITING", email: string };
 
 export type SIGN_UP_FAILURE_EVENT = { type: "SIGN_UP_FAILURE"; error: string };
 
