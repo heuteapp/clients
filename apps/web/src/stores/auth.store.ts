@@ -20,12 +20,12 @@ export const useAuthStore = create<AuthStore>()(
 
             setAuth: (auth) => {
                 set((draft) => {
-                draft.auth = auth;
+                    draft.auth = auth;
                 });
             },
             clearAuth: () => {
                 set((draft) => {
-                draft.auth = null;
+                    draft.auth = null;
                 });
             },
         };
