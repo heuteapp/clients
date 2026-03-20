@@ -1,7 +1,7 @@
 import { AuthRegistration } from "@/src/core/types/auth/auth.state";
 import { AuthState } from "@/src/core/types/auth/auth.state";
 import { SignInActorEvents } from "./auth.actors";
-import { DONE_INVOKE_HYDRATE_EVENT, HYDRATE_EVENT, SIGN_IN_ALL_EVENTS, SIGN_OUT_EVENT, SIGN_UP_ALL_EVENTS } from "./action.events";
+import { DONE_INVOKE_HYDRATE_EVENT, HYDRATE_EVENT, SIGN_IN_ALL_EVENTS, SIGN_OUT_EVENT, SIGN_UP_ALL_EVENTS } from "./auth.events";
 
 export interface AuthMachineContext {
   auth: AuthState | null;
