@@ -1,30 +1,13 @@
 'use client';
 
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/src/states/auth/auth.store";
+import { useRef } from "react";
 import Monitor from "@/src/ui/components/workspace/Monitor";
-import Sidebar from "@/src/ui/components/workspace/Sidebar";
 import BoardProvider from "@/src/ui/components/workspace/BoardProvider";
 
 export default function WorkspaceLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const { profile, hydrate } = useAuthStore();
-  const router = useRouter();
   const rootRef = useRef<HTMLDivElement | null>(null);
-  
-  useEffect(() => {
-    if(profile) return;
-    const auth = hydrate();
-    
-    if(!auth || !auth.accessToken || !auth.profile) {
-      router.push("/workspace/sign-in");
-      return;
-    }
-  }, []);
-
-  if (!profile) return null;
 
   return (
     <div ref={rootRef} style= {{
@@ -36,7 +19,6 @@ export default function WorkspaceLayout({
       userSelect: "none",
     }}>
       <BoardProvider rootRef={rootRef}>
-        <Sidebar />
         <Monitor>
             {children}
         </Monitor>
