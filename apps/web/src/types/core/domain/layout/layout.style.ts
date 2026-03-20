@@ -1,4 +1,4 @@
-import { BoxStyle } from "@/src/types/shared/style";
+import { BoxStyle } from "@/src/types/shared/core/style";
 
 export type LayoutStyle = {
     name: string;

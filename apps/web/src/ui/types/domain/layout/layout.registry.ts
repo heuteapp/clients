@@ -1,4 +1,4 @@
-import { Identifier } from "@/src/types/shared/data"
+import { Identifier } from "@/src/types/shared/core/data"
 import { LayoutRootNode, LayoutSectionNode, LayoutGridNode } from "./layout.nodes"
 import { LayoutRootProps, LayoutSectionProps, LayoutGridProps } from "./layout.props"
 

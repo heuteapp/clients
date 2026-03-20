@@ -1,4 +1,4 @@
-import { Identifier, ClientId, ServerId, DataIdentifier } from "@/src/types/shared/data";
+import { Identifier, ClientId, ServerId, DataIdentifier } from "@/src/types/shared/core/data";
 
 export function createIdentifier(id?: Partial<Identifier>): Identifier {
     return {

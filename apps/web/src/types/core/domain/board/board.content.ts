@@ -1,4 +1,4 @@
-import { DataContent } from "@/src/types/shared/data"
+import { DataContent } from "@/src/types/shared/core/data"
 import { LayoutData, LayoutSectionData } from "@/src/types/core/domain/layout/layout.data"
 import { BoardData, BoardCardData } from "./board.data"
 

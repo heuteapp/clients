@@ -1,5 +1,5 @@
-import { BaseData } from "@/src/types/shared/data";
-import { CardPlacement } from "@/src/types/shared/board";
+import { BaseData } from "@/src/types/shared/core/data";
+import { CardPlacement } from "@/src/types/shared/core/board";
 
 export interface BoardData extends BaseData {
     layoutName: string;
