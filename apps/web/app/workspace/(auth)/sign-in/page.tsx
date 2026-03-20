@@ -1,36 +1,36 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
-import { useAuthContext } from "@/src/ui/hooks/useAuthContext";
 import NextLink from 'next/link';
+import { useRouter } from "next/navigation";
+import { useMachine } from "@xstate/react";
+import { authMachine } from "@/src/states/auth/auth.machine";
 
 export default function SignInPage() {
-  const { manager: authManager } = useAuthContext();
+  const router = useRouter();
+  const [state, send] = useMachine(authMachine);
+  
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const isLoading = state.matches("signing in");
+  const isAuthenticated = state.matches("authenticated");
+  const error = state.context.error;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/workspace/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(null);
-    setLoading(true);
-
-    if (!authManager.current) {
-      console.error("Auth manager is not initialized.");
-      setError("Authentication system is not available. Please try again later.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      await authManager.current.signIn({ identifier, password });
-    } catch (err) {
-      console.error("Sign-in error:", err);
-      setError("Failed to sign in.");
-    } finally {
-      setLoading(false);
-    }
+    
+    send({ 
+      type: "SIGN_IN", 
+      identifier, 
+      password 
+    });
   };
 
   return (
@@ -38,16 +38,18 @@ export default function SignInPage() {
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign in
       </Typography>
+      
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <TextField
-          label="Username"
+          label="Username or Email"
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
           placeholder="username or email"
           required
           error={!!error}
-          disabled={loading}
+          disabled={isLoading}
         />
+        
         <TextField
           label="Password"
           type="password"
@@ -56,25 +58,49 @@ export default function SignInPage() {
           placeholder="••••••"
           required
           error={!!error}
-          disabled={loading}
+          disabled={isLoading}
         />
-        <Button type="submit" variant="contained" disabled={loading} sx={{ position: "relative" }}>
-          {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Sign in"}
+        
+        <Button 
+          type="submit" 
+          variant="contained" 
+          disabled={isLoading} 
+          sx={{ position: "relative", height: 36 }}
+        >
+          {isLoading ? (
+            <CircularProgress size={24} sx={{ color: "white" }} />
+          ) : (
+            "Sign in"
+          )}
         </Button>
       </form>
+
       <Box sx={{ mt: 2, textAlign: "center", minHeight: 24 }}>
         {error && (
-          <Typography color="error" >
+          <Typography color="error">
             {error}
           </Typography>
         )}
       </Box>
+
       <Typography sx={{ mt: 2, textAlign: "center" }}>
         Don’t have an account?{" "}
         <Link component={NextLink} href="/workspace/sign-up" underline="hover">
           Sign up
         </Link>
       </Typography>
+
+      {process.env.NODE_ENV === 'development' && (
+        <Box sx={{ mt: 4, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+          <Typography variant="caption" component="pre" sx={{ fontSize: 10 }}>
+            {JSON.stringify({ 
+              state: state.value, 
+              auth: state.context.auth,
+              error: state.context.error 
+            }, null, 2)}
+          </Typography>
+        </Box>
+      )}
     </Card>
   );
 }
