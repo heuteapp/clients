@@ -17,9 +17,13 @@ export type SIGN_IN_EVENTS = SIGN_IN_EVENT | SIGN_IN_SUCCESS_EVENT | SIGN_IN_FAI
 
 export type SIGN_UP_EVENT = { type: "SIGN_UP"; username: string; email: string; password: string };
 
+export type SIGN_UP_AWAITING_EVENT = { type: "SIGN_UP_AWAITING" };
+
+export type SIGN_UP_FAILURE_EVENT = { type: "SIGN_UP_FAILURE"; error: string };
+
 export type SIGN_UP_COMPLETED_EVENT = { type: "SIGN_UP_COMPLETED"; accessToken: string; profile: ProfileData };
 
-export type SIGN_UP_EXPIRED_EVENT = { type: "SIGN_UP_EXPIRED" };
+export type SIGN_UP_EXPIRED_EVENT = { type: "SIGN_UP_EXPIRED"; error: string };
 
 export type SIGN_UP_EVENTS = SIGN_UP_EVENT | SIGN_UP_COMPLETED_EVENT | SIGN_UP_EXPIRED_EVENT;
 
