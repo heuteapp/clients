@@ -1,5 +1,5 @@
 import { BoardCardData, BoardData } from "@/src/types/core/domain/board/board.data";
-import { DataContent } from "../types/shared/data";
+import { DataContent } from "../../types/shared/data";
 import { createDataIdentifier } from "../utils/shared/data";
 
 export function createBoardData(content: DataContent<BoardData>): BoardData {

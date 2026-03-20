@@ -1,4 +1,4 @@
-import { CardPlacement } from "@/src/core/types/shared/board";
+import { CardPlacement } from "@/src/types/shared/board";
 
 export interface BoardModel {
     layoutId: string;

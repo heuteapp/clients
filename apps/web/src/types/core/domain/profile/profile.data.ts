@@ -1,4 +1,4 @@
-import { BaseData } from "@/src/core/types/shared/data";
+import { BaseData } from "@/src/types/shared/data";
 
 export interface ProfileData extends BaseData {
     username: string;

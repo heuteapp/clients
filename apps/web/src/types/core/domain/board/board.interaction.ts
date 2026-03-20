@@ -1,6 +1,6 @@
-import { GridSize, Pointer } from "@/src/core/types/shared/common";
-import { CardPositionInfo } from "@/src/core/types/shared/board";
-import { Identifier } from "@/src/core/types/shared/data";
+import { GridSize, Pointer } from "@/src/types/shared/common";
+import { CardPositionInfo } from "@/src/types/shared/board";
+import { Identifier } from "@/src/types/shared/data";
 import { BoardBaseSessionManager, BoardBaseSessionUpdater, BoardBaseSessionValue, BoardBaseState, BoardUserSessionManager, BoardUserSessionUpdater, BoardUserSessionValue } from "./board.session";
 
 export interface BoardBaseInteraction<

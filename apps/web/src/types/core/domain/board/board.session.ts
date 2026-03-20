@@ -1,7 +1,7 @@
-import { GridSize, Pointer, ResizeHandle } from "@/src/core/types/shared/common";
-import { Identifier } from "@/src/core/types/shared/data";
+import { GridSize, Pointer, ResizeHandle } from "@/src/types/shared/common";
+import { Identifier } from "@/src/types/shared/data";
 import { Draft } from "immer";
-import { CardPositionInfo } from "@/src/core/types/shared/board";
+import { CardPositionInfo } from "@/src/types/shared/board";
 
 //
 
