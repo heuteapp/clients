@@ -1,4 +1,4 @@
-import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
+import { ProfileData } from "@/src/types/core/domain/profile/profile.data";
 
 //
 export type HYDRATE_EVENT = { type: "HYDRATE" };
