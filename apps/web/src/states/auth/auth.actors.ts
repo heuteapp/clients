@@ -45,7 +45,7 @@ export const signUpActor = fromPromise<SignUpResponse, SignUpRequest, SignUpActo
         const response = await server.auth.signUp(input);
 
         emit({ 
-            type: 'SIGN_UP_COMPLETED'
+            type: 'SIGN_UP_AWAITING'
         });
 
         return response;
