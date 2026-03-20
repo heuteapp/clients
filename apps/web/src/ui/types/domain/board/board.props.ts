@@ -1,4 +1,4 @@
-import { BoardCardData, BoardData } from "@/src/core/types/domain/board/board.data";
+import { BoardCardData, BoardData } from "@/src/types/core/domain/board/board.data";
 import { LayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
 import { Identifier } from "@/src/core/types/shared/data";
 

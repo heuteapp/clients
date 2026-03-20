@@ -1,4 +1,4 @@
-import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
+import { BoardMetricsContext } from "@/src/types/core/domain/board/board.metrics";
 import { LayoutMetricsValue, LayoutMetricsTotalSpacing, LayoutMetricsGridFullSize, LayoutMetricsSectionContainerSize } from "@/src/core/types/domain/layout/layout.metrics";
 
 export function computeLayoutMetrics(context: BoardMetricsContext): LayoutMetricsValue | undefined {

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { BoardThemeManager } from "@/src/ui/types/domain/board/board.theme";
 import { useBoardThemeStore } from "@/src/stores/board.theme.store";
-import { BoardThemeValue } from "@/src/core/types/domain/board/board.theme";
+import { BoardThemeValue } from "@/src/types/core/domain/board/board.theme";
 
 export function useBoardThemeManager() : BoardThemeManager {
     const board = useBoardThemeStore(state => state.board);

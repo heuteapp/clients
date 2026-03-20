@@ -1,8 +1,8 @@
 import { useMemo, useRef } from "react";
-import { BoardContentActions, BoardContentState } from "@/src/core/types/domain/board/board.content";
+import { BoardContentActions, BoardContentState } from "@/src/types/core/domain/board/board.content";
 import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { useAuthStore } from "@/src/stores/auth.store";
-import { BoardCommand, BoardCommandType } from "@/src/core/types/domain/board/board.command";
+import { BoardCommand, BoardCommandType } from "@/src/types/core/domain/board/board.command";
 import debounce from "lodash.debounce";
 import { server } from "@/src/api/server";
 import { BoardContentStoreBridge } from "@/src/ui/types/domain/board/board.content";

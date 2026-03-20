@@ -1,7 +1,7 @@
-import { BoardUserInteraction } from "@/src/core/types/domain/board/board.interaction"
+import { BoardUserInteraction } from "@/src/types/core/domain/board/board.interaction"
 import { createIdentifier } from "@/src/core/utils/shared/data"
-import { BoardUserSessionManager } from "@/src/core/types/domain/board/board.session"
-import { BoardUserInteractionType } from "@/src/core/types/domain/board/board.interaction"
+import { BoardUserSessionManager } from "@/src/types/core/domain/board/board.session"
+import { BoardUserInteractionType } from "@/src/types/core/domain/board/board.interaction"
 
 export function createBoardUserInteraction(
     session: BoardUserSessionManager
