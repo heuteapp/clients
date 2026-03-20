@@ -90,7 +90,7 @@ export default function SignInPage() {
       </Typography>
 
       {process.env.NODE_ENV === 'development' && (
-        <Box sx={{ mt: 4, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+        <Box sx={{ mt: 4, p: 2, bgcolor: '#f5f5f523', borderRadius: 1 }}>
           <Typography variant="caption" component="pre" sx={{ fontSize: 10 }}>
             {JSON.stringify({ 
               state: state.value, 
