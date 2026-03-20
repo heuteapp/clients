@@ -1,8 +1,8 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
-import { SignInResponse, SignUpResponse } from "@/src/api/models/auth.response";
 import { server } from "@/src/api/server";
 import { AuthData } from "@/src/types/core/auth/auth.data";
 import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/auth.actors";
+import { createCallback } from "@/src/utils/xstate/create-callback";
 import { fromPromise } from "xstate";
 
 export const hydrateActor = fromPromise<
@@ -22,53 +22,43 @@ export const hydrateActor = fromPromise<
     }
 );
 
-export const signInActor = fromPromise<
-    SignInResponse, SignInRequest, SignInActorEvents
+export const signInActor = createCallback<
+    SignInRequest, SignInActorEvents
 >(
-    async ({ input, emit }) => {
-        try {
-            const response = await server.auth.signIn(input);
-            
-            emit({ 
-                type: 'SIGN_IN_SUCCESS', 
-                accessToken: response.accessToken, 
-                profile: response.profile 
+    ({ input, sendBack }) => {
+        server.auth.signIn(input)
+            .then(response => {
+                sendBack({ 
+                    type: 'SIGN_IN_SUCCESS',
+                    accessToken: response.accessToken,
+                    profile: response.profile,
+                });
+            })
+            .catch((err: any) => {
+                sendBack({ 
+                    type: 'SIGN_IN_FAILURE', 
+                    error: err?.message || "Unknown error from sign in" 
+                });
             });
-            
-            return response;
-        } 
-        catch (err: any) {
-            emit({ 
-                type: 'SIGN_IN_FAILURE', 
-                error: err?.message || "Unknown error from sign in" 
-            });
-            
-            throw new Error(err?.message || "Unknown error from sign in");
-        }
     }
 );
 
-export const signUpActor = fromPromise<
-    SignUpResponse, SignUpRequest, SignUpActorEvents
+export const signUpActor = createCallback<
+    SignUpRequest, SignUpActorEvents
 >(
-    async ({ input, emit }) => {
-        try {
-            const response = await server.auth.signUp(input);
-
-            emit({ 
-                type: 'SIGN_UP_AWAITING',
-                email: input.email,
+    ({ input, sendBack }) => {
+        server.auth.signUp(input)
+            .then(() => {
+                sendBack({ 
+                    type: 'SIGN_UP_AWAITING',
+                    email: input.email,
+                });
+            })
+            .catch((err: any) => {
+                sendBack({ 
+                    type: 'SIGN_UP_FAILURE', 
+                    error: err?.message || "Unknown error from sign up" 
+                });
             });
-
-            return response;
-        }
-        catch (err: any) {
-            emit({ 
-                type: 'SIGN_UP_FAILURE', 
-                error: err?.message || "Unknown error from sign up" 
-            });
-
-            throw new Error(err?.message || "Unknown error from sign up");
-        }
     }
 );
