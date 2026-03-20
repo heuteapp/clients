@@ -1,4 +1,4 @@
-import { LayoutStyle, LayoutSectionStyle } from "@/src/core/types/domain/layout/layout.style";
+import { LayoutStyle, LayoutSectionStyle } from "@/src/types/core/domain/layout/layout.style";
 import { BoardStyle, BoardCardStyle } from "@/src/types/core/domain/board/board.style";
 
 export type BoardThemeStore = BoardThemeValue & {

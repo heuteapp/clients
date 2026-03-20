@@ -1,4 +1,4 @@
-import { LayoutStyle, LayoutSectionStyle } from "@/src/core/types/domain/layout/layout.style";
+import { LayoutStyle, LayoutSectionStyle } from "@/src/types/core/domain/layout/layout.style";
 
 export type LayoutThemeStore = LayoutThemeValue & {
     setState: (value: LayoutThemeValue) => void

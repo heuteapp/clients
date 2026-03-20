@@ -1,5 +1,5 @@
-import { GridRect } from "../../shared/common"
-import { BaseData } from "../../shared/data"
+import { GridRect } from "../../../../core/types/shared/common"
+import { BaseData } from "../../../../core/types/shared/data"
 
 export interface LayoutData extends BaseData {
     columnCount: number

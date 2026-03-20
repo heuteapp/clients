@@ -1,5 +1,5 @@
 import { BoardCardData, BoardData } from "@/src/types/core/domain/board/board.data";
-import { LayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
+import { LayoutData, LayoutSectionData } from "@/src/types/core/domain/layout/layout.data";
 import { Identifier } from "@/src/core/types/shared/data";
 
 export interface BoardRootProps extends BoardData {

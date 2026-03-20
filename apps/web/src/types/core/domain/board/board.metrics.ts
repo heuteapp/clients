@@ -1,4 +1,4 @@
-import { LayoutMetricsValue } from "@/src/core/types/domain/layout/layout.metrics"
+import { LayoutMetricsValue } from "@/src/types/core/domain/layout/layout.metrics"
 import { BoardThemeValue } from "./board.theme";
 import { BoardContentState } from "./board.content";
 
