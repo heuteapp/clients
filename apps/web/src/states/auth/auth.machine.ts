@@ -1,6 +1,7 @@
 import { assign, setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
+import { clearAuth, persistAuth } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -14,29 +15,8 @@ export const authMachine = setup({
     signUp: signUpActor
   },
   actions: {
-    "persistAuth": assign(({ event }) => {
-      let data: { accessToken: string; profile: any };
-
-      if (event.type === "SIGN_IN_SUCCESS" || event.type === "SIGN_UP_COMPLETED") {
-        data = { accessToken: event.accessToken, profile: event.profile };
-      } else if (event.type === "done.invoke.hydrate") {
-        data = event.output;
-      } else {
-        throw new Error("Invalid event for persistAuth");
-      }
-
-      localStorage.setItem("auth", JSON.stringify(data));
-
-      return {
-        auth: data
-      };
-    }),
-    "clearAuth": assign(() => {
-      localStorage.removeItem("auth");
-      return {
-        auth: null
-      };
-    }),
+    persistAuth,
+    clearAuth
   },
   guards: {
     isUserLoggedIn: ({ context }) => !!context.auth
