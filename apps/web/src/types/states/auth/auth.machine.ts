@@ -1,7 +1,7 @@
 import { AuthRegistration } from "@/src/core/types/auth/auth.state";
 import { AuthState } from "@/src/core/types/auth/auth.state";
-import { ProfileData } from "@/src/core/types/domain/profile/profile.data";
 import { SignInActorEvents } from "./auth.actors";
+import { DONE_INVOKE_HYDRATE_EVENT, HYDRATE_EVENT, SIGN_IN_EVENT, SIGN_IN_FAILURE_EVENT, SIGN_IN_SUCCESS_EVENT, SIGN_OUT_EVENT, SIGN_UP_COMPLETED_EVENT, SIGN_UP_EVENT, SIGN_UP_EXPIRED_EVENT } from "./action.events";
 
 export interface AuthMachineContext {
   auth: AuthState | null;
@@ -9,13 +9,15 @@ export interface AuthMachineContext {
 }
 
 export type AuthMachineEvent =
-  | AuthMachineSignInEvent
-  | { type: "SIGN_UP"; username: string; email: string; password: string }
-  | { type: "SIGN_UP_COMPLETED"; accessToken: string; profile: ProfileData }
-  | { type: "SIGN_UP_EXPIRED" }
-  | { type: "SIGN_OUT" }
-  | { type: "HYDRATE" }
-  | { type: "done.invoke.hydrate"; output: { accessToken: string; profile: ProfileData } };
+  | SIGN_IN_EVENT
+  | SIGN_IN_SUCCESS_EVENT
+  | SIGN_IN_FAILURE_EVENT
+  | SIGN_UP_EVENT
+  | SIGN_UP_COMPLETED_EVENT
+  | SIGN_UP_EXPIRED_EVENT
+  | SIGN_OUT_EVENT
+  | HYDRATE_EVENT
+  | DONE_INVOKE_HYDRATE_EVENT;
 
 export type AuthMachineSignInEvent = 
   | { type: "SIGN_IN"; identifier: string; password: string }
