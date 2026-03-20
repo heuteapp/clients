@@ -1,7 +1,7 @@
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
 import { createAssign } from "@/src/utils/xstate/create-assign";
 
-export const persistAuth = createAssign<
+export const persistAuthAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     ({ event }) => {
@@ -26,7 +26,7 @@ export const persistAuth = createAssign<
     }
 );
 
-export const clearAuth = createAssign<
+export const clearAuthAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     () => {

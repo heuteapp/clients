@@ -1,7 +1,7 @@
 import { assign, setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
-import { clearAuth, persistAuth } from "./auth.actions";
+import { clearAuthAction, persistAuthAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -15,8 +15,8 @@ export const authMachine = setup({
     signUp: signUpActor
   },
   actions: {
-    persistAuth,
-    clearAuth
+    persistAuth: persistAuthAction,
+    clearAuth: clearAuthAction
   },
   guards: {
     isUserLoggedIn: ({ context }) => !!context.auth
