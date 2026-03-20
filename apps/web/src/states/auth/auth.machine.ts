@@ -14,7 +14,7 @@ export const authMachine = setup({
     signUp: signUpActor
   },
   actions: {
-    persistAuth: assign(({ event }) => {
+    "persistAuth": assign(({ event }) => {
       let data: { accessToken: string; profile: any };
 
       if (event.type === "SIGN_IN_SUCCESS" || event.type === "SIGN_UP_COMPLETED") {
@@ -59,7 +59,10 @@ export const authMachine = setup({
             guard: "isUserLoggedIn",
             actions: "persistAuth"
           },
-          { target: "unauthenticated" },
+          { 
+            target: "unauthenticated",
+            actions: "clearAuth"
+          },
         ],
         onError: { target: "unauthenticated" },
       }
