@@ -6,10 +6,10 @@ export const useAuthSttore = create<AuthStore>()(
     immer((set) => ({
         accessToken: null,
         profile: null,
-        setState: (state) => {
+        setAuth: (auth) => {
             set((draft) => {
-                draft.accessToken = state.accessToken;
-                draft.profile = state.profile;
+                draft.accessToken = auth.accessToken;
+                draft.profile = auth.profile;
             });
         }
     }))
