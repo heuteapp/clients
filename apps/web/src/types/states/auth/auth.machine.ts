@@ -14,7 +14,8 @@ export type AuthMachineEvent =
   | { type: "SIGN_UP_COMPLETED"; accessToken: string; profile: ProfileData }
   | { type: "SIGN_UP_EXPIRED" }
   | { type: "SIGN_OUT" }
-  | { type: "HYDRATE" };
+  | { type: "HYDRATE" }
+  | { type: "done.invoke.hydrate"; output: { accessToken: string; profile: ProfileData } };
 
 export type AuthMachineSignInEvent = 
   | { type: "SIGN_IN"; identifier: string; password: string }

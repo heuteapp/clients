@@ -14,33 +14,29 @@ export const authMachine = setup({
     signUp: signUpActor
   },
   actions: {
-    persistAuth: ({ event }) => {
-      if (event.type !== "SIGN_IN_SUCCESS" && event.type !== "SIGN_UP_COMPLETED") {
-        throw new Error("Invalid event");
+    persistAuth: assign(({ event }) => {
+      let data: { accessToken: string; profile: any };
+
+      if (event.type === "SIGN_IN_SUCCESS" || event.type === "SIGN_UP_COMPLETED") {
+        data = { accessToken: event.accessToken, profile: event.profile };
+      } else if (event.type === "done.invoke.hydrate") {
+        data = event.output;
+      } else {
+        throw new Error("Invalid event for persistAuth");
       }
 
-      localStorage.setItem("auth", JSON.stringify({
-        accessToken: event.accessToken,
-        profile: event.profile
-      }));
+      localStorage.setItem("auth", JSON.stringify(data));
 
-      return assign({
-        auth: { 
-          accessToken: event.accessToken,
-          profile: event.profile
-        }
-      });
-    },
-    "clearAuth": () => {
+      return {
+        auth: data
+      };
+    }),
+    "clearAuth": assign(() => {
       localStorage.removeItem("auth");
-
-      return assign({
-        auth: {
-          accessToken: null,
-          profile: null
-        }
-      });
-    }
+      return {
+        auth: null
+      };
+    }),
   },
   guards: {
     isUserLoggedIn: ({ context }) => !!context.auth
@@ -58,7 +54,11 @@ export const authMachine = setup({
       invoke: {
         src: "hydrate",
         onDone: [
-          { target: "authenticated", guard: "isUserLoggedIn" },
+          { 
+            target: "authenticated", 
+            guard: "isUserLoggedIn",
+            actions: "persistAuth"
+          },
           { target: "unauthenticated" },
         ],
         onError: { target: "unauthenticated" },
