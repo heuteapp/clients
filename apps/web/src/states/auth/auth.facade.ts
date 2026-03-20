@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/src/states/auth/auth.store";
+import { authService } from "@/src/states/auth/auth.machine";
 import { AuthFacadeManagerInterface } from "@/src/types/core/auth/auth.facade";
 
 export class AuthFacadeManager implements AuthFacadeManagerInterface {
@@ -8,22 +8,17 @@ export class AuthFacadeManager implements AuthFacadeManagerInterface {
         return context.auth;
     }
 
+    public get isAuthenticated() {
+        return this.#getSnapshot().matches('authenticated');
+    }
+
     public signOut() {
-        const { service } = this.#getStore();
-        service.send({ type: "SIGN_OUT" });
+        authService.send({ type: "SIGN_OUT" });
     }
 
-    #getStore() {
-        return useAuthStore.getState();
-    }
+    //
 
-    #getService() {
-        const { service } = this.#getStore();
-        return service;
-    }
-
-    #getSnapshot() {
-        const service = this.#getService();
-        return service.getSnapshot();
+    #getSnapshot = () => {
+        return authService.getSnapshot();
     }
 }

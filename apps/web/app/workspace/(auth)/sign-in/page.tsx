@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
-import { useMachine } from "@xstate/react";
-import { authMachine } from "@/src/states/auth/auth.machine";
+import { useAuthService } from "@/src/ui/hooks/states/auth/useAuthService";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [state, send] = useMachine(authMachine);
+  const [state, send] = useAuthService();
   
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");

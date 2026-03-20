@@ -1,4 +1,4 @@
-import { setup } from "xstate";
+import { createActor, setup } from "xstate";
 import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
 import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction } from "./auth.actions";
@@ -125,3 +125,5 @@ export const authMachine = setup({
     }
   },
 });
+
+export const authService = createActor(authMachine).start();

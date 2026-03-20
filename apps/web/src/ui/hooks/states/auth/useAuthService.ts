@@ -1,11 +1,18 @@
-import { authMachine } from "@/src/states/auth/auth.machine";
-import { useMachine } from "@xstate/react";
+import { authService } from "@/src/states/auth/auth.machine";
+import { useEffect, useState } from "react";
 
 export function useAuthService() {
-    const [state, send] = useMachine(authMachine);
-    
-    return [
-        state,
-        send
-    ] as const;
+    const [state, setState] = useState(() => authService.getSnapshot());
+
+    useEffect(() => {
+        const subscription = authService.subscribe((newState) => {
+            setState(newState);
+        });
+        
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, []);
+
+    return [state, authService.send] as const;
 }

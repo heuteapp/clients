@@ -7,6 +7,10 @@ export class AuthFacade {
         return this.manager.auth;
     }
 
+    get isAuthenticated() {
+        return this.manager.isAuthenticated;
+    }
+
     signOut() {
         this.manager.signOut();
     }
@@ -14,6 +18,8 @@ export class AuthFacade {
 
 export interface AuthFacadeManagerInterface {
     readonly auth: AuthData | null;
+
+    readonly isAuthenticated: boolean;
 
     signOut(): void;
 };
