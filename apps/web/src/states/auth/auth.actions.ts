@@ -36,3 +36,24 @@ export const clearAuthAction = createAssign<
         };
     }
 );
+
+export const persistRegistrationAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    ({ event }) => {
+        if (event.type !== "SIGN_UP_AWAITING") {
+            throw new Error("Invalid event type for persistRegistration action");
+        }
+
+        const data = {
+            email: event.email,
+            expiredAt: Date.now() + 10 * 60 * 1000, // 10 minutes from now
+        };
+
+        localStorage.setItem("registration", JSON.stringify(data));
+
+        return {
+            registration: data,
+        };
+    }
+);
