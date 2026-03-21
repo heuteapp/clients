@@ -1,7 +1,7 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
 import { AuthData } from "@/src/types/core/auth/auth.data";
-import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/auth.actors";
+import { SignInActorEvents, SignUpActorEvents, VerifyActorEvents } from "@/src/types/states/auth/auth.actors";
 import { AuthRegistration } from "@/src/types/states/auth/auth.machine";
 import { createCallback } from "@/src/utils/xstate/create-callback";
 import { fromPromise } from "xstate";
@@ -80,5 +80,47 @@ export const signUpActor = createCallback<
                     error: err?.message || "Unknown error from sign up" 
                 });
             });
+    }
+);
+
+export const verifyActor = createCallback<
+    AuthRegistration | null, VerifyActorEvents
+>(
+    ({ input, sendBack }) => {
+        const registration = input;
+
+        if (!registration) {
+            sendBack({ 
+                type: 'VERIFY_FAILURE', 
+                error: "No registration data available for verification" 
+            });
+            return;
+        }
+
+        if (typeof window === "undefined") {
+            sendBack({ 
+                type: 'VERIFY_FAILURE', 
+                error: "Verification can only be performed in the browser" 
+            });
+            return;
+        }
+
+        const authRaw = localStorage.getItem("auth");
+        if (!authRaw) {
+            sendBack({ 
+                type: 'VERIFY_FAILURE', 
+                error: "No auth data found in localStorage for verification" 
+            });
+
+            return;
+        }
+
+        const authData = JSON.parse(authRaw) as AuthData;
+
+        sendBack({ 
+            type: 'VERIFY_SUCCESS',
+            accessToken: authData.accessToken,
+            profile: authData.profile,
+        });
     }
 );
