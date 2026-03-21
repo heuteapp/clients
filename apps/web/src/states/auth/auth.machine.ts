@@ -71,7 +71,7 @@ export const authMachine = setup({
         onDone: [
           {
             target: "after checking registration done",
-            actions: "setRegistration"
+            actions: "setRegistration",
           }
         ],
         onError: { target: "unauthenticated" },
@@ -181,6 +181,7 @@ export const authMachine = setup({
           actions: [
             "setAuth",
             "persistAuth",
+            "unsetRegistration",
             "clearRegistration",
             "unsetError"
           ]
@@ -190,7 +191,7 @@ export const authMachine = setup({
           actions: "setError"
         },
         VERIFY_EXPIRED: { 
-          target: "unauthenticated",
+          target: "verify expires",
           actions: [
             "setError",
             "unsetRegistration",
@@ -198,6 +199,11 @@ export const authMachine = setup({
           ]
         },
       },
+      "verify expires": {
+        after: {
+          5000: "unauthenticated"
+        }
+      }
     }
   },
 });
