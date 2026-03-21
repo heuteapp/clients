@@ -195,3 +195,13 @@ export const isChecking = (state: AuthMachineState) => isCheckingAuth(state) || 
 export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth") || state.matches("after checking auth done");
 
 export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration") || state.matches("after checking registration done");
+
+export const isAuthenticated = (state: AuthMachineState) => state.matches("authenticated");
+
+export const isUnauthenticated = (state: AuthMachineState) => state.matches("unauthenticated");
+
+export const isSigningIn = (state: AuthMachineState) => state.matches("signing in");
+
+export const isSigningUp = (state: AuthMachineState) => state.matches("signing up");
+
+export const isAwaitingVerification = (state: AuthMachineState) => state.matches("awaiting verification");
