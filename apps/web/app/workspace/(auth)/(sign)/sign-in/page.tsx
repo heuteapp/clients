@@ -16,12 +16,6 @@ export default function SignInPage() {
   const isLoading = isSigningIn(state);
   const error = state.context.error;
 
-  useEffect(() => {
-    if (isAuthenticated(state)) {
-      router.push("/workspace");
-    }
-  }, [isAuthenticated, router]);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     

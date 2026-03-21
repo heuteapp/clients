@@ -37,20 +37,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return;
         }
 
-        if(!isAuthenticated(state) && pathname?.startsWith("/workspace")) {
-            if(!onSignInPage && isSigningIn(state)) {
-                router.push("/workspace/sign-in");
+        if(isAuthenticated(state)) {
+            if(onSignInPage || onSignUpPage || onVerifycationPage) {
+                router.push("/workspace");
                 return;
             }
+        }
+        else {
+            if(pathname?.startsWith("/workspace")) {
+                if(!onSignInPage && isSigningIn(state)) {
+                    router.push("/workspace/sign-in");
+                    return;
+                }
 
-            if(!onSignUpPage && isSigningUp(state)) {
-                router.push("/workspace/sign-up");
-                return;
-            }
+                if(!onSignUpPage && isSigningUp(state)) {
+                    router.push("/workspace/sign-up");
+                    return;
+                }
 
-            if(!onVerifycationPage && isAwaitingVerification(state)) {
-                router.push("/workspace/verification");
-                return;
+                if(!onVerifycationPage && isAwaitingVerification(state)) {
+                    router.push("/workspace/verification");
+                    return;
+                }
             }
         }
 
