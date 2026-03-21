@@ -2,6 +2,7 @@ import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
 import { AuthData } from "@/src/types/core/auth/auth.data";
 import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/auth.actors";
+import { AuthRegistration } from "@/src/types/states/auth/auth.machine";
 import { createCallback } from "@/src/utils/xstate/create-callback";
 import { fromPromise } from "xstate";
 
@@ -25,7 +26,7 @@ export const hydrateAuthActor = fromPromise<
 );
 
 export const hydrateRegistrationActor = fromPromise<
-    { email: string } | null
+    AuthRegistration | null
 >(
     async () => {
         if (typeof window === "undefined") return null;
@@ -34,7 +35,7 @@ export const hydrateRegistrationActor = fromPromise<
         if (!raw) throw new Error("No registration data found in localStorage");
 
         try {
-            return JSON.parse(raw) as { email: string };
+            return JSON.parse(raw) as AuthRegistration;
         } catch {
             throw new Error("Failed to parse registration data from localStorage");
         }

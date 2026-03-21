@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
-import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, unsetAuthAction, unsetErrorAction } from "./auth.actions";
+import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -20,16 +20,19 @@ export const authMachine = setup({
     unsetAuth: unsetAuthAction,
     persistAuth: persistAuthAction,
     clearAuth: clearAuthAction,
+    setRegistration: setRegistrationAction,
+    unsetRegistration: unsetRegistrationAction,
     persistRegistration: persistRegistrationAction,
     clearRegistration: clearRegistrationAction,
     setError: setErrorAction,
     unsetError: unsetErrorAction
   },
   guards: {
-    isUserLoggedIn: ({ context }) => !!context.auth
+    isAuthenticated: ({ context }) => !!context.auth,
+    isRegistrationAwaiting: ({ context }) => !!context.registration
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWrQFYAnADYj+8yIDsAGhABPRLZEAObO8MAWEXtN1PyMAXxDHQTwCYnIqQVowACdEhkTsKQAbZHQAM1SAWyjeAQxhcWUZOQUlJFUNbV0DIzNLLWs7RxcEd2NzbB9jXq1Ta2DbfTCI0uxkHPQkyh4YimpSykZmWlEJWsr5RTJlNQRbH1tdH3N3P0H3Uz13TsRjO69DTQ9jLVsDW0mQSKzeaJRbRUgrQTrJhgLb6HbSWT7GqgY6nc4iS7XES3e7qR7OVx47BuXq2MynYzjLT-SJLcFURJgKAkWDoRLZA70aGsMgcLhFYh8RnM1ns6pkbYVRHio6IfTaUzYNruWxafx4tzWJ7dBp3Sk+dQvcZkmnTOmxSjCllsjlMBLJVLpLK5AoC-hW0W2iXlXbSg6yhDy4ZK-QqtUPTXmbUU4nmQY+LTmGwiZWmrAzUpgMgKXDZSC0ADKAEkAOIAOQA+gB5ACqABVJb6qv7asc2jZicZ1cM8XYftrBvpsDYRqZevoRPdTNTwgDpqgyIIszm8xBC6XK0Wy42Ec3kXUEG1bIrE5TDIMu-2CYezsS9CJ9MYfAbtEE-rPIgul9mSLn5mvi3LCsawABR3EA9hlVtECPHx+mMbQXh8McUO1fR0M8LtjAnDx3BMA1jDTHA5CgMgLXIdcgK3CsCxrABhOiAFECwLcDIJbFE5VsWxPGVPD3HMQItGfLRtXUK54PUFN7m8dRTGnIjsBIsiVgowDN0rAAxABBIsABkawAJUYti-X3Y59G43jQ34wTtBE7VvH6eT5JsfR7nDQiP2mZSLVQKRKMrUCK20gB1XS6y3EtTL3Q5oMDBUQzDdUVQfKNr2nYwvB8dwBITL59By8xFN8lZ-MC4CQIrHT9KMkyfV3JE4s4hLg2VVUUsjNCtDkpVBknNyE0srypnTZAAHdkH2FZlMocr1Mqis6KrABZEC9MYutGIAERipqA0sniktsoSHOvASsofQZEzsdQeNsYrvLGybpqoWb5o3RbGIADRAotjN2hqILM5qD0O6zcq0ATToTbULBEbALAunjxNMB71DCWcyAYCA4GUQQpVigM+HSro+CylzKapsd31GnBzQhUpCf2+LYfOyy7yGO7cq+HxFKBBYGbiNYNjAZmoJa7ChyCO6esMPDJ30aMpOwBC7mNcwpMfEa53TIXLSZa0xQ44Gifi0wfCHbxhOGQJsXuBx2b6MNX0NJ8bB1wFMx-P9IHFk2238S7LlMbxH2PB8fAHXLdEsbQTGGOw9EUr9vZXf9-fMmDtGlg1cuxQ1DUTaNn1jQY7vQxXLZKkhSPI0H2KzwMzCy887DOSzsUdrpZd0OxzATdwrr8CYnuI2uVKofzM9Biz5UVMxufdxXu7ldtsENJN3Du8wJx6Pmx5mF6FBmie5qkGeDsHbBCpEONEzJBM8ThnriVDTXNELnjHrCIA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWgCwAOU1oDs6gJzqANCACeiawFZr2dSddHrWk-r6rsEAviEOgngExORUgrRgAE6JDInYUgA2yOgAZqkAtlG8AhjC4soycgpKSKoa2roGxmYmljb2Toj6TdhaAGwm6iJagZreFmERpdjIOehJlDwxFNSllIzMtKIStZXyimTKaggWRha6Rn3W+iIm3kHqFg7OCNYWfdhGRq6PIkb9NiMkxAkVm80Si2ipBWgnWTDAW30O2ksn2NVAx1O5z+Vxud1cDyenQQgWsRmwBNabwJ-REA2BkSW0KoiTAUBIsHQiWyB3o8NYZA4XCKxD4rPZnO51TI2wqqOlRy62hE2AsejpImsJls7meXX0Fn02BMFlcen0piCJmGDOmTNilHFHK5PKYCWSqXSWVyBRF-CdktdMvKu3lB0VJOVqvVfU12vUuuJVp01yMBsGvjVfVtWBmcwW9pWAZd0rhm1loaq4dqx30VIpBn0fWbpn+-z1JLrJmwtl8bz6Ixu2fCIOmYILUIdxalBzLCKESLlVfRdRJ9Z+gWbfVbxi0HYtfVc2Cb-z0Wlchtcw6mucEYDIClw2UgtAAygBJADiADkAPoAeQAVQAFQrFFl0OGtEH6Pp1GPIwRAJA0zgQowO1sbtd2MAYhwvIER0iVAyDvB8SCfeYIDfL8-3fb8wJAPYFSghB+gCbBD1jaxU3cRMXnUAZPg3Tc+n0axblcHMcCIkjH2fSiPx-X9AIABXoxjqwxaC+neY0jH4kTAn6PdiTYs0RBxfTbANfRJOwOQoDIB1yCoxTaN-V9AIAYU8gBRV9XzUsMV2OLR-BVTiRmubwtH4jtTA8LRzS0Wwrm0WDbPsxyVmchSaL-AAxABBd8ABlAIAJR8wKIIjULrXYzVIrrVwYr6DtEp0c9zPUb5m0MOl1AykgHIdVApBcv8VN-QqAHViuA2jP2qtFIM0tdkobYTtzMXcOwsUybD+bUYusbSbII6ZMtG8bcqU5TfyK0qKqqkNwJWiM6w2oStx3dtiQGI9XG8bUCT+IYE1s5AAHdkH2FZMsoMaJru39PP-ABZZSSp84CfIAEWWpi1rq8LGtE5rWv3TVyTJH5vAGW5tRMSGYbhqgEaR26pp8gANZT30qgnXoYoLVtXEmGr8cnotipNLBVc99pa7CJOBMgGAgOBlEEJd3uYvg2uJPgjy402zfNwaLtzQs4lKXWidXP6XjeI0TAHRDmxNa4IatnBxwhG3ViwOd7Y01ckM8PT3n+IS3g6Z22MMjURjOWDrFswPpyDUPgpcPTelO7xfCvYJLH3OtyQTJsfEePTTtVm8-fzAPJyLNlnRnJgQ8rPW1qCf52OMPwAmSsSCXL2wGuriwxMMS5099mZSnvWSKJzsWQrNc4o-4xD+i4tDiTeckrh+Y+AjVTVbOk5fSPIyB19qt24KsNN3BECxTjcKmVSGYI-FOAhfa24hojWymLdSucWI3HOASYIA5DwJhNB2HqR5viNlChYRKXhHigKylQMaj9mIng8GJESQNX6akQh2AYOgR6thjh-dKi9oawwUPDYaZBEZSCIcTAam1RJfDjlxQ2LxAimCnhQ+MCY-hhDCEAA */
   context: {
     auth: null,    
     registration: null,
@@ -55,7 +58,7 @@ export const authMachine = setup({
       always: [
         { 
           target: "authenticated",
-          guard: "isUserLoggedIn"
+          guard: "isAuthenticated"
         },
         { target: "checking registration" }
       ]
@@ -66,12 +69,21 @@ export const authMachine = setup({
         id: "check-registration",
         onDone: [
           {
-            target: "awaiting sign up",
-            actions: "persistRegistration"
+            target: "after checking registration done",
+            actions: "setRegistration"
           }
         ],
         onError: { target: "unauthenticated" },
       }
+    },
+    "after checking registration done": {
+      always: [
+        { 
+          target: "awaiting sign up",
+          guard: "isRegistrationAwaiting"
+        },
+        { target: "unauthenticated" }
+      ]
     },
     "authenticated": {
       on: {
@@ -153,9 +165,20 @@ export const authMachine = setup({
       on: {
         SIGN_UP_COMPLETED: { 
           target: "authenticated",
-          actions: "persistAuth"
+          actions: [
+            "setAuth",
+            "persistAuth",
+            "clearRegistration",
+            "unsetError"
+          ]
         },
-        SIGN_UP_EXPIRED: { target: "unauthenticated" },
+        SIGN_UP_EXPIRED: { 
+          target: "unauthenticated",
+          actions: [
+            "setError",
+            "clearRegistration"
+          ]
+        },
       },
       exit: "clearRegistration"
     }

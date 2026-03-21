@@ -34,4 +34,6 @@ export type SIGN_OUT_EVENT = { type: "SIGN_OUT" };
 
 //
 
-export type DONE_INVOKE_HYDRATE_EVENT = DoneActorEvent<{ accessToken: string, profile: ProfileData }, "check-auth">;
+export type DONE_ACTOR_CHECK_AUTH_EVENT = DoneActorEvent<{ accessToken: string, profile: ProfileData }, "check-auth">;
+
+export type DONE_ACTOR_CHECK_REGISTRATION_EVENT = DoneActorEvent<{ email: string, expiredAt: number } | null, "check-registration">;

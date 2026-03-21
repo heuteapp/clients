@@ -52,37 +52,48 @@ export const clearAuthAction = () => {
 
 //
 
-export const persistRegistrationAction = createAssign<
+export const setRegistrationAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     ({ event }) => {
-        if (event.type !== "SIGN_UP_AWAITING") {
-            throw new Error("Invalid event type for persistRegistration action");
+        if (event.type === "SIGN_UP_AWAITING") {
+            return {
+                registration: {
+                    email: event.email,
+                    expiredAt: Date.now() + 10 * 60 * 1000,
+                },
+            };
         }
 
-        const data = {
-            email: event.email,
-            expiredAt: Date.now() + 10 * 60 * 1000, // 10 minutes from now
-        };
+        if (event.type === "xstate.done.actor.check-registration") {
+            return {
+                registration: event.output,
+            };
+        }
 
-        localStorage.setItem("registration", JSON.stringify(data));
-
-        return {
-            registration: data,
-        };
+        throw new Error("Invalid event type for registration: " + event.type);
     }
 );
 
-export const clearRegistrationAction = createAssign<
+export const unsetRegistrationAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     () => {
-        localStorage.removeItem("registration");
         return {
             registration: null,
         };
     }
 );
+
+export const persistRegistrationAction = ({ context }: { context: AuthMachineContext }) => {
+    if (!context.registration) return;
+
+    localStorage.setItem("registration", JSON.stringify(context.registration));
+};
+
+export const clearRegistrationAction = () => {
+    localStorage.removeItem("registration");
+};
 
 //
 
