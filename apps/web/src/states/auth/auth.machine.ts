@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor } from "./auth.actors";
+import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor, verifyActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/types/states/auth/auth.machine";
 import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
 
@@ -13,7 +13,8 @@ export const authMachine = setup({
     hydrateAuth: hydrateAuthActor,
     hydrateRegistration: hydrateRegistrationActor,
     signIn: signInActor,
-    signUp: signUpActor
+    signUp: signUpActor,
+    verify: verifyActor,
   },
   actions: {
     setAuth: setAuthAction,
@@ -164,7 +165,18 @@ export const authMachine = setup({
     },
     "awaiting verification": {
       on: {
-        VERIFICATION_COMPLETED: { 
+        VERIFY: { 
+          target: "verifying",
+        }
+      }
+    },
+    "verifying": {
+      invoke: {
+        src: "verify",
+        input: ({ context }) => context.registration
+      },
+      on: {
+        VERIFY_SUCCESS: {
           target: "authenticated",
           actions: [
             "setAuth",
@@ -173,15 +185,19 @@ export const authMachine = setup({
             "unsetError"
           ]
         },
-        VERIFICATION_EXPIRED: { 
+        VERIFY_FAILURE: {
+          target: "awaiting verification",
+          actions: "setError"
+        },
+        VERIFY_EXPIRED: { 
           target: "unauthenticated",
           actions: [
             "setError",
+            "unsetRegistration",
             "clearRegistration"
           ]
         },
       },
-      exit: "clearRegistration"
     }
   },
 });
