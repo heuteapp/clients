@@ -121,19 +121,21 @@ export const authMachine = setup({
             email: event.email,
             password: event.password,
           };
-        },
-        onDone: {
+        }
+      },
+      on: {
+        SIGN_UP_AWAITING: {
           target: "awaiting sign up",
           actions: [
             "persistRegistration",
             "unsetError"
           ]
         },
-        onError: {
+        SIGN_UP_FAILURE: {
           target: "unauthenticated",
           actions: "setError"
-        },
-      },
+        }
+      }
     },
     "awaiting sign up": {
       on: {
