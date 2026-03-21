@@ -2,13 +2,13 @@
 
 import { isAwaitingVerification } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
-import { Card, Typography, Button, CircularProgress } from "@mui/material";
-import router from "next/router";
+import { Card, Typography, Button, CircularProgress, Alert } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
     const { state } = useAuthContext();
     const [email, setEmail] = useState("");
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (state.context.registration) {
@@ -16,7 +16,16 @@ export default function VerificationPage() {
         }
     }, [state.context.registration]);
 
-    if(isAwaitingVerification(state)) {
+    const handleTrySignIn = () => {
+        if (state.context.auth) {
+            window.location.href = "/workspace/sign-in";
+        }
+        else {
+            setError("Email verification is not completed yet");
+        }
+    };
+
+    if(!isAwaitingVerification(state)) {
         return (
             <CircularProgress />
         )
@@ -36,13 +45,20 @@ export default function VerificationPage() {
             <Typography sx={{ mb: 2, textAlign: "center", color: "text.secondary" }}>
                 After verification, you can sign in to your account.
             </Typography>
+
+
+            {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                    {error}
+                </Alert>
+            )}
             
             <Button 
                 variant="contained" 
-                onClick={() => router.push("/workspace/sign-in")}
                 fullWidth
+                onClick={handleTrySignIn}
             >
-                Go to Sign In
+                Try Sign In
             </Button>
         </Card>
     );
