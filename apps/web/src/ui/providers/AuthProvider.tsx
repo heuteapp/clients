@@ -25,6 +25,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         if (state.matches("unauthenticated") && pathname?.startsWith("/workspace")) {
+            if (pathname === "/workspace/sign-in" || pathname === "/workspace/sign-up") {
+                return;
+            }
             router.push("/workspace/sign-in");
         }
     }, [router, pathname, state]);
