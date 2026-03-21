@@ -1,6 +1,6 @@
 import { createActor, setup } from "xstate";
 import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor } from "./auth.actors";
-import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
+import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/types/states/auth/auth.machine";
 import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
 
 export const authMachine = setup({
@@ -187,3 +187,11 @@ export const authMachine = setup({
 });
 
 export const authService = createActor(authMachine);
+
+//
+
+export const isChecking = (state: AuthMachineState) => isCheckingAuth(state) || isCheckingRegistration(state);
+
+export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth") || state.matches("after checking auth done");
+
+export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration") || state.matches("after checking registration done");
