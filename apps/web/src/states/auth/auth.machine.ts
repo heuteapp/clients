@@ -208,4 +208,4 @@ export const isAwaitingVerification = (state: AuthMachineState) => state.matches
 
 //
 
-export const isBusy = (state: AuthMachineState) => isChecking(state) || isSigningIn(state) || isSigningUp(state) || isAwaitingVerification(state);
+export const isSignBusy = (state: AuthMachineState) => isChecking(state) || isAwaitingVerification(state);
