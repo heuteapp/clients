@@ -12,6 +12,7 @@ export default function SignInPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
+  const isCheckingAuth = state.matches("checking auth") || state.matches("after checking auth done");
   const isLoading = state.matches("signing in");
   const isAuthenticated = state.matches("authenticated");
   const error = state.context.error;
@@ -31,6 +32,10 @@ export default function SignInPage() {
       password 
     });
   };
+
+  if (isCheckingAuth || isAuthenticated) {
+    return <CircularProgress />;
+  }
 
   return (
     <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
