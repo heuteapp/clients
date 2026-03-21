@@ -2,7 +2,7 @@ import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/au
 import { createAssign } from "@/src/utils/xstate/create-assign";
 
 export const resolveAuthData = (event: AuthMachineEvent) => {
-    if (event.type === "SIGN_IN_SUCCESS" || event.type === "SIGN_UP_COMPLETED") {
+    if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFICATION_COMPLETED") {
         return {
             accessToken: event.accessToken,
             profile: event.profile,
@@ -56,7 +56,7 @@ export const setRegistrationAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     ({ event }) => {
-        if (event.type === "SIGN_UP_AWAITING") {
+        if (event.type === "SIGN_UP_SUCCESS") {
             return {
                 registration: {
                     email: event.email,

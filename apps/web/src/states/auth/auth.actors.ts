@@ -70,7 +70,7 @@ export const signUpActor = createCallback<
         server.auth.signUp(input)
             .then(() => {
                 sendBack({ 
-                    type: 'SIGN_UP_AWAITING',
+                    type: 'SIGN_UP_SUCCESS',
                     email: input.email,
                 });
             })

@@ -148,8 +148,8 @@ export const authMachine = setup({
         }
       },
       on: {
-        SIGN_UP_AWAITING: {
-          target: "awaiting sign up",
+        SIGN_UP_COMPLETED: {
+          target: "awaiting verification",
           actions: [
             "setRegistration",
             "persistRegistration",
@@ -162,9 +162,9 @@ export const authMachine = setup({
         }
       }
     },
-    "awaiting sign up": {
+    "awaiting verification": {
       on: {
-        SIGN_UP_COMPLETED: { 
+        VERIFICATION_COMPLETED: { 
           target: "authenticated",
           actions: [
             "setAuth",
@@ -173,7 +173,7 @@ export const authMachine = setup({
             "unsetError"
           ]
         },
-        SIGN_UP_EXPIRED: { 
+        VERIFICATION_EXPIRED: { 
           target: "unauthenticated",
           actions: [
             "setError",
