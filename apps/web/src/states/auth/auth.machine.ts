@@ -14,7 +14,7 @@ export const authMachine = setup({
     hydrateRegistration: hydrateRegistrationActor,
     signIn: signInActor,
     signUp: signUpActor,
-    verify: verifyActor,
+    registrationVerification: verifyActor,
   },
   actions: {
     setAuth: setAuthAction,
@@ -80,7 +80,7 @@ export const authMachine = setup({
     "after checking registration done": {
       always: [
         { 
-          target: "awaiting verification",
+          target: "awaiting registration",
           guard: "isRegistrationAwaiting"
         },
         { target: "unauthenticated" }
@@ -150,7 +150,7 @@ export const authMachine = setup({
       },
       on: {
         SIGN_UP_SUCCESS: {
-          target: "awaiting verification",
+          target: "awaiting registration",
           actions: [
             "setRegistration",
             "persistRegistration",
@@ -163,20 +163,20 @@ export const authMachine = setup({
         }
       }
     },
-    "awaiting verification": {
+    "awaiting registration": {
       on: {
-        VERIFY: { 
-          target: "verifying",
+        REGISTRATION_VERIFICATION: { 
+          target: "verifying registration",
         }
       }
     },
-    "verifying": {
+    "verifying registration": {
       invoke: {
-        src: "verify",
+        src: "registrationVerification",
         input: ({ context }) => context.registration
       },
       on: {
-        VERIFY_SUCCESS: {
+        REGISTRATION_VERIFICATION_SUCCESS: {
           target: "authenticated",
           actions: [
             "setAuth",
@@ -186,11 +186,11 @@ export const authMachine = setup({
             "unsetError"
           ]
         },
-        VERIFY_FAILURE: {
-          target: "awaiting verification",
+        REGISTRATION_VERIFICATION_FAILURE: {
+          target: "awaiting registration",
           actions: "setError"
         },
-        VERIFY_EXPIRED: { 
+        REGISTRATION_VERIFICATION_EXPIRED: { 
           target: "verify expires",
           actions: [
             "setError",
@@ -226,14 +226,14 @@ export const isSigningIn = (state: AuthMachineState) => state.matches("signing i
 
 export const isSigningUp = (state: AuthMachineState) => state.matches("signing up");
 
-export const isAwaitingVerification = (state: AuthMachineState) => state.matches("awaiting verification");
+export const isAwaitingRegistration = (state: AuthMachineState) => state.matches("awaiting registration");
 
-export const isVerifying = (state: AuthMachineState) => state.matches("verifying");
+export const isVerifyingRegistration = (state: AuthMachineState) => state.matches("verifying registration");
 
 //
 
 export const isAuthBusy = (state: AuthMachineState) => isAuthenticated(state) || isChecking(state);
 
-export const isSignBusy = (state: AuthMachineState) => isAuthBusy(state) || isAwaitingVerification(state);
+export const isSignBusy = (state: AuthMachineState) => isAuthBusy(state) || isAwaitingRegistration(state);
 
 export const isVerificationBusy = (state: AuthMachineState) => isAuthBusy(state) || isSigningIn(state) || isSigningUp(state);
