@@ -4,7 +4,7 @@ import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
-import { isAuthenticated, isAwaitingVerification, isCheckingAuth, isSigningUp } from "@/src/states/auth/auth.machine";
+import { isAuthenticated, isAwaitingVerification, isBusy, isCheckingAuth, isSigningUp } from "@/src/states/auth/auth.machine";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -66,14 +66,8 @@ export default function SignUpPage() {
     });
   };
 
-  if (isCheckingAuth(state) || isAuthenticated(state)) {
+  if (isBusy(state)) {
     return <CircularProgress />;
-  }
-
-  if (isAwaitingVerification(state)) {
-    return (
-      <CircularProgress />
-    );
   }
 
   return (
