@@ -24,10 +24,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
+        const isAuthenticated = state.matches("authenticated");
+
+        const isSigningIn = state.matches("signing in");
+        const isSigningUp = state.matches("signing up") || state.matches("awaiting sign up");
+
         if (state.matches("unauthenticated") && pathname?.startsWith("/workspace")) {
-            if (pathname === "/workspace/sign-in" || pathname === "/workspace/sign-up") {
+            if (pathname === "/workspace/sign-in") {
+                if (isSigningUp) {
+                    router.push("/workspace/sign-up");
+                }
+
                 return;
             }
+
+            if(pathname === "/workspace/sign-up") {
+                if (isSigningIn) {
+                    router.push("/workspace/sign-in");
+                }
+
+                return;
+            }
+
             router.push("/workspace/sign-in");
         }
     }, [router, pathname, state]);
