@@ -29,7 +29,7 @@ export const authMachine = setup({
     isUserLoggedIn: ({ context }) => !!context.auth
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMW-QFYAbCYDs60wA4LAGhABPRBZGnsps+oAs+gJz++j42WloAvuGOgngExORUgrRgAE4pDCnYUgA2yOgAZhkAtrG8AhjC4soycgpKSKoa2roGRmaW1naOLgg+Fha6FlqBff5mNqZjkdEVpfEUlClgUCSw6Cl5imT0TCzsnNxx-Esraxt1ZKISDTXyW8pqCDbP2BY+gf4+PqY+Wr7q3UQXxEun8Pz+P1MFgmESiIBiPHmVBOq3WmyYyTSGSyuQKxTmx2WqPOWyu1Vkd3qoEezxsr3eI2+v3+gIQxiGngs-n6Wl+kx87mm8NmgjAZAUuDykFoAGUAJIAcQAcgB9ADyAFUACpkm4Ui4PRD6Cz6EFaGyGMFmES8-qsyb6bD+YYWLw24wiD0+IUxVBkUXikiS9DS+XKlVypW66T6+4NR7G82vMFjES-AX6Gz+Vn6fSmdSeMaafNWPrGfQ+2Z+gMSqUQWWK1UagAK0ZAtwN8aNQwL-hsPnUFpsZihX1ZFuwHpEIi5vjCXLTlaw2DkUDICUo5Ab4cjKplGoAwgeAKIymVtjtx6lG7QDN4fN4iYfDYzjkKebT+dxaYwjuxLnBV3XBYtzDVVdwAMQAQTlAAZDUACVjwvWMqUaBB9FvekHwFZ8xlZQIBneMJ2T6AJ2QAlcSDXDdUCkbcm2bFUoIAdRgrVIwVFDaivdDaWwxlwRZZwNGNQsREzU1tHMCTKKA2j6LAlUWxVaC4MQ5Cqj1Hi0JpF570E5kB1ZLQbWwH9py5Ux81zKFKOQAB3ZA7gWIDKDohjlKYg81QAWWbWDjy1Y8ABFuMpMhDQwrCDO5XDjBfVkBR8J1XRsiThgmCx7KclyqDcjylJU48AA1mzlJCwq0mMdMirtoq0O8GTip8EvwkSEHUYwUr6ayBU0dQZx+SI4TIBgIDgZRBHJWqor4UxWT4YwnQ+Va1v8dRKMRUgFmm7SIqi34kus7BQky-tzWCf84QRI4NxRM50TqmqDvq8tHX+KwspNCYkoSychj7LMfGMbRvmMeyKjFWsQwgGbXuvDDfxS9kLV6kJ83anohjpQdhlNIJ2UwiGbqrf0ocDYNIHhztEYCadTosD1bGMGwJMmLQCP8SdTB-NnQgtRrnTk6jgKocgad4hMTBSrxeZBqFTBnZ0ue5n62Zk4w+2skWaIWOjJd01wRG5wwGRnX8TbeHNAmwXr81CVmgmCHLnIUVzRfcqRDee9Dc1NTlM1-YcTZdVlfGWoZrOsNwvq6kbwiAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWrQFYAnADYj+8yIDsAGhABPRLZEAObO8MAWEXtN1PyMAXxDHQTwCYnIqQVowACdEhkTsKQAbZHQAM1SAWyjeAQxhcWUZOQUlJFUNbV0DIzNLLWs7RxcEd2NzbB9jXq1Ta2DbfTCI0uxkHPQkyh4YimpSykZmWlEJWsr5RTJlNQRbH1tdH3N3P0H3Uz13TsRjO69DTQ9jLVsDW0mQSKzeaJRbRUgrQTrJhgLb6HbSWT7GqgY6nc4iS7XES3e7qR7OVx47BuXq2MynYzjLT-SJLcFURJgKAkWDoRLZA70aGsMgcLhFYh8RnM1ns6pkbYVRHio6IfTaUzYNruWxafx4tzWJ7dBp3Sk+dQvcZkmnTOmxSjCllsjlMBLJVLpLK5AoC-hW0W2iXlXbSg6yhDy4ZK-QqtUPTXmbUU4nmQY+LTmGwiZWmrAzUpgMgKXDZSC0ADKAEkAOIAOQA+gB5ACqABVJb6qv7asc2jZicZ1cM8XYftrBvpsDYRqZevoRPdTNTwgDpqgyIIszm8xBC6XK0Wy42Ec3kXUEG1bIrE5TDIMu-2CYezsS9CJ9MYfAbtEE-rPIgul9mSLn5mvi3LCsawABR3EA9hlVtECPHx+mMbQXh8McUO1fR0M8LtjAnDx3BMA1jDTHA5CgMgLXIdcgK3CsCxrABhOiAFECwLcDIJbFE5VsWxPGVPD3HMQItGfLRtXUK54PUFN7m8dRTGnIjsBIsiVgowDN0rAAxABBIsABkawAJUYti-X3Y59G43jQ34wTtBE7VvH6eT5JsfR7nDQiP2mZSLVQKRKMrUCK20gB1XS6y3EtTL3Q5oMDBUQzDdUVQfKNr2nYwvB8dwBITL59By8xFN8lZ-MC4CQIrHT9KMkyfV3JE4s4hLg2VVUUsjNCtDkpVBknNyE0srypnTZAAHdkH2FZlMocr1Mqis6KrABZEC9MYutGIAERipqA0sniktsoSHOvASsofQZEzsdQeNsYrvLGybpqoWb5o3RbGIADRAotjN2hqILM5qD0O6zcq0ATToTbULBEbALAunjxNMB71DCWcyAYCA4GUQQpVigM+HSro+CylzKapsd31GnBzQhUpCf2+LYfOyy7yGO7cq+HxFKBBYGbiNYNjAZmoJa7ChyCO6esMPDJ30aMpOwBC7mNcwpMfEa53TIXLSZa0xQ44Gifi0wfCHbxhOGQJsXuBx2b6MNX0NJ8bB1wFMx-P9IHFk2238S7LlMbxH2PB8fAHXLdEsbQTGGOw9EUr9vZXf9-fMmDtGlg1cuxQ1DUTaNn1jQY7vQxXLZKkhSPI0H2KzwMzCy887DOSzsUdrpZd0OxzATdwrr8CYnuI2uVKofzM9Biz5UVMxufdxXu7ldtsENJN3Du8wJx6Pmx5mF6FBmie5qkGeDsHbBCpEONEzJBM8ThnriVDTXNELnjHrCIA */
   context: {
     auth: null,    
     registration: null,
@@ -44,12 +44,21 @@ export const authMachine = setup({
         id: "check-auth",
         onDone: [
           {
-            target: "authenticated",
+            target: "after checking auth done",
             actions: "setAuth"
           }
         ],
         onError: { target: "checking registration" },
       }
+    },
+    "after checking auth done": {
+      always: [
+        { 
+          target: "authenticated",
+          guard: "isUserLoggedIn"
+        },
+        { target: "checking registration" }
+      ]
     },
     "checking registration": {
       invoke: {
