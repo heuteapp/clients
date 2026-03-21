@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { authService } from "@/src/states/auth/auth.machine";
-import { authFacade } from "@/src/core/auth/auth.facade";
-import { authFacadeManager } from "@/src/states/auth/auth.facade";
 import { AuthContext } from "../contexts/auth.context";
 import { usePathname, useRouter } from "next/dist/client/components/navigation";
 
@@ -13,7 +11,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [state, setState] = useState(() => authService.getSnapshot());
      
     useEffect(() => {
-        authFacade.setManager(authFacadeManager);
         authService.start();
 
         const subscription = authService.subscribe((newState) => {
@@ -23,7 +20,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return () =>  {
             subscription.unsubscribe();
             authService.stop(); 
-            authFacade.setManager(null);
         }
     }, []);
 

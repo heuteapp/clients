@@ -32,12 +32,7 @@ serverApi.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            console.log("Unauthorized - logging out");
             authService.send({ type: "SIGN_OUT" });
-
-            if (typeof window !== "undefined") {
-                window.location.href = "/login";
-            }
         }
         return Promise.reject(error);
     }
