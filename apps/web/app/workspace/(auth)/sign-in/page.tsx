@@ -4,6 +4,7 @@ import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { isAuthenticated, isCheckingAuth, isSigningIn } from "@/src/states/auth/auth.machine";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -12,13 +13,11 @@ export default function SignInPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
-  const isCheckingAuth = state.matches("checking auth") || state.matches("after checking auth done");
-  const isLoading = state.matches("signing in");
-  const isAuthenticated = state.matches("authenticated");
+  const isLoading = isSigningIn(state);
   const error = state.context.error;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated(state)) {
       router.push("/workspace");
     }
   }, [isAuthenticated, router]);
@@ -33,7 +32,7 @@ export default function SignInPage() {
     });
   };
 
-  if (isCheckingAuth || isAuthenticated) {
+  if (isCheckingAuth(state) || isAuthenticated(state)) {
     return <CircularProgress />;
   }
 

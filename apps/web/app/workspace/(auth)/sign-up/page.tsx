@@ -4,6 +4,7 @@ import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { isAuthenticated, isAwaitingVerification, isCheckingAuth, isSigningUp } from "@/src/states/auth/auth.machine";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -15,26 +16,14 @@ export default function SignUpPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const isCheckingAuth = state.matches("checking auth") || state.matches("after checking auth done");
-  const isLoading = state.matches("signing up");
-  const isAwaitingSignUp = state.matches("awaiting sign up");
-  const isAuthenticated = state.matches("authenticated");
+  const isLoading = isSigningUp(state);
   const error = state.context.error;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated(state)) {
       router.push("/workspace");
     }
-  }, [isAuthenticated, router]);
-
-  // If user is in awaiting sign up state, they might need to verify email
-  useEffect(() => {
-    if (isAwaitingSignUp && state.context.registration) {
-      // You can show a verification message or redirect to verification page
-      // For now, we'll just stay on the page and show a success message
-      console.log("Registration pending verification:", state.context.registration);
-    }
-  }, [isAwaitingSignUp, state.context.registration]);
+  }, [isAuthenticated(state), router]);
 
   const validatePasswords = () => {
     if (password !== confirmPassword) {
@@ -77,35 +66,13 @@ export default function SignUpPage() {
     });
   };
 
-  if (isCheckingAuth || isAuthenticated) {
+  if (isCheckingAuth(state) || isAuthenticated(state)) {
     return <CircularProgress />;
   }
 
-  // Show verification message if awaiting sign up
-  if (isAwaitingSignUp) {
+  if (isAwaitingVerification(state)) {
     return (
-      <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
-        <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
-          Verify Your Email
-        </Typography>
-        
-        <Typography sx={{ mb: 2, textAlign: "center" }}>
-          We've sent a verification email to <strong>{email}</strong>. 
-          Please check your inbox and verify your email address to complete the registration.
-        </Typography>
-        
-        <Typography sx={{ mb: 2, textAlign: "center", color: "text.secondary" }}>
-          After verification, you can sign in to your account.
-        </Typography>
-        
-        <Button 
-          variant="contained" 
-          onClick={() => router.push("/workspace/sign-in")}
-          fullWidth
-        >
-          Go to Sign In
-        </Button>
-      </Card>
+      <CircularProgress />
     );
   }
 
