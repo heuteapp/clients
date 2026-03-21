@@ -18,7 +18,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/workspace/dashboard");
+      router.push("/workspace");
     }
   }, [isAuthenticated, router]);
 
