@@ -5,13 +5,7 @@ export function useAuthService() {
     const [state, setState] = useState(() => authService.getSnapshot());
 
     useEffect(() => {
-        const subscription = authService.subscribe((newState) => {
-            setState(newState);
-        });
-        
-        return () => {
-            subscription.unsubscribe();
-        };
+
     }, []);
 
     return [state, authService.send] as const;
