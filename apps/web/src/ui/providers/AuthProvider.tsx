@@ -28,12 +28,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if (state.matches("unauthenticated")) {
-            if (pathname.startsWith("/workspace")) {
-                router.push("workspace/sign-in");
-            }
+        if (state.matches("unauthenticated") && pathname?.startsWith("/workspace")) {
+            router.push("/workspace/sign-in");
         }
-    }, [state, router]);
+    }, [router, pathname, state]);
 
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
