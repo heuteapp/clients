@@ -5,19 +5,38 @@ import { SignInActorEvents, SignUpActorEvents } from "@/src/types/states/auth/au
 import { createCallback } from "@/src/utils/xstate/create-callback";
 import { fromPromise } from "xstate";
 
-export const hydrateActor = fromPromise<
+export const hydrateAuthActor = fromPromise<
     AuthData | null
 >(
     async () => {
         if (typeof window === "undefined") return null;
 
         const raw = localStorage.getItem("auth");
-        if (!raw) return null;
+        if (!raw) {
+            throw new Error("No auth data found in localStorage");
+        }
 
         try {
             return JSON.parse(raw) as AuthData;
         } catch {
-            return null;
+            throw new Error("Failed to parse auth data from localStorage");
+        }
+    }
+);
+
+export const hydrateRegistrationActor = fromPromise<
+    { email: string } | null
+>(
+    async () => {
+        if (typeof window === "undefined") return null;
+
+        const raw = localStorage.getItem("registration");
+        if (!raw) throw new Error("No registration data found in localStorage");
+
+        try {
+            return JSON.parse(raw) as { email: string };
+        } catch {
+            throw new Error("Failed to parse registration data from localStorage");
         }
     }
 );

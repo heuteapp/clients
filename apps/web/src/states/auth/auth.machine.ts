@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { hydrateActor, signInActor, signUpActor } from "./auth.actors";
+import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
 import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, unsetAuthAction, unsetErrorAction } from "./auth.actions";
 
@@ -10,7 +10,8 @@ export const authMachine = setup({
 
   },
   actors: {
-    hydrate: hydrateActor,
+    hydrateAuth: hydrateAuthActor,
+    hydrateRegistration: hydrateRegistrationActor,
     signIn: signInActor,
     signUp: signUpActor
   },
@@ -28,7 +29,7 @@ export const authMachine = setup({
     isUserLoggedIn: ({ context }) => !!context.auth
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygGIIB7MsbcgNxqIf0KIFpMBPCAE7J0JOgG0ADAF1EoAA41YJEXVkgAHogDMO7ABYAnEa0B2CQEYATOZOWANCF6JrANmwAOAKwuTW93s8Jdy0XCUsAX3CHNCw8AmJyKjABARoBbDkAG2EAMzSAWzjOHn4hFTJJGSQQBSVytU0EHS19IwNTC2tbBycEd3NsQIlhlz0TFwMJca1I6IwcDgSKAAJkHPRk5b5BYVEySkq1WuU9hsQTEz1sS6NzF3cLiT1zcx7nPTcbg0utYb0tb6zEAxBbxUgrNYbARbUq7OgHcxVeSKE6qaqNC5XL53B5mZ6vRzOYbXIZPcwGdyWawzKLA+bYEFgMgiXDCSCUADKAEkAOIAOQA+gB5ACqABVDtVjvV0YgXhdsJZ+uZDFpzJ4lXo9G8EC4Qtg-CYDJ4Xi5yeMXECQdhUGRGcySKyNhBObzBVy+ZLkXVTrKEC9jdcDPdTHpLN5PMadcGJEGw1MtJYLEZLbTrbb7Sy2S7ufyBSKAApemoomWgRoB2MUsP9X5aTy-eyEpruWMSSPBEJmhMRNP0pRQMiJZbkV15j0CjkigDC04AohyOcXpb7y+dLtdDAYcY98TrRiZFS5LMb-sN23p3Fb+yRB8PR7n3YKAGIAQS5ABkRQAlOfL0urho65YluO54i8Or+G2WpdJSMbBtesQDkOKyoHI1B0AwzCsAw1rIcOaEINhTp7JU-4+mia5NLoW7tGYVg2E2vTeAMSqjBIExqiaNJzEht4oVAyxoZQySpOkWS5AUDI3neqFyERZAsCR4jSORqJkGc1EtLRHQMd0zbmEELRPM87heK2HHHohODIAA7sgJwrMhQnoY++YFgK05CgAsgWH5zmKc4ACJqWWQEIJim63Pcu4Qc2QweBIFJcVqWqjNZDL2Y5gnOcJbmFgKc4ABoFlyv4hdIRwAZR4WRdiMXgQSzHBtcx7fA25hmZcJiRLSZA0BAcBqCCVUURpfpcC4OpcJ42BtPNC0UqmvGgpwiSjepmlhjqSaxp2mr-AELieJeGWLOCgmQps2xlIBK41Y0J0tJ1lyWMdzwGEmU3NpYfiDMEb3kvW24PBlmaOtmG1hRWYQDJ4JitqYJg2Im23Nj4lgeM8UwnqM7SdRlGbzEyWbOlDgEVkjHg3CaKomrY329IZLhuL97h6gEQTI+lfZ8bJgnkOTD2IKEAzHWaZhKg2-yeJB5KDDBv0hgEBgZfhclC+NVHqi0DyGP8fgs5SDY6p48PYJ0wbVuqFxXrzNlZSITn8S5muaSdBiDIZHTvSqJ6m5GXsnuzx7I1q5i9eEQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMW-QFYAbCYDs60wA4LAGhABPRBZGnsps+oAs+gJz++j42WloAvuGOgngExORUgrRgAE4pDCnYUgA2yOgAZhkAtrG8AhjC4soycgpKSKoa2roGRmaW1naOLgg+Fha6FlqBff5mNqZjkdEVpfEUlClgUCSw6Cl5imT0TCzsnNxx-Esraxt1ZKISDTXyW8pqCDbP2BY+gf4+PqY+Wr7q3UQXxEun8Pz+P1MFgmESiIBiPHmVBOq3WmyYyTSGSyuQKxTmx2WqPOWyu1Vkd3qoEezxsr3eI2+v3+gIQxiGngs-n6Wl+kx87mm8NmgjAZAUuDykFoAGUAJIAcQAcgB9ADyAFUACpkm4Ui4PRD6Cz6EFaGyGMFmES8-qsyb6bD+YYWLw24wiD0+IUxVBkUXikiS9DS+XKlVypW66T6+4NR7G82vMFjES-AX6Gz+Vn6fSmdSeMaafNWPrGfQ+2Z+gMSqUQWWK1UagAK0ZAtwN8aNQwL-hsPnUFpsZihX1ZFuwHpEIi5vjCXLTlaw2DkUDICUo5Ab4cjKplGoAwgeAKIymVtjtx6lG7QDN4fN4iYfDYzjkKebT+dxaYwjuxLnBV3XBYtzDVVdwAMQAQTlAAZDUACVjwvWMqUaBB9FvekHwFZ8xlZQIBneMJ2T6AJ2QAlcSDXDdUCkbcm2bFUoIAdRgrVIwVFDaivdDaWwxlwRZZwNGNQsREzU1tHMCTKKA2j6LAlUWxVaC4MQ5Cqj1Hi0JpF570E5kB1ZLQbWwH9py5Ux81zKFKOQAB3ZA7gWIDKDohjlKYg81QAWWbWDjy1Y8ABFuMpMhDQwrCDO5XDjBfVkBR8J1XRsiThgmCx7KclyqDcjylJU48AA1mzlJCwq0mMdMirtoq0O8GTip8EvwkSEHUYwUr6ayBU0dQZx+SI4TIBgIDgZRBHJWqor4UxWT4YwnQ+Va1v8dRKMRUgFmm7SIqi34kus7BQky-tzWCf84QRI4NxRM50TqmqDvq8tHX+KwspNCYkoSychj7LMfGMbRvmMeyKjFWsQwgGbXuvDDfxS9kLV6kJ83anohjpQdhlNIJ2UwiGbqrf0ocDYNIHhztEYCadTosD1bGMGwJMmLQCP8SdTB-NnQgtRrnTk6jgKocgad4hMTBSrxeZBqFTBnZ0ue5n62Zk4w+2skWaIWOjJd01wRG5wwGRnX8TbeHNAmwXr81CVmgmCHLnIUVzRfcqRDee9Dc1NTlM1-YcTZdVlfGWoZrOsNwvq6kbwiAA */
   context: {
     auth: null,    
     registration: null,
@@ -39,12 +40,25 @@ export const authMachine = setup({
   states: {
     "checking auth": {
       invoke: {
-        src: "hydrate",
+        src: "hydrateAuth",
         id: "check-auth",
         onDone: [
           {
             target: "authenticated",
             actions: "setAuth"
+          }
+        ],
+        onError: { target: "checking registration" },
+      }
+    },
+    "checking registration": {
+      invoke: {
+        src: "hydrateRegistration",
+        id: "check-registration",
+        onDone: [
+          {
+            target: "awaiting sign up",
+            actions: "persistRegistration"
           }
         ],
         onError: { target: "unauthenticated" },
