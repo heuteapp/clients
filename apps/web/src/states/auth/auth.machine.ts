@@ -32,7 +32,7 @@ export const authMachine = setup({
     isRegistrationAwaiting: ({ context }) => !!context.registration
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWgCwAOU1oDs6gJzqANCACeiawFZr2dSddHrWk-r6rsEAviEOgngExORUgrRgAE6JDInYUgA2yOgAZqkAtlG8AhjC4soycgpKSKoa2roGxmYmljb2Toj6TdhaAGwm6iJagZreFmERpdjIOehJlDwxFNSllIzMtKIStZXyimTKaggWRha6Rn3W+iIm3kHqFg7OCNYWfdhGRq6PIkb9NiMkxAkVm80Si2ipBWgnWTDAW30O2ksn2NVAx1O5z+Vxud1cDyenQQgWsRmwBNabwJ-REA2BkSW0KoiTAUBIsHQiWyB3o8NYZA4XCKxD4rPZnO51TI2wqqOlRy62hE2AsejpImsJls7meXX0Fn02BMFlcen0piCJmGDOmTNilHFHK5PKYCWSqXSWVyBRF-CdktdMvKu3lB0VJOVqvVfU12vUuuJVp01yMBsGvjVfVtWBmcwW9pWAZd0rhm1loaq4dqx30VIpBn0fWbpn+-z1JLrJmwtl8bz6Ixu2fCIOmYILUIdxalBzLCKESLlVfRdRJ9Z+gWbfVbxi0HYtfVc2Cb-z0Wlchtcw6mucEYDIClw2UgtAAygBJADiADkAPoAeQAVQAFQrFFl0OGtEH6Pp1GPIwRAJA0zgQowO1sbtd2MAYhwvIER0iVAyDvB8SCfeYIDfL8-3fb8wJAPYFSghB+gCbBD1jaxU3cRMXnUAZPg3Tc+n0axblcHMcCIkjH2fSiPx-X9AIABXoxjqwxaC+neY0jH4kTAn6PdiTYs0RBxfTbANfRJOwOQoDIB1yCoxTaN-V9AIAYU8gBRV9XzUsMV2OLR-BVTiRmubwtH4jtTA8LRzS0Wwrm0WDbPsxyVmchSaL-AAxABBd8ABlAIAJR8wKIIjULrXYzVIrrVwYr6DtEp0c9zPUb5m0MOl1AykgHIdVApBcv8VN-QqAHViuA2jP2qtFIM0tdkobYTtzMXcOwsUybD+bUYusbSbII6ZMtG8bcqU5TfyK0qKqqkNwJWiM6w2oStx3dtiQGI9XG8bUCT+IYE1s5AAHdkH2FZMsoMaJru39PP-ABZZSSp84CfIAEWWpi1rq8LGtE5rWv3TVyTJH5vAGW5tRMSGYbhqgEaR26pp8gANZT30qgnXoYoLVtXEmGr8cnotipNLBVc99pa7CJOBMgGAgOBlEEJd3uYvg2uJPgjy402zfNwaLtzQs4lKXWidXP6XjeI0TAHRDmxNa4IatnBxwhG3ViwOd7Y01ckM8PT3n+IS3g6Z22MMjURjOWDrFswPpyDUPgpcPTelO7xfCvYJLH3OtyQTJsfEePTTtVm8-fzAPJyLNlnRnJgQ8rPW1qCf52OMPwAmSsSCXL2wGuriwxMMS5099mZSnvWSKJzsWQrNc4o-4xD+i4tDiTeckrh+Y+AjVTVbOk5fSPIyB19qt24KsNN3BECxTjcKmVSGYI-FOAhfa24hojWymLdSucWI3HOASYIA5DwJhNB2HqR5viNlChYRKXhHigKylQMaj9mIng8GJESQNX6akQh2AYOgR6thjh-dKi9oawwUPDYaZBEZSCIcTAam1RJfDjlxQ2LxAimCnhQ+MCY-hhDCEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWgGzaAnABYRAdhGmANCACeiUwA4ArNlfqP+1zdd9U1N1AF9Qh0E8AmJyKkFaMAAnJIYk7CkAG2R0ADM0gFto3gEMYXFlGTkFJSRVDW1dA2MzSxt7J0R9TVdsKy19c3d9a1MRkS1wyLLsZFz0ZMoeWIpqMspGZlpRCTqq+UUyZTUEK3MrXXMjUy0rMddzENcHZwRxnVc3cy11K3d3MbmfRTEBROYLJJLGKkVaCDZMMDbfS7aSyA61UAnM4XERXG53PyPHwvLpaLQibCmKzdAyma5GcyuIwgqLLGFUJJgKAkWDoJI5Q70BGsMgcLjFYh8Tnc3n8mpkHaVNHy45dbQUmzadzqdxGQzuB4kt5BXraQIMgGuWxnFkzNlxSjSnl8gVMRIpNIZbJ5QoS-hO2WuhUVPbKw6qt7qvp6LTa3X6w2dN5GWzYdRGaluM4ia4iVy2rCzeaLe2rAMu+XwraK0PVcN1E5+LSmbDawbam4-MZGwz6Tw+QL6KzqCY2ZkRUEzcEl6EO8tyw5VxFCZFKusY+pvVzN1sGIbqTsH-Q9x76bB6-pklNBclhCdgspgMgKXA5SC0ADKAEkAOIAOQAfQAeQAVQAFRrVF1yOBtEFuPQvC0QdzEZO4-isI06XMc9TG1HUWhEbp83vGZUDIQQnxfN8IE-X9AK-P9IJAfYVVghBbjJNNzB6XCHiZDpXnTXp90MK1cRQox3CsAscDIijnxIV8Fho79-wAkCAAUmJY+tMTg6kLm1WwsP+YIziNQJWxEaz9FEq4iWkkjCzkKAyAdchaLUhiAI-ECAGE-IAUQ-D9tLDDcTjJK1z1sKTfH+T5zCNRkW1vQZhz0Zo6Rk7AXLc1YPNU+jAIAMQAQS-AAZECACVArC6CIyiikU1wqx4oNCwjXJHRYxs25eytIxJicnA8odVApE8wDNJ8-ygpChr0RgvStx3Nt90Pbsk3as8O1sPV3BEdxzjvaZnJIVyJqmor1I0gDyqq2r6pDKDlojJsWw2jsySPI0jA8VsPDMkdyQ8EbzpwZAAHdkAOVY2GSEhckUoNaAANUCmqvxKr8-LKsCvyAwC-KAgBZDTKsCsDAoAESW1jVuamK2o6xKe17NMvi0SxXG3WxiMh2ZYfhqhEaSZHUflDGsZxvGCaJwDAoADQ0r86vp17mPClbN2Z1q4uGBKuqTQw6T6EYqV+L5vHHCcyAYCA4GUQQ13eti+CMI1PZy0t4jKN3Gc3b5MLcNM+xGWymT8PUcunSE-bWLAl0D3TN2GM91G4qx+j56xNB7azDMkvM3D0Pwbl92cyy5Z0Fw3HSIpcbjsGba4u2sSOtB7AYKStc4fh5qwTBtUaiwhKFeDnWvA0rTYwFTpu3hOnRhvcMG9AzwYe-JXQTqMBlyRzq5xyF+SqOUxfdcik7en1clHmOwxbkLwjsEGbx+L8azvByuTHwUkpSAV8mqmFxNgb4+g17+CZMNV+aZjq6mCOmXulcx7jQKrrRu184IjEMn2bcnwcxGizp4ESKF0zDGHlcHKGCqCTRAWxKBjxKQ5l+FcbwVIvZJgBh8e+AIoEPBoWPGGcMFAIyRijJSadsFNTYbuQYSEpKxh1OoDmfw94cKOpqSSdtQhAA */
   context: {
     auth: null,    
     registration: null,
@@ -79,7 +79,7 @@ export const authMachine = setup({
     "after checking registration done": {
       always: [
         { 
-          target: "awaiting sign up",
+          target: "awaiting verification",
           guard: "isRegistrationAwaiting"
         },
         { target: "unauthenticated" }
@@ -148,7 +148,7 @@ export const authMachine = setup({
         }
       },
       on: {
-        SIGN_UP_COMPLETED: {
+        SIGN_UP_SUCCESS: {
           target: "awaiting verification",
           actions: [
             "setRegistration",
