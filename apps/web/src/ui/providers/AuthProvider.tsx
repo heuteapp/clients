@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService } from "@/src/states/auth/auth.machine";
+import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification } from "@/src/states/auth/auth.machine";
 import { AuthContext } from "../contexts/auth.context";
 import { usePathname, useRouter } from "next/dist/client/components/navigation";
 
@@ -24,15 +24,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        const isAuthenticated = state.matches("authenticated");
-
-        const isSigningIn = state.matches("signing in");
-        const isSigningUp = state.matches("signing up") || state.matches("awaiting sign up");
-
         const onSignInPage = pathname === "/workspace/sign-in";
         const onSignUpPage = pathname === "/workspace/sign-up";
+        const onVerifycationPage = pathname === "/workspace/verification";
 
-        if (state.matches("unauthenticated") && pathname?.startsWith("/workspace")) {
+        if (isUnauthenticated(state) && pathname?.startsWith("/workspace")) {
             if (onSignInPage || onSignUpPage) {
                 return;
             }
@@ -41,13 +37,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return;
         }
 
-        if(onSignInPage && isSigningUp) {
-            router.push("/workspace/sign-up");
+        if(!onSignInPage && isSigningIn(state)) {
+            router.push("/workspace/sign-in");
+            return;
         }
 
-        if(onSignUpPage && isSigningIn) {
-            router.push("/workspace/sign-in");
+        if(!onSignUpPage && isSigningUp(state)) {
+            router.push("/workspace/sign-up");
+            return;
         }
+
+        if(!onVerifycationPage && isAwaitingVerification(state)) {
+            router.push("/workspace/verification");
+            return;
+        }
+
     }, [router, pathname, state]);
 
     return (
