@@ -1,11 +1,26 @@
 "use client";
 
-import { Card, Typography, Button } from "@mui/material";
+import { isAwaitingVerification } from "@/src/states/auth/auth.machine";
+import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { Card, Typography, Button, CircularProgress } from "@mui/material";
 import router from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
+    const { state } = useAuthContext();
     const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        if (state.context.registration) {
+            setEmail(state.context.registration.email);
+        }
+    }, [state.context.registration]);
+
+    if(isAwaitingVerification(state)) {
+        return (
+            <CircularProgress />
+        )
+    }
 
     return (
         <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
