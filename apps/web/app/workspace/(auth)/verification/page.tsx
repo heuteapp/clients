@@ -6,7 +6,7 @@ import { Card, Typography, Button, CircularProgress, Alert } from "@mui/material
 import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
-    const { state } = useAuthContext();
+    const { state, send } = useAuthContext();
     const [email, setEmail] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -16,14 +16,34 @@ export default function VerificationPage() {
         }
     }, [state.context.registration]);
 
-    const handleTrySignIn = () => {
-        if (state.context.auth) {
+    useEffect(() => {
+        if (state.matches('awaiting verification') && state.context.error) {
+            setError(state.context.error);
+        }
+        
+        if (state.matches('unauthenticated') && state.context.error?.includes('expired')) {
+            setError("Verification link has expired. Please sign up again.");
+        }
+        
+        if (state.matches('authenticated')) {
             window.location.href = "/workspace/sign-in";
         }
-        else {
-            setError("Email verification is not completed yet");
-        }
-    };
+    }, [state]);
+
+    useEffect(() => {
+        const handleFocus = () => {
+            console.log("Window focused, checking verification status...");
+            if (isAwaitingVerification(state)) {
+                send({ type: "VERIFY" });
+            }
+        };
+
+        window.addEventListener('focus', handleFocus);
+        
+        return () => {
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, [state, send]);
 
     if(!isAwaitingVerification(state)) {
         return (
@@ -45,21 +65,6 @@ export default function VerificationPage() {
             <Typography sx={{ mb: 2, textAlign: "center", color: "text.secondary" }}>
                 After verification, you can sign in to your account.
             </Typography>
-
-
-            {error && (
-                <Alert severity="error" sx={{ mb: 2 }}>
-                    {error}
-                </Alert>
-            )}
-            
-            <Button 
-                variant="contained" 
-                fullWidth
-                onClick={handleTrySignIn}
-            >
-                Try Sign In
-            </Button>
         </Card>
     );
 }
