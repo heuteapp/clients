@@ -83,3 +83,29 @@ export const clearRegistrationAction = createAssign<
         };
     }
 );
+
+//
+
+export const setErrorAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    ({ event }) => {
+        if (event.type !== "SIGN_IN_FAILURE" && event.type !== "SIGN_UP_FAILURE") {
+            throw new Error("Invalid event type for setError action");
+        }
+
+        return {
+            error: event.error,
+        };
+    }
+);
+
+export const unsetErrorAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    () => {
+        return {
+            error: null,
+        };
+    }
+);
