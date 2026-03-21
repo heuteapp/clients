@@ -35,31 +35,20 @@ export const authMachine = setup({
     error: null,
   },
   id: "auth",
-  initial: "checking",
+  initial: "checking auth",
   states: {
-    "checking": {
+    "checking auth": {
       invoke: {
         src: "hydrate",
-        id: "check-hydration",
+        id: "check-auth",
         onDone: [
           {
-            target: "checking after hydration",
+            target: "authenticated",
             actions: "setAuth"
           }
         ],
         onError: { target: "unauthenticated" },
       }
-    },
-    "checking after hydration": {
-      always: [
-        {
-          target: "authenticated",
-          guard: "isUserLoggedIn"
-        },
-        {
-          target: "unauthenticated"
-        }
-      ]
     },
     "authenticated": {
       on: {

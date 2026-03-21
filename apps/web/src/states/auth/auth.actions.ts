@@ -9,7 +9,7 @@ export const resolveAuthData = (event: AuthMachineEvent) => {
         };
     }
 
-    if (event.type === "xstate.done.actor.check-hydration") {
+    if (event.type === "xstate.done.actor.check-auth") {
         return event.output;
     }
 
