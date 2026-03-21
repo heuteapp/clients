@@ -22,15 +22,19 @@ export type SIGN_UP_SUCCESS_EVENT = { type: "SIGN_UP_SUCCESS", email: string };
 
 export type SIGN_UP_FAILURE_EVENT = { type: "SIGN_UP_FAILURE"; error: string };
 
-export type SIGN_UP_ALL_EVENTS = SIGN_UP_EVENT | SIGN_UP_SUCCESS_EVENT | SIGN_UP_FAILURE_EVENT;
+export type SignUpEvents = SIGN_UP_EVENT | SIGN_UP_SUCCESS_EVENT | SIGN_UP_FAILURE_EVENT;
 
 //
 
-export type VERIFICATION_COMPLETED_EVENT = { type: "VERIFICATION_COMPLETED"; accessToken: string; profile: ProfileData };
+export type VERIFY_EVENT = { type: "VERIFY"; };
 
-export type VERIFICATION_EXPIRED_EVENT = { type: "VERIFICATION_EXPIRED"; error: string };
+export type VERIFY_SUCCESS_EVENT = { type: "VERIFY_SUCCESS"; accessToken: string; profile: ProfileData };
 
-export type ALL_VERIFICATION_EVENTS = VERIFICATION_COMPLETED_EVENT | VERIFICATION_EXPIRED_EVENT;
+export type VERIFY_FAILURE_EVENT = { type: "VERIFY_FAILURE"; error: string };
+
+export type VERIFY_EXPIRED_EVENT = { type: "VERIFY_EXPIRED"; email: string };
+
+export type VerifyEvents = VERIFY_EVENT | VERIFY_SUCCESS_EVENT | VERIFY_FAILURE_EVENT | VERIFY_EXPIRED_EVENT;
 
 //
 

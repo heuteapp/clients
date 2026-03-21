@@ -1,5 +1,5 @@
 import { AuthData } from "@/src/types/core/auth/auth.data";
-import { ALL_VERIFICATION_EVENTS, DONE_ACTOR_CHECK_AUTH_EVENT, DONE_ACTOR_CHECK_REGISTRATION_EVENT, HYDRATE_EVENT, SIGN_IN_ALL_EVENTS, SIGN_OUT_EVENT, SIGN_UP_ALL_EVENTS } from "./auth.events";
+import { DONE_ACTOR_CHECK_AUTH_EVENT, DONE_ACTOR_CHECK_REGISTRATION_EVENT, HYDRATE_EVENT, SIGN_IN_ALL_EVENTS, SIGN_OUT_EVENT, SignUpEvents, VerifyEvents } from "./auth.events";
 import { ActorRefFrom } from "xstate";
 import { authMachine } from "@/src/states/auth/auth.machine";
 
@@ -11,8 +11,8 @@ export interface AuthMachineContext {
 
 export type AuthMachineEvent =
   | SIGN_IN_ALL_EVENTS
-  | SIGN_UP_ALL_EVENTS
-  | ALL_VERIFICATION_EVENTS
+  | SignUpEvents
+  | VerifyEvents
   | SIGN_OUT_EVENT
   | HYDRATE_EVENT
   | DONE_ACTOR_CHECK_AUTH_EVENT
