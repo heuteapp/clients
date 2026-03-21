@@ -151,6 +151,7 @@ export const authMachine = setup({
         SIGN_UP_AWAITING: {
           target: "awaiting sign up",
           actions: [
+            "setRegistration",
             "persistRegistration",
             "unsetError"
           ]

@@ -29,23 +29,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const isSigningIn = state.matches("signing in");
         const isSigningUp = state.matches("signing up") || state.matches("awaiting sign up");
 
+        const onSignInPage = pathname === "/workspace/sign-in";
+        const onSignUpPage = pathname === "/workspace/sign-up";
+
         if (state.matches("unauthenticated") && pathname?.startsWith("/workspace")) {
-            if (pathname === "/workspace/sign-in") {
-                if (isSigningUp) {
-                    router.push("/workspace/sign-up");
-                }
-
+            if (onSignInPage || onSignUpPage) {
                 return;
             }
 
-            if(pathname === "/workspace/sign-up") {
-                if (isSigningIn) {
-                    router.push("/workspace/sign-in");
-                }
+            router.push("/workspace/sign-in");
+            return;
+        }
 
-                return;
-            }
+        if(onSignInPage && isSigningUp) {
+            router.push("/workspace/sign-up");
+        }
 
+        if(onSignUpPage && isSigningIn) {
             router.push("/workspace/sign-in");
         }
     }, [router, pathname, state]);
