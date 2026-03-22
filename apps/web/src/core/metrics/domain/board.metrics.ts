@@ -1,4 +1,4 @@
-import { BoardMetricsContext, BoardMetricsValue } from "@/src/core/types/domain/board/board.metrics";
+import { BoardMetricsContext, BoardMetricsValue } from "@/src/types/core/domain/board/board.metrics";
 import { computeLayoutMetrics } from "./layout.metrics";
 
 export function computeBoardMetrics(context: BoardMetricsContext): BoardMetricsValue | undefined {

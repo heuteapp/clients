@@ -1,3 +1,5 @@
-import { BoardContentActions, BoardContentValue } from "@/src/core/types/domain/board/board.content";
+import { BoardContentBase } from "@/src/types/core/domain/board/board.content";
 
-export type BoardContentManager = React.RefObject<BoardContentValue & BoardContentActions | null>
+export interface BoardContentStoreBridge extends BoardContentBase {
+
+}

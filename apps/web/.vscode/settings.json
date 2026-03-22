@@ -1,0 +1,36 @@
+{
+  "js/ts.tsserver.maxTsServerMemory": 2048,
+  "js/ts.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.tsserver.useSeparateSyntaxServer": false,
+  "js/ts.disableAutomaticTypeAcquisition": true,
+  "js/ts.preferences.includePackageJsonAutoImports": "off",
+  "js/ts.suggest.autoImports": false,
+  "js/ts.tsserver.log": "off",
+  
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/apps/**/.next/**": true,
+    "**/pnpm-lock.yaml": true
+  },
+  
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/pnpm-lock.yaml": true
+  },
+  
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.run": "onSave",
+  "eslint.codeActionsOnSave.mode": "problems",
+  
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}

@@ -1,13 +1,13 @@
 import { AppTheme } from "@/src/ui/themes/mui/AppTheme";
-import { AuthProvider } from "./AuthProvider";
 import { Analytics } from "@vercel/analytics/next";
+import { AuthProvider } from "../providers/AuthProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AppTheme>
         <AuthProvider>
-            {children}
+          {children}
         </AuthProvider>
       </AppTheme>
       <Analytics />

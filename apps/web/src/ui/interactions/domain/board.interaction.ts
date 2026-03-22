@@ -1,15 +1,15 @@
-import { BoardInteraction } from "@/src/ui/types/domain/board/board.interaction"
+import { BoardUserInteraction } from "@/src/types/core/domain/board/board.interaction"
 import { createIdentifier } from "@/src/core/utils/shared/data"
-import { BoardSessionManager } from "@/src/ui/types/domain/board/board.session"
-import { BoardInteractionType } from "@/src/core/types/domain/board/board.interaction"
+import { BoardUserSessionManager } from "@/src/types/core/domain/board/board.session"
+import { BoardUserInteractionType } from "@/src/types/core/domain/board/board.interaction"
 
-export function createBoardInteraction(
-    session: BoardSessionManager
-): BoardInteraction {
+export function createBoardUserInteraction(
+    session: BoardUserSessionManager
+): BoardUserInteraction {
 
-    const interaction: BoardInteraction = {
+    const interaction: BoardUserInteraction = {
         pointer: null,
-        type: BoardInteractionType.Idle,
+        type: BoardUserInteractionType.Idle,
         session,
         callbacks: null,
 
@@ -32,7 +32,7 @@ export function createBoardInteraction(
                 draft.cardResize = null;
             })
             
-            interaction.type = BoardInteractionType.CardCreation;
+            interaction.type = BoardUserInteractionType.CardCreation;
             interaction.callbacks?.OnStart?.(interaction.type, state)
         },
 
@@ -60,7 +60,7 @@ export function createBoardInteraction(
                 draft.cardResize = null;
             })
 
-            interaction.type = BoardInteractionType.CardMovement;
+            interaction.type = BoardUserInteractionType.CardMovement;
             interaction.callbacks?.OnStart?.(interaction.type, state)
         },
 
@@ -78,7 +78,7 @@ export function createBoardInteraction(
             if(!interaction.type) return;
 
             interaction.callbacks?.OnFinish?.(interaction.type, interaction.getCurrentState()!);
-            interaction.type = BoardInteractionType.Idle;
+            interaction.type = BoardUserInteractionType.Idle;
 
             interaction.session.updater((draft) => {
                 draft.cardCreation = null;
@@ -92,11 +92,11 @@ export function createBoardInteraction(
             if(!session) return null;
 
             switch(interaction.type) {
-                case BoardInteractionType.CardCreation:
+                case BoardUserInteractionType.CardCreation:
                     return session.cardCreation;
-                case BoardInteractionType.CardMovement:
+                case BoardUserInteractionType.CardMovement:
                     return session.cardMovement;
-                case BoardInteractionType.CardResize:
+                case BoardUserInteractionType.CardResize:
                     return session.cardResize;
                 default:
                     return null;

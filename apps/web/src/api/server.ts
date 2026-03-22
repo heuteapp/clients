@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useAuthStore } from "../stores/auth.store";
 import { authApi } from "./endpoints/auth.api";
 import { boardApi } from "./endpoints/workspace/board.api";
 import { layoutApi } from "./endpoints/workspace/layout.api";
+import { authService } from "../states/auth/auth.machine";
 
 export const server = {
     auth: authApi,
@@ -21,7 +21,7 @@ export const serverApi = axios.create({
 });
 
 serverApi.interceptors.request.use((config) => {
-    const accessToken = useAuthStore.getState().accessToken;
+    const accessToken = authService.getSnapshot().context.auth?.accessToken;
     if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -32,13 +32,7 @@ serverApi.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-        console.log("Unauthorized - logging out");
-        useAuthStore.getState().signOut?.();
-
-        if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      }
-
+            authService.send({ type: "SIGN_OUT" });
         }
         return Promise.reject(error);
     }

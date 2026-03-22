@@ -1,4 +1,4 @@
-import { GridPosition, GridSize, Pointer } from "@/src/core/types/shared/common"
+import { GridPosition, GridSize, Pointer } from "@/src/types/shared/core/common"
 import { clamp } from "@/src/core/utils/shared/clamp"
 
 export function calculateCardPositionByPointer(

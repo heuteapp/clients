@@ -2,7 +2,7 @@ import { BoardRegistry } from "@/src/ui/types/domain/board/board.registry";
 import { BoardMetricsManager } from "@/src/ui/types/domain/board/board.metrics";
 import { applyBoardMetrics } from "./apply";
 import { computeBoardMetrics } from "@/src/core/metrics/domain/board.metrics";
-import { BoardMetricsContext } from "@/src/core/types/domain/board/board.metrics";
+import { BoardMetricsContext } from "@/src/types/core/domain/board/board.metrics";
 import { BoardContentManager } from "@/src/ui/types/domain/board/board.content";
 import { BoardThemeManager } from "@/src/ui/types/domain/board/board.theme";
 

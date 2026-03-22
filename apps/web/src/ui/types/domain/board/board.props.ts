@@ -1,6 +1,6 @@
-import { BoardCardData, BoardData } from "@/src/core/types/domain/board/board.data";
-import { LayoutData, LayoutSectionData } from "@/src/core/types/domain/layout/layout.data";
-import { Identifier } from "@/src/core/types/shared/data";
+import { BoardCardData, BoardData } from "@/src/types/core/domain/board/board.data";
+import { LayoutData, LayoutSectionData } from "@/src/types/core/domain/layout/layout.data";
+import { Identifier } from "@/src/types/shared/core/data";
 
 export interface BoardRootProps extends BoardData {
 
@@ -11,7 +11,7 @@ export interface BoardCardContainerProps {
 }
 
 export interface BoardCardProps extends BoardCardData {
-
+    
 }
 
 export interface BoardLayoutRootProps extends LayoutData {

@@ -1,6 +1,6 @@
 import { serverApi } from "@/src/api/server";
 import { BoardResponse } from "@/src/api/models/workspace/board.response";
-import { BoardCommand } from "@/src/core/types/domain/board/board.command";
+import { BoardCommand } from "@/src/types/core/domain/board/board.command";
 
 export const boardApi = {
     getBoard: (categoryName: string) =>

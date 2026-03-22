@@ -1,5 +1,6 @@
-import { AuthManagerRef } from "./auth.manager";
+import { AuthMachineSend, AuthMachineState } from "@/src/types/states/auth/auth.machine";
 
 export interface AuthContextValue {
-    manager: AuthManagerRef;
+    state: AuthMachineState;
+    send: AuthMachineSend;
 }

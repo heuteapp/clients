@@ -1,4 +1,4 @@
-import { Rect } from "@/src/core/types/shared/common";
+import { Rect } from "@/src/types/shared/core/common";
 import { BoardRegistry } from "@/src/ui/types/domain/board/board.registry";
 
 export function clearGridHover(registry: BoardRegistry) {
