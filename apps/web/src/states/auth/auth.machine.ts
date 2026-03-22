@@ -26,14 +26,14 @@ export const authMachine = setup({
     persistRegistration: persistRegistrationAction,
     clearRegistration: clearRegistrationAction,
     setError: setErrorAction,
-    unsetError: unsetErrorAction
+    unsetError: unsetErrorAction,
   },
   guards: {
     isAuthenticated: ({ context }) => !!context.auth,
     isRegistrationAwaiting: ({ context }) => !!context.registration
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWgCwB2TQA4j5k-oA0IAJ6ITJnQDY3ATn2Hr5rW4ArOoAviH2gngExORUgrRgAE6JDInYUgA2yOgAZqkAtlG8AhjC4soycgpKSKoa2roGxmbqltZ2joiGJtiB5gYmbiL66kaebgZhEaXYyDnoSdSllDzEkLSiErWV8opkymoIJiI6WuaG+mPmbkb6IoH2TgjmJ71uxiLHt32egVMgkTmC0SSywK2iXAgG30W2ksl2NVAh2Op3OWkunmut3uj0Qxjc2H6Bmu6hMpmO2n+kVWpAolESYCgJFg6ES2T29CYLHYnG4EL4DKZLLZ1TImwq8NFBy6Wl+2E8pMCIjcLiMWk0JlxCE8PSGKsCZ30-XORiMVJmNNi9MZzNZ7KYCWSqXSWVyBSKxAFNuF9rF5W2kr20oQhjlCpMSpVZPVpK1xkC2GMngV-gCRhElnNWFm80WgttIr24N463FAaqQdqh30Jmu2EuyoCSfRpq1516Ik7nYmzUu5izOCBee9dtFxbWUKEMIlFcRdRDtYJDfe7zGLaMWu6HeG3lcYxXoXCAJmgjAZAUuGy6wAygBJADiADkAPoAeQAqgAVMtw2f7KtdIu9bpiuzaXBunRHDc2DqIEngxu8dyeLcA7YKgZCnueJCXgsUJ3k+z63o+P4gDsUoASG5iYroq7nKMhgTOoWrqNBYyYnolimlogR-EekToZhF5XnhD4vu+AAKJFkZWSJ4uinj1iI8HqPBNxjA8kGBPoCZKYEVg8XRxyeKhchQGQVrkLQ+EvkRz7Xu+ADCDkAKLXteUmBnO1aygm4aRqqMaapp7ZaCcOo3GYSqkiZJBmRZZBWaJhEvgAYgAgreAAy74AErOR5f7BqGvmKsqAUalq+mJlcQy-MqapaDFcV0qgUiJQREl2Y5LluQVCL-rJCDceY5jYGqRrqSYyGmJVBpjcmSl3HpjHcU15ktW11nPp16VZbl+X+r+-XBlo8mKcpqmmr8lX6Aplzqsc9zmEqyGocgADuyC7HSbBJCQOTYb6tAAGrOTlt4pQAms+zkALIZZlfXkYNTZGL0tYjO8spuOcm70fKpLpjWnawdpqG-Yk-0OFaYD5F9GQg2DEPQ3DCNdU5rnuYdpGeQN87FQTEZldGFWQfB+g0eqgS1qa0v9nxMwU1TNN0yQDOg+DUMw-DWXPrt2V5UjMn8z5gv+SLsaQZc7zYDjZhYqMCqYuTf05NTdK0-TjOayzOuZTDAAa4m3nlAAiRteTKYalVGaqi08PinYSZydpGrRBC7lNu5QYAqFIJAMrAtAqCyV45sCAAUSqdgAlLQkRK9nuf54XEd89WQHLqj4utlbNbqB2EYgaa7Rmv8ZAMBAcDKIIM7HRRfBuFqi+6F2a-r2cqGWnSs-lvPg1qlqEYEjc0v3IYwSYo1CvZkOIKCOOkJz8j85aRLoykqMRgRT4QVPFNaMVLSx8MEGs4Yt4QitPmH0L9pKR2eNRUB6p1TPWTJiOMyp5qYm6HoU0+gM430HLmEE0DRxFhpJAZ+xtqx6TRuvS4IxfgaQTrdGCmhSamFukpcYb1ShniErhKh8DtLQVggqU+aktCDDbJ2QkhhP5IUxDqVCAk+FYRwpQveL9DihXTMBRscEDDaCYppT4vQLhKQzNYAya14pCPbl0O4OhLCtBcFFPBf9EB9DRhGQYLgL5GFGLYja9iTq3AHlNHG3FpbBG0JVWsttaw2CGL4EQY9pi30+t9KgjdAawN5idF4A9MSmgMCcPo-hPEhg1L0aw6ZTDBECek482ZG7uyoJ7NWoSKJ3FcDBQwYwGlGL6JuQJCZBgsWQmcBUUjeIZJwG0nOecC7Ty0dQrofQCS3BAvBZMVgDCbhrDoJU-i7h9kuLxMIQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCM2gCwAOAOwA2IwE4L+swBoQAT0T6967Ootb32rSIiZiYAviFOgngExORUgrRgAE6JDInYUgA2yOgAZqkAtlG8AhjC4soycgpKSKoa2roGxuZWtvZOrgj6Rkb62PrdZlqadgCso9phEaXYyDnoSdSllDzEkLSiErWV8opkymoIZiI6WiaGJpf6Fuqmox1uIqMi2Ea+1tZnT6NnoeEgkTmC0SSywK2iXAgG30W2ksl2NVAh2Op3O6ku5xudweXW0nm8RjME1GJiMIkuWimAJmq1IFEoiTAUBIsHQiWye3oTBY7E43AhfEZzNZ7OqZE2FXhYoObi0ROw1nUlnGJnUIh8+i0OMMgWwQ26tiewRMIiMVMitNiDKZLLZHKYCWSqXSWVyBSKxEFNpF9vF5W2Ur2Mq6ctGCqVFhVao1WpcbjsFmwPksJh+vnVIn05pmQMWQttor24N46wlAaqQdqh3sZN0gX0tmew1GwW1BjMevOvRMFgs1iMfdG2aws3mee9drFxbWUKEMMlFcRdS6ZlrgUzjZO6hbJm1NhM2HMZjM+lGPW31h+w5wgjAZAUuGy6wAygBJADiADkAPoAeQAqgAKmWcKLvsVYaOSRh1nodimg2-ZGDikaJsEhj2FoPzfEO-yRKgZC3veJCPgsUJvl+36vp+IEgDs0oQQgBgnNgoyntYlhElYp44qxfSfOxZzuJYfYDte2D4YRD5PmRH4-v+AAKNF0ZWSKQexep6AOQTkhYlz3HGCDnCx64GJ8xgDJSuEzHIUBkFa5C0ORP5Ud+z7-gAwu5ACiz7PkpgZLocWhWAeSpnu4RijDcfbIQ0FhmOxPy9kM5I4dMI42XZ9IOU5lE-gAYgAgq+AAy-4AEpef5YHBsFpheESvSmlF3jWDitxhkMvamFo1ipoEZpWRlJC2VaqBSI5snfgprked5vnVQi4GqSua71puzatgZAy6QqWgBJh5zHpZ6U4JlY0TblM1FaVFVVf6oFLcGNYvOuDaRluO44gd2CYYEUU9cEmZmGJyAAO7ILs9JsEkJA5MRvq0AAal55WvvlACa35eQAssVJWLfRK2+CarzqgD4xkjY+mdJqfUscEmhnlFZy3KDENQ1QMOJHDCNisjqPo1juP49+7m-jj8klV5gFeQAIoTKnLiTLxkihkVnqal44seianj4kb7Ru8VidzcPOFaYD5JDGQC2jmPY3jpWzZ5Pl+Q9tEBctyshQ14XNdFbXbftHaZqSmFKtYRqm7DOQW-SVs23bQuO6LN3SwrHvKYFiD7ftrzEr08WjJeNOysxPisaxJhaKYRjqDHPNx5b1skLbKP28LTsldjAAa8mvpVmewp7NUMXVoWNRFLUxcHx4sfoqqXs2ZJyo35uULAqC4LgcCwKWWde7VUeJmrNyBJY2hl10eh9IEcqZtonzuFmQ04GbceUGAKhSCQjKwLQFQrInyjmBAACmeIEAAlLQSIH9nBfx-n-OAisc6MSgjBbwEUEI9DbGcfofU9DPEil1BuVIyAMAgHAZQggFxPQYnwCwOJGFiUtPSWh5Z6ErTeNqZqh50S6UuPXLqaVqQjlzCCQQ05IR0KJsuXiXh66pjsDYQIqp1C8PGLoS4KIJgh0MKwiEVp8w+jkdnb2hwTD0wmIYIk9h1B9V7G2QwBCTSYnOD8cwoMxwghMZOIstJICyKVtWGwHZUyXiGP2HUmE8E6B6CaIklMHFPFBqUO8UlSLBLQb1dwSYfhDGPG8U8tdkKKl+rcSKvYzgfD7GJCS6SiIkSCZwuRhxtCkhYtE+wukS4Dmvu4F4aooqnnRJfdUr9TrYHOtlb25jaqEjDIJLEHxFmmBxKYA8-FGqrl8AYP4UyZlUHGtkixbgopDKJCIT4Vgzw2A0dtD4rxhLPCVLcYYIM36zA5goaGsc+ZK3mQxBsq4YLXHMOedZwdMKHlYvFRCjYDliPfrHeOVBE5t1OQsmwepiHDEXghYK2oSa-V0uiJKhoBjr0-lvHee8WmPTabnE+rwlQRJLl8S4xLbh6jJcXQwvVJhfPgYg3+-8sXj2sNcFiPgewpUsHoPBHYGwmnii-Mw6JBphCAA */
   context: {
     auth: null,    
     registration: null,
@@ -55,6 +55,7 @@ export const authMachine = setup({
         onError: { target: "checking registration" },
       }
     },
+
     "after auth checked": {
       always: [
         { 
@@ -64,6 +65,7 @@ export const authMachine = setup({
         { target: "checking registration" }
       ]
     },
+
     "checking registration": {
       invoke: {
         src: "hydrateRegistration",
@@ -77,6 +79,7 @@ export const authMachine = setup({
         onError: { target: "unauthenticated" },
       }
     },
+
     "after registration checked": {
       always: [
         { 
@@ -86,6 +89,7 @@ export const authMachine = setup({
         { target: "unauthenticated" }
       ]
     },
+
     "authenticated": {
       on: {
         SIGN_OUT: {
@@ -97,6 +101,7 @@ export const authMachine = setup({
         },
       },
     },
+
     "unauthenticated": {
       on: {
         SIGN_IN: {
@@ -107,6 +112,7 @@ export const authMachine = setup({
         },
       },
     },
+
     "signing in": {
       invoke: {        
         src: "signIn",
@@ -133,6 +139,7 @@ export const authMachine = setup({
         SIGN_IN_FAILURE: { target: "unauthenticated", actions: "setError" },
       }
     },
+
     "signing up": {
       invoke: {
         src: "signUp",
@@ -163,16 +170,25 @@ export const authMachine = setup({
         }
       }
     },
+
     "awaiting verification": {
       on: {
         VERIFY_EMAIL: { 
           target: "verifying email",
         },
         VERIFY_EMAIL_COMPLETED: {
-          target: "verify completing",
+          target: "authenticated",
+          actions: [
+            "setAuth",
+            "persistAuth",
+            "unsetRegistration",
+            "clearRegistration",
+            "unsetError"
+          ]
         }
       }
     },
+
     "verifying email": {
       invoke: {
         src: "verifyEmail",
@@ -180,7 +196,7 @@ export const authMachine = setup({
       },
       on: {
         VERIFY_EMAIL_SUCCESS: {
-          target: "verify completing",
+          target: "verify successed",
         },
         VERIFY_EMAIL_FAILED: {
           target: "awaiting verification",
@@ -196,7 +212,8 @@ export const authMachine = setup({
         },
       },
     },
-    "verify completing": {
+
+    "verify successed": {
         always: {
           actions: [
             "setAuth",
@@ -205,11 +222,9 @@ export const authMachine = setup({
             "clearRegistration",
             "unsetError"
           ]
-        },
-        after: {
-          5000: "authenticated"
         }
     },
+
     "verify expires": {
       after: {
         5000: "unauthenticated"
