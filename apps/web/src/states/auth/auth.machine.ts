@@ -48,14 +48,14 @@ export const authMachine = setup({
         id: "check-auth",
         onDone: [
           {
-            target: "after checking auth done",
+            target: "after auth checked",
             actions: "setAuth"
           }
         ],
         onError: { target: "checking registration" },
       }
     },
-    "after checking auth done": {
+    "after auth checked": {
       always: [
         { 
           target: "authenticated",
@@ -70,14 +70,14 @@ export const authMachine = setup({
         id: "check-registration",
         onDone: [
           {
-            target: "after checking registration done",
+            target: "after registration checked",
             actions: "setRegistration",
           }
         ],
         onError: { target: "unauthenticated" },
       }
     },
-    "after checking registration done": {
+    "after registration checked": {
       always: [
         { 
           target: "awaiting registration",
@@ -150,7 +150,7 @@ export const authMachine = setup({
       },
       on: {
         SIGN_UP_SUCCESS: {
-          target: "awaiting registration",
+          target: "awaiting verification",
           actions: [
             "setRegistration",
             "persistRegistration",
@@ -163,20 +163,20 @@ export const authMachine = setup({
         }
       }
     },
-    "awaiting registration": {
+    "awaiting verification": {
       on: {
-        REGISTRATION_VERIFICATION: { 
-          target: "verifying registration",
+        VERIFY_EMAIL: { 
+          target: "verifying email",
         }
       }
     },
-    "verifying registration": {
+    "verifying email": {
       invoke: {
         src: "registrationVerification",
         input: ({ context }) => context.registration
       },
       on: {
-        REGISTRATION_VERIFICATION_SUCCESS: {
+        VERIFY_EMAIL_SUCCESS: {
           target: "authenticated",
           actions: [
             "setAuth",
@@ -186,11 +186,11 @@ export const authMachine = setup({
             "unsetError"
           ]
         },
-        REGISTRATION_VERIFICATION_FAILURE: {
+        VERIFY_EMAIL_FAILURE: {
           target: "awaiting registration",
           actions: "setError"
         },
-        REGISTRATION_VERIFICATION_EXPIRED: { 
+        VERIFY_EMAIL_EXPIRED: { 
           target: "verify expires",
           actions: [
             "setError",
@@ -214,9 +214,9 @@ export const authService = createActor(authMachine);
 
 export const isChecking = (state: AuthMachineState) => isCheckingAuth(state) || isCheckingRegistration(state);
 
-export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth") || state.matches("after checking auth done");
+export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth") || state.matches("after auth checked");
 
-export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration") || state.matches("after checking registration done");
+export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration") || state.matches("after registration checked");
 
 export const isAuthenticated = (state: AuthMachineState) => state.matches("authenticated");
 
@@ -226,9 +226,9 @@ export const isSigningIn = (state: AuthMachineState) => state.matches("signing i
 
 export const isSigningUp = (state: AuthMachineState) => state.matches("signing up");
 
-export const isAwaitingRegistration = (state: AuthMachineState) => state.matches("awaiting registration");
+export const isAwaitingRegistration = (state: AuthMachineState) => state.matches("awaiting verification");
 
-export const isVerifyingRegistration = (state: AuthMachineState) => state.matches("verifying registration");
+export const isVerifyingRegistration = (state: AuthMachineState) => state.matches("verifying email");
 
 //
 

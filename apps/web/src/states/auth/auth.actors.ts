@@ -1,7 +1,7 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
 import { AuthData } from "@/src/types/core/auth/auth.data";
-import { SignInActorEvents, SignUpActorEvents, RegistrationVerificationActorEvents } from "@/src/types/states/auth/auth.actors";
+import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/types/states/auth/auth.actors";
 import { AuthRegistration } from "@/src/types/states/auth/auth.machine";
 import { createCallback } from "@/src/utils/xstate/create-callback";
 import { fromPromise } from "xstate";
@@ -84,14 +84,14 @@ export const signUpActor = createCallback<
 );
 
 export const verifyActor = createCallback<
-    AuthRegistration | null, RegistrationVerificationActorEvents
+    AuthRegistration | null, VerifyEmailActorEvents
 >(
     ({ input, sendBack }) => {
         const registration = input;
 
         if (!registration) {
             sendBack({ 
-                type: 'REGISTRATION_VERIFICATION_FAILURE', 
+                type: 'VERIFY_EMAIL_FAILURE', 
                 error: "No registration data available for verification" 
             });
             return;
@@ -99,7 +99,7 @@ export const verifyActor = createCallback<
 
         if (typeof window === "undefined") {
             sendBack({ 
-                type: 'REGISTRATION_VERIFICATION_FAILURE', 
+                type: 'VERIFY_EMAIL_FAILURE', 
                 error: "Verification can only be performed in the browser" 
             });
             return;
@@ -108,7 +108,7 @@ export const verifyActor = createCallback<
         const authRaw = localStorage.getItem("auth");
         if (!authRaw) {
             sendBack({ 
-                type: 'REGISTRATION_VERIFICATION_FAILURE', 
+                type: 'VERIFY_EMAIL_FAILURE', 
                 error: "No auth data found in localStorage for verification" 
             });
 
@@ -118,7 +118,7 @@ export const verifyActor = createCallback<
         const authData = JSON.parse(authRaw) as AuthData;
 
         sendBack({ 
-            type: 'REGISTRATION_VERIFICATION_SUCCESS',
+            type: 'VERIFY_EMAIL_SUCCESS',
             accessToken: authData.accessToken,
             profile: authData.profile,
         });

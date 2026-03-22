@@ -34,7 +34,7 @@ export default function VerificationPage() {
         const handleFocus = () => {
             console.log("Window focused, checking verification status...");
             if (isAwaitingRegistration(state)) {
-                send({ type: "VERIFY" });
+                send({ type: "VERIFY_EMAIL" });
             }
         };
 
