@@ -1,6 +1,6 @@
 "use client";
 
-import { isVerificationBusy } from "@/src/states/auth/auth.machine";
+import { isVerificationLocked } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -9,7 +9,7 @@ export default function HomeLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { state } = useAuthContext();
 
-  if (isVerificationBusy(state)) {
+  if (isVerificationLocked(state)) {
     return <CircularProgress />;
   }
 

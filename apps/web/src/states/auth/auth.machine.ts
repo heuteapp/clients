@@ -217,7 +217,6 @@ export const authService = createActor(authMachine);
 
 //
 
-export const isChecking = (state: AuthMachineState) => isCheckingAuth(state) || isCheckingRegistration(state);
 
 export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth");
 
@@ -233,14 +232,26 @@ export const isSigningUp = (state: AuthMachineState) => state.matches("signing u
 
 export const isAwaitingVerification = (state: AuthMachineState) => state.matches("awaiting verification");
 
-export const isVerifying = (state: AuthMachineState) => isVerifyingEmail(state);
-
 export const isVerifyingEmail = (state: AuthMachineState) => state.matches("verifying email");
+
+export const isVerifySuccessed = (state: AuthMachineState) => state.matches("verify successed");
+
+export const isVerifyExpired = (state: AuthMachineState) => state.matches("verify expired");
 
 //
 
-export const isAuthBusy = (state: AuthMachineState) => isAuthenticated(state) || isChecking(state);
+export const isAnyChecking = (state: AuthMachineState) => isCheckingAuth(state) || isCheckingRegistration(state);
 
-export const isSignBusy = (state: AuthMachineState) => isAuthBusy(state) || isAwaitingVerification(state);
+export const isAnyAuthenticated = (state: AuthMachineState) => isAuthenticated(state) || isUnauthenticated(state);
 
-export const isVerificationBusy = (state: AuthMachineState) => isAuthBusy(state) || isSigningIn(state) || isSigningUp(state);
+export const isAnySigning = (state: AuthMachineState) => isSigningIn(state) || isSigningUp(state);
+
+export const isAnyVerifying = (state: AuthMachineState) => isVerifyingEmail(state);
+
+export const isAnyVerificationState = (state: AuthMachineState) => isAwaitingVerification(state) || isAnyVerifying(state) || isVerifySuccessed(state) || isVerifyExpired(state);
+
+//
+
+export const isSignLocked = (state: AuthMachineState) => isUnauthenticated(state) || !isAnySigning(state)
+
+export const isVerificationLocked = (state: AuthMachineState) => !isAnyVerificationState(state)
