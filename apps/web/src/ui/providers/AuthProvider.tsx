@@ -13,6 +13,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const tokenHash = searchParams.get("token_hash");
     const type = searchParams.get("type");
+    console.log(state.value);
 
     useEffect(() => {
         authService.start();

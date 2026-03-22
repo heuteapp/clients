@@ -250,6 +250,6 @@ export const isAnyVerification = (state: AuthMachineState) => isAwaitingVerifica
 
 //
 
-export const isSignLocked = (state: AuthMachineState) => isUnauthenticated(state) || !isAnySigning(state)
+export const isSignLocked = (state: AuthMachineState) => isAnyChecking(state) || isAuthenticated(state)|| isAnyVerification(state);
 
-export const isVerificationLocked = (state: AuthMachineState) => !isAnyVerification(state)
+export const isVerificationLocked = (state: AuthMachineState) => isAnyChecking(state) || isAnyAuthenticated(state) || isAnySigning(state);

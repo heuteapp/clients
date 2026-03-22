@@ -1,6 +1,6 @@
 "use client";
 
-import { isAwaitingVerification } from "@/src/states/auth/auth.machine";
+import { isAwaitingVerification, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { Card, Typography, Button, CircularProgress, Alert } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -45,9 +45,36 @@ export default function VerificationPage() {
         };
     }, [state, send]);
 
-    if(!isAwaitingVerification(state)) {
+    if(isVerifySuccessed(state)) {
         return (
-            <CircularProgress />
+            <Card sx={{ 
+                padding: 4, 
+                maxWidth: 450, 
+                borderRadius: 3,
+                boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+                textAlign: "center"
+            }}>
+                <Typography variant="h4" component="h1" sx={{ 
+                    mb: 3, 
+                    fontWeight: 600,
+                    color: "success.main"
+                }}>
+                    ✓ Email Verified
+                </Typography>
+                <Typography sx={{ 
+                    mb: 2, 
+                    fontSize: "1.1rem",
+                    color: "text.secondary"
+                }}>
+                    Your email has been successfully verified.
+                </Typography>
+                <Typography sx={{ 
+                    fontSize: "0.95rem",
+                    color: "text.secondary"
+                }}>
+                    You can now close this page.
+                </Typography>
+            </Card>
         )
     }
 
