@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { AuthContext } from "../contexts/auth.context";
 import { usePathname, useRouter, useSearchParams } from "next/dist/client/components/navigation";
+import { send } from "process";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -13,7 +14,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const tokenHash = searchParams.get("token_hash");
     const type = searchParams.get("type");
-    console.log(state.value);
 
     useEffect(() => {
         authService.start();
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
         else {
             if(isVerifySuccessed(state) && !onVerifycationPage) {
-                router.push("/workspace/verification");
+                authService.send({ type: "VERIFY_EMAIL_FINISHED" });
                 return;
             }
 

@@ -200,7 +200,12 @@ export const authMachine = setup({
         "unsetRegistration",
         "clearRegistration",
         "unsetError"
-      ]
+      ],
+      on: {
+        VERIFY_EMAIL_FINISHED: {
+          target: "authenticated"
+        }
+      }
     },
 
     "verify expired": {
