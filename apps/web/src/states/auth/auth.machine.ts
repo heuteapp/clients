@@ -169,14 +169,7 @@ export const authMachine = setup({
           target: "verifying email",
         },
         VERIFY_EMAIL_COMPLETED: {
-          target: "authenticated",
-          actions: [
-            "setAuth",
-            "persistAuth",
-            "unsetRegistration",
-            "clearRegistration",
-            "unsetError"
-          ]
+          target: "verify completing",
         }
       }
     },
