@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated } from "@/src/states/auth/auth.machine";
+import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { AuthContext } from "../contexts/auth.context";
 import { usePathname, useRouter, useSearchParams } from "next/dist/client/components/navigation";
 
@@ -58,6 +58,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
         }
         else {
+            if(isVerifySuccessed(state) && !onVerifycationPage) {
+                router.push("/workspace/verification");
+                return;
+            }
+
             if(pathname?.startsWith("/workspace")) {
                 if(!onSignInPage && isSigningIn(state)) {
                     router.push("/workspace/sign-in");
