@@ -2,7 +2,7 @@ import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/au
 import { createAssign } from "@/src/utils/xstate/create-assign";
 
 export const resolveAuthData = (event: AuthMachineEvent) => {
-    if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFY_EMAIL_COMPLETED") {
+    if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFY_EMAIL_COMPLETED" || event.type === "VERIFY_EMAIL_SUCCESS") {
         return {
             accessToken: event.accessToken,
             profile: event.profile,
@@ -101,7 +101,7 @@ export const setErrorAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(
     ({ event }) => {
-        if (event.type !== "SIGN_IN_FAILURE" && event.type !== "SIGN_UP_FAILURE" && event.type !== "VERIFY_EMAIL_NOT_COMPLETED") {
+        if (event.type !== "SIGN_IN_FAILURE" && event.type !== "SIGN_UP_FAILURE" && event.type !== "VERIFY_EMAIL_FAILED") {
             throw new Error("Invalid event type for setError action");
         }
 

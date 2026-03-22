@@ -30,11 +30,13 @@ export type VERIFY_EMAIL_EVENT = { type: "VERIFY_EMAIL"; };
 
 export type VERIFY_EMAIL_COMPLETED_EVENT = { type: "VERIFY_EMAIL_COMPLETED"; accessToken: string; profile: ProfileData };
 
-export type VERIFY_EMAIL_NOT_COMPLETED_EVENT = { type: "VERIFY_EMAIL_NOT_COMPLETED"; error: string };
+export type VERIFY_EMAIL_SUCCESS_EVENT = { type: "VERIFY_EMAIL_SUCCESS"; accessToken: string; profile: ProfileData };
+
+export type VERIFY_EMAIL_FAILED_EVENT = { type: "VERIFY_EMAIL_FAILED"; error: string };
 
 export type VERIFY_EMAIL_EXPIRED_EVENT = { type: "VERIFY_EMAIL_EXPIRED"; email: string };
 
-export type VerifyEmailEvents = VERIFY_EMAIL_EVENT | VERIFY_EMAIL_COMPLETED_EVENT | VERIFY_EMAIL_NOT_COMPLETED_EVENT | VERIFY_EMAIL_EXPIRED_EVENT;
+export type VerifyEmailEvents = VERIFY_EMAIL_EVENT | VERIFY_EMAIL_COMPLETED_EVENT | VERIFY_EMAIL_SUCCESS_EVENT | VERIFY_EMAIL_FAILED_EVENT | VERIFY_EMAIL_EXPIRED_EVENT;
 
 //
 

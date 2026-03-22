@@ -179,10 +179,10 @@ export const authMachine = setup({
         input: ({ context }) => context.registration
       },
       on: {
-        VERIFY_EMAIL_COMPLETED: {
+        VERIFY_EMAIL_SUCCESS: {
           target: "verify completing",
         },
-        VERIFY_EMAIL_NOT_COMPLETED: {
+        VERIFY_EMAIL_FAILED: {
           target: "awaiting verification",
           actions: "setError"
         },

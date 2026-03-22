@@ -91,7 +91,7 @@ export const verifyEmailActor = createCallback<
 
         if (!registration) {
             sendBack({ 
-                type: 'VERIFY_EMAIL_NOT_COMPLETED', 
+                type: 'VERIFY_EMAIL_FAILED', 
                 error: "No registration data available for verification" 
             });
             return;
@@ -99,7 +99,7 @@ export const verifyEmailActor = createCallback<
 
         if (typeof window === "undefined") {
             sendBack({ 
-                type: 'VERIFY_EMAIL_NOT_COMPLETED', 
+                type: 'VERIFY_EMAIL_FAILED', 
                 error: "Verification can only be performed in the browser" 
             });
             return;
@@ -108,7 +108,7 @@ export const verifyEmailActor = createCallback<
         const authRaw = localStorage.getItem("auth");
         if (!authRaw) {
             sendBack({ 
-                type: 'VERIFY_EMAIL_NOT_COMPLETED', 
+                type: 'VERIFY_EMAIL_FAILED', 
                 error: "No auth data found in localStorage for verification" 
             });
 
@@ -118,7 +118,7 @@ export const verifyEmailActor = createCallback<
         const authData = JSON.parse(authRaw) as AuthData;
 
         sendBack({ 
-            type: 'VERIFY_EMAIL_COMPLETED',
+            type: 'VERIFY_EMAIL_SUCCESS',
             accessToken: authData.accessToken,
             profile: authData.profile,
         });
