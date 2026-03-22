@@ -167,6 +167,16 @@ export const authMachine = setup({
       on: {
         VERIFY_EMAIL: { 
           target: "verifying email",
+        },
+        VERIFY_EMAIL_COMPLETED: {
+          target: "authenticated",
+          actions: [
+            "setAuth",
+            "persistAuth",
+            "unsetRegistration",
+            "clearRegistration",
+            "unsetError"
+          ]
         }
       }
     },
@@ -176,17 +186,10 @@ export const authMachine = setup({
         input: ({ context }) => context.registration
       },
       on: {
-        VERIFY_EMAIL_SUCCESS: {
-          target: "authenticated",
-          actions: [
-            "setAuth",
-            "persistAuth",
-            "unsetRegistration",
-            "clearRegistration",
-            "unsetError"
-          ]
+        VERIFY_EMAIL_COMPLETED: {
+          target: "verify completing",
         },
-        VERIFY_EMAIL_FAILURE: {
+        VERIFY_EMAIL_NOT_COMPLETED: {
           target: "awaiting verification",
           actions: "setError"
         },
@@ -199,6 +202,20 @@ export const authMachine = setup({
           ]
         },
       },
+    },
+    "verify completing": {
+        always: {
+          actions: [
+            "setAuth",
+            "persistAuth",
+            "unsetRegistration",
+            "clearRegistration",
+            "unsetError"
+          ]
+        },
+        after: {
+          5000: "authenticated"
+        }
     },
     "verify expires": {
       after: {
