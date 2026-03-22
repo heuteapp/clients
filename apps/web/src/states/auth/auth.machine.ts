@@ -48,22 +48,12 @@ export const authMachine = setup({
         id: "check-auth",
         onDone: [
           {
-            target: "after auth checked",
+            target: "authenticated",
             actions: "setAuth"
           }
         ],
         onError: { target: "checking registration" },
       }
-    },
-
-    "after auth checked": {
-      always: [
-        { 
-          target: "authenticated",
-          guard: "isAuthenticated"
-        },
-        { target: "checking registration" }
-      ]
     },
 
     "checking registration": {
@@ -72,22 +62,12 @@ export const authMachine = setup({
         id: "check-registration",
         onDone: [
           {
-            target: "after registration checked",
+            target: "awaiting verification",
             actions: "setRegistration",
           }
         ],
         onError: { target: "unauthenticated" },
       }
-    },
-
-    "after registration checked": {
-      always: [
-        { 
-          target: "awaiting verification",
-          guard: "isRegistrationAwaiting"
-        },
-        { target: "unauthenticated" }
-      ]
     },
 
     "authenticated": {
@@ -239,9 +219,9 @@ export const authService = createActor(authMachine);
 
 export const isChecking = (state: AuthMachineState) => isCheckingAuth(state) || isCheckingRegistration(state);
 
-export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth") || state.matches("after auth checked");
+export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth");
 
-export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration") || state.matches("after registration checked");
+export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration");
 
 export const isAuthenticated = (state: AuthMachineState) => state.matches("authenticated");
 
