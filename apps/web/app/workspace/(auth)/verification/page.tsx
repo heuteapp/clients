@@ -2,13 +2,12 @@
 
 import { isAwaitingVerification, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
-import { Card, Typography, Button, CircularProgress, Alert } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
     const { state, send } = useAuthContext();
     const [email, setEmail] = useState("");
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (state.context.registration) {
@@ -17,22 +16,7 @@ export default function VerificationPage() {
     }, [state.context.registration]);
 
     useEffect(() => {
-        if (state.matches('awaiting verification') && state.context.error) {
-            setError(state.context.error);
-        }
-        
-        if (state.matches('unauthenticated') && state.context.error?.includes('expired')) {
-            setError("Verification link has expired. Please sign up again.");
-        }
-        
-        if (state.matches('authenticated')) {
-            window.location.href = "/workspace/sign-in";
-        }
-    }, [state]);
-
-    useEffect(() => {
         const handleFocus = () => {
-            console.log("Window focused, checking verification status...");
             if (isAwaitingVerification(state)) {
                 send({ type: "VERIFY_EMAIL" });
             }
