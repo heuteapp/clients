@@ -226,14 +226,16 @@ export const isSigningIn = (state: AuthMachineState) => state.matches("signing i
 
 export const isSigningUp = (state: AuthMachineState) => state.matches("signing up");
 
-export const isAwaitingRegistration = (state: AuthMachineState) => state.matches("awaiting verification");
+export const isAwaitingVerification = (state: AuthMachineState) => state.matches("awaiting verification");
 
-export const isVerifyingRegistration = (state: AuthMachineState) => state.matches("verifying email");
+export const isVerifying = (state: AuthMachineState) => isVerifyingEmail(state);
+
+export const isVerifyingEmail = (state: AuthMachineState) => state.matches("verifying email");
 
 //
 
 export const isAuthBusy = (state: AuthMachineState) => isAuthenticated(state) || isChecking(state);
 
-export const isSignBusy = (state: AuthMachineState) => isAuthBusy(state) || isAwaitingRegistration(state);
+export const isSignBusy = (state: AuthMachineState) => isAuthBusy(state) || isAwaitingVerification(state);
 
 export const isVerificationBusy = (state: AuthMachineState) => isAuthBusy(state) || isSigningIn(state) || isSigningUp(state);

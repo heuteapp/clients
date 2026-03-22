@@ -1,6 +1,6 @@
 "use client";
 
-import { isAwaitingRegistration } from "@/src/states/auth/auth.machine";
+import { isAwaitingVerification } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { Card, Typography, Button, CircularProgress, Alert } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ export default function VerificationPage() {
     useEffect(() => {
         const handleFocus = () => {
             console.log("Window focused, checking verification status...");
-            if (isAwaitingRegistration(state)) {
+            if (isAwaitingVerification(state)) {
                 send({ type: "VERIFY_EMAIL" });
             }
         };
@@ -45,7 +45,7 @@ export default function VerificationPage() {
         };
     }, [state, send]);
 
-    if(!isAwaitingRegistration(state)) {
+    if(!isAwaitingVerification(state)) {
         return (
             <CircularProgress />
         )
