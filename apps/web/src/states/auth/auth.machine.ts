@@ -194,15 +194,13 @@ export const authMachine = setup({
     },
 
     "verify successed": {
-        always: {
-          actions: [
-            "setAuth",
-            "persistAuth",
-            "unsetRegistration",
-            "clearRegistration",
-            "unsetError"
-          ]
-        }
+      entry: [
+        "setAuth",
+        "persistAuth",
+        "unsetRegistration",
+        "clearRegistration",
+        "unsetError"
+      ]
     },
 
     "verify expired": {
