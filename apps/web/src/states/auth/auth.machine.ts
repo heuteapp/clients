@@ -246,10 +246,10 @@ export const isAnySigning = (state: AuthMachineState) => isSigningIn(state) || i
 
 export const isAnyVerifying = (state: AuthMachineState) => isVerifyingEmail(state);
 
-export const isAnyVerificationState = (state: AuthMachineState) => isAwaitingVerification(state) || isAnyVerifying(state) || isVerifySuccessed(state) || isVerifyExpired(state);
+export const isAnyVerification = (state: AuthMachineState) => isAwaitingVerification(state) || isAnyVerifying(state) || isVerifySuccessed(state) || isVerifyExpired(state);
 
 //
 
 export const isSignLocked = (state: AuthMachineState) => isUnauthenticated(state) || !isAnySigning(state)
 
-export const isVerificationLocked = (state: AuthMachineState) => !isAnyVerificationState(state)
+export const isVerificationLocked = (state: AuthMachineState) => !isAnyVerification(state)
