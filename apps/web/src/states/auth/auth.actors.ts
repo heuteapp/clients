@@ -83,7 +83,7 @@ export const signUpActor = createCallback<
     }
 );
 
-export const verifyActor = createCallback<
+export const verifyEmailActor = createCallback<
     AuthRegistration | null, VerifyEmailActorEvents
 >(
     ({ input, sendBack }) => {

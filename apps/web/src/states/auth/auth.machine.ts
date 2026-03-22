@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor, verifyActor } from "./auth.actors";
+import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/types/states/auth/auth.machine";
 import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
 
@@ -14,7 +14,7 @@ export const authMachine = setup({
     hydrateRegistration: hydrateRegistrationActor,
     signIn: signInActor,
     signUp: signUpActor,
-    registrationVerification: verifyActor,
+    verifyEmail: verifyEmailActor,
   },
   actions: {
     setAuth: setAuthAction,
@@ -80,7 +80,7 @@ export const authMachine = setup({
     "after registration checked": {
       always: [
         { 
-          target: "awaiting registration",
+          target: "awaiting verification",
           guard: "isRegistrationAwaiting"
         },
         { target: "unauthenticated" }
@@ -172,7 +172,7 @@ export const authMachine = setup({
     },
     "verifying email": {
       invoke: {
-        src: "registrationVerification",
+        src: "verifyEmail",
         input: ({ context }) => context.registration
       },
       on: {
