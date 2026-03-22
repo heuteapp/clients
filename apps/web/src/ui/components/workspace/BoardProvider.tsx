@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import { BoardContext } from "@/src/ui/contexts/board.context";
 
@@ -13,4 +13,4 @@ export default function BoardProvider({ rootRef, children }: BoardProviderProps)
 export interface BoardProviderProps {
     rootRef: React.RefObject<HTMLDivElement | null>;
     children: React.ReactNode;
-}
+}*/

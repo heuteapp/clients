@@ -1,4 +1,4 @@
-"use client"
+/*"use client"
 
 import style from "@/src/ui/styles/board.module.css"
 
@@ -37,4 +37,4 @@ export function BoardRoot(props: BoardRootProps) {
       <BoardGhostCard />
     </div>
   )
-}
+}*/

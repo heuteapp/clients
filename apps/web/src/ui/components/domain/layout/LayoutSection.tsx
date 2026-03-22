@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react"
+/*import { useLayoutEffect, useRef } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
 import { BoardLayoutSectionProps } from "@/src/ui/types/domain/board/board.props";
@@ -32,4 +32,4 @@ export function LayoutSection(props : BoardLayoutSectionProps) {
             <LayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
         </div>
     )
-}
+}*/

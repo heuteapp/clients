@@ -1,4 +1,4 @@
-import style from "@/src/ui/styles/board.module.css"
+/*import style from "@/src/ui/styles/board.module.css"
 
 function BoardGhostCard(props : BoardGhostCardProps) {
     return (
@@ -21,4 +21,4 @@ export default BoardGhostCard
 
 export interface BoardGhostCardProps {
 
-}
+}*/

@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import Monitor from "@/src/ui/components/workspace/Monitor";
-import BoardProvider from "@/src/ui/components/workspace/BoardProvider";
 
 export default function WorkspaceLayout({
   children,
@@ -18,11 +17,9 @@ export default function WorkspaceLayout({
       touchAction: "none",
       userSelect: "none",
     }}>
-      <BoardProvider rootRef={rootRef}>
         <Monitor>
             {children}
         </Monitor>
-      </BoardProvider>
     </div>
   )
 }

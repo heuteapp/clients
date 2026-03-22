@@ -1,4 +1,4 @@
-import style from "@/src/ui/styles/layout.module.css"
+/*import style from "@/src/ui/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
 import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext";
@@ -27,4 +27,4 @@ function LayoutGrid(props : BoardLayoutGridProps) {
     )
 }
 
-export default LayoutGrid
+export default LayoutGrid*/

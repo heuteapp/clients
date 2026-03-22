@@ -1,4 +1,4 @@
-"use client"
+/*"use client"
 
 import { useLayoutEffect } from "react"
 
@@ -59,4 +59,4 @@ export function LayoutRoot(props: BoardLayoutRootProps) {
       ))}
     </div>
   )
-}
+}*/

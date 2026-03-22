@@ -1,4 +1,4 @@
-import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext"
+/*import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext"
 import style from "@/src/ui/styles/board.module.css"
 import BoardCard from "./BoardCard"
 import { BoardCardContainerProps } from "@/src/ui/types/domain/board/board.props";
@@ -28,4 +28,4 @@ function BoardCardContainer(props : BoardCardContainerProps) {
     )
 }
 
-export default BoardCardContainer
+export default BoardCardContainer*/
