@@ -183,7 +183,7 @@ export const authMachine = setup({
           actions: "setError"
         },
         VERIFY_EMAIL_EXPIRED: { 
-          target: "verify expires",
+          target: "verify expired",
           actions: [
             "setError",
             "unsetRegistration",
@@ -205,7 +205,7 @@ export const authMachine = setup({
         }
     },
 
-    "verify expires": {
+    "verify expired": {
       after: {
         5000: "unauthenticated"
       }
