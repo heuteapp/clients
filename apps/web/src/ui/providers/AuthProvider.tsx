@@ -3,13 +3,17 @@
 import { useEffect, useState } from "react";
 import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated } from "@/src/states/auth/auth.machine";
 import { AuthContext } from "../contexts/auth.context";
-import { usePathname, useRouter } from "next/dist/client/components/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/dist/client/components/navigation";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const [state, setState] = useState(() => authService.getSnapshot());
-     
+    const searchParams = useSearchParams();
+
+    const tokenHash = searchParams.get("token_hash");
+    const type = searchParams.get("type");
+
     useEffect(() => {
         authService.start();
 
@@ -22,6 +26,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             authService.stop(); 
         }
     }, []);
+
+    useEffect(() => {
+        if (tokenHash && type === "email" && isAwaitingVerification(state)) {
+            authService.send({ 
+                type: "VERIFY_EMAIL_COMPLETED", 
+                accessToken: tokenHash,
+                profile: null!
+            });
+        }
+    }, [tokenHash, type, state]);
 
     useEffect(() => {
         const onSignInPage = pathname === "/workspace/sign-in";
