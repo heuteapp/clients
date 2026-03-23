@@ -3,7 +3,7 @@
 import { isAwaitingVerification, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
-import { Card, CircularProgress, Typography } from "@mui/material";
+import { Button, Card, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
@@ -71,6 +71,10 @@ export default function VerificationPage() {
         )
     }
 
+    const handleAssume = () => {
+        send({ type: "VERIFY_EMAIL_ASSUMED" });
+    };
+
     return (
         <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
             <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
@@ -85,6 +89,19 @@ export default function VerificationPage() {
             <Typography sx={{ mb: 2, textAlign: "center", color: "text.secondary" }}>
                 After verification, you can sign in to your account.
             </Typography>
+
+            <Button 
+                variant="outlined" 
+                fullWidth
+                onClick={handleAssume}
+                sx={{
+                    mt: 2,
+                    borderRadius: 2,
+                    textTransform: "none"
+                }}
+            >
+                Already verified? Sign In
+            </Button>
         </Card>
     );
 }
