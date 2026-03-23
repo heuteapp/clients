@@ -1,4 +1,4 @@
-import { Providers } from "@/src/ui/components/Providers";
+import { AppProviders } from "@/src/ui/providers/AppProviders";
 import { StickyNavbar } from "@/src/ui/components/StickyNavbar";
 import "@/src/ui/styles/shared/global.css";
 import type { Metadata } from "next";
@@ -28,10 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <StickyNavbar />
-        <Providers>
+        <AppProviders>
           {children}
-        </Providers>
+        </AppProviders>
       </body>
     </html>
   );
