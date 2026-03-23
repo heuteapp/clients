@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
+import { Card, Typography, TextField, Button, Link, CircularProgress, Box, Container } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
@@ -27,7 +27,10 @@ export default function SignInPage() {
   };
 
   return (
-    <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
+    <Card sx={{ 
+      width: "100%",
+      height: "100%"
+    }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign in
       </Typography>
@@ -82,18 +85,6 @@ export default function SignInPage() {
           Sign up
         </Link>
       </Typography>
-
-      {process.env.NODE_ENV === 'development' && (
-        <Box sx={{ mt: 4, p: 2, bgcolor: '#f5f5f523', borderRadius: 1 }}>
-          <Typography variant="caption" component="pre" sx={{ fontSize: 10 }}>
-            {JSON.stringify({ 
-              state: state.value, 
-              auth: state.context.auth,
-              error: state.context.error 
-            }, null, 2)}
-          </Typography>
-        </Box>
-      )}
     </Card>
   );
 }
