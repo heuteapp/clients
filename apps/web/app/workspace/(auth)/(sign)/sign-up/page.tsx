@@ -146,19 +146,6 @@ export default function SignUpPage() {
           Sign in
         </Link>
       </Typography>
-
-      {process.env.NODE_ENV === 'development' && (
-        <Box sx={{ mt: 4, p: 2, bgcolor: '#f5f5f523', borderRadius: 1 }}>
-          <Typography variant="caption" component="pre" sx={{ fontSize: 10 }}>
-            {JSON.stringify({ 
-              state: state.value, 
-              auth: state.context.auth,
-              registration: state.context.registration,
-              error: state.context.error 
-            }, null, 2)}
-          </Typography>
-        </Box>
-      )}
     </Box>
   );
 }
