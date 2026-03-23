@@ -9,9 +9,12 @@ export const Brand = () => {
       fontSize: "1.5rem",
       color: "#FFF",
       textDecoration: "none", 
+      userSelect: "none",
     }}>
       <Favicon width={36} height={36} alt="HeuteApp Logo"/>
-      euteApp
+      <div style={{ paddingTop: 6 }}>
+        euteApp
+      </div>
     </Link>
   );
 };
