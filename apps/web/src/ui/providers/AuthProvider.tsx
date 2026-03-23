@@ -3,16 +3,14 @@
 import { useEffect, useState } from "react";
 import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { AuthContext } from "../contexts/auth.context";
-import { usePathname, useRouter, useSearchParams } from "next/dist/client/components/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
-    const [state, setState] = useState(() => authService.getSnapshot());
-    const searchParams = useSearchParams();
-
-    const tokenHash = searchParams.get("token_hash");
-    const type = searchParams.get("type");
+    const [state, setState] = useState(() => authService.getSnapshot());  
+    const authHash = useAuthHashParams();
 
     useEffect(() => {
         authService.start();
@@ -28,14 +26,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if (tokenHash && type === "email" && isAwaitingVerification(state)) {
+        if (authHash && isAwaitingVerification(state)) {
             authService.send({ 
                 type: "VERIFY_EMAIL_COMPLETED", 
-                accessToken: tokenHash,
+                accessToken: authHash.access_token,
                 profile: null!
             });
         }
-    }, [tokenHash, type, state]);
+    }, [authHash, state]);
 
     useEffect(() => {
         const onSignInPage = pathname === "/workspace/sign-in";
