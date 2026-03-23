@@ -194,7 +194,8 @@ export const authMachine = setup({
           target: "verify expired",
           actions: [
             "unsetRegistration",
-            "clearRegistration"
+            "clearRegistration",
+            "unsetError"
           ]
         },
       },
@@ -217,7 +218,7 @@ export const authMachine = setup({
 
     "verify expired": {
       after: {
-        5000: "unauthenticated"
+        10000: "unauthenticated"
       }
     }
   },
