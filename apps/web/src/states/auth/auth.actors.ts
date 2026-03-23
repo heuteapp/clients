@@ -105,6 +105,14 @@ export const verifyEmailActor = createCallback<
             return;
         }
 
+        if(Date.now() > registration.expiredAt) {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_EXPIRED', 
+                email: registration.email,
+            });
+            return;
+        }
+
         const authRaw = localStorage.getItem("auth");
         if (!authRaw) {
             sendBack({ 
