@@ -6,12 +6,17 @@ import { AuthContext } from "../contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
 import { server } from "@/src/api/server";
+import { withAccessToken } from "@/src/api/token.helper";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const [state, setState] = useState(() => authService.getSnapshot());  
     const authHash = useAuthHashParams();
+
+    const onSignInPage = pathname === "/workspace/sign-in";
+    const onSignUpPage = pathname === "/workspace/sign-up";
+    const onVerifycationPage = pathname === "/workspace/verification";
 
     useEffect(() => {
         authService.start();
@@ -34,7 +39,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             try {
                 await server.auth.setRefresh(authHash.refresh_token);
-                const profile = await server.auth.me();
+
+                const profile = await withAccessToken(authHash.access_token, async () => {
+                    return await server.auth.me();
+                });
 
                 if(!profile) {
                     throw new Error("Profil information could not be retrieved after email verification.");
@@ -50,16 +58,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
         };
 
-        if(isAwaitingVerification(state)) {
+        if(onVerifycationPage && isAwaitingVerification(state)) {
             verify();
         }
     }, [authHash?.access_token, authHash?.refresh_token, state]);
 
     useEffect(() => {
-        const onSignInPage = pathname === "/workspace/sign-in";
-        const onSignUpPage = pathname === "/workspace/sign-up";
-        const onVerifycationPage = pathname === "/workspace/verification";
-
         if (isUnauthenticated(state) && pathname?.startsWith("/workspace")) {
             if (onSignInPage || onSignUpPage) {
                 return;
