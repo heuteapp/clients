@@ -2,12 +2,12 @@
 
 import { isAwaitingVerification, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
 import { Card, CircularProgress, Typography } from "@mui/material";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
-    const searchParams = useSearchParams();
+    const authHash = useAuthHashParams();
 
     const { state, send } = useAuthContext();
     const [email, setEmail] = useState("");
@@ -31,11 +31,8 @@ export default function VerificationPage() {
             window.removeEventListener('focus', handleFocus);
         };
     }, [state, send]);
-    
-    const tokenHash = searchParams.get("token_hash");
-    const type = searchParams.get("type");
 
-    if(tokenHash && type) {
+    if(authHash) {
         return (
             <CircularProgress />
         )
