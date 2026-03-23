@@ -218,7 +218,12 @@ export const authMachine = setup({
 
     "verify expired": {
       after: {
-        10000: "unauthenticated"
+        20000: "unauthenticated"
+      },
+      on: {
+        VERIFY_EMAIL_FINISHED: {
+          target: "unauthenticated"
+        }
       }
     }
   },

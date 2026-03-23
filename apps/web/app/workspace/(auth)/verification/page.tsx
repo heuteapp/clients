@@ -6,13 +6,14 @@ import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams"
 import { Button, Card, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 export default function VerificationPage() {
     const authHash = useAuthHashParams();
     const router = useRouter();
     const { state, send } = useAuthContext();
     const [email, setEmail] = useState("");
-    const [countdown, setCountdown] = useState(10);
+    const [countdown, setCountdown] = useState(20);
 
     useEffect(() => {
         if (state.context.registration) {
@@ -97,13 +98,14 @@ export default function VerificationPage() {
     if(isVerifyExpired(state)) {
         return (
             <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
-                <Typography variant="h4" component="h1" sx={{ 
-                    mb: 2, 
-                    textAlign: "center",
-                    color: "error.main"
-                }}>
-                    Verification Expired
-                </Typography>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }}>
+                    <ErrorOutlineIcon sx={{ fontSize: 40, color: 'error.main' }} />
+                    <Typography variant="h4" component="h1" sx={{ 
+                        fontWeight: 600
+                    }}>
+                        Verification Expired
+                    </Typography>
+                </div>
                 
                 <Typography sx={{ mb: 2, textAlign: "center" }}>
                     The verification link for <strong>{email}</strong> has expired.
@@ -114,13 +116,13 @@ export default function VerificationPage() {
                     textAlign: "center",
                     color: "text.secondary"
                 }}>
-                    Please sign up again to receive a new verification email.
+                    Please sign up again.
                 </Typography>
 
                 <Typography sx={{ 
                     mb: 2, 
                     textAlign: "center",
-                    color: "warning.main",
+                    color: "text.secondary",
                     fontWeight: "bold"
                 }}>
                     Redirecting in {countdown} second{countdown !== 1 ? 's' : ''}...
@@ -129,7 +131,7 @@ export default function VerificationPage() {
                 <Button 
                     variant="contained" 
                     fullWidth
-                    onClick={() => router.push('/workspace/sign-up')}
+                    onClick={() => send({ type: "VERIFY_EMAIL_FINISHED" })}
                     sx={{
                         borderRadius: 2,
                         textTransform: "none"
