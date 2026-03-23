@@ -165,6 +165,14 @@ export const authMachine = setup({
             "clearRegistration",
             "unsetError"
           ]
+        },
+        VERIFY_EMAIL_ASSUMED: {
+          target: "unauthenticated",
+          actions: [
+            "unsetRegistration",
+            "clearRegistration",
+            "unsetError"
+          ]
         }
       }
     },
