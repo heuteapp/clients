@@ -193,7 +193,6 @@ export const authMachine = setup({
         VERIFY_EMAIL_EXPIRED: { 
           target: "verify expired",
           actions: [
-            "setError",
             "unsetRegistration",
             "clearRegistration"
           ]

@@ -1,16 +1,18 @@
 "use client";
 
-import { isAwaitingVerification, isVerifySuccessed } from "@/src/states/auth/auth.machine";
+import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
 import { Button, Card, CircularProgress, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function VerificationPage() {
     const authHash = useAuthHashParams();
-
+    const router = useRouter();
     const { state, send } = useAuthContext();
     const [email, setEmail] = useState("");
+    const [countdown, setCountdown] = useState(10);
 
     useEffect(() => {
         if (state.context.registration) {
@@ -31,6 +33,27 @@ export default function VerificationPage() {
             window.removeEventListener('focus', handleFocus);
         };
     }, [state, send]);
+
+    useEffect(() => {
+        if (isVerifyExpired(state)) {
+            const timer = setInterval(() => {
+                setCountdown((prev) => {
+                    if (prev <= 1) {
+                        clearInterval(timer);
+                        router.push('/workspace/sign-up');
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+
+            return () => clearInterval(timer);
+        }
+    }, [state, router]);
+
+    const handleAssume = () => {
+        send({ type: "VERIFY_EMAIL_ASSUMED" });
+    };
 
     if(authHash) {
         return (
@@ -71,9 +94,52 @@ export default function VerificationPage() {
         )
     }
 
-    const handleAssume = () => {
-        send({ type: "VERIFY_EMAIL_ASSUMED" });
-    };
+    if(isVerifyExpired(state)) {
+        return (
+            <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
+                <Typography variant="h4" component="h1" sx={{ 
+                    mb: 2, 
+                    textAlign: "center",
+                    color: "error.main"
+                }}>
+                    Verification Expired
+                </Typography>
+                
+                <Typography sx={{ mb: 2, textAlign: "center" }}>
+                    The verification link for <strong>{email}</strong> has expired.
+                </Typography>
+                
+                <Typography sx={{ 
+                    mb: 3, 
+                    textAlign: "center",
+                    color: "text.secondary"
+                }}>
+                    Please sign up again to receive a new verification email.
+                </Typography>
+
+                <Typography sx={{ 
+                    mb: 2, 
+                    textAlign: "center",
+                    color: "warning.main",
+                    fontWeight: "bold"
+                }}>
+                    Redirecting in {countdown} second{countdown !== 1 ? 's' : ''}...
+                </Typography>
+                
+                <Button 
+                    variant="contained" 
+                    fullWidth
+                    onClick={() => router.push('/workspace/sign-up')}
+                    sx={{
+                        borderRadius: 2,
+                        textTransform: "none"
+                    }}
+                >
+                    Sign Up Now
+                </Button>
+            </Card>
+        )
+    }
 
     return (
         <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
