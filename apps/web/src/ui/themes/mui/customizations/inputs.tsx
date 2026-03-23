@@ -32,7 +32,7 @@ export const inputsCustomizations: Components<Theme> = {
         padding: '8px',
       },      
       input: {
-        padding: '8px 8px',
+        padding: '2px 8px',
         lineHeight: 1.2,
         fontSize: '0.875rem',
       }
@@ -44,14 +44,6 @@ export const inputsCustomizations: Components<Theme> = {
         width: 16,
         height: 16,
         color: brand[500],
-      },
-    },
-  },
-  MuiFormLabel: {
-    styleOverrides: {
-      root: {
-        fontSize: '0.875rem',
-        marginBottom: 4,
       },
     },
   },
