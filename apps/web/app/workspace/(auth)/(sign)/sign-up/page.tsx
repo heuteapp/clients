@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
+import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
@@ -67,7 +67,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <Card sx={{ padding: 3, width: 360, margin: 16 }}>
+    <Box sx={{ padding: 3, width: 360, margin: 16 }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign up
       </Typography>
@@ -159,6 +159,6 @@ export default function SignUpPage() {
           </Typography>
         </Box>
       )}
-    </Card>
+    </Box>
   );
 }

@@ -25,7 +25,8 @@ export default function HomeLayout({
                 height: "100%", 
                 width: "100%", 
                 minWidth: "min-content",
-                alignItems: "stretch"
+                alignItems: "stretch",
+                color: "text.primary",
             }}
         >
             <Box

@@ -47,4 +47,14 @@ export const inputsCustomizations: Components<Theme> = {
       },
     },
   },
+  MuiInputLabel: {
+    styleOverrides: {
+      root: {
+        fontSize: '0.875rem',
+      },
+      shrink: {
+        fontSize: '1rem',
+      }
+    },
+  },
 };

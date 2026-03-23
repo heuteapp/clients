@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Card, Typography, TextField, Button, Link, CircularProgress, Box, Container } from "@mui/material";
+import React, { useState } from "react";
+import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
-import { isAuthenticated, isSigningIn } from "@/src/states/auth/auth.machine";
+import { isSigningIn } from "@/src/states/auth/auth.machine";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function SignInPage() {
   };
 
   return (
-    <Card sx={{ 
+    <Box sx={{ 
       width: 360,
     }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
@@ -84,6 +84,6 @@ export default function SignInPage() {
           Sign up
         </Link>
       </Typography>
-    </Card>
+    </Box>
   );
 }
