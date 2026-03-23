@@ -12,5 +12,5 @@ html {
 }
 
 * {
-  font-family: var(--font-geist-sans), sans-serif;
+    font-family: var(--font-helvetica-neue), Arial, sans-serif;
 }

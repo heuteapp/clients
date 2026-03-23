@@ -1,18 +1,7 @@
 import { AppProviders } from "@/src/ui/providers/AppProviders";
-import { StickyNavbar } from "@/src/ui/components/StickyNavbar";
 import "@/src/ui/styles/shared/global.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { helveticaNeue } from "./fonts";
 
 export const metadata: Metadata = {
   title: "HeuteApp",
@@ -26,7 +15,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${helveticaNeue.variable}`}>
       <body>
         <AppProviders>
           {children}
