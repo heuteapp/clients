@@ -13,6 +13,6 @@ export const authApi = {
     signUp: (request: SignUpRequest): Promise<SignUpResponse> =>
         serverApi.post<SignUpResponse>("/auth/sign-up", request).then(res => res.data),
 
-    me: () : Promise<ProfileData> =>
+    me: () : Promise<ProfileData | null> =>
         serverApi.get("/auth/me").then(res => res.data),
 };
