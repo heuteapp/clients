@@ -21,7 +21,12 @@ export const serverApi = axios.create({
 });
 
 serverApi.interceptors.request.use((config) => {
-    const accessToken = authService.getSnapshot().context.auth?.accessToken;
+    let accessToken = authService.getSnapshot().context.auth?.accessToken;
+
+    if (!accessToken && typeof window !== "undefined") {
+        accessToken = localStorage.getItem("temp_accessToken") || undefined;
+    }
+
     if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
