@@ -67,7 +67,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
+    <Card sx={{ padding: 3, width: 360, margin: 16 }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign up
       </Typography>

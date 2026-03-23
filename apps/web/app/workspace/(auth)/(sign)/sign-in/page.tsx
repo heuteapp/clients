@@ -28,8 +28,7 @@ export default function SignInPage() {
 
   return (
     <Card sx={{ 
-      width: "100%",
-      height: "100%"
+      width: 360,
     }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign in
