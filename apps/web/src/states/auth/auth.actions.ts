@@ -60,7 +60,7 @@ export const setRegistrationAction = createAssign<
             return {
                 registration: {
                     email: event.email,
-                    expiredAt: Date.now() + 1 * 60 * 1000,
+                    expiredAt: Date.now() + 10 * 60 * 1000,
                 },
             };
         }
