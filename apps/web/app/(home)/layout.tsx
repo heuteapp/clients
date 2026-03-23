@@ -8,10 +8,10 @@ export default function WorkspaceLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
-  return (
-    <div ref={rootRef}>
-        <StickyNavbar />
-        {children}
-    </div>
-  )
+    return (
+        <div ref={rootRef}>
+            <StickyNavbar />
+            {children}
+        </div>
+    )
 }
