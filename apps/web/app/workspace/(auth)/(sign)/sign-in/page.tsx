@@ -28,7 +28,7 @@ export default function SignInPage() {
 
   return (
     <Box sx={{ 
-      width: 360,
+      width: 328, padding: 2,
     }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign in

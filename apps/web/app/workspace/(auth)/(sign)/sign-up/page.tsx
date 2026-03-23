@@ -67,7 +67,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <Box sx={{ padding: 3, width: 360, margin: 16 }}>
+    <Box sx={{ width: 328, padding: 2 }}>
       <Typography variant="h4" component="h1" sx={{ mb: 2, textAlign: "center" }}>
         Sign up
       </Typography>
