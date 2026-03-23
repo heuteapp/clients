@@ -1,6 +1,7 @@
 import { serverApi } from "@/src/api/server";
 import { SignInRequest, SignUpRequest } from "../models/auth.request";
 import { SignInResponse, SignUpResponse } from "../models/auth.response";
+import { ProfileData } from "@/src/types/core/domain/profile/profile.data";
 
 export const authApi = {
     setRefresh: (refreshToken: string): Promise<void> =>
@@ -11,4 +12,7 @@ export const authApi = {
     
     signUp: (request: SignUpRequest): Promise<SignUpResponse> =>
         serverApi.post<SignUpResponse>("/auth/sign-up", request).then(res => res.data),
+
+    me: () : Promise<ProfileData> =>
+        serverApi.get("/auth/me").then(res => res.data),
 };
