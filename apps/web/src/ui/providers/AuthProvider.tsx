@@ -5,6 +5,7 @@ import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVer
 import { AuthContext } from "../contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
+import { server } from "@/src/api/server";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -26,14 +27,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if (authHash && isAwaitingVerification(state)) {
-            authService.send({ 
-                type: "VERIFY_EMAIL_COMPLETED", 
-                accessToken: authHash.access_token,
-                profile: null!
-            });
+        const verify = async () => {
+            if(!authHash || !authHash.refresh_token) {
+                return;
+            }
+
+            try {
+                await server.auth.setRefresh(authHash.refresh_token);
+                const profile = await server.auth.me();
+
+                if(!profile) {
+                    throw new Error("Profil information could not be retrieved after email verification.");
+                }
+
+                authService.send({ 
+                    type: "VERIFY_EMAIL_COMPLETED", 
+                    accessToken: authHash.access_token,
+                    profile
+                });
+            } catch (err) {
+                console.error("Email verification errorı:", err);
+            }
+        };
+
+        if(isAwaitingVerification(state)) {
+            verify();
         }
-    }, [authHash, state]);
+    }, [authHash?.access_token, authHash?.refresh_token, state]);
 
     useEffect(() => {
         const onSignInPage = pathname === "/workspace/sign-in";
