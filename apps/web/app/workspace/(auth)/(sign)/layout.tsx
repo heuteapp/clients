@@ -1,6 +1,7 @@
 "use client";
 
 import { isSignLocked } from "@/src/states/auth/auth.machine";
+import { Favicon } from "@/src/ui/assets/Favicon";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { CircularProgress } from "@mui/material";
 import { Box, Stack } from "@mui/system";
@@ -40,18 +41,39 @@ export default function HomeLayout({
             >
                 {children}
             </Box>
-            <Box 
+            <Box
                 sx={{
                     flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    color: "text.secondary",
-                    backgroundColor: "background.default",
                     display: { xs: "none", lg: "flex" },
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    backgroundColor: "background.default",
+                    px: 4,
                 }}
-            >
-                {new Date().getFullYear()} Heute. All rights reserved.
+                >
+
+                <Box
+                    sx={{
+                        width: 150,
+                        height: "auto",
+                        mb: 3,
+                    }}
+                >
+                    <Favicon width={64} height={64} />
+                </Box>
+
+                {/* Slogan */}
+                <Box
+                    sx={{
+                    fontSize: "1.5rem",
+                    fontWeight: 600,
+                    color: "text.primary",
+                    }}
+                >
+                    Daily Learning Journey
+                </Box>
             </Box>
         </Stack>
     )
