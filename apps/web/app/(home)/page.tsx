@@ -1,9 +1,12 @@
 "use client";
 
+import { isAuthenticated, isUnauthenticated } from "@/src/states/auth/auth.machine";
+import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { Box, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const HomePage = () => {
+  const { state } = useAuthContext();
   const router = useRouter();
 
   return (
@@ -62,7 +65,19 @@ const HomePage = () => {
             justifyContent: "center",
           }}
         >
-
+          <Button variant="contained" color="primary" onClick={() => {
+            if(isAuthenticated(state)) {
+              window.location.href = "/workspace";
+            }
+            else if(isUnauthenticated(state)) {
+              window.location.href = "/workspace/sign-in";
+            }
+          }}>
+            Get Started
+          </Button>
+          <Button variant="outlined" color="primary" onClick={() => router.push("/")}>
+            Learn More
+          </Button>
         </Box>
       </Box>
     </Box>
