@@ -45,7 +45,7 @@ Brand.Full = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", icon
   );
 };
 
-Brand.Compact = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textStyle }: BrandFullProps) => {
+Brand.Compact = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "euteApp", textStyle }: BrandFullProps) => {
   return (
     <Brand>
       <Brand.Icon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
