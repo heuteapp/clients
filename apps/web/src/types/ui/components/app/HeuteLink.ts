@@ -5,6 +5,6 @@ export interface HeuteLinkProps {
     style?: React.CSSProperties;
 }
 
-export type HeuteLinkData = Exclude<HeuteLinkProps, "children">;
+export type HeuteLinkData = Omit<HeuteLinkProps, "children">;
 
 export type HeuteLinkType = "internal" | "external";

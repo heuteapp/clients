@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { HeuteLinkData } from "./HeuteLink";
 
 export interface BrandBaseProps {
     style?: React.CSSProperties;
@@ -8,8 +9,7 @@ export interface BrandBaseProps {
 
 export interface BrandRootProps extends BrandBaseProps {
     children: ReactNode;
-    link?: string;
-    linkType?: "client" | "server";
+    link: HeuteLinkData;
 };
 
 export interface BrandIconProps extends BrandBaseProps {
@@ -26,8 +26,7 @@ export interface BrandTextProps extends BrandBaseProps {
 //
 
 export interface BrandComponentProps extends BrandBaseProps {
-    link?: string;
-    linkType?: "client" | "server";
+    link: HeuteLinkData;
 }
 
 export interface BrandPairProps extends BrandComponentProps {

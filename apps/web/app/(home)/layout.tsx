@@ -35,7 +35,7 @@ export default function WorkspaceLayout({
                 justifyContent: "flex-start",
               }}
             >
-              <BrandCompact link="/" />
+              <BrandCompact link={{ href: "/", type: "internal" }} />
             </Box>
 
             <Box
