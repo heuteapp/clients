@@ -3,11 +3,15 @@
 import { useRef } from "react";
 import { Box } from "@mui/material";
 import { BrandCompact } from "@/src/ui/components/app/Brand";
+import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { isUnauthenticated } from "@/src/states/auth/auth.machine";
+import Link from "next/link";
 
 export default function WorkspaceLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const { state } = useAuthContext();
 
     return (
         <div ref={rootRef}>
@@ -40,9 +44,19 @@ export default function WorkspaceLayout({
                 display: "flex",
                 width: "20%",
                 alignItems: "center",
-                justifyContent: "flex-start",
+                justifyContent: "flex-end",
               }}
             >
+              {isUnauthenticated(state) && (
+                <>
+                  <Link href="/workspace/sign-in" id={"link-sign-in"}>
+                    Sign In
+                  </Link>
+                  <Link href="/workspace/sign-up" id={"link-sign-up"}>
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </Box>
           </Box>
             {children}
