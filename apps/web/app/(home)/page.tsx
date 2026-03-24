@@ -1,28 +1,71 @@
 "use client";
 
+import { Box, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const HomePage = () => {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 gap-4">
-      <h1 className="text-4xl font-bold mb-4">Welcome to HeuteApp</h1>
-      <div className="flex gap-4">
-        <button
-          className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          onClick={() => router.push("/workspace/sign-in")}
+    <Box
+      sx={{
+        minHeight: "60vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        px: 2,
+        color: "#FFF",
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: 600,
+          textAlign: "center",
+        }}
+      >
+        <Box>
+          <Typography
+            variant="h2"
+            sx={{
+              fontWeight: 500,
+              mb: 1,
+            }}
+          >
+            Daily what you learned
+          </Typography>
+
+          <Typography
+            variant="h2"
+            sx={{
+              fontWeight: 500,
+              mb: 1,
+            }}
+          >
+            Yours to keep
+          </Typography>
+        </Box>
+
+        <Typography
+          variant="body1"
+          sx={{
+            opacity: 0.7,
+            mb: 8,
+          }}
         >
-          Sign In
-        </button>
-        <button
-          className="px-6 py-3 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
-          onClick={() => router.push("/workspace/sign-up")}
+          HeuteApp is a digital journal for your daily learning journey. Capture, reflect, and grow with your personal learning log.
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            justifyContent: "center",
+          }}
         >
-          Sign Up
-        </button>
-      </div>
-    </div>
+
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
