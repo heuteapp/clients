@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Box } from "@mui/material";
 import { BrandCompact } from "@/src/ui/components/app/Brand";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
-import { isUnauthenticated } from "@/src/states/auth/auth.machine";
+import { isAuthenticated, isUnauthenticated } from "@/src/states/auth/auth.machine";
 import Link from "next/link";
 
 export default function WorkspaceLayout({
@@ -49,11 +49,22 @@ export default function WorkspaceLayout({
             >
               {isUnauthenticated(state) && (
                 <>
-                  <Link href="/workspace/sign-in" id={"navbar-link-sign-in"}>
+                  <Link href="/workspace/sign-in" className="navbar-link" id={"navbar-link-sign-in"}>
                     Sign In
                   </Link>
-                  <Link href="/workspace/sign-up" id={"navbar-link-sign-up"}>
+                  <Link href="/workspace/sign-up" className="navbar-link" id={"navbar-link-sign-up"}>
                     Sign Up
+                  </Link>
+                </>
+              )}
+
+              {isAuthenticated(state) && (
+                <>                
+                  <Link href="/workspace" className="navbar-link" id={"navbar-link-workspace"}>
+                    Workspace
+                  </Link>
+                  <Link href="/workspace/profile" className="navbar-link" id={"navbar-link-profile"}>
+                    {state.context.auth?.profile.username}
                   </Link>
                 </>
               )}
