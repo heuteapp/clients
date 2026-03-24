@@ -40,7 +40,7 @@ const BrandText = ({ text, color = "#FFF", size = "1.25rem", style }: BrandTextP
 export const BrandFull = ({ link, iconSize = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textColor = "#FFF", textSize = "1.25rem", textStyle }: BrandFullProps) => {
   return (
     <BrandRoot link={link}>
-      <BrandIcon size={iconSize} alt={iconAlt} style={iconStyle} />
+      <BrandIcon size={iconSize} alt={iconAlt} style={{ padding: 6, ...iconStyle}} />
       <BrandText text={text} color={textColor} size={textSize} style={textStyle} />
     </BrandRoot>
   );

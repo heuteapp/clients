@@ -1,7 +1,6 @@
 "use client";
 
 import { isSignLocked } from "@/src/states/auth/auth.machine";
-import { Favicon } from "@/src/ui/assets/Favicon";
 import { BrandCompact, BrandFull } from "@/src/ui/components/app/Brand";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { CircularProgress } from "@mui/material";
@@ -36,7 +35,8 @@ export default function HomeLayout({
                     position: "fixed",
                     top: 0,
                     left: 0,
-                    padding: 2
+                    px: 4,
+                    py: 3
                 }}
             >
                 <BrandCompact link="/" />
@@ -73,11 +73,11 @@ export default function HomeLayout({
                     }}
                 >
                     <BrandFull 
-                        iconSize={64} 
-                        iconStyle={{
-                            padding: 6
-                        }}
+                        iconSize={64}
                         textSize={"2.5rem"}
+                        textStyle={{
+                            paddingTop: 10
+                        }}
                     />
                 </Box>
 
