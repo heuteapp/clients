@@ -27,9 +27,15 @@ const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", style }: BrandIconProps) 
   return <Favicon width={size} height={size} alt={alt} style={style} />;
 };
 
-const BrandText = ({ text, color = "#FFF", size = "1.25rem", style }: BrandTextProps) => {
+const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", style }: BrandTextProps) => {
   return (
-    <div style={{ color, fontSize: size, paddingTop: 6, ...style }}>
+    <div style={{ 
+      color, 
+      fontWeight: "600",
+      fontSize: size, 
+      paddingTop: 6,
+      ...style 
+    }}>
       {text}
     </div>
   );
@@ -37,7 +43,7 @@ const BrandText = ({ text, color = "#FFF", size = "1.25rem", style }: BrandTextP
 
 //
 
-export const BrandFull = ({ link, iconSize = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textColor = "#FFF", textSize = "1.25rem", textStyle }: BrandFullProps) => {
+export const BrandFull = ({ link, iconSize = 36, iconAlt, iconStyle, text = "HeuteApp", textColor, textSize, textStyle }: BrandFullProps) => {
   return (
     <BrandRoot link={link}>
       <BrandIcon size={iconSize} alt={iconAlt} style={{ padding: 6, ...iconStyle}} />
@@ -46,7 +52,7 @@ export const BrandFull = ({ link, iconSize = 36, iconAlt = "HeuteApp Logo", icon
   );
 };
 
-export const BrandCompact = ({ link, iconSize = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "euteApp", textColor = "#FFF", textSize = "1.25rem", textStyle }: BrandCompactProps) => {
+export const BrandCompact = ({ link, iconSize = 36, iconAlt, iconStyle, text = "euteApp", textColor, textSize, textStyle }: BrandCompactProps) => {
   return (
     <BrandRoot link={link}>
       <BrandIcon size={iconSize} alt={iconAlt} style={iconStyle} />
@@ -55,7 +61,7 @@ export const BrandCompact = ({ link, iconSize = 36, iconAlt = "HeuteApp Logo", i
   );
 };
 
-export const BrandIconOnly = ({ link, size = 36, alt = "HeuteApp Logo", style }: BrandIconOnlyProps) => {
+export const BrandIconOnly = ({ link, size, alt, style }: BrandIconOnlyProps) => {
   return (
     <BrandRoot link={link}>
       <BrandIcon size={size} alt={alt} style={style} />
@@ -63,7 +69,7 @@ export const BrandIconOnly = ({ link, size = 36, alt = "HeuteApp Logo", style }:
   );
 };
 
-export const BrandTextOnly = ({ link, text = "HeuteApp", color = "#FFF", size = "1.25rem", style }: BrandTextOnlyProps) => {
+export const BrandTextOnly = ({ link, text = "HeuteApp", color, size, style }: BrandTextOnlyProps) => {
   return (
     <BrandRoot link={link}>
       <BrandText text={text} color={color} size={size} style={style} />
