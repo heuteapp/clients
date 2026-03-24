@@ -2,6 +2,7 @@
 
 import { isSignLocked } from "@/src/states/auth/auth.machine";
 import { Favicon } from "@/src/ui/assets/Favicon";
+import { Brand } from "@/src/ui/components/app/Brand";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { CircularProgress } from "@mui/material";
 import { Box, Stack } from "@mui/system";
@@ -32,6 +33,16 @@ export default function HomeLayout({
         >
             <Box
                 sx={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    padding: 2
+                }}
+            >
+                <Brand.Full />
+            </Box>
+            <Box
+                sx={{
                     width: { xs: "100%", lg: "40%" },
                     display: "flex",
                     flexDirection: "column",
@@ -50,6 +61,7 @@ export default function HomeLayout({
                     alignItems: "center",
                     textAlign: "center",
                     backgroundColor: "background.default",
+                    userSelect: "none",
                     px: 4,
                 }}
                 >
