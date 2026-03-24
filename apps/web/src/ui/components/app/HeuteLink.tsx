@@ -17,7 +17,7 @@ export const HeuteLink = (props: HeuteLinkProps) => {
 
         if (linkType === "external") {
             return (
-                <a target="_blank" rel="noopener noreferrer" {...componentProps} href={href}>
+                <a {...componentProps} href={href}>
                     {props.children}
                 </a>
             );

@@ -49,10 +49,10 @@ export default function WorkspaceLayout({
             >
               {isUnauthenticated(state) && (
                 <>
-                  <HeuteLink href="/workspace/sign-in" className="navbar-link" id={"navbar-link-sign-in"}>
+                  <HeuteLink href="/workspace/sign-in" linkType="external" className="navbar-link" id={"navbar-link-sign-in"}>
                     Sign In
                   </HeuteLink>
-                  <HeuteLink href="/workspace/sign-up" className="navbar-link" id={"navbar-link-sign-up"}>
+                  <HeuteLink href="/workspace/sign-up" linkType="external" className="navbar-link" id={"navbar-link-sign-up"}>
                     Sign Up
                   </HeuteLink>
                 </>
