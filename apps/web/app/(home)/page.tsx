@@ -35,7 +35,7 @@ const HomePage = () => {
           }}
         >
           <Typography
-            variant="h2"
+            variant="h1"
             sx={{
               fontWeight: 500,
               mb: 1,
@@ -45,7 +45,7 @@ const HomePage = () => {
           </Typography>
 
           <Typography
-            variant="h2"
+            variant="h1"
             sx={{
               fontWeight: 500,
               mb: 1,

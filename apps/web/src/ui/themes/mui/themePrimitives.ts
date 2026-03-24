@@ -44,16 +44,17 @@ export const brand = {
 };
 
 export const gray = {
-  50: 'hsl(0, 0%, 97%)',
-  100: 'hsl(0, 0%, 94%)',
-  200: 'hsl(0, 0%, 88%)',
-  300: 'hsl(0, 0%, 80%)',
-  400: 'hsl(0, 0%, 65%)',
-  500: 'hsl(0, 0%, 48%)',
-  600: 'hsl(0, 0%, 38%)',
-  700: 'hsl(0, 0%, 28%)',
-  800: 'hsl(0, 0%, 18%)',
-  900: 'hsl(0, 0%, 10%)',
+  50: 'hsl(0, 0%, 95%)',   // was 97%
+  100: 'hsl(0, 0%, 90%)',  // was 94%
+  200: 'hsl(0, 0%, 82%)',  // was 88%
+  300: 'hsl(0, 0%, 74%)',  // was 80%
+  400: 'hsl(0, 0%, 58%)',  // was 65%
+  500: 'hsl(0, 0%, 42%)',  // was 48%
+  600: 'hsl(0, 0%, 32%)',  // was 38%
+  700: 'hsl(0, 0%, 22%)',  // was 28%
+  800: 'hsl(0, 0%, 14%)',  // was 18%
+  850: 'hsl(0, 0%, 10%)',  // was 12%
+  900: 'hsl(0, 0%, 8%)',   // was 10%
 };
 
 export const green = {
@@ -177,7 +178,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       divider: mode === 'dark' ? alpha(gray[700], 0.4) : alpha(gray[300], 0.3),
       background: {
         default: mode === 'dark' ? gray[900] : gray[50],
-        paper: mode === 'dark' ? gray[800] : gray[100],
+        paper: mode === 'dark' ? gray[850] : gray[100],
       },
       text: {
         primary: mode === 'dark' ? gray[100] : gray[800],

@@ -44,6 +44,7 @@ export default function HomeLayout({
             <Box
                 sx={{
                     width: { xs: "100%", lg: "40%" },
+                    bgcolor: "background.paper",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
