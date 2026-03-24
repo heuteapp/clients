@@ -1,26 +1,28 @@
 import { HeuteLinkProps } from "@/src/types/ui/components/app/HeuteLink";
 import Link from "next/link";
 
-export const HeuteLink = ({ children, href, type, style }: HeuteLinkProps) => {
-    type ||= "internal";
+export const HeuteLink = (props: HeuteLinkProps) => {
+    let { href, linkType, children, ...componentProps } = props;
+
+    linkType ||= "internal";
 
     if(href) {
-        if (type === "internal") {
+        if (props.linkType === "internal") {
             return (
-                <Link href={href} style={style}>
-                    {children}
+                <Link {...componentProps} href={href}>
+                    {props.children}
                 </Link>
             );
         }
 
-        if (type === "external") {
+        if (props.linkType === "external") {
             return (
-                <a href={href} style={style} target="_blank" rel="noopener noreferrer">
-                    {children}
+                <a {...componentProps} href={href} target="_blank" rel="noopener noreferrer">
+                    {props.children}
                 </a>
             );
         }
     }
 
-    return <span style={style}>{children}</span>;
+    return <span {...componentProps}>{props.children}</span>;
 };

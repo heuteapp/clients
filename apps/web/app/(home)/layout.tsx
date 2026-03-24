@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import { BrandCompact } from "@/src/ui/components/app/Brand";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { isAuthenticated, isUnauthenticated } from "@/src/states/auth/auth.machine";
+import { HeuteLink } from "@/src/ui/components/app/HeuteLink";
 
 export default function WorkspaceLayout({
   children,
@@ -35,7 +36,7 @@ export default function WorkspaceLayout({
                 justifyContent: "flex-start",
               }}
             >
-              <BrandCompact link={{ href: "/", type: "internal" }} />
+              <BrandCompact link={{ href: "/", linkType: "internal" }} />
             </Box>
 
             <Box
@@ -48,23 +49,23 @@ export default function WorkspaceLayout({
             >
               {isUnauthenticated(state) && (
                 <>
-                  <a href="/workspace/sign-in" className="navbar-link" id={"navbar-link-sign-in"}>
+                  <HeuteLink href="/workspace/sign-in" className="navbar-link" id={"navbar-link-sign-in"}>
                     Sign In
-                  </a>
-                  <a href="/workspace/sign-up" className="navbar-link" id={"navbar-link-sign-up"}>
+                  </HeuteLink>
+                  <HeuteLink href="/workspace/sign-up" className="navbar-link" id={"navbar-link-sign-up"}>
                     Sign Up
-                  </a>
+                  </HeuteLink>
                 </>
               )}
 
               {isAuthenticated(state) && (
                 <>                
-                  <a href="/workspace" className="navbar-link" id={"navbar-link-workspace"}>
+                  <HeuteLink href="/workspace" className="navbar-link" id={"navbar-link-workspace"}>
                     Workspace
-                  </a>
-                  <a href="/workspace/profile" className="navbar-link" id={"navbar-link-profile"}>
+                  </HeuteLink>
+                  <HeuteLink href="/workspace/profile" className="navbar-link" id={"navbar-link-profile"}>
                     {state.context.auth?.profile.username}
-                  </a>
+                  </HeuteLink>
                 </>
               )}
             </Box>

@@ -6,7 +6,7 @@ export interface HeuteLinkProps extends ComponentProps, HeuteLinkData {
 
 export type HeuteLinkData = {
     href?: string;
-    type?: HeuteLinkType;
+    linkType?: HeuteLinkType;
 }
 
 export type HeuteLinkType = "internal" | "external";
