@@ -17,7 +17,7 @@ const HomePage = () => {
         alignItems: "center",
         justifyContent: "center",
         padding: 2,
-        color: "#FFF",
+        color: "text.primary",
       }}
     >
       <Box
@@ -26,7 +26,14 @@ const HomePage = () => {
           textAlign: "center",
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            mb: 4,
+          }}
+        >
           <Typography
             variant="h2"
             sx={{

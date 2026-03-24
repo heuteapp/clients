@@ -16,20 +16,21 @@ export default function WorkspaceLayout({
     return (
         <Box ref={rootRef}
         sx={{
-          bgcolor: 'background.default',
+            bgcolor: 'background.default',
             minHeight: '100vh',
           }}
         >
           <Box 
             component="nav"    
             sx={{
-              borderBottom: "1px solid #7f7f7f53",
+              borderBottom: 1,
+              borderColor: 'divider',
               width: "100%",
               height: "64px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-around",
-              color: "#FFF",
+              color: 'text.primary',
               fontSize: "1.5rem",
             }}
           >
