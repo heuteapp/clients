@@ -1,4 +1,4 @@
-import { Brand } from "./Brand";
+import { Brand } from "./app/Brand";
 
 export const StickyNavbar = () => {
   return (
