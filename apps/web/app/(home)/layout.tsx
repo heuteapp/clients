@@ -14,7 +14,12 @@ export default function WorkspaceLayout({
   const { state } = useAuthContext();
 
     return (
-        <div ref={rootRef}>
+        <Box ref={rootRef}
+        sx={{
+          bgcolor: 'background.default',
+            minHeight: '100vh',
+          }}
+        >
           <Box 
             component="nav"    
             sx={{
@@ -71,6 +76,6 @@ export default function WorkspaceLayout({
             </Box>
           </Box>
             {children}
-        </div>
+        </Box>
     )
 }
