@@ -73,7 +73,13 @@ export default function HomeLayout({
                         mb: 3,
                     }}
                 >
-                    <BrandFull iconSize={64} textSize={"2.5rem"} />
+                    <BrandFull 
+                        iconSize={64} 
+                        iconStyle={{
+                            padding: 6
+                        }}
+                        textSize={"2.5rem"}
+                    />
                 </Box>
 
                 {/* Slogan */}
