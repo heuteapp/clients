@@ -76,9 +76,6 @@ export default function HomeLayout({
                     <BrandFull 
                         iconSize={64}
                         textSize={"2.5rem"}
-                        textStyle={{
-                            paddingTop: 10
-                        }}
                     />
                 </Box>
 

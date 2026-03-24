@@ -31,7 +31,6 @@ const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", style }: BrandTe
       color, 
       fontWeight: "600",
       fontSize: size, 
-      paddingTop: 6,
       ...style 
     }}>
       {text}

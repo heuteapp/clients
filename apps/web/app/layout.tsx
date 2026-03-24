@@ -1,7 +1,9 @@
 import { AppProviders } from "@/src/ui/providers/AppProviders";
 import "@/src/ui/styles/shared/global.css";
 import type { Metadata } from "next";
-import { helveticaNeue } from "./fonts";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "HeuteApp",
@@ -15,7 +17,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${helveticaNeue.variable}`}>
+    <html lang="en" className={`${inter.className}`}>
       <body>
         <AppProviders>
           {children}
