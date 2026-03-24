@@ -16,7 +16,7 @@ const BrandRoot = ({ children, link }: BrandRootProps) => {
   };
 
   return (
-    <HeuteLink href={link.href} type={link.type} style={{...styles, ...link.style}}>
+    <HeuteLink href={link?.href} type={link?.type} style={{...styles, ...link?.style}}>
       {children}
     </HeuteLink>
   )

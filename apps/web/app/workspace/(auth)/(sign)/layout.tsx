@@ -39,7 +39,7 @@ export default function HomeLayout({
                     py: 3
                 }}
             >
-                <BrandCompact link="/" />
+                <BrandCompact link={{ href: "/", type: "internal" }} />
             </Box>
             <Box
                 sx={{

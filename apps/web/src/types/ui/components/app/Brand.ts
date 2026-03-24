@@ -9,7 +9,7 @@ export interface BrandBaseProps {
 
 export interface BrandRootProps extends BrandBaseProps {
     children: ReactNode;
-    link: HeuteLinkData;
+    link?: HeuteLinkData;
 };
 
 export interface BrandIconProps extends BrandBaseProps {
@@ -26,7 +26,7 @@ export interface BrandTextProps extends BrandBaseProps {
 //
 
 export interface BrandComponentProps extends BrandBaseProps {
-    link: HeuteLinkData;
+    link?: HeuteLinkData;
 }
 
 export interface BrandPairProps extends BrandComponentProps {
