@@ -1,3 +1,4 @@
+import { BrandIconProps, BrandBaseProps, BrandFullProps } from "@/src/types/ui/components/app/Brand";
 import { Favicon } from "@/src/ui/assets/Favicon";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -19,18 +20,6 @@ export const Brand = ({ children }: { children: ReactNode }) => {
   );
 };
 
-interface BrandBaseProps {
-  style?: React.CSSProperties;
-}
-
-//
-
-interface BrandIconProps extends BrandBaseProps {
-  width?: number;
-  height?: number;
-  alt?: string;
-};
-
 Brand.Icon = ({ width = 36, height = 36, alt = "HeuteApp Logo" }: BrandIconProps) => {
   return <Favicon width={width} height={height} alt={alt} />;
 };
@@ -47,36 +36,23 @@ Brand.Text = ({ children, style }: BrandTextProps) => {
   );
 };
 
-//
-
-interface BrandFullProps extends BrandBaseProps {
-  iconWidth?: number;
-  iconHeight?: number;
-  iconAlt?: string;
-  iconStyle?: React.CSSProperties;
-  textChildren?: ReactNode;
-  textStyle?: React.CSSProperties;
-};
-
-Brand.Full = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, textChildren = "HeuteApp", textStyle }: BrandFullProps) => {
+Brand.Full = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textStyle }: BrandFullProps) => {
   return (
     <Brand>
       <Brand.Icon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
       <Brand.Text style={textStyle}>
-        {textChildren}
+        {text}
       </Brand.Text>
     </Brand>
   );
 };
 
-
-
-Brand.Compact = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, textChildren = "HeuteApp", textStyle }: BrandFullProps) => {
+Brand.Compact = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textStyle }: BrandFullProps) => {
   return (
     <Brand>
       <Brand.Icon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
       <Brand.Text style={textStyle}>
-        {textChildren}
+        {text}
       </Brand.Text>
     </Brand>
   );
