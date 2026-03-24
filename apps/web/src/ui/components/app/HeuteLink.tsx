@@ -7,7 +7,7 @@ export const HeuteLink = (props: HeuteLinkProps) => {
     linkType ||= "internal";
 
     if(href) {
-        if (props.linkType === "internal") {
+        if (linkType === "internal") {
             return (
                 <Link {...componentProps} href={href}>
                     {props.children}
@@ -15,9 +15,9 @@ export const HeuteLink = (props: HeuteLinkProps) => {
             );
         }
 
-        if (props.linkType === "external") {
+        if (linkType === "external") {
             return (
-                <a {...componentProps} href={href} target="_blank" rel="noopener noreferrer">
+                <a target="_blank" rel="noopener noreferrer" {...componentProps} href={href}>
                     {props.children}
                 </a>
             );
