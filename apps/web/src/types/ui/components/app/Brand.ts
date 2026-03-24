@@ -8,6 +8,7 @@ export interface BrandBaseProps {
 
 export interface BrandRootProps extends BrandBaseProps {
     children: ReactNode;
+    link?: string;
 };
 
 export interface BrandIconProps extends BrandBaseProps {

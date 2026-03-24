@@ -1,27 +1,28 @@
-import { BrandIconProps, BrandBaseProps, BrandTextOnlyProps, BrandIconOnlyProps, BrandCompactProps, BrandFullProps, BrandTextProps } from "@/src/types/ui/components/app/Brand";
+import { BrandIconProps, BrandTextOnlyProps, BrandIconOnlyProps, BrandCompactProps, BrandFullProps, BrandTextProps, BrandRootProps } from "@/src/types/ui/components/app/Brand";
 import { Favicon } from "@/src/ui/assets/Favicon";
+import { CSSProperties } from "@mui/material";
 import Link from "next/link";
-import { ReactNode } from "react";
 
-interface BrandProps {
-  children: ReactNode;
-}
+const BrandRoot = ({ children, link }: BrandRootProps) => {
+  const styles : CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    fontSize: "1.5rem",
+    color: "#FFF",
+    textDecoration: "none",
+    userSelect: "none",
+  };
 
-const BrandRoot = ({ children }: BrandProps) => {
+  if (!link) {
+    return <div style={styles}>{children}</div>;
+  }
+
   return (
-    <Link href="/" style={{
-      display: "flex",
-      alignItems: "center",
-      fontSize: "1.5rem",
-      color: "#FFF",
-      textDecoration: "none",
-      userSelect: "none",
-    }}>
+    <Link href={link} style={styles}>
       {children}
     </Link>
   );
 };
-
 const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", style }: BrandIconProps) => {
   return <Favicon width={size} height={size} alt={alt} style={style} />;
 };
