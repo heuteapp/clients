@@ -14,13 +14,14 @@ export default function WorkspaceLayout({
       <Box
         component="nav"
         sx={{
-          borderBottom: "1px solid #7f7f7f53",
+          borderBottom: 1,
+          borderColor: "divider",
           width: "100%",
           height: "48px",
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-start",
-          color: "#FFF",
+          color: "text.primary",
           fontSize: "1.5rem",
         }}
       >
@@ -29,16 +30,18 @@ export default function WorkspaceLayout({
           size={28} 
           style={{ padding: 8 }}
         />
-        <div
-          style={{
+        <Box
+          component="div"
+          sx={{
             fontSize: "1.125rem",
-            color: "#6c6c6c6d",
+            color: "text.disabled",
             fontWeight: "600",
           }}
         >
           /
-        </div>
+        </Box>
       </Box>
+      {children}
     </Box>
   )
 }

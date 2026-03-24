@@ -63,7 +63,7 @@ export default function SignInPage() {
           sx={{ position: "relative", height: 36 }}
         >
           {isLoading ? (
-            <CircularProgress size={24} sx={{ color: "white" }} />
+            <CircularProgress size={24} sx={{ color: "common.white" }} />
           ) : (
             "Sign in"
           )}

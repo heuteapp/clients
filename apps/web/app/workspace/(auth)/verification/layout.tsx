@@ -15,7 +15,7 @@ export default function HomeLayout({
   }
 
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" sx={{ minHeight: "100%", width: "100%", backgroundColor: "background.default" }}>
+    <Stack direction="column" justifyContent="center" alignItems="center" sx={{ minHeight: "100%", width: "100%", bgcolor: "background.default" }}>
       {children}
     </Stack>
   )

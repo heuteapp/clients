@@ -1,21 +1,35 @@
 "use client";
 
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { Box, Button, Typography } from "@mui/material";
 
 export default function WorkspacePage() {
     const { send } = useAuthContext();
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-            <h1 className="text-4xl font-bold">Welcome to your Workspace</h1>
-            <div>
-                <button
-                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                    onClick={() => send({ type: "SIGN_OUT" })}
-                >
-                    Sign Out
-                </button>
-            </div>
-        </div>
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                p: 6,
+            }}
+        >
+            <Typography variant="h4" sx={{ fontWeight: "bold", mb: 4, color: "text.primary" }}>
+                Welcome to your Workspace
+            </Typography>
+            <Button
+                variant="contained"
+                color="error"
+                onClick={() => send({ type: "SIGN_OUT" })}
+                sx={{
+                    textTransform: "none",
+                }}
+            >
+                Sign Out
+            </Button>
+        </Box>
     );
 }

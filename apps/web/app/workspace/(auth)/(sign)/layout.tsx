@@ -48,7 +48,8 @@ export default function HomeLayout({
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    borderRight: { xs: "none", lg: "1.5px solid #3b3b3b" },
+                    borderRight: { xs: "none", lg: 1.5 },
+                    borderColor: { lg: "divider" },
                 }}
             >
                 {children}

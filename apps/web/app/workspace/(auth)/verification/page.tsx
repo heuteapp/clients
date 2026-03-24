@@ -3,7 +3,7 @@
 import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/states/auth/auth.machine";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { useAuthHashParams } from "@/src/ui/hooks/states/auth/useAuthHashParams";
-import { Button, Card, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -68,7 +68,7 @@ export default function VerificationPage() {
                 padding: 4, 
                 maxWidth: 450, 
                 borderRadius: 3,
-                boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+                boxShadow: 3,
                 textAlign: "center"
             }}>
                 <Typography variant="h4" component="h1" sx={{ 
@@ -98,14 +98,14 @@ export default function VerificationPage() {
     if(isVerifyExpired(state)) {
         return (
             <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2 }}>
                     <ErrorOutlineIcon sx={{ fontSize: 40, color: 'error.main' }} />
                     <Typography variant="h4" component="h1" sx={{ 
                         fontWeight: 600
                     }}>
                         Verification Expired
                     </Typography>
-                </div>
+                </Box>
                 
                 <Typography sx={{ mb: 2, textAlign: "center" }}>
                     The verification link for <strong>{email}</strong> has expired.
