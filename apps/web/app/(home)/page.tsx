@@ -16,7 +16,7 @@ const HomePage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        px: 2,
+        padding: 2,
         color: "#FFF",
       }}
     >
