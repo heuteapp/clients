@@ -17,22 +17,20 @@ html {
 
 .navbar-link {
     color: #eaeaea;
-    background-color: #3c3c3c76;
+    background-color: rgba(50, 50, 50, 0.65);
     text-decoration: none;
     font-size: 12px;
+    font-weight: 500;
     padding: 8px 10px 6px 10px;
     margin: 0 4px;
-    border: 1px solid #424242;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     box-sizing: border-box;
     text-align: center;
-}
 
-.navbar-link {
-    background-color: rgba(50, 50, 50, 0.65);
-    border-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar-link:hover {
@@ -50,6 +48,6 @@ html {
 }
 
 .navbar-link#navbar-link-profile {
-    background-color: rgb(190, 75, 20);
+    background-color: rgb(180, 75, 25);
     border-color: rgba(255, 148, 85, 0.35);
 }

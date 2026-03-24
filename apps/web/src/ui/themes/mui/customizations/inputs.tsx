@@ -56,5 +56,5 @@ export const inputsCustomizations: Components<Theme> = {
         fontSize: '1rem',
       }
     },
-  },
+  }
 };
