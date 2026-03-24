@@ -12,8 +12,7 @@ export default function WorkspaceLayout({
   return (
     <Box
       sx={{
-        bgcolor: "background.paper",
-        minHeight: "100%",
+        minHeight: "100vh",
       }}
     >
       <Box
@@ -46,7 +45,19 @@ export default function WorkspaceLayout({
           /
         </Box>
       </Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          py: 4,
+          bgcolor: "transparent"
+        }}
+      >
       {children}
+      </Box>
     </Box>
   )
 }
