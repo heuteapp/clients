@@ -9,15 +9,16 @@ export default function WorkspacePage() {
     return (
         <Box
             sx={{
-                minHeight: "100vh",
+                minHeight: "60vh",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 p: 6,
+                bgcolor: "transparent",
             }}
         >
-            <Typography variant="h4" sx={{ fontWeight: "bold", mb: 4, color: "text.primary" }}>
+            <Typography variant="h4" sx={{ fontWeight: "bold", mb: 4, color: "text.primary", bgcolor: "transparent" }}>
                 Welcome to your Workspace
             </Typography>
             <Button

@@ -175,7 +175,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       grey: {
         ...gray,
       },
-      divider: mode === 'dark' ? alpha(gray[700], 0.4) : alpha(gray[300], 0.3),
+      divider: mode === 'dark' ? alpha(gray[700], 0.8) : alpha(gray[300], 0.3),
       background: {
         default: mode === 'dark' ? gray[900] : gray[50],
         paper: mode === 'dark' ? gray[850] : gray[100],

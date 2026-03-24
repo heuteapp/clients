@@ -10,7 +10,12 @@ export default function WorkspaceLayout({
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        bgcolor: "background.paper",
+        minHeight: "100%",
+      }}
+    >
       <Box
         component="nav"
         sx={{
