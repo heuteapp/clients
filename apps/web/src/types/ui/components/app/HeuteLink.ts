@@ -1,10 +1,12 @@
-export interface HeuteLinkProps {
-    children: React.ReactNode;
-    href?: string;
-    type?: HeuteLinkType;
-    style?: React.CSSProperties;
+import { ComponentProps } from "@/src/types/ui/components/shared/app/Component";
+
+export interface HeuteLinkProps extends ComponentProps, HeuteLinkData {
+    
 }
 
-export type HeuteLinkData = Omit<HeuteLinkProps, "children">;
+export type HeuteLinkData = {
+    href?: string;
+    type?: HeuteLinkType;
+}
 
 export type HeuteLinkType = "internal" | "external";
