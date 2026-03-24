@@ -18,9 +18,9 @@ export default function WorkspaceLayout({
           <Box 
             component="nav"    
             sx={{
-              borderBottom: "1px solid #eaeaea",
+              borderBottom: "1px solid #7f7f7f53",
               width: "100%",
-              height: "72px",
+              height: "64px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-around",
@@ -49,10 +49,10 @@ export default function WorkspaceLayout({
             >
               {isUnauthenticated(state) && (
                 <>
-                  <Link href="/workspace/sign-in" id={"link-sign-in"}>
+                  <Link href="/workspace/sign-in" id={"navbar-link-sign-in"}>
                     Sign In
                   </Link>
-                  <Link href="/workspace/sign-up" id={"link-sign-up"}>
+                  <Link href="/workspace/sign-up" id={"navbar-link-sign-up"}>
                     Sign Up
                   </Link>
                 </>
