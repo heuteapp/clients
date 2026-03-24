@@ -2,7 +2,7 @@
 
 import { isSignLocked } from "@/src/states/auth/auth.machine";
 import { Favicon } from "@/src/ui/assets/Favicon";
-import { Brand } from "@/src/ui/components/app/Brand";
+import { BrandCompact } from "@/src/ui/components/app/Brand";
 import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
 import { CircularProgress } from "@mui/material";
 import { Box, Stack } from "@mui/system";
@@ -39,7 +39,7 @@ export default function HomeLayout({
                     padding: 2
                 }}
             >
-                <Brand.Full />
+                <BrandCompact />
             </Box>
             <Box
                 sx={{

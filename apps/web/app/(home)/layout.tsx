@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef } from "react";
-import { StickyNavbar } from "@/src/ui/components/StickyNavbar";
+import { Box } from "@mui/material";
+import { BrandCompact } from "@/src/ui/components/app/Brand";
 
 export default function WorkspaceLayout({
   children,
@@ -10,7 +11,21 @@ export default function WorkspaceLayout({
 
     return (
         <div ref={rootRef}>
-            <StickyNavbar />
+          <Box 
+            component="nav"    
+            style={{
+                borderBottom: "1px solid #eaeaea",
+                width: "100%",
+                height: "72px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#FFF",
+                fontSize: "1.5rem",
+            }}
+          >
+            <BrandCompact />
+          </Box>
             {children}
         </div>
     )
