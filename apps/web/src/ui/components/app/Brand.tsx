@@ -3,18 +3,16 @@ import { Favicon } from "@/src/ui/assets/Favicon";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-const baseStyles = {
-  display: "flex",
-  alignItems: "center",
-  fontSize: "1.5rem",
-  color: "#FFF",
-  textDecoration: "none",
-  userSelect: "none",
-} as const;
-
 export const Brand = ({ children }: { children: ReactNode }) => {
   return (
-    <Link href="/" style={baseStyles}>
+    <Link href="/" style={{
+      display: "flex",
+      alignItems: "center",
+      fontSize: "1.5rem",
+      color: "#FFF",
+      textDecoration: "none",
+      userSelect: "none",
+    }}>
       {children}
     </Link>
   );
