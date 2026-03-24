@@ -6,6 +6,10 @@ export interface BrandBaseProps {
 
 //
 
+export interface BrandRootProps extends BrandBaseProps {
+    children: ReactNode;
+};
+
 export interface BrandIconProps extends BrandBaseProps {
     width?: number;
     height?: number;
@@ -18,7 +22,8 @@ export interface BrandTextProps extends BrandBaseProps {
 
 //
 
-export interface BrandFullProps extends BrandBaseProps {
+export interface BrandPairProps extends BrandBaseProps {
+    style?: React.CSSProperties;
     iconWidth?: number;
     iconHeight?: number;
     iconAlt?: string;
@@ -26,3 +31,21 @@ export interface BrandFullProps extends BrandBaseProps {
     text?: ReactNode;
     textStyle?: React.CSSProperties;
 };
+
+export interface BrandFullProps extends BrandPairProps {
+
+}
+
+export interface BrandCompactProps extends BrandPairProps {
+
+}
+
+//
+
+export interface BrandIconOnlyProps extends BrandIconProps {
+
+}
+
+export interface BrandTextOnlyProps extends BrandTextProps {
+
+}

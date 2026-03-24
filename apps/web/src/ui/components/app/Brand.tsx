@@ -1,9 +1,13 @@
-import { BrandIconProps, BrandBaseProps, BrandFullProps } from "@/src/types/ui/components/app/Brand";
+import { BrandIconProps, BrandBaseProps, BrandTextOnlyProps, BrandIconOnlyProps, BrandCompactProps, BrandFullProps } from "@/src/types/ui/components/app/Brand";
 import { Favicon } from "@/src/ui/assets/Favicon";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-export const Brand = ({ children }: { children: ReactNode }) => {
+interface BrandProps {
+  children: ReactNode;
+}
+
+const BrandRoot = ({ children }: BrandProps) => {
   return (
     <Link href="/" style={{
       display: "flex",
@@ -18,15 +22,15 @@ export const Brand = ({ children }: { children: ReactNode }) => {
   );
 };
 
-Brand.Icon = ({ width = 36, height = 36, alt = "HeuteApp Logo" }: BrandIconProps) => {
-  return <Favicon width={width} height={height} alt={alt} />;
+const BrandIcon = ({ width = 36, height = 36, alt = "HeuteApp Logo", style }: BrandIconProps) => {
+  return <Favicon width={width} height={height} alt={alt} style={style} />;
 };
 
 interface BrandTextProps extends BrandBaseProps {
   children: ReactNode;
-};
+}
 
-Brand.Text = ({ children, style }: BrandTextProps) => {
+const BrandText = ({ children, style }: BrandTextProps) => {
   return (
     <div style={{ paddingTop: 6, ...style }}>
       {children}
@@ -34,40 +38,42 @@ Brand.Text = ({ children, style }: BrandTextProps) => {
   );
 };
 
-Brand.Full = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textStyle }: BrandFullProps) => {
+//
+
+export const BrandFull = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "HeuteApp", textStyle }: BrandFullProps) => {
   return (
-    <Brand>
-      <Brand.Icon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
-      <Brand.Text style={textStyle}>
+    <BrandRoot>
+      <BrandIcon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
+      <BrandText style={textStyle}>
         {text}
-      </Brand.Text>
-    </Brand>
+      </BrandText>
+    </BrandRoot>
   );
 };
 
-Brand.Compact = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "euteApp", textStyle }: BrandFullProps) => {
+export const BrandCompact = ({ iconWidth = 36, iconHeight = 36, iconAlt = "HeuteApp Logo", iconStyle, text = "euteApp", textStyle }: BrandCompactProps) => {
   return (
-    <Brand>
-      <Brand.Icon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
-      <Brand.Text style={textStyle}>
+    <BrandRoot>
+      <BrandIcon width={iconWidth} height={iconHeight} alt={iconAlt} style={iconStyle} />
+      <BrandText style={textStyle}>
         {text}
-      </Brand.Text>
-    </Brand>
+      </BrandText>
+    </BrandRoot>
   );
 };
 
-Brand.IconOnly = ({ width = 36, height = 36, alt = "HeuteApp Logo" }: BrandIconProps) => {
+export const BrandIconOnly = ({ width = 36, height = 36, alt = "HeuteApp Logo", style }: BrandIconOnlyProps) => {
   return (
-    <Brand>
-      <Brand.Icon width={width} height={height} alt={alt} />
-    </Brand>
+    <BrandRoot>
+      <BrandIcon width={width} height={height} alt={alt} style={style} />
+    </BrandRoot>
   );
 };
 
-Brand.TextOnly = ({ children = "HeuteApp" } : BrandTextProps ) => {
+export const BrandTextOnly = ({ text = "HeuteApp", style }: BrandTextOnlyProps) => {
   return (
-    <Brand>
-      <Brand.Text>{children}</Brand.Text>
-    </Brand>
+    <BrandRoot>
+      <BrandText style={style}>{text}</BrandText>
+    </BrandRoot>
   );
 };
