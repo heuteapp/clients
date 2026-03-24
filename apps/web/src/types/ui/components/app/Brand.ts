@@ -9,6 +9,7 @@ export interface BrandBaseProps {
 export interface BrandRootProps extends BrandBaseProps {
     children: ReactNode;
     link?: string;
+    linkType?: "client" | "server";
 };
 
 export interface BrandIconProps extends BrandBaseProps {
@@ -26,6 +27,7 @@ export interface BrandTextProps extends BrandBaseProps {
 
 export interface BrandComponentProps extends BrandBaseProps {
     link?: string;
+    linkType?: "client" | "server";
 }
 
 export interface BrandPairProps extends BrandComponentProps {
