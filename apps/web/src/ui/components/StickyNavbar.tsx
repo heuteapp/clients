@@ -12,7 +12,7 @@ export const StickyNavbar = () => {
         color: "#FFF",
         fontSize: "1.5rem",
     }}>
-      <Brand />
+      <Brand.Compact />
     </nav>
   );
 };
