@@ -24,7 +24,7 @@ export default function WorkspaceLayout({
                 fontSize: "1.5rem",
             }}
           >
-            <BrandCompact />
+            <BrandCompact link="/" />
           </Box>
             {children}
         </div>

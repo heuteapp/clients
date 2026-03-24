@@ -39,7 +39,7 @@ export default function HomeLayout({
                     padding: 2
                 }}
             >
-                <BrandCompact />
+                <BrandCompact link="/" />
             </Box>
             <Box
                 sx={{
@@ -68,7 +68,6 @@ export default function HomeLayout({
 
                 <Box
                     sx={{
-                        width: 150,
                         height: "auto",
                         mb: 3,
                     }}

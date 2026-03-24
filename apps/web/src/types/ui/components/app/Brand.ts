@@ -24,7 +24,11 @@ export interface BrandTextProps extends BrandBaseProps {
 
 //
 
-export interface BrandPairProps extends BrandBaseProps {
+export interface BrandComponentProps extends BrandBaseProps {
+    link?: string;
+}
+
+export interface BrandPairProps extends BrandComponentProps {
     iconSize?: number;
     iconAlt?: string;
     iconStyle?: React.CSSProperties;
@@ -44,10 +48,10 @@ export interface BrandCompactProps extends BrandPairProps {
 
 //
 
-export interface BrandIconOnlyProps extends BrandIconProps {
+export interface BrandIconOnlyProps extends BrandComponentProps, BrandIconProps {
 
 }
 
-export interface BrandTextOnlyProps extends BrandTextProps {
+export interface BrandTextOnlyProps extends BrandComponentProps, BrandTextProps {
 
 }
