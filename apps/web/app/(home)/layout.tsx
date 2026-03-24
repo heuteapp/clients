@@ -13,18 +13,37 @@ export default function WorkspaceLayout({
         <div ref={rootRef}>
           <Box 
             component="nav"    
-            style={{
-                borderBottom: "1px solid #eaeaea",
-                width: "100%",
-                height: "72px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#FFF",
-                fontSize: "1.5rem",
+            sx={{
+              borderBottom: "1px solid #eaeaea",
+              width: "100%",
+              height: "72px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              color: "#FFF",
+              fontSize: "1.5rem",
             }}
           >
-            <BrandCompact link="/" />
+            <Box
+              sx={{
+                display: "flex",
+                width: "30%",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
+            >
+              <BrandCompact link="/" />
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                width: "20%",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
+            >
+            </Box>
           </Box>
             {children}
         </div>
