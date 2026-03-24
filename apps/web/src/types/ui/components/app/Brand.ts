@@ -11,24 +11,25 @@ export interface BrandRootProps extends BrandBaseProps {
 };
 
 export interface BrandIconProps extends BrandBaseProps {
-    width?: number;
-    height?: number;
+    size?: number;
     alt?: string;
 };
 
 export interface BrandTextProps extends BrandBaseProps {
     text: ReactNode;
+    color?: string;
+    size?: string | number;
 };
 
 //
 
 export interface BrandPairProps extends BrandBaseProps {
-    style?: React.CSSProperties;
-    iconWidth?: number;
-    iconHeight?: number;
+    iconSize?: number;
     iconAlt?: string;
     iconStyle?: React.CSSProperties;
     text?: ReactNode;
+    textColor?: string;
+    textSize?: string | number;
     textStyle?: React.CSSProperties;
 };
 
