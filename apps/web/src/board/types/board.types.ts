@@ -1,8 +1,9 @@
 import { GridRect } from "@/src/types/shared/core/common";
 
 export interface Board {
-    layoutId: string;
-    categoryName: string;
+    layoutName: string;
+    layoutVersion: number;
+    categoryPath: string;
     date: Date;
     cards: BoardCard[];
 }
@@ -12,6 +13,14 @@ export interface BoardCard {
     content: BoardCardContent;
     placement: BoardCardPlacement | null;
 }
+
+//
+
+export type BoardData = Omit<Board, "cards">;
+
+export type BoardCardData = Omit<BoardCard, "">;
+
+//
 
 export interface BoardCardContent {
     title: string | null;
