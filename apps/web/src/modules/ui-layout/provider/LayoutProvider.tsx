@@ -1,6 +1,6 @@
 import React from "react";
-import { useLayoutRegistry } from "@/src/ui-layout/hooks/useLayoutRegistry";
-import { LayoutContext } from "@/src/ui-layout/contexts/layout.context";
+import { useLayoutRegistry } from "@/src/modules/ui-layout/hooks/useLayoutRegistry";
+import { LayoutContext } from "@/src/modules/ui-layout/contexts/layout.context";
 
 export function LayoutProvider({ children }: { children: React.ReactNode }) {
     const rootRef = React.useRef<HTMLDivElement | null>(null);

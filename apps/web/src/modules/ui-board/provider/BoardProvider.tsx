@@ -1,7 +1,7 @@
 import React from "react";
-import { useLayoutContext } from "@/src/ui-layout/hooks/useLayoutContext";
-import { useBoardRegistry } from "@/src/ui-board/hooks/useBoardRegistry";
-import { BoardContext } from "@/src/ui-board/contexts/board.context";
+import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
+import { useBoardRegistry } from "@/src/modules/ui-board/hooks/useBoardRegistry";
+import { BoardContext } from "@/src/modules/ui-board/contexts/board.context";
 
 export function BoardProvider({ children }: { children: React.ReactNode }) {
     const layout = useLayoutContext();

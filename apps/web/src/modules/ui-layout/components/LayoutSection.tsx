@@ -1,10 +1,10 @@
-import style from "@/src/ui-layout/styles/layout.module.css"
+import style from "@/src/modules/ui-layout/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react"
 import LayoutGrid from "./LayoutGrid";
 
-import { LayoutSectionProps } from "@/src/ui-layout/types/layout.props";
-import { useLayoutContext } from "@/src/ui-layout/hooks/useLayoutContext";
+import { LayoutSectionProps } from "@/src/modules/ui-layout/types/layout.props";
+import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 
 //
 

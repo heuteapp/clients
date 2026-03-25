@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { BoardRegistry } from "@/src/ui-board/types/board.registry"
-import { LayoutRegistry } from "@/src/ui-layout/types/layout.registry"
+import { BoardRegistry } from "@/src/modules/ui-board/types/board.registry"
+import { LayoutRegistry } from "@/src/modules/ui-layout/types/layout.registry"
 //
 
 export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | null>, layoutRegistry: LayoutRegistry): BoardRegistry {

@@ -1,8 +1,8 @@
-import style from "@/src/ui-layout/styles/layout.module.css"
+import style from "@/src/modules/ui-layout/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
-import { useLayoutContext } from "@/src/ui-layout/hooks/useLayoutContext";
-import { LayoutGridProps } from "@/src/ui-layout/types/layout.props";
+import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
+import { LayoutGridProps } from "@/src/modules/ui-layout/types/layout.props";
 
 function LayoutGrid(props : LayoutGridProps) {
     const context = useLayoutContext();

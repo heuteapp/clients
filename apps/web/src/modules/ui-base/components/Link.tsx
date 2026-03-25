@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { LinkProps } from "@/src/ui-base/types/ui.props.types";
+import { LinkProps } from "@/src/modules/ui-base/types/ui.props.types";
 
 export const Link = (props: LinkProps) => {
     let { href, linkType, children, ...componentProps } = props;

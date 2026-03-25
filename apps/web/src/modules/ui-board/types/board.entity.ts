@@ -1,4 +1,4 @@
-import { UIEntity } from "@/src/ui-base/types/ui.types";
+import { UIEntity } from "@/src/modules/ui-base/types/ui.types";
 import { BoardCardData, BoardData } from "@/src/modules/board/types/board.types";
 
 /**

@@ -2,7 +2,7 @@
 
 import { useLayoutEffect } from "react"
 
-import style from "@/src/ui-layout/styles/layout.module.css"
+import style from "@/src/modules/ui-layout/styles/layout.module.css"
 
 import { LayoutSection } from "./LayoutSection";
 import { LayoutRootProps } from "../types/layout.props";

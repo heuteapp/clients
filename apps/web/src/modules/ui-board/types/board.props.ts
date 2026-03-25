@@ -1,4 +1,4 @@
-import { BoardEntity, BoardCardEntity } from "@/src/ui-board/types/board.entity";
+import { BoardEntity, BoardCardEntity } from "@/src/modules/ui-board/types/board.entity";
 
 export interface BoardRootProps extends BoardEntity {
 

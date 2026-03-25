@@ -1,4 +1,4 @@
-import { UINode, UIRootNode } from "@/src/ui-base/types/ui.types";
+import { UINode, UIRootNode } from "@/src/modules/ui-base/types/ui.types";
 import { BoardRootProps, BoardCardProps, BoardCardContainerProps } from "./board.props";
 
 export interface BoardRootNode extends UIRootNode {

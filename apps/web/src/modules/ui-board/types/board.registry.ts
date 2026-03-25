@@ -1,6 +1,6 @@
-import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui-board/types/board.nodes"
-import { BoardCardContainerProps, BoardCardProps, BoardRootProps } from "@/src/ui-board/types/board.props"
-import { LayoutRegistry } from "@/src/ui-layout/types/layout.registry"
+import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/modules/ui-board/types/board.nodes"
+import { BoardCardContainerProps, BoardCardProps, BoardRootProps } from "@/src/modules/ui-board/types/board.props"
+import { LayoutRegistry } from "@/src/modules/ui-layout/types/layout.registry"
 
 export interface BoardRegistry {
     board: BoardRootNode

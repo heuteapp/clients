@@ -1,4 +1,4 @@
-import { UINode, UIRootNode } from "@/src/ui-base/types/ui.types";
+import { UINode, UIRootNode } from "@/src/modules/ui-base/types/ui.types";
 import { LayoutRootProps, LayoutGridProps, LayoutSectionProps } from "./layout.props";
 
 export interface LayoutRootNode extends UIRootNode {

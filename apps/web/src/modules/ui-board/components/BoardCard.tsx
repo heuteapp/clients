@@ -1,7 +1,7 @@
-import style from "@/src/ui-board/styles/board.module.css"
+import style from "@/src/modules/ui-board/styles/board.module.css"
 
-import { useBoardContext } from "@/src/ui-board/hooks/useBoardContext"
-import { BoardCardProps } from "@/src/ui-board/types/board.props";
+import { useBoardContext } from "@/src/modules/ui-board/hooks/useBoardContext"
+import { BoardCardProps } from "@/src/modules/ui-board/types/board.props";
 import { useLayoutEffect, useRef } from "react";
 
 function BoardCard(props : BoardCardProps) {

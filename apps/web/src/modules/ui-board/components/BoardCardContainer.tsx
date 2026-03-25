@@ -1,10 +1,10 @@
-import style from "@/src/ui-board/styles/board.module.css"
+import style from "@/src/modules/ui-board/styles/board.module.css"
 
 import { useLayoutEffect, useRef } from "react";
 import BoardCard from "./BoardCard"
 
-import { useBoardContext } from "@/src/ui-board/hooks/useBoardContext"
-import { BoardCardContainerProps } from "@/src/ui-board/types/board.props";
+import { useBoardContext } from "@/src/modules/ui-board/hooks/useBoardContext"
+import { BoardCardContainerProps } from "@/src/modules/ui-board/types/board.props";
 
 //
 

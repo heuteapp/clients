@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { LayoutContext } from "@/src/ui-layout/contexts/layout.context";
-import { LayoutContextValue } from "@/src/ui-layout/types/layout.context";
+import { LayoutContext } from "@/src/modules/ui-layout/contexts/layout.context";
+import { LayoutContextValue } from "@/src/modules/ui-layout/types/layout.context";
 
 export const useLayoutContext = () : LayoutContextValue => {
     const context = useContext(LayoutContext);

@@ -1,4 +1,4 @@
-import style from "@/src/ui-board/styles/board.module.css"
+import style from "@/src/modules/ui-board/styles/board.module.css"
 
 function BoardGhostCard() {
     return (

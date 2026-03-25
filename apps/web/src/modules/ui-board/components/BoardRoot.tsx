@@ -1,6 +1,6 @@
 "use client"
 
-import style from "@/src/ui-board/styles/board.module.css"
+import style from "@/src/modules/ui-board/styles/board.module.css"
 import { useLayoutEffect, useRef } from "react";
 
 import BoardCardContainer from "./BoardCardContainer";
@@ -8,7 +8,7 @@ import BoardGhostCard from "./BoardGhostCard";
 
 import { useBoardContext } from "../hooks/useBoardContext";
 import { BoardRootProps } from "../types/board.props";
-import { LayoutRoot } from "@/src/ui-layout/components/LayoutRoot";
+import { LayoutRoot } from "@/src/modules/ui-layout/components/LayoutRoot";
 
 //
 

@@ -1,4 +1,4 @@
-import { BrandComponentProps, BrandIconProps, BrandPairProps, BrandTextProps, LinkProps } from "@/src/ui-base/types/ui.props.types";
+import { BrandComponentProps, BrandIconProps, BrandPairProps, BrandTextProps, LinkProps } from "@/src/modules/ui-base/types/ui.props.types";
 
 //
 
