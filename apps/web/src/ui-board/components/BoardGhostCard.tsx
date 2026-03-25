@@ -1,6 +1,6 @@
-/*import style from "@/src/ui/styles/board.module.css"
+import style from "@/src/ui/styles/board.module.css"
 
-function BoardGhostCard(props : BoardGhostCardProps) {
+function BoardGhostCard() {
     return (
         <div 
             className={style.ghostCard} 
@@ -17,8 +17,3 @@ function BoardGhostCard(props : BoardGhostCardProps) {
 }
 
 export default BoardGhostCard
-
-
-export interface BoardGhostCardProps {
-
-}*/
