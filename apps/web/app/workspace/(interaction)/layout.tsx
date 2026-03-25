@@ -13,6 +13,7 @@ export default function WorkspaceLayout({
     <Box
       sx={{
         minHeight: "100vh",
+        bgcolor: "background.paper",
       }}
     >
       <Box
