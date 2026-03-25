@@ -2,6 +2,16 @@ import { BoardPath, BoardPathConfig } from "@/src/modules/shared/types/board.typ
 import { parseYYMMDD } from "./date.utils";
 
 /**
+ * Validates that a category doesn't contain numbers
+ * @throws {Error} If category contains numbers
+ */
+function validateCategory(category: string): void {
+    if (/\d/.test(category)) {
+        throw new Error(`Category "${category}" cannot contain numbers`);
+    }
+}
+
+/**
  * Extracts categories and date from a board URL path
  * 
  * @param relativePath - The relative path (e.g., "history/250315" or "projects/active")
@@ -38,8 +48,14 @@ export function parseBoardPath(relativePath: string): BoardPath | null {
  * @param categories - Array of category strings
  * @param date - Optional date in YYMMDD format
  * @returns Relative path string (e.g., "history/240101")
+ * @throws {Error} If any category contains numbers
  */
 export function buildBoardPath(categories: string[], date?: string | null): string {
+    // Validate each category doesn't contain numbers
+    for (const category of categories) {
+        validateCategory(category);
+    }
+    
     const parts = [...categories];
     
     if (date) {
@@ -83,6 +99,10 @@ export function getBoardCategories(relativePath: string): string[] {
  * // Check if path has a date
  * isValidBoardPath("history/250315", { requireDate: true }) // true
  * isValidBoardPath("history", { requireDate: true }) // false
+ * 
+ * // Check if categories contain numbers
+ * isValidBoardPath("history/ww2") // true (ww2 is valid as it's not a category)
+ * isValidBoardPath("history/2024/events") // false (2024 contains numbers)
  */
 export function isValidBoardPath(
     relativePath: string, 
@@ -94,31 +114,20 @@ export function isValidBoardPath(
         requireDate = false,
     } = config;
     
-    // Parse the path
     const boardPath = parseBoardPath(relativePath);
     
-    // If path is invalid (null), it's not valid
     if (!boardPath) {
-        // Only valid if no categories required and no date required
         return minCategories === 0 && !requireDate;
     }
     
     const { categories, date } = boardPath;
     const categoryCount = categories.length;
     
-    // Check category count constraints
-    if (categoryCount < minCategories) {
-        return false;
-    }
+    if (categoryCount < minCategories) return false;
+    if (categoryCount > maxCategories) return false;
     
-    if (categoryCount > maxCategories) {
-        return false;
-    }
-    
-    // Check date requirement
-    if (requireDate && !date) {
-        return false;
-    }
+    if (categories.some(cat => /\d/.test(cat))) return false;
+    if (requireDate && !date) return false;
     
     return true;
 }
@@ -142,10 +151,22 @@ export function validateBoardPath(
         
         let errorMessage = 'Invalid board path';
         
-        if (categoryCount < minCategories) {
+        // Check for categories with numbers
+        if (boardPath?.categories) {
+            const invalidCategory = boardPath.categories.find(cat => /\d/.test(cat));
+            if (invalidCategory) {
+                errorMessage = `Category "${invalidCategory}" cannot contain numbers`;
+            } else if (categoryCount < minCategories) {
+                errorMessage = `Board path must have at least ${minCategories} category(s), but found ${categoryCount}`;
+            } else if (categoryCount > maxCategories) {
+                errorMessage = `Board path must have at most ${maxCategories} category(s), but found ${categoryCount}`;
+            } else if (requireDate && (!boardPath?.date)) {
+                errorMessage = `Board path must end with a valid date (YYMMDD format)`;
+            } else if (!boardPath) {
+                errorMessage = `Board path is empty or invalid`;
+            }
+        } else if (categoryCount < minCategories) {
             errorMessage = `Board path must have at least ${minCategories} category(s), but found ${categoryCount}`;
-        } else if (categoryCount > maxCategories) {
-            errorMessage = `Board path must have at most ${maxCategories} category(s), but found ${categoryCount}`;
         } else if (requireDate && (!boardPath?.date)) {
             errorMessage = `Board path must end with a valid date (YYMMDD format)`;
         } else if (!boardPath) {
