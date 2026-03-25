@@ -1,18 +1,17 @@
 import React from "react";
-import { useLayoutRegistry } from "@/src/ui-layout/hooks/useLayoutRegistry";
-import { useBoardRegistry } from "../hooks/useBoardRegistry";
-import { BoardContext } from "../contexts/board.context";
+import { useLayoutContext } from "@/src/ui-layout/hooks/useLayoutContext";
+import { useBoardRegistry } from "@/src/ui-board/hooks/useBoardRegistry";
+import { BoardContext } from "@/src/ui-board/contexts/board.context";
 
 export function BoardProvider({ children }: { children: React.ReactNode }) {
-    const layoutRef = React.useRef<HTMLDivElement | null>(null);
-    const boardRef = React.useRef<HTMLDivElement | null>(null);
+    const layout = useLayoutContext();
 
-    const layoutRegistry = useLayoutRegistry(layoutRef);
-    const boardRegistry = useBoardRegistry(boardRef, layoutRegistry);
+    const rootRef = React.useRef<HTMLDivElement | null>(null);
+    const registry = useBoardRegistry(rootRef, layout.registry);
     
     const contextValue = React.useMemo(() => ({
-        boardRef, layoutRef, registry: boardRegistry
-    }), [boardRef, layoutRef, boardRegistry]);
+        layout, rootRef, registry
+    }), [layout, rootRef, registry]);
 
     return (
         <BoardContext.Provider value={contextValue}>
