@@ -1,7 +1,7 @@
-import { AuthRegistration, AuthSession } from "@/src/authentication/types/auth.types";
+import { AuthRegistration, AuthSession } from "@/src/modules/auth/types/auth.types";
 import { DONE_ACTOR_CHECK_AUTH_EVENT, DONE_ACTOR_CHECK_REGISTRATION_EVENT, HYDRATE_EVENT, SIGN_IN_ALL_EVENTS, SIGN_OUT_EVENT, SignUpEvents, VerifyEmailEvents } from "./auth.events.types";
 import { ActorRefFrom } from "xstate";
-import { authMachine } from "@/src/authentication/state/auth.machine";
+import { authMachine } from "@/src/modules/auth/state/auth.machine";
 
 export interface AuthMachineContext {
   auth: AuthSession | null;

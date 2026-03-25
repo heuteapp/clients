@@ -1,7 +1,7 @@
-import { serverApi } from "@/src/api/server";
+import { serverApi } from "@/src/modules/api/server";
 import { SignInRequest, SignUpRequest } from "../models/auth.request";
 import { SignInResponse, SignUpResponse } from "../models/auth.response";
-import { UserProfile } from "@/src/modules/user/types/user.profile.types";
+import { AuthProfile } from "@/src/modules/auth/types/auth.types";
 
 export const authApi = {
     setRefresh: (refreshToken: string): Promise<void> =>
@@ -13,6 +13,6 @@ export const authApi = {
     signUp: (request: SignUpRequest): Promise<SignUpResponse> =>
         serverApi.post<SignUpResponse>("/auth/sign-up", request).then(res => res.data),
 
-    me: () : Promise<UserProfile | null> =>
+    me: () : Promise<AuthProfile | null> =>
         serverApi.get("/auth/me").then(res => res.data),
 };

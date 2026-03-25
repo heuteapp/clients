@@ -1,9 +1,14 @@
-import { UserProfile } from "@/src/modules/user/types/user.profile.types";
-
 export interface AuthSession {
     accessToken: string;
-    profile: UserProfile;
+    profile: AuthProfile;
 }
+
+export interface AuthProfile {
+    username: string;
+    email: string;
+}
+
+//
 
 export interface AuthRegistration {
     email: string;

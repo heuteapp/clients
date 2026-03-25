@@ -1,8 +1,8 @@
-import { UserProfile } from "@/src/modules/user/types/user.profile.types";
+import { AuthProfile } from "@/src/modules/auth/types/auth.types";
 
 export interface SignInResponse {
     accessToken: string;
-    profile: UserProfile;
+    profile: AuthProfile;
 }
 
 export type SignUpResponse = {

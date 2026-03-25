@@ -4,7 +4,7 @@ import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
-import { isSigningIn } from "@/src/modules/authentication/state/auth.machine";
+import { isSigningIn } from "@/src/modules/auth/state/auth.machine";
 
 export default function SignInPage() {
   const router = useRouter();

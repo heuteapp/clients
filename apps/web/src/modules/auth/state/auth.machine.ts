@@ -1,6 +1,6 @@
 import { createActor, setup } from "xstate";
 import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
-import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/authentication/types/auth.machine.types";
+import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
 import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
 
 export const authMachine = setup({
