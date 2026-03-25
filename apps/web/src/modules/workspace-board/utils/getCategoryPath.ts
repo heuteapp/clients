@@ -1,6 +1,6 @@
 /**
  * Builds a category path string from categories array
  */
-export function buildCategoryPath(categories: string[]): string {
+export function getCategoryPath(categories: string[]): string {
     return categories.join('/');
 }
