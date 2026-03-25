@@ -1,5 +1,5 @@
-import { BoardCardContainerNode, BoardCardNode, BoardRootNode, BoardLayoutGridNode, BoardLayoutRootNode, BoardLayoutSectionNode } from "@/src/ui/types/domain/board/board.nodes"
-import { BoardCardContainerProps, BoardCardProps, BoardRootProps, BoardLayoutRootProps, BoardLayoutGridProps, BoardLayoutSectionProps } from "@/src/ui/types/domain/board/board.props"
+import { BoardCardContainerNode, BoardCardNode, BoardRootNode, BoardLayoutGridNode, BoardLayoutRootNode, BoardLayoutSectionNode } from "@/src/features/domain/board/types/board.nodes"
+import { BoardCardContainerProps, BoardCardProps, BoardRootProps, BoardLayoutRootProps, BoardLayoutGridProps, BoardLayoutSectionProps } from "@/src/features/domain/board/types/board.props"
 import { Identifier } from "@/src/types/shared/core/data"
 
 export interface BoardRegistry {
