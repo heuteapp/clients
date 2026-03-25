@@ -1,5 +1,5 @@
-import { HeuteLinkProps } from "@/src/types/ui/components/app/HeuteLink";
 import Link from "next/link";
+import { HeuteLinkProps } from "@/src/ui-shared/types/ui.props.types";
 
 export const HeuteLink = (props: HeuteLinkProps) => {
     let { href, linkType, children, ...componentProps } = props;
