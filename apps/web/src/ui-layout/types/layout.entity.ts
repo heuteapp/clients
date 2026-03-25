@@ -1,12 +1,10 @@
+import { LayoutData, LayoutSectionData } from "@/src/layout/types/layout.types";
 import { UIEntity } from "@/src/shared/types/entity.types"
-import { GridRect } from "@/src/types/shared/core/common"
 
-export interface LayoutEntity extends UIEntity {
-    columnCount: number
-    rowCount: number
+export interface LayoutEntity extends UIEntity, LayoutData {
+
 }
 
-export interface LayoutSectionEntity extends UIEntity {
-    name: string
-    position: GridRect;
+export interface LayoutSectionEntity extends UIEntity, LayoutSectionData {
+
 }
