@@ -42,12 +42,6 @@ export interface WorkspaceBoardDate {
     display: string;
 
     /**
-     * Turkish formatted date (DD.MM.YYYY).
-     * @example "25.03.2026"
-     */
-    displayTR: string;
-
-    /**
      * 4-digit year component.
      * @example "2026"
      */
