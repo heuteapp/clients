@@ -1,14 +1,14 @@
-/*"use client"
+"use client"
 
 import style from "@/src/ui/styles/board.module.css"
-
-import { LayoutRoot } from "@/src/ui/components/domain/layout/LayoutRoot";
-import BoardCardContainer from "./BoardCardContainer";
 import { useLayoutEffect, useRef } from "react";
-import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext";
+
+import BoardCardContainer from "./BoardCardContainer";
 import BoardGhostCard from "./BoardGhostCard";
-import { useBoardContentStore } from "@/src/stores/board.content.store";
-import { BoardRootProps } from "@/src/ui/types/domain/board/board.props";
+
+import { useBoardContext } from "../hooks/useBoardContext";
+import { BoardRootProps } from "../types/board.props";
+import { LayoutRoot } from "@/src/ui-layout/components/LayoutRoot";
 
 //
 
@@ -16,8 +16,9 @@ export function BoardRoot(props: BoardRootProps) {
   const { registry } = useBoardContext();
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const layout = useBoardContentStore(state => state.layout);
-  const cards = useBoardContentStore(state => state.cards);
+  // !! FIX HERE !!
+  const layout = null! as any;
+  const cards = [] as any[];
 
   useLayoutEffect(() => {
     registry.registerBoard(boardRef, props)
@@ -37,4 +38,4 @@ export function BoardRoot(props: BoardRootProps) {
       <BoardGhostCard />
     </div>
   )
-}*/
+}
