@@ -1,14 +1,14 @@
 import { BoardCardPlacement } from "@/src/board/types/board.types";
-import { BaseData } from "@/src/types/shared/core/data";
+import { UIEntity } from "@/src/shared/types/entity.types";
 
-export interface BoardEntity extends BaseData {
+export interface BoardEntity extends UIEntity {
     layoutName: string;
     layoutVersion: number;
     category: string;
     date: Date;
 }
 
-export interface BoardCardEntity extends BaseData {
+export interface BoardCardEntity extends UIEntity {
     name: string;
     content: { title: string | null };
     placement: BoardCardPlacement | null;
