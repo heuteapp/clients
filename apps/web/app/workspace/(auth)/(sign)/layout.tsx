@@ -2,7 +2,7 @@
 
 import { isSignLocked } from "@/src/authentication/state/auth.machine";
 import { HeuteCompactBrand, HeuteFullBrand } from "@/src/ui-shared/components/HeuteBrand";
-import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
+import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { CircularProgress } from "@mui/material";
 import { Box, Stack } from "@mui/material";
 

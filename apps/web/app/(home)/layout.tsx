@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { Box } from "@mui/material";
 import { HeuteCompactBrand } from "@/src/ui-shared/components/HeuteBrand";
-import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
+import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { isAuthenticated, isUnauthenticated } from "@/src/authentication/state/auth.machine";
 import { HeuteLink } from "@/src/ui-shared/components/HeuteLink";
 
