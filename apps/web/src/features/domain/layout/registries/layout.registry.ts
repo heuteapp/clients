@@ -1,5 +1,5 @@
 import React from "react"
-import { LayoutRegistry } from "@/src/ui/types/domain/layout/layout.registry"
+import { LayoutRegistry } from "@/src/features/domain/layout/types/layout.registry"
 
 //
 
