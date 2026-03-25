@@ -35,20 +35,18 @@ const HomePage = () => {
           }}
         >
           <Typography
-            variant="h1"
+            variant="h2"
             sx={{
               fontWeight: 500,
-              mb: 1,
             }}
           >
             Daily what you learned
           </Typography>
 
           <Typography
-            variant="h1"
+            variant="h2"
             sx={{
               fontWeight: 500,
-              mb: 1,
             }}
           >
             Yours to keep

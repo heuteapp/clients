@@ -116,144 +116,8 @@ export const getDesignTokens = (mode: PaletteMode) => {
       : 'hsla(40, 15%, 10%, 0.05) 0px 4px 16px 0px, hsla(40, 12%, 15%, 0.05) 0px 8px 16px -5px';
 
   return {
-    palette: {
-      mode,
-      primary: {
-        light: brand[300],
-        main: brand[400],
-        dark: brand[700],
-        contrastText: gray[50],
-        ...(mode === 'dark' && {
-          contrastText: gray[50],
-          light: brand[300],
-          main: brand[400],
-          dark: brand[700],
-        }),
-      },
-      info: {
-        light: blue[300],
-        main: blue[500],
-        dark: blue[700],
-        contrastText: gray[50],
-        ...(mode === 'dark' && {
-          contrastText: blue[100],
-          light: blue[400],
-          main: blue[600],
-          dark: blue[800],
-        }),
-      },
-      warning: {
-        light: orange[300],
-        main: orange[400],
-        dark: orange[700],
-        ...(mode === 'dark' && {
-          light: orange[400],
-          main: orange[500],
-          dark: orange[800],
-        }),
-      },
-      error: {
-        light: red[300],
-        main: red[400],
-        dark: red[700],
-        ...(mode === 'dark' && {
-          light: red[400],
-          main: red[500],
-          dark: red[800],
-        }),
-      },
-      success: {
-        light: green[300],
-        main: green[500],
-        dark: green[700],
-        ...(mode === 'dark' && {
-          light: green[400],
-          main: green[500],
-          dark: green[800],
-        }),
-      },
-      grey: {
-        ...gray,
-      },
-      divider: mode === 'dark' ? alpha(gray[700], 0.8) : alpha(gray[300], 0.3),
-      background: {
-        default: mode === 'dark' ? gray[900] : gray[50],
-        paper: mode === 'dark' ? gray[850] : gray[100],
-      },
-      text: {
-        primary: mode === 'dark' ? gray[100] : gray[800],
-        secondary: mode === 'dark' ? gray[400] : gray[600],
-        disabled: mode === 'dark' ? gray[600] : gray[400],
-      },
-      action: {
-        hover: mode === 'dark' ? alpha(gray[600], 0.3) : alpha(brand[100], 0.5),
-        selected: mode === 'dark' ? alpha(gray[600], 0.4) : alpha(brand[200], 0.3),
-        active: brand[400],
-      },
-    },
-    typography: {
-      fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
-      h1: {
-        fontSize: defaultTheme.typography.pxToRem(48),
-        fontWeight: 600,
-        lineHeight: 1.2,
-        letterSpacing: -0.02,
-      },
-      h2: {
-        fontSize: defaultTheme.typography.pxToRem(36),
-        fontWeight: 600,
-        lineHeight: 1.25,
-        letterSpacing: -0.01,
-      },
-      h3: {
-        fontSize: defaultTheme.typography.pxToRem(30),
-        fontWeight: 500,
-        lineHeight: 1.3,
-      },
-      h4: {
-        fontSize: defaultTheme.typography.pxToRem(24),
-        fontWeight: 500,
-        lineHeight: 1.35,
-      },
-      h5: {
-        fontSize: defaultTheme.typography.pxToRem(20),
-        fontWeight: 500,
-        lineHeight: 1.4,
-      },
-      h6: {
-        fontSize: defaultTheme.typography.pxToRem(18),
-        fontWeight: 500,
-        lineHeight: 1.45,
-      },
-      subtitle1: {
-        fontSize: defaultTheme.typography.pxToRem(16),
-        fontWeight: 400,
-        lineHeight: 1.5,
-      },
-      subtitle2: {
-        fontSize: defaultTheme.typography.pxToRem(14),
-        fontWeight: 500,
-        lineHeight: 1.5,
-      },
-      body1: {
-        fontSize: defaultTheme.typography.pxToRem(14),
-        lineHeight: 1.6,
-      },
-      body2: {
-        fontSize: defaultTheme.typography.pxToRem(13),
-        fontWeight: 400,
-        lineHeight: 1.6,
-      },
-      caption: {
-        fontSize: defaultTheme.typography.pxToRem(12),
-        fontWeight: 400,
-        lineHeight: 1.5,
-      },
-      button: {
-        textTransform: 'none',
-        fontWeight: 500,
-      },
-    },
+    palette: colorSchemes[mode].palette,
+    typography,
     shape: {
       borderRadius: 12,
     },
@@ -346,7 +210,7 @@ export const colorSchemes = {
       divider: alpha(gray[700], 0.4),
       background: {
         default: gray[900],
-        paper: gray[800],
+        paper: gray[850],
       },
       text: {
         primary: gray[100],
@@ -365,34 +229,34 @@ export const colorSchemes = {
 export const typography = {
   fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
   h1: {
-    fontSize: defaultTheme.typography.pxToRem(48),
+    fontSize: defaultTheme.typography.pxToRem(72),
     fontWeight: 600,
     lineHeight: 1.2,
     letterSpacing: -0.02,
   },
   h2: {
-    fontSize: defaultTheme.typography.pxToRem(36),
+    fontSize: defaultTheme.typography.pxToRem(54),
     fontWeight: 600,
     lineHeight: 1.25,
     letterSpacing: -0.01,
   },
   h3: {
-    fontSize: defaultTheme.typography.pxToRem(30),
+    fontSize: defaultTheme.typography.pxToRem(44),
     fontWeight: 500,
     lineHeight: 1.3,
   },
   h4: {
-    fontSize: defaultTheme.typography.pxToRem(24),
+    fontSize: defaultTheme.typography.pxToRem(36),
     fontWeight: 500,
     lineHeight: 1.35,
   },
   h5: {
-    fontSize: defaultTheme.typography.pxToRem(20),
+    fontSize: defaultTheme.typography.pxToRem(30),
     fontWeight: 500,
     lineHeight: 1.4,
   },
   h6: {
-    fontSize: defaultTheme.typography.pxToRem(18),
+    fontSize: defaultTheme.typography.pxToRem(24),
     fontWeight: 500,
     lineHeight: 1.45,
   },
