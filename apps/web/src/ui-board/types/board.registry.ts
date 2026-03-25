@@ -1,9 +1,11 @@
 import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui-board/types/board.nodes"
 import { BoardCardContainerProps, BoardCardProps, BoardRootProps } from "@/src/ui-board/types/board.props"
 import { Identifier } from "@/src/types/shared/core/data"
+import { LayoutRegistry } from "@/src/ui-layout/types/layout.registry"
 
 export interface BoardRegistry {
     board: BoardRootNode
+    layoutRegistry: LayoutRegistry
 
     registerBoard(
         ref: React.RefObject<HTMLDivElement | null>,
