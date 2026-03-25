@@ -1,17 +1,17 @@
-import { RegistryBaseNode } from "@/src/ui/types/shared/registry";
+import { UINode, UIRootNode } from "@/src/shared/types/ui.types";
 import { BoardRootProps, BoardCardProps, BoardCardContainerProps } from "./board.props";
 
-export interface BoardRootNode extends RegistryBaseNode {
+export interface BoardRootNode extends UIRootNode {
     ref: React.RefObject<HTMLDivElement | null>
     props?: BoardRootProps
     cardContainer?: BoardCardContainerNode
 }
 
-export interface BoardCardContainerNode extends RegistryBaseNode {
+export interface BoardCardContainerNode extends UINode {
     props?: BoardCardContainerProps; 
     cards: Map<string, BoardCardNode>
 }
 
-export interface BoardCardNode extends RegistryBaseNode {
+export interface BoardCardNode extends UINode {
     props?: BoardCardProps; 
 }
