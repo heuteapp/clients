@@ -1,4 +1,4 @@
-import { parseYYMMDD } from "../../shared/utils/date.utils";
+import { parseYYMMDD } from "@/src/modules/shared/utils/date.utils";
 import { WorkspaceBoardData } from "../types/workspace-board.types";
 
 /**
