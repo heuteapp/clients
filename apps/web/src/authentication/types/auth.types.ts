@@ -4,3 +4,8 @@ export interface AuthSession {
     accessToken: string;
     profile: UserProfile;
 }
+
+export interface AuthRegistration {
+    email: string;
+    expiredAt: number;
+}
