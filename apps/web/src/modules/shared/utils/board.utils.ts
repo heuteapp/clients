@@ -1,4 +1,4 @@
-import { BoardPath } from "@/src/modules/shared/types/board.types";
+import { BoardPath, BoardPathConfig } from "@/src/modules/shared/types/board.types";
 import { parseYYMMDD } from "./date.utils";
 
 /**
@@ -63,4 +63,95 @@ export function hasBoardDate(relativePath: string): boolean {
 export function getBoardCategories(relativePath: string): string[] {
     const boardPath = parseBoardPath(relativePath);
     return boardPath?.categories ?? [];
+}
+
+/**
+ * Validates a board path against the provided configuration
+ * 
+ * @param relativePath - The relative path to validate
+ * @param config - Configuration options for validation
+ * @returns True if the path is valid according to the config, false otherwise
+ * 
+ * @example
+ * // Check if path has at least 1 category
+ * isValidBoardPath("history/ww2", { minCategories: 1 }) // true
+ * isValidBoardPath("", { minCategories: 1 }) // false
+ * 
+ * // Check if path has at most 2 categories
+ * isValidBoardPath("school/grade2/history", { maxCategories: 2 }) // false
+ * 
+ * // Check if path has a date
+ * isValidBoardPath("history/250315", { requireDate: true }) // true
+ * isValidBoardPath("history", { requireDate: true }) // false
+ */
+export function isValidBoardPath(
+    relativePath: string, 
+    config: BoardPathConfig = {}
+): boolean {
+    const {
+        minCategories = 0,
+        maxCategories = Infinity,
+        requireDate = false,
+    } = config;
+    
+    // Parse the path
+    const boardPath = parseBoardPath(relativePath);
+    
+    // If path is invalid (null), it's not valid
+    if (!boardPath) {
+        // Only valid if no categories required and no date required
+        return minCategories === 0 && !requireDate;
+    }
+    
+    const { categories, date } = boardPath;
+    const categoryCount = categories.length;
+    
+    // Check category count constraints
+    if (categoryCount < minCategories) {
+        return false;
+    }
+    
+    if (categoryCount > maxCategories) {
+        return false;
+    }
+    
+    // Check date requirement
+    if (requireDate && !date) {
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Validates a board path and throws an error if invalid
+ * 
+ * @param relativePath - The relative path to validate
+ * @param config - Configuration options for validation
+ * @throws {Error} If the path is invalid
+ */
+export function validateBoardPath(
+    relativePath: string, 
+    config: BoardPathConfig = {}
+): void {
+    if (!isValidBoardPath(relativePath, config)) {
+        const { minCategories = 0, maxCategories = Infinity, requireDate = false } = config;
+        
+        const boardPath = parseBoardPath(relativePath);
+        const categoryCount = boardPath?.categories.length ?? 0;
+        
+        let errorMessage = 'Invalid board path';
+        
+        if (categoryCount < minCategories) {
+            errorMessage = `Board path must have at least ${minCategories} category(s), but found ${categoryCount}`;
+        } else if (categoryCount > maxCategories) {
+            errorMessage = `Board path must have at most ${maxCategories} category(s), but found ${categoryCount}`;
+        } else if (requireDate && (!boardPath?.date)) {
+            errorMessage = `Board path must end with a valid date (YYMMDD format)`;
+        } else if (!boardPath) {
+            errorMessage = `Board path is empty or invalid`;
+        }
+        
+        throw new Error(errorMessage);
+    }
 }
