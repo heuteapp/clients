@@ -2,9 +2,8 @@
 
 import { useRef } from "react";
 import Box from "@mui/material/Box";
-import { BrandIconOnly } from "@/src/ui/components/app/Brand";
-import { flex } from "@mui/system";
 import { Navbar } from "./navbar";
+import { Sidebar } from "./sidebar";
 
 export default function WorkspaceLayout({
   children,
@@ -28,29 +27,7 @@ export default function WorkspaceLayout({
           bgcolor: "transparent"
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            height: "100vh",
-            width: 300,
-            backgroundColor: "green",
-          }}
-        >
-          {/* do 5 96x96 items */}
-          {[...Array(5)].map((_, index) => (
-            <Box
-              key={index}
-              sx={{
-                width: 48,
-                height: 48,
-                backgroundColor: "lightgray",
-                margin: 2,
-              }}
-            />
-          ))}
-        </Box>        
+        <Sidebar />
         <Box
           sx={{
             flexGrow: 1,
