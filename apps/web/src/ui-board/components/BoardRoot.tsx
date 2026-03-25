@@ -1,6 +1,6 @@
 "use client"
 
-import style from "@/src/ui/styles/board.module.css"
+import style from "@/src/ui-board/styles/board.module.css"
 import { useLayoutEffect, useRef } from "react";
 
 import BoardCardContainer from "./BoardCardContainer";
