@@ -1,5 +1,4 @@
 import { BrandIconProps, BrandTextOnlyProps, BrandIconOnlyProps, BrandCompactProps, BrandFullProps, BrandTextProps, BrandRootProps } from "@/src/types/ui/components/app/Brand";
-import { HeuteIcon } from "@/src/ui-shared/components/HeuteIcon";
 import { CSSProperties } from "@mui/material";
 import { HeuteLink } from "./HeuteLink";
 
@@ -57,7 +56,18 @@ const BrandRoot = ({ children, link }: BrandRootProps) => {
 };
 
 const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", style }: BrandIconProps) => {
-  return <HeuteIcon width={size} height={size} alt={alt} style={style} />;
+  return  (
+    <img
+      src="/assets/favicon.svg"
+      alt={alt}
+      width={size}
+      height={size}
+      //className={className}
+      style={{
+        ...style,
+      }}
+    />
+  )
 };
 
 const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", style }: BrandTextProps) => {
