@@ -66,10 +66,10 @@ export default function WorkspaceLayout({
 
               {isAuthenticated(state) && (
                 <>                
-                  <HeuteLink href="/workspace" className="navbar-link" id={"navbar-link-workspace"}>
+                  <HeuteLink href="/workspace" linkType="external" className="navbar-link" id={"navbar-link-workspace"}>
                     Workspace
                   </HeuteLink>
-                  <HeuteLink href="/workspace/profile" className="navbar-link" id={"navbar-link-profile"}>
+                  <HeuteLink href="/workspace/profile" linkType="external" className="navbar-link" id={"navbar-link-profile"}>
                     {state.context.auth?.profile.username}
                   </HeuteLink>
                 </>
