@@ -2,7 +2,7 @@ import React from "react"
 import { LayoutRegistry } from "@/src/ui-layout/types/layout.registry";
 import { createLayoutRegistry } from "@/src/ui-layout/registries/layout.registry";
 
-export const useLayoutRegistry = (layoutRef: React.RefObject<HTMLDivElement>) : LayoutRegistry => {
+export const useLayoutRegistry = (layoutRef: React.RefObject<HTMLDivElement | null>) : LayoutRegistry => {
     const registry = React.useRef<LayoutRegistry>(null);
 
     React.useEffect(() => {
