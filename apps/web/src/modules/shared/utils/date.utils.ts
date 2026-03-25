@@ -101,6 +101,24 @@ export function parseYYMMDD(dateStr: string): YYMMDDDate | null {
 }
 
 /**
+ * Converts a JavaScript Date object to a YYMMDDDate object.
+ * 
+ * @param date - Date object to convert
+ * @returns YYMMDDDate object or null if the date is invalid
+ * 
+ * @example
+ * dateToYYMMDD(new Date(2026, 2, 25))
+ * // Returns: { raw: "260325", iso: "2026-03-25", display: "March 25, 2026", ... }
+ */
+export function dateToYYMMDD(date: Date): YYMMDDDate | null {
+    const yyMMddStr = dateToYYMMDDStr(date);
+    if (!yyMMddStr) {
+        return null;
+    }
+    return parseYYMMDD(yyMMddStr);
+}
+
+/**
  * Converts a JavaScript Date object to YYMMDD string format.
  * 
  * @param date - Date object
