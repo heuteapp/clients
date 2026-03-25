@@ -1,6 +1,6 @@
 import { WorkspaceBoardData } from "../types/workspace-board.types";
 import { isValidYYMMDD } from "./isValidYYMMDD";
-import { parseYYMMDD } from "./parseYYMMDD";
+import { parseYYMMDD } from "./yymmdd.utils";
 
 /**
  * Extracts categories and date from a board URL path
