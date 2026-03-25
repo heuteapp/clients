@@ -1,4 +1,4 @@
-import { AppTheme } from "@/src/ui/themes/mui/AppTheme";
+import { AppTheme } from "@/src/ui-shared/themes/mui/AppTheme";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "../../modules/auth/providers/AuthProvider";
 import { Suspense } from "react";
