@@ -1,4 +1,4 @@
-import { GridRect } from "@/src/types/shared/core/common";
+import { GridRect } from "@/src/shared/types/common";
 
 export interface Board {
     layoutName: string;
