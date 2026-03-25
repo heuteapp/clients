@@ -1,22 +1,22 @@
 import { useMemo } from "react";
 import { WorkspaceBoardConfig, WorkspaceBoardMetadata } from "../types/workspace-board.types";
-import { enrichBoardData } from "../utils/enrichBoardData";
-import { validateCategoryDepth } from "../utils/validateCategoryDepth";
-import { useWorkspaceBoardUtils } from "./useWorkspaceBoardUtils";
 import { usePathname } from "next/navigation";
+import { parseBoardPath } from "../../shared/utils/board.utils";
+import { dateToYYMMDD } from "../../shared/utils/date.utils";
 
 export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceBoardMetadata {
     const pathName = usePathname();
-    const utils = useWorkspaceBoardUtils(config);
+    const relativePath = pathName.replace(/^\/workspace\/board\/?/, "");
     
     return useMemo(() => {
-        const boardData = utils.parsePath(pathName);
-        const enrichedData = enrichBoardData(boardData);
+        const boardData = parseBoardPath(relativePath);
         
-        const validation = validateCategoryDepth(enrichedData.categoryDepth, config);
-        if (!validation.isValid) {
-            console.warn('Invalid board path:', validation.error);
-        }
+        const enrichedData: WorkspaceBoardMetadata = {
+            categories: boardData?.categories || [],
+            date: boardData?.date || dateToYYMMDD(new Date()),
+            categoryDepth: boardData?.categories.length || 0,
+            categoryPath: boardData?.categories.join("/") || "",
+        };
         
         return enrichedData;
     }, [pathName, config]);
