@@ -60,11 +60,7 @@ export interface WorkspaceBoardDate {
     day: string;
 }
 
-/**
- * Return value of the useWorkspaceBoard hook.
- * Provides access to category and date information from the current board URL.
- */
-export interface WorkspaceBoardReturn {
+export interface WorkspaceBoardData {
     /**
      * Array of category segments extracted from the URL path.
      * Categories are URL-decoded automatically.
@@ -78,6 +74,27 @@ export interface WorkspaceBoardReturn {
      * categories = ["school", "grade2", "history"]
      */
     categories: string[];
+
+    /**
+     * Date information extracted from the URL.
+     * Returns null if the last segment is not a valid date (YYMMDD format).
+     * 
+     * @example
+     * // URL: /workspace/board/history/250315
+     * date = { raw: "250315", iso: "2025-03-15", display: "March 15, 2025", ... }
+     * 
+     * @example
+     * // URL: /workspace/board/history (no date)
+     * date = null
+     */
+    date: WorkspaceBoardDate | null;
+}
+
+/**
+ * Return value of the useWorkspaceBoard hook.
+ * Provides access to category and date information from the current board URL.
+ */
+export interface WorkspaceBoardMetadata extends WorkspaceBoardData {
 
     /**
      * Number of category segments in the current path.
@@ -105,18 +122,4 @@ export interface WorkspaceBoardReturn {
      * categoryPath = "school/grade2/history"
      */
     categoryPath: string;
-
-    /**
-     * Date information extracted from the URL.
-     * Returns null if the last segment is not a valid date (YYMMDD format).
-     * 
-     * @example
-     * // URL: /workspace/board/history/250315
-     * date = { raw: "250315", iso: "2025-03-15", display: "March 15, 2025", ... }
-     * 
-     * @example
-     * // URL: /workspace/board/history (no date)
-     * date = null
-     */
-    date: WorkspaceBoardDate | null;
 }
