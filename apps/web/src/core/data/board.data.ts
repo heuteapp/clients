@@ -1,6 +1,6 @@
-import { BoardCardData, BoardData } from "@/src/types/core/domain/board/board.data";
-import { DataContent } from "../../types/shared/core/data";
-import { createDataIdentifier } from "../utils/shared/data";
+import { BoardCardData, BoardData } from "@/src/features/domain/board/types/board.data";
+import { DataContent } from "@/src/types/shared/core/data";
+import { createDataIdentifier } from "@/src/core/utils/shared/data";
 
 export function createBoardData(content: DataContent<BoardData>): BoardData {
     return {

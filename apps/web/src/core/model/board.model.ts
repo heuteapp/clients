@@ -1,4 +1,4 @@
-import { BoardCardModel, BoardModel } from "@/src/types/core/domain/board/board.model";
+import { BoardCardModel, BoardModel } from "@/src/features/domain/board/types/board.model";
 
 export function createBoardModel(
     layoutId: string, 
