@@ -31,8 +31,8 @@ export interface BoardPath {
      * Array of category strings extracted from the board path.
      * 
      * @example
-     * // For the path "school/grade2/history/250315"
-     * categories: ["school", "grade2", "history"]
+     * // For the path "school/grade2/math/250315"
+     * categories: ["school", "grade2", "math"]
      */
     categories: string[];
 

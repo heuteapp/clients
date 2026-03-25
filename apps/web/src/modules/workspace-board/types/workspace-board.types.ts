@@ -13,7 +13,7 @@ export interface WorkspaceBoardConfig {
     /**
      * Maximum allowed category depth.
      * @default 5
-     * @example If maxDepth = 2, a path like "/workspace/board/school/grade2/history" would be invalid
+     * @example If maxDepth = 2, a path like "/workspace/board/school/grade2/math" would be invalid
      */
     maxDepth?: number;
 }
@@ -70,8 +70,8 @@ export interface WorkspaceBoardData {
      * categories = ["history"]
      * 
      * @example
-     * // URL: /workspace/board/school/grade2/history
-     * categories = ["school", "grade2", "history"]
+     * // URL: /workspace/board/school/grade2/math
+     * categories = ["school", "grade2", "math"]
      */
     categories: string[];
 
@@ -104,7 +104,7 @@ export interface WorkspaceBoardMetadata extends WorkspaceBoardData {
      * categoryDepth = 1
      * 
      * @example
-     * // URL: /workspace/board/school/grade2/history
+     * // URL: /workspace/board/school/grade2/math
      * categoryDepth = 3
      */
     categoryDepth: number;
@@ -118,8 +118,8 @@ export interface WorkspaceBoardMetadata extends WorkspaceBoardData {
      * categoryPath = "history"
      * 
      * @example
-     * // URL: /workspace/board/school/grade2/history
-     * categoryPath = "school/grade2/history"
+     * // URL: /workspace/board/school/grade2/math
+     * categoryPath = "school/grade2/math"
      */
     categoryPath: string;
 }
@@ -162,12 +162,12 @@ export interface WorkspaceBoardUtils {
      * 
      * @example
      * const { enrichPath } = useWorkspaceBoardUtils();
-     * enrichPath('/workspace/board/school/grade2/history');
+     * enrichPath('/workspace/board/school/grade2/math');
      * // Returns: { 
      * //   categories: ['school', 'grade2', 'history'],
      * //   date: null,
      * //   categoryDepth: 3,
-     * //   categoryPath: 'school/grade2/history'
+     * //   categoryPath: 'school/grade2/math'
      * // }
      */
     enrichPath: (pathname: string) => WorkspaceBoardMetadata;
