@@ -1,6 +1,7 @@
-/*import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext"
 import style from "@/src/ui/styles/board.module.css"
-import { BoardCardProps } from "@/src/ui/types/domain/board/board.props";
+
+import { useBoardContext } from "@/src/ui-board/hooks/useBoardContext"
+import { BoardCardProps } from "@/src/ui-board/types/board.props";
 import { useLayoutEffect, useRef } from "react";
 
 function BoardCard(props : BoardCardProps) {
@@ -30,4 +31,4 @@ function BoardCard(props : BoardCardProps) {
     )
 }
 
-export default BoardCard*/
+export default BoardCard
