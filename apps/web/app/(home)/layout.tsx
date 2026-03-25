@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { Box } from "@mui/material";
-import { BrandCompact } from "@/src/ui/components/app/Brand";
+import { BrandCompact } from "@/src/ui-shared/components/Brand";
 import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
 import { isAuthenticated, isUnauthenticated } from "@/src/authentication/state/auth.machine";
-import { HeuteLink } from "@/src/ui/components/app/HeuteLink";
+import { HeuteLink } from "@/src/ui-shared/components/HeuteLink";
 
 export default function WorkspaceLayout({
   children,

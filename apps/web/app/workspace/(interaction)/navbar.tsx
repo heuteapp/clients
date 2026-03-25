@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { BrandIconOnly } from "@/src/ui/components/app/Brand";
+import { BrandIconOnly } from "@/src/ui-shared/components/Brand";
 
 export const Navbar = () => {
     return (

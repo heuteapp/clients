@@ -1,4 +1,4 @@
-import { useHashParams } from "@/src/ui/hooks/useHashParams";
+import { useHashParams } from "@/src/ui-shared/hooks/useHashParams";
 
 //
 

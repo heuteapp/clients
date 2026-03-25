@@ -1,5 +1,5 @@
 import { BrandIconProps, BrandTextOnlyProps, BrandIconOnlyProps, BrandCompactProps, BrandFullProps, BrandTextProps, BrandRootProps } from "@/src/types/ui/components/app/Brand";
-import { Favicon } from "@/src/ui/assets/Favicon";
+import { Favicon } from "@/src/ui-shared/components/Favicon";
 import { CSSProperties } from "@mui/material";
 import Link from "next/link";
 import { HeuteLink } from "./HeuteLink";

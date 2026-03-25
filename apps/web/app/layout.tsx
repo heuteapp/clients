@@ -1,5 +1,5 @@
 import { AppProviders } from "@/src/ui/providers/AppProviders";
-import "@/src/ui/styles/shared/global.css";
+import "@/src/ui-shared/styles/global.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
