@@ -20,6 +20,8 @@ export function HH() {
             <p>Categories: {metadata.categories.join(", ")}</p>
             <p>Category Depth: {metadata.categoryDepth}</p>
             <p>Date: {metadata.date?.display}</p>
+            <p>Is Valid: {metadata.isValid ? "Yes" : "No"}</p>
+            {metadata.errorMessage && <p style={{ color: "red" }}>Error: {metadata.errorMessage}</p>}
         </div>
     )
 }
