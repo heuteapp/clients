@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Box from "@mui/material/Box";
 import { BrandIconOnly } from "@/src/ui/components/app/Brand";
 import { flex } from "@mui/system";
+import { Navbar } from "./navbar";
 
 export default function WorkspaceLayout({
   children,
@@ -17,36 +18,7 @@ export default function WorkspaceLayout({
         bgcolor: "background.paper",
       }}
     >
-      <Box
-        component="nav"
-        sx={{
-          borderBottom: 1,
-          borderColor: "divider",
-          width: "100%",
-          height: "48px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          color: "text.primary",
-          fontSize: "1.5rem",
-        }}
-      >
-        <BrandIconOnly 
-          link={{ href: "/", linkType: "external" }}
-          size={28} 
-          style={{ padding: 8 }}
-        />
-        <Box
-          component="div"
-          sx={{
-            fontSize: "1.125rem",
-            color: "text.disabled",
-            fontWeight: "600",
-          }}
-        >
-          /
-        </Box>
-      </Box>
+      <Navbar />
       <Box
         sx={{
           width: "100%",
