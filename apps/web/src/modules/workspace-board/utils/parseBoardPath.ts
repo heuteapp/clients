@@ -1,6 +1,5 @@
+import { parseYYMMDD } from "../../shared/utils/date.utils";
 import { WorkspaceBoardData } from "../types/workspace-board.types";
-import { isValidYYMMDD } from "./isValidYYMMDD";
-import { parseYYMMDD } from "./yymmdd.utils";
 
 /**
  * Extracts categories and date from a board URL path
@@ -28,7 +27,7 @@ export function parseBoardPath(pathname: string): WorkspaceBoardData {
     
     // Check if last segment is a date
     const lastSegment = segments[segments.length - 1];
-    const date = isValidYYMMDD(lastSegment) ? parseYYMMDD(lastSegment) : null;
+    const date = parseYYMMDD(lastSegment);
     
     // If date exists, remove it from categories
     const categories = date ? segments.slice(0, -1) : segments;
