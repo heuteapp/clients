@@ -1,11 +1,11 @@
-import { BoardCardModel, BoardModel } from "@/src/modules/board/types/board.model";
+import { BoardCard, Board } from "@/src/board/types/board.types";
 
 export function createBoardModel(
     layoutId: string, 
     categoryName: string, 
     date: Date,
-    cards: BoardCardModel[]
-): BoardModel {
+    cards: BoardCard[]
+): Board {
     return {
         layoutId,
         categoryName,
