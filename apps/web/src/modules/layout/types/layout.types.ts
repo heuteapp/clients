@@ -1,4 +1,4 @@
-import { GridRect } from "@/src/shared/types/common";
+import { GridRect } from "@/src/modules/shared/types/common";
 
 export interface Layout {
     columnCount: number

@@ -1,4 +1,4 @@
-import { BoxStyle } from "@/src/shared/types/style";
+import { BoxStyle } from "@/src/modules/shared/types/style";
 
 export type BoardStyle = {
     name: string;
