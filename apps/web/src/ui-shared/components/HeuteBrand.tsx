@@ -1,0 +1,74 @@
+import { BrandIconProps, BrandTextOnlyProps, BrandIconOnlyProps, BrandCompactProps, BrandFullProps, BrandTextProps, BrandRootProps } from "@/src/types/ui/components/app/Brand";
+import { HeuteIcon } from "@/src/ui-shared/components/HeuteIcon";
+import { CSSProperties } from "@mui/material";
+import { HeuteLink } from "./HeuteLink";
+
+export const HeuteFullBrand = ({ link, iconSize, iconAlt, iconStyle, text = "HeuteApp", textColor, textSize, textStyle }: BrandFullProps) => {
+  return (
+    <BrandRoot link={link}>
+      <BrandIcon size={iconSize} alt={iconAlt} style={{ padding: 6, ...iconStyle}} />
+      <BrandText text={text} color={textColor} size={textSize} style={textStyle} />
+    </BrandRoot>
+  );
+};
+
+export const HeuteCompactBrand = ({ link, iconSize, iconAlt, iconStyle, text = "euteApp", textColor, textSize, textStyle }: BrandCompactProps) => {
+  return (
+    <BrandRoot link={link}>
+      <BrandIcon size={iconSize} alt={iconAlt} style={iconStyle} />
+      <BrandText text={text} color={textColor} size={textSize} style={textStyle} />
+    </BrandRoot>
+  );
+};
+
+export const HeuteIconOnlyBrand = ({ link, size, alt, style }: BrandIconOnlyProps) => {
+  return (
+    <BrandRoot link={link}>
+      <BrandIcon size={size} alt={alt} style={style} />
+    </BrandRoot>
+  );
+};
+
+export const HeuteTextOnlyBrand = ({ link, text, color, size, style }: BrandTextOnlyProps) => {
+  return (
+    <BrandRoot link={link}>
+      <BrandText text={text} color={color} size={size} style={style} />
+    </BrandRoot>
+  );
+};
+
+//
+
+const BrandRoot = ({ children, link }: BrandRootProps) => {
+  const styles : CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    fontSize: "1.5rem",
+    color: "#FFF",
+    textDecoration: "none",
+    userSelect: "none",
+  };
+
+  return (
+    <HeuteLink href={link?.href} linkType={link?.linkType} style={{...styles, ...link?.style}}>
+      {children}
+    </HeuteLink>
+  )
+};
+
+const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", style }: BrandIconProps) => {
+  return <HeuteIcon width={size} height={size} alt={alt} style={style} />;
+};
+
+const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", style }: BrandTextProps) => {
+  return (
+    <div style={{ 
+      color, 
+      fontWeight: "600",
+      fontSize: size, 
+      ...style 
+    }}>
+      {text}
+    </div>
+  );
+};

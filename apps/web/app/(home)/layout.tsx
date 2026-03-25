@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { Box } from "@mui/material";
-import { BrandCompact } from "@/src/ui-shared/components/Brand";
+import { HeuteCompactBrand } from "@/src/ui-shared/components/HeuteBrand";
 import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
 import { isAuthenticated, isUnauthenticated } from "@/src/authentication/state/auth.machine";
 import { HeuteLink } from "@/src/ui-shared/components/HeuteLink";
@@ -42,7 +42,7 @@ export default function WorkspaceLayout({
                 justifyContent: "flex-start",
               }}
             >
-              <BrandCompact link={{ href: "/", linkType: "internal" }} />
+              <HeuteCompactBrand link={{ href: "/", linkType: "internal" }} />
             </Box>
 
             <Box
