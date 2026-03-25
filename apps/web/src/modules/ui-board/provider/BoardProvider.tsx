@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { useBoardRegistry } from "@/src/modules/ui-board/hooks/useBoardRegistry";

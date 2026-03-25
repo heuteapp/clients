@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useLayoutRegistry } from "@/src/modules/ui-layout/hooks/useLayoutRegistry";
 import { LayoutContext } from "@/src/modules/ui-layout/contexts/layout.context";
