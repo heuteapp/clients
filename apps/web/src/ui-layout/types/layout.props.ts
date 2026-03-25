@@ -10,7 +10,7 @@ export interface LayoutSectionProps extends LayoutSectionEntity {
 }
 
 export interface LayoutGridProps  {
-    sectionId: Identifier,
+    sectionId: string,
     colSpan: number,
     rowSpan: number,
 }
