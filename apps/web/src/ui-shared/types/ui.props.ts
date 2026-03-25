@@ -1,4 +1,4 @@
-export type FavIconProps = {    
+export type HeuteIconProps = {    
     alt?: string;
     width?: number;
     height?: number;

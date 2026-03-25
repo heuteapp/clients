@@ -1,6 +1,6 @@
-import { FavIconProps } from "@/src/types/ui/assets/FavIcon";
+import { HeuteIconProps } from "../types/ui.props";
 
-export const Favicon = ({ alt = "HeuteApp Favicon", width = 100, height = 100, className = "", style } : FavIconProps) => {
+export const HeuteIcon = ({ alt = "HeuteIcon", width = 96, height = 96, className = "", style } : HeuteIconProps) => {
   return (
     <img
       src="/assets/favicon.svg"
