@@ -1,13 +1,16 @@
-/*import { useLayoutEffect, useRef } from "react"
 import style from "@/src/ui/styles/layout.module.css"
 
-import { BoardLayoutSectionProps } from "@/src/ui/types/domain/board/board.props";
-import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext";
+import { useLayoutEffect, useRef } from "react"
 import LayoutGrid from "./LayoutGrid";
 
-export function LayoutSection(props : BoardLayoutSectionProps) {
+import { LayoutSectionProps } from "@/src/ui-layout/types/layout.props";
+import { useLayoutContext } from "@/src/ui-layout/hooks/useLayoutContext";
+
+//
+
+export function LayoutSection(props : LayoutSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
-    const context = useBoardContext();
+    const context = useLayoutContext();
 
     const { registry } = context!;
 
@@ -32,4 +35,4 @@ export function LayoutSection(props : BoardLayoutSectionProps) {
             <LayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
         </div>
     )
-}*/
+}
