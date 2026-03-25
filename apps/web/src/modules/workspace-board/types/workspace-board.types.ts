@@ -1,23 +1,14 @@
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
+import { BoardPathConfig } from "../../shared/types/board.types";
 
 /**
- * Configuration options for the workspace board hook.
- * Controls the validation rules for category depth in the board structure.
+ * Configuration options for the useWorkspaceBoard hook, allowing customization of how the board path is parsed and validated.
  */
 export interface WorkspaceBoardConfig {
     /**
-     * Minimum allowed category depth.
-     * @default 1
-     * @example If minDepth = 2, a path like "/workspace/board/history" would be invalid
+     * Configuration for validating and parsing the board path.
      */
-    minDepth?: number;
-
-    /**
-     * Maximum allowed category depth.
-     * @default 5
-     * @example If maxDepth = 2, a path like "/workspace/board/school/grade2/math" would be invalid
-     */
-    maxDepth?: number;
+    path?: BoardPathConfig;
 }
 
 /**
@@ -85,4 +76,14 @@ export interface WorkspaceBoardData {
      * date = null
      */
     date: YYMMDDDate | null;
+
+    /**
+     * Indicates whether the current path is valid according to the workspace board configuration and validation rules.
+     */
+    isValid: boolean;
+
+    /**
+     * Error message providing details about why the path is invalid, if applicable.
+     */
+    errorMessage?: string;
 }
