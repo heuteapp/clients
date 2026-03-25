@@ -1,4 +1,4 @@
-import { LayoutData, LayoutSectionData } from "@/src/modules/domain/layout/types/layout.data";
+import { LayoutData, LayoutSectionData } from "@/src/modules/layout/types/layout.data";
 import { Identifier } from "@/src/types/shared/core/data";
 
 export interface LayoutRootProps extends LayoutData {
