@@ -1,11 +1,11 @@
-/*import style from "@/src/ui/styles/layout.module.css"
+import style from "@/src/ui/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react";
-import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext";
-import { BoardLayoutGridProps } from "@/src/ui/types/domain/board/board.props";
+import { useLayoutContext } from "@/src/ui-layout/hooks/useLayoutContext";
+import { LayoutGridProps } from "@/src/ui-layout/types/layout.props";
 
-function LayoutGrid(props : BoardLayoutGridProps) {
-    const context = useBoardContext();
+function LayoutGrid(props : LayoutGridProps) {
+    const context = useLayoutContext();
 
     const { registry } = context!;
 
@@ -27,4 +27,4 @@ function LayoutGrid(props : BoardLayoutGridProps) {
     )
 }
 
-export default LayoutGrid*/
+export default LayoutGrid
