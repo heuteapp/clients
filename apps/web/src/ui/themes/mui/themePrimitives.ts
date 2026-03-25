@@ -205,7 +205,7 @@ export const colorSchemes = {
       grey: {
         ...gray,
       },
-      divider: alpha(gray[700], 0.4),
+      divider: alpha(gray[700], 0.6),
       background: {
         default: gray[900],
         paper: gray[850],
