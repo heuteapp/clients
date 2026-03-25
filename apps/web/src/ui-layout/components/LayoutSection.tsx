@@ -1,4 +1,4 @@
-import style from "@/src/ui/styles/layout.module.css"
+import style from "@/src/ui-layout/styles/layout.module.css"
 
 import { useLayoutEffect, useRef } from "react"
 import LayoutGrid from "./LayoutGrid";
