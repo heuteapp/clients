@@ -125,7 +125,8 @@ export const getDesignTokens = (mode: PaletteMode) => {
 
 export const colorSchemes = {
   light: {
-    palette: {
+    palette: {      
+      mode: 'light' as PaletteMode,
       primary: {
         light: brand[300],
         main: brand[400],
@@ -174,7 +175,8 @@ export const colorSchemes = {
     },
   },
   dark: {
-    palette: {
+    palette: {      
+      mode: 'dark' as PaletteMode,
       primary: {
         light: brand[300],
         main: brand[400],
