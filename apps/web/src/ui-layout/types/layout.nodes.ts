@@ -1,4 +1,4 @@
-import { UINode, UIRootNode } from "@/src/shared/types/ui.types";
+import { UINode, UIRootNode } from "@/src/ui-shared/types/ui.types";
 import { LayoutRootProps, LayoutGridProps, LayoutSectionProps } from "./layout.props";
 
 export interface LayoutRootNode extends UIRootNode {
