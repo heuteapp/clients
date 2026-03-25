@@ -1,9 +1,9 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
-import { AuthSession } from "@/src/modules/authentication/types/auth.types";
+import { AuthSession } from "@/src/authentication/types/auth.types";
 import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/types/states/auth/auth.actors";
 import { AuthRegistration } from "@/src/types/states/auth/auth.machine";
-import { createCallback } from "@/src/modules/authentication/utils/create-callback";
+import { createCallback } from "@/src/authentication/utils/create-callback";
 import { fromPromise } from "xstate";
 
 export const hydrateAuthActor = fromPromise<
