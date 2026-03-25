@@ -123,3 +123,77 @@ export interface WorkspaceBoardMetadata extends WorkspaceBoardData {
      */
     categoryPath: string;
 }
+
+//
+
+/**
+ * Return type for the useWorkspaceBoardUtils hook
+ * Provides utility functions for working with workspace board paths
+ */
+export interface WorkspaceBoardUtils {
+    /**
+     * Validates if a given pathname conforms to the board configuration
+     * @param pathname - The URL pathname to validate
+     * @returns True if the path is valid, false otherwise
+     * 
+     * @example
+     * const { validatePath } = useWorkspaceBoardUtils({ minDepth: 1, maxDepth: 3 });
+     * validatePath('/workspace/board/history'); // true
+     * validatePath('/workspace/board'); // false (depth 0 < minDepth 1)
+     */
+    validatePath: (pathname: string) => boolean;
+
+    /**
+     * Parses a board pathname into categories and date information
+     * @param pathname - The URL pathname to parse
+     * @returns WorkspaceBoardData containing categories and optional date
+     * 
+     * @example
+     * const { parsePath } = useWorkspaceBoardUtils();
+     * parsePath('/workspace/board/history/250315');
+     * // Returns: { categories: ['history'], date: { raw: '250315', ... } }
+     */
+    parsePath: (pathname: string) => WorkspaceBoardData;
+
+    /**
+     * Parses and enriches a board pathname with additional metadata
+     * @param pathname - The URL pathname to parse and enrich
+     * @returns WorkspaceBoardMetadata with categories, date, depth, and path
+     * 
+     * @example
+     * const { enrichPath } = useWorkspaceBoardUtils();
+     * enrichPath('/workspace/board/school/grade2/history');
+     * // Returns: { 
+     * //   categories: ['school', 'grade2', 'history'],
+     * //   date: null,
+     * //   categoryDepth: 3,
+     * //   categoryPath: 'school/grade2/history'
+     * // }
+     */
+    enrichPath: (pathname: string) => WorkspaceBoardMetadata;
+
+    /**
+     * Generates a board URL from categories and optional date
+     * @param categories - Array of category segments
+     * @param date - Optional date (as string or WorkspaceBoardDate object)
+     * @returns Generated URL string
+     * 
+     * @example
+     * const { generateUrl } = useWorkspaceBoardUtils();
+     * generateUrl(['history', 'essays']); 
+     * // Returns: '/workspace/board/history/essays'
+     * 
+     * generateUrl(['notes'], '250315');
+     * // Returns: '/workspace/board/notes/250315'
+     */
+    generateUrl: (
+        categories: string[],
+        date?: WorkspaceBoardDate | string
+    ) => string;
+
+    /**
+     * Current configuration being used by the utilities
+     * Combines default config with user-provided config
+     */
+    config: Required<WorkspaceBoardConfig>;
+}
