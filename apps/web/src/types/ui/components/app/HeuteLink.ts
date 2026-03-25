@@ -1,4 +1,4 @@
-import { ComponentProps } from "@/src/types/ui/components/shared/app/Component";
+import { ComponentProps } from "@/src/ui-base/types/ui.props.types";
 
 export interface HeuteLinkProps extends ComponentProps, HeuteLinkData {
     
