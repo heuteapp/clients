@@ -1,4 +1,3 @@
-import { Identifier } from "@/src/types/shared/core/data"
 import { LayoutRootNode, LayoutSectionNode, LayoutGridNode } from "./layout.nodes"
 import { LayoutRootProps, LayoutSectionProps, LayoutGridProps } from "./layout.props"
 
@@ -11,13 +10,13 @@ export interface LayoutRegistry {
     ): LayoutRootNode
 
     registerLayoutSection(
-        id: Identifier,
+        id: string,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutSectionProps
     ): LayoutSectionNode
 
     registerLayoutGrid(
-        sectionId: Identifier,
+        sectionId: string,
         ref: React.RefObject<HTMLDivElement | null>,
         props: LayoutGridProps
     ): LayoutGridNode
@@ -26,19 +25,19 @@ export interface LayoutRegistry {
 
     unregisterLayout(): void
 
-    unregisterLayoutSection(id: Identifier): void
+    unregisterLayoutSection(id: string): void
 
-    unregisterLayoutGrid(sectionId: Identifier): void
+    unregisterLayoutGrid(sectionId: string): void
 
     //
 
-    getLayoutSection(id: Identifier): LayoutSectionNode | undefined
+    getLayoutSection(id: string): LayoutSectionNode | undefined
 
     getLayoutSectionByName(name: string): LayoutSectionNode | undefined
 
     getLayoutSections(): LayoutSectionNode[] | undefined
 
-    getLayoutGrid(sectionId: Identifier): LayoutGridNode | undefined
+    getLayoutGrid(sectionId: string): LayoutGridNode | undefined
 
-    getLayoutGrids(sectionId: Identifier): LayoutGridNode[] | undefined
+    getLayoutGrids(sectionId: string): LayoutGridNode[] | undefined
 }

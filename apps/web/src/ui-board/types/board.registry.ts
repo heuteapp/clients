@@ -1,6 +1,5 @@
 import { BoardCardContainerNode, BoardCardNode, BoardRootNode } from "@/src/ui-board/types/board.nodes"
 import { BoardCardContainerProps, BoardCardProps, BoardRootProps } from "@/src/ui-board/types/board.props"
-import { Identifier } from "@/src/types/shared/core/data"
 import { LayoutRegistry } from "@/src/ui-layout/types/layout.registry"
 
 export interface BoardRegistry {
@@ -18,7 +17,7 @@ export interface BoardRegistry {
     ): BoardCardContainerNode
 
     registerBoardCard(
-        id: Identifier,
+        id: string,
         ref: React.RefObject<HTMLDivElement | null>,
         props: BoardCardProps
     ): BoardCardNode
@@ -29,15 +28,15 @@ export interface BoardRegistry {
 
     unregisterBoardCardContainer(): void
 
-    unregisterBoardCard(id: Identifier): void
+    unregisterBoardCard(id: string): void
 
     //
 
     getBoardCardContainer(): BoardCardContainerNode | undefined
 
-    getBoardCard(id: Identifier): BoardCardNode | undefined
+    getBoardCard(id: string): BoardCardNode | undefined
 
     getBoardCards(): BoardCardNode[] | undefined
 
-    getBoardCardsForSection(sectionId: Identifier): BoardCardNode[] | undefined
+    getBoardCardsForSection(sectionId: string): BoardCardNode[] | undefined
 }

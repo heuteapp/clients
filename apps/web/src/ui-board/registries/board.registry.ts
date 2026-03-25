@@ -41,11 +41,11 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const cards = registry.board.cardContainer.cards
 
-            if (!cards.has(id.client)) {
-                cards.set(id.client, { ref, props })
+            if (!cards.has(id)) {
+                cards.set(id, { ref, props })
             }
 
-            const card = cards.get(id.client)!
+            const card = cards.get(id)!
 
             card.ref = ref
             card.props = props
@@ -71,7 +71,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         unregisterBoardCard(id) {
-            registry.board.cardContainer?.cards.delete(id.client)
+            registry.board.cardContainer?.cards.delete(id)
         },
 
         //
@@ -81,7 +81,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
         },
 
         getBoardCard(id) {
-            return registry.board.cardContainer?.cards.get(id.client)
+            return registry.board.cardContainer?.cards.get(id)
         },
         
         getBoardCards() {
@@ -95,7 +95,7 @@ export function createBoardRegistry(boardRef: React.RefObject<HTMLDivElement | n
 
             const sectionCards = []
 
-            const section = registry.layoutRegistry.layout?.sections.get(sectionId.client);
+            const section = registry.layoutRegistry.layout?.sections.get(sectionId);
 
             for (const card of cards.values()) {
                 const placement = card.props?.placement;

@@ -23,11 +23,11 @@ export function createLayoutRegistry(layoutRef: React.RefObject<HTMLDivElement |
 
             const sections = registry.layout.sections
 
-            if (!sections.has(id.client)) {
-                sections.set(id.client, { ref, props })
+            if (!sections.has(id)) {
+                sections.set(id, { ref, props })
             }
 
-            const section = sections.get(id.client)!
+            const section = sections.get(id)!
 
             section.ref = ref
             section.props = props
@@ -42,11 +42,11 @@ export function createLayoutRegistry(layoutRef: React.RefObject<HTMLDivElement |
 
             const sections = registry.layout.sections
 
-            if (!sections.has(sectionId.client)) {
-                sections.set(sectionId.client, {  })
+            if (!sections.has(sectionId)) {
+                sections.set(sectionId, {  })
             }
 
-            const section = sections.get(sectionId.client)!
+            const section = sections.get(sectionId)!
 
             if (!section.grid) {
                 section.grid = {
@@ -66,18 +66,18 @@ export function createLayoutRegistry(layoutRef: React.RefObject<HTMLDivElement |
         },
 
         unregisterLayoutSection(id) {
-            registry.layout?.sections.delete(id.client)
+            registry.layout?.sections.delete(id)
         },
 
         unregisterLayoutGrid(sectionId) {
-            const section = registry.layout?.sections.get(sectionId.client)
+            const section = registry.layout?.sections.get(sectionId)
             if (section) section.grid = null
         },
 
         //
 
         getLayoutSection(id) {
-            return registry.layout?.sections.get(id.client)
+            return registry.layout?.sections.get(id)
         },
 
         getLayoutSectionByName(name) {
@@ -99,7 +99,7 @@ export function createLayoutRegistry(layoutRef: React.RefObject<HTMLDivElement |
         },
 
         getLayoutGrid(sectionId) {
-            return registry.layout?.sections.get(sectionId.client)?.grid ?? undefined
+            return registry.layout?.sections.get(sectionId)?.grid ?? undefined
         },
 
         getLayoutGrids() {
