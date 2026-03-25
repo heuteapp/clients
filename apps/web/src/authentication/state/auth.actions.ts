@@ -1,4 +1,4 @@
-import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
+import { AuthMachineContext, AuthMachineEvent } from "@/src/authentication/types/auth.machine.types";
 import { createAssign } from "@/src/authentication/utils/create-assign";
 
 export const resolveAuthData = (event: AuthMachineEvent) => {

@@ -1,8 +1,8 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
 import { AuthSession } from "@/src/authentication/types/auth.types";
-import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/types/states/auth/auth.actors";
-import { AuthRegistration } from "@/src/types/states/auth/auth.machine";
+import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/authentication/types/auth.actors";
+import { AuthRegistration } from "@/src/authentication/types/auth.machine.types";
 import { createCallback } from "@/src/authentication/utils/create-callback";
 import { fromPromise } from "xstate";
 

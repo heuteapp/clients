@@ -1,4 +1,4 @@
-import { DONE_ACTOR_CHECK_AUTH_EVENT, VERIFY_EMAIL_SUCCESS_EVENT, SIGN_IN_SUCCESS_EVENT } from "./auth.events";
+import { DONE_ACTOR_CHECK_AUTH_EVENT, VERIFY_EMAIL_SUCCESS_EVENT, SIGN_IN_SUCCESS_EVENT } from "./auth.events.types";
 
 export type PersistAuthEvent =
     | SIGN_IN_SUCCESS_EVENT

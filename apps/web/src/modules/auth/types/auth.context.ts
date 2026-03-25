@@ -1,4 +1,4 @@
-import { AuthMachineSend, AuthMachineState } from "@/src/types/states/auth/auth.machine";
+import { AuthMachineSend, AuthMachineState } from "@/src/authentication/types/auth.machine.types";
 
 export interface AuthContextValue {
     state: AuthMachineState;
