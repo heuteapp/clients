@@ -1,5 +1,16 @@
+
+/**
+ * Configuration options for the workspace board. These options determine how the board is rendered based on the category structure of the workspace.
+ */
 export interface WorkspaceBoardConfig {
+    /**
+     * Minimum category depth to consider for board rendering. Categories with depth less than this value will be ignored.
+     */
     minDepth: number;
+
+    /**
+     * Maximum category depth to consider for board rendering. Categories with depth greater than this value will be ignored.
+     */
     maxDepth: number;
 }
 
