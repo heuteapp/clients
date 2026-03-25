@@ -1,8 +1,8 @@
 "use client";
 
-import { isSignLocked } from "@/src/features/auth/state/auth.machine";
+import { isSignLocked } from "@/src/modules/auth/state/auth.machine";
 import { BrandCompact, BrandFull } from "@/src/ui/components/app/Brand";
-import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
+import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
 import { CircularProgress } from "@mui/material";
 import { Box, Stack } from "@mui/material";
 

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
-import { isAuthenticated, isSigningUp } from "@/src/features/auth/state/auth.machine";
+import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
+import { isAuthenticated, isSigningUp } from "@/src/modules/auth/state/auth.machine";
 
 export default function SignUpPage() {
   const router = useRouter();

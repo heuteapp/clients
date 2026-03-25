@@ -1,4 +1,4 @@
-import { BoardCardData, BoardData } from "@/src/features/domain/board/types/board.data";
+import { BoardCardData, BoardData } from "@/src/modules/domain/board/types/board.data";
 import { DataContent } from "@/src/types/shared/core/data";
 import { createDataIdentifier } from "@/src/core/utils/shared/data";
 

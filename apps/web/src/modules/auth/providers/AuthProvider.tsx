@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/features/auth/state/auth.machine";
-import { AuthContext } from "@/src/features/auth/contexts/auth.context";
+import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/modules/auth/state/auth.machine";
+import { AuthContext } from "@/src/modules/auth/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuthHashParams } from "@/src/features/auth/hooks/useAuthHashParams";
+import { useAuthHashParams } from "@/src/modules/auth/hooks/useAuthHashParams";
 import { server } from "@/src/api/server";
 import { withAccessToken } from "@/src/api/token.helper";
 

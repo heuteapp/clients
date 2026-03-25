@@ -1,4 +1,4 @@
-import { BoardRegistry } from "@/src/features/domain/board/types/board.registry";
+import { BoardRegistry } from "@/src/modules/domain/board/types/board.registry";
 
 export interface BoardContextValue {
     rootRef: React.RefObject<HTMLDivElement | null>;

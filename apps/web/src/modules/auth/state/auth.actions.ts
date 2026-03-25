@@ -1,5 +1,5 @@
 import { AuthMachineContext, AuthMachineEvent } from "@/src/types/states/auth/auth.machine";
-import { createAssign } from "@/src/features/auth/utils/create-assign";
+import { createAssign } from "@/src/modules/auth/utils/create-assign";
 
 export const resolveAuthData = (event: AuthMachineEvent) => {
     if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFY_EMAIL_COMPLETED" || event.type === "VERIFY_EMAIL_SUCCESS") {
