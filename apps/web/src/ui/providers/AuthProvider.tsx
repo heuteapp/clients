@@ -69,13 +69,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 return;
             }
 
-            router.push("/workspace/sign-in");
+            window.location.href = "/workspace/sign-in";
             return;
         }
 
         if(isAuthenticated(state)) {
             if(onSignInPage || onSignUpPage || onVerifycationPage) {
-                router.push("/workspace");
+                window.location.href = "/workspace";
                 return;
             }
         }
@@ -87,17 +87,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             if(pathname?.startsWith("/workspace")) {
                 if(!onSignInPage && isSigningIn(state)) {
-                    router.push("/workspace/sign-in");
+
+                    if(onSignUpPage) {
+                        router.push("/workspace/sign-in");
+                    }
+                    else {
+                        window.location.href = "/workspace/sign-in";
+                    }
                     return;
                 }
 
                 if(!onSignUpPage && isSigningUp(state)) {
-                    router.push("/workspace/sign-up");
+                    if(onSignInPage) {
+                        router.push("/workspace/sign-up");
+                    }
+                    else {
+                        window.location.href = "/workspace/sign-up";
+                    }
                     return;
                 }
 
                 if(!onVerifycationPage && isAwaitingVerification(state)) {
-                    router.push("/workspace/verification");
+                    window.location.href = "/workspace/verification";
                     return;
                 }
             }
