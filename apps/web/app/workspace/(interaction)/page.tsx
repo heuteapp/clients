@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
 import { Box, Button, Typography } from "@mui/material";
 
 export default function WorkspacePage() {

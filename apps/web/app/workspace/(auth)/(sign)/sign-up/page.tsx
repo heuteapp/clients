@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
 import { isAuthenticated, isSigningUp } from "@/src/states/auth/auth.machine";
 
 export default function SignUpPage() {

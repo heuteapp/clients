@@ -1,7 +1,7 @@
 "use client";
 
 import { isAuthenticated, isUnauthenticated } from "@/src/states/auth/auth.machine";
-import { useAuthContext } from "@/src/ui/hooks/states/auth/useAuthContext";
+import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
 import { Box, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
