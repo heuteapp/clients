@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { AppThemeProps } from '@/src/ui/types/theme/mui/mui.props';
-import { inputsCustomizations } from '@/src/ui/themes/mui/customizations/inputs';
+import { AppThemeProps } from '@/src/ui-shared/types/ui.theme.types';
+import { inputsCustomizations } from '@/src/ui-shared/themes/mui/customizations/inputs';
 import { getDesignTokens } from './themePrimitives';
 
 export function AppTheme(props: AppThemeProps) {
