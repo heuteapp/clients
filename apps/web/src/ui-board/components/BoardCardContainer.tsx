@@ -1,8 +1,12 @@
-/*import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext"
 import style from "@/src/ui/styles/board.module.css"
-import BoardCard from "./BoardCard"
-import { BoardCardContainerProps } from "@/src/ui/types/domain/board/board.props";
+
 import { useLayoutEffect, useRef } from "react";
+import BoardCard from "./BoardCard"
+
+import { useBoardContext } from "@/src/ui-board/hooks/useBoardContext"
+import { BoardCardContainerProps } from "@/src/ui-board/types/board.props";
+
+//
 
 function BoardCardContainer(props : BoardCardContainerProps) {
     const { registry } = useBoardContext();
@@ -22,10 +26,10 @@ function BoardCardContainer(props : BoardCardContainerProps) {
             ref={ref}
         >
             {props.cards.map(card => (
-                <BoardCard key={card.id.client} {...card} />
+                <BoardCard key={card.id} {...card} />
             ))}
         </div>
     )
 }
 
-export default BoardCardContainer*/
+export default BoardCardContainer
