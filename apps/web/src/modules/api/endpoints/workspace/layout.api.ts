@@ -1,5 +1,5 @@
 import { serverApi } from "@/src/api/server";
-import { LayoutResponse } from "@/src/api/models/workspace/layout.response";
+import { LayoutResponse } from "@/src/modules/api/models/workspace/layout.response";
 
 export const layoutApi = {
     getLayout: (name: string, version?: number) =>

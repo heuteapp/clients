@@ -1,5 +1,5 @@
 import { serverApi } from "@/src/api/server";
-import { BoardResponse } from "@/src/api/models/workspace/board.response";
+import { BoardResponse } from "@/src/modules/api/models/workspace/board.response";
 import { BoardCommand } from "@/src/modules/board/types/board.command.types";
 
 export const boardApi = {

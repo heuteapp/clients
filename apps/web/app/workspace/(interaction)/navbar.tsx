@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { HeuteIconOnlyBrand } from "@/src/ui-shared/components/HeuteBrand";
+import { HeuteIconOnlyBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
 
 export const Navbar = () => {
     return (
