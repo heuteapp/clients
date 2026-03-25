@@ -1,5 +1,5 @@
-import { BoardCardContainerNode, BoardCardNode, BoardRootNode, BoardLayoutGridNode, BoardLayoutRootNode, BoardLayoutSectionNode } from "@/src/ui-board/types/board.nodes"
-import { BoardCardContainerProps, BoardCardProps, BoardRootProps, BoardLayoutRootProps, BoardLayoutGridProps, BoardLayoutSectionProps } from "@/src/ui-board/types/board.props"
+import { BoardCardContainerNode, BoardCardNode, BoardRootNode, BoardLayoutRootNode } from "@/src/ui-board/types/board.nodes"
+import { BoardCardContainerProps, BoardCardProps, BoardRootProps } from "@/src/ui-board/types/board.props"
 import { Identifier } from "@/src/types/shared/core/data"
 
 export interface BoardRegistry {
@@ -22,23 +22,6 @@ export interface BoardRegistry {
         props: BoardCardProps
     ): BoardCardNode
 
-    registerLayout(
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: BoardLayoutRootProps,
-    ): BoardLayoutRootNode
-
-    registerLayoutSection(
-        id: Identifier,
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: BoardLayoutSectionProps
-    ): BoardLayoutSectionNode
-
-    registerLayoutGrid(
-        sectionId: Identifier,
-        ref: React.RefObject<HTMLDivElement | null>,
-        props: BoardLayoutGridProps
-    ): BoardLayoutGridNode
-
     //
 
     unregisterBoard(): void
@@ -46,12 +29,6 @@ export interface BoardRegistry {
     unregisterBoardCardContainer(): void
 
     unregisterBoardCard(id: Identifier): void
-
-    unregisterLayout(): void
-
-    unregisterLayoutSection(id: Identifier): void
-
-    unregisterLayoutGrid(sectionId: Identifier): void
 
     //
 
@@ -62,14 +39,4 @@ export interface BoardRegistry {
     getBoardCards(): BoardCardNode[] | undefined
 
     getBoardCardsForSection(sectionId: Identifier): BoardCardNode[] | undefined
-
-    getLayoutSection(id: Identifier): BoardLayoutSectionNode | undefined
-
-    getLayoutSectionByName(name: string): BoardLayoutSectionNode | undefined
-
-    getLayoutSections(): BoardLayoutSectionNode[] | undefined
-
-    getLayoutGrid(sectionId: Identifier): BoardLayoutGridNode | undefined
-
-    getLayoutGrids(sectionId: Identifier): BoardLayoutGridNode[] | undefined
 }
