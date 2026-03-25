@@ -118,9 +118,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
   return {
     palette: colorSchemes[mode].palette,
     typography,
-    shape: {
-      borderRadius: 12,
-    },
+    shape,
     shadows: customShadows,
   };
 };
