@@ -1,20 +1,18 @@
-/*"use client"
+"use client"
 
 import { useLayoutEffect } from "react"
 
 import style from "@/src/ui/styles/layout.module.css"
 
-import { useBoardContext } from "@/src/ui/hooks/core/domain/useBoardContext";
-import { BoardLayoutRootProps } from "@/src/ui/types/domain/board/board.props";
-import { useBoardContentStore } from "@/src/stores/board.content.store";
 import { LayoutSection } from "./LayoutSection";
+import { LayoutRootProps } from "../types/layout.props";
+import { useLayoutContext } from "../hooks/useLayoutContext";
 
-export function LayoutRoot(props: BoardLayoutRootProps) {
-  const context = useBoardContext();
+export function LayoutRoot(props: LayoutRootProps) {
+  const { registry } = useLayoutContext();
 
-  const { registry } = context!;
-
-  const sections = useBoardContentStore(state => state.sections);
+  // !! FIX HERE !!
+  const sections = [] as any[];
 
   const layoutRef = registry.layout!.ref!;
 
@@ -41,12 +39,12 @@ export function LayoutRoot(props: BoardLayoutRootProps) {
   });
 
   const gridTemplateAreas = matrix
-  .map(row => `"${row.join(" ")}"`)
-  .join(" ");
+    .map(row => `"${row.join(" ")}"`)
+    .join(" ");
 
   return (
     <div 
-      ref={registry.layout!.ref} 
+      ref={layoutRef} 
       className={style.layout}
       style={{
         gridTemplateColumns: `repeat(${props.columnCount}, var(--cell-size-full))`,
@@ -59,4 +57,4 @@ export function LayoutRoot(props: BoardLayoutRootProps) {
       ))}
     </div>
   )
-}*/
+}
