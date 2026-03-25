@@ -54,7 +54,7 @@ export function buildBoardPath(categories: string[], date?: string | null): stri
  */
 export function hasBoardDate(relativePath: string): boolean {
     const boardPath = parseBoardPath(relativePath);
-    return boardPath ? boardPath.date !== null : false;
+    return boardPath?.date !== null && boardPath?.date !== undefined;
 }
 
 /**
@@ -62,5 +62,5 @@ export function hasBoardDate(relativePath: string): boolean {
  */
 export function getBoardCategories(relativePath: string): string[] {
     const boardPath = parseBoardPath(relativePath);
-    return boardPath ? boardPath.categories : [];
+    return boardPath?.categories ?? [];
 }
