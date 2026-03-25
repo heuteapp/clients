@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Box } from "@mui/material";
 import { BrandCompact } from "@/src/ui/components/app/Brand";
 import { useAuthContext } from "@/src/modules/auth/hooks/useAuthContext";
-import { isAuthenticated, isUnauthenticated } from "@/src/modules/auth/state/auth.machine";
+import { isAuthenticated, isUnauthenticated } from "@/src/modules/authentication/state/auth.machine";
 import { HeuteLink } from "@/src/ui/components/app/HeuteLink";
 
 export default function WorkspaceLayout({

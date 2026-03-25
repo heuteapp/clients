@@ -1,13 +1,13 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/auth.request";
 import { server } from "@/src/api/server";
-import { AuthData } from "@/src/modules/auth/types/auth.data";
+import { AuthSession } from "@/src/modules/authentication/types/auth.types";
 import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/types/states/auth/auth.actors";
 import { AuthRegistration } from "@/src/types/states/auth/auth.machine";
-import { createCallback } from "@/src/modules/auth/utils/create-callback";
+import { createCallback } from "@/src/modules/authentication/utils/create-callback";
 import { fromPromise } from "xstate";
 
 export const hydrateAuthActor = fromPromise<
-    AuthData | null
+    AuthSession | null
 >(
     async () => {
         if (typeof window === "undefined") return null;
@@ -18,7 +18,7 @@ export const hydrateAuthActor = fromPromise<
         }
 
         try {
-            return JSON.parse(raw) as AuthData;
+            return JSON.parse(raw) as AuthSession;
         } catch {
             throw new Error("Failed to parse auth data from localStorage");
         }
@@ -123,7 +123,7 @@ export const verifyEmailActor = createCallback<
             return;
         }
 
-        const authData = JSON.parse(authRaw) as AuthData;
+        const authData = JSON.parse(authRaw) as AuthSession;
 
         sendBack({ 
             type: 'VERIFY_EMAIL_SUCCESS',
