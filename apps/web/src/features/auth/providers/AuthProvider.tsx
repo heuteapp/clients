@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/states/auth/auth.machine";
-import { AuthContext } from "../contexts/auth.context";
+import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/features/auth/state/auth.machine";
+import { AuthContext } from "../../../ui/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/features/auth/hooks/useAuthHashParams";
 import { server } from "@/src/api/server";

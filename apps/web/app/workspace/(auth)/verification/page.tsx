@@ -1,6 +1,6 @@
 "use client";
 
-import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/states/auth/auth.machine";
+import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/features/auth/state/auth.machine";
 import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
 import { useAuthHashParams } from "@/src/features/auth/hooks/useAuthHashParams";
 import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";

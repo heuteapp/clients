@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { AuthContextValue } from "@/src/ui/types/auth/auth.context";
+import { AuthContextValue } from "@/src/features/auth/types/auth.context";
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
