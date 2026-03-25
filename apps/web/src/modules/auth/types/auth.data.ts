@@ -1,6 +1,6 @@
-import { ProfileData } from "@/src/types/core/domain/profile/profile.data";
+import { UserProfile } from "@/src/modules/user/types/user.profile.types";
 
 export interface AuthData {
     accessToken: string;
-    profile: ProfileData;
+    profile: UserProfile;
 }

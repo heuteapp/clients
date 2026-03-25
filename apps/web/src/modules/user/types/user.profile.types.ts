@@ -1,6 +1,6 @@
 import { BaseData } from "@/src/types/shared/core/data";
 
-export interface ProfileData extends BaseData {
+export interface UserProfile extends BaseData {
     username: string;
     email: string;
 }

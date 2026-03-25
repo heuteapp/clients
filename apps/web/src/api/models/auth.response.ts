@@ -1,8 +1,8 @@
-import { ProfileData } from "@/src/types/core/domain/profile/profile.data";
+import { UserProfile } from "@/src/modules/user/types/user.profile.types";
 
 export interface SignInResponse {
     accessToken: string;
-    profile: ProfileData;
+    profile: UserProfile;
 }
 
 export type SignUpResponse = {
