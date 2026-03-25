@@ -43,3 +43,18 @@ export interface BoardPath {
      */
     date: YYMMDDDate | null;
 }
+
+/**
+ * Validation result for board path validation.
+ */
+export interface BoardPathValidationResult {
+    /**
+     * Indicates whether the board path is valid according to the provided configuration.
+     */
+    isValid: boolean;
+
+    /**
+     * Optional array of error messages if the path is invalid.
+     */
+    errors?: string[];
+}

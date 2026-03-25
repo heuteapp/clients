@@ -1,4 +1,4 @@
-import { BoardPath, BoardPathConfig } from "@/src/modules/shared/types/board.types";
+import { BoardPath, BoardPathConfig, BoardPathValidationResult } from "@/src/modules/shared/types/board.types";
 import { parseYYMMDD } from "./date.utils";
 
 /**
@@ -132,47 +132,47 @@ export function isValidBoardPath(
     return true;
 }
 
-/**
- * Validates a board path and throws an error if invalid
- * 
- * @param relativePath - The relative path to validate
- * @param config - Configuration options for validation
- * @throws {Error} If the path is invalid
- */
 export function validateBoardPath(
     relativePath: string, 
     config: BoardPathConfig = {}
-): void {
-    if (!isValidBoardPath(relativePath, config)) {
-        const { minCategories = 0, maxCategories = Infinity, requireDate = false } = config;
-        
-        const boardPath = parseBoardPath(relativePath);
-        const categoryCount = boardPath?.categories.length ?? 0;
-        
-        let errorMessage = 'Invalid board path';
-        
-        // Check for categories with numbers
-        if (boardPath?.categories) {
-            const invalidCategory = boardPath.categories.find(cat => /\d/.test(cat));
-            if (invalidCategory) {
-                errorMessage = `Category "${invalidCategory}" cannot contain numbers`;
-            } else if (categoryCount < minCategories) {
-                errorMessage = `Board path must have at least ${minCategories} category(s), but found ${categoryCount}`;
-            } else if (categoryCount > maxCategories) {
-                errorMessage = `Board path must have at most ${maxCategories} category(s), but found ${categoryCount}`;
-            } else if (requireDate && (!boardPath?.date)) {
-                errorMessage = `Board path must end with a valid date (YYMMDD format)`;
-            } else if (!boardPath) {
-                errorMessage = `Board path is empty or invalid`;
-            }
-        } else if (categoryCount < minCategories) {
-            errorMessage = `Board path must have at least ${minCategories} category(s), but found ${categoryCount}`;
-        } else if (requireDate && (!boardPath?.date)) {
-            errorMessage = `Board path must end with a valid date (YYMMDD format)`;
-        } else if (!boardPath) {
-            errorMessage = `Board path is empty or invalid`;
-        }
-        
-        throw new Error(errorMessage);
+): BoardPathValidationResult {
+    const errors: string[] = [];
+    const { minCategories = 0, maxCategories = Infinity, requireDate = false } = config;
+    
+    const boardPath = parseBoardPath(relativePath);
+    const categoryCount = boardPath?.categories.length ?? 0;
+    
+    // Check for empty/invalid path
+    if (!boardPath) {
+        errors.push('Board path is empty or invalid');
     }
+    
+    // Check categories for numbers
+    if (boardPath?.categories) {
+        const invalidCategories = boardPath.categories.filter(cat => /\d/.test(cat));
+        if (invalidCategories.length > 0) {
+            invalidCategories.forEach(cat => {
+                errors.push(`Category "${cat}" cannot contain numbers`);
+            });
+        }
+    }
+    
+    // Check category count
+    if (categoryCount < minCategories) {
+        errors.push(`Board path must have at least ${minCategories} category(s), but found ${categoryCount}`);
+    }
+    
+    if (categoryCount > maxCategories) {
+        errors.push(`Board path must have at most ${maxCategories} category(s), but found ${categoryCount}`);
+    }
+    
+    // Check date requirement
+    if (requireDate && (!boardPath?.date)) {
+        errors.push('Board path must end with a valid date (YYMMDD format)');
+    }
+    
+    return {
+        isValid: errors.length === 0,
+        errors: errors.length > 0 ? errors : undefined
+    };
 }
