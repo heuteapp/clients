@@ -3,21 +3,21 @@ import { HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/compo
 import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
 
-export const HeuteLinkedBreadcrumbs = (props: HeuteLinkedBreadcrumbsProps) => {
-    const wrapperElement = (item: BreadcrumbsItemData, children: React.ReactNode) => {
+export const HeuteLinkedBreadcrumbs = ({ linkProps, wrapperElement, ...props }: HeuteLinkedBreadcrumbsProps) => {
+    const linkWrapper = (item: BreadcrumbsItemData, children: React.ReactNode) => {
         return (
             <HeuteLink
-                {...props.linkProps}
+                {...linkProps}
                 href={item.href}
             >
-                {props.wrapperElement ? props.wrapperElement(item, children) : children}
+                {wrapperElement ? wrapperElement(item, children) : children}
             </HeuteLink>
         )
     }
 
     return (
         <Breadcrumbs
-            wrapperElement={wrapperElement}
+            wrapperElement={linkWrapper}
             {...props}
         />
     )
