@@ -1,5 +1,3 @@
-import { Box } from "@mui/material";
-import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
 import { HeuteLinkedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
 import { BrandIcon } from "../../ui-base/components/Brand";
@@ -14,9 +12,6 @@ export function WorkspaceBreadcrumbs() {
         element: () => (
             <BrandIcon 
                 size={24}
-                sx={{
-                    p: 1
-                }}
             />
         )
     }
@@ -31,11 +26,15 @@ export function WorkspaceBreadcrumbs() {
     return (
         <>
             <HeuteLinkedBreadcrumbs 
+                sx={{
+                    padding: 1
+                }}
                 linkProps={{
                     sx: {
                         textDecoration: "none",
                         display: "flex",
                         alignItems: "center",
+                        color: "text.primary",
                     }
                 }}
                 items={items}

@@ -22,14 +22,14 @@ export const Breadcrumbs = ({ items, separator, wrapperElement, defaultElement, 
 
     return (
         <MUIBreadcrumbs 
-            {...props}
-            separator={seperator}
             sx={{
                 li: {
                     display: 'flex',
                     alignItems: 'center',
                 },
             }}
+            {...props}
+            separator={seperator}
         >
             {items.map((item) => (
                 getWrappedElement(item)
