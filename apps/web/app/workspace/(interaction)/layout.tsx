@@ -5,8 +5,7 @@ import Box from "@mui/material/Box";
 import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/WorkspaceBoardProvider";
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
-import { Navbar } from "./navbar";
-import Content from "./content";
+import { HeuteIconOnlyBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
 
 export default function WorkspaceLayout({
   children,
@@ -45,7 +44,71 @@ const LayoutContainer = ({ children }: { children: React.ReactNode }) => {
 
 const LayoutContent = ({ children }: { children: React.ReactNode }) => (
   <>
-    <Navbar />
-    <Content>{children}</Content>
+    <LayoutNavbar/>
+    <LayoutMonitor>
+      {children}
+    </LayoutMonitor>
   </>
 );
+
+//
+
+const LayoutNavbar = () => {
+    return (
+        <Box
+            component="nav"
+            sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            width: "100%",
+            height: "48px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            color: "text.primary",
+            fontSize: "1.5rem",
+            }}
+        >
+            <HeuteIconOnlyBrand 
+                link={{ href: "/", linkType: "external" }}
+                size={28} 
+                style={{ padding: 8 }}
+            />
+            <Box
+                component="div"
+                sx={{
+                    fontSize: "1.125rem",
+                    color: "text.disabled",
+                    fontWeight: "600",
+                }}
+            >
+            /
+            </Box>
+        </Box>
+    )
+};
+
+const LayoutMonitor = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Box
+        sx={{
+            width: "100%",
+            height: "calc(100dvh - 49px)",
+            display: "flex",
+            flexDirection: "row",
+            bgcolor: "transparent"
+        }}
+    >
+        <Box
+            sx={{
+                flexGrow: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            {children}
+        </Box>
+    </Box>
+  );
+}
