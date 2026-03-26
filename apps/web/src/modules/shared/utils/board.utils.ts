@@ -1,5 +1,5 @@
 import { BoardPath, BoardPathConfig, BoardPathValidationResult } from "@/src/modules/shared/types/board.types";
-import { isValidYYMMDD, parseYYMMDD } from "./date.utils";
+import { isValidYYMMDD, parseYYMMDD, YYMMDD_PATTERN } from "./date.utils";
 
 /**
  * Validates that a category doesn't contain numbers
@@ -151,32 +151,24 @@ export function validateBoardPath(
         boardPath.categories.forEach((category, index) => {
             const isLastSegment = index === boardPath.categories.length - 1;
             
-            // Skip date validation for last segment if it's supposed to be a date
-            if (isLastSegment && boardPath.date) {
-                return;
-            }
-            
             // Check if category contains numbers
             if (/\d/.test(category)) {
-                // Starts with letter and contains numbers
-                if (/^[a-zA-Z]/.test(category) && /\d/.test(category)) {
-                    errors.push(`Category "${category}" starts with letter but contains numbers`);
-                }
-                // Starts with letter and ends with number
-                else if (/^[a-zA-Z]/.test(category) && /\d$/.test(category)) {
-                    errors.push(`Category "${category}" starts with letter but ends with number`);
-                }
-                // Starts with number and ends with letter
-                else if (/^\d/.test(category) && /[a-zA-Z]$/.test(category)) {
-                    errors.push(`Category "${category}" starts with number but ends with letter`);
+                if (/^\d/.test(category) && /[a-zA-Z]$/.test(category)) {
+                    errors.push(`Category "${category}" starts with number`);
                 }
                 // Only numbers
                 else if (/^\d+$/.test(category)) {
-                    errors.push(`Category "${category}" cannot be only numbers`);
-                }
-                // General case
-                else {
-                    errors.push(`Category "${category}" cannot contain numbers`);
+                    if(isLastSegment) {
+                        if(YYMMDD_PATTERN.test(category)) {
+                            errors.push(`Date "${category}" is invalid YYMMDD format`);
+                        }
+                        else {
+                            errors.push(`Last segment "${category}" cannot be only numbers unless it's a valid date (YYMMDD format)`);
+                        }
+                    }
+                    else {
+                        errors.push(`Category "${category}" cannot be only numbers`);
+                    }
                 }
             }
         });
