@@ -7,6 +7,7 @@ export const HeuteLinkedBreadcrumbs = (props: HeuteLinkedBreadcrumbsProps) => {
     const wrapperElement = (item: BreadcrumbsItemData, children: React.ReactNode) => {
         return (
             <HeuteLink
+                {...props.linkProps}
                 href={item.href}
             >
                 {props.wrapperElement ? props.wrapperElement(item, children) : children}
