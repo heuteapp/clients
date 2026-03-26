@@ -1,7 +1,10 @@
-export interface BreadcrumbsProps {
+export interface BreadcrumbsBaseProps {
     items: BreadcrumbsItem[];
+    seperator?: React.ReactNode;
+}
+
+export interface BreadcrumbsProps extends BreadcrumbsBaseProps {
     defaultElement?: (name: string, href?: string) => React.ReactNode;
-    separator?: React.ReactNode;
 }
 
 export interface BreadcrumbsItem {
