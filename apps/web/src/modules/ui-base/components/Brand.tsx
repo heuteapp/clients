@@ -1,7 +1,8 @@
 import { CSSProperties } from "react";
-import { BrandIconProps, BrandRootProps, BrandTextProps } from "../types/ui.props.types";
 import { Link } from "./Link";
+import { BrandIconProps, BrandRootProps, BrandTextProps } from "@/src/modules/ui-base/types/components/brand.types";
 
+//
 
 export const BrandRoot = ({ children, link }: BrandRootProps) => {
   const styles : CSSProperties = {

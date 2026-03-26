@@ -1,15 +1,6 @@
 import { ReactNode } from "react";
-import { SxProps, Theme } from "@mui/material/styles";
-
-export interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
-    sx?: SxProps<Theme>
-}
-
-export interface ComponentContainerProps extends ComponentProps {
-    children: React.ReactNode
-}
-
-//
+import { LinkProps } from "./link.types";
+import { ComponentContainerProps, ComponentProps } from "./types";
 
 export interface BrandRootProps extends ComponentContainerProps {
     children: ReactNode;
@@ -40,16 +31,3 @@ export interface BrandPairProps extends BrandComponentProps {
     textSize?: string | number;
     textStyle?: React.CSSProperties;
 };
-
-//
-
-export interface LinkProps extends ComponentProps, LinkData {
-
-}
-
-export type LinkData = {
-    href?: string;
-    linkType?: LinkType;
-}
-
-export type LinkType = "internal" | "external";

@@ -1,6 +1,5 @@
-import { BrandComponentProps, BrandIconProps, BrandPairProps, BrandTextProps, LinkProps } from "@/src/modules/ui-base/types/ui.props.types";
-
-//
+import { LinkProps } from "@/src/modules/ui-base/types/components/link.types";
+import { BrandPairProps, BrandComponentProps, BrandIconProps, BrandTextProps } from "@/src/modules/ui-base/types/components/brand.types";
 
 export interface HeuteFullBrandProps extends BrandPairProps {
     link?: HeuteLinkProps;

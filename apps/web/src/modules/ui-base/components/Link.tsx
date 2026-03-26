@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import MUILink from "@mui/material/Link";
-import { LinkProps } from "@/src/modules/ui-base/types/ui.props.types";
+import { LinkProps } from "@/src/modules/ui-base/types/components/link.types";
 
 export const Link = (props: LinkProps) => {
     let { href, linkType, children, ...componentProps } = props;
