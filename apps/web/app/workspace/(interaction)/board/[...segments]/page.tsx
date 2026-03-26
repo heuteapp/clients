@@ -15,7 +15,7 @@ export function HH() {
     const { metadata } = useWorkspaceBoardContext();
 
     return (
-        <div>
+        <div style={{ color: "white" }}>
             <h1>Workspace Board</h1>
             <p>Categories: {metadata.categories.join(", ")}</p>
             <p>Category Depth: {metadata.categoryDepth}</p>

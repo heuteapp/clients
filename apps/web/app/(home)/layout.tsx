@@ -69,7 +69,7 @@ export default function WorkspaceLayout({
                   <HeuteLink href="/workspace/board" linkType="external" className="navbar-link" id={"navbar-link-workspace"}>
                     Workspace
                   </HeuteLink>
-                  <HeuteLink href="/workspace/profile" linkType="external" className="navbar-link" id={"navbar-link-profile"}>
+                  <HeuteLink href="/workspace" linkType="external" className="navbar-link" id={"navbar-link-profile"}>
                     {state.context.auth?.profile.username}
                   </HeuteLink>
                 </>
