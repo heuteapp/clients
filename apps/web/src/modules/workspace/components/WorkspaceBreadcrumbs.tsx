@@ -1,5 +1,3 @@
-import { BrandIcon } from "../../ui-base/components/Brand";
-import { BreadcrumbsItem } from "../../ui-base/types/breadcrumbs.types";
 import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
 import { HeuteLinkedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
@@ -24,9 +22,8 @@ export function WorkspaceBreadcrumbs() {
             />
             <HeuteLinkedBreadcrumbs 
                 linkProps={{
-                    style: {
-                        textDecoration: "none",
-                        color: "white"
+                    sx: {
+                        textDecoration: "none"
                     }
                 }}
                 items={items}
