@@ -1,6 +1,5 @@
-import NextBreadcrumbs from "@mui/material/Breadcrumbs";
+import MUIBreadcrumbs from "@mui/material/Breadcrumbs";
 import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Box from "@mui/material/Box";
 
 export const Breadcrumbs = (props: BreadcrumbsProps) => {
@@ -22,18 +21,18 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
     const seperator = props.separator || <BreadcrumbsSeparator />;
 
     return (
-        <NextBreadcrumbs separator={seperator}
+        <MUIBreadcrumbs separator={seperator}
             sx={{
-                '& .MuiBreadcrumbs-li': {
+                li: {
                     display: 'flex',
                     alignItems: 'center',
-                }
+                },
             }}
         >
             {props.items.map((item) => (
                 getWrappedElement(item)
             ))}
-        </NextBreadcrumbs>
+        </MUIBreadcrumbs>
     )
 }
 
