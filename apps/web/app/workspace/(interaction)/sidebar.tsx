@@ -8,17 +8,31 @@ export const Sidebar = () => {
     return (
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%",
-            width: 128,
-            backgroundColor: "grey.800",
-            borderRight: 1,
-            borderColor: "divider",
-          }}
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100%",
+    width: 128,
+    backgroundColor: "grey.800",
+    borderRight: 1,
+    borderColor: "divider",
+    overflowY: "auto",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      display: "none"
+    },
+    overflowX: "hidden"
+  }}
         >
+<Box sx={{ 
+    marginTop: "auto",    // Yukarıdan it
+    marginBottom: "auto", // Aşağıdan it → ortalar
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  }}>
+
           {items.map((item) => (
             <Box
               key={item.id}
@@ -40,6 +54,7 @@ export const Sidebar = () => {
               {item.name}
             </Box>
           ))}
+          </Box>
         </Box>
     )
 }
@@ -49,5 +64,8 @@ const items = [
     { id: 2, name: "History", link: "/school/grade2/history" },
     { id: 3, name: "Math", link: "/math" },
     { id: 4, name: "Science", link: "/science" },
-    { id: 5, name: "English", link: "/english" }
+    { id: 5, name: "English", link: "/english" },
+    { id: 6, name: "Other", link: "/other" },
+    { id: 7, name: "Personal", link: "/personal/learning" },
+    { id: 8, name: "Work", link: "/work" },
 ];
