@@ -1,21 +1,22 @@
 import { Breadcrumbs } from "@/src/modules/ui-base/components/Breadcrumbs"
 import { HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/components/heute-breadcrumbs.types"
+import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
 
 export const HeuteLinkedBreadcrumbs = (props: HeuteLinkedBreadcrumbsProps) => {
-    const defaultElement = (name: string, href?: string) => {
+    const wrapperElement = (item: BreadcrumbsItemData, children: React.ReactNode) => {
         return (
             <HeuteLink
-                href={href}
+                href={item.href}
             >
-                {props.defaultElement ? props.defaultElement(name, href) : name}
+                {props.wrapperElement ? props.wrapperElement(item, children) : children}
             </HeuteLink>
         )
     }
 
     return (
         <Breadcrumbs
-            defaultElement={defaultElement}
+            wrapperElement={wrapperElement}
             {...props}
         />
     )

@@ -1,13 +1,21 @@
-import React from "react";
 import NextBreadcrumbs from "@mui/material/Breadcrumbs";
 import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 export const Breadcrumbs = (props: BreadcrumbsProps) => {
     const getElement = (item: BreadcrumbsItem) => {
-        return item.element ? item.element(item.name, item.href) 
-            : props.defaultElement ? props.defaultElement(item.name, item.href)
+        return item.element ? item.element(item) 
+            : props.defaultElement ? props.defaultElement(item)
             : item.name;
+    };
+
+    const getWrappedElement = (item: BreadcrumbsItem) => {
+        const element = getElement(item);
+        
+        if (props.wrapperElement) {
+            return props.wrapperElement(item, element);
+        }
+        return element;
     };
 
     const seperator = props.separator || <NavigateNextIcon fontSize="small" />;
@@ -22,7 +30,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
             }}
         >
             {props.items.map((item) => (
-                getElement(item)
+                getWrappedElement(item)
             ))}
         </NextBreadcrumbs>
     )
