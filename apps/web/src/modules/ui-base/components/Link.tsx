@@ -8,19 +8,15 @@ export const Link = (props: LinkProps) => {
     linkType ||= "internal";
 
     if(href) {
-        if (linkType === "internal") {
+        const component = 
+            linkType === "internal" ? NextLink :
+            linkType === "external" ? "a" : undefined;
+
+        if (component) {
             return (
                 <MUILink component={NextLink} href={href} {...componentProps}>
                     {props.children}
                 </MUILink>
-            );
-        }
-
-        if (linkType === "external") {
-            return (
-                <a {...componentProps} href={href}>
-                    {props.children}
-                </a>
             );
         }
     }
