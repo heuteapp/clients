@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { WorkspaceBoardConfig, WorkspaceBoardMetadata } from "../types/workspace-board.types";
 import { usePathname } from "next/navigation";
-import { isValidBoardPath, parseBoardPath, validateBoardPath } from "../../shared/utils/board.utils";
+import { parseBoardPath, validateBoardPath } from "../../shared/utils/board.utils";
 import { dateToYYMMDD } from "../../shared/utils/date.utils";
 
 export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceBoardMetadata {

@@ -1,5 +1,5 @@
 import { BoardPath, BoardPathConfig, BoardPathValidationResult } from "@/src/modules/shared/types/board.types";
-import { parseYYMMDD } from "./date.utils";
+import { isValidYYMMDD, parseYYMMDD } from "./date.utils";
 
 /**
  * Validates that a category doesn't contain numbers
@@ -82,56 +82,55 @@ export function getBoardCategories(relativePath: string): string[] {
 }
 
 /**
- * Validates a board path against the provided configuration
+ * Validates a board path structure and returns validation results with all errors.
  * 
- * @param relativePath - The relative path to validate
+ * This function performs comprehensive validation on a board path including:
+ * - Path structure validity
+ * - Category naming conventions (number patterns)
+ * - Category count constraints
+ * - Date format validation for the last segment
+ * 
+ * @param relativePath - The board path string to validate
  * @param config - Configuration options for validation
- * @returns True if the path is valid according to the config, false otherwise
+ * @param config.minCategories - Minimum number of categories required (default: 0)
+ * @param config.maxCategories - Maximum number of categories allowed (default: Infinity)
+ * @param config.requireDate - Whether the path must end with a valid date (default: false)
+ * 
+ * @returns ValidationResult object containing:
+ *   - isValid: boolean indicating if all validations passed
+ *   - errors: array of error messages (undefined if no errors)
  * 
  * @example
- * // Check if path has at least 1 category
- * isValidBoardPath("history/ww2", { minCategories: 1 }) // true
- * isValidBoardPath("", { minCategories: 1 }) // false
+ * // Valid path with categories and date
+ * const result = validateBoardPath('projects/frontend/250331', { 
+ *   minCategories: 2, 
+ *   requireDate: true 
+ * });
+ * // result.isValid = true, result.errors = undefined
  * 
- * // Check if path has at most 2 categories
- * isValidBoardPath("school/grade2/history", { maxCategories: 2 }) // false
+ * @example
+ * // Invalid path with multiple errors
+ * const result = validateBoardPath('abc123/def456/25033', { 
+ *   minCategories: 2,
+ *   requireDate: true 
+ * });
+ * // result.isValid = false
+ * // result.errors = [
+ * //   'Category "abc123" starts with letter but contains numbers',
+ * //   'Category "def456" starts with letter but contains numbers',
+ * //   'Last segment "25033" is not a valid date (YYMMDD format)'
+ * // ]
  * 
- * // Check if path has a date
- * isValidBoardPath("history/250315", { requireDate: true }) // true
- * isValidBoardPath("history", { requireDate: true }) // false
- * 
- * // Check if categories contain numbers
- * isValidBoardPath("history/ww2") // true (ww2 is valid as it's not a category)
- * isValidBoardPath("history/2024/events") // false (2024 contains numbers)
+ * @example
+ * // Category naming validation rules:
+ * // - Categories cannot contain numbers unless they follow specific patterns
+ * // - Starts with letter and contains numbers: "abc123" ❌
+ * // - Starts with letter and ends with number: "abc123" ❌  
+ * // - Starts with number and ends with letter: "123abc" ❌
+ * // - Only numbers: "12345" ❌
+ * // - Letters only: "history" ✅
+ * // - Letters with special chars: "history_ww2" ✅
  */
-export function isValidBoardPath(
-    relativePath: string, 
-    config: BoardPathConfig = {}
-): boolean {
-    const {
-        minCategories = 0,
-        maxCategories = Infinity,
-        requireDate = false,
-    } = config;
-    
-    const boardPath = parseBoardPath(relativePath);
-    
-    if (!boardPath) {
-        return minCategories === 0 && !requireDate;
-    }
-    
-    const { categories, date } = boardPath;
-    const categoryCount = categories.length;
-    
-    if (categoryCount < minCategories) return false;
-    if (categoryCount > maxCategories) return false;
-    
-    if (categories.some(cat => /\d/.test(cat))) return false;
-    if (requireDate && !date) return false;
-    
-    return true;
-}
-
 export function validateBoardPath(
     relativePath: string, 
     config: BoardPathConfig = {}
@@ -145,16 +144,43 @@ export function validateBoardPath(
     // Check for empty/invalid path
     if (!boardPath) {
         errors.push('Board path is empty or invalid');
+        return { isValid: false, errors };
     }
     
-    // Check categories for numbers
-    if (boardPath?.categories) {
-        const invalidCategories = boardPath.categories.filter(cat => /\d/.test(cat));
-        if (invalidCategories.length > 0) {
-            invalidCategories.forEach(cat => {
-                errors.push(`Category "${cat}" cannot contain numbers`);
-            });
-        }
+   // Check categories
+    if (boardPath.categories) {
+        boardPath.categories.forEach((category, index) => {
+            const isLastSegment = index === boardPath.categories.length - 1;
+            
+            // Skip date validation for last segment if it's supposed to be a date
+            if (isLastSegment && boardPath.date) {
+                return;
+            }
+            
+            // Check if category contains numbers
+            if (/\d/.test(category)) {
+                // Starts with letter and contains numbers
+                if (/^[a-zA-Z]/.test(category) && /\d/.test(category)) {
+                    errors.push(`Category "${category}" starts with letter but contains numbers`);
+                }
+                // Starts with letter and ends with number
+                else if (/^[a-zA-Z]/.test(category) && /\d$/.test(category)) {
+                    errors.push(`Category "${category}" starts with letter but ends with number`);
+                }
+                // Starts with number and ends with letter
+                else if (/^\d/.test(category) && /[a-zA-Z]$/.test(category)) {
+                    errors.push(`Category "${category}" starts with number but ends with letter`);
+                }
+                // Only numbers
+                else if (/^\d+$/.test(category)) {
+                    errors.push(`Category "${category}" cannot be only numbers`);
+                }
+                // General case
+                else {
+                    errors.push(`Category "${category}" cannot contain numbers`);
+                }
+            }
+        });
     }
     
     // Check category count
