@@ -9,6 +9,7 @@ export interface PathSegmentsResult {
     segments: string[];
     current: string;
     path: string;
+    fullPath: string;
     depth: number;
     isRoot: boolean;
 }

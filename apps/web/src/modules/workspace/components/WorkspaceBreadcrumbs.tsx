@@ -7,7 +7,7 @@ export function WorkspaceBreadcrumbs() {
     
     const items = segmentsResult.segments.map((segment, index) => ({
         name: segment,
-        href: segmentsResult.path + "?display=" + index,
+        href: segmentsResult.fullPath + "?display=" + index,
     }));
 
     return (

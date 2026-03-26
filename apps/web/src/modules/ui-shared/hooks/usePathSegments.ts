@@ -40,6 +40,7 @@ export const usePathSegments = (config?: PathSegmentsConfig): PathSegmentsResult
             segments,
             current: segments[segments.length - 1],
             path: '/' + segments.join('/'),
+            fullPath: pathname,
             depth: segments.length,
             isRoot: segments.length === 0,
         };

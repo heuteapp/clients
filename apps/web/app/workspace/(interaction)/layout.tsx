@@ -6,6 +6,7 @@ import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { HeuteIconOnlyBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
+import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
 
 export default function WorkspaceLayout({
   children,
@@ -69,21 +70,7 @@ const LayoutNavbar = () => {
             fontSize: "1.5rem",
             }}
         >
-            <HeuteIconOnlyBrand 
-                link={{ href: "/", linkType: "external" }}
-                size={28} 
-                style={{ padding: 8 }}
-            />
-            <Box
-                component="div"
-                sx={{
-                    fontSize: "1.125rem",
-                    color: "text.disabled",
-                    fontWeight: "600",
-                }}
-            >
-            /
-            </Box>
+          <WorkspaceBreadcrumbs />
         </Box>
     )
 };
