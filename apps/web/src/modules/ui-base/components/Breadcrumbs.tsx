@@ -10,7 +10,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
     };
 
     return (
-        <NextBreadcrumbs>
+        <NextBreadcrumbs separator={props.separator || ">"}>
             {props.items.map((item, index) => (
                 <React.Fragment key={index}>{getElement(item)}</React.Fragment>
             ))}
