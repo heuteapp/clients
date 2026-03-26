@@ -1,8 +1,9 @@
 export interface BreadcrumbsProps {
     items: BreadcrumbsItem[];
+    defaultElement?: (name: string) => React.ReactNode;
 }
 
 export interface BreadcrumbsItem {
     name: string;
-    onClick?: () => void;
+    element?: (name: string) => React.ReactNode;
 }
