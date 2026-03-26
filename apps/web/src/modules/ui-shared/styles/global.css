@@ -15,7 +15,7 @@ html {
     font-family: var(--font-helvetica-neue), Arial, sans-serif;
 }
 
-.navbar-link {
+a.navbar-link {
     color: #eaeaea;
     background-color: rgba(50, 50, 50, 0.65);
     text-decoration: none;
@@ -33,21 +33,21 @@ html {
     justify-content: center;
 }
 
-.navbar-link:hover {
+a.navbar-link:hover {
     filter: brightness(1.1);
 }
 
-.navbar-link#navbar-link-sign-up {
+a.navbar-link#navbar-link-sign-up {
     background-color: rgb(0, 95, 65);
     border-color: rgba(62, 207, 142, 0.25);
 }
 
-.navbar-link#navbar-link-workspace {
+a.navbar-link#navbar-link-workspace {
     background-color: rgb(0, 85, 110);
     border-color: rgba(80, 168, 218, 0.25);
 }
 
-.navbar-link#navbar-link-profile {
+a.navbar-link#navbar-link-profile {
     background-color: rgb(180, 75, 25);
     border-color: rgba(255, 148, 85, 0.35);
 }
