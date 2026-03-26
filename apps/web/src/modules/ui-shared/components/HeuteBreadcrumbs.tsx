@@ -8,7 +8,7 @@ export const HeuteLinkedBreadcrumbs = (props: HeuteLinkedBreadcrumbsProps) => {
             <HeuteLink
                 href={href}
             >
-                {name}
+                {props.defaultElement ? props.defaultElement(name, href) : name}
             </HeuteLink>
         )
     }

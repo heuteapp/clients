@@ -1,5 +1,5 @@
-import { BreadcrumbsBaseProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 
-export interface HeuteLinkedBreadcrumbsProps extends BreadcrumbsBaseProps {
+export interface HeuteLinkedBreadcrumbsProps extends BreadcrumbsProps {
 
 }
