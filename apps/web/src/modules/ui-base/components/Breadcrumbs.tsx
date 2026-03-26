@@ -5,8 +5,8 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 export const Breadcrumbs = (props: BreadcrumbsProps) => {
     const getElement = (item: BreadcrumbsItem) => {
-        return item.element ? item.element(item.name) 
-            : props.defaultElement ? props.defaultElement(item.name)
+        return item.element ? item.element(item.name, item.href) 
+            : props.defaultElement ? props.defaultElement(item.name, item.href)
             : item.name;
     };
 
