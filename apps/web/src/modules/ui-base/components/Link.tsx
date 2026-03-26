@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import MUILink from "@mui/material/Link";
 import { LinkProps } from "@/src/modules/ui-base/types/ui.props.types";
 
 export const Link = (props: LinkProps) => {
@@ -9,9 +10,9 @@ export const Link = (props: LinkProps) => {
     if(href) {
         if (linkType === "internal") {
             return (
-                <NextLink {...componentProps} href={href}>
+                <MUILink component={NextLink} href={href} {...componentProps}>
                     {props.children}
-                </NextLink>
+                </MUILink>
             );
         }
 
