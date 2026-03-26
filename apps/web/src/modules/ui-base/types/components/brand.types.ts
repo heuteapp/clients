@@ -33,12 +33,12 @@ export interface BrandPairProps extends BrandComponentProps, BrandHasIconProps, 
 export interface BrandHasIconProps extends BrandComponentProps {
     iconSize?: number;
     iconAlt?: string;
-    iconProps: ComponentProps;
+    iconProps?: ComponentProps;
 }
 
 export interface BrandHasTextProps extends BrandComponentProps {
     text?: ReactNode;
     textColor?: string;
     textSize?: string | number;
-    textProps: ComponentProps;
+    textProps?: ComponentProps;
 }
