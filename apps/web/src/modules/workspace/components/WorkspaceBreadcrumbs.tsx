@@ -1,0 +1,18 @@
+import { HeuteLinkedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
+import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
+
+export function WorkspaceBreadcrumbs() {
+    const context = useWorkspaceContext();
+    const { segmentsResult } = context.metadata;
+    
+    const items = segmentsResult.segments.map((segment, index) => ({
+        name: segment,
+        href: segmentsResult.path + "?display=" + index,
+    }));
+
+    return (
+        <HeuteLinkedBreadcrumbs
+            items={items}
+        />
+    )
+}
