@@ -4,7 +4,7 @@ import { BrandIconProps, BrandRootProps, BrandTextProps } from "@/src/modules/ui
 
 //
 
-export const BrandRoot = ({ children, link }: BrandRootProps) => {
+export const BrandRoot = ({ children, link, ...props }: BrandRootProps) => {
   const styles : CSSProperties = {
     display: "flex",
     alignItems: "center",
@@ -15,34 +15,31 @@ export const BrandRoot = ({ children, link }: BrandRootProps) => {
   };
 
   return (
-    <Link href={link?.href} linkType={link?.linkType} style={{...styles, ...link?.style}}>
+    <Link {...props} href={link?.href} linkType={link?.linkType} style={{...styles, ...link?.style}}>
       {children}
     </Link>
   )
 };
 
-export const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", style }: BrandIconProps) => {
+export const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", ...props }: BrandIconProps) => {
   return  (
     <img
+      {...props}
       src="/assets/favicon.svg"
       alt={alt}
       width={size}
       height={size}
-      //className={className}
-      style={{
-        ...style,
-      }}
     />
   )
 };
 
-export const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", style }: BrandTextProps) => {
+export const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", ...props }: BrandTextProps) => {
   return (
     <div style={{ 
+      ...props,
       color, 
       fontWeight: "600",
       fontSize: size, 
-      ...style 
     }}>
       {text}
     </div>
