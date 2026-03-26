@@ -132,13 +132,12 @@ export function getBoardCategories(relativePath: string): string[] {
  * // - Letters with special chars: "history_ww2" ✅
  */
 export function validateBoardPath(
-    relativePath: string, 
+    boardPath: BoardPath | null,
     config: BoardPathConfig = {}
 ): BoardPathValidationResult {
     const errors: string[] = [];
     const { minCategories = 0, maxCategories = Infinity, requireDate = false } = config;
     
-    const boardPath = parseBoardPath(relativePath);
     const categoryCount = boardPath?.categories.length ?? 0;
     
     // Check for empty/invalid path

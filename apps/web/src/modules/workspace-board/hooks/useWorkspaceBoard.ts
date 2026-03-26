@@ -11,16 +11,7 @@ export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceB
     return useMemo(() => {
         const boardData = parseBoardPath(relativePath);
 
-        let isValid = false;
-        let errorMessage = undefined;
-
-        try {
-            validateBoardPath(relativePath, config.path);
-            isValid = true;
-        } catch (error) {
-            isValid = false;
-            errorMessage = (error as Error).message;
-        }
+        const { isValid, errors } = validateBoardPath(boardData, config.path);
         
         const enrichedData: WorkspaceBoardMetadata = {
             categories: boardData?.categories || [],
@@ -28,7 +19,7 @@ export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceB
             categoryDepth: boardData?.categories.length || 0,
             categoryPath: boardData?.categories.join("/") || "",
             isValid,
-            errorMessage,
+            errors,
         };
         
         return enrichedData;

@@ -1,5 +1,5 @@
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
-import { BoardPathConfig } from "../../shared/types/board.types";
+import { BoardPathConfig, BoardPathValidationResult } from "../../shared/types/board.types";
 
 /**
  * Configuration options for the useWorkspaceBoard hook, allowing customization of how the board path is parsed and validated.
@@ -15,7 +15,7 @@ export interface WorkspaceBoardConfig {
  * Return value of the useWorkspaceBoard hook.
  * Provides access to category and date information from the current board URL.
  */
-export interface WorkspaceBoardMetadata extends WorkspaceBoardData {
+export interface WorkspaceBoardMetadata extends WorkspaceBoardData, BoardPathValidationResult {
 
     /**
      * Number of category segments in the current path.
@@ -76,14 +76,4 @@ export interface WorkspaceBoardData {
      * date = null
      */
     date: YYMMDDDate | null;
-
-    /**
-     * Indicates whether the current path is valid according to the workspace board configuration and validation rules.
-     */
-    isValid: boolean;
-
-    /**
-     * Error message providing details about why the path is invalid, if applicable.
-     */
-    errorMessage?: string;
 }

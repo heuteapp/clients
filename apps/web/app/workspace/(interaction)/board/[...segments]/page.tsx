@@ -21,7 +21,16 @@ export function HH() {
             <p>Category Depth: {metadata.categoryDepth}</p>
             <p>Date: {metadata.date?.display}</p>
             <p>Is Valid: {metadata.isValid ? "Yes" : "No"}</p>
-            {metadata.errorMessage && <p style={{ color: "red" }}>Error: {metadata.errorMessage}</p>}
+            {metadata.errors && metadata.errors.length > 0 && (
+                <div style={{ color: "red"}}>
+                    <h2>Errors:</h2>
+                    <ul>
+                        {metadata.errors.map((error, index) => (
+                            <li key={index}>{error}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     )
 }
