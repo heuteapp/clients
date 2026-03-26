@@ -18,7 +18,7 @@ export function WorkspaceBreadcrumbs() {
                 iconSize={28} 
                 iconProps={{
                     sx: {
-                        padding: 12
+                        padding: 1
                     }
                 }}
             />

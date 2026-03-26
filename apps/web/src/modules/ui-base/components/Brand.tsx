@@ -1,6 +1,7 @@
 import { CSSProperties } from "react";
 import { Link } from "./Link";
 import { BrandIconProps, BrandRootProps, BrandTextProps } from "@/src/modules/ui-base/types/components/brand.types";
+import { Box, Typography } from "@mui/material";
 
 //
 
@@ -22,26 +23,30 @@ export const BrandRoot = ({ children, link, ...props }: BrandRootProps) => {
 };
 
 export const BrandIcon = ({ size = 36, alt = "HeuteApp Logo", ...props }: BrandIconProps) => {
-  return  (
-    <img
+  return (
+    <Box
       {...props}
+      component="img"
       src="/assets/favicon.svg"
       alt={alt}
       width={size}
       height={size}
     />
-  )
+  );
 };
 
 export const BrandText = ({ text, color = "#eaeaea", size = "1.25rem", ...props }: BrandTextProps) => {
   return (
-    <div style={{ 
-      ...props,
-      color, 
-      fontWeight: "600",
-      fontSize: size, 
-    }}>
+    <Typography
+      sx={{
+        color,
+        fontSize: size,
+        fontWeight: 600,
+        ...props.sx
+      }}
+      {...props}
+    >
       {text}
-    </div>
+    </Typography>
   );
 };
