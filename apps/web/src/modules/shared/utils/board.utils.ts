@@ -1,15 +1,5 @@
 import { BoardPath, BoardPathConfig, BoardPathValidationResult } from "@/src/modules/shared/types/board.types";
-import { isValidYYMMDD, parseYYMMDD, YYMMDD_PATTERN } from "./date.utils";
-
-/**
- * Validates that a category doesn't contain numbers
- * @throws {Error} If category contains numbers
- */
-function validateCategory(category: string): void {
-    if (/\d/.test(category)) {
-        throw new Error(`Category "${category}" cannot contain numbers`);
-    }
-}
+import { parseYYMMDD, YYMMDD_PATTERN } from "./date.utils";
 
 /**
  * Extracts categories and date from a board URL path
@@ -51,11 +41,6 @@ export function parseBoardPath(relativePath: string): BoardPath | null {
  * @throws {Error} If any category contains numbers
  */
 export function buildBoardPath(categories: string[], date?: string | null): string {
-    // Validate each category doesn't contain numbers
-    for (const category of categories) {
-        validateCategory(category);
-    }
-    
     const parts = [...categories];
     
     if (date) {
