@@ -260,6 +260,11 @@ export const typography = {
     fontWeight: 500,
     lineHeight: 1.45,
   },
+  title: {
+    fontSize: defaultTheme.typography.pxToRem(20),
+    fontWeight: 500,
+    lineHeight: 1.5,
+  },
   subtitle1: {
     fontSize: defaultTheme.typography.pxToRem(16),
     fontWeight: 400,
