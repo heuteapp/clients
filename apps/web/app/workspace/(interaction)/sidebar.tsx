@@ -1,28 +1,53 @@
+"use client";
 import { Box } from "@mui/material"
+import { useRouter } from "next/navigation";
 
 export const Sidebar = () => {
+  const router = useRouter();
+
     return (
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center",
             height: "100vh",
-            width: 80,
-            backgroundColor: "green",
+            width: 128,
+            backgroundColor: "grey.800",
+            borderRight: 1,
+            borderColor: "divider",
           }}
         >
-          {[...Array(5)].map((_, index) => (
+          {items.map((item) => (
             <Box
-              key={index}
+              key={item.id}
               sx={{
-                width: 48,
-                height: 48,
+                width: 96,
+                height: 64,
                 backgroundColor: "lightgray",
                 margin: 2,
+                textAlign: "center",
+                lineHeight: "64px",
+                borderRadius: 1,
+                userSelect: "none",
+                cursor: "pointer",
               }}
-            />
+              onClick={() => {
+                router.push("/workspace/board" + item.link);
+              }}
+            >
+              {item.name}
+            </Box>
           ))}
         </Box>
     )
 }
+
+const items = [
+    { id: 1, name: "School", link: "/school" },
+    { id: 2, name: "History", link: "/school/grade2/history" },
+    { id: 3, name: "Math", link: "/math" },
+    { id: 4, name: "Science", link: "/science" },
+    { id: 5, name: "English", link: "/english" }
+];
