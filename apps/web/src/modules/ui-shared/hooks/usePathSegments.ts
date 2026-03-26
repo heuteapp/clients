@@ -5,7 +5,7 @@ import { PathSegmentsConfig, PathSegmentsResult } from "@/src/modules/ui-shared/
 //
 
 export const usePathSegments = (config?: PathSegmentsConfig): PathSegmentsResult => {
-        const pathname = usePathname();
+    const pathname = usePathname();
     
     return useMemo(() => {
         let segments = pathname.split('/').filter(Boolean);
