@@ -13,7 +13,14 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
     const seperator = props.separator || <NavigateNextIcon fontSize="small" />;
 
     return (
-        <NextBreadcrumbs separator={seperator}>
+        <NextBreadcrumbs separator={seperator}
+            sx={{
+                '& .MuiBreadcrumbs-li': {
+                    display: 'flex',
+                    alignItems: 'center',
+                }
+            }}
+        >
             {props.items.map((item) => (
                 getElement(item)
             ))}
