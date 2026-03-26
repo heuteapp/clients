@@ -6,7 +6,7 @@ export default function Content({ children }: { children: React.ReactNode }) {
     <Box
         sx={{
             width: "100%",
-            height: "100%",
+            height: "calc(100dvh - 49px)",
             display: "flex",
             flexDirection: "row",
             bgcolor: "transparent"

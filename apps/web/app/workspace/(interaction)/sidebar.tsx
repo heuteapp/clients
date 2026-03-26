@@ -12,7 +12,7 @@ export const Sidebar = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            height: "100vh",
+            height: "100%",
             width: 128,
             backgroundColor: "grey.800",
             borderRight: 1,
