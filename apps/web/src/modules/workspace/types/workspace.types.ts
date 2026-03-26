@@ -1,1 +1,1 @@
-export type WorkspaceType = "board" | "unknown";
+export type WorkspaceType = "root" | "board" | "unknown";
