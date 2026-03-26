@@ -9,12 +9,12 @@ import { YYMMDDDate } from '../types/date.types';
  * - MM: 01-12 (months)
  * - DD: 01-31 (days)
  */
-const YYMMDD_PATTERN = /^(\d{2})(\d{2})(\d{2})$/;
+export const YYMMDD_PATTERN = /^(\d{2})(\d{2})(\d{2})$/;
 
 /**
  * Regular expression for ISO date format (YYYY-MM-DD)
  */
-const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+export const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
  * Checks if a string is a valid date in YYMMDD format.
