@@ -18,16 +18,27 @@ export interface BrandTextProps extends ComponentProps {
     size?: string | number;
 };
 
+//
+
 export interface BrandComponentProps extends ComponentProps {
     link?: LinkProps;
 }
 
-export interface BrandPairProps extends BrandComponentProps {
+//
+
+export interface BrandPairProps extends BrandComponentProps, BrandHasIconProps, BrandHasTextProps {
+
+};
+
+export interface BrandHasIconProps extends BrandComponentProps {
     iconSize?: number;
     iconAlt?: string;
-    iconStyle?: React.CSSProperties;
+    iconProps: ComponentProps;
+}
+
+export interface BrandHasTextProps extends BrandComponentProps {
     text?: ReactNode;
     textColor?: string;
     textSize?: string | number;
-    textStyle?: React.CSSProperties;
-};
+    textProps: ComponentProps;
+}

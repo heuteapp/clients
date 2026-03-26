@@ -1,36 +1,36 @@
 import { BrandRoot, BrandIcon, BrandText } from "@/src/modules/ui-base/components/Brand";
 import { HeuteFullBrandProps, HeuteCompactBrandProps, HeuteIconOnlyBrandProps, HeuteTextOnlyBrandProps } from "@/src/modules/ui-shared/types/ui.props.types";
 
-export const HeuteFullBrand = ({ link, iconSize, iconAlt, iconStyle, text = "HeuteApp", textColor, textSize, textStyle }: HeuteFullBrandProps) => {
+export const HeuteFullBrand = ({ link, iconSize, iconAlt, iconProps, text = "HeuteApp", textColor, textSize, textProps, ...props }: HeuteFullBrandProps) => {
   return (
-    <BrandRoot link={link}>
-      <BrandIcon size={iconSize} alt={iconAlt} style={{ padding: 6, ...iconStyle}} />
-      <BrandText text={text} color={textColor} size={textSize} style={textStyle} />
+    <BrandRoot {...props} link={link}>
+      <BrandIcon  {...iconProps} size={iconSize} alt={iconAlt} />
+      <BrandText {...textProps} text={text} color={textColor} size={textSize} />
     </BrandRoot>
   );
 };
 
-export const HeuteCompactBrand = ({ link, iconSize, iconAlt, iconStyle, text = "euteApp", textColor, textSize, textStyle }: HeuteCompactBrandProps) => {
+export const HeuteCompactBrand = ({ link, iconSize, iconAlt, iconProps, text = "euteApp", textColor, textSize, textProps, ...props }: HeuteCompactBrandProps) => {
   return (
-    <BrandRoot link={link}>
-      <BrandIcon size={iconSize} alt={iconAlt} style={iconStyle} />
-      <BrandText text={text} color={textColor} size={textSize} style={textStyle} />
+    <BrandRoot {...props} link={link}>
+      <BrandIcon {...iconProps} size={iconSize} alt={iconAlt} />
+      <BrandText {...textProps} text={text} color={textColor} size={textSize} />
     </BrandRoot>
   );
 };
 
-export const HeuteIconOnlyBrand = ({ link, size, alt, style }: HeuteIconOnlyBrandProps) => {
+export const HeuteIconOnlyBrand = ({ link, iconSize, iconAlt, iconProps, ...props }: HeuteIconOnlyBrandProps) => {
   return (
-    <BrandRoot link={link}>
-      <BrandIcon size={size} alt={alt} style={style} />
+    <BrandRoot {...props} link={link}>
+      <BrandIcon {...iconProps} size={iconSize} alt={iconAlt} />
     </BrandRoot>
   );
 };
 
-export const HeuteTextOnlyBrand = ({ link, text, color, size, style }: HeuteTextOnlyBrandProps) => {
+export const HeuteTextOnlyBrand = ({ link, text, textColor, textSize, textProps, ...props }: HeuteTextOnlyBrandProps) => {
   return (
-    <BrandRoot link={link}>
-      <BrandText text={text} color={color} size={size} style={style} />
+    <BrandRoot {...props} link={link}>
+      <BrandText {...textProps} text={text} color={textColor} size={textSize} />
     </BrandRoot>
   );
 };

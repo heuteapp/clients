@@ -14,10 +14,12 @@ export function WorkspaceBreadcrumbs() {
     return (
         <>
             <HeuteIconOnlyBrand 
-                size={28} 
                 link={{ href:"/", linkType: "external" }} 
-                style={{
-                    padding: 8
+                iconSize={28} 
+                iconProps={{
+                    sx: {
+                        padding: 12
+                    }
                 }}
             />
             <HeuteLinkedBreadcrumbs 
