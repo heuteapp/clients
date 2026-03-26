@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { Box } from "@mui/material";
-import { BrandCompact } from "@/src/ui/components/app/Brand";
-import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
-import { isAuthenticated, isUnauthenticated } from "@/src/features/auth/state/auth.machine";
-import { HeuteLink } from "@/src/ui/components/app/HeuteLink";
+import { HeuteCompactBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
+import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
+import { isAuthenticated, isUnauthenticated } from "@/src/modules/auth/state/auth.machine";
+import { HeuteLink } from "@/src/modules/ui-shared/components/HeuteLink";
 
 export default function WorkspaceLayout({
   children,
@@ -42,7 +42,7 @@ export default function WorkspaceLayout({
                 justifyContent: "flex-start",
               }}
             >
-              <BrandCompact link={{ href: "/", linkType: "internal" }} />
+              <HeuteCompactBrand link={{ href: "/", linkType: "internal" }} />
             </Box>
 
             <Box

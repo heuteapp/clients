@@ -1,8 +1,8 @@
 "use client";
 
-import { isSignLocked } from "@/src/features/auth/state/auth.machine";
-import { BrandCompact, BrandFull } from "@/src/ui/components/app/Brand";
-import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
+import { isSignLocked } from "@/src/modules/auth/state/auth.machine";
+import { HeuteCompactBrand, HeuteFullBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
+import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { CircularProgress } from "@mui/material";
 import { Box, Stack } from "@mui/material";
 
@@ -39,7 +39,7 @@ export default function HomeLayout({
                     py: 3
                 }}
             >
-                <BrandCompact link={{ href: "/", linkType: "external" }} />
+                <HeuteCompactBrand link={{ href: "/", linkType: "external" }} />
             </Box>
             <Box
                 sx={{
@@ -75,7 +75,7 @@ export default function HomeLayout({
                         mb: 3,
                     }}
                 >
-                    <BrandFull 
+                    <HeuteFullBrand 
                         iconSize={64}
                         textSize={"2.5rem"}
                     />

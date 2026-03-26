@@ -1,8 +1,8 @@
 "use client";
 
-import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/features/auth/state/auth.machine";
-import { useAuthContext } from "@/src/features/auth/hooks/useAuthContext";
-import { useAuthHashParams } from "@/src/features/auth/hooks/useAuthHashParams";
+import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/modules/auth/state/auth.machine";
+import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
+import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";
 import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

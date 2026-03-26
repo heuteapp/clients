@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { BrandIconOnly } from "@/src/ui/components/app/Brand";
+import { HeuteIconOnlyBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
 
 export const Navbar = () => {
     return (
@@ -17,7 +17,7 @@ export const Navbar = () => {
             fontSize: "1.5rem",
             }}
         >
-            <BrandIconOnly 
+            <HeuteIconOnlyBrand 
                 link={{ href: "/", linkType: "external" }}
                 size={28} 
                 style={{ padding: 8 }}
