@@ -4,14 +4,6 @@ import { useWorkspaceBoardContext } from "@/src/modules/workspace-board/hooks/us
 import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/WorkspaceBoardProvider";
 
 export default function WorkspaceBoardPage() {
-    return (
-        <WorkspaceBoardProvider>
-            <HH />
-        </WorkspaceBoardProvider>
-    )
-}
-
-export function HH() {
     const { metadata } = useWorkspaceBoardContext();
 
     return (

@@ -1,15 +1,18 @@
 'use client';
 
-import { useRef } from "react";
 import Box from "@mui/material/Box";
+
+import { useWorkspaceType } from "@/src/modules/workspace/hooks/useWorkspaceType";
+import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/WorkspaceBoardProvider";
 import { Navbar } from "./navbar";
-import { Sidebar } from "./sidebar";
 import Content from "./content";
 
 export default function WorkspaceLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const rootRef = useRef<HTMLDivElement | null>(null);
+  const type = useWorkspaceType();
+
+  const content = <LayoutContent>{children}</LayoutContent>;
 
   return (
     <Box
@@ -18,10 +21,18 @@ export default function WorkspaceLayout({
         bgcolor: "background.paper",
       }}
     >
-      <Navbar />
-      <Content>
-        {children}
-      </Content>
+      {type === "board" ? (
+        <WorkspaceBoardProvider>{content}</WorkspaceBoardProvider>
+      ) : (
+        content
+      )}
     </Box>
   )
 }
+
+const LayoutContent = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <Navbar />
+    <Content>{children}</Content>
+  </>
+);
