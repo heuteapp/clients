@@ -1,4 +1,6 @@
-export interface BreadcrumbsProps {
+import { ComponentProps } from "./components/types";
+
+export interface BreadcrumbsProps extends ComponentProps {
     items: BreadcrumbsItem[];    
     separator?: React.ReactNode;
     wrapperElement?: (item: BreadcrumbsItemData, children: React.ReactNode) => React.ReactNode;

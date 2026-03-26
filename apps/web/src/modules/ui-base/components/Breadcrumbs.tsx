@@ -2,26 +2,28 @@ import MUIBreadcrumbs from "@mui/material/Breadcrumbs";
 import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import Box from "@mui/material/Box";
 
-export const Breadcrumbs = (props: BreadcrumbsProps) => {
+export const Breadcrumbs = ({ items, separator, wrapperElement, defaultElement, ...props }: BreadcrumbsProps) => {
     const getElement = (item: BreadcrumbsItem) => {
         return item.element ? item.element(item) 
-            : props.defaultElement ? props.defaultElement(item)
+            : defaultElement ? defaultElement(item)
             : item.name;
     };
 
     const getWrappedElement = (item: BreadcrumbsItem) => {
         const element = getElement(item);
         
-        if (props.wrapperElement) {
-            return props.wrapperElement(item, element);
+        if (wrapperElement) {
+            return wrapperElement(item, element);
         }
         return element;
     };
 
-    const seperator = props.separator || <BreadcrumbsSeparator />;
+    const seperator = separator || <BreadcrumbsSeparator />;
 
     return (
-        <MUIBreadcrumbs separator={seperator}
+        <MUIBreadcrumbs 
+            {...props}
+            separator={seperator}
             sx={{
                 li: {
                     display: 'flex',
@@ -29,7 +31,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
                 },
             }}
         >
-            {props.items.map((item) => (
+            {items.map((item) => (
                 getWrappedElement(item)
             ))}
         </MUIBreadcrumbs>
