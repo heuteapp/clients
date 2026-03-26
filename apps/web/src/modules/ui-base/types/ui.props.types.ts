@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
+import { SxProps, Theme } from "@mui/material/styles";
 
 export interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
-
+    sx?: SxProps<Theme>
 }
 
 export interface ComponentContainerProps extends ComponentProps {
