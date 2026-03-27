@@ -19,7 +19,7 @@ export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceB
                 href: `/workspace/${segmentsResult.segments.slice(0, index + 1).join("/")}`,
             }))
         ]);
-    }, [])
+    }, [segmentsResult.path])
 
     return useMemo(() => {
         const boardData = parseBoardPath(relativePath);
