@@ -3,6 +3,7 @@
   "short_name": "HeuteApp",
   "description": "Daily what you learned, Yours to keep.",
   "start_url": "/workspace/board",
+  "scope": "/workspace",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
