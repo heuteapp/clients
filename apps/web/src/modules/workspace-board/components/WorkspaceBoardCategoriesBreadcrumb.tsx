@@ -1,5 +1,6 @@
 import { Breadcrumbs } from "@/src/modules/ui-base/components/Breadcrumbs";
 import { Box, Typography } from "@mui/material";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export function WorkspaceBoardCategoriesBreadcrumb({ categories } : { categories: string[] }) {
     const categoryItems = categories.map((category) => ({
@@ -12,10 +13,15 @@ export function WorkspaceBoardCategoriesBreadcrumb({ categories } : { categories
                 border: "1px solid",
                 borderColor: "divider",
                 borderRadius: 0.5,
-                px: 2,
+                pl: 1.5,
                 userSelect: "none",
                 display: "flex",
                 justifyContent: "center",
+                cursor: "pointer",
+                transition: "background-color 0.2s",
+                "&:hover": {
+                    backgroundColor: "action.hover"
+                }
             }}
         >
             {categories.length === 0 ? (
@@ -37,6 +43,10 @@ export function WorkspaceBoardCategoriesBreadcrumb({ categories } : { categories
                     separator=">"
                 />
             )}
+            <ArrowDropDownIcon sx={{
+                pl: 0.5,
+                pr: 1
+            }} />
         </Box>
     )
 }
