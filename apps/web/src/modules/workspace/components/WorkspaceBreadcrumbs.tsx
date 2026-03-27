@@ -7,19 +7,19 @@ export function WorkspaceBreadcrumbs() {
     const context = useWorkspaceContext();
     const { breadcrumbs } = context.metadata;
 
-    const rootItem = {
+    const rootItem : BreadcrumbsItem = {
         name: "Home",
         href: "/",
-        element: () => (
+        element: (item) => (
             <HeuteIconOnlyBrand 
                 iconSize={24} 
-                link={{ href: "/", linkType: "external" }}
+                link={{ href: item.href, linkType: "external" }}
             />
         )
     }
 
     const items = [rootItem, {
-        name: "injected",
+        name: "animated",
         element: () => <AnimatedBreadcrumbItems items={breadcrumbs.items} />
     }];
 
@@ -38,7 +38,7 @@ const AnimatedBreadcrumbItems = ({ items } : { items: BreadcrumbsItem[]}) => {
         <Breadcrumbs 
             sx={{
                 padding: 1,                    
-                li: {
+                '& > ol > li': {
                     animation: "slideInFromLeft 0.2s ease-out forwards",
                     opacity: 0,
                     transform: "translateX(-10px)",
