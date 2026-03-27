@@ -18,27 +18,25 @@ export function WorkspaceBreadcrumbs() {
 
     const segmentItems = segmentsResult.segments.map((segment, index) => ({
         name: segment,
-        href: segmentsResult.fullPath + "?display=" + index,
+        href: `${segmentsResult.fullPath}?on=${index}`,
     }));
 
     const items = [rootItem, ...segmentItems];
 
     return (
-        <>
-            <HeuteLinkedBreadcrumbs 
-                sx={{
-                    padding: 1
-                }}
-                linkProps={{
-                    sx: {
-                        textDecoration: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        color: "text.primary",
-                    }
-                }}
-                items={items}
-            />
-        </>
+        <HeuteLinkedBreadcrumbs 
+            sx={{
+                padding: 1
+            }}
+            linkProps={{
+                sx: {
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    color: "text.primary",
+                }
+            }}
+            items={items}
+        />
     )
 }
