@@ -13,11 +13,16 @@ export function WorkspaceBoardCategoriesBC() {
         <Breadcrumbs 
             items={categoryItems} 
             sx={{
+                '& .MuiBreadcrumbs-separator': {
+                    marginX: 1
+                },
                 border: "1px solid",
                 borderColor: "divider",
                 borderRadius: 1,
-                px: 1
+                px: 1,
+                userSelect: "none",
             }}
+            separator=">"
         />
     )
 }
