@@ -6,7 +6,6 @@ import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
-import { FullscreenButton } from "@/src/modules/ui-shared/components/FullscreenButton";
 
 export default function WorkspaceLayout({
   children,
@@ -79,7 +78,6 @@ const LayoutNavbar = () => {
                 pr: 1,
             }}
           >
-            <FullscreenButton />
           </Box>
         </Box>
     )
