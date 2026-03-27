@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/WorkspaceBoardProvider";
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
-import { HeuteIconOnlyBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
 import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
 
 export default function WorkspaceLayout({
