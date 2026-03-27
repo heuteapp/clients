@@ -3,6 +3,7 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+  customWorkerSrc: 'service-worker.js',
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/api\.heuteapp\.net\/.*/i,
