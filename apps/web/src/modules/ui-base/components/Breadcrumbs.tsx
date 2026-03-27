@@ -16,7 +16,7 @@ export const Breadcrumbs = ({ items, separator, wrapperElement, defaultElement, 
             return wrapperElement(item, element);
         }
 
-        return <>{element}</>;
+        return <span>{element}</span>;
     };
 
     const seperator = separator || <BreadcrumbsSeparator />;
