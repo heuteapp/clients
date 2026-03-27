@@ -3,6 +3,7 @@ import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceC
 import { WorkspaceBoardCategoriesBreadcrumb } from "../components/WorkspaceBoardCategoriesBreadcrumb";
 import { WorkspaceBoardDateBreadcrumb } from "../components/WorkspaceBoardDateBreadcrumb";
 import { useWorkspaceBoardContext } from "./useWorkspaceBoardContext";
+import { HeuteLink } from "../../ui-shared/components/HeuteLink";
 
 export const useWorkspaceBoardBreadcrumbs = () => {
     const context = useWorkspaceContext();
@@ -10,6 +11,10 @@ export const useWorkspaceBoardBreadcrumbs = () => {
 
     const boardContext = useWorkspaceBoardContext();
     const { categories, date, isDateToday } = boardContext.metadata;
+
+    const BoardElement = useMemo(() => {
+        return () => <HeuteLink href="/workspace/board" linkType="internal" sx={{ color: "text.primary", textDecoration: "none" }}>board</HeuteLink>;
+    }, []);
 
     const CategoriesElement = useMemo(() => {
         return () => <WorkspaceBoardCategoriesBreadcrumb categories={categories} />;
@@ -25,7 +30,8 @@ export const useWorkspaceBoardBreadcrumbs = () => {
         const items = [
             {
                 name: "board",
-                href: "/workspace/board"
+                href: "/workspace/board",
+                element: BoardElement
             },
             {
                 name: "categories",
