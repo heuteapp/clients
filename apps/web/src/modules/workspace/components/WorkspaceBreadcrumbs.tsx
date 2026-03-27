@@ -4,7 +4,7 @@ import { BrandIcon } from "../../ui-base/components/Brand";
 
 export function WorkspaceBreadcrumbs() {
     const context = useWorkspaceContext();
-    const { segmentsResult } = context.metadata;
+    const { breadcrumbs } = context.metadata;
 
     const rootItem = {
         name: "Home",
@@ -16,12 +16,7 @@ export function WorkspaceBreadcrumbs() {
         )
     }
 
-    const segmentItems = segmentsResult.segments.map((segment, index) => ({
-        name: segment,
-        href: `${segmentsResult.fullPath}?on=${index}`,
-    }));
-
-    const items = [rootItem, ...segmentItems];
+    const items = [rootItem, ...breadcrumbs.items];
 
     return (
         <HeuteLinkedBreadcrumbs 
