@@ -4,22 +4,16 @@ import { usePathname } from "next/navigation";
 import { parseBoardPath, validateBoardPath } from "../../shared/utils/board.utils";
 import { dateToYYMMDD } from "../../shared/utils/date.utils";
 import { useWorkspaceContext } from "../../workspace/hooks/useWorkspaceContext";
+import { useWorkspaceBoardBreadcrumbs } from "./useWorkspaceBoardBreadcrumbs";
 
 export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceBoardMetadata {
     const pathName = usePathname();
     const context = useWorkspaceContext();
-    const { segmentsResult, breadcrumbs } = context.metadata;
+    const { segmentsResult } = context.metadata;
 
     const relativePath = segmentsResult.segments.slice(1).join("/");
 
-    useEffect(() => {
-                breadcrumbs.setItems([
-            ...segmentsResult.segments.map((segment, index) => ({
-                name: segment,
-                href: `/workspace/${segmentsResult.segments.slice(0, index + 1).join("/")}`,
-            }))
-        ]);
-    }, [segmentsResult])
+    useWorkspaceBoardBreadcrumbs();
 
     return useMemo(() => {
         const boardData = parseBoardPath(relativePath);
