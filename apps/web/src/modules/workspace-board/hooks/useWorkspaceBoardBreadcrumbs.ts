@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
-import { WorkspaceBoardCategoriesBC } from "../components/WorkspaceBoardCategoriesBC";
-import { WorkspaceBoardDateView } from "../components/WorkspaceBoardDateView";
+import { WorkspaceBoardCategoriesBreadcrumb } from "../components/WorkspaceBoardCategoriesBreadcrumb";
+import { WorkspaceBoardDateBreadcrumb } from "../components/WorkspaceBoardDateBreadcrumb";
 import { useWorkspaceBoardContext } from "./useWorkspaceBoardContext";
 
 export const useWorkspaceBoardBreadcrumbs = () => {
@@ -19,14 +19,14 @@ export const useWorkspaceBoardBreadcrumbs = () => {
             },
             {
                 name: "categories",
-                element: WorkspaceBoardCategoriesBC
+                element: WorkspaceBoardCategoriesBreadcrumb
             }
         ];
 
         if(categories.length > 0) {
             items.push({
                 name: "date",
-                element: WorkspaceBoardDateView
+                element: WorkspaceBoardDateBreadcrumb
             });
         }
 

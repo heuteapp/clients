@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useWorkspaceBoardContext } from "../hooks/useWorkspaceBoardContext";
 
-export function WorkspaceBoardDateView() {
+export function WorkspaceBoardDateBreadcrumb() {
     const context = useWorkspaceBoardContext();
     const { date, isDateToday } = context.metadata;
 
