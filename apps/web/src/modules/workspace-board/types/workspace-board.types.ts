@@ -43,6 +43,12 @@ export interface WorkspaceBoardMetadata extends WorkspaceBoardData, BoardPathVal
      * categoryPath = "school/grade2/math"
      */
     categoryPath: string;
+
+
+    /**
+     * Boolean indicating whether the date segment (if present) represents today's date.
+     */
+    isDateToday: boolean;
 }
 
 /**

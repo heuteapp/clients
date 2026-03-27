@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBoardCategoriesBC } from "../components/WorkspaceBoardCategoriesBC";
+import { WorkspaceBoardDateView } from "../components/WorkspaceBoardDateView";
 
 export const useWorkspaceBoardBreadcrumbs = () => {
     const context = useWorkspaceContext();
@@ -15,6 +16,10 @@ export const useWorkspaceBoardBreadcrumbs = () => {
             {
                 name: "categories",
                 element: WorkspaceBoardCategoriesBC
+            },
+            {
+                name: "date",
+                element: WorkspaceBoardDateView
             }
         ]);
     }, [segmentsResult])
