@@ -1,10 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { WorkspaceBoardConfig, WorkspaceBoardMetadata } from "../types/workspace-board.types";
 import { usePathname } from "next/navigation";
 import { parseBoardPath, validateBoardPath } from "../../shared/utils/board.utils";
 import { dateToYYMMDD, isToday } from "../../shared/utils/date.utils";
 import { useWorkspaceContext } from "../../workspace/hooks/useWorkspaceContext";
-import { useWorkspaceBoardBreadcrumbs } from "./useWorkspaceBoardBreadcrumbs";
 
 export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceBoardMetadata {
     const pathName = usePathname();
@@ -12,13 +11,12 @@ export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceB
     const { segmentsResult } = context.metadata;
 
     const relativePath = segmentsResult.segments.slice(1).join("/");
-
-    useWorkspaceBoardBreadcrumbs();
+    const stableConfig = useMemo(() => config, [JSON.stringify(config)]);
 
     return useMemo(() => {
         const boardData = parseBoardPath(relativePath);
 
-        const { isValid, errors } = validateBoardPath(boardData, config.path);
+        const { isValid, errors } = validateBoardPath(boardData, stableConfig.path);
         const date = boardData?.date || dateToYYMMDD(new Date())!;
         
         const enrichedData: WorkspaceBoardMetadata = {
@@ -32,5 +30,5 @@ export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceB
         };
         
         return enrichedData;
-    }, [pathName, config]);
+    }, [pathName, stableConfig]);
 }

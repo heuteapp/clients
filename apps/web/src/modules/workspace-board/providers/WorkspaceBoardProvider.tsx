@@ -5,6 +5,7 @@ import { BoardProvider } from "@/src/modules/ui-board/provider/BoardProvider"
 import { LayoutProvider } from "@/src/modules/ui-layout/provider/LayoutProvider"
 import { useWorkspaceBoard } from "../hooks/useWorkspaceBoard"
 import { WorkspaceBoardContext } from "../contexts/workspace-board.context";
+import { useWorkspaceBoardBreadcrumbs } from "../hooks/useWorkspaceBoardBreadcrumbs";
 
 export function WorkspaceBoardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceBoard();
@@ -18,10 +19,20 @@ export function WorkspaceBoardProvider({ children }: { children: React.ReactNode
             <LayoutProvider>
                 <BoardProvider>
                     <WorkspaceBoardContext.Provider value={contextValue}>
-                        {children}
+                        <ProviderContent>
+                            {children}
+                        </ProviderContent>
                     </WorkspaceBoardContext.Provider>
                 </BoardProvider>
             </LayoutProvider>
         </>
+    )
+}
+
+const ProviderContent = ({ children }: { children: React.ReactNode }) => {
+    useWorkspaceBoardBreadcrumbs();
+
+    return (
+        <>{children}</>
     )
 }

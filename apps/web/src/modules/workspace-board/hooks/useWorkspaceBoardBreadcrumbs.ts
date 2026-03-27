@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBoardCategoriesBC } from "../components/WorkspaceBoardCategoriesBC";
 import { WorkspaceBoardDateView } from "../components/WorkspaceBoardDateView";
+import { useWorkspaceBoardContext } from "./useWorkspaceBoardContext";
 
 export const useWorkspaceBoardBreadcrumbs = () => {
     const context = useWorkspaceContext();
-    const { segmentsResult, breadcrumbs } = context.metadata;
+    const { breadcrumbs } = context.metadata;
+
+    const boardContext = useWorkspaceBoardContext();
+    const { categories, date } = boardContext.metadata;
     
     useEffect(() => {
         breadcrumbs.setItems([
@@ -22,5 +26,5 @@ export const useWorkspaceBoardBreadcrumbs = () => {
                 element: WorkspaceBoardDateView
             }
         ]);
-    }, [segmentsResult])
+    }, [categories, date]);
 }
