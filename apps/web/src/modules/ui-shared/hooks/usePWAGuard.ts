@@ -11,11 +11,11 @@ export const usePWAGuard = () => {
     const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
                   (window.navigator as any).standalone === true;
     
-    if (isPWA) {
-      document.cookie = "pwa-mode=true; path=/";
-    }
+    if (!isPWA) return;
     
-    if (isPWA && !pathname.startsWith('/workspace')) {
+    document.cookie = "pwa-mode=true; path=/";
+    
+    if (!pathname.startsWith('/workspace')) {
       router.replace('/workspace/board');
     }
   }, [pathname, router]);
