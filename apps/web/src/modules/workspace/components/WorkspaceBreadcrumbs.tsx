@@ -1,7 +1,7 @@
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
-import { BrandIcon } from "../../ui-base/components/Brand";
 import { BreadcrumbsItem } from "../../ui-base/types/breadcrumbs.types";
 import { Breadcrumbs } from "../../ui-base/components/Breadcrumbs";
+import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
 
 export function WorkspaceBreadcrumbs() {
     const context = useWorkspaceContext();
@@ -11,8 +11,9 @@ export function WorkspaceBreadcrumbs() {
         name: "Home",
         href: "/",
         element: () => (
-            <BrandIcon 
-                size={24}
+            <HeuteIconOnlyBrand 
+                iconSize={24} 
+                link={{ href: "/", linkType: "external" }}
             />
         )
     }
