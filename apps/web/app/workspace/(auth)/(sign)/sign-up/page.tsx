@@ -19,12 +19,6 @@ export default function SignUpPage() {
   const isLoading = isSigningUp(state);
   const error = state.context.error;
 
-  useEffect(() => {
-    if (isAuthenticated(state)) {
-      router.push("/workspace");
-    }
-  }, [isAuthenticated(state), router]);
-
   const validatePasswords = () => {
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match");

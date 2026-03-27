@@ -76,7 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         if(isAuthenticated(state)) {
             if(onSignInPage || onSignUpPage || onVerifycationPage) {
-                window.location.href = "/workspace";
+                window.location.href = "/workspace/board";
                 return;
             }
         }
