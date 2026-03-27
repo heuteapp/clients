@@ -1,4 +1,3 @@
-import { HeuteLinkedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
 import { BrandIcon } from "../../ui-base/components/Brand";
 import { BreadcrumbsItem } from "../../ui-base/types/breadcrumbs.types";
@@ -20,7 +19,7 @@ export function WorkspaceBreadcrumbs() {
 
     const items = [rootItem, {
         name: "injected",
-        element: () => <BreadcrumbsRest items={breadcrumbs.items} />
+        element: () => <AnimatedBreadcrumbItems items={breadcrumbs.items} />
     }];
 
     return (
@@ -33,7 +32,7 @@ export function WorkspaceBreadcrumbs() {
     )
 }
 
-const BreadcrumbsRest = ({ items } : { items: BreadcrumbsItem[]}) => {
+const AnimatedBreadcrumbItems = ({ items } : { items: BreadcrumbsItem[]}) => {
     return (
         <Breadcrumbs 
             sx={{
