@@ -16,7 +16,7 @@ export function useWorkspaceBoard(config: WorkspaceBoardConfig = {}): WorkspaceB
                 breadcrumbs.setItems([
             ...segmentsResult.segments.map((segment, index) => ({
                 name: segment,
-                href: `/${segmentsResult.segments.slice(0, index + 1).join("/")}`,
+                href: `/workspace/${segmentsResult.segments.slice(0, index + 1).join("/")}`,
             }))
         ]);
     }, [])
