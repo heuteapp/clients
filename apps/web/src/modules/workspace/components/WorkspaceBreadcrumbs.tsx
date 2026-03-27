@@ -8,7 +8,7 @@ export function WorkspaceBreadcrumbs() {
 
     const rootItem = {
         name: "Home",
-        href: "/workspace",
+        href: "/",
         element: () => (
             <BrandIcon 
                 size={24}
