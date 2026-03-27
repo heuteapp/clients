@@ -10,6 +10,14 @@ export function WorkspaceBoardCategoriesBC() {
     }));
 
     return (
-        <Breadcrumbs items={categoryItems} />
+        <Breadcrumbs 
+            items={categoryItems} 
+            sx={{
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 1,
+                px: 1
+            }}
+        />
     )
 }
