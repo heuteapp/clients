@@ -1,6 +1,7 @@
 import { Breadcrumbs } from "@/src/modules/ui-base/components/Breadcrumbs";
 import { Box, Typography } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 
 export function WorkspaceBoardCategoriesBreadcrumb({ categories } : { categories: string[] }) {
     const categoryItems = categories.map((category) => ({
@@ -33,7 +34,9 @@ export function WorkspaceBoardCategoriesBreadcrumb({ categories } : { categories
                     Select Category
                 </Typography>
             ): (           
-                <Breadcrumbs                 
+                <HeuteAnimatedBreadcrumbs   
+                    delay={0.2}
+                    offset={10}              
                     sx={{
                         '& .MuiBreadcrumbs-separator': {
                             marginX: 1
