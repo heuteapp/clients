@@ -5,7 +5,7 @@ export function WorkspaceBoardCategoriesBC() {
     const context = useWorkspaceBoardContext();
     const { categories } = context.metadata;
 
-    const categoryItems = categories.map((category, index) => ({
+    const categoryItems = categories.map((category) => ({
         name: category,
     }));
 
