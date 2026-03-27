@@ -1,6 +1,8 @@
 import { HeuteLinkedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
 import { BrandIcon } from "../../ui-base/components/Brand";
+import { BreadcrumbsItem } from "../../ui-base/types/breadcrumbs.types";
+import { Breadcrumbs } from "../../ui-base/components/Breadcrumbs";
 
 export function WorkspaceBreadcrumbs() {
     const context = useWorkspaceContext();
@@ -16,19 +18,40 @@ export function WorkspaceBreadcrumbs() {
         )
     }
 
-    const items = [rootItem, ...breadcrumbs.items];
+    const items = [rootItem, {
+        name: "injected",
+        element: () => <BreadcrumbsRest items={breadcrumbs.items} />
+    }];
 
     return (
-        <HeuteLinkedBreadcrumbs 
+        <Breadcrumbs 
             sx={{
                 padding: 1
             }}
-            linkProps={{
-                sx: {
-                    textDecoration: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    color: "text.primary",
+            items={items}
+        />
+    )
+}
+
+const BreadcrumbsRest = ({ items } : { items: BreadcrumbsItem[]}) => {
+    return (
+        <Breadcrumbs 
+            sx={{
+                padding: 1,                    
+                li: {
+                    animation: "slideInFromLeft 0.2s ease-out forwards",
+                    opacity: 0,
+                    transform: "translateX(-10px)",
+                    "@keyframes slideInFromLeft": {
+                        "0%": {
+                            opacity: 0,
+                            transform: "translateX(-10px)"
+                        },
+                        "100%": {
+                            opacity: 1,
+                            transform: "translateX(0)"
+                        }
+                    }
                 }
             }}
             items={items}

@@ -16,7 +16,17 @@ export const Breadcrumbs = ({ items, separator, wrapperElement, defaultElement, 
             return wrapperElement(item, element);
         }
 
-        return <span>{element}</span>;
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "text.primary",
+                }}
+            >
+                {element}
+            </Box>
+        );
     };
 
     const seperator = separator || <BreadcrumbsSeparator />;
