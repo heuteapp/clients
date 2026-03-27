@@ -12,7 +12,7 @@ export const useWorkspaceBoardBreadcrumbs = () => {
     const { categories, date } = boardContext.metadata;
     
     useEffect(() => {
-        breadcrumbs.setItems([
+        const items = [
             {
                 name: "board",
                 href: "/workspace/board"
@@ -20,11 +20,17 @@ export const useWorkspaceBoardBreadcrumbs = () => {
             {
                 name: "categories",
                 element: WorkspaceBoardCategoriesBC
-            },
-            {
+            }
+        ];
+
+        if(categories.length > 0) {
+            items.push({
                 name: "date",
                 element: WorkspaceBoardDateView
-            }
-        ]);
+            });
+        }
+
+        breadcrumbs.setItems(items);
+
     }, [categories, date]);
 }
