@@ -162,3 +162,12 @@ export function isoToYYMMDDStr(isoDate: string): string | null {
     
     return `${shortYear.toString().padStart(2, '0')}${month}${day}`;
 }
+
+/**
+ * Checks if a given YYMMDDDate represents today's date.
+ */
+export function isToday(yyMMddDate: YYMMDDDate): boolean {
+    const today = new Date();
+    const todayYYMMDD = dateToYYMMDDStr(today);
+    return yyMMddDate.raw === todayYYMMDD;
+}
