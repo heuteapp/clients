@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBoardCategoriesBreadcrumb } from "../components/WorkspaceBoardCategoriesBreadcrumb";
 import { WorkspaceBoardDateBreadcrumb } from "../components/WorkspaceBoardDateBreadcrumb";
@@ -9,7 +9,17 @@ export const useWorkspaceBoardBreadcrumbs = () => {
     const { breadcrumbs } = context.metadata;
 
     const boardContext = useWorkspaceBoardContext();
-    const { categories, date } = boardContext.metadata;
+    const { categories, date, isDateToday } = boardContext.metadata;
+
+    const CategoriesElement = useMemo(() => {
+        return () => <WorkspaceBoardCategoriesBreadcrumb categories={categories} />;
+    }, [categories]);
+    
+    const DateElement = useMemo(() => {
+        return () => <WorkspaceBoardDateBreadcrumb date={date!} isDateToday={isDateToday} />;
+    }, [date, isDateToday]);
+
+    //
     
     useEffect(() => {
         const items = [
@@ -19,14 +29,14 @@ export const useWorkspaceBoardBreadcrumbs = () => {
             },
             {
                 name: "categories",
-                element: WorkspaceBoardCategoriesBreadcrumb
+                element: CategoriesElement
             }
         ];
 
         if(categories.length > 0) {
             items.push({
                 name: "date",
-                element: WorkspaceBoardDateBreadcrumb
+                element: DateElement
             });
         }
 

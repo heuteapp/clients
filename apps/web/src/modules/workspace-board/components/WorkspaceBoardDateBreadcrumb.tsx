@@ -1,10 +1,7 @@
 import { Box } from "@mui/material";
-import { useWorkspaceBoardContext } from "../hooks/useWorkspaceBoardContext";
+import { YYMMDDDate } from "../../shared/types/date.types";
 
-export function WorkspaceBoardDateBreadcrumb() {
-    const context = useWorkspaceBoardContext();
-    const { date, isDateToday } = context.metadata;
-
+export function WorkspaceBoardDateBreadcrumb({ date, isDateToday }: { date: YYMMDDDate, isDateToday: boolean }) {
     return (
         <Box sx={{
             fontSize: "0.875rem",
