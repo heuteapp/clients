@@ -1,22 +1,27 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 
-export const usePWAGuard = () => {
-  const pathname = usePathname();
-  const router = useRouter();
-  
+export function usePWAGuard() {
   useEffect(() => {
-    const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
-                  (window.navigator as any).standalone === true;
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches;
     
-    if (!isPWA) return;
-    
-    document.cookie = "pwa-mode=true; path=/";
-    
-    if (!pathname.startsWith('/workspace')) {
-      router.replace('/workspace/board');
+    if (isPWA) {
+      // Fetch isteklerine header ekle
+      const originalFetch = window.fetch;
+      window.fetch = function(...args) {
+        if (args[1]) {
+          args[1].headers = {
+            ...args[1].headers,
+            'X-PWA-Mode': 'true'
+          };
+        } else {
+          args[1] = { headers: { 'X-PWA-Mode': 'true' } };
+        }
+        return originalFetch.apply(this, args);
+      };
     }
-  }, [pathname, router]);
+  }, []);
+  
+  return null;
 }
