@@ -26,6 +26,7 @@ export const HeuteLinkedBreadcrumbs = ({ linkProps, wrapperElement, ...props }: 
 export const HeuteAnimatedBreadcrumbs = ({ delay, offset, ...props }: HeuteAnimatedBreadcrumbsProps) => {
     return (
         <Breadcrumbs 
+            {...props}
             sx={{
                 padding: 1,                    
                 '& > ol > li': {
@@ -42,9 +43,9 @@ export const HeuteAnimatedBreadcrumbs = ({ delay, offset, ...props }: HeuteAnima
                             transform: "translateX(0)"
                         }
                     }
-                }
+                },                ...props.sx,
+
             }}
-            {...props}
         />
     )
 }
