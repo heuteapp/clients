@@ -1,4 +1,4 @@
-import { Breadcrumbs, BreadcrumbsAnimationRender } from "@/src/modules/ui-base/components/Breadcrumbs"
+import { Breadcrumbs, BreadcrumbsAnimationRender, BreadcrumbsSeparator } from "@/src/modules/ui-base/components/Breadcrumbs"
 import { HeuteAnimatedBreadcrumbsItem, HeuteAnimatedBreadcrumbsProps, HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/components/heute-breadcrumbs.types"
 import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
@@ -39,16 +39,23 @@ export const HeuteAnimatedBreadcrumbs = ({ items, renderItem, delay = 0, offset,
         }
 
         return (
-            <BreadcrumbsAnimationRender duration={0.5} delay={delay}>
+            <BreadcrumbsAnimationRender duration={10} delay={0}>
                 {content}
             </BreadcrumbsAnimationRender>
         )
     }
 
+    const animatedSeparator = (
+        <BreadcrumbsAnimationRender duration={10} delay={0}>
+            {separator ? separator : <BreadcrumbsSeparator />}
+        </BreadcrumbsAnimationRender>
+    )
+
     return (
         <Breadcrumbs 
             items={items}
             renderItem={animationRender}
+            separator={animatedSeparator}
             {...props}
         />
     )
