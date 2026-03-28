@@ -28,7 +28,7 @@ export const HeuteLinkedBreadcrumbs = ({ linkProps, renderItem, ...props }: Heut
     )
 }
 
-export const HeuteAnimatedBreadcrumbs = ({ items, renderItem, delay = 0, offset, animate = true, separator, ...props }: HeuteAnimatedBreadcrumbsProps) => {
+export const HeuteAnimatedBreadcrumbs = ({ items, renderItem, duration, delay = 0, offset, animate = true, separator, ...props }: HeuteAnimatedBreadcrumbsProps) => {
     const animationRender = (item: HeuteAnimatedBreadcrumbsItem, index?: number) => {
         const content = renderItem 
             ? renderItem(item, index)
@@ -39,14 +39,14 @@ export const HeuteAnimatedBreadcrumbs = ({ items, renderItem, delay = 0, offset,
         }
 
         return (
-            <BreadcrumbsAnimationRender duration={10} delay={0}>
+            <BreadcrumbsAnimationRender duration={duration} delay={delay}>
                 {content}
             </BreadcrumbsAnimationRender>
         )
     }
 
     const animatedSeparator = (
-        <BreadcrumbsAnimationRender duration={10} delay={0}>
+        <BreadcrumbsAnimationRender duration={duration} delay={delay}>
             {separator ? separator : <BreadcrumbsSeparator />}
         </BreadcrumbsAnimationRender>
     )

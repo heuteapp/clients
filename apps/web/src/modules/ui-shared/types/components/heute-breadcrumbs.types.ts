@@ -9,6 +9,7 @@ export interface HeuteAnimatedBreadcrumbsProps extends BreadcrumbsProps {
     items: HeuteAnimatedBreadcrumbsItem[];
     renderItem?: (item: HeuteAnimatedBreadcrumbsItem, index?: number) => React.ReactNode;
     
+    duration: number;
     delay: number;
     offset: number;
     animate?: boolean;

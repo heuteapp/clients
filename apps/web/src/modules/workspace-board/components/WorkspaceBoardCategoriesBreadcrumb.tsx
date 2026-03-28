@@ -35,7 +35,8 @@ export function WorkspaceBoardCategoriesBreadcrumb({ categories } : { categories
                 </Typography>
             ): (           
                 <HeuteAnimatedBreadcrumbs   
-                    delay={0.2}
+                    duration={0.2}
+                    delay={0}
                     offset={10}              
                     sx={{
                         '& .MuiBreadcrumbs-separator': {

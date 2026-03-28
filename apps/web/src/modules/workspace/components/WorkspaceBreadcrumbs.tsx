@@ -23,10 +23,11 @@ export function WorkspaceBreadcrumbs() {
 
     return (
         <HeuteAnimatedBreadcrumbs 
-            delay={0.2}
+            duration={0.2}
+            delay={0}
             offset={10}
             items={items}
-            animate={animate}
+            animate={true}
         />
     )
 }

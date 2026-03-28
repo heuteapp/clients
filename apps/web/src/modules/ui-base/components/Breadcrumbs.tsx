@@ -89,7 +89,7 @@ export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", stroke
 
 export const BreadcrumbsAnimationRender = ({ children, duration, delay } : { children: React.ReactNode; duration: number; delay: number }) => (
     <motion.div
-        initial={{ opacity: 0, x: -10 }}
+        initial={{ opacity: 0, x: -5 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{
             duration: duration,
