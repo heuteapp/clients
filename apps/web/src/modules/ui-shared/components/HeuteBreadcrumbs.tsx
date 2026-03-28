@@ -31,7 +31,7 @@ export const HeuteLinkedBreadcrumbs = ({ linkProps, renderItem, ...props }: Heut
 export const HeuteAnimatedBreadcrumbs = ({ delay, offset, animate = true, renderItem, separator, ...props }: HeuteAnimatedBreadcrumbsProps) => {
     const animationStyle = (shouldAnimate: boolean) => ({
         animation: shouldAnimate ? `slideInFromLeft ${delay}s ease-out forwards` : "none",
-        opacity: shouldAnimate ? 1 : 0,
+        opacity: shouldAnimate ? 0 : 1,
         transform: shouldAnimate ? `translateX(-${offset}px)` : "none",
         "@keyframes slideInFromLeft": {
             "0%": {
