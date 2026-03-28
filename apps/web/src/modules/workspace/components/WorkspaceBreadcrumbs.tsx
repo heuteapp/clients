@@ -27,7 +27,7 @@ export function WorkspaceBreadcrumbs() {
             delay={0}
             offset={10}
             items={items}
-            animate={true}
+            animate={animate}
         />
     )
 }

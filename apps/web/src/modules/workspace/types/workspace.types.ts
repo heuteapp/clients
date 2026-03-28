@@ -1,6 +1,6 @@
 import React from "react";
 import { PathSegmentsResult } from "@/src/modules/ui-shared/types/path-segments.types";
-import { BreadcrumbsAnimate, BreadcrumbsItem } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { BreadcrumbsItem } from "@/src/modules/ui-base/types/breadcrumbs.types";
 
 export type WorkspaceMetadata = {
     type: WorkspaceType;
@@ -14,6 +14,6 @@ export type WorkspaceBreadcrumbs = {
     readonly items: BreadcrumbsItem[];
     setItems: React.Dispatch<React.SetStateAction<BreadcrumbsItem[]>>;
 
-    readonly animate: BreadcrumbsAnimate;
-    setAnimate: React.Dispatch<React.SetStateAction<BreadcrumbsAnimate>>;
+    readonly animate: boolean;
+    setAnimate: React.Dispatch<React.SetStateAction<boolean>>;
 }
