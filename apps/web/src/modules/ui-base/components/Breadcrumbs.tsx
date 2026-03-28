@@ -32,24 +32,37 @@ export const Breadcrumbs = ({ items, separator, renderItem, ...props }: Breadcru
             }}
         >
             <MUIBreadcrumbs 
-                separator={separator || <BreadcrumbsSeparator />}
+                separator={
+                    <BreadcrumbsFlexRender>
+                        {separator ? separator : <BreadcrumbsSeparator />}
+                    </BreadcrumbsFlexRender>
+                }
                 {...props}
             >
                 {items.map((item, index) => 
-                    <Box key={item.name}
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}
-                    >
+                    <BreadcrumbsFlexRender key={item.name}>
                         {renderElement(item, index)}
-                    </Box>
+                    </BreadcrumbsFlexRender>
                 )}
             </MUIBreadcrumbs>
         </Box>
     );
 };
+
+export const BreadcrumbsFlexRender = ({ children } : { children: React.ReactNode }) => {
+    return (
+        <Box 
+            sx={{
+                '& > *': {
+                    display: 'flex',
+                    alignItems: 'center',
+                }
+            }}
+        >
+            {children}
+        </Box>
+    )
+}
 
 export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", strokeWidth = 1 }) => {
     return (
