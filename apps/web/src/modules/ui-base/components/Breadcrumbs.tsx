@@ -1,7 +1,8 @@
 import MUIBreadcrumbs from "@mui/material/Breadcrumbs";
-import { BreadcrumbsAnimatedItemAnimation, BreadcrumbsAnimatedItemProps, BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { BreadcrumbsAnimatedItemProps, BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import Box from "@mui/material/Box";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import { useMemo } from "react";
 
 export const Breadcrumbs = ({ items, separator, renderItem, ...props }: BreadcrumbsProps) => {
     const renderElement = (item: BreadcrumbsItem, index?: number) => {
@@ -88,24 +89,24 @@ export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", stroke
 //
 
 export const BreadcrumbsAnimatedItem = ({ children, animation, shouldAnimate = true, index }: BreadcrumbsAnimatedItemProps) => {
-    const getOffset = () => {
-        const offset = animation.offset ?? 10;
-        switch (animation.direction) {
-            case 'left': return { x: -offset, y: 0 };
-            case 'right': return { x: offset, y: 0 };
-            case 'up': return { x: 0, y: -offset };
-            case 'down': return { x: 0, y: offset };
-            default: return { x: -offset, y: 0 };
-        }
-    };
-
-    const getVariants = (): Variants => {
+    const variants = useMemo(() => {
         if (!shouldAnimate || animation.type === 'none') {
             return {
                 hidden: { opacity: 1, x: 0, y: 0 },
                 show: { opacity: 1, x: 0, y: 0 }
             };
         }
+
+        const getOffset = () => {
+            const offset = animation.offset ?? 10;
+            switch (animation.direction) {
+                case 'left': return { x: -offset, y: 0 };
+                case 'right': return { x: offset, y: 0 };
+                case 'up': return { x: 0, y: -offset };
+                case 'down': return { x: 0, y: offset };
+                default: return { x: -offset, y: 0 };
+            }
+        };
 
         const animations = {
             slide: {
@@ -119,9 +120,11 @@ export const BreadcrumbsAnimatedItem = ({ children, animation, shouldAnimate = t
         };
 
         return animations[animation.type] || animations.slide;
-    };
+    }, [shouldAnimate, animation.type, animation.direction, animation.offset]);
 
-    const variants = getVariants();
+    const transition = useMemo(() => ({
+        duration: animation.type !== 'none' ? (animation.duration ?? 0.2) : 0
+    }), [animation.type, animation.duration]);
     
     if (!shouldAnimate || animation.type === 'none') {
         return <div>{children}</div>;
@@ -131,7 +134,7 @@ export const BreadcrumbsAnimatedItem = ({ children, animation, shouldAnimate = t
         <motion.div
             variants={variants}
             custom={index}
-            transition={{ duration: animation.duration ?? 0.2 }}
+            transition={transition}
         >
             {children}
         </motion.div>
