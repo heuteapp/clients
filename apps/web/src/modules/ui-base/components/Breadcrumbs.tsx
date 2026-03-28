@@ -1,8 +1,7 @@
 import MUIBreadcrumbs from "@mui/material/Breadcrumbs";
-import { BreadcrumbsAnimatedItemProps, BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import Box from "@mui/material/Box";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
 
 export const Breadcrumbs = ({ items, separator, renderItem, ...props }: BreadcrumbsProps) => {
     const renderElement = (item: BreadcrumbsItem, index?: number) => {
@@ -85,3 +84,20 @@ export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", stroke
         </Box>
     );
 };
+
+//
+
+export const BreadcrumbsAnimationRender = ({ children, duration, delay } : { children: React.ReactNode; duration: number; delay: number }) => (
+    <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+            duration: duration,
+            delay: (delay),
+            type: "tween",
+            damping: 12,
+        }}
+    >
+        {children}
+    </motion.div>
+)
