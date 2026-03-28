@@ -4,7 +4,7 @@ import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/types/workspace.ty
 
 export const useWorkspaceBreadcrumbs = () : WorkspaceBreadcrumbs => {
     const [items, setItems] = React.useState<BreadcrumbsItem[]>([]);
-    const [animate, setAnimate] = React.useState<BreadcrumbsAnimate>(true);
+    const [animate, setAnimate] = React.useState<BreadcrumbsAnimate>(false);
 
     return { items, setItems, animate, setAnimate };
 }

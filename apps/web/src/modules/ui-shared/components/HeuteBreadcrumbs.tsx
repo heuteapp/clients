@@ -50,7 +50,7 @@ export const HeuteAnimatedBreadcrumbs = ({ delay, offset, animate = true, render
             return animate;
         }
 
-        return index !== undefined && animate?.[index];
+        return index !== undefined ? animate?.[index] : true;
     }
     
     const animationRender = (item: BreadcrumbsItemData, index?: number) => {
