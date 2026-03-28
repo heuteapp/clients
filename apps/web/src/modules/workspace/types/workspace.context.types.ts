@@ -65,3 +65,115 @@ export class WorkspaceDailyboardCache {
 }
 
 export type WorkspaceDailyboardsMap = Map<string, Map<string, WorkspaceDailyboard>>;
+
+//
+
+export class WorkspaceCategoryCache {
+    private map: WorkspaceCategoriesMap;
+    private index: WorkspaceCategoryIndex;
+    
+    constructor() {
+        this.map = new Map();
+        this.index = new Map();
+    }
+    
+    set(path: string, category: WorkspaceCategory) {
+        this.map.set(path, category);
+        
+        // Parent index'e ekle
+        const lastSlash = path.lastIndexOf('/');
+        if (lastSlash !== -1) {
+            const parent = path.substring(0, lastSlash);
+            if (!this.index.has(parent)) {
+                this.index.set(parent, new Set());
+            }
+            this.index.get(parent)!.add(path);
+        }
+    }
+    
+    get(path: string): WorkspaceCategory | undefined {
+        return this.map.get(path);
+    }
+    
+    has(path: string): boolean {
+        return this.map.has(path);
+    }
+    
+    getChildren(parentPath: string): WorkspaceCategory[] {
+        const childrenPaths = this.index.get(parentPath);
+        if (!childrenPaths) return [];
+        
+        const result: WorkspaceCategory[] = [];
+        for (const path of childrenPaths) {
+            const category = this.map.get(path);
+            if (category) result.push(category);
+        }
+        return result;
+    }
+    
+    getAllChildren(parentPath: string): WorkspaceCategory[] {
+        const result: WorkspaceCategory[] = [];
+        const stack = [parentPath];
+        
+        while (stack.length > 0) {
+            const current = stack.pop()!;
+            const children = this.index.get(current);
+            
+            if (children) {
+                for (const childPath of children) {
+                    const category = this.map.get(childPath);
+                    if (category) {
+                        result.push(category);
+                        stack.push(childPath);
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    delete(path: string): boolean {
+        // Children'ları da sil
+        const allChildren = this.getAllChildren(path);
+        for (const child of allChildren) {
+            // Child'ın path'ini bul
+            for (const [p, category] of this.map) {
+                if (category === child) {
+                    this.map.delete(p);
+                    break;
+                }
+            }
+        }
+        
+        const deleted = this.map.delete(path);
+        
+        for (const [parent, children] of this.index) {
+            if (children.delete(path)) {
+                if (children.size === 0) {
+                    this.index.delete(parent);
+                }
+                break;
+            }
+        }
+        
+        return deleted;
+    }
+    
+    getAll(): WorkspaceCategory[] {
+        return Array.from(this.map.values());
+    }
+    
+    getPathParts(path: string): string[] {
+        return path.split('/');
+    }
+    
+    clear() {
+        this.map.clear();
+        this.index.clear();
+    }
+}
+
+export type WorkspaceCategoriesMap = Map<string, WorkspaceCategory>;
+
+export type WorkspaceCategoryIndex = Map<string, Set<string>>;
