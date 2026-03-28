@@ -4,6 +4,7 @@ import { WorkspaceBoardCategoriesBreadcrumb } from "../components/WorkspaceBoard
 import { WorkspaceBoardDateBreadcrumb } from "../components/WorkspaceBoardDateBreadcrumb";
 import { useWorkspaceBoardContext } from "./useWorkspaceBoardContext";
 import { HeuteLink } from "../../ui-shared/components/HeuteLink";
+import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
 
 export const useWorkspaceBoardBreadcrumbs = () => {
     const context = useWorkspaceContext();
@@ -27,7 +28,7 @@ export const useWorkspaceBoardBreadcrumbs = () => {
     //
     
     useEffect(() => {
-        const items = [
+        const items : HeuteAnimatedBreadcrumbsItem[] = [
             {
                 name: "board",
                 href: "/workspace/board",
@@ -35,7 +36,8 @@ export const useWorkspaceBoardBreadcrumbs = () => {
             },
             {
                 name: "categories",
-                render: CategoriesElement
+                render: CategoriesElement,
+                animate: categories.length == 0
             }
         ];
 
@@ -47,12 +49,5 @@ export const useWorkspaceBoardBreadcrumbs = () => {
         }
 
         breadcrumbs.setItems(items);
-        breadcrumbs.setAnimate({
-            0: false,
-            1: true,
-            2: false,
-            3: true
-        });
-
     }, [categories, date]);
 }

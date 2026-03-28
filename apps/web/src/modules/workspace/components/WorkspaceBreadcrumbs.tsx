@@ -1,13 +1,13 @@
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
-import { BreadcrumbsItem } from "../../ui-base/types/breadcrumbs.types";
 import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
+import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
 
 export function WorkspaceBreadcrumbs() {
     const context = useWorkspaceContext();
     const { breadcrumbs } = context.metadata;
 
-    const rootItem : BreadcrumbsItem = {
+    const rootItem : HeuteAnimatedBreadcrumbsItem = {
         name: "Home",
         href: "/",
         render: (item) => (
@@ -15,7 +15,8 @@ export function WorkspaceBreadcrumbs() {
                 iconSize={24} 
                 link={{ href: item.href, linkType: "external" }}
             />
-        )
+        ),
+        animate: false
     }
 
     const items = [rootItem, ...breadcrumbs.items];
