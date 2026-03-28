@@ -1,4 +1,4 @@
-import { Breadcrumbs } from "@/src/modules/ui-base/components/Breadcrumbs"
+import { Breadcrumbs, BreadcrumbsSeparator } from "@/src/modules/ui-base/components/Breadcrumbs"
 import { HeuteAnimatedBreadcrumbsProps, HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/components/heute-breadcrumbs.types"
 import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
@@ -24,30 +24,42 @@ export const HeuteLinkedBreadcrumbs = ({ linkProps, renderItem, ...props }: Heut
     )
 }
 
-export const HeuteAnimatedBreadcrumbs = ({ delay, offset, ...props }: HeuteAnimatedBreadcrumbsProps) => {
-    return (
-        <Box
-            sx={{
-                '& > * > ol > li': {
-                    animation: `slideInFromLeft ${delay}s ease-out forwards`,
-                    opacity: 0,
-                    transform: `translateX(-${offset}px)`,
-                    "@keyframes slideInFromLeft": {
-                        "0%": {
-                            opacity: 0,
-                            transform: `translateX(-${offset}px)`
-                        },
-                        "100%": {
-                            opacity: 1,
-                            transform: "translateX(0)"
-                        }
-                    }
-                },
-            }}
-        >
-            <Breadcrumbs 
-                {...props}
-            />
+export const HeuteAnimatedBreadcrumbs = ({ delay, offset, renderItem, separator, ...props }: HeuteAnimatedBreadcrumbsProps) => {
+    const animationStyle = {
+        animation: `slideInFromLeft ${delay}s ease-out forwards`,
+        opacity: 0,
+        transform: `translateX(-${offset}px)`,
+        "@keyframes slideInFromLeft": {
+            "0%": {
+                opacity: 0,
+                transform: `translateX(-${offset}px)`
+            },
+            "100%": {
+                opacity: 1,
+                transform: "translateX(0)"
+            }
+        }
+    }
+    
+    const animationRender = (item: BreadcrumbsItemData) => {
+        return (
+            <Box sx={animationStyle} >
+                {renderItem ? renderItem(item) : item.name}
+            </Box>
+        )
+    }
+
+    const animationSeparator = (
+        <Box sx={animationStyle} >
+            {separator ? separator : <BreadcrumbsSeparator />}
         </Box>
+    )
+
+    return (
+        <Breadcrumbs 
+            renderItem={animationRender}
+            separator={animationSeparator}
+            {...props}
+        />
     )
 }
