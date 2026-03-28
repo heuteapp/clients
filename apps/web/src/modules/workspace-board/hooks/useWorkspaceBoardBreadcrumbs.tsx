@@ -47,6 +47,12 @@ export const useWorkspaceBoardBreadcrumbs = () => {
         }
 
         breadcrumbs.setItems(items);
+        breadcrumbs.setAnimate({
+            0: false,
+            1: true,
+            2: false,
+            3: true
+        });
 
     }, [categories, date]);
 }
