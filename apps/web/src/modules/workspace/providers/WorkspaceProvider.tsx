@@ -2,11 +2,11 @@
 
 import React from "react";
 import { WorkspaceContext } from "@/src/modules/workspace/contexts/workspace.context";
-import { useWorkspace } from "@/src/modules/workspace/hooks/useWorkspace";
+import { useWorkspaceMetadata } from "@/src/modules/workspace/hooks/useWorkspaceMetadata";
 import { useWorkspaceBreadcrumbs } from "../hooks/useWorspaceBreadcrumbs";
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
-    const metadata = useWorkspace();
+    const metadata = useWorkspaceMetadata();
     const breadcrumbs = useWorkspaceBreadcrumbs();
     
     const contextValue = React.useMemo(() => {
