@@ -2,22 +2,23 @@ import { Breadcrumbs } from "@/src/modules/ui-base/components/Breadcrumbs"
 import { HeuteAnimatedBreadcrumbsProps, HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/components/heute-breadcrumbs.types"
 import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
+import { Box } from "@mui/material"
 
-export const HeuteLinkedBreadcrumbs = ({ linkProps, wrapperElement, ...props }: HeuteLinkedBreadcrumbsProps) => {
-    const linkWrapper = (item: BreadcrumbsItemData, children: React.ReactNode) => {
+export const HeuteLinkedBreadcrumbs = ({ linkProps, renderItem, ...props }: HeuteLinkedBreadcrumbsProps) => {
+    const linkRender = (item: BreadcrumbsItemData) => {
         return (
             <HeuteLink
                 {...linkProps}
                 href={item.href}
             >
-                {wrapperElement ? wrapperElement(item, children) : children}
+                {renderItem ? renderItem(item) : item.name}
             </HeuteLink>
         )
     }
 
     return (
         <Breadcrumbs
-            wrapperElement={linkWrapper}
+            renderItem={linkRender}
             {...props}
         />
     )
@@ -25,11 +26,9 @@ export const HeuteLinkedBreadcrumbs = ({ linkProps, wrapperElement, ...props }: 
 
 export const HeuteAnimatedBreadcrumbs = ({ delay, offset, ...props }: HeuteAnimatedBreadcrumbsProps) => {
     return (
-        <Breadcrumbs 
-            {...props}
+        <Box
             sx={{
-                padding: 1,                    
-                '& > ol > li': {
+                '& > * > ol > li': {
                     animation: `slideInFromLeft ${delay}s ease-out forwards`,
                     opacity: 0,
                     transform: `translateX(-${offset}px)`,
@@ -43,9 +42,12 @@ export const HeuteAnimatedBreadcrumbs = ({ delay, offset, ...props }: HeuteAnima
                             transform: "translateX(0)"
                         }
                     }
-                },                ...props.sx,
-
+                },
             }}
-        />
+        >
+            <Breadcrumbs 
+                {...props}
+            />
+        </Box>
     )
 }

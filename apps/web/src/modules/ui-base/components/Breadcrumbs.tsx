@@ -2,52 +2,36 @@ import MUIBreadcrumbs from "@mui/material/Breadcrumbs";
 import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import Box from "@mui/material/Box";
 
-export const Breadcrumbs = ({ items, separator, wrapperElement, defaultElement, ...props }: BreadcrumbsProps) => {
-    const getElement = (item: BreadcrumbsItem) => {
-        return item.element ? item.element(item) 
-            : defaultElement ? defaultElement(item)
-            : item.name;
+export const Breadcrumbs = ({ items, separator, renderItem, ...props }: BreadcrumbsProps) => {
+    const renderElement = (item: BreadcrumbsItem) => {
+        if (item.render) return item.render(item);
+        if (renderItem) return renderItem(item);
+        return item.name;
     };
-
-    const getWrappedElement = (item: BreadcrumbsItem) => {
-        const element = getElement(item);
-        
-        if (wrapperElement) {
-            return wrapperElement(item, element);
-        }
-
-        return (
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "text.primary",
-                }}
-            >
-                {element}
-            </Box>
-        );
-    };
-
-    const seperator = separator || <BreadcrumbsSeparator />;
 
     return (
-        <MUIBreadcrumbs 
+        <Box
             sx={{
-                li: {
+                '& li': {
                     display: 'flex',
                     alignItems: 'center',
+                    color: 'text.primary',
                 },
             }}
-            {...props}
-            separator={seperator}
         >
-            {items.map((item) => (
-                getWrappedElement(item)
-            ))}
-        </MUIBreadcrumbs>
-    )
-}
+            <MUIBreadcrumbs 
+                separator={separator || <BreadcrumbsSeparator />}
+                {...props}
+            >
+                {items.map((item) => 
+                    <Box key={item.name}>
+                        {renderElement(item)}
+                    </Box>
+                )}
+            </MUIBreadcrumbs>
+        </Box>
+    );
+};
 
 export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", strokeWidth = 1 }) => {
     return (

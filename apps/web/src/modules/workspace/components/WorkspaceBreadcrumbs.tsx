@@ -11,7 +11,7 @@ export function WorkspaceBreadcrumbs() {
     const rootItem : BreadcrumbsItem = {
         name: "Home",
         href: "/",
-        element: (item) => (
+        render: (item) => (
             <HeuteIconOnlyBrand 
                 iconSize={24} 
                 link={{ href: item.href, linkType: "external" }}
@@ -21,7 +21,7 @@ export function WorkspaceBreadcrumbs() {
 
     const items = [rootItem, {
         name: "animated",
-        element: () => <HeuteAnimatedBreadcrumbs items={breadcrumbs.items} delay={0.2} offset={10} />
+        render: () => <HeuteAnimatedBreadcrumbs items={breadcrumbs.items} delay={0.2} offset={10} />
     }];
 
     return (

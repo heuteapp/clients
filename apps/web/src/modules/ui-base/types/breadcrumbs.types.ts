@@ -1,14 +1,13 @@
 import { ComponentProps } from "./components/types";
 
 export interface BreadcrumbsProps extends ComponentProps {
-    items: BreadcrumbsItem[];    
+    items: BreadcrumbsItem[];
     separator?: React.ReactNode;
-    wrapperElement?: (item: BreadcrumbsItemData, children: React.ReactNode) => React.ReactNode;
-    defaultElement?: (item: BreadcrumbsItemData) => React.ReactNode;    
+    renderItem?: (item: BreadcrumbsItemData) => React.ReactNode;
 }
 
 export interface BreadcrumbsItem extends BreadcrumbsItemData {
-    element?: (item: BreadcrumbsItemData) => React.ReactNode;
+    render?: (item: BreadcrumbsItemData) => React.ReactNode;
 }
 
 export interface BreadcrumbsItemData {

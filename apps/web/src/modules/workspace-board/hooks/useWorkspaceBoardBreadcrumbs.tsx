@@ -31,18 +31,18 @@ export const useWorkspaceBoardBreadcrumbs = () => {
             {
                 name: "board",
                 href: "/workspace/board",
-                element: BoardElement
+                render: BoardElement
             },
             {
                 name: "categories",
-                element: CategoriesElement
+                render: CategoriesElement
             }
         ];
 
         if(categories.length > 0) {
             items.push({
                 name: "date",
-                element: DateElement
+                render: DateElement
             });
         }
 
