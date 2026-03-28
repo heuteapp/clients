@@ -14,3 +14,7 @@ export interface BreadcrumbsItemData {
     name: string;
     href?: string;
 }
+
+//
+
+export type BreadcrumbsAnimate = boolean | Record<number, boolean>;
