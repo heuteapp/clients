@@ -24,7 +24,7 @@ export type WorkspaceBoard = {
     date: YYMMDDDate;
 }
 
-export type WorkspaceBoardCategory = {
+export type WorkspaceCategory = {
     name: string;
-    children?: WorkspaceBoardCategory[];
+    children?: WorkspaceCategory[];
 }

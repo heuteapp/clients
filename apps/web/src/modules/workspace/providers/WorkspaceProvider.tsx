@@ -10,7 +10,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     const breadcrumbs = useWorkspaceBreadcrumbs();
     
     const contextValue = React.useMemo(() => {
-        return { metadata, breadcrumbs, boardCache: null! };
+        return { metadata, breadcrumbs, cache: null! };
     }, [metadata]);
 
     return (

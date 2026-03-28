@@ -1,14 +1,14 @@
-import { WorkspaceBoard, WorkspaceBoardCategory, WorkspaceBreadcrumbs, WorkspaceMetadata } from "./workspace.types";
+import { WorkspaceBoard, WorkspaceCategory, WorkspaceBreadcrumbs, WorkspaceMetadata } from "./workspace.types";
 
 export interface WorkspaceContextValue {
     metadata: WorkspaceMetadata;
     breadcrumbs: WorkspaceBreadcrumbs;
-    boardCache: WorkspaceBoardCache;
+    cache: WorkspaceCache;
 }
 
 //
 
-export type WorkspaceBoardCache = {
+export type WorkspaceCache = {
     boards: WorkspaceBoard[];
-    categories: WorkspaceBoardCategory[];
+    categories: WorkspaceCategory[];
 }
