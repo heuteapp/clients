@@ -19,17 +19,16 @@ export function WorkspaceBreadcrumbs() {
         )
     }
 
-    const items = [rootItem, {
-        name: "animated",
-        render: () => <HeuteAnimatedBreadcrumbs items={breadcrumbs.items} delay={0.2} offset={10} />
-    }];
+    const items = [rootItem, ...breadcrumbs.items];
 
     return (
-        <Breadcrumbs 
-            sx={{
-                padding: 1
-            }}
+        <HeuteAnimatedBreadcrumbs 
+            delay={0.2}
+            offset={10}
             items={items}
+            renderItem={() => (
+                <span>test</span>
+    )}
         />
     )
 }

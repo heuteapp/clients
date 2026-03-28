@@ -5,13 +5,17 @@ import { HeuteLink } from "./HeuteLink"
 import { Box } from "@mui/material"
 
 export const HeuteLinkedBreadcrumbs = ({ linkProps, renderItem, ...props }: HeuteLinkedBreadcrumbsProps) => {
-    const linkRender = (item: BreadcrumbsItemData) => {
+    const linkRender = (item: BreadcrumbsItemData, index?: number) => {
+         const content = renderItem 
+            ? renderItem(item, index)
+            : item.name;
+
         return (
             <HeuteLink
                 {...linkProps}
                 href={item.href}
             >
-                {renderItem ? renderItem(item) : item.name}
+                {content}
             </HeuteLink>
         )
     }
@@ -42,9 +46,11 @@ export const HeuteAnimatedBreadcrumbs = ({ delay, offset, renderItem, separator,
     }
     
     const animationRender = (item: BreadcrumbsItemData) => {
+        const content = renderItem ? renderItem(item) : item.name;
+
         return (
             <Box sx={animationStyle} >
-                {renderItem ? renderItem(item) : item.name}
+                {content}
             </Box>
         )
     }
