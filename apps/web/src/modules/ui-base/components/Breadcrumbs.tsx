@@ -87,19 +87,30 @@ export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", stroke
 
 //
 
-export const AnimatedItem = ({ children, animation, shouldAnimate = true, index }: BreadcrumbsAnimatedItemProps) => {
+export const BreadcrumbsAnimatedItem = ({ children, animation, shouldAnimate = true, index }: BreadcrumbsAnimatedItemProps) => {
+    const getOffset = () => {
+        const offset = animation.offset ?? 10;
+        switch (animation.direction) {
+            case 'left': return { x: -offset, y: 0 };
+            case 'right': return { x: offset, y: 0 };
+            case 'up': return { x: 0, y: -offset };
+            case 'down': return { x: 0, y: offset };
+            default: return { x: -offset, y: 0 };
+        }
+    };
+
     const getVariants = (): Variants => {
         if (!shouldAnimate || animation.type === 'none') {
             return {
-                hidden: { opacity: 1, x: 0 },
-                show: { opacity: 1, x: 0 }
+                hidden: { opacity: 1, x: 0, y: 0 },
+                show: { opacity: 1, x: 0, y: 0 }
             };
         }
 
         const animations = {
             slide: {
-                hidden: { opacity: 0, x: -(animation.offset ?? 10) },
-                show: { opacity: 1, x: 0 }
+                hidden: { opacity: 0, ...getOffset() },
+                show: { opacity: 1, x: 0, y: 0 }
             },
             fade: {
                 hidden: { opacity: 0 },
