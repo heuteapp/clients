@@ -66,7 +66,7 @@ export default function WorkspaceLayout({
 
               {isAuthenticated(state) && (
                 <>                
-                  <HeuteLink href="/workspace/board" linkType="external" className="navbar-link" id={"navbar-link-workspace"}>
+                  <HeuteLink href="/workspace/dailyboard" linkType="external" className="navbar-link" id={"navbar-link-workspace"}>
                     Workspace
                   </HeuteLink>
                   <HeuteLink href="/workspace" linkType="external" className="navbar-link" id={"navbar-link-profile"}>

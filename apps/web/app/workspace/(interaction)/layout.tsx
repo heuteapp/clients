@@ -2,7 +2,7 @@
 
 import Box from "@mui/material/Box";
 
-import { WorkspaceBoardProvider } from "@/src/modules/workspace-board/providers/WorkspaceBoardProvider";
+import { WorkspaceDailyboardProvider } from "@/src/modules/workspace-dailyboard/providers/WorkspaceDailyboardProvider";
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
@@ -32,8 +32,8 @@ const LayoutContainer = ({ children }: { children: React.ReactNode }) => {
 
   const getWrappedContent = () => {
     switch (type) {
-      case "board":
-        return <WorkspaceBoardProvider>{content}</WorkspaceBoardProvider>;
+      case "dailyboard":
+        return <WorkspaceDailyboardProvider>{content}</WorkspaceDailyboardProvider>;
       default:
         return content;
     }

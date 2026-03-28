@@ -11,8 +11,8 @@ export const useWorkspaceType = (): WorkspaceType => {
     const workspaceType = segments[0];
     
     switch (workspaceType) {
-        case 'board':
-            return 'board';
+        case 'dailyboard':
+            return 'dailyboard';
         default:
             return 'unknown';
     }

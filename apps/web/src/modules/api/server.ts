@@ -1,13 +1,13 @@
 import axios from "axios";
 import { authApi } from "./endpoints/auth.api";
-import { boardApi } from "./endpoints/workspace/board.api";
+import { dailyboardApi } from "./endpoints/workspace/dailyboard.api";
 import { layoutApi } from "./endpoints/workspace/layout.api";
 import { authService } from "../auth/state/auth.machine";
 
 export const server = {
     auth: authApi,
     workspace: {
-        board: boardApi,
+        dailyboard: dailyboardApi,
         layout: layoutApi
     }
 };

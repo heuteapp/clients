@@ -48,7 +48,7 @@ export const Sidebar = () => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                router.push("/workspace/board" + item.link);
+                router.push("/workspace/dailyboard" + item.link);
               }}
             >
               {item.name}

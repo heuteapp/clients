@@ -8,7 +8,7 @@ export type WorkspaceMetadata = {
     segmentsResult: PathSegmentsResult;
 }
 
-export type WorkspaceType = "root" | "board" | "unknown";
+export type WorkspaceType = "root" | "dailyboard" | "unknown";
 
 export type WorkspaceBreadcrumbs = {
     readonly items: BreadcrumbsItem[];
@@ -20,7 +20,7 @@ export type WorkspaceBreadcrumbs = {
 
 //
 
-export type WorkspaceBoard = {
+export type WorkspaceDailyboard = {
     date: YYMMDDDate;
 }
 
