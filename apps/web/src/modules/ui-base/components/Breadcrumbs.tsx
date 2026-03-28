@@ -3,9 +3,9 @@ import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/b
 import Box from "@mui/material/Box";
 
 export const Breadcrumbs = ({ items, separator, renderItem, ...props }: BreadcrumbsProps) => {
-    const renderElement = (item: BreadcrumbsItem) => {
-        if (item.render) return item.render(item);
-        if (renderItem) return renderItem(item);
+    const renderElement = (item: BreadcrumbsItem, index?: number) => {
+        if (item.render) return item.render(item, index);
+        if (renderItem) return renderItem(item, index);
         return item.name;
     };
 
@@ -23,9 +23,9 @@ export const Breadcrumbs = ({ items, separator, renderItem, ...props }: Breadcru
                 separator={separator || <BreadcrumbsSeparator />}
                 {...props}
             >
-                {items.map((item) => 
+                {items.map((item, index) => 
                     <Box key={item.name}>
-                        {renderElement(item)}
+                        {renderElement(item, index)}
                     </Box>
                 )}
             </MUIBreadcrumbs>
