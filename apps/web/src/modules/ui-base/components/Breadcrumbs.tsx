@@ -86,8 +86,6 @@ export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", stroke
     );
 };
 
-//
-
 export const BreadcrumbsAnimatedItem = ({ children, animation, shouldAnimate = true, index }: BreadcrumbsAnimatedItemProps) => {
     const variants = useMemo(() => {
         if (!shouldAnimate || animation.type === 'none') {
