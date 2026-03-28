@@ -19,19 +19,19 @@ export type WorkspaceBreadcrumbs = {
 
 export type WorkspaceCache = {
     dailyboards: WorkspaceDailyboardCache;
-    categories: WorkspaceCategory[];
+    categories: WorkspaceCategoryCache;
 }
 
 //
 
 export class WorkspaceDailyboardCache {
-    private map: Map<string, Map<string, WorkspaceDailyboard>>;
+    private map: WorkspaceDailyboardsMap;
 
     constructor() {
         this.map = new Map();
     }
 
-    set(category: string, date: string, dailyboard: WorkspaceDailyboard) {
+    set(category: string, date: string, dailyboard: WorkspaceDailyboard): void {
         if (!this.map.has(category)) {
             this.map.set(category, new Map());
         }
@@ -43,10 +43,10 @@ export class WorkspaceDailyboardCache {
     }
 
     has(category: string, date: string): boolean {
-        return this.map.has(category) && this.map.get(category)!.has(date);
+        return this.map.get(category)?.has(date) ?? false;
     }
 
-    delete(category: string, date: string) {
+    delete(category: string, date: string): boolean {
         const categoryMap = this.map.get(category);
         if (!categoryMap) return false;
         
@@ -58,9 +58,33 @@ export class WorkspaceDailyboardCache {
         
         return deleted;
     }
-
-    clear() {
+    
+    // Faydalı metodlar
+    getByCategory(category: string): WorkspaceDailyboard[] {
+        const categoryMap = this.map.get(category);
+        return categoryMap ? Array.from(categoryMap.values()) : [];
+    }
+    
+    getAll(): WorkspaceDailyboard[] {
+        const result: WorkspaceDailyboard[] = [];
+        for (const categoryMap of this.map.values()) {
+            for (const board of categoryMap.values()) {
+                result.push(board);
+            }
+        }
+        return result;
+    }
+    
+    clear(): void {
         this.map.clear();
+    }
+    
+    size(): number {
+        let total = 0;
+        for (const categoryMap of this.map.values()) {
+            total += categoryMap.size;
+        }
+        return total;
     }
 }
 
@@ -77,10 +101,9 @@ export class WorkspaceCategoryCache {
         this.index = new Map();
     }
     
-    set(path: string, category: WorkspaceCategory) {
+    set(path: string, category: WorkspaceCategory): void {
         this.map.set(path, category);
         
-        // Parent index'e ekle
         const lastSlash = path.lastIndexOf('/');
         if (lastSlash !== -1) {
             const parent = path.substring(0, lastSlash);
@@ -134,20 +157,38 @@ export class WorkspaceCategoryCache {
     }
     
     delete(path: string): boolean {
-        // Children'ları da sil
-        const allChildren = this.getAllChildren(path);
-        for (const child of allChildren) {
-            // Child'ın path'ini bul
-            for (const [p, category] of this.map) {
-                if (category === child) {
-                    this.map.delete(p);
-                    break;
+        const allChildrenPaths = this.getAllChildrenPaths(path);
+        for (const childPath of allChildrenPaths) {
+            this.map.delete(childPath);
+            this.removeFromIndex(childPath);
+        }
+        
+        const deleted = this.map.delete(path);
+        this.removeFromIndex(path);
+        
+        return deleted;
+    }
+    
+    private getAllChildrenPaths(parentPath: string): string[] {
+        const result: string[] = [];
+        const stack = [parentPath];
+        
+        while (stack.length > 0) {
+            const current = stack.pop()!;
+            const children = this.index.get(current);
+            
+            if (children) {
+                for (const childPath of children) {
+                    result.push(childPath);
+                    stack.push(childPath);
                 }
             }
         }
         
-        const deleted = this.map.delete(path);
-        
+        return result;
+    }
+    
+    private removeFromIndex(path: string): void {
         for (const [parent, children] of this.index) {
             if (children.delete(path)) {
                 if (children.size === 0) {
@@ -156,8 +197,6 @@ export class WorkspaceCategoryCache {
                 break;
             }
         }
-        
-        return deleted;
     }
     
     getAll(): WorkspaceCategory[] {
@@ -168,12 +207,15 @@ export class WorkspaceCategoryCache {
         return path.split('/');
     }
     
-    clear() {
+    clear(): void {
         this.map.clear();
         this.index.clear();
+    }
+    
+    size(): number {
+        return this.map.size;
     }
 }
 
 export type WorkspaceCategoriesMap = Map<string, WorkspaceCategory>;
-
 export type WorkspaceCategoryIndex = Map<string, Set<string>>;
