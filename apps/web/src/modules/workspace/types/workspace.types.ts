@@ -12,11 +12,16 @@ export type WorkspaceType = "root" | "dailyboard" | "unknown";
 
 //
 
-export type WorkspaceDailyboard = {
+export type WorkspaceDailyboardRef = {
     date: YYMMDDDate;
 }
 
-export type WorkspaceCategory = {
+export type WorkspaceCategoryRef = {
     name: string;
-    children?: WorkspaceCategory[];
 }
+
+export type WorkspaceDailyboardMap = Map<string, Map<string, WorkspaceDailyboardRef>>;
+
+export type WorkspaceCategoryMap = Map<string, WorkspaceCategoryRef>;
+
+export type WorkspaceCategoryIndex = Map<string, Set<string>>;

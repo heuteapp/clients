@@ -1,5 +1,5 @@
 import { WorkspaceCategoriesMap, WorkspaceCategoryIndex } from "../types/workspace.context.types";
-import { WorkspaceCategory } from "../types/workspace.types";
+import { WorkspaceCategoryRef } from "../types/workspace.types";
 
 
 export class WorkspaceCategoryCache {
@@ -11,7 +11,7 @@ export class WorkspaceCategoryCache {
         this.index = new Map();
     }
     
-    set(path: string, category: WorkspaceCategory): void {
+    set(path: string, category: WorkspaceCategoryRef): void {
         this.map.set(path, category);
         
         const lastSlash = path.lastIndexOf('/');
@@ -24,7 +24,7 @@ export class WorkspaceCategoryCache {
         }
     }
     
-    get(path: string): WorkspaceCategory | undefined {
+    get(path: string): WorkspaceCategoryRef | undefined {
         return this.map.get(path);
     }
     
@@ -32,11 +32,11 @@ export class WorkspaceCategoryCache {
         return this.map.has(path);
     }
     
-    getChildren(parentPath: string): WorkspaceCategory[] {
+    getChildren(parentPath: string): WorkspaceCategoryRef[] {
         const childrenPaths = this.index.get(parentPath);
         if (!childrenPaths) return [];
         
-        const result: WorkspaceCategory[] = [];
+        const result: WorkspaceCategoryRef[] = [];
         for (const path of childrenPaths) {
             const category = this.map.get(path);
             if (category) result.push(category);
@@ -44,8 +44,8 @@ export class WorkspaceCategoryCache {
         return result;
     }
     
-    getAllChildren(parentPath: string): WorkspaceCategory[] {
-        const result: WorkspaceCategory[] = [];
+    getAllChildren(parentPath: string): WorkspaceCategoryRef[] {
+        const result: WorkspaceCategoryRef[] = [];
         const stack = [parentPath];
         
         while (stack.length > 0) {
@@ -109,7 +109,7 @@ export class WorkspaceCategoryCache {
         }
     }
     
-    getAll(): WorkspaceCategory[] {
+    getAll(): WorkspaceCategoryRef[] {
         return Array.from(this.map.values());
     }
     

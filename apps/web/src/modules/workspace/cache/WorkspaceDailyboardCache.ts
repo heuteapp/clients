@@ -1,5 +1,5 @@
 import { WorkspaceDailyboardsMap } from "../types/workspace.context.types";
-import { WorkspaceDailyboard } from "../types/workspace.types";
+import { WorkspaceDailyboardRef } from "../types/workspace.types";
 
 export class WorkspaceDailyboardCache {
     private map: WorkspaceDailyboardsMap;
@@ -8,14 +8,14 @@ export class WorkspaceDailyboardCache {
         this.map = new Map();
     }
 
-    set(category: string, date: string, dailyboard: WorkspaceDailyboard): void {
+    set(category: string, date: string, dailyboard: WorkspaceDailyboardRef): void {
         if (!this.map.has(category)) {
             this.map.set(category, new Map());
         }
         this.map.get(category)!.set(date, dailyboard);
     }
 
-    get(category: string, date: string): WorkspaceDailyboard | undefined {
+    get(category: string, date: string): WorkspaceDailyboardRef | undefined {
         return this.map.get(category)?.get(date);
     }
 
@@ -37,13 +37,13 @@ export class WorkspaceDailyboardCache {
     }
     
     // Faydalı metodlar
-    getByCategory(category: string): WorkspaceDailyboard[] {
+    getByCategory(category: string): WorkspaceDailyboardRef[] {
         const categoryMap = this.map.get(category);
         return categoryMap ? Array.from(categoryMap.values()) : [];
     }
     
-    getAll(): WorkspaceDailyboard[] {
-        const result: WorkspaceDailyboard[] = [];
+    getAll(): WorkspaceDailyboardRef[] {
+        const result: WorkspaceDailyboardRef[] = [];
         for (const categoryMap of this.map.values()) {
             for (const board of categoryMap.values()) {
                 result.push(board);

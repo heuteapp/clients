@@ -1,5 +1,5 @@
 import { BreadcrumbsItem } from "@/src/modules/ui-base/types/breadcrumbs.types";
-import { WorkspaceDailyboard, WorkspaceCategory, WorkspaceMetadata } from "./workspace.types";
+import { WorkspaceDailyboardRef, WorkspaceCategoryRef, WorkspaceMetadata } from "./workspace.types";
 import { WorkspaceDailyboardCache } from "../cache/WorkspaceDailyboardCache";
 import { WorkspaceCategoryCache } from "../cache/WorkspaceCategoryCache";
 
@@ -26,8 +26,8 @@ export type WorkspaceCache = {
 
 //
 
-export type WorkspaceDailyboardsMap = Map<string, Map<string, WorkspaceDailyboard>>;
+export type WorkspaceDailyboardsMap = Map<string, Map<string, WorkspaceDailyboardRef>>;
 
-export type WorkspaceCategoriesMap = Map<string, WorkspaceCategory>;
+export type WorkspaceCategoriesMap = Map<string, WorkspaceCategoryRef>;
 
 export type WorkspaceCategoryIndex = Map<string, Set<string>>;
