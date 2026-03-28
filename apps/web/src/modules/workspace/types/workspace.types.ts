@@ -1,6 +1,7 @@
 import React from "react";
 import { PathSegmentsResult } from "@/src/modules/ui-shared/types/path-segments.types";
 import { BreadcrumbsItem } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { YYMMDDDate } from "../../shared/types/date.types";
 
 export type WorkspaceMetadata = {
     type: WorkspaceType;
@@ -16,4 +17,15 @@ export type WorkspaceBreadcrumbs = {
 
     readonly animate: boolean;
     setAnimate: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+//
+
+export type WorkspaceBoard = {
+    date: YYMMDDDate;
+}
+
+export type WorkspaceBoardCategory = {
+    name: string;
+    children?: WorkspaceBoardCategory[];
 }
