@@ -17,8 +17,6 @@ export interface BreadcrumbsItemData {
 
 //
 
-export type BreadcrumbsAnimate = boolean | Record<number, boolean>;
-
 export type BreadcrumbsAnimatedItemProps = {
     children: React.ReactNode;
     animation: BreadcrumbsAnimatedItemAnimation;

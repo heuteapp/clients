@@ -1,6 +1,6 @@
 import { Breadcrumbs, BreadcrumbsSeparator } from "@/src/modules/ui-base/components/Breadcrumbs"
 import { HeuteAnimatedBreadcrumbsProps, HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/components/heute-breadcrumbs.types"
-import { BreadcrumbsAnimate, BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
+import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
 import { Box } from "@mui/material"
 

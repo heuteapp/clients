@@ -1,4 +1,4 @@
-import { BreadcrumbsAnimate, BreadcrumbsItem, BreadcrumbsItemData, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { BreadcrumbsItem, BreadcrumbsItemData, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import { ComponentProps } from "@/src/modules/ui-base/types/components/types";
 
 export interface HeuteLinkedBreadcrumbsProps extends BreadcrumbsProps {
@@ -11,7 +11,7 @@ export interface HeuteAnimatedBreadcrumbsProps extends BreadcrumbsProps {
     
     delay: number;
     offset: number;
-    animate?: BreadcrumbsAnimate;
+    animate?: boolean;
 }
 
 export interface HeuteAnimatedBreadcrumbsItem extends HeuteAnimatedBreadcrumbsItemData {
@@ -19,5 +19,5 @@ export interface HeuteAnimatedBreadcrumbsItem extends HeuteAnimatedBreadcrumbsIt
 }
 
 export interface HeuteAnimatedBreadcrumbsItemData extends BreadcrumbsItemData {
-
+    animate?: boolean;
 }
