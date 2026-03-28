@@ -6,7 +6,7 @@ export interface HeuteLinkedBreadcrumbsProps extends BreadcrumbsProps {
 }
 
 export interface HeuteAnimatedBreadcrumbsProps extends BreadcrumbsProps {
-    items: BreadcrumbsItem[];
+    items: HeuteAnimatedBreadcrumbsItem[];
     renderItem?: (item: HeuteAnimatedBreadcrumbsItem, index?: number) => React.ReactNode;
     
     delay: number;
@@ -14,7 +14,7 @@ export interface HeuteAnimatedBreadcrumbsProps extends BreadcrumbsProps {
     animate?: boolean;
 }
 
-export interface HeuteAnimatedBreadcrumbsItem extends HeuteAnimatedBreadcrumbsItemData {
+export interface HeuteAnimatedBreadcrumbsItem extends BreadcrumbsItem, HeuteAnimatedBreadcrumbsItemData {
     render?: (item: HeuteAnimatedBreadcrumbsItemData, index?: number) => React.ReactNode;
 }
 
