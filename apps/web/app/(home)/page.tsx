@@ -72,7 +72,7 @@ const HomePage = () => {
         >
           <Button variant="contained" color="primary" onClick={() => {
             if(isAuthenticated(state)) {
-              window.location.href = "/workspace/board";
+              window.location.href = "/workspace/dailyboard";
             }
             else if(isUnauthenticated(state)) {
               window.location.href = "/workspace/sign-in";

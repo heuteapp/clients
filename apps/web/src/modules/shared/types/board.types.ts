@@ -1,6 +1,6 @@
 import { YYMMDDDate } from "./date.types";
 
-export interface BoardPathConfig {
+export interface DailyboardPathConfig {
     /**
      * Minimum number of required categories.
      * The path must have at least this many categories to be valid.
@@ -26,9 +26,9 @@ export interface BoardPathConfig {
     requireDate?: boolean;
 }
 
-export interface BoardPath {
+export interface DailyboardPath {
     /**
-     * Array of category strings extracted from the board path.
+     * Array of category strings extracted from the dailyboard path.
      * 
      * @example
      * // For the path "school/grade2/math/250315"
@@ -37,7 +37,7 @@ export interface BoardPath {
     categories: string[];
 
     /**
-     * Optional date extracted from the board path.
+     * Optional date extracted from the dailyboard path.
      * If the last segment of the path is a valid YYMMDD date, it will be parsed and included here.
      * Otherwise, this will be null.
      */
@@ -45,11 +45,11 @@ export interface BoardPath {
 }
 
 /**
- * Validation result for board path validation.
+ * Validation result for dailyboard path validation.
  */
-export interface BoardPathValidationResult {
+export interface DailyboardPathValidationResult {
     /**
-     * Indicates whether the board path is valid according to the provided configuration.
+     * Indicates whether the dailyboard path is valid according to the provided configuration.
      */
     isValid: boolean;
 

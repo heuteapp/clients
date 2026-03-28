@@ -1,4 +1,4 @@
-import { WorkspaceBoard, WorkspaceCategory, WorkspaceBreadcrumbs, WorkspaceMetadata } from "./workspace.types";
+import { WorkspaceDailyboard, WorkspaceCategory, WorkspaceBreadcrumbs, WorkspaceMetadata } from "./workspace.types";
 
 export interface WorkspaceContextValue {
     metadata: WorkspaceMetadata;
@@ -9,6 +9,6 @@ export interface WorkspaceContextValue {
 //
 
 export type WorkspaceCache = {
-    boards: WorkspaceBoard[];
+    dailyboards: WorkspaceDailyboard[];
     categories: WorkspaceCategory[];
 }

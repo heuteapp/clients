@@ -1,12 +1,12 @@
 import { LayoutResponse } from "./layout.response";
 
-export interface BoardResponse {
+export interface DailyboardResponse {
     date: string;
     layout: LayoutResponse;
-    cards: BoardCardResponse[];
+    cards: DailyboardCardResponse[];
 }
 
-export interface BoardCardResponse {
+export interface DailyboardCardResponse {
     name: string;
     title: string | null;
     sectionName: string | null;

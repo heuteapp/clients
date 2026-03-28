@@ -1,13 +1,13 @@
-import { BoardPath, BoardPathConfig, BoardPathValidationResult } from "@/src/modules/shared/types/board.types";
+import { DailyboardPath, DailyboardPathConfig, DailyboardPathValidationResult } from "@/src/modules/shared/types/dailyboard.types";
 import { parseYYMMDD, YYMMDD_PATTERN } from "./date.utils";
 
 /**
- * Extracts categories and date from a board URL path
+ * Extracts categories and date from a dailyboard URL path
  * 
  * @param relativePath - The relative path (e.g., "history/250315" or "projects/active")
- * @returns BoardPath object with categories and optional date
+ * @returns DailyboardPath object with categories and optional date
  */
-export function parseBoardPath(relativePath: string): BoardPath | null {
+export function parseDailyboardPath(relativePath: string): DailyboardPath | null {
     // Handle empty or undefined input
     if (!relativePath) {
         return null;
@@ -40,7 +40,7 @@ export function parseBoardPath(relativePath: string): BoardPath | null {
  * @returns Relative path string (e.g., "history/240101")
  * @throws {Error} If any category contains numbers
  */
-export function buildBoardPath(categories: string[], date?: string | null): string {
+export function buildDailyboardPath(categories: string[], date?: string | null): string {
     const parts = [...categories];
     
     if (date) {
@@ -53,29 +53,29 @@ export function buildBoardPath(categories: string[], date?: string | null): stri
 /**
  * Checks if a path has a date segment
  */
-export function hasBoardDate(relativePath: string): boolean {
-    const boardPath = parseBoardPath(relativePath);
-    return boardPath?.date !== null && boardPath?.date !== undefined;
+export function hasDailyboardDate(relativePath: string): boolean {
+    const dailyboardPath = parseDailyboardPath(relativePath);
+    return dailyboardPath?.date !== null && dailyboardPath?.date !== undefined;
 }
 
 /**
- * Gets the categories from a board path
+ * Gets the categories from a dailyboard path
  */
-export function getBoardCategories(relativePath: string): string[] {
-    const boardPath = parseBoardPath(relativePath);
-    return boardPath?.categories ?? [];
+export function getDailyboardCategories(relativePath: string): string[] {
+    const dailyboardPath = parseDailyboardPath(relativePath);
+    return dailyboardPath?.categories ?? [];
 }
 
 /**
- * Validates a board path structure and returns validation results with all errors.
+ * Validates a dailyboard path structure and returns validation results with all errors.
  * 
- * This function performs comprehensive validation on a board path including:
+ * This function performs comprehensive validation on a dailyboard path including:
  * - Path structure validity
  * - Category naming conventions (number patterns)
  * - Category count constraints
  * - Date format validation for the last segment
  * 
- * @param relativePath - The board path string to validate
+ * @param relativePath - The dailyboard path string to validate
  * @param config - Configuration options for validation
  * @param config.minCategories - Minimum number of categories required (default: 0)
  * @param config.maxCategories - Maximum number of categories allowed (default: Infinity)
@@ -87,7 +87,7 @@ export function getBoardCategories(relativePath: string): string[] {
  * 
  * @example
  * // Valid path with categories and date
- * const result = validateBoardPath('projects/frontend/250331', { 
+ * const result = validateDailyboardPath('projects/frontend/250331', { 
  *   minCategories: 2, 
  *   requireDate: true 
  * });
@@ -95,7 +95,7 @@ export function getBoardCategories(relativePath: string): string[] {
  * 
  * @example
  * // Invalid path with multiple errors
- * const result = validateBoardPath('abc123/def456/25033', { 
+ * const result = validateDailyboardPath('abc123/def456/25033', { 
  *   minCategories: 2,
  *   requireDate: true 
  * });
@@ -116,25 +116,25 @@ export function getBoardCategories(relativePath: string): string[] {
  * // - Letters only: "history" ✅
  * // - Letters with special chars: "history_ww2" ✅
  */
-export function validateBoardPath(
-    boardPath: BoardPath | null,
-    config: BoardPathConfig = {}
-): BoardPathValidationResult {
+export function validateDailyboardPath(
+    dailyboardPath: DailyboardPath | null,
+    config: DailyboardPathConfig = {}
+): DailyboardPathValidationResult {
     const errors: string[] = [];
     const { minCategories = 0, maxCategories = Infinity, requireDate = false } = config;
     
-    const categoryCount = boardPath?.categories.length ?? 0;
+    const categoryCount = dailyboardPath?.categories.length ?? 0;
     
     // Check for empty/invalid path
-    if (!boardPath) {
-        errors.push('Board path is empty or invalid');
+    if (!dailyboardPath) {
+        errors.push('Dailyboard path is empty or invalid');
         return { isValid: false, errors };
     }
     
    // Check categories
-    if (boardPath.categories) {
-        boardPath.categories.forEach((category, index) => {
-            const isLastSegment = index === boardPath.categories.length - 1;
+    if (dailyboardPath.categories) {
+        dailyboardPath.categories.forEach((category, index) => {
+            const isLastSegment = index === dailyboardPath.categories.length - 1;
             
             // Check if category contains numbers
             if (/\d/.test(category)) {
@@ -161,16 +161,16 @@ export function validateBoardPath(
     
     // Check category count
     if (categoryCount < minCategories) {
-        errors.push(`Board path must have at least ${minCategories} category(s), but found ${categoryCount}`);
+        errors.push(`Dailyboard path must have at least ${minCategories} category(s), but found ${categoryCount}`);
     }
     
     if (categoryCount > maxCategories) {
-        errors.push(`Board path must have at most ${maxCategories} category(s), but found ${categoryCount}`);
+        errors.push(`Dailyboard path must have at most ${maxCategories} category(s), but found ${categoryCount}`);
     }
     
     // Check date requirement
-    if (requireDate && (!boardPath?.date)) {
-        errors.push('Board path must end with a valid date (YYMMDD format)');
+    if (requireDate && (!dailyboardPath?.date)) {
+        errors.push('Dailyboard path must end with a valid date (YYMMDD format)');
     }
     
     return {
