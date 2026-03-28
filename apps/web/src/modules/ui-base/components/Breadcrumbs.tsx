@@ -53,10 +53,10 @@ export const BreadcrumbsFlexRender = ({ children } : { children: React.ReactNode
     return (
         <Box 
             sx={{
-                '& > *': {
+                div: {
                     display: 'flex',
                     alignItems: 'center',
-                }
+                },
             }}
         >
             {children}
