@@ -19,12 +19,14 @@ export function WorkspaceBreadcrumbs() {
     }
 
     const items = [rootItem, ...breadcrumbs.items];
+    const animate = breadcrumbs.animate;
 
     return (
         <HeuteAnimatedBreadcrumbs 
             delay={0.2}
             offset={10}
             items={items}
+            animate={animate}
         />
     )
 }
