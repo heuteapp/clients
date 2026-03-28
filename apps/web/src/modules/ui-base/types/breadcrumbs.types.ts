@@ -18,3 +18,17 @@ export interface BreadcrumbsItemData {
 //
 
 export type BreadcrumbsAnimate = boolean | Record<number, boolean>;
+
+export type BreadcrumbsAnimatedItemProps = {
+    children: React.ReactNode;
+    animation: BreadcrumbsAnimatedItemAnimation;
+    shouldAnimate?: boolean;
+    index?: number;
+}
+
+export type BreadcrumbsAnimatedItemAnimation = {
+    type: 'slide' | 'fade' | 'none';
+    direction?: 'left' | 'right' | 'up' | 'down';
+    duration?: number;
+    offset?: number;
+};

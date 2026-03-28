@@ -1,6 +1,7 @@
 import MUIBreadcrumbs from "@mui/material/Breadcrumbs";
-import { BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
+import { BreadcrumbsAnimatedItemAnimation, BreadcrumbsAnimatedItemProps, BreadcrumbsItem, BreadcrumbsProps } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import Box from "@mui/material/Box";
+import { motion, Variants } from "framer-motion";
 
 export const Breadcrumbs = ({ items, separator, renderItem, ...props }: BreadcrumbsProps) => {
     const renderElement = (item: BreadcrumbsItem, index?: number) => {
@@ -81,5 +82,47 @@ export const BreadcrumbsSeparator = ({ size = 20, color = "currentColor", stroke
         >
             <path d="M16 3.549L7.12 20.600" />
         </Box>
+    );
+};
+
+//
+
+export const AnimatedItem = ({ children, animation, shouldAnimate = true, index }: BreadcrumbsAnimatedItemProps) => {
+    const getVariants = (): Variants => {
+        if (!shouldAnimate || animation.type === 'none') {
+            return {
+                hidden: { opacity: 1, x: 0 },
+                show: { opacity: 1, x: 0 }
+            };
+        }
+
+        const animations = {
+            slide: {
+                hidden: { opacity: 0, x: -(animation.offset ?? 10) },
+                show: { opacity: 1, x: 0 }
+            },
+            fade: {
+                hidden: { opacity: 0 },
+                show: { opacity: 1 }
+            }
+        };
+
+        return animations[animation.type] || animations.slide;
+    };
+
+    const variants = getVariants();
+    
+    if (!shouldAnimate || animation.type === 'none') {
+        return <div>{children}</div>;
+    }
+
+    return (
+        <motion.div
+            variants={variants}
+            custom={index}
+            transition={{ duration: animation.duration ?? 0.2 }}
+        >
+            {children}
+        </motion.div>
     );
 };
