@@ -10,14 +10,6 @@ export type WorkspaceMetadata = {
 
 export type WorkspaceType = "root" | "dailyboard" | "unknown";
 
-export type WorkspaceBreadcrumbs = {
-    readonly items: BreadcrumbsItem[];
-    setItems: React.Dispatch<React.SetStateAction<BreadcrumbsItem[]>>;
-
-    readonly animate: boolean;
-    setAnimate: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 //
 
 export type WorkspaceDailyboard = {
