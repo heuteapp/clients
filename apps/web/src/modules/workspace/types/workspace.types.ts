@@ -6,7 +6,6 @@ import { YYMMDDDate } from "../../shared/types/date.types";
 export type WorkspaceMetadata = {
     type: WorkspaceType;
     segmentsResult: PathSegmentsResult;
-    breadcrumbs: WorkspaceBreadcrumbs;
 }
 
 export type WorkspaceType = "root" | "board" | "unknown";

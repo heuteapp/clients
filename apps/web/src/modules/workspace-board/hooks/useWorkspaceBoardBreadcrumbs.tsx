@@ -7,8 +7,7 @@ import { HeuteLink } from "../../ui-shared/components/HeuteLink";
 import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
 
 export const useWorkspaceBoardBreadcrumbs = () => {
-    const context = useWorkspaceContext();
-    const { breadcrumbs } = context.metadata;
+    const { breadcrumbs } = useWorkspaceContext();
 
     const boardContext = useWorkspaceBoardContext();
     const { categories, date, isDateToday } = boardContext.metadata;

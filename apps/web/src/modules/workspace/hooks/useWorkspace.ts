@@ -6,11 +6,9 @@ import { useWorkspaceBreadcrumbs } from "./useWorspaceBreadcrumbs";
 export const useWorkspace = () : WorkspaceMetadata => {
     const type = useWorkspaceType();
     const segmentsResult = useWorkspaceSegments();
-    const breadcrumbs = useWorkspaceBreadcrumbs();
 
     return {
         type,
         segmentsResult,
-        breadcrumbs
     }
 }

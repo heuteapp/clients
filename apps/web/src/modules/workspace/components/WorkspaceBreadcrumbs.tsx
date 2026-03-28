@@ -4,8 +4,7 @@ import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadc
 import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
 
 export function WorkspaceBreadcrumbs() {
-    const context = useWorkspaceContext();
-    const { breadcrumbs } = context.metadata;
+    const { breadcrumbs } = useWorkspaceContext();
 
     const rootItem : HeuteAnimatedBreadcrumbsItem = {
         name: "Home",
