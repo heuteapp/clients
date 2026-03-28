@@ -15,17 +15,15 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     }, [metadata]);
 
     return (
-        <>
-            <LayoutProvider>
-                <DailyboardProvider>
-                    <WorkspaceDailyboardContext.Provider value={contextValue}>
-                        <ProviderContent>
-                            {children}
-                        </ProviderContent>
-                    </WorkspaceDailyboardContext.Provider>
-                </DailyboardProvider>
-            </LayoutProvider>
-        </>
+        <LayoutProvider>
+            <DailyboardProvider>
+                <WorkspaceDailyboardContext.Provider value={contextValue}>
+                    <ProviderContent>
+                        {children}
+                    </ProviderContent>
+                </WorkspaceDailyboardContext.Provider>
+            </DailyboardProvider>
+        </LayoutProvider>
     )
 }
 
