@@ -1,6 +1,5 @@
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
 import { BreadcrumbsItem } from "../../ui-base/types/breadcrumbs.types";
-import { Breadcrumbs } from "../../ui-base/components/Breadcrumbs";
 import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 
@@ -26,9 +25,6 @@ export function WorkspaceBreadcrumbs() {
             delay={0.2}
             offset={10}
             items={items}
-            renderItem={() => (
-                <span>test</span>
-    )}
         />
     )
 }

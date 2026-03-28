@@ -4,8 +4,20 @@ import Box from "@mui/material/Box";
 
 export const Breadcrumbs = ({ items, separator, renderItem, ...props }: BreadcrumbsProps) => {
     const renderElement = (item: BreadcrumbsItem, index?: number) => {
-        if (item.render) return item.render(item, index);
-        if (renderItem) return renderItem(item, index);
+        if (item.render) {
+            const innerContent = item.render(item, index);
+            
+            if (renderItem) {
+                return renderItem({ ...item, name: innerContent as string }, index);
+            }
+            
+            return innerContent;
+        }
+        
+        if (renderItem) {
+            return renderItem(item, index);
+        }
+        
         return item.name;
     };
 
@@ -24,7 +36,13 @@ export const Breadcrumbs = ({ items, separator, renderItem, ...props }: Breadcru
                 {...props}
             >
                 {items.map((item, index) => 
-                    <Box key={item.name}>
+                    <Box key={item.name}
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
+                    >
                         {renderElement(item, index)}
                     </Box>
                 )}
