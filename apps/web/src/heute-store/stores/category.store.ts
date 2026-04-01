@@ -1,149 +1,200 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
-import { CategoryState, StoredCategory } from "@/src/heute-store/types/category.types";
+import { CategoryState, CategoryOwnerData, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
     immer((set, get) => ({
-        owners: {},
+        me: null,
+        users: {},
+        userOrder: [],
 
-        loadOwner: (owner: string, hierarchy: CategoryHierarchy) => {
+        loadMe: (hierarchy: CategoryHierarchy) => {
+            set({ me: flattenToOwnerData('me', hierarchy) });
+        },
+
+        loadUser: (user: string, hierarchy: CategoryHierarchy) => {
             set((state) => {
-                const byId: Record<string, StoredCategory> = {};
-                const byParentId: Record<string, string[]> = {};
-                const rootIds: string[] = [];
+                state.userOrder = state.userOrder.filter(u => u !== user);
+                state.userOrder.push(user);
                 
-                let idCounter = 0;
-                
-                const flatten = (node: CategoryTree, parentId: string | null) => {
-                    const id = `${owner}_${idCounter++}`;
-                    
-                    byId[id] = {
-                        id,
-                        name: node.name,
-                        parentId,
-                    };
-                    
-                    if (parentId === null) {
-                        rootIds.push(id);
-                    } else {
-                        if (!byParentId[parentId]) byParentId[parentId] = [];
-                        byParentId[parentId].push(id);
+                if (state.userOrder.length > 20) {
+                    const oldestUser = state.userOrder.shift();
+                    if (oldestUser) {
+                        delete state.users[oldestUser];
                     }
-                    
-                    node.children?.forEach(child => flatten(child, id));
-                };
-                
-                hierarchy.roots.forEach(root => flatten(root, null));
-                
-                state.owners[owner] = { byId, byParentId, rootIds };
-            });
-        },
-
-        hasOwner: (owner: string) => {
-            return !!get().owners[owner];
-        },
-
-        clearOwner: (owner: string) => {
-            set((state) => {
-                delete state.owners[owner];
-            });
-        },
-
-        //
-
-        getChain: (owner: string, path: string) => {
-            const ownerData = get().owners[owner];
-            if (!ownerData) return null;
-
-            const names = path.split('/');
-            
-            const buildChain = (currentId: string | null, index: number): CategoryChain | null => {
-                if (index >= names.length) return null;
-                
-                const candidates = currentId === null 
-                    ? ownerData.rootIds 
-                    : (ownerData.byParentId[currentId] || []);
-                
-                const matchedId = candidates.find(id => 
-                    ownerData.byId[id].name === names[index]
-                );
-                
-                if (!matchedId) return null;
-                
-                const category = ownerData.byId[matchedId];
-                const child = buildChain(matchedId, index + 1);
-                
-                return {
-                    name: category.name,
-                    ...(child && { child })
-                };
-            };
-            
-            return buildChain(null, 0);
-        },
-
-        getTree: (owner: string, path: string) => {
-            const ownerData = get().owners[owner];
-            if (!ownerData) return null;
-
-            const names = path.split('/');
-            
-            const findNode = (currentId: string | null, index: number): CategoryTree | null => {
-                if (index >= names.length) return null;
-                
-                const candidates = currentId === null 
-                    ? ownerData.rootIds 
-                    : (ownerData.byParentId[currentId] || []);
-                
-                const matchedId = candidates.find(id => 
-                    ownerData.byId[id].name === names[index]
-                );
-                
-                if (!matchedId) return null;
-                
-                const category = ownerData.byId[matchedId];
-                
-                if (index === names.length - 1) {
-                    const buildFullTree = (id: string): CategoryTree => {
-                        return {
-                            name: ownerData.byId[id].name,
-                            children: (ownerData.byParentId[id] || []).map(buildFullTree),
-                        };
-                    };
-                    return buildFullTree(matchedId);
                 }
                 
-                // Değilse, devam et
-                const child = findNode(matchedId, index + 1);
-                if (!child) return null;
-                
-                return {
-                    name: category.name,
-                    children: [child],
-                };
-            };
-            
-            return findNode(null, 0);
+                state.users[user] = flattenToOwnerData(user, hierarchy);
+            });
         },
 
-        getHierarchy: (owner: string) => {
-            const ownerData = get().owners[owner];
-            if (!ownerData) return null;
+        getMeChain: (path: string) => {
+            const me = get().me;
+            if (!me) return null;
+            return getChainFromData(me, path);
+        },
 
-            const { byId, byParentId, rootIds } = ownerData;
+        getMeTree: (path: string) => {
+            const me = get().me;
+            if (!me) return null;
+            return getTreeFromData(me, path);
+        },
 
-            const buildTree = (id: string): CategoryTree => {
-                const category = byId[id];
-                return {
-                    name: category.name,
-                    children: (byParentId[id] || []).map(buildTree),
-                };
-            };
+        getMeHierarchy: () => {
+            const me = get().me;
+            if (!me) return null;
+            return getHierarchyFromData(me);
+        },
 
-            return {
-                roots: rootIds.map(buildTree),
-            };
+        getUserChain: (user: string, path: string) => {
+            const userData = get().users[user];
+            if (!userData) return null;
+            return getChainFromData(userData, path);
+        },
+
+        getUserTree: (user: string, path: string) => {
+            const userData = get().users[user];
+            if (!userData) return null;
+            return getTreeFromData(userData, path);
+        },
+
+        getUserHierarchy: (user: string) => {
+            const userData = get().users[user];
+            if (!userData) return null;
+            return getHierarchyFromData(userData);
+        },
+
+        hasUser: (user: string) => {
+            return !!get().users[user];
+        },
+
+        clearMe: () => {
+            set({ me: null });
+        },
+
+        clearUser: (user: string) => {
+            set((state) => {
+                delete state.users[user];
+                state.userOrder = state.userOrder.filter(u => u !== user);
+            });
         },
     }))
 );
+
+//
+
+const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): CategoryOwnerData => {
+    const byId: Record<string, StoredCategory> = {};
+    const byParentId: Record<string, string[]> = {};
+    const rootIds: string[] = [];
+    
+    let idCounter = 0;
+    
+    const flatten = (node: CategoryTree, parentId: string | null) => {
+        const id = `${owner}_${idCounter++}`;
+        
+        byId[id] = {
+            id,
+            name: node.name,
+            parentId,
+        };
+        
+        if (parentId === null) {
+            rootIds.push(id);
+        } else {
+            if (!byParentId[parentId]) byParentId[parentId] = [];
+            byParentId[parentId].push(id);
+        }
+        
+        node.children?.forEach(child => flatten(child, id));
+    };
+    
+    hierarchy.roots.forEach(root => flatten(root, null));
+    
+    return { byId, byParentId, rootIds };
+};
+
+const getChainFromData = (data: CategoryOwnerData, path: string): CategoryChain | null => {
+    const names = path.split('/');
+    
+    const buildChain = (currentId: string | null, index: number): CategoryChain | null => {
+        if (index >= names.length) return null;
+        
+        const candidates = currentId === null 
+            ? data.rootIds 
+            : (data.byParentId[currentId] || []);
+        
+        const matchedId = candidates.find(id => 
+            data.byId[id].name === names[index]
+        );
+        
+        if (!matchedId) return null;
+        
+        const category = data.byId[matchedId];
+        const child = buildChain(matchedId, index + 1);
+        
+        return {
+            name: category.name,
+            ...(child && { child })
+        };
+    };
+    
+    return buildChain(null, 0);
+};
+
+const getTreeFromData = (data: CategoryOwnerData, path: string): CategoryTree | null => {
+    const names = path.split('/');
+    
+    const findNode = (currentId: string | null, index: number): CategoryTree | null => {
+        if (index >= names.length) return null;
+        
+        const candidates = currentId === null 
+            ? data.rootIds 
+            : (data.byParentId[currentId] || []);
+        
+        const matchedId = candidates.find(id => 
+            data.byId[id].name === names[index]
+        );
+        
+        if (!matchedId) return null;
+        
+        const category = data.byId[matchedId];
+        
+        if (index === names.length - 1) {
+            const buildFullTree = (id: string): CategoryTree => {
+                return {
+                    name: data.byId[id].name,
+                    children: (data.byParentId[id] || []).map(buildFullTree),
+                };
+            };
+            return buildFullTree(matchedId);
+        }
+        
+        const child = findNode(matchedId, index + 1);
+        if (!child) return null;
+        
+        return {
+            name: category.name,
+            children: [child],
+        };
+    };
+    
+    return findNode(null, 0);
+};
+
+const getHierarchyFromData = (data: CategoryOwnerData): CategoryHierarchy => {
+    const { byId, byParentId, rootIds } = data;
+    
+    const buildTree = (id: string): CategoryTree => {
+        const category = byId[id];
+        return {
+            name: category.name,
+            children: (byParentId[id] || []).map(buildTree),
+        };
+    };
+    
+    return {
+        roots: rootIds.map(buildTree),
+    };
+};

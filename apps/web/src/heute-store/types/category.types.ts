@@ -3,21 +3,33 @@ import { Category, CategoryChain, CategoryTree, CategoryHierarchy } from "@/src/
 //
 
 export interface CategoryState {
-    owners: {   
-        [owner: string]: {
-            byId: Record<string, StoredCategory>;
-            byParentId: Record<string, string[]>;
-            rootIds: string[];
-        }
+    me: CategoryOwnerData | null;
+    users: {   
+        [user: string]: CategoryOwnerData
     };
+    userOrder: string[];
 
-    loadOwner: (owner: string, hierarchy: CategoryHierarchy) => void;    
-    hasOwner: (owner: string) => boolean;
-    clearOwner: (owner: string) => void;
+    loadMe: (hierarchy: CategoryHierarchy) => void;
+    loadUser: (user: string, hierarchy: CategoryHierarchy) => void;   
 
-    getChain: (owner: string, path: string) => CategoryChain | null;
-    getTree: (owner: string, path: string) => CategoryTree | null;
-    getHierarchy: (owner: string) => CategoryHierarchy | null;
+    getMeChain: (path: string) => CategoryChain | null;
+    getMeTree: (path: string) => CategoryTree | null;
+    getMeHierarchy: () => CategoryHierarchy | null;
+
+    getUserChain: (user: string, path: string) => CategoryChain | null;
+    getUserTree: (user: string, path: string) => CategoryTree | null;
+    getUserHierarchy: (user: string) => CategoryHierarchy | null;
+
+    hasUser: (user: string) => boolean;
+
+    clearMe: () => void;
+    clearUser: (user: string) => void;
+}
+
+export interface CategoryOwnerData {
+    byId: Record<string, StoredCategory>;
+    byParentId: Record<string, string[]>;
+    rootIds: string[];
 }
 
 //
