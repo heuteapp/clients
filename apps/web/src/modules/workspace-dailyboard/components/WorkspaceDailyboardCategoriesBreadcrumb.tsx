@@ -36,7 +36,7 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
 const CategoriesBreadcrumb = styled(Box)(({ theme }) => ({
     border: "1px solid",
     borderColor: theme.palette.divider,
-    borderRadius: 6,
+    borderRadius: theme.spacing(1),
     paddingLeft: theme.spacing(1.5),
     userSelect: "none",
     display: "flex",
