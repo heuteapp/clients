@@ -9,5 +9,8 @@ export const categories = {
         heuteClient.get<CategoryTreeResponse>(`/me/categories/tree/${encodeURIComponent(path)}`).then(res => res.data),
 
     getHierarchy : () => 
-        heuteClient.get<CategoryHierarchyResponse>(`/me/categories/hierarchy`).then(res => res.data)
+        heuteClient.get<CategoryHierarchyResponse>(`/me/categories/hierarchy`).then(res => res.data),
+
+    create: (path: string) =>
+        heuteClient.post(`/me/categories/${encodeURIComponent(path)}`).then(res => res.data),
 };
