@@ -3,11 +3,14 @@ import { Category, CategoryHierarchy } from "@/src/modules/category/types/catego
 //
 
 export interface CategoryState {
-    byId: Map<string, StoredCategory>;
-    byParentId: Map<string, string[]>;
-    rootIds: string[];
-
-    loadFromHierarchy: (hierarchy: CategoryHierarchy) => void;
+    owners: {   
+        [owner: string]: {
+            byId: Record<string, StoredCategory>;
+            byParentId: Record<string, string[]>;
+            rootIds: string[];
+        }
+    };
+    loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => void;
 }
 
 //
