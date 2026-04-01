@@ -3,6 +3,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { styled } from "@mui/system";
 import { useState } from "react";
+import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categories: string[] }) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -19,6 +20,8 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
     const categoryItems = categories.map((category) => ({
         name: category,
     }));
+
+    const { getMeRoots } = useCategoryStore();
 
     return (
         <>
@@ -56,9 +59,9 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                         horizontal: 'left',
                     }}
                 >
-                    {categories.map((category, index) => (
+                    {getMeRoots().map((category, index) => (
                         <MenuItem key={index} onClick={handleClose}>
-                            {category}
+                            {category.name}
                         </MenuItem>
                     ))}
             </Menu>
