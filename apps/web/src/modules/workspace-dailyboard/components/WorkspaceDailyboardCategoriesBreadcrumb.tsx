@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
+import { styled } from "@mui/system";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categories: string[] }) {
     const categoryItems = categories.map((category) => ({
@@ -8,30 +9,11 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
     }));
 
     return (
-        <Box
-            sx={{
-                border: "1px solid",
-                borderColor: "divider",
-                borderRadius: 0.5,
-                pl: 1.5,
-                userSelect: "none",
-                display: "flex",
-                justifyContent: "center",
-                cursor: "pointer",
-                transition: "background-color 0.2s",
-                "&:hover": {
-                    backgroundColor: "action.hover"
-                }
-            }}
-        >
+        <CategoriesBreadcrumb>
             {categories.length === 0 ? (
-                <Typography
-                    sx={{
-                        color: "text.secondary"
-                    }}
-                >
-                    Select Category
-                </Typography>
+                <SelectCategoryPlaceholder>
+                    Select a category
+                </SelectCategoryPlaceholder>
             ): (           
                 <HeuteAnimatedBreadcrumbs   
                     duration={0.2}
@@ -46,10 +28,31 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                     separator=">"
                 />
             )}
-            <ArrowDropDownIcon sx={{
-                pl: 0.5,
-                pr: 1
-            }} />
-        </Box>
+            <DropDownIcon />
+        </CategoriesBreadcrumb>
     )
 }
+
+const CategoriesBreadcrumb = styled(Box)(({ theme }) => ({
+    border: "1px solid",
+    borderColor: theme.palette.divider,
+    borderRadius: 6,
+    paddingLeft: theme.spacing(1.5),
+    userSelect: "none",
+    display: "flex",
+    justifyContent: "center",
+    cursor: "pointer",
+    transition: "background-color 0.2s",
+    "&:hover": {
+        backgroundColor: theme.palette.action.hover
+    }
+}));
+
+const SelectCategoryPlaceholder = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.secondary
+}));
+
+const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
+    padding: `0 ${theme.spacing(1)} 0 ${theme.spacing(0.5)}`,
+    color: theme.palette.text.secondary
+}));
