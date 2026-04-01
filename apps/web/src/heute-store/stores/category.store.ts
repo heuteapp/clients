@@ -40,13 +40,23 @@ export const useCategoryStore = create<CategoryState>()(
             });
         },
 
-        getCategoryById: (owner: string, id: string) => {
-            return get().owners[owner]?.byId[id];
-        },
+        getHierarchy: (owner: string) => {
+            const ownerData = get().owners[owner];
+            if (!ownerData) return null;
 
-        getChildren: (owner: string, parentId: string) => {
-            const parentMap = get().owners[owner]?.byParentId;
-            return parentMap?.[parentId]?.map(id => get().owners[owner].byId[id]) || [];
+            const { byId, byParentId, rootIds } = ownerData;
+
+            const buildTree = (id: string): CategoryTree => {
+                const category = byId[id];
+                return {
+                    name: category.name,
+                    children: (byParentId[id] || []).map(buildTree),
+                };
+            };
+
+            return {
+                roots: rootIds.map(buildTree),
+            };
         },
 
         clearOwner: (owner: string) => {
