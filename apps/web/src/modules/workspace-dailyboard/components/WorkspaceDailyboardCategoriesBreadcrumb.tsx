@@ -46,7 +46,7 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                 )}
                 <DropDownIcon />
             </CategoriesBreadcrumb>
-            <Menu
+            <CategoriesMenu
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -58,22 +58,13 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                     vertical: 'top',
                     horizontal: 'left',
                 }}
-                slotProps={{
-                    paper: {
-                        sx: {
-                            width: 200,
-                            maxHeight: 400,
-                            borderRadius: 0,
-                        }
-                    }
-                }}
             >
                 {getMeRoots().map((category, index) => (
                     <MenuItem key={index} onClick={handleClose}>
                         {category.name}
                     </MenuItem>
                 ))}
-            </Menu>
+            </CategoriesMenu>
         </>
     )
 }
@@ -100,4 +91,12 @@ const SelectCategoryPlaceholder = styled(Typography)(({ theme }) => ({
 const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
     padding: `0 ${theme.spacing(1)} 0 ${theme.spacing(0.5)}`,
     color: theme.palette.text.secondary
+}));
+
+const CategoriesMenu = styled(Menu)(() => ({
+    '& .MuiPaper-root': {
+        width: 200,
+        maxHeight: 400,
+        borderRadius: 0,
+    }
 }));
