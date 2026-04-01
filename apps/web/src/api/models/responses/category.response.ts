@@ -1,13 +1,7 @@
-export type CategoryChainResponse = {
-    name: string;
-    child?: CategoryChainResponse;
-}
+import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
 
-export type CategoryTreeResponse = {
-    name: string;
-    children?: CategoryTreeResponse[];
-}
+export type CategoryChainResponse = CategoryChain;
 
-export type CategoryHierarchyResponse = {
-    roots: CategoryTreeResponse[];
-}
+export type CategoryTreeResponse = CategoryTree;
+
+export type CategoryHierarchyResponse = CategoryHierarchy;
