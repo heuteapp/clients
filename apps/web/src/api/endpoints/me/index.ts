@@ -7,8 +7,8 @@ export const me = {
     check: () : Promise<AuthProfile | null> =>
         heuteClient.get("/me").then(res => res.data),
     
-    refresh: (): Promise<void> =>
-        heuteClient.post("/me/refresh"),
+    refresh: (): Promise<{ accessToken: string }> =>
+        heuteClient.post("/me/refresh").then(res => res.data),
     
     categories,
     dailyboards

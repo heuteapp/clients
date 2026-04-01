@@ -5,10 +5,11 @@ import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/
 import { AuthRegistration } from "@/src/modules/auth/types/auth.types";
 import { createCallback } from "@/src/modules/auth/utils/create-callback";
 import { fromPromise } from "xstate";
+import { withAccessToken } from "@/src/api/token.helper";
 
 export const hydrateAuthActor = fromPromise<
-    AuthSession | null
->(
+AuthSession | null
+>(      
     async () => {
         if (typeof window === "undefined") return null;
 
@@ -17,10 +18,62 @@ export const hydrateAuthActor = fromPromise<
             throw new Error("No auth data found in localStorage");
         }
 
+        let authSession: AuthSession;
         try {
-            return JSON.parse(raw) as AuthSession;
+            authSession = JSON.parse(raw) as AuthSession;
         } catch {
             throw new Error("Failed to parse auth data from localStorage");
+        }
+
+        const accessToken = authSession.accessToken;
+        
+        if (!accessToken) {
+            throw new Error("No access token in auth data");
+        }
+
+        try {
+            const profile = await withAccessToken(accessToken, async () => {
+                return await heuteApi.me.check();
+            });
+            
+            if (!profile) {
+                throw new Error("Profile not found");
+            }
+            
+            return {
+                ...authSession,
+                profile,
+            };
+        } catch (error: any) {
+            console.error("Token validation failed:", error);
+            
+            if (error?.response?.status === 401) {
+                try {
+                    const { accessToken: newAccessToken } = await heuteApi.me.refresh();
+                    
+                    const profile = await withAccessToken(newAccessToken, async () => {
+                        return await heuteApi.me.check();
+                    });
+                    
+                    if (profile) {
+                        const newSession = {
+                            accessToken: newAccessToken,
+                            profile,
+                        };
+                        localStorage.setItem("auth", JSON.stringify(newSession));
+                        return newSession;
+                    }
+                } catch (refreshError) {
+                    console.error("Refresh failed:", refreshError);
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("accessToken");
+                    throw new Error("Token expired and refresh failed");
+                }
+            }
+            
+            localStorage.removeItem("auth");
+            localStorage.removeItem("accessToken");
+            throw error;
         }
     }
 );
