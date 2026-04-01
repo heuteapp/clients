@@ -7,7 +7,7 @@ export const useCategoryStore = create<CategoryState>()(
     immer((set, get) => ({
         owners: {},
 
-        loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => {
+        loadOwner: (owner: string, hierarchy: CategoryHierarchy) => {
             set((state) => {
                 const byId: Record<string, StoredCategory> = {};
                 const byParentId: Record<string, string[]> = {};
@@ -39,6 +39,18 @@ export const useCategoryStore = create<CategoryState>()(
                 state.owners[owner] = { byId, byParentId, rootIds };
             });
         },
+
+        hasOwner: (owner: string) => {
+            return !!get().owners[owner];
+        },
+
+        clearOwner: (owner: string) => {
+            set((state) => {
+                delete state.owners[owner];
+            });
+        },
+
+        //
 
         getChain: (owner: string, path: string) => {
             const ownerData = get().owners[owner];
@@ -92,7 +104,6 @@ export const useCategoryStore = create<CategoryState>()(
                 
                 const category = ownerData.byId[matchedId];
                 
-                // Eğer sonuncuysa, tüm alt dallarıyla döndür
                 if (index === names.length - 1) {
                     const buildFullTree = (id: string): CategoryTree => {
                         return {
@@ -134,15 +145,5 @@ export const useCategoryStore = create<CategoryState>()(
                 roots: rootIds.map(buildTree),
             };
         },
-
-        clearOwner: (owner: string) => {
-            set((state) => {
-                delete state.owners[owner];
-            });
-        },
-
-        hasOwner: (owner: string) => {
-            return !!get().owners[owner];
-        }
     }))
 );

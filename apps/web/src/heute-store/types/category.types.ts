@@ -10,8 +10,9 @@ export interface CategoryState {
             rootIds: string[];
         }
     };
-    
-    loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => void;    
+
+    loadOwner: (owner: string, hierarchy: CategoryHierarchy) => void;    
+    hasOwner: (owner: string) => boolean;
     clearOwner: (owner: string) => void;
 
     getChain: (owner: string, path: string) => CategoryChain | null;
