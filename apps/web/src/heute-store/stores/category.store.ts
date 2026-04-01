@@ -88,7 +88,6 @@ export const useCategoryStore = create<CategoryState>()(
     )
 );
 
-// flattenToOwnerData fonksiyonu (idCounter sorunu çözüldü)
 const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): CategoryOwnerData => {
     const byId: Record<string, StoredCategory> = {};
     const byParentId: Record<string, string[]> = {};
@@ -96,7 +95,7 @@ const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): Catego
     
     const flatten = (node: CategoryTree, parentId: string | null, path: string = "") => {
         const currentPath = path ? `${path}/${node.name}` : node.name;
-        const id = `${owner}_${currentPath}`;
+        const id = `${owner}@${currentPath}`;
         
         byId[id] = {
             id,
@@ -119,7 +118,6 @@ const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): Catego
     return { byId, byParentId, rootIds };
 };
 
-// Diğer yardımcı fonksiyonlar aynı kalabilir...
 const getChainFromData = (data: CategoryOwnerData, path: string): CategoryChain | null => {
     const names = path.split('/');
     
