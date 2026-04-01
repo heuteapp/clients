@@ -15,10 +15,14 @@ export interface CategoryState {
     getMeChain: (path: string) => CategoryChain | null;
     getMeTree: (path: string) => CategoryTree | null;
     getMeHierarchy: () => CategoryHierarchy | null;
+    getMeRoots: () => Category[];
+    getMeChildren: (parentId: string | null) => Category[];
 
     getUserChain: (user: string, path: string) => CategoryChain | null;
     getUserTree: (user: string, path: string) => CategoryTree | null;
     getUserHierarchy: (user: string) => CategoryHierarchy | null;
+    getUserRoots: (user: string) => Category[] | null;
+    getUserChildren: (user: string, parentId: string | null) => Category[] | null;
 
     hasUser: (user: string) => boolean;
 

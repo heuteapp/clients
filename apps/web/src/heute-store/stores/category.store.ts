@@ -48,6 +48,24 @@ export const useCategoryStore = create<CategoryState>()(
                 if (!me) return null;
                 return getHierarchyFromData(me);
             },
+            
+            getMeRoots: () => {
+                const me = get().me;
+                if (!me) return [];
+                return me.rootIds.map(id => me.byId[id]);
+            },
+
+            getMeChildren: (parentId: string | null) => {
+                const me = get().me;
+                if (!me) return [];
+                
+                if (parentId === null) {
+                    return me.rootIds.map(id => me.byId[id]);
+                }
+                
+                const childIds = me.byParentId[parentId] || [];
+                return childIds.map(id => me.byId[id]);
+            },
 
             getUserChain: (user: string, path: string) => {
                 const userData = get().users[user];
@@ -65,6 +83,24 @@ export const useCategoryStore = create<CategoryState>()(
                 const userData = get().users[user];
                 if (!userData) return null;
                 return getHierarchyFromData(userData);
+            },
+
+            getUserRoots: (user: string) => {
+                const userData = get().users[user];
+                if (!userData) return [];
+                return userData.rootIds.map(id => userData.byId[id]);
+            },
+
+            getUserChildren: (user: string, parentId: string | null) => {
+                const userData = get().users[user];
+                if (!userData) return [];
+                
+                if (parentId === null) {
+                    return userData.rootIds.map(id => userData.byId[id]);
+                }
+                
+                const childIds = userData.byParentId[parentId] || [];
+                return childIds.map(id => userData.byId[id]);
             },
 
             hasUser: (user: string) => {
