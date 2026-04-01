@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { heuteApi } from "@/src/api/heuteApi";
+import { LoaderState } from "@/src/heute-store/types/loader.types";
 
-export const useCategoriesLoader = () => {
+export const useCategoriesLoader = () : LoaderState => {
     const { state } = useAuthContext();
     const { me, loadMe } = useCategoryStore();
     
