@@ -1,5 +1,5 @@
-import { meCategories } from "./me.categories";
+import { categories } from "./categories";
 
 export const me = {
-    categories: meCategories
+    categories: categories
 };
