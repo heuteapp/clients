@@ -47,23 +47,32 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                 <DropDownIcon />
             </CategoriesBreadcrumb>
             <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                >
-                    {getMeRoots().map((category, index) => (
-                        <MenuItem key={index} onClick={handleClose}>
-                            {category.name}
-                        </MenuItem>
-                    ))}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                slotProps={{
+                    paper: {
+                        sx: {
+                            width: 200,
+                            maxHeight: 400,
+                            borderRadius: 0,
+                        }
+                    }
+                }}
+            >
+                {getMeRoots().map((category, index) => (
+                    <MenuItem key={index} onClick={handleClose}>
+                        {category.name}
+                    </MenuItem>
+                ))}
             </Menu>
         </>
     )
