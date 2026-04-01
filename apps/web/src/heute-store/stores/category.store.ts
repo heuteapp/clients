@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
+import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
 import { CategoryState, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
@@ -16,7 +16,7 @@ export const useCategoryStore = create<CategoryState>()(
                 let idCounter = 0;
                 
                 const flatten = (node: CategoryTree, parentId: string | null) => {
-                    const id = `cat_${idCounter++}`;
+                    const id = `${owner}_${idCounter++}`;
                     
                     byId[id] = {
                         id,
@@ -38,6 +38,82 @@ export const useCategoryStore = create<CategoryState>()(
                 
                 state.owners[owner] = { byId, byParentId, rootIds };
             });
+        },
+
+        getChain: (owner: string, path: string) => {
+            const ownerData = get().owners[owner];
+            if (!ownerData) return null;
+
+            const names = path.split('/');
+            
+            const buildChain = (currentId: string | null, index: number): CategoryChain | null => {
+                if (index >= names.length) return null;
+                
+                const candidates = currentId === null 
+                    ? ownerData.rootIds 
+                    : (ownerData.byParentId[currentId] || []);
+                
+                const matchedId = candidates.find(id => 
+                    ownerData.byId[id].name === names[index]
+                );
+                
+                if (!matchedId) return null;
+                
+                const category = ownerData.byId[matchedId];
+                const child = buildChain(matchedId, index + 1);
+                
+                return {
+                    name: category.name,
+                    ...(child && { child })
+                };
+            };
+            
+            return buildChain(null, 0);
+        },
+
+        getTree: (owner: string, path: string) => {
+            const ownerData = get().owners[owner];
+            if (!ownerData) return null;
+
+            const names = path.split('/');
+            
+            const findNode = (currentId: string | null, index: number): CategoryTree | null => {
+                if (index >= names.length) return null;
+                
+                const candidates = currentId === null 
+                    ? ownerData.rootIds 
+                    : (ownerData.byParentId[currentId] || []);
+                
+                const matchedId = candidates.find(id => 
+                    ownerData.byId[id].name === names[index]
+                );
+                
+                if (!matchedId) return null;
+                
+                const category = ownerData.byId[matchedId];
+                
+                // Eğer sonuncuysa, tüm alt dallarıyla döndür
+                if (index === names.length - 1) {
+                    const buildFullTree = (id: string): CategoryTree => {
+                        return {
+                            name: ownerData.byId[id].name,
+                            children: (ownerData.byParentId[id] || []).map(buildFullTree),
+                        };
+                    };
+                    return buildFullTree(matchedId);
+                }
+                
+                // Değilse, devam et
+                const child = findNode(matchedId, index + 1);
+                if (!child) return null;
+                
+                return {
+                    name: category.name,
+                    children: [child],
+                };
+            };
+            
+            return findNode(null, 0);
         },
 
         getHierarchy: (owner: string) => {

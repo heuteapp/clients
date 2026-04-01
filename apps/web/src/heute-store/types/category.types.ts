@@ -1,4 +1,4 @@
-import { Category, CategoryHierarchy } from "@/src/modules/category/types/category.types";
+import { Category, CategoryChain, CategoryTree, CategoryHierarchy } from "@/src/modules/category/types/category.types";
 
 //
 
@@ -10,9 +10,13 @@ export interface CategoryState {
             rootIds: string[];
         }
     };
-    loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => void;
-    getHierarchy: (owner: string) => CategoryHierarchy | null;
+    
+    loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => void;    
     clearOwner: (owner: string) => void;
+
+    getChain: (owner: string, path: string) => CategoryChain | null;
+    getTree: (owner: string, path: string) => CategoryTree | null;
+    getHierarchy: (owner: string) => CategoryHierarchy | null;
 }
 
 //
