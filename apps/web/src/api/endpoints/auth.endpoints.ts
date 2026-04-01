@@ -1,4 +1,4 @@
-import { heuteClient } from "@/src/api/client";
+import { heuteClient } from "@/src/api/heuteClient";
 import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
 import { SignInResponse, SignUpResponse } from "@/src/api/models/responses/auth.response";
 import { AuthProfile } from "@/src/modules/auth/types/auth.types";
