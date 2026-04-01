@@ -39,10 +39,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
 
             try {
-                await heuteApi.auth.setRefresh(authHash.refresh_token);
+                await heuteApi.me.refresh();
 
                 const profile = await withAccessToken(authHash.access_token, async () => {
-                    return await heuteApi.auth.me();
+                    return await heuteApi.me.check();
                 });
 
                 if(!profile) {
