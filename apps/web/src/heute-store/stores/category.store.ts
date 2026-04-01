@@ -1,99 +1,102 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware/devtools";
+import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
 import { CategoryState, CategoryOwnerData, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
-    devtools(immer((set, get) => ({
+    devtools(
+        immer((set, get) => ({
             me: null,
             users: {},
             userOrder: [],
 
-        loadMe: (hierarchy: CategoryHierarchy) => {
-            set({ me: flattenToOwnerData('me', hierarchy) });
-        },
+            loadMe: (hierarchy: CategoryHierarchy) => {
+                set({ me: flattenToOwnerData('me', hierarchy) });
+            },
 
-        loadUser: (user: string, hierarchy: CategoryHierarchy) => {
-            set((state) => {
-                state.userOrder = state.userOrder.filter(u => u !== user);
-                state.userOrder.push(user);
-                
-                if (state.userOrder.length > 20) {
-                    const oldestUser = state.userOrder.shift();
-                    if (oldestUser) {
-                        delete state.users[oldestUser];
+            loadUser: (user: string, hierarchy: CategoryHierarchy) => {
+                set((state) => {
+                    state.userOrder = state.userOrder.filter(u => u !== user);
+                    state.userOrder.push(user);
+                    
+                    if (state.userOrder.length > 20) {
+                        const oldestUser = state.userOrder.shift();
+                        if (oldestUser) {
+                            delete state.users[oldestUser];
+                        }
                     }
-                }
-                
-                state.users[user] = flattenToOwnerData(user, hierarchy);
-            });
-        },
+                    
+                    state.users[user] = flattenToOwnerData(user, hierarchy);
+                });
+            },
 
-        getMeChain: (path: string) => {
-            const me = get().me;
-            if (!me) return null;
-            return getChainFromData(me, path);
-        },
+            getMeChain: (path: string) => {
+                const me = get().me;
+                if (!me) return null;
+                return getChainFromData(me, path);
+            },
 
-        getMeTree: (path: string) => {
-            const me = get().me;
-            if (!me) return null;
-            return getTreeFromData(me, path);
-        },
+            getMeTree: (path: string) => {
+                const me = get().me;
+                if (!me) return null;
+                return getTreeFromData(me, path);
+            },
 
-        getMeHierarchy: () => {
-            const me = get().me;
-            if (!me) return null;
-            return getHierarchyFromData(me);
-        },
+            getMeHierarchy: () => {
+                const me = get().me;
+                if (!me) return null;
+                return getHierarchyFromData(me);
+            },
 
-        getUserChain: (user: string, path: string) => {
-            const userData = get().users[user];
-            if (!userData) return null;
-            return getChainFromData(userData, path);
-        },
+            getUserChain: (user: string, path: string) => {
+                const userData = get().users[user];
+                if (!userData) return null;
+                return getChainFromData(userData, path);
+            },
 
-        getUserTree: (user: string, path: string) => {
-            const userData = get().users[user];
-            if (!userData) return null;
-            return getTreeFromData(userData, path);
-        },
+            getUserTree: (user: string, path: string) => {
+                const userData = get().users[user];
+                if (!userData) return null;
+                return getTreeFromData(userData, path);
+            },
 
-        getUserHierarchy: (user: string) => {
-            const userData = get().users[user];
-            if (!userData) return null;
-            return getHierarchyFromData(userData);
-        },
+            getUserHierarchy: (user: string) => {
+                const userData = get().users[user];
+                if (!userData) return null;
+                return getHierarchyFromData(userData);
+            },
 
-        hasUser: (user: string) => {
-            return !!get().users[user];
-        },
+            hasUser: (user: string) => {
+                return !!get().users[user];
+            },
 
-        clearMe: () => {
-            set({ me: null });
-        },
+            clearMe: () => {
+                set({ me: null });
+            },
 
-        clearUser: (user: string) => {
-            set((state) => {
-                delete state.users[user];
-                state.userOrder = state.userOrder.filter(u => u !== user);
-            });
-        },
-    })))
+            clearUser: (user: string) => {
+                set((state) => {
+                    delete state.users[user];
+                    state.userOrder = state.userOrder.filter(u => u !== user);
+                });
+            },
+        })),
+        { 
+            name: "CategoryStore"
+        }
+    )
 );
 
-//
-
+// flattenToOwnerData fonksiyonu (idCounter sorunu çözüldü)
 const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): CategoryOwnerData => {
     const byId: Record<string, StoredCategory> = {};
     const byParentId: Record<string, string[]> = {};
     const rootIds: string[] = [];
     
-    let idCounter = 0;
-    
-    const flatten = (node: CategoryTree, parentId: string | null) => {
-        const id = `${owner}_${idCounter++}`;
+    const flatten = (node: CategoryTree, parentId: string | null, path: string = "") => {
+        const currentPath = path ? `${path}/${node.name}` : node.name;
+        const id = `${owner}_${currentPath}`;
         
         byId[id] = {
             id,
@@ -108,7 +111,7 @@ const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): Catego
             byParentId[parentId].push(id);
         }
         
-        node.children?.forEach(child => flatten(child, id));
+        node.children?.forEach(child => flatten(child, id, currentPath));
     };
     
     hierarchy.roots.forEach(root => flatten(root, null));
@@ -116,6 +119,7 @@ const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): Catego
     return { byId, byParentId, rootIds };
 };
 
+// Diğer yardımcı fonksiyonlar aynı kalabilir...
 const getChainFromData = (data: CategoryOwnerData, path: string): CategoryChain | null => {
     const names = path.split('/');
     
@@ -133,11 +137,17 @@ const getChainFromData = (data: CategoryOwnerData, path: string): CategoryChain 
         if (!matchedId) return null;
         
         const category = data.byId[matchedId];
+        
+        if (index === names.length - 1) {
+            return { name: category.name };
+        }
+        
         const child = buildChain(matchedId, index + 1);
+        if (!child) return null;
         
         return {
             name: category.name,
-            ...(child && { child })
+            child
         };
     };
     

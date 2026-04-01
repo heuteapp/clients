@@ -8,20 +8,28 @@ import { useWorkspaceCache } from "../hooks/useWorkspaceCache";
 
 import { useQuery } from "@tanstack/react-query";
 import { heuteApi } from "@/src/api/heuteApi";
+import { useCategoryStore } from "@/src/heute-store/stores/category.store";
+import { useAuthContext } from "../../ui-auth/hooks/useAuthContext";
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
+    const { state } = useAuthContext();
     const metadata = useWorkspaceMetadata();
     const breadcrumbs = useWorkspaceBreadcrumbs();
     const cache = useWorkspaceCache();
-
-    const { data: categories, isLoading } = useQuery({
+    
+    const { data: categories } = useQuery({
         queryKey: ["categories"],
-        queryFn: () => heuteApi.me.categories.getHierarchy()
+        queryFn: () => heuteApi.me.categories.getHierarchy(),
+        enabled: state.matches("authenticated")
     });
 
+    const { loadMe } = useCategoryStore();
+
     useEffect(() => {
-        console.log("Fetched categories:", categories);
-    }, [categories]);
+        if (categories) {
+            loadMe(categories);
+        }
+    }, [categories, loadMe]);
     
     const contextValue = React.useMemo(() => {
         return { metadata, breadcrumbs, cache };
