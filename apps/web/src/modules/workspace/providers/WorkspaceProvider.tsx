@@ -5,7 +5,7 @@ import { WorkspaceContext } from "@/src/modules/workspace/contexts/workspace.con
 import { useWorkspaceMetadata } from "@/src/modules/workspace/hooks/useWorkspaceMetadata";
 import { useWorkspaceBreadcrumbs } from "../hooks/useWorkspaceBreadcrumbs";
 import { useWorkspaceCache } from "../hooks/useWorkspaceCache";
-import { useCategoriesLoader } from "../../ui-category/hooks/useCategoriesLoader";
+import { useCategoriesLoader } from "@/src/heute-store/hooks/useCategoriesLoader";
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceMetadata();
