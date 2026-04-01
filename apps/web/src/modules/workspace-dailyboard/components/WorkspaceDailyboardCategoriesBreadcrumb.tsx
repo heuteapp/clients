@@ -1,35 +1,68 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Menu, MenuItem, Typography } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { styled } from "@mui/system";
+import { useState } from "react";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categories: string[] }) {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const categoryItems = categories.map((category) => ({
         name: category,
     }));
 
     return (
-        <CategoriesBreadcrumb>
-            {categories.length === 0 ? (
-                <SelectCategoryPlaceholder>
-                    Select a category
-                </SelectCategoryPlaceholder>
-            ): (           
-                <HeuteAnimatedBreadcrumbs   
-                    duration={0.2}
-                    delay={0}
-                    offset={10}              
-                    sx={{
-                        '& .MuiBreadcrumbs-separator': {
-                            marginX: 1
-                        },
+        <>
+            <CategoriesBreadcrumb onClick={handleClick}>
+                {categories.length === 0 ? (
+                    <SelectCategoryPlaceholder>
+                        Select a category
+                    </SelectCategoryPlaceholder>
+                ): (           
+                    <HeuteAnimatedBreadcrumbs   
+                        duration={0.2}
+                        delay={0}
+                        offset={10}              
+                        sx={{
+                            '& .MuiBreadcrumbs-separator': {
+                                marginX: 1
+                            },
+                        }}
+                        items={categoryItems} 
+                        separator=">"
+                    />
+                )}
+                <DropDownIcon />
+            </CategoriesBreadcrumb>
+            <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
                     }}
-                    items={categoryItems} 
-                    separator=">"
-                />
-            )}
-            <DropDownIcon />
-        </CategoriesBreadcrumb>
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                >
+                    {categories.map((category, index) => (
+                        <MenuItem key={index} onClick={handleClose}>
+                            {category}
+                        </MenuItem>
+                    ))}
+            </Menu>
+        </>
     )
 }
 
