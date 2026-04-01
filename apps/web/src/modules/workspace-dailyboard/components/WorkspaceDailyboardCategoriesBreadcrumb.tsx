@@ -1,9 +1,12 @@
-import { Box, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Menu, MenuItem, Typography, Collapse } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { styled } from "@mui/system";
 import { useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
+import { Category } from "@/src/modules/category/types/category.types";
+import { StoredCategory } from "@/src/heute-store/types/category.types";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categories: string[] }) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -21,7 +24,8 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
         name: category,
     }));
 
-    const { getMeRoots } = useCategoryStore();
+    const { getMeRoots, getMeChildren } = useCategoryStore();
+    const roots = getMeRoots();
 
     return (
         <>
@@ -46,7 +50,7 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                 )}
                 <DropDownIcon />
             </CategoriesBreadcrumb>
-            <CategoriesMenu
+            <Menu
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -58,15 +62,74 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories } : { categ
                     vertical: 'top',
                     horizontal: 'left',
                 }}
+                slotProps={{
+                    paper: {
+                        sx: {
+                            width: 250
+                        }
+                    }
+                }}
             >
-                {getMeRoots().map((category, index) => (
-                    <MenuItem key={index} onClick={handleClose}>
-                        {category.name}
-                    </MenuItem>
+                {roots.map((category) => (
+                    <CategoryMenuItem 
+                        key={category.id} 
+                        categoryId={category.id} 
+                        onClose={handleClose}
+                        getMeChildren={getMeChildren}
+                    />
                 ))}
-            </CategoriesMenu>
+            </Menu>
         </>
     )
+}
+
+// Menu Item Component
+function CategoryMenuItem({ categoryId, onClose, getMeChildren }: { 
+    categoryId: string; 
+    onClose: () => void;
+    getMeChildren: (parentId: string | null) => StoredCategory[];
+}) {
+    const [open, setOpen] = useState(false);
+    const category = useCategoryStore(state => state.me?.byId[categoryId]);
+    const children = getMeChildren(categoryId);
+    const hasChildren = children.length > 0;
+
+    if (!category) return null;
+
+    const handleClick = () => {
+        if (hasChildren) {
+            setOpen(!open);
+        } else {
+            onClose();
+            console.log("Selected category:", category.name);
+        }
+    };
+
+    return (
+        <>
+            <StyledMenuItem onClick={handleClick}>
+                <Typography variant="body2">{category.name}</Typography>
+                {hasChildren && (
+                    open ? <ArrowDropDownIcon fontSize="small" /> : <ArrowRightIcon fontSize="small" />
+                )}
+            </StyledMenuItem>
+            
+            {hasChildren && (
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Box sx={{ pl: 2 }}>
+                        {children.map((child) => (
+                            <CategoryMenuItem 
+                                key={child.id} 
+                                categoryId={child.id} 
+                                onClose={onClose}
+                                getMeChildren={getMeChildren}
+                            />
+                        ))}
+                    </Box>
+                </Collapse>
+            )}
+        </>
+    );
 }
 
 const CategoriesBreadcrumb = styled(Box)(({ theme }) => ({
@@ -93,10 +156,8 @@ const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
     color: theme.palette.text.secondary
 }));
 
-const CategoriesMenu = styled(Menu)(() => ({
-    '& .MuiPaper-root': {
-        width: 200,
-        maxHeight: 400,
-        borderRadius: 0,
-    }
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    justifyContent: "space-between",
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(1),
 }));
