@@ -3,7 +3,7 @@ import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.req
 import { SignInResponse, SignUpResponse } from "@/src/api/models/responses/auth.response";
 import { AuthProfile } from "@/src/modules/auth/types/auth.types";
 
-export const authEndpoints = {
+export const auth = {
     signIn: (request: SignInRequest): Promise<SignInResponse> =>
         heuteClient.post<SignInResponse>("/auth/sign-in", request).then(res => res.data),
     

@@ -1,7 +1,7 @@
-import { authEndpoints } from "./endpoints/auth.endpoints";
+import { auth } from "./endpoints/auth";
 import { me } from "./endpoints/me";
 
 export const heuteApi = {
-    auth: authEndpoints,
+    auth,
     me
 };
