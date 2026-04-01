@@ -7,7 +7,5 @@ export const useMeCategoryStore = create<MeCategoryState>()(
         byId: new Map(),
         byParentId: new Map(),
         rootIds: [],
-        isLoading: false,
-        error: null,
     }))
 );
