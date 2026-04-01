@@ -4,6 +4,9 @@ import { SignInResponse, SignUpResponse } from "@/src/api/models/responses/auth.
 import { AuthProfile } from "@/src/modules/auth/types/auth.types";
 
 export const auth = {
+    setRefresh: (refreshToken: string): Promise<void> =>
+        heuteClient.post("/auth/set-refresh", { refreshToken }),
+
     signIn: (request: SignInRequest): Promise<SignInResponse> =>
         heuteClient.post<SignInResponse>("/auth/sign-in", request).then(res => res.data),
     

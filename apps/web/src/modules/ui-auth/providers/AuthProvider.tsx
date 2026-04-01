@@ -5,8 +5,8 @@ import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVer
 import { AuthContext } from "@/src/modules/ui-auth/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";
-import { server } from "@/src/modules/api/server";
-import { withAccessToken } from "@/src/modules/api/token.helper";
+import { heuteApi } from "@/src/api/heuteApi";
+import { withAccessToken } from "@/src/api/token.helper";
 import { AuthProviderProps } from "@/src/modules/ui-auth/types/auth.props";
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -39,10 +39,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
 
             try {
-                await server.auth.setRefresh(authHash.refresh_token);
+                await heuteApi.auth.setRefresh(authHash.refresh_token);
 
                 const profile = await withAccessToken(authHash.access_token, async () => {
-                    return await server.auth.me();
+                    return await heuteApi.auth.me();
                 });
 
                 if(!profile) {

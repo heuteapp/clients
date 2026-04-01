@@ -1,5 +1,5 @@
-import { SignInRequest, SignUpRequest } from "@/src/modules/api/models/auth.request";
-import { server } from "@/src/modules/api/server";
+import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
+import { heuteApi } from "@/src/api/heuteApi";
 import { AuthSession } from "@/src/modules/auth/types/auth.types";
 import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/modules/auth/types/auth.actors";
 import { AuthRegistration } from "@/src/modules/auth/types/auth.types";
@@ -46,7 +46,7 @@ export const signInActor = createCallback<
     SignInRequest, SignInActorEvents
 >(
     ({ input, sendBack }) => {
-        server.auth.signIn(input)
+        heuteApi.auth.signIn(input)
             .then(response => {
                 sendBack({ 
                     type: 'SIGN_IN_SUCCESS',
@@ -67,7 +67,7 @@ export const signUpActor = createCallback<
     SignUpRequest, SignUpActorEvents
 >(
     ({ input, sendBack }) => {
-        server.auth.signUp(input)
+        heuteApi.auth.signUp(input)
             .then(() => {
                 sendBack({ 
                     type: 'SIGN_UP_SUCCESS',
