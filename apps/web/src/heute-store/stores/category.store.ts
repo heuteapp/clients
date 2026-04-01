@@ -4,7 +4,7 @@ import { CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/ca
 import { CategoryState, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
-    immer((set) => ({
+    immer((set, get) => ({
         owners: {},
 
         loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => {
@@ -38,6 +38,25 @@ export const useCategoryStore = create<CategoryState>()(
                 
                 state.owners[owner] = { byId, byParentId, rootIds };
             });
+        },
+
+        getCategoryById: (owner: string, id: string) => {
+            return get().owners[owner]?.byId[id];
+        },
+
+        getChildren: (owner: string, parentId: string) => {
+            const parentMap = get().owners[owner]?.byParentId;
+            return parentMap?.[parentId]?.map(id => get().owners[owner].byId[id]) || [];
+        },
+
+        clearOwner: (owner: string) => {
+            set((state) => {
+                delete state.owners[owner];
+            });
+        },
+
+        hasOwner: (owner: string) => {
+            return !!get().owners[owner];
         }
     }))
 );

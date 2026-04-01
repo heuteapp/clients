@@ -11,6 +11,9 @@ export interface CategoryState {
         }
     };
     loadFromHierarchy: (owner: string, hierarchy: CategoryHierarchy) => void;
+    getCategoryById: (owner: string, id: string) => StoredCategory | undefined;
+    getChildren: (owner: string, parentId: string) => StoredCategory[];
+    clearOwner: (owner: string) => void;
 }
 
 //
