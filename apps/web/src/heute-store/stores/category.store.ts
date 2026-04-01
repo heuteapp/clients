@@ -1,13 +1,14 @@
 import { create } from "zustand";
+import { devtools } from "zustand/middleware/devtools";
 import { immer } from "zustand/middleware/immer";
 import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
 import { CategoryState, CategoryOwnerData, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
-    immer((set, get) => ({
-        me: null,
-        users: {},
-        userOrder: [],
+    devtools(immer((set, get) => ({
+            me: null,
+            users: {},
+            userOrder: [],
 
         loadMe: (hierarchy: CategoryHierarchy) => {
             set({ me: flattenToOwnerData('me', hierarchy) });
@@ -79,7 +80,7 @@ export const useCategoryStore = create<CategoryState>()(
                 state.userOrder = state.userOrder.filter(u => u !== user);
             });
         },
-    }))
+    })))
 );
 
 //
