@@ -49,7 +49,7 @@ AuthSession | null
             
             if (error?.response?.status === 401) {
                 try {
-                    const { accessToken: newAccessToken } = await heuteApi.me.refresh();
+                    const { accessToken: newAccessToken } = await heuteApi.auth.refresh();
                     
                     const profile = await withAccessToken(newAccessToken, async () => {
                         return await heuteApi.me.check();

@@ -9,4 +9,7 @@ export const auth = {
     
     signUp: (request: SignUpRequest): Promise<SignUpResponse> =>
         heuteClient.post<SignUpResponse>("/auth/sign-up", request).then(res => res.data),
+
+    refresh: (): Promise<{ accessToken: string, profile: AuthProfile }> =>
+        heuteClient.post("/me/refresh").then(res => res.data),
 };
