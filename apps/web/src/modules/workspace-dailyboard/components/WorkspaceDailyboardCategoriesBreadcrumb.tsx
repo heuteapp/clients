@@ -37,6 +37,34 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
     );
 }
 
+const CategoriesBreadcrumb = styled(Box)(({ theme }) => ({
+    border: "1px solid",
+    borderColor: theme.palette.divider,
+    borderRadius: theme.spacing(1),
+    paddingLeft: theme.spacing(1.5),
+    userSelect: "none",
+    display: "flex",
+    justifyContent: "center",
+    cursor: "pointer",
+    transition: "background-color 0.2s",
+    "&:hover": {
+        backgroundColor: theme.palette.action.hover
+    }
+}));
+
+const SelectCategoryPlaceholder = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.secondary
+}));
+
+const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
+    padding: `0 ${theme.spacing(1)} 0 ${theme.spacing(0.5)}`,
+    color: theme.palette.text.secondary
+}));
+
+
+//
+
+
 function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLElement | null; setBreadcrumbEl: (el: HTMLElement | null) => void }) {
 
     return(
@@ -68,6 +96,8 @@ function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLEle
         </Menu>
     )
 }
+
+//
 
 function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLElement | null; setBreadcrumbEl: (el: HTMLElement | null) => void }) {
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
@@ -135,6 +165,8 @@ function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTM
     );
 }
 
+//
+
 function CategoryTreeItem({ 
     category, 
     getMeChildren,
@@ -170,30 +202,6 @@ function CategoryTreeItem({
         </StyledTreeItem>
     );
 }
-
-const CategoriesBreadcrumb = styled(Box)(({ theme }) => ({
-    border: "1px solid",
-    borderColor: theme.palette.divider,
-    borderRadius: theme.spacing(1),
-    paddingLeft: theme.spacing(1.5),
-    userSelect: "none",
-    display: "flex",
-    justifyContent: "center",
-    cursor: "pointer",
-    transition: "background-color 0.2s",
-    "&:hover": {
-        backgroundColor: theme.palette.action.hover
-    }
-}));
-
-const SelectCategoryPlaceholder = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.secondary
-}));
-
-const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
-    padding: `0 ${theme.spacing(1)} 0 ${theme.spacing(0.5)}`,
-    color: theme.palette.text.secondary
-}));
 
 const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
     [`& .${treeItemClasses.content}`]: {
