@@ -5,7 +5,6 @@ import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
-import { StoredCategory } from "@/src/heute-store/types/category.types";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoriesBreadcrumbProps, CategoryMenuProps, CategoryTreeItemProps, CategoryTreeViewProps } from "../types/components/workspace-dailyboard.categories-breadcrumb.types";
 
