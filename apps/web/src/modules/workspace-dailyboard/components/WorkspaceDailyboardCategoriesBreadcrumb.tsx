@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { StoredCategory } from "@/src/heute-store/types/category.types";
 import { usePathname, useRouter } from "next/navigation";
-import { CategoriesBreadcrumbProps, CategoryMenuProps, CategoryTreeViewProps } from "../types/components/workspace-dailyboard.categories-breadcrumb.types";
+import { CategoriesBreadcrumbProps, CategoryMenuProps, CategoryTreeItemProps, CategoryTreeViewProps } from "../types/components/workspace-dailyboard.categories-breadcrumb.types";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: CategoriesBreadcrumbProps) {
     const [breadcrumbEl, setBreadcrumbEl] = useState<null | HTMLElement>(null);
@@ -33,7 +33,7 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: Categori
                 <DropDownIcon />
             </CategoriesBreadcrumb>
 
-            <CategoryMenu breadcrumb={{ value: breadcrumbEl, set: setBreadcrumbEl }} />
+            <CategoryMenu anchor={{ value: breadcrumbEl, set: setBreadcrumbEl }} />
         </>
     );
 }
@@ -66,20 +66,20 @@ const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
 //
 
 
-function CategoryMenu({ breadcrumb }: CategoryMenuProps) {
+function CategoryMenu({ anchor }: CategoryMenuProps) {
 
     return(
         <Menu
-            anchorEl={breadcrumb.value}
-            open={Boolean(breadcrumb.value)}
-            onClose={() => breadcrumb.set(null)}
+            anchorEl={anchor.value}
+            open={Boolean(anchor.value)}
+            onClose={() => anchor.set(null)}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             transformOrigin={{ vertical: 'top', horizontal: 'left' }}
             slotProps={{ 
                 paper: { 
                     sx: { 
                         minWidth: 200, 
-                        width: breadcrumb.value ? breadcrumb.value.offsetWidth : 'auto',
+                        width: anchor.value ? anchor.value.offsetWidth : 'auto',
                         maxHeight: 400,
                         border: "1px solid",
                         borderColor: 'divider',
@@ -93,14 +93,14 @@ function CategoryMenu({ breadcrumb }: CategoryMenuProps) {
                 } 
             }}
         >
-            <CategoryTreeView breadcrumb={breadcrumb} />
+            <CategoryTreeView anchor={anchor} />
         </Menu>
     )
 }
 
 //
 
-function CategoryTreeView({ breadcrumb }: CategoryTreeViewProps) {
+function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
     const { getMeRoots, getMeChildren } = useCategoryStore();
 
@@ -109,7 +109,7 @@ function CategoryTreeView({ breadcrumb }: CategoryTreeViewProps) {
     const pathname = usePathname();
 
     useEffect(() => {
-        if(!breadcrumb.value) return;
+        if(!anchor.value) return;
 
         const currentPath = pathname.substring('/workspace/dailyboard/'.length);
         if (!currentPath) {
@@ -127,7 +127,7 @@ function CategoryTreeView({ breadcrumb }: CategoryTreeViewProps) {
         }
         
         setExpandedItems(newExpandedItems);
-    }, [breadcrumb.value, pathname]);
+    }, [anchor.value, pathname]);
 
     const handleExpandedItemsChange = (event: unknown, itemIds: string[]) => {
         const newlyExpanded = itemIds.find(id => !expandedItems.includes(id));
@@ -158,7 +158,7 @@ function CategoryTreeView({ breadcrumb }: CategoryTreeViewProps) {
                     getMeChildren={getMeChildren}
                     onSelect={(categoryId: string) => {
                         router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
-                        breadcrumb.set(null);
+                        anchor.set(null);
                     }}
                 />
             ))}
@@ -168,15 +168,7 @@ function CategoryTreeView({ breadcrumb }: CategoryTreeViewProps) {
 
 //
 
-function CategoryTreeItem({ 
-    category, 
-    getMeChildren,
-    onSelect 
-}: { 
-    category: StoredCategory; 
-    getMeChildren: (parentId: string | null) => StoredCategory[];
-    onSelect: (categoryId: string) => void;
-}) {
+function CategoryTreeItem({ category, getMeChildren, onSelect }: CategoryTreeItemProps) {
     const children = getMeChildren(category.id);
     const hasChildren = children.length > 0;
 

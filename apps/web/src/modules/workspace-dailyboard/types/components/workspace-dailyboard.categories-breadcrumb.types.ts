@@ -1,24 +1,26 @@
+import { StoredCategory } from "@/src/heute-store/types/category.types";
+
 export interface CategoriesBreadcrumbProps {
     categories: string[];
 }
 
 export interface CategoryMenuProps {
-    breadcrumb: BreadcrumbRef;
+    anchor: AnchorRef;
 }
 
 export interface CategoryTreeViewProps {
-    breadcrumb: BreadcrumbRef;
+    anchor: AnchorRef;
 }
 
 export interface CategoryTreeItemProps {
-    category: string;
-    getMeChildren: (category: string) => string[];
+    category: StoredCategory;
+    getMeChildren: (parentId: string | null) => StoredCategory[];
     onSelect: (categoryId: string) => void;
 }
 
 //
 
-export interface BreadcrumbRef { 
+export interface AnchorRef { 
     value: HTMLElement | null; 
     set: (el: HTMLElement | null) => void 
 }
