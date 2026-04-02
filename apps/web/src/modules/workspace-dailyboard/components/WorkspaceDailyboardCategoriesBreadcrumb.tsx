@@ -1,17 +1,20 @@
+"use clients";
 import { Box, Menu, Typography, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { SimpleTreeView, TreeItem } from '@mui/x-tree-view';
+import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
-import { Category } from "@/src/modules/category/types/category.types";
 import { StoredCategory } from "@/src/heute-store/types/category.types";
+import { useRouter } from "next/navigation";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { categories: string[] }) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { getMeRoots, getMeChildren } = useCategoryStore();
     const roots = getMeRoots();
+
+    const router = useRouter();
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
         setAnchorEl(event.currentTarget);
@@ -22,8 +25,8 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
     };
 
     const handleSelect = (categoryId: string) => {
-        console.log("Selected category:", categoryId);
-        handleClose(); // Sadece seçim yapıldığında kapat
+        router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
+        handleClose();
     };
 
     const categoryItems = categories.map((category) => ({ name: category }));
@@ -52,7 +55,17 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-                slotProps={{ paper: { sx: { width: 250, maxHeight: 400 } } }}
+                slotProps={{ 
+                    paper: { 
+                        sx: { 
+                            width: 250, 
+                            maxHeight: 400,
+                            [`& .${treeItemClasses.content}`]: {
+                                borderRadius: 0
+                            }
+                        } 
+                    } 
+                }}
             >
                 <SimpleTreeView>
                     {roots.map((category) => (
