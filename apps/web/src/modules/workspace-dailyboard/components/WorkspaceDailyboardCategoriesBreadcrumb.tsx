@@ -153,7 +153,7 @@ function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
     };
 
     return (
-        <SimpleTreeView
+        <StyledTreeView
             expandedItems={expandedItems}
             onExpandedItemsChange={handleExpandedItemsChange}
             selectedItems={selectedItem}
@@ -177,9 +177,26 @@ function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
                     }}
                 />
             ))}
-        </SimpleTreeView>
+        </StyledTreeView>
     );
 }
+
+const StyledTreeView = styled(SimpleTreeView)(({ theme }) => ({
+    minHeight: 160,
+    maxHeight: 320,
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    overflowY: "auto",
+    '&::-webkit-scrollbar': {
+        width: 8,
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: alpha(theme.palette.text.primary, 0.2),
+        borderRadius: 4,
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+        backgroundColor: alpha(theme.palette.text.primary, 0.3),
+    },
+}));
 
 //
 
@@ -217,7 +234,7 @@ const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
     height: 32,
     borderRadius: theme.spacing(0.75),
     padding: theme.spacing(0, 1),
-    margin: theme.spacing(0, 1, 0.5, 1),
+    margin: theme.spacing(0, 1, 1, 1),
   },
   [`& .${treeItemClasses.groupTransition}`]: {
     marginLeft: theme.spacing(3),
