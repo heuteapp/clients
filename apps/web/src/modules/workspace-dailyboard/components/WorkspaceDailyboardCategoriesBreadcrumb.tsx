@@ -42,13 +42,19 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
                 anchorEl={breadcrumbEl}
                 open={open}
                 onClose={() => setBreadcrumbEl(null)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'center' }}
                 slotProps={{ 
                     paper: { 
                         sx: { 
-                            width: 250, 
+                            minWidth: 300, 
+                            width: breadcrumbEl ? breadcrumbEl.offsetWidth : 'auto',
                             maxHeight: 400,
+                            border: "1px solid",
+                            borderColor: 'divider',
+                            backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.04))',
+                            borderRadius: 0.5,
+                            marginTop: 1,
                             [`& .${treeItemClasses.content}`]: {
                                 borderRadius: 0
                             }
