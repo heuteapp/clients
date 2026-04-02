@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoriesBreadcrumbProps, CategoryMenuProps, CategoryTreeItemProps, CategoryTreeViewProps } from "../types/components/workspace-dailyboard.categories-breadcrumb.types";
+import { alpha, borderRadius, padding, Stack } from "@mui/system";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: CategoriesBreadcrumbProps) {
     const [breadcrumbEl, setBreadcrumbEl] = useState<null | HTMLElement>(null);
@@ -159,6 +160,11 @@ function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
             onSelectedItemsChange={(_, itemIds) => {
                 setSelectedItem(itemIds as string);
             }}
+            slots={{
+                expandIcon: ExpandIcon,
+                collapseIcon: CollapseIcon,
+                endIcon: EndIcon,
+            }}
         >
             {getMeRoots().map((category) => (
                 <CategoryTreeItem 
@@ -206,13 +212,48 @@ function CategoryTreeItem({ category, getMeChildren, onSelect }: CategoryTreeIte
 }
 
 const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
-    [`& .${treeItemClasses.content}`]: {
-        borderRadius: theme.spacing(0.5),
-        '&:hover': {
-            backgroundColor: theme.palette.action.hover,
-        },
+  [`& .${treeItemClasses.content}`]: {
+    width: "auto",
+    height: 32,
+    borderRadius: theme.spacing(0.75),
+    padding: theme.spacing(0, 1),
+    margin: theme.spacing(0.5, 1),
+  },
+  [`& .${treeItemClasses.groupTransition}`]: {
+    marginLeft: theme.spacing(3),
+    paddingLeft: 9,
+    position: "relative",
+
+    // border kaldırıyoruz
+    borderLeft: "none",
+
+    // custom çizgi
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      left: 0,
+      top: 0,
+      bottom: theme.spacing(0.75),
+      width: 1,
+      borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
     },
-    [`& .${treeItemClasses.label}`]: {
-        fontSize: '0.875rem',
-    }
+  },
 }));
+
+import IndeterminateCheckBoxRoundedIcon from '@mui/icons-material/IndeterminateCheckBoxRounded';
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+
+function ExpandIcon(props: React.PropsWithoutRef<typeof AddBoxRoundedIcon>) {
+  return <AddBoxRoundedIcon {...props} sx={{ opacity: 0.8 }} />;
+}
+
+function CollapseIcon(
+  props: React.PropsWithoutRef<typeof IndeterminateCheckBoxRoundedIcon>,
+) {
+  return <IndeterminateCheckBoxRoundedIcon {...props} sx={{ opacity: 0.8 }} />;
+}
+
+function EndIcon(props: React.PropsWithoutRef<typeof CategoryOutlinedIcon>) {
+  return <CategoryOutlinedIcon {...props} sx={{ opacity: 0.8 }} />;
+}
