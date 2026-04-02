@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { StoredCategory } from "@/src/heute-store/types/category.types";
 import { usePathname, useRouter } from "next/navigation";
+import { CategoriesBreadcrumbProps, CategoryMenuProps, CategoryTreeViewProps } from "../types/components/workspace-dailyboard.categories-breadcrumb.types";
 
-export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { categories: string[] }) {
+export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: CategoriesBreadcrumbProps) {
     const [breadcrumbEl, setBreadcrumbEl] = useState<null | HTMLElement>(null);
     const categoryItems = categories.map((category) => ({ name: category }));
 
@@ -32,7 +33,7 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
                 <DropDownIcon />
             </CategoriesBreadcrumb>
 
-            <CategoryMenu breadcrumbEl={breadcrumbEl} setBreadcrumbEl={setBreadcrumbEl} />
+            <CategoryMenu breadcrumb={{ value: breadcrumbEl, set: setBreadcrumbEl }} />
         </>
     );
 }
@@ -65,20 +66,20 @@ const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
 //
 
 
-function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLElement | null; setBreadcrumbEl: (el: HTMLElement | null) => void }) {
+function CategoryMenu({ breadcrumb }: CategoryMenuProps) {
 
     return(
         <Menu
-            anchorEl={breadcrumbEl}
-            open={Boolean(breadcrumbEl)}
-            onClose={() => setBreadcrumbEl(null)}
+            anchorEl={breadcrumb.value}
+            open={Boolean(breadcrumb.value)}
+            onClose={() => breadcrumb.set(null)}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             transformOrigin={{ vertical: 'top', horizontal: 'left' }}
             slotProps={{ 
                 paper: { 
                     sx: { 
                         minWidth: 200, 
-                        width: breadcrumbEl ? breadcrumbEl.offsetWidth : 'auto',
+                        width: breadcrumb.value ? breadcrumb.value.offsetWidth : 'auto',
                         maxHeight: 400,
                         border: "1px solid",
                         borderColor: 'divider',
@@ -92,14 +93,14 @@ function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLEle
                 } 
             }}
         >
-            <CategoryTreeView breadcrumbEl={breadcrumbEl} setBreadcrumbEl={setBreadcrumbEl} />
+            <CategoryTreeView breadcrumb={breadcrumb} />
         </Menu>
     )
 }
 
 //
 
-function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLElement | null; setBreadcrumbEl: (el: HTMLElement | null) => void }) {
+function CategoryTreeView({ breadcrumb }: CategoryTreeViewProps) {
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
     const { getMeRoots, getMeChildren } = useCategoryStore();
 
@@ -108,7 +109,7 @@ function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTM
     const pathname = usePathname();
 
     useEffect(() => {
-        if(!breadcrumbEl) return;
+        if(!breadcrumb.value) return;
 
         const currentPath = pathname.substring('/workspace/dailyboard/'.length);
         if (!currentPath) {
@@ -126,7 +127,7 @@ function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTM
         }
         
         setExpandedItems(newExpandedItems);
-    }, [breadcrumbEl, pathname]);
+    }, [breadcrumb.value, pathname]);
 
     const handleExpandedItemsChange = (event: unknown, itemIds: string[]) => {
         const newlyExpanded = itemIds.find(id => !expandedItems.includes(id));
@@ -157,7 +158,7 @@ function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTM
                     getMeChildren={getMeChildren}
                     onSelect={(categoryId: string) => {
                         router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
-                        setBreadcrumbEl(null);
+                        breadcrumb.set(null);
                     }}
                 />
             ))}
