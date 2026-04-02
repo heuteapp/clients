@@ -45,6 +45,8 @@ function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLEle
     const pathname = usePathname();
 
     useEffect(() => {
+        if(!breadcrumbEl) return;
+
         const currentPath = pathname.substring('/workspace/dailyboard/'.length);
         if (!currentPath) {
             setExpandedItems([]);
@@ -61,7 +63,24 @@ function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLEle
         }
         
         setExpandedItems(newExpandedItems);
-    }, [pathname]);
+    }, [breadcrumbEl, pathname]);
+
+    const handleExpandedItemsChange = (event: unknown, itemIds: string[]) => {
+        const newlyExpanded = itemIds.find(id => !expandedItems.includes(id));
+        
+        if (newlyExpanded) {
+            const parts = newlyExpanded.split('/');
+            const allParents: string[] = [];
+            
+            for (let i = 1; i < parts.length; i++) {
+            allParents.push(parts.slice(0, i).join('/'));
+            }
+            
+            setExpandedItems([...allParents, newlyExpanded]);
+        } else {
+            setExpandedItems(itemIds);
+        }
+    };
 
     return(
         <Menu
@@ -89,7 +108,8 @@ function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLEle
             }}
         >
             <SimpleTreeView
-                defaultExpandedItems={expandedItems}
+                expandedItems={expandedItems}
+                onExpandedItemsChange={handleExpandedItemsChange}
             >
                 {getMeRoots().map((category) => (
                     <CategoryTreeItem 
