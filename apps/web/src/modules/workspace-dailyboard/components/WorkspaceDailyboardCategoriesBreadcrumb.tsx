@@ -184,6 +184,7 @@ function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
 const StyledTreeView = styled(SimpleTreeView)(({ theme }) => ({
     minHeight: 160,
     maxHeight: 320,
+    margin: theme.spacing(1, 0),
     borderBottom: `1px solid ${theme.palette.divider}`,
     overflowY: "auto",
     '&::-webkit-scrollbar': {
