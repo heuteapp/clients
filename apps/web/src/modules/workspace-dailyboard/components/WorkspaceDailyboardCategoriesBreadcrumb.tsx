@@ -9,31 +9,20 @@ import { StoredCategory } from "@/src/heute-store/types/category.types";
 import { useRouter } from "next/navigation";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { categories: string[] }) {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const { getMeRoots, getMeChildren } = useCategoryStore();
-    const roots = getMeRoots();
-
     const router = useRouter();
-
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleSelect = (categoryId: string) => {
-        router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
-        handleClose();
-    };
 
     const categoryItems = categories.map((category) => ({ name: category }));
 
+    const [breadcrumbEl, setBreadcrumbEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(breadcrumbEl);
+
+    const { getMeRoots, getMeChildren } = useCategoryStore();
+
     return (
         <>
-            <CategoriesBreadcrumb onClick={handleClick}>
+            <CategoriesBreadcrumb onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+                setBreadcrumbEl(event.currentTarget);
+            }}>
                 {categories.length === 0 ? (
                     <SelectCategoryPlaceholder>Select a category</SelectCategoryPlaceholder>
                 ) : (
@@ -50,9 +39,9 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
             </CategoriesBreadcrumb>
 
             <Menu
-                anchorEl={anchorEl}
+                anchorEl={breadcrumbEl}
                 open={open}
-                onClose={handleClose}
+                onClose={() => setBreadcrumbEl(null)}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                 slotProps={{ 
@@ -68,12 +57,15 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
                 }}
             >
                 <SimpleTreeView>
-                    {roots.map((category) => (
+                    {getMeRoots().map((category) => (
                         <CategoryTreeItem 
                             key={category.id} 
                             category={category} 
                             getMeChildren={getMeChildren}
-                            onSelect={handleSelect}
+                            onSelect={(categoryId: string) => {
+                                router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
+                                setBreadcrumbEl(null);
+                            }}
                         />
                     ))}
                 </SimpleTreeView>
@@ -82,7 +74,6 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
     );
 }
 
-// Recursive TreeItem
 function CategoryTreeItem({ 
     category, 
     getMeChildren,
@@ -95,23 +86,19 @@ function CategoryTreeItem({
     const children = getMeChildren(category.id);
     const hasChildren = children.length > 0;
 
-    const handleClick = (event: React.MouseEvent) => {
-        event.stopPropagation(); // Event propagation'ı durdur
-        
-        if (!hasChildren) {
-            // Sadece leaf node ise seç
-            onSelect(category.id);
-        }
-        // Parent ise hiçbir şey yapma - MUI X zaten açılma/kapanmayı yönetir
-    };
-
     return (
         <TreeItem 
             itemId={category.id} 
             label={category.name}
-            onClick={handleClick}
+            onClick={(event: React.MouseEvent) => {
+                event.stopPropagation();
+                
+                if (!hasChildren) {
+                    onSelect(category.id);
+                }
+            }}
             sx={{
-                '& .MuiTreeItem-label': {
+                [`& .${treeItemClasses.label}`]: {
                     fontSize: '0.875rem',
                     py: 0.5,
                     cursor: 'pointer',
@@ -130,7 +117,6 @@ function CategoryTreeItem({
     );
 }
 
-// Styled Components
 const CategoriesBreadcrumb = styled(Box)(({ theme }) => ({
     border: "1px solid",
     borderColor: theme.palette.divider,
