@@ -101,8 +101,9 @@ function CategoryMenu({ anchor }: CategoryMenuProps) {
 
 function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
-    const { getMeRoots, getMeChildren } = useCategoryStore();
+    const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
+    const { getMeRoots, getMeChildren } = useCategoryStore();
 
     const router = useRouter();
     const pathname = usePathname();
@@ -113,19 +114,24 @@ function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
         const currentPath = pathname.substring('/workspace/dailyboard/'.length);
         if (!currentPath) {
             setExpandedItems([]);
+            setSelectedItem(null);
             return;
         }
         
         const parts = currentPath.split('/').filter(Boolean);
         const newExpandedItems: string[] = [];
         let current = '';
+        let lastItem = '';
         
         for (let i = 0; i < parts.length; i++) {
             current = current ? `${current}/${parts[i]}` : parts[i];
-            newExpandedItems.push(`me@${current}`);
+            const itemId = `me@${current}`;
+            newExpandedItems.push(itemId);
+            lastItem = itemId;
         }
         
         setExpandedItems(newExpandedItems);
+        setSelectedItem(lastItem);
     }, [anchor.value, pathname]);
 
     const handleExpandedItemsChange = (event: unknown, itemIds: string[]) => {
@@ -149,6 +155,10 @@ function CategoryTreeView({ anchor }: CategoryTreeViewProps) {
         <SimpleTreeView
             expandedItems={expandedItems}
             onExpandedItemsChange={handleExpandedItemsChange}
+            selectedItems={selectedItem}
+            onSelectedItemsChange={(_, itemIds) => {
+                setSelectedItem(itemIds as string);
+            }}
         >
             {getMeRoots().map((category) => (
                 <CategoryTreeItem 
