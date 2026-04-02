@@ -217,23 +217,19 @@ const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
     height: 32,
     borderRadius: theme.spacing(0.75),
     padding: theme.spacing(0, 1),
-    margin: theme.spacing(0.5, 1),
+    margin: theme.spacing(0, 1, 0.5, 1),
   },
   [`& .${treeItemClasses.groupTransition}`]: {
     marginLeft: theme.spacing(3),
-    paddingLeft: 9,
+    paddingLeft: theme.spacing(0.5),
     position: "relative",
 
-    // border kaldırıyoruz
-    borderLeft: "none",
-
-    // custom çizgi
     "&::before": {
       content: '""',
       position: "absolute",
       left: 0,
       top: 0,
-      bottom: theme.spacing(1.5),
+      bottom: theme.spacing(1),
       width: 1,
       borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
     },
