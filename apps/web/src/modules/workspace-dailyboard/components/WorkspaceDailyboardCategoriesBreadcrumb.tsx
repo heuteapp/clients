@@ -3,13 +3,15 @@ import { Box, Menu, Typography, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { StoredCategory } from "@/src/heute-store/types/category.types";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { categories: string[] }) {
+    const pathname = usePathname();
     const router = useRouter();
+    const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
     const categoryItems = categories.map((category) => ({ name: category }));
 
@@ -17,6 +19,25 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
     const open = Boolean(breadcrumbEl);
 
     const { getMeRoots, getMeChildren } = useCategoryStore();
+
+    useEffect(() => {
+        const currentPath = pathname.substring('/workspace/dailyboard/'.length);
+        if (!currentPath) {
+            setExpandedItems([]);
+            return;
+        }
+        
+        const parts = currentPath.split('/').filter(Boolean);
+        const newExpandedItems: string[] = [];
+        let current = '';
+        
+        for (let i = 0; i < parts.length; i++) {
+            current = current ? `${current}/${parts[i]}` : parts[i];
+            newExpandedItems.push(`me@${current}`);
+        }
+        
+        setExpandedItems(newExpandedItems);
+    }, [pathname]);
 
     return (
         <>
@@ -47,7 +68,7 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
                 slotProps={{ 
                     paper: { 
                         sx: { 
-                            minWidth: 300, 
+                            minWidth: 200, 
                             width: breadcrumbEl ? breadcrumbEl.offsetWidth : 'auto',
                             maxHeight: 400,
                             border: "1px solid",
@@ -62,7 +83,9 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
                     } 
                 }}
             >
-                <SimpleTreeView>
+                <SimpleTreeView
+                    defaultExpandedItems={expandedItems}
+                >
                     {getMeRoots().map((category) => (
                         <CategoryTreeItem 
                             key={category.id} 
@@ -93,7 +116,7 @@ function CategoryTreeItem({
     const hasChildren = children.length > 0;
 
     return (
-        <TreeItem 
+        <StyledTreeItem 
             itemId={category.id} 
             label={category.name}
             onClick={(event: React.MouseEvent) => {
@@ -101,13 +124,6 @@ function CategoryTreeItem({
                 
                 if (!hasChildren) {
                     onSelect(category.id);
-                }
-            }}
-            sx={{
-                [`& .${treeItemClasses.label}`]: {
-                    fontSize: '0.875rem',
-                    py: 0.5,
-                    cursor: 'pointer',
                 }
             }}
         >
@@ -119,7 +135,7 @@ function CategoryTreeItem({
                     onSelect={onSelect}
                 />
             ))}
-        </TreeItem>
+        </StyledTreeItem>
     );
 }
 
@@ -145,4 +161,16 @@ const SelectCategoryPlaceholder = styled(Typography)(({ theme }) => ({
 const DropDownIcon = styled(ArrowDropDownIcon)(({ theme }) => ({
     padding: `0 ${theme.spacing(1)} 0 ${theme.spacing(0.5)}`,
     color: theme.palette.text.secondary
+}));
+
+const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
+    [`& .${treeItemClasses.content}`]: {
+        borderRadius: theme.spacing(0.5),
+        '&:hover': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+    [`& .${treeItemClasses.label}`]: {
+        fontSize: '0.875rem',
+    }
 }));
