@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoriesBreadcrumbProps, CategoryMenuProps, CategoryTreeItemProps, CategoryTreeViewProps } from "../types/components/workspace-dailyboard.categories-breadcrumb.types";
-import { alpha, borderRadius, padding, Stack } from "@mui/system";
+import { alpha } from "@mui/system";
 
 export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: CategoriesBreadcrumbProps) {
     const [breadcrumbEl, setBreadcrumbEl] = useState<null | HTMLElement>(null);
@@ -233,7 +233,7 @@ const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
       position: "absolute",
       left: 0,
       top: 0,
-      bottom: theme.spacing(0.75),
+      bottom: theme.spacing(1.5),
       width: 1,
       borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
     },
