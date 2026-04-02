@@ -38,8 +38,41 @@ export function WorkspaceDailyboardCategoriesBreadcrumb({ categories }: { catego
 }
 
 function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLElement | null; setBreadcrumbEl: (el: HTMLElement | null) => void }) {
-    const { getMeRoots, getMeChildren } = useCategoryStore();
+
+    return(
+        <Menu
+            anchorEl={breadcrumbEl}
+            open={Boolean(breadcrumbEl)}
+            onClose={() => setBreadcrumbEl(null)}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+            slotProps={{ 
+                paper: { 
+                    sx: { 
+                        minWidth: 200, 
+                        width: breadcrumbEl ? breadcrumbEl.offsetWidth : 'auto',
+                        maxHeight: 400,
+                        border: "1px solid",
+                        borderColor: 'divider',
+                        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.04))',
+                        borderRadius: 0.5,
+                        marginTop: 1,
+                        [`& .${treeItemClasses.content}`]: {
+                            borderRadius: 0
+                        }
+                    } 
+                } 
+            }}
+        >
+            <CategoryTreeView breadcrumbEl={breadcrumbEl} setBreadcrumbEl={setBreadcrumbEl} />
+        </Menu>
+    )
+}
+
+function CategoryTreeView({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLElement | null; setBreadcrumbEl: (el: HTMLElement | null) => void }) {
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
+    const { getMeRoots, getMeChildren } = useCategoryStore();
+
 
     const router = useRouter();
     const pathname = usePathname();
@@ -82,49 +115,24 @@ function CategoryMenu({ breadcrumbEl, setBreadcrumbEl }: { breadcrumbEl: HTMLEle
         }
     };
 
-    return(
-        <Menu
-            anchorEl={breadcrumbEl}
-            open={Boolean(breadcrumbEl)}
-            onClose={() => setBreadcrumbEl(null)}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-            slotProps={{ 
-                paper: { 
-                    sx: { 
-                        minWidth: 200, 
-                        width: breadcrumbEl ? breadcrumbEl.offsetWidth : 'auto',
-                        maxHeight: 400,
-                        border: "1px solid",
-                        borderColor: 'divider',
-                        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.04))',
-                        borderRadius: 0.5,
-                        marginTop: 1,
-                        [`& .${treeItemClasses.content}`]: {
-                            borderRadius: 0
-                        }
-                    } 
-                } 
-            }}
+    return (
+        <SimpleTreeView
+            expandedItems={expandedItems}
+            onExpandedItemsChange={handleExpandedItemsChange}
         >
-            <SimpleTreeView
-                expandedItems={expandedItems}
-                onExpandedItemsChange={handleExpandedItemsChange}
-            >
-                {getMeRoots().map((category) => (
-                    <CategoryTreeItem 
-                        key={category.id} 
-                        category={category} 
-                        getMeChildren={getMeChildren}
-                        onSelect={(categoryId: string) => {
-                            router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
-                            setBreadcrumbEl(null);
-                        }}
-                    />
-                ))}
-            </SimpleTreeView>
-        </Menu>
-    )
+            {getMeRoots().map((category) => (
+                <CategoryTreeItem 
+                    key={category.id} 
+                    category={category} 
+                    getMeChildren={getMeChildren}
+                    onSelect={(categoryId: string) => {
+                        router.push(`/workspace/dailyboard/${categoryId.slice(3)}`);
+                        setBreadcrumbEl(null);
+                    }}
+                />
+            ))}
+        </SimpleTreeView>
+    );
 }
 
 function CategoryTreeItem({ 
