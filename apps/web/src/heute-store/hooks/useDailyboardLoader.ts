@@ -9,7 +9,7 @@ import { responseToDailyboard } from "@/src/api/responses/dailyboard.response";
 export const useDailyboardLoader = (): LoaderState => {
     const { state } = useAuthContext();
     const { loadMeDailyboard } = useDailyboardStore();
-    
+
     const pathname = usePathname();
     
     const [isLoading, setIsLoading] = useState(false);

@@ -140,6 +140,22 @@ export function dateToYYMMDDStr(date: Date): string | null {
 }
 
 /**
+ * Converts an ISO date string (YYYY-MM-DD) to a YYMMDDDate object.
+ * 
+ * @param isoDate - ISO date string (e.g., "2026-03-25")
+ * @returns YYMMDDDate object or null if invalid
+ */
+export function isoToYYMMDD(isoDate: string): YYMMDDDate | null {
+    const isoStr = isoToYYMMDDStr(isoDate);
+
+    if(!isoStr) {
+        return null;
+    }
+
+    return parseYYMMDD(isoStr);
+}
+
+/**
  * Converts an ISO date string (YYYY-MM-DD) to YYMMDD format.
  * 
  * @param isoDate - ISO date string (e.g., "2026-03-25")
