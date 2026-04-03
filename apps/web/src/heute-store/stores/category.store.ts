@@ -2,114 +2,177 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
-import { CategoryState, CategoryOwnerData, StoredCategory } from "@/src/heute-store/types/category.types";
+import { CategoryState, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
     devtools(
         immer((set, get) => ({
-            me: null,
-            users: {},
+            byId: {},
+            byParentId: {},
+            rootIds: [],
             userOrder: [],
 
             loadMe: (hierarchy: CategoryHierarchy) => {
-                set({ me: flattenToOwnerData('me', hierarchy) });
+                set((state) => {
+                    // Önce eski me verilerini temizle
+                    const meIds = Object.keys(state.byId).filter(id => id.startsWith('me@'));
+                    meIds.forEach(id => {
+                        delete state.byId[id];
+                    });
+                    
+                    Object.keys(state.byParentId).forEach(parentId => {
+                        if (parentId.startsWith('me@')) {
+                            delete state.byParentId[parentId];
+                        } else {
+                            state.byParentId[parentId] = state.byParentId[parentId].filter(childId => 
+                                !childId.startsWith('me@')
+                            );
+                        }
+                    });
+                    
+                    state.rootIds = state.rootIds.filter(id => !id.startsWith('me@'));
+                    
+                    // Yeni me verilerini ekle
+                    flattenToStore(state, 'me', hierarchy);
+                    
+                    if (!state.userOrder.includes('me')) {
+                        state.userOrder.push('me');
+                    }
+                });
             },
 
             loadUser: (user: string, hierarchy: CategoryHierarchy) => {
                 set((state) => {
+                    // Önce eski user verilerini temizle
+                    const userIds = Object.keys(state.byId).filter(id => id.startsWith(`${user}@`));
+                    userIds.forEach(id => {
+                        delete state.byId[id];
+                    });
+                    
+                    Object.keys(state.byParentId).forEach(parentId => {
+                        if (parentId.startsWith(`${user}@`)) {
+                            delete state.byParentId[parentId];
+                        } else {
+                            state.byParentId[parentId] = state.byParentId[parentId].filter(childId => 
+                                !childId.startsWith(`${user}@`)
+                            );
+                        }
+                    });
+                    
+                    state.rootIds = state.rootIds.filter(id => !id.startsWith(`${user}@`));
+                    
+                    // Yeni user verilerini ekle
+                    flattenToStore(state, user, hierarchy);
+                    
+                    // UserOrder'ı güncelle
                     state.userOrder = state.userOrder.filter(u => u !== user);
                     state.userOrder.push(user);
                     
-                    if (state.userOrder.length > 20) {
+                    // LRU cache: 20 user limit
+                    while (state.userOrder.length > 20) {
                         const oldestUser = state.userOrder.shift();
                         if (oldestUser) {
-                            delete state.users[oldestUser];
+                            const oldUserIds = Object.keys(state.byId).filter(id => id.startsWith(`${oldestUser}@`));
+                            oldUserIds.forEach(id => {
+                                delete state.byId[id];
+                            });
+                            
+                            Object.keys(state.byParentId).forEach(parentId => {
+                                if (parentId.startsWith(`${oldestUser}@`)) {
+                                    delete state.byParentId[parentId];
+                                } else {
+                                    state.byParentId[parentId] = state.byParentId[parentId].filter(childId => 
+                                        !childId.startsWith(`${oldestUser}@`)
+                                    );
+                                }
+                            });
+                            
+                            state.rootIds = state.rootIds.filter(id => !id.startsWith(`${oldestUser}@`));
                         }
                     }
-                    
-                    state.users[user] = flattenToOwnerData(user, hierarchy);
                 });
             },
 
             getMeChain: (path: string) => {
-                const me = get().me;
-                if (!me) return null;
-                return getChainFromData(me, path);
+                const state = get();
+                return getChainFromStore(state, 'me', path);
             },
 
             getMeTree: (path: string) => {
-                const me = get().me;
-                if (!me) return null;
-                return getTreeFromData(me, path);
+                const state = get();
+                return getTreeFromStore(state, 'me', path);
             },
 
             getMeHierarchy: () => {
-                const me = get().me;
-                if (!me) return null;
-                return getHierarchyFromData(me);
+                const state = get();
+                return getHierarchyFromStore(state, 'me');
             },
             
             getMeRoots: () => {
-                const me = get().me;
-                if (!me) return [];
-                return me.rootIds.map(id => me.byId[id]);
+                const state = get();
+                return state.rootIds
+                    .filter(id => id.startsWith('me@'))
+                    .map(id => state.byId[id]);
             },
 
             getMeChildren: (parentId: string | null) => {
-                const me = get().me;
-                if (!me) return [];
+                const state = get();
                 
                 if (parentId === null) {
-                    return me.rootIds.map(id => me.byId[id]);
+                    return state.rootIds
+                        .filter(id => id.startsWith('me@'))
+                        .map(id => state.byId[id]);
                 }
                 
-                const childIds = me.byParentId[parentId] || [];
-                return childIds.map(id => me.byId[id]);
+                if (!parentId.startsWith('me@')) return [];
+                
+                const childIds = state.byParentId[parentId] || [];
+                return childIds.map(id => state.byId[id]);
             },
 
             getUserChain: (user: string, path: string) => {
-                const userData = get().users[user];
-                if (!userData) return null;
-                return getChainFromData(userData, path);
+                const state = get();
+                return getChainFromStore(state, user, path);
             },
 
             getUserTree: (user: string, path: string) => {
-                const userData = get().users[user];
-                if (!userData) return null;
-                return getTreeFromData(userData, path);
+                const state = get();
+                return getTreeFromStore(state, user, path);
             },
 
             getUserHierarchy: (user: string) => {
-                const userData = get().users[user];
-                if (!userData) return null;
-                return getHierarchyFromData(userData);
+                const state = get();
+                return getHierarchyFromStore(state, user);
             },
 
             getUserRoots: (user: string) => {
-                const userData = get().users[user];
-                if (!userData) return [];
-                return userData.rootIds.map(id => userData.byId[id]);
+                const state = get();
+                const userRootIds = state.rootIds.filter(id => id.startsWith(`${user}@`));
+                if (userRootIds.length === 0) return null;
+                return userRootIds.map(id => state.byId[id]);
             },
 
             getUserChildren: (user: string, parentId: string | null) => {
-                const userData = get().users[user];
-                if (!userData) return [];
+                const state = get();
                 
                 if (parentId === null) {
-                    return userData.rootIds.map(id => userData.byId[id]);
+                    const userRootIds = state.rootIds.filter(id => id.startsWith(`${user}@`));
+                    if (userRootIds.length === 0) return null;
+                    return userRootIds.map(id => state.byId[id]);
                 }
                 
-                const childIds = userData.byParentId[parentId] || [];
-                return childIds.map(id => userData.byId[id]);
+                if (!parentId.startsWith(`${user}@`)) return null;
+                
+                const childIds = state.byParentId[parentId] || [];
+                if (childIds.length === 0) return null;
+                return childIds.map(id => state.byId[id]);
             },
 
             initializeCategory: (path: string) => {
                 const names = path.split('/').filter(Boolean);
+                if (names.length === 0) return;
 
                 set((state) => {
-                    const me = state.me;
-                    if (!me) return;
-
                     let currentParentId: string | null = null;
                     let currentPath = "";
 
@@ -117,51 +180,83 @@ export const useCategoryStore = create<CategoryState>()(
                         currentPath = currentPath ? `${currentPath}/${name}` : name;
                         const id = `me@${currentPath}`;
 
-                        if (me.byId[id]) {
+                        if (state.byId[id]) {
                             currentParentId = id;
                             continue;
                         }
 
-                        me.byId[id] = {
+                        state.byId[id] = {
                             id,
                             name,
                             parentId: currentParentId,
                         };
 
                         if (currentParentId === null) {
-                            me.rootIds.push(id);
+                            state.rootIds.push(id);
+                            state.rootIds = sortChildrenFromStore(state, null);
                         } else {
-                            if (!me.byParentId[currentParentId]) {
-                                me.byParentId[currentParentId] = [];
+                            if (!state.byParentId[currentParentId]) {
+                                state.byParentId[currentParentId] = [];
                             }
-                            me.byParentId[currentParentId].push(id);
-                            me.byParentId[currentParentId] = sortChildren(me, currentParentId);
+                            state.byParentId[currentParentId].push(id);
+                            state.byParentId[currentParentId] = sortChildrenFromStore(state, currentParentId);
                         }
 
                         currentParentId = id;
                     }
                 });
             },
+
             sortMe: () => {
                 set((state) => {
-                    const me = state.me;
-                    if (!me) return;
-
-                    sortRecursive(me, null);
+                    sortRecursiveFromStore(state, null, 'me');
                 });
             },
 
             hasUser: (user: string) => {
-                return !!get().users[user];
+                return get().userOrder.includes(user);
             },
 
             clearMe: () => {
-                set({ me: null });
+                set((state) => {
+                    const meIds = Object.keys(state.byId).filter(id => id.startsWith('me@'));
+                    meIds.forEach(id => {
+                        delete state.byId[id];
+                    });
+                    
+                    Object.keys(state.byParentId).forEach(parentId => {
+                        if (parentId.startsWith('me@')) {
+                            delete state.byParentId[parentId];
+                        } else {
+                            state.byParentId[parentId] = state.byParentId[parentId].filter(childId => 
+                                !childId.startsWith('me@')
+                            );
+                        }
+                    });
+                    
+                    state.rootIds = state.rootIds.filter(id => !id.startsWith('me@'));
+                    state.userOrder = state.userOrder.filter(u => u !== 'me');
+                });
             },
 
             clearUser: (user: string) => {
                 set((state) => {
-                    delete state.users[user];
+                    const userIds = Object.keys(state.byId).filter(id => id.startsWith(`${user}@`));
+                    userIds.forEach(id => {
+                        delete state.byId[id];
+                    });
+                    
+                    Object.keys(state.byParentId).forEach(parentId => {
+                        if (parentId.startsWith(`${user}@`)) {
+                            delete state.byParentId[parentId];
+                        } else {
+                            state.byParentId[parentId] = state.byParentId[parentId].filter(childId => 
+                                !childId.startsWith(`${user}@`)
+                            );
+                        }
+                    });
+                    
+                    state.rootIds = state.rootIds.filter(id => !id.startsWith(`${user}@`));
                     state.userOrder = state.userOrder.filter(u => u !== user);
                 });
             },
@@ -172,53 +267,59 @@ export const useCategoryStore = create<CategoryState>()(
     )
 );
 
-const flattenToOwnerData = (owner: string, hierarchy: CategoryHierarchy): CategoryOwnerData => {
-    const byId: Record<string, StoredCategory> = {};
-    const byParentId: Record<string, string[]> = {};
-    const rootIds: string[] = [];
-    
+const flattenToStore = (
+    state: CategoryState, 
+    owner: string, 
+    hierarchy: CategoryHierarchy
+) => {
     const flatten = (node: CategoryTree, parentId: string | null, path: string = "") => {
         const currentPath = path ? `${path}/${node.name}` : node.name;
         const id = `${owner}@${currentPath}`;
         
-        byId[id] = {
+        state.byId[id] = {
             id,
             name: node.name,
             parentId,
         };
         
         if (parentId === null) {
-            rootIds.push(id);
+            state.rootIds.push(id);
         } else {
-            if (!byParentId[parentId]) byParentId[parentId] = [];
-            byParentId[parentId].push(id);
+            if (!state.byParentId[parentId]) {
+                state.byParentId[parentId] = [];
+            }
+            state.byParentId[parentId].push(id);
         }
         
         node.children?.forEach(child => flatten(child, id, currentPath));
     };
     
     hierarchy.roots.forEach(root => flatten(root, null));
-    
-    return { byId, byParentId, rootIds };
 };
 
-const getChainFromData = (data: CategoryOwnerData, path: string): CategoryChain | null => {
-    const names = path.split('/');
+const getChainFromStore = (
+    state: CategoryState,
+    owner: string,
+    path: string
+): CategoryChain | null => {
+    const names = path.split('/').filter(Boolean);
+    if (names.length === 0) return null;
     
     const buildChain = (currentId: string | null, index: number): CategoryChain | null => {
         if (index >= names.length) return null;
         
         const candidates = currentId === null 
-            ? data.rootIds 
-            : (data.byParentId[currentId] || []);
+            ? state.rootIds.filter(id => id.startsWith(`${owner}@`))
+            : (state.byParentId[currentId] || []).filter(id => id.startsWith(`${owner}@`));
         
         const matchedId = candidates.find(id => 
-            data.byId[id].name === names[index]
+            state.byId[id]?.name === names[index]
         );
         
         if (!matchedId) return null;
         
-        const category = data.byId[matchedId];
+        const category = state.byId[matchedId];
+        if (!category) return null;
         
         if (index === names.length - 1) {
             return { name: category.name };
@@ -236,29 +337,36 @@ const getChainFromData = (data: CategoryOwnerData, path: string): CategoryChain 
     return buildChain(null, 0);
 };
 
-const getTreeFromData = (data: CategoryOwnerData, path: string): CategoryTree | null => {
-    const names = path.split('/');
+const getTreeFromStore = (
+    state: CategoryState,
+    owner: string,
+    path: string
+): CategoryTree | null => {
+    const names = path.split('/').filter(Boolean);
+    if (names.length === 0) return null;
     
     const findNode = (currentId: string | null, index: number): CategoryTree | null => {
         if (index >= names.length) return null;
         
         const candidates = currentId === null 
-            ? data.rootIds 
-            : (data.byParentId[currentId] || []);
+            ? state.rootIds.filter(id => id.startsWith(`${owner}@`))
+            : (state.byParentId[currentId] || []).filter(id => id.startsWith(`${owner}@`));
         
         const matchedId = candidates.find(id => 
-            data.byId[id].name === names[index]
+            state.byId[id]?.name === names[index]
         );
         
         if (!matchedId) return null;
         
-        const category = data.byId[matchedId];
+        const category = state.byId[matchedId];
+        if (!category) return null;
         
         if (index === names.length - 1) {
             const buildFullTree = (id: string): CategoryTree => {
+                const cat = state.byId[id];
                 return {
-                    name: data.byId[id].name,
-                    children: (data.byParentId[id] || []).map(buildFullTree),
+                    name: cat.name,
+                    children: (state.byParentId[id] || []).map(buildFullTree),
                 };
             };
             return buildFullTree(matchedId);
@@ -276,33 +384,42 @@ const getTreeFromData = (data: CategoryOwnerData, path: string): CategoryTree | 
     return findNode(null, 0);
 };
 
-const getHierarchyFromData = (data: CategoryOwnerData): CategoryHierarchy => {
-    const { byId, byParentId, rootIds } = data;
+const getHierarchyFromStore = (
+    state: CategoryState,
+    owner: string
+): CategoryHierarchy | null => {
+    const ownerRootIds = state.rootIds.filter(id => id.startsWith(`${owner}@`));
+    if (ownerRootIds.length === 0) return null;
     
     const buildTree = (id: string): CategoryTree => {
-        const category = byId[id];
+        const category = state.byId[id];
         return {
             name: category.name,
-            children: (byParentId[id] || []).map(buildTree),
+            children: (state.byParentId[id] || []).map(buildTree),
         };
     };
     
     return {
-        roots: rootIds.map(buildTree),
+        roots: ownerRootIds.map(buildTree),
     };
 };
 
-const sortChildren = (data: CategoryOwnerData, parentId: string | null): string[] => {
+const sortChildrenFromStore = (
+    state: CategoryState,
+    parentId: string | null
+): string[] => {
     const childIds = parentId === null 
-        ? data.rootIds 
-        : (data.byParentId[parentId] || []);
+        ? [...state.rootIds]
+        : [...(state.byParentId[parentId] || [])];
     
-    return [...childIds].sort((a, b) => {
-        const categoryA = data.byId[a];
-        const categoryB = data.byId[b];
+    return childIds.sort((a, b) => {
+        const categoryA = state.byId[a];
+        const categoryB = state.byId[b];
         
-        const aHasChildren = (data.byParentId[a]?.length || 0) > 0;
-        const bHasChildren = (data.byParentId[b]?.length || 0) > 0;
+        if (!categoryA || !categoryB) return 0;
+        
+        const aHasChildren = (state.byParentId[a]?.length || 0) > 0;
+        const bHasChildren = (state.byParentId[b]?.length || 0) > 0;
         
         if (aHasChildren !== bHasChildren) {
             return aHasChildren ? -1 : 1;
@@ -312,18 +429,28 @@ const sortChildren = (data: CategoryOwnerData, parentId: string | null): string[
     });
 };
 
-const sortRecursive = (data: CategoryOwnerData, parentId: string | null) => {
-    const sorted = sortChildren(data, parentId);
-
+const sortRecursiveFromStore = (
+    state: CategoryState,
+    parentId: string | null,
+    owner: string
+) => {
+    const childIds = parentId === null
+        ? state.rootIds.filter(id => id.startsWith(`${owner}@`))
+        : (state.byParentId[parentId] || []).filter(id => id.startsWith(`${owner}@`));
+    
+    const sorted = sortChildrenFromStore(state, parentId);
+    
     if (parentId === null) {
-        data.rootIds = sorted;
-    } else {
-        data.byParentId[parentId] = sorted;
+        // Sadece owner'a ait rootIds'leri güncelle
+        const otherRoots = state.rootIds.filter(id => !id.startsWith(`${owner}@`));
+        state.rootIds = [...otherRoots, ...sorted.filter(id => id.startsWith(`${owner}@`))];
+    } else if (parentId && parentId.startsWith(`${owner}@`)) {
+        state.byParentId[parentId] = sorted;
     }
-
-    sorted.forEach(childId => {
-        if (data.byParentId[childId]) {
-            sortRecursive(data, childId);
+    
+    childIds.forEach(childId => {
+        if (state.byParentId[childId] && state.byParentId[childId].length > 0) {
+            sortRecursiveFromStore(state, childId, owner);
         }
     });
 };

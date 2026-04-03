@@ -3,10 +3,9 @@ import { Category, CategoryChain, CategoryTree, CategoryHierarchy } from "@/src/
 //
 
 export interface CategoryState {
-    me: CategoryOwnerData | null;
-    users: {   
-        [user: string]: CategoryOwnerData
-    };
+    byId: Record<string, StoredCategory>;
+    byParentId: Record<string, string[]>;
+    rootIds: string[];
     userOrder: string[];
 
     loadMe: (hierarchy: CategoryHierarchy) => void;
@@ -31,12 +30,6 @@ export interface CategoryState {
 
     clearMe: () => void;
     clearUser: (user: string) => void;
-}
-
-export interface CategoryOwnerData {
-    byId: Record<string, StoredCategory>;
-    byParentId: Record<string, string[]>;
-    rootIds: string[];
 }
 
 //
