@@ -1,13 +1,14 @@
 import { GridRect } from "@/src/modules/shared/types/common";
 
 export interface Layout {
-    columnCount: number
-    rowCount: number
+    name: string;
+    columnCount: number;
+    rowCount: number;
     sections: LayoutSection[];
 }
 
 export interface LayoutSection {
-    name: string
+    name: string;
     position: GridRect;
 }
 
