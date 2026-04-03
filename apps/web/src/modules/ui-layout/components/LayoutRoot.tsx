@@ -25,7 +25,7 @@ export function LayoutRoot(props: LayoutRootProps) {
   }, [registry])
 
   const matrix = Array.from({ length: props.rowCount }, () =>
-    Array.from({ length: props.columnCount }, () => ".")
+    Array.from({ length: props.colCount }, () => ".")
   );
 
   sections.forEach(s => {
@@ -47,7 +47,7 @@ export function LayoutRoot(props: LayoutRootProps) {
       ref={layoutRef} 
       className={style.layout}
       style={{
-        gridTemplateColumns: `repeat(${props.columnCount}, var(--cell-size-full))`,
+        gridTemplateColumns: `repeat(${props.colCount}, var(--cell-size-full))`,
         gridTemplateRows: `repeat(${props.rowCount}, var(--cell-size-full))`,
         gridTemplateAreas
       }}
