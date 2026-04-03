@@ -1,5 +1,5 @@
 "use clients";
-import { Box, Menu, Typography, styled } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Menu, MenuItem, TextField, Typography, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
@@ -80,7 +80,6 @@ function CategoryMenu({ anchor }: CategoryMenuProps) {
                     sx: { 
                         minWidth: 200, 
                         width: anchor.value ? anchor.value.offsetWidth : 'auto',
-                        maxHeight: 400,
                         border: "1px solid",
                         borderColor: 'divider',
                         backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.04))',
@@ -94,9 +93,15 @@ function CategoryMenu({ anchor }: CategoryMenuProps) {
             }}
         >
             <CategoryTreeView anchor={anchor} />
+            <NewCategoryItem />
         </Menu>
     )
 }
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    width: "auto",
+    margin: theme.spacing(0, 1),
+}));
 
 //
 
@@ -270,4 +275,90 @@ function CollapseIcon(
 
 function EndIcon(props: React.PropsWithoutRef<typeof CategoryOutlinedIcon>) {
   return <CategoryOutlinedIcon {...props} sx={{ opacity: 0.8 }} />;
+}
+
+//
+
+import AddIcon from '@mui/icons-material/Add';
+import { heuteApi } from "@/src/api/heuteApi";
+
+function NewCategoryItem() {
+    const [open, setOpen] = useState(false);
+    const [categoryName, setCategoryName] = useState('');
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    const handleClickOpen = () => {
+        setOpen(true);
+        setCategoryName('');
+    };
+
+    const handleClose = () => {
+        if (!loading) {
+            setOpen(false);
+            setCategoryName('');
+        }
+    };
+
+    const handleCreate = async () => {
+        if (!categoryName.trim()) return;
+        
+        setLoading(true);
+        try {
+            await heuteApi.me.categories.create(categoryName);
+            
+            router.push(`/workspace/dailyboard/${categoryName}`);
+            
+            handleClose();
+        } catch (error) {
+            console.error('Category creation failed:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <>
+            <StyledMenuItem onClick={handleClickOpen}>
+                <AddIcon color="disabled" sx={{ mr: 1 }} />
+                <Typography variant="subtitle2" color="text.secondary">
+                    New Category
+                </Typography>
+            </StyledMenuItem>
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>New Category Path</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        label="Category Name"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
+                        disabled={loading}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter' && !loading) {
+                                handleCreate();
+                            }
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} disabled={loading}>
+                        Cancel
+                    </Button>
+                    <Button 
+                        onClick={handleCreate} 
+                        variant="contained"
+                        disabled={loading || !categoryName.trim()}
+                    >
+                        {loading ? 'Creating...' : 'Create'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
+    );
 }
