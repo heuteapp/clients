@@ -1,5 +1,5 @@
 "use clients";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Menu, MenuItem, TextField, Typography, styled } from "@mui/material";
+import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Stack, TextField, Typography, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
@@ -281,40 +281,76 @@ function EndIcon(props: React.PropsWithoutRef<typeof CategoryOutlinedIcon>) {
 
 import AddIcon from '@mui/icons-material/Add';
 import { heuteApi } from "@/src/api/heuteApi";
+import React from "react";
 
 function NewCategoryItem() {
     const [open, setOpen] = useState(false);
-    const [categoryName, setCategoryName] = useState('');
     const [loading, setLoading] = useState(false);
+    const [levels, setLevels] = useState(['', '', '']);
     const router = useRouter();
+
+    const activeLevel = levels.findIndex(level => !level.trim());
+    const { addCategory } = useCategoryStore();
 
     const handleClickOpen = () => {
         setOpen(true);
-        setCategoryName('');
+        setLevels(['', '', '']);
     };
 
     const handleClose = () => {
         if (!loading) {
             setOpen(false);
-            setCategoryName('');
+            setLevels(['', '', '']);
+        }
+    };
+
+    const getFullPath = () => levels.filter(Boolean).join('/');
+
+    const handleLevelChange = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newLevels = [...levels];
+        newLevels[index] = e.target.value;
+        setLevels(newLevels);
+    };
+
+    const handleKeyDown = (index: number) => (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const currentValue = levels[index].trim();
+            
+            if (currentValue && index < levels.length - 1) {
+                // Sonraki input'a geç
+                const nextInput = document.querySelector<HTMLInputElement>(`input[data-level="${index + 1}"]`);
+                nextInput?.focus();
+            } else if (getFullPath()) {
+                // Son input'ta create yap
+                handleCreate();
+            }
         }
     };
 
     const handleCreate = async () => {
-        if (!categoryName.trim()) return;
+        const fullPath = getFullPath();
+        if (!fullPath) return;
         
         setLoading(true);
         try {
-            await heuteApi.me.categories.create(categoryName);
-            
-            router.push(`/workspace/dailyboard/${categoryName}`);
-            
+            await heuteApi.me.categories.create(fullPath);
+
+            //addCategory(fullPath);
+
+            router.push(`/workspace/dailyboard/${fullPath}`);
             handleClose();
         } catch (error) {
             console.error('Category creation failed:', error);
         } finally {
             setLoading(false);
         }
+    };
+
+    const isDisabled = (index: number) => {
+        if (loading) return true;
+        if (index === 0) return false;
+        return !levels[index - 1].trim();
     };
 
     return (
@@ -326,25 +362,38 @@ function NewCategoryItem() {
                 </Typography>
             </StyledMenuItem>
 
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>New Category Path</DialogTitle>
+            <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+                <DialogTitle>Create Category Path</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Category Name"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        value={categoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
-                        disabled={loading}
-                        onKeyPress={(e) => {
-                            if (e.key === 'Enter' && !loading) {
-                                handleCreate();
-                            }
-                        }}
-                    />
+                    <Stack spacing={2} sx={{ mt: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            {levels.map((level, index) => (
+                                <React.Fragment key={index}>
+                                    <TextField
+                                        autoFocus={activeLevel === index}
+                                        placeholder={"Name"}
+                                        value={level}
+                                        onChange={handleLevelChange(index)}
+                                        onKeyDown={handleKeyDown(index)}
+                                        disabled={isDisabled(index)}
+                                        sx={{ flex: 1 }}
+                                        size="small"
+                                    />
+                                    {index < levels.length - 1 && (
+                                        <Typography variant="h6" color="text.secondary">
+                                            /
+                                        </Typography>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </Box>
+
+                        {getFullPath() && (
+                            <Alert sx={{ mt: 1 }}>
+                                <strong>Full Path:</strong> {getFullPath()}
+                            </Alert>
+                        )}
+                    </Stack>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} disabled={loading}>
@@ -353,7 +402,7 @@ function NewCategoryItem() {
                     <Button 
                         onClick={handleCreate} 
                         variant="contained"
-                        disabled={loading || !categoryName.trim()}
+                        disabled={loading || !getFullPath()}
                     >
                         {loading ? 'Creating...' : 'Create'}
                     </Button>
