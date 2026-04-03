@@ -8,10 +8,10 @@ export interface DailyboardResponse {
 
 export interface DailyboardCardResponse {
     name: string;
-    title: string | null;
-    sectionName: string | null;
-    colIndex: number | null;
-    rowIndex: number | null;
-    colSpan: number | null;
-    rowSpan: number | null;
+    title?: string;
+    sectionName?: string;
+    colIndex?: number;
+    rowIndex?: number;
+    colSpan?: number;
+    rowSpan?: number;
 }
