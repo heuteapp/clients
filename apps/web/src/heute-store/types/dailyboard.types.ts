@@ -11,7 +11,7 @@ export interface DailyboardState extends UserBasedStoreState<StoredDailyboard> {
 }
 
 export interface StoredDailyboard extends StoredItem, DailyboardData {
-
+    categoryId: () => string;
 }
 
 export interface StoredDailyboardCard extends StoredItem, DailyboardCardData {
