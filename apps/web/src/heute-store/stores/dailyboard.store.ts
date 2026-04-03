@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { Dailyboard } from "@/src/modules/dailyboard/types/dailyboard.types";
-import { DailyboardState, StoredDailyboard, StoredDailyboardCard } from "@/src/heute-store/types/dailyboard.types";
+import { DailyboardState, StoredDailyboard, StoredDailyboardCard, StoredDailyboardResult } from "@/src/heute-store/types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
 export const useDailyboardStore = create<DailyboardState>()(
@@ -89,27 +89,11 @@ export const useDailyboardStore = create<DailyboardState>()(
             },
 
             getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => {
-                const state = get();
-                const id = `me@${categoryPath}/${date.raw}`;
-                return (state.byId[id] as StoredDailyboard) || null;
+                return getDailyBoardResult(get(), 'me', categoryPath, date);
             },
 
             getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
-                const state = get();
-                const id = `${user}@${categoryPath}/${date.raw}`;
-                return (state.byId[id] as StoredDailyboard) || null;
-            },
-            
-            getMeCardsByDailyboard: (categoryPath: string, date: YYMMDDDate) => {
-                const dailyboardId = `me@${categoryPath}/${date.raw}`;
-                const state = get();
-                return Object.values(state.cardById).filter(card => card.dailyboardId() === dailyboardId) as StoredDailyboardCard[];
-            },
-            
-            getUserCardsByDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
-                const dailyboardId = `${user}@${categoryPath}/${date.raw}`;
-                const state = get();
-                return Object.values(state.cardById).filter(card => card.dailyboardId() === dailyboardId) as StoredDailyboardCard[];
+                return getDailyBoardResult(get(), user, categoryPath, date);
             },
             
             hasUser: (user: string) => {
@@ -153,3 +137,27 @@ export const useDailyboardStore = create<DailyboardState>()(
         }
     )
 );
+
+const getDailyboard = (state: DailyboardState, user: string, categoryPath: string, date: YYMMDDDate): StoredDailyboard | null => {
+    const id = `${user}@${categoryPath}/${date.raw}`;
+    return (state.byId[id] as StoredDailyboard) || null;
+};
+
+const getDailyBoardResult = (state: DailyboardState, user: string, categoryPath: string, date: YYMMDDDate): StoredDailyboardResult | null => {
+    const dailyboard = getDailyboard(state, user, categoryPath, date);
+    if (!dailyboard) return null;
+    
+    const cards = getDailyboardCards(state, dailyboard.id);
+    
+    return {
+        ...dailyboard,
+        cards,
+    };
+};
+
+const getDailyboardCards = (state: DailyboardState, dailyboardId: string | null): StoredDailyboardCard[] => {
+    if (!dailyboardId) return [];
+    return Object.values(state.cardById).filter((card: StoredDailyboardCard) => 
+        card.dailyboardId() === dailyboardId
+    ) as StoredDailyboardCard[];
+};
