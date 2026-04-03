@@ -24,6 +24,8 @@ export interface CategoryState {
     getUserRoots: (user: string) => StoredCategory[] | null;
     getUserChildren: (user: string, parentId: string | null) => StoredCategory[] | null;
 
+    addCategory: (request: CategoryRequest) => string | null;
+
     hasUser: (user: string) => boolean;
 
     clearMe: () => void;
