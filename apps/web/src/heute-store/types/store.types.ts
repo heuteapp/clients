@@ -1,14 +1,14 @@
-export interface BaseStoreState<TItem extends BaseStoredItem> {
+export interface BaseStoreState<TItem extends StoredItem> {
     byId: Record<string, TItem>;
 }
 
-export interface BaseStoredItem {
+export interface StoredItem {
     id: string;
 }
 
 //
 
-export interface UserBasedStoreState<TItem extends BaseStoredItem> extends BaseStoreState<TItem> {
+export interface UserBasedStoreState<TItem extends StoredItem> extends BaseStoreState<TItem> {
     userOrder: string[];
 
     hasUser: (user: string) => boolean;

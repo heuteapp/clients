@@ -1,12 +1,11 @@
 import { Category, CategoryChain, CategoryTree, CategoryHierarchy } from "@/src/modules/category/types/category.types";
+import { StoredItem, UserBasedStoreState } from "./store.types";
 
 //
 
-export interface CategoryState {
-    byId: Record<string, StoredCategory>;
+export interface CategoryState extends UserBasedStoreState<StoredCategory> {
     byParentId: Record<string, string[]>;
     rootIds: string[];
-    userOrder: string[];
 
     loadMe: (hierarchy: CategoryHierarchy) => void;
     loadUser: (user: string, hierarchy: CategoryHierarchy) => void;   
@@ -24,17 +23,10 @@ export interface CategoryState {
     getUserChildren: (user: string, parentId: string | null) => StoredCategory[] | null;
 
     initializeCategory: (path: string) => void;
-    sortMe: () => void;
-
-    hasUser: (user: string) => boolean;
-
-    clearMe: () => void;
-    clearUser: (user: string) => void;
 }
 
 //
 
-export interface StoredCategory extends Category {
-    id: string;
+export interface StoredCategory extends StoredItem, Category {
     parentId: string | null;
 }
