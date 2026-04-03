@@ -80,7 +80,7 @@ export function parseYYMMDD(dateStr: string): YYMMDDDate | null {
     const monthNum = parseInt(month, 10);
     const dayNum = parseInt(day, 10);
 
-    const date = new Date(fullYear, monthNum - 1, dayNum);
+    const date = new Date(Date.UTC(fullYear, monthNum - 1, dayNum));
     const iso = date.toISOString().split('T')[0];
     
     // Format display date
