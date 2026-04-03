@@ -7,9 +7,7 @@ export const useDailyboardRegistry = (dailyboardRef: React.RefObject<HTMLDivElem
     const registry = React.useRef<DailyboardRegistry>(null);
 
     React.useEffect(() => {
-        return () => {
-            registry.current = createDailyboardRegistry(dailyboardRef, layoutRegistry);
-        }
+        registry.current = createDailyboardRegistry(dailyboardRef, layoutRegistry);
     }, []);
 
     return registry.current!;
