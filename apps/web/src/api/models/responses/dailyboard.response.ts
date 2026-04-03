@@ -1,6 +1,7 @@
 import { LayoutResponse } from "./layout.response";
 
 export interface DailyboardResponse {
+    categoryPath: string;
     date: string;
     layout: LayoutResponse;
     cards: DailyboardCardResponse[];
