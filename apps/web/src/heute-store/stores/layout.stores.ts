@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { Layout } from "@/src/modules/layout/types/layout.types";
-import { LayoutState, StoredLayout, StoredLayoutSection } from "@/src/heute-store/types/layout.types";
+import { LayoutState, StoredLayout, StoredLayoutSection, StoredLayoutResult } from "@/src/heute-store/types/layout.types";
 
 export const useLayoutStore = create<LayoutState>()(
     devtools(
@@ -56,30 +56,15 @@ export const useLayoutStore = create<LayoutState>()(
             },
 
             getGlobalLayout: (name: string, version: number) => {
-                return getLayout(get(), "g", name, version);
+                return getLayoutResult(get(), "g", name, version);
             },
 
             getMeLayout: (name: string, version: number) => {
-                return getLayout(get(), "me", name, version);
+                return getLayoutResult(get(), "me", name, version);
             },
 
             getUserLayout: (user: string, name: string, version: number) => {
-                return getLayout(get(), user, name, version);
-            },
-
-            getGlobalSectionsByLayout: (name: string, version: number) => {
-                const layout = get().getGlobalLayout(name, version);
-                return getSectionsByLayoutId(get(), layout?.id || null);
-            },
-
-            getMeSectionsByLayout: (name: string, version: number) => {
-                const layout = get().getMeLayout(name, version);
-                return getSectionsByLayoutId(get(), layout?.id || null);
-            },
-
-            getUserSectionsByLayout: (user: string, name: string, version: number) => {
-                const layout = get().getUserLayout(user, name, version);
-                return getSectionsByLayoutId(get(), layout?.id || null);
+                return getLayoutResult(get(), user, name, version);
             },
         })),
         { name: "LayoutStore" }
@@ -109,7 +94,19 @@ const getLayout = (state: any, owner: string, name: string, version: number) => 
     return key ? state.byId[key] as StoredLayout : null;
 };
 
-const getSectionsByLayoutId = (state: LayoutState, layoutId: string | null) => {
+const getLayoutResult = (state: any, owner: string, name: string, version: number): StoredLayoutResult | null => {
+    const layout = getLayout(state, owner, name, version);
+    if (!layout) return null;
+    
+    const sections = getLayoutSections(state, layout.id);
+    
+    return {
+        ...layout,
+        sections,
+    };
+};
+
+const getLayoutSections = (state: LayoutState, layoutId: string | null) => {
     if (!layoutId) return [];
     return Object.values(state.sectionById).filter(s => s.layoutId() === layoutId) as StoredLayoutSection[];
 };

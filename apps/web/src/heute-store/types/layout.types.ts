@@ -8,14 +8,12 @@ export interface LayoutState extends UserBasedStoreState<StoredLayout> {
     loadMeLayout: (layout: Layout) => void;
     loadUserLayout: (user: string, layout: Layout) => void;
 
-    getGlobalLayout: (name: string, version: number) => StoredLayout | null;
-    getMeLayout: (name: string, version: number) => StoredLayout | null;
-    getUserLayout: (user: string, name: string, version: number) => StoredLayout | null;
-
-    getGlobalSectionsByLayout: (name: string, version: number) => StoredLayoutSection[];
-    getMeSectionsByLayout: (name: string, version: number) => StoredLayoutSection[];
-    getUserSectionsByLayout: (user: string, name: string, version: number) => StoredLayoutSection[];
+    getGlobalLayout: (name: string, version: number) => StoredLayoutResult | null;
+    getMeLayout: (name: string, version: number) => StoredLayoutResult | null;
+    getUserLayout: (user: string, name: string, version: number) => StoredLayoutResult | null;
 }
+
+//
 
 export interface StoredLayout extends StoredItem, LayoutData {
 
@@ -23,4 +21,10 @@ export interface StoredLayout extends StoredItem, LayoutData {
 
 export interface StoredLayoutSection extends StoredItem, LayoutSectionData {
     layoutId: () => string;
+}
+
+//
+
+export interface StoredLayoutResult extends StoredLayout {
+    sections: StoredLayoutSection[];
 }
