@@ -12,15 +12,20 @@ export const heuteClient = axios.create({
 //
 
 heuteClient.interceptors.request.use((config) => {
-    let accessToken = authService.getSnapshot().context.auth?.accessToken;
-
-    if (!accessToken && typeof window !== "undefined") {
-        accessToken = localStorage.getItem("temp_accessToken") || undefined;
+    let accessToken = null;
+    
+    if (typeof window !== "undefined") {
+        accessToken = localStorage.getItem("temp_accessToken");
+    }
+    
+    if (!accessToken) {
+        accessToken = authService.getSnapshot().context.auth?.accessToken;
     }
 
     if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    
     return config;
 });
 
