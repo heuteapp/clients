@@ -5,9 +5,13 @@ import { LoaderState } from "@/src/heute-store/types/loader.types";
 import { usePathname } from "next/navigation";
 import { useDailyboardStore } from "../stores/dailyboard.store";
 import { responseToDailyboard } from "@/src/api/responses/dailyboard.response";
+import { useLayoutStore } from "../stores/layout.stores";
+import { responseToLayout } from "@/src/api/responses/layout.response";
 
 export const useDailyboardLoader = (): LoaderState => {
     const { state } = useAuthContext();
+
+    const { loadMeLayout, loadGlobalLayout } = useLayoutStore();
     const { loadMeDailyboard } = useDailyboardStore();
 
     const pathname = usePathname();
@@ -43,9 +47,15 @@ export const useDailyboardLoader = (): LoaderState => {
         lastPathRef.current = dailyboardPath;
 
         heuteApi.me.dailyboards.getDailyboard(dailyboardPath)
-            .then(dailyboard => {
+            .then(response => {
                 if (isMounted) {
-                    loadMeDailyboard(dailyboard.categoryPath, responseToDailyboard(dailyboard));
+
+                    var dailyboard = responseToDailyboard(response);
+                    loadMeDailyboard(response.categoryPath, dailyboard);
+
+                    var layout = responseToLayout(response.layout);
+                    loadGlobalLayout(layout);
+                    
                     setIsLoading(false);
                 }
             })
