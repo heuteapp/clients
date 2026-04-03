@@ -6,9 +6,12 @@ import { LayoutProvider } from "@/src/modules/ui-layout/provider/LayoutProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
+import { useDailyboardLoader } from "@/src/heute-store/hooks/useDailyboardLoader";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
+
+    useDailyboardLoader();
 
     const contextValue = React.useMemo(() => {
         return { metadata };
