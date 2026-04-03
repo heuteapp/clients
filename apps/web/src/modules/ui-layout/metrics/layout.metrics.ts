@@ -1,9 +1,8 @@
-import { LayoutContextValue } from "../types/layout.context";
 import { LayoutMetrics } from "../types/layout.metrics";
+import { LayoutRegistry } from "../types/layout.registry";
 
-export function calculateLayoutMetrics(contextValue: LayoutContextValue) : LayoutMetrics | null {
-    const { rootRef } = contextValue;
-
+export function calculateLayoutMetrics(registry: LayoutRegistry) : LayoutMetrics | null {
+    const rootRef = registry.layout.ref;
     const rootEl = rootRef.current;
 
     if(!rootEl) {
@@ -12,7 +11,7 @@ export function calculateLayoutMetrics(contextValue: LayoutContextValue) : Layou
 
     const rootRect = rootEl.getBoundingClientRect();
 
-    const layout = contextValue.registry.layout;
+    const layout = registry.layout;
 
     if (!layout.props) {
         return null;
@@ -31,4 +30,17 @@ export function calculateLayoutMetrics(contextValue: LayoutContextValue) : Layou
             inner: cellSize * 0.9,
         }
     }
+}
+
+export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetrics) {
+    const layoutRef = registry.layout.ref;
+    const layoutEl = layoutRef.current;
+
+    if (!layoutEl) {
+        return;
+    }
+
+    const cellSize = metrics.cellSize.full;
+
+    layoutEl.style.setProperty("--cell-size", `${cellSize}px`);
 }
