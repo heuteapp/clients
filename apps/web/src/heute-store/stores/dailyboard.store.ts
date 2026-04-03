@@ -14,7 +14,7 @@ export const useDailyboardStore = create<DailyboardState>()(
             loadMeDailyboard: (categoryPath: string, dailyboard: Dailyboard) => {
                 set((state) => {
                     const owner = 'me';
-                    const dailyboardId = `${owner}@${categoryPath}/${dailyboard.date}`;
+                    const dailyboardId = `${owner}@${categoryPath}/${dailyboard.date.raw}`;
                     
                     state.byId[dailyboardId] = {
                         id: dailyboardId,
@@ -32,7 +32,7 @@ export const useDailyboardStore = create<DailyboardState>()(
 
             loadUserDailyboard: (user: string, categoryPath: string, dailyboard: Dailyboard) => {
                 set((state) => {
-                    const dailyboardId = `${user}@${categoryPath}/${dailyboard.date}`;
+                    const dailyboardId = `${user}@${categoryPath}/${dailyboard.date.raw}`;
                     
                     state.byId[dailyboardId] = {
                         id: dailyboardId,
@@ -59,13 +59,13 @@ export const useDailyboardStore = create<DailyboardState>()(
 
             getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => {
                 const state = get();
-                const id = `me@${categoryPath}/${date}`;
+                const id = `me@${categoryPath}/${date.raw}`;
                 return (state.byId[id] as StoredDailyboard) || null;
             },
 
             getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
                 const state = get();
-                const id = `${user}@${categoryPath}/${date}`;
+                const id = `${user}@${categoryPath}/${date.raw}`;
                 return (state.byId[id] as StoredDailyboard) || null;
             },
             
