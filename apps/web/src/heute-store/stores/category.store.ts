@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
-import { CategoryState, CategoryOwnerData, StoredCategory, CategoryRequest } from "@/src/heute-store/types/category.types";
+import { CategoryState, CategoryOwnerData, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(
     devtools(
@@ -103,70 +103,51 @@ export const useCategoryStore = create<CategoryState>()(
                 return childIds.map(id => userData.byId[id]);
             },
 
-            addCategory: (request: CategoryRequest) => {
-                set((state) => {
-                    if (!state.me) return;
+            initializeCategory: (path: string) => {
+                const names = path.split('/').filter(Boolean);
 
-                    const processRequest = (
-                        req: CategoryRequest,
-                        parentId: string | null,
-                        currentPath: string = ""
-                    ): string | null => {
-                        if (typeof req.src === 'string') {
-                            const targetPath = currentPath 
-                                ? `${currentPath}/${req.src}` 
-                                : req.src;
-                            const targetId = `me@${targetPath}`;
-                            
-                            if (!state.me!.byId[targetId]) {
-                                console.error(`Category not found: ${targetPath}`);
-                                return null;
-                            }
-                            
-                            if (req.child) {
-                                return processRequest(req.child, targetId, targetPath);
-                            }
-                            
-                            return targetId;
-                        } 
-                        else {
-                            const newCategoryName = req.src.name;
-                            const newPath = currentPath 
-                                ? `${currentPath}/${newCategoryName}` 
-                                : newCategoryName;
-                            const newId = `me@${newPath}`;
-                            
-                            if (state.me!.byId[newId]) {
-                                console.error(`Category already exists: ${newPath}`);
-                                return null;
-                            }
-                            
-                            state.me!.byId[newId] = {
-                                id: newId,
-                                name: newCategoryName,
-                                parentId: parentId,
-                            };
-                            
-                            if (parentId === null) {
-                                state.me!.rootIds.push(newId);
-                                state.me!.rootIds = sortChildren(state.me!, null);
-                            } else {
-                                if (!state.me!.byParentId[parentId]) {
-                                    state.me!.byParentId[parentId] = [];
-                                }
-                                state.me!.byParentId[parentId].push(newId);
-                                state.me!.byParentId[parentId] = sortChildren(state.me!, parentId);
-                            }
-                            
-                            if (req.child) {
-                                return processRequest(req.child, newId, newPath);
-                            }
-                            
-                            return newId;
+                set((state) => {
+                    const me = state.me;
+                    if (!me) return;
+
+                    let currentParentId: string | null = null;
+                    let currentPath = "";
+
+                    for (const name of names) {
+                        currentPath = currentPath ? `${currentPath}/${name}` : name;
+                        const id = `me@${currentPath}`;
+
+                        if (me.byId[id]) {
+                            currentParentId = id;
+                            continue;
                         }
-                    };
-                    
-                    processRequest(request, null);
+
+                        me.byId[id] = {
+                            id,
+                            name,
+                            parentId: currentParentId,
+                        };
+
+                        if (currentParentId === null) {
+                            me.rootIds.push(id);
+                        } else {
+                            if (!me.byParentId[currentParentId]) {
+                                me.byParentId[currentParentId] = [];
+                            }
+                            me.byParentId[currentParentId].push(id);
+                            me.byParentId[currentParentId] = sortChildren(me, currentParentId);
+                        }
+
+                        currentParentId = id;
+                    }
+                });
+            },
+            sortMe: () => {
+                set((state) => {
+                    const me = state.me;
+                    if (!me) return;
+
+                    sortRecursive(me, null);
                 });
             },
 
@@ -324,9 +305,25 @@ const sortChildren = (data: CategoryOwnerData, parentId: string | null): string[
         const bHasChildren = (data.byParentId[b]?.length || 0) > 0;
         
         if (aHasChildren !== bHasChildren) {
-            return aHasChildren ? 1 : -1;
+            return aHasChildren ? -1 : 1;
         }
         
         return categoryA.name.localeCompare(categoryB.name);
+    });
+};
+
+const sortRecursive = (data: CategoryOwnerData, parentId: string | null) => {
+    const sorted = sortChildren(data, parentId);
+
+    if (parentId === null) {
+        data.rootIds = sorted;
+    } else {
+        data.byParentId[parentId] = sorted;
+    }
+
+    sorted.forEach(childId => {
+        if (data.byParentId[childId]) {
+            sortRecursive(data, childId);
+        }
     });
 };

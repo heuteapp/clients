@@ -290,7 +290,7 @@ function NewCategoryItem() {
     const router = useRouter();
 
     const activeLevel = levels.findIndex(level => !level.trim());
-    const { addCategory } = useCategoryStore();
+    const { sortMe, initializeCategory } = useCategoryStore();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -318,11 +318,9 @@ function NewCategoryItem() {
             const currentValue = levels[index].trim();
             
             if (currentValue && index < levels.length - 1) {
-                // Sonraki input'a geç
                 const nextInput = document.querySelector<HTMLInputElement>(`input[data-level="${index + 1}"]`);
                 nextInput?.focus();
             } else if (getFullPath()) {
-                // Son input'ta create yap
                 handleCreate();
             }
         }
@@ -336,10 +334,12 @@ function NewCategoryItem() {
         try {
             await heuteApi.me.categories.create(fullPath);
 
-            //addCategory(fullPath);
+            initializeCategory(fullPath);
+            sortMe();
 
             router.push(`/workspace/dailyboard/${fullPath}`);
             handleClose();
+
         } catch (error) {
             console.error('Category creation failed:', error);
         } finally {
