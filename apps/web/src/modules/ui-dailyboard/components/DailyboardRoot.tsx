@@ -16,7 +16,7 @@ export function DailyboardRoot(props: DailyboardRootProps) {
   const { registry } = useDailyboardContext();
   const dailyboardRef = useRef<HTMLDivElement>(null);
 
-  // !! FIX HERE !!
+  
   const layout = null! as any;
   const cards = [] as any[];
 

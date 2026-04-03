@@ -7,15 +7,12 @@ import style from "@/src/modules/ui-layout/styles/layout.module.css"
 import { LayoutSection } from "./LayoutSection";
 import { LayoutRootProps } from "../types/layout.props";
 import { useLayoutContext } from "../hooks/useLayoutContext";
-import { useLayoutStore } from "@/src/heute-store/stores/layout.stores";
 
 export function LayoutRoot(props: LayoutRootProps) {
   const { data } = props;
   const { registry } = useLayoutContext();
 
-  const { getGlobalSectionsByLayout } = useLayoutStore();
-  const sections = getGlobalSectionsByLayout(data.name, data.version);
-
+  const sections = data.sections;
   const layoutRef = registry.layout!.ref!;
 
   useLayoutEffect(() => {
@@ -54,7 +51,7 @@ export function LayoutRoot(props: LayoutRootProps) {
         gridTemplateAreas
       }}
     >
-      {sections.map(section => (
+      {sections.map((section) => (
         <LayoutSection id={section.id} key={section.name} data={section}/>
       ))}
     </div>
