@@ -2,6 +2,7 @@ import { GridRect } from "@/src/modules/shared/types/common";
 
 export interface Layout {
     name: string;
+    version: string;
     columnCount: number;
     rowCount: number;
     sections: LayoutSection[];

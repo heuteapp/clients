@@ -1,6 +1,5 @@
-import { DailyboardCardData, DailyboardData } from "@/src/modules/dailyboard/types/dailyboard.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
-import { Layout } from "@/src/modules/layout/types/layout.types";
+import { Layout, LayoutData, LayoutSectionData } from "@/src/modules/layout/types/layout.types";
 
 export interface LayoutState extends UserBasedStoreState<StoredLayout> {
     sectionById: Record<string, StoredLayoutSection>;
@@ -18,10 +17,10 @@ export interface LayoutState extends UserBasedStoreState<StoredLayout> {
     getUserSectionsByLayout: (user: string, name: string) => StoredLayoutSection[];
 }
 
-export interface StoredLayout extends StoredItem, DailyboardData {
+export interface StoredLayout extends StoredItem, LayoutData {
 
 }
 
-export interface StoredLayoutSection extends StoredItem, DailyboardCardData {
+export interface StoredLayoutSection extends StoredItem, LayoutSectionData {
     layoutId: () => string;
 }
