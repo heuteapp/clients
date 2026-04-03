@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { Dailyboard, DailyboardCard } from "@/src/modules/dailyboard/types/dailyboard.types";
+import { Dailyboard } from "@/src/modules/dailyboard/types/dailyboard.types";
 import { DailyboardState, StoredDailyboard, StoredDailyboardCard } from "@/src/heute-store/types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
