@@ -1,10 +1,11 @@
 import { GridRect } from "@/src/modules/shared/types/common";
+import { YYMMDDDate } from "../../shared/types/date.types";
 
 export interface Dailyboard {
     layoutName: string;
     layoutVersion: number;
     categoryPath: string;
-    date: Date;
+    date: YYMMDDDate;
     cards: DailyboardCard[];
 }
 
