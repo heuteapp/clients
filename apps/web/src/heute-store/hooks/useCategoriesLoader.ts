@@ -6,13 +6,13 @@ import { LoaderState } from "@/src/heute-store/types/loader.types";
 
 export const useCategoriesLoader = () : LoaderState => {
     const { state } = useAuthContext();
-    const { me, loadMe } = useCategoryStore();
+    const { loadMe } = useCategoryStore();
     
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        if (me || !state.matches("authenticated")) {
+        if (!state.matches("authenticated")) {
             return;
         }
 
@@ -36,7 +36,7 @@ export const useCategoriesLoader = () : LoaderState => {
         return () => {
             isMounted = false;
         };
-    }, [state, loadMe, me]);
+    }, [state, loadMe]);
 
     return { isLoading, error };
 };
