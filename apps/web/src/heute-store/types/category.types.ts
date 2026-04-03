@@ -42,3 +42,8 @@ export interface StoredCategory extends Category {
     id: string;
     parentId: string | null;
 }
+
+export interface CategoryRequest {
+    src: Category | string;
+    child?: CategoryRequest;
+}
