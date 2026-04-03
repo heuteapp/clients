@@ -7,12 +7,14 @@ import style from "@/src/modules/ui-layout/styles/layout.module.css"
 import { LayoutSection } from "./LayoutSection";
 import { LayoutRootProps } from "../types/layout.props";
 import { useLayoutContext } from "../hooks/useLayoutContext";
+import { useLayoutStore } from "@/src/heute-store/stores/layout.stores";
 
 export function LayoutRoot(props: LayoutRootProps) {
+  const { data } = props;
   const { registry } = useLayoutContext();
 
-  // !! FIX HERE !!
-  const sections = [] as any[];
+  const { getGlobalSectionsByLayout } = useLayoutStore();
+  const sections = getGlobalSectionsByLayout(data.name, data.version);
 
   const layoutRef = registry.layout!.ref!;
 
@@ -24,8 +26,8 @@ export function LayoutRoot(props: LayoutRootProps) {
     }
   }, [registry])
 
-  const matrix = Array.from({ length: props.rowCount }, () =>
-    Array.from({ length: props.colCount }, () => ".")
+  const matrix = Array.from({ length: data.rowCount }, () =>
+    Array.from({ length: data.colCount }, () => ".")
   );
 
   sections.forEach(s => {
@@ -47,13 +49,13 @@ export function LayoutRoot(props: LayoutRootProps) {
       ref={layoutRef} 
       className={style.layout}
       style={{
-        gridTemplateColumns: `repeat(${props.colCount}, var(--cell-size-full))`,
-        gridTemplateRows: `repeat(${props.rowCount}, var(--cell-size-full))`,
+        gridTemplateColumns: `repeat(${data.colCount}, var(--cell-size-full))`,
+        gridTemplateRows: `repeat(${data.rowCount}, var(--cell-size-full))`,
         gridTemplateAreas
       }}
     >
       {sections.map(section => (
-        <LayoutSection key={section.name} {...section}/>
+        <LayoutSection id={section.id} key={section.name} data={section}/>
       ))}
     </div>
   )

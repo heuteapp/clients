@@ -9,6 +9,7 @@ import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext
 //
 
 export function LayoutSection(props : LayoutSectionProps) {
+    const { data } = props;
     const ref = useRef<HTMLDivElement>(null)
     const context = useLayoutContext();
 
@@ -27,12 +28,12 @@ export function LayoutSection(props : LayoutSectionProps) {
             ref={ref}
             className={style.section}
             style={{
-                gridArea: props.name,
+                gridArea: data.name,
                 padding: "var(--section-padding)",
                 margin: "var(--section-margin)"
             }}
         >
-            <LayoutGrid sectionId={props.id} colSpan={props.position.colSpan} rowSpan={props.position.rowSpan}/>
+            <LayoutGrid sectionId={props.id} colSpan={data.position.colSpan} rowSpan={data.position.rowSpan}/>
         </div>
     )
 }
