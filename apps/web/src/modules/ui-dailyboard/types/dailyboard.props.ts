@@ -1,8 +1,10 @@
 import { DailyboardEntity, DailyboardCardEntity } from "@/src/modules/ui-dailyboard/types/dailyboard.entity";
-import { Layout } from "../../layout/types/layout.types";
+import { StoredLayoutResult } from "@/src/heute-store/types/layout.types";
+import { StoredDailyboardResult } from "@/src/heute-store/types/dailyboard.types";
 
 export interface DailyboardRootProps extends DailyboardEntity {
-    layout: Layout
+    data: StoredDailyboardResult;
+    layout: StoredLayoutResult;
 }
 
 export interface DailyboardCardContainerProps {
