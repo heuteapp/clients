@@ -17,8 +17,8 @@ export function DailyboardRoot(props: DailyboardRootProps) {
   const dailyboardRef = useRef<HTMLDivElement>(null);
 
   
-  const layout = null! as any;
-  const cards = [] as any[];
+  const layout = props.layout;
+  const cards = props.data.cards;
 
   useLayoutEffect(() => {
     registry.registerDailyboard(dailyboardRef, props)
@@ -33,7 +33,7 @@ export function DailyboardRoot(props: DailyboardRootProps) {
 
   return (
     <div ref={dailyboardRef} className={style.dailyboard}>
-      <LayoutRoot {...layout} />
+      <LayoutRoot id={layout.id} data={layout} />
       <DailyboardCardContainer cards={cards} />
       <DailyboardGhostCard />
     </div>

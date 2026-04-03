@@ -26,7 +26,7 @@ function DailyboardCardContainer(props : DailyboardCardContainerProps) {
             ref={ref}
         >
             {props.cards.map(card => (
-                <DailyboardCard key={card.id} {...card} />
+                <DailyboardCard key={card.id} id={card.id} data={card} />
             ))}
         </div>
     )
