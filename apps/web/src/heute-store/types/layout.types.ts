@@ -8,13 +8,13 @@ export interface LayoutState extends UserBasedStoreState<StoredLayout> {
     loadMeLayout: (layout: Layout) => void;
     loadUserLayout: (user: string, layout: Layout) => void;
 
-    getGlobalLayout: (name: string) => StoredLayout | null;
-    getMeLayout: (name: string) => StoredLayout | null;
-    getUserLayout: (user: string, name: string) => StoredLayout | null;
+    getGlobalLayout: (name: string, version: number) => StoredLayout | null;
+    getMeLayout: (name: string, version: number) => StoredLayout | null;
+    getUserLayout: (user: string, name: string, version: number) => StoredLayout | null;
 
-    getGlobalSectionsByLayout: (name: string) => StoredLayoutSection[];
-    getMeSectionsByLayout: (name: string) => StoredLayoutSection[];
-    getUserSectionsByLayout: (user: string, name: string) => StoredLayoutSection[];
+    getGlobalSectionsByLayout: (name: string, version: number) => StoredLayoutSection[];
+    getMeSectionsByLayout: (name: string, version: number) => StoredLayoutSection[];
+    getUserSectionsByLayout: (user: string, name: string, version: number) => StoredLayoutSection[];
 }
 
 export interface StoredLayout extends StoredItem, LayoutData {
