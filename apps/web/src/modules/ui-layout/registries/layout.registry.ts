@@ -85,7 +85,7 @@ export function createLayoutRegistry(layoutRef: React.RefObject<HTMLDivElement |
             if (!sections) return undefined
 
             for (const section of sections.values()) {
-                if (section.props?.name === name) {
+                if (section.props?.data.name === name) {
                     return section
                 }
             }
