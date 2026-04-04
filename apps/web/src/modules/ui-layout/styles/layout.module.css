@@ -14,8 +14,11 @@
     align-content: center;
     justify-items: center;
     transition: background-color 0.2s ease;
-
-    margin: 12px;
+}
+.layout .section .grid {
+    display: grid;
+    align-items: center;
+    justify-items: center;
 
     background: #1a1d24;
 
@@ -31,7 +34,7 @@
         box-shadow 0.2s ease;
 }
 
-[data-interaction-card-create] .layout .section [data-grid-hover] {
+[data-interaction-card-create] .layout .section [data-grid-hover].grid {
     background: #212630;
     border-color: #3a4150;
 

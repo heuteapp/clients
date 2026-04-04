@@ -2,14 +2,12 @@ import { LayoutMetrics } from "../types/layout.metrics";
 import { LayoutRegistry } from "../types/layout.registry";
 
 export function calculateLayoutMetrics(registry: LayoutRegistry) : LayoutMetrics | null {
-    const rootRef = registry.layout.ref;
-    const rootEl = rootRef.current;
+    const layoutRef = registry.layout.ref;
+    const layoutEl = layoutRef.current;
 
-    if(!rootEl) {
+    if(!layoutEl) {
         return null;
     }
-
-    const rootRect = rootEl.getBoundingClientRect();
 
     const layout = registry.layout;
 
@@ -17,17 +15,23 @@ export function calculateLayoutMetrics(registry: LayoutRegistry) : LayoutMetrics
         return null;
     }
 
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutEl;
     const { colCount, rowCount } = layout.props.data;
 
-    const cellWidth = rootRect.width / colCount;
-    const cellHeight = rootRect.height / rowCount;
 
-    const cellSize = Math.min(cellWidth, cellHeight);
+    const totalGap = 16;
+
+    const cellFullSize = Math.min(
+        layoutWidth / colCount,
+        layoutHeight / rowCount
+    );
+
+    const cellSizeInner = cellFullSize - totalGap;
 
     return {
         cellSize: {
-            full: cellSize,
-            inner: cellSize * 0.9,
+            full: cellFullSize,
+            inner: cellSizeInner,
         }
     }
 }
@@ -40,7 +44,9 @@ export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetr
         return;
     }
 
-    const cellSize = metrics.cellSize.inner;
+    const cellSizeFull = metrics.cellSize.full;
+    const cellSizeInner = metrics.cellSize.inner;
 
-    layoutEl.style.setProperty("--cell-size", `${cellSize}px`);
+    layoutEl.style.setProperty("--cell-size-full", `${cellSizeFull}px`);
+    layoutEl.style.setProperty("--cell-size-inner", `${cellSizeInner}px`);
 }

@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react"
 
 import { LayoutSectionProps } from "@/src/modules/ui-layout/types/layout.props";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
+import LayoutGrid from "./LayoutGrid";
 
 //
 
@@ -28,7 +29,10 @@ export function LayoutSection(props : LayoutSectionProps) {
             className={style.section}
             style={{
                 gridArea: data.name,
+                padding: "8px",
             }}
-        />
+        >
+            <LayoutGrid sectionId={props.id} colSpan={props.data.position.colSpan} rowSpan={props.data.position.rowSpan} />
+        </div>
     )
 }

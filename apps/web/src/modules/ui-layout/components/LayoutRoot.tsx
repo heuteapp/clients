@@ -46,8 +46,8 @@ export function LayoutRoot(props: LayoutRootProps) {
       ref={layoutRef} 
       className={style.layout}
       style={{
-        gridTemplateColumns: `repeat(${data.colCount}, var(--cell-size))`,
-        gridTemplateRows: `repeat(${data.rowCount}, var(--cell-size))`,
+        gridTemplateColumns: `repeat(${data.colCount}, var(--cell-size-full))`,
+        gridTemplateRows: `repeat(${data.rowCount}, var(--cell-size-full))`,
         gridTemplateAreas
       }}
     >
