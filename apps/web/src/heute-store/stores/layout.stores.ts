@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { Layout } from "@/src/modules/layout/types/layout.types";
-import { LayoutState, StoredLayout, StoredLayoutSection, StoredLayoutResult } from "@/src/heute-store/types/layout.types";
+import { LayoutState, StoredLayout, StoredLayoutSection, StoredLayoutRoot } from "@/src/heute-store/types/layout.types";
 
 export const useLayoutStore = create<LayoutState>()(
     devtools(
@@ -94,7 +94,7 @@ const getLayout = (state: any, owner: string, name: string, version: number) => 
     return key ? state.byId[key] as StoredLayout : null;
 };
 
-const getLayoutResult = (state: any, owner: string, name: string, version: number): StoredLayoutResult | null => {
+const getLayoutResult = (state: any, owner: string, name: string, version: number): StoredLayoutRoot | null => {
     const layout = getLayout(state, owner, name, version);
     if (!layout) return null;
     

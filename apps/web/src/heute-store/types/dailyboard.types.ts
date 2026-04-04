@@ -8,8 +8,8 @@ export interface DailyboardState extends UserBasedStoreState<StoredDailyboard> {
     loadMeDailyboard: (categoryPath: string, dailyboard: Dailyboard) => void;
     loadUserDailyboard: (user: string, categoryPath: string, dailyboard: Dailyboard) => void;
 
-    getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => StoredDailyboardResult | null;
-    getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => StoredDailyboardResult | null;
+    getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => StoredDailyboardRoot | null;
+    getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => StoredDailyboardRoot | null;
 }
 
 export interface StoredDailyboard extends StoredItem, DailyboardData {
@@ -22,6 +22,6 @@ export interface StoredDailyboardCard extends StoredItem, DailyboardCardData {
 
 //
 
-export interface StoredDailyboardResult extends StoredDailyboard {
+export interface StoredDailyboardRoot extends StoredDailyboard {
     cards: StoredDailyboardCard[];
 }

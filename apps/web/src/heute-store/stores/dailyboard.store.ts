@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { Dailyboard } from "@/src/modules/dailyboard/types/dailyboard.types";
-import { DailyboardState, StoredDailyboard, StoredDailyboardCard, StoredDailyboardResult } from "@/src/heute-store/types/dailyboard.types";
+import { DailyboardState, StoredDailyboard, StoredDailyboardCard, StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
 export const useDailyboardStore = create<DailyboardState>()(
@@ -143,7 +143,7 @@ const getDailyboard = (state: DailyboardState, user: string, categoryPath: strin
     return (state.byId[id] as StoredDailyboard) || null;
 };
 
-const getDailyBoardResult = (state: DailyboardState, user: string, categoryPath: string, date: YYMMDDDate): StoredDailyboardResult | null => {
+const getDailyBoardResult = (state: DailyboardState, user: string, categoryPath: string, date: YYMMDDDate): StoredDailyboardRoot | null => {
     const dailyboard = getDailyboard(state, user, categoryPath, date);
     if (!dailyboard) return null;
     

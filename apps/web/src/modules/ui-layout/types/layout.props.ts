@@ -1,8 +1,8 @@
 import { LayoutEntity, LayoutSectionEntity } from "@/src/modules/ui-layout/types/layout.entity";
-import { StoredLayoutResult, StoredLayoutSection } from "@/src/heute-store/types/layout.types";
+import { StoredLayoutRoot, StoredLayoutSection } from "@/src/heute-store/types/layout.types";
 
 export interface LayoutRootProps extends LayoutEntity {
-    data: StoredLayoutResult;
+    data: StoredLayoutRoot;
 }
 
 export interface LayoutSectionProps extends LayoutSectionEntity {
