@@ -1,7 +1,7 @@
 import { LayoutBase, LayoutSectionBase } from "@/src/modules/layout/types/layout.base.types";
 import { StoredLayoutItemContent, StoredLayoutSectionItemContent } from "../types/layout/layout.base.types";
 
-export const convertSourceToItemContent = <
+export const convertLayoutSourceToItemContent = <
     TSource extends LayoutBase, 
     TItemContent extends StoredLayoutItemContent
 > (id: string, source: TSource) : TItemContent => {
@@ -13,7 +13,7 @@ export const convertSourceToItemContent = <
     } as unknown as TItemContent;
 }
 
-export const convertSectionSourceToItemContent = <
+export const convertLayoutSectionSourceToItemContent = <
     TSource extends LayoutSectionBase,
     TItemContent extends StoredLayoutSectionItemContent
 > (id: string, source: TSource) : TItemContent => {
