@@ -19,6 +19,7 @@ export const convertLayoutSectionSourceToItemContent = <
 
     return {
         id,
+        layoutId: () => id.split("/").slice(0, -1).join("/"),
         ...source,
     } as unknown as TItemContent;
 }

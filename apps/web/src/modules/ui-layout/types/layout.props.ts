@@ -1,11 +1,11 @@
-import { StoredLayoutRoot, StoredLayoutSection } from "@/src/heute-store/types/layout.types";
+import { StoredLayoutData, StoredLayoutSectionData } from "@/src/heute-store/types/layout.types";
 
 export interface LayoutRootProps {
-    data: StoredLayoutRoot;
+    data: StoredLayoutData;
 }
 
 export interface LayoutSectionProps {
-    data: StoredLayoutSection
+    data: StoredLayoutSectionData
 }
 
 export interface LayoutGridProps  {
@@ -15,6 +15,6 @@ export interface LayoutGridProps  {
 }
 
 export interface LayoutProviderProps {
-    source: StoredLayoutRoot | null;
+    source: StoredLayoutData | null;
     children: React.ReactNode;
 }
