@@ -3,31 +3,32 @@ import { StoredItem, UserBasedStoreState } from "../store.types";
 
 export interface LayoutBaseState<
     TLayoutSource extends LayoutBase,
-    TLayoutItem extends StoredLayoutItem,
-    TLayoutRoot extends StoredLayoutRootItem<TLayoutSection>,
-    TLayoutSection extends StoredLayoutSectionItem
-> extends UserBasedStoreState<TLayoutItem> {
-    sectionById: Record<string, StoredLayoutSectionItem>;
+    TLayoutItem extends StoredLayoutItem<TLayoutSection>,
+    TLayoutItemContent extends StoredLayoutItemContent,
+    TLayoutSection extends StoredLayoutSectionItem,
+    TLayoutSectionContent extends StoredLayoutSectionItemContent
+> extends UserBasedStoreState<TLayoutItemContent> {
+    sectionById: Record<string, TLayoutSectionContent>;
 
     loadGlobalLayout: (layout: TLayoutSource) => void;
     loadMeLayout: (layout: TLayoutSource) => void;
     loadUserLayout: (user: string, layout: TLayoutSource) => void;
 
-    getGlobalLayout: (name: string, version: number) => TLayoutRoot | null;
-    getMeLayout: (name: string, version: number) => TLayoutRoot | null;
-    getUserLayout: (user: string, name: string, version: number) => TLayoutRoot | null;
+    getGlobalLayout: (name: string, version: number) => TLayoutItem | null;
+    getMeLayout: (name: string, version: number) => TLayoutItem | null;
+    getUserLayout: (user: string, name: string, version: number) => TLayoutItem | null;
 }
 
 //
 
-export interface StoredLayoutItem extends StoredItem, LayoutBase {
-
-}
-
-export interface StoredLayoutRootItem<TLayoutSection extends StoredLayoutSectionItem> extends StoredLayoutItem {
+export interface StoredLayoutItem<TLayoutSection extends StoredLayoutSectionItem> extends StoredItem, LayoutBase {
     sections: TLayoutSection[];
 }
 
 export interface StoredLayoutSectionItem extends StoredItem, LayoutSectionBase {
     layoutId: () => string;
 }
+
+export type StoredLayoutItemContent = Omit<StoredLayoutItem<StoredLayoutSectionItem>, "sections">;
+
+export type StoredLayoutSectionItemContent = StoredLayoutSectionItem;

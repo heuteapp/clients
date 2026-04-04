@@ -1,21 +1,25 @@
-import { LayoutData } from "@/src/modules/layout/types/layout.data.types";
-import { LayoutBaseState, StoredLayoutItem, StoredLayoutRootItem, StoredLayoutSectionItem } from "./layout.base.types";
-import { LayoutSectionStyle, LayoutStyle } from "@/src/modules/layout/types/layout.style.types";
+import { LayoutBaseState, StoredLayoutItem, StoredLayoutSectionItem } from "./layout.base.types";
+import { LayoutSectionStyleContent, LayoutStyle, LayoutStyleContent } from "@/src/modules/layout/types/layout.style.types";
 
-export interface LayoutStyleState extends LayoutBaseState<LayoutStyle, StoredLayoutStyle, StoredLayoutRootStyle, StoredLayoutSectionStyle> {
+export interface LayoutStyleState extends LayoutBaseState<
+    LayoutStyle, 
+    StoredLayoutStyle, 
+    StoredLayoutStyleContent,
+    StoredLayoutSectionStyle,
+    StoredLayoutSectionStyleContent> {
 
 }
 
 //
 
-export interface StoredLayoutStyle extends StoredLayoutItem, LayoutStyle {
+export interface StoredLayoutStyle extends StoredLayoutItem<StoredLayoutSectionStyle>, LayoutStyleContent {
 
 }
 
-export interface StoredLayoutRootStyle extends StoredLayoutStyle, StoredLayoutRootItem<StoredLayoutSectionStyle> {
+export interface StoredLayoutSectionStyle extends StoredLayoutSectionItem, LayoutSectionStyleContent {
 
 }
 
-export interface StoredLayoutSectionStyle extends StoredLayoutSectionItem, LayoutSectionStyle {
-    layoutId: () => string;
-}
+export type StoredLayoutStyleContent = Omit<StoredLayoutStyle, "sections">;
+
+export type StoredLayoutSectionStyleContent = StoredLayoutSectionStyle;
