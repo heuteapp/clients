@@ -17,7 +17,7 @@ export function useWorkspaceDailyboard(config: WorkspaceDailyboardConfig = {}): 
         const dailyboardData = parseDailyboardPath(relativePath);
 
         const { isValid, errors } = validateDailyboardPath(dailyboardData, stableConfig.path);
-        const date = dailyboardData?.date || dateToYYMMDD(new Date())!;
+        const date = dailyboardData?.date || dateToYYMMDD(getCurrentUTCDate())!;
         
         const enrichedData: WorkspaceDailyboardMetadata = {
             categories: dailyboardData?.categories || [],
@@ -32,3 +32,13 @@ export function useWorkspaceDailyboard(config: WorkspaceDailyboardConfig = {}): 
         return enrichedData;
     }, [pathName, stableConfig]);
 }
+
+const getCurrentUTCDate = (): Date => {
+    const now = new Date();
+    return new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, 0, 0, 0
+    ));
+};
