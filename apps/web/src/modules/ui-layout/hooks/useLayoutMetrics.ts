@@ -7,8 +7,6 @@ export const useLayoutMetrics = (registry: LayoutRegistry) : LayoutMetrics => {
     const metrics = React.useRef<LayoutMetrics>(null);
 
     React.useEffect(() => {
-        metrics.current = calculateLayoutMetrics(registry);
-
         const resizeObserver = new ResizeObserver(() => {
             metrics.current = calculateLayoutMetrics(registry);
             applyLayoutMetrics(registry, metrics.current!);
@@ -21,7 +19,7 @@ export const useLayoutMetrics = (registry: LayoutRegistry) : LayoutMetrics => {
         return () => {
             resizeObserver.disconnect();
         }
-    }, []);
+    });
 
     return metrics.current!;
 }
