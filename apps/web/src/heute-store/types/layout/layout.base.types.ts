@@ -2,7 +2,7 @@ import { LayoutBase, LayoutSectionBase } from "@/src/modules/layout/types/layout
 import { StoredItem, UserBasedStoreState } from "../store.types";
 
 export interface LayoutBaseState<
-    TLayoutSource extends LayoutBase,
+    TLayoutSource extends LayoutBaseSource,
     TLayoutItem extends StoredLayoutItem<TLayoutSection>,
     TLayoutItemContent extends StoredLayoutItemContent,
     TLayoutSection extends StoredLayoutSectionItem,
@@ -20,6 +20,10 @@ export interface LayoutBaseState<
 }
 
 //
+
+export type LayoutBaseSource = LayoutBase;
+
+export type LayoutSectionBaseSource = LayoutSectionBase;
 
 export interface StoredLayoutItem<TLayoutSection extends StoredLayoutSectionItem> extends StoredItem, LayoutBase {
     sections: TLayoutSection[];
