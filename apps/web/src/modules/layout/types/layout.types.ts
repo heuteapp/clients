@@ -1,15 +1,13 @@
 import { GridRect } from "@/src/modules/shared/types/common";
+import { LayoutBase, LayoutSectionBase } from "./layout.base.types";
 
-export interface Layout {
-    name: string;
-    version: number;
+export interface Layout extends LayoutBase {
     colCount: number;
     rowCount: number;
     sections: LayoutSection[];
 }
 
-export interface LayoutSection {
-    name: string;
+export interface LayoutSection extends LayoutSectionBase {
     position: GridRect;
 }
 

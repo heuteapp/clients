@@ -1,21 +1,11 @@
 import { BoxStyle } from "@/src/modules/shared/types/style";
+import { LayoutBase, LayoutSectionBase } from "./layout.base.types";
 
-export type LayoutStyle = {
-    name: string;
-    box: BoxStyle;
-    sectionContainer?: LayoutSectionContainerStyle;
-}
-
-export type LayoutSectionContainerStyle = {
+export interface LayoutStyle extends LayoutBase{
     box: BoxStyle;
 }
 
-export type LayoutSectionStyle = {
-    name: string;
+export interface LayoutSectionStyle extends LayoutSectionBase {
     box: BoxStyle;
-    grid?: LayoutGridStyle;
-}
-
-export type LayoutGridStyle = {
-    box: BoxStyle;
+    grid?: BoxStyle;
 }
