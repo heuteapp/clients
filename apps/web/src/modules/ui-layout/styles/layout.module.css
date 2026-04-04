@@ -14,11 +14,8 @@
     align-content: center;
     justify-items: center;
     transition: background-color 0.2s ease;
-}
-.layout .section {
-    display: grid;
-    align-items: center;
-    justify-items: center;
+
+    margin: 12px;
 
     background: #1a1d24;
 

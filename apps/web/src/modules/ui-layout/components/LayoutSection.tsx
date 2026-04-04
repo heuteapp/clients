@@ -28,8 +28,6 @@ export function LayoutSection(props : LayoutSectionProps) {
             className={style.section}
             style={{
                 gridArea: data.name,
-                padding: "var(--section-padding)",
-                margin: "var(--section-margin)"
             }}
         />
     )
