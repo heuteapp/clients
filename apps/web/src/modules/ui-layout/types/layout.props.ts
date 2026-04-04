@@ -14,3 +14,8 @@ export interface LayoutGridProps  {
     colSpan: number,
     rowSpan: number,
 }
+
+export interface LayoutProviderProps {
+    source: StoredLayoutRoot | null;
+    children: React.ReactNode;
+}
