@@ -6,14 +6,14 @@ import { LayoutContext } from "@/src/modules/ui-layout/contexts/layout.context";
 import { useLayoutMetrics } from "../hooks/useLayoutMetrics";
 
 export function LayoutProvider({ children }: { children: React.ReactNode }) {
-    const rootRef = React.useRef<HTMLDivElement | null>(null);
-    const registry = useLayoutRegistry(rootRef);
+    const layoutRef = React.useRef<HTMLDivElement | null>(null);
+    const registry = useLayoutRegistry(layoutRef);
 
     useLayoutMetrics(registry);
 
     const contextValue = React.useMemo(() => ({
-        rootRef, registry
-    }), [rootRef, registry]);
+        registry
+    }), [registry]);
 
     return (
         <LayoutContext.Provider value={contextValue}>
