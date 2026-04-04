@@ -1,4 +1,4 @@
-import { Layout } from "@/src/modules/layout/types/layout.types";
+import { LayoutData } from "@/src/modules/layout/types/layout.data.types";
 import { LayoutBaseState, StoredLayoutItem, StoredLayoutRootItem, StoredLayoutSectionItem } from "./layout.base.types";
 import { LayoutSectionStyle, LayoutStyle } from "@/src/modules/layout/types/layout.style.types";
 

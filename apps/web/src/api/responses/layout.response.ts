@@ -1,7 +1,7 @@
-import { Layout, LayoutSection } from "@/src/modules/layout/types/layout.types";
+import { LayoutData, LayoutSectionData } from "@/src/modules/layout/types/layout.data.types";
 import { LayoutResponse, LayoutSectionResponse } from "../models/responses/layout.response";
 
-export function responseToLayout(response: LayoutResponse): Layout {
+export function responseToLayout(response: LayoutResponse): LayoutData {
     return {
         name: response.name,
         version: response.version,
@@ -11,7 +11,7 @@ export function responseToLayout(response: LayoutResponse): Layout {
     };
 }
 
-export function responseToLayoutSections(response: LayoutSectionResponse): LayoutSection {
+export function responseToLayoutSections(response: LayoutSectionResponse): LayoutSectionData {
     return {
         name: response.name,
         position: {

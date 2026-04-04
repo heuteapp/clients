@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { Layout } from "@/src/modules/layout/types/layout.types";
+import { LayoutData } from "@/src/modules/layout/types/layout.data.types";
 import { LayoutState, StoredLayout, StoredLayoutSection, StoredLayoutRoot } from "@/src/heute-store/types/layout.types";
 
 export const useLayoutStore = create<LayoutState>()(
@@ -11,7 +11,7 @@ export const useLayoutStore = create<LayoutState>()(
             sectionById: {},
             userOrder: [],
 
-            loadGlobalLayout: (layout: Layout) => {
+            loadGlobalLayout: (layout: LayoutData) => {
                 set((state) => {
                     const owner = "g";
                     saveLayoutToState(state, owner, layout);
@@ -21,7 +21,7 @@ export const useLayoutStore = create<LayoutState>()(
                 });
             },
 
-            loadMeLayout: (layout: Layout) => {
+            loadMeLayout: (layout: LayoutData) => {
                 set((state) => {
                     const owner = "me";
                     saveLayoutToState(state, owner, layout);
@@ -31,7 +31,7 @@ export const useLayoutStore = create<LayoutState>()(
                 });
             },
 
-            loadUserLayout: (user: string, layout: Layout) => {
+            loadUserLayout: (user: string, layout: LayoutData) => {
                 set((state) => {
                     saveLayoutToState(state, user, layout);
 
@@ -71,7 +71,7 @@ export const useLayoutStore = create<LayoutState>()(
     )
 );
 
-const saveLayoutToState = (state: any, owner: string, layout: Layout) => {
+const saveLayoutToState = (state: any, owner: string, layout: LayoutData) => {
     const layoutId = `${owner}@${layout.name}/${layout.version}`;
 
     state.byId[layoutId] = {

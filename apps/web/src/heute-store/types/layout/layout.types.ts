@@ -1,13 +1,13 @@
-import { Layout, LayoutData, LayoutSectionData } from "@/src/modules/layout/types/layout.types";
+import { LayoutData, LayoutDataContent, LayoutSectionDataContent } from "@/src/modules/layout/types/layout.data.types";
 import { LayoutBaseState, StoredLayoutItem, StoredLayoutRootItem, StoredLayoutSectionItem } from "./layout.base.types";
 
-export interface LayoutState extends LayoutBaseState<Layout, StoredLayout, StoredLayoutRoot, StoredLayoutSection> {
+export interface LayoutState extends LayoutBaseState<LayoutData, StoredLayout, StoredLayoutRoot, StoredLayoutSection> {
 
 }
 
 //
 
-export interface StoredLayout extends StoredLayoutItem, LayoutData {
+export interface StoredLayout extends StoredLayoutItem, LayoutDataContent {
 
 }
 
@@ -15,6 +15,6 @@ export interface StoredLayoutRoot extends StoredLayout, StoredLayoutRootItem<Sto
 
 }
 
-export interface StoredLayoutSection extends StoredLayoutSectionItem, LayoutSectionData {
+export interface StoredLayoutSection extends StoredLayoutSectionItem, LayoutSectionDataContent {
     layoutId: () => string;
 }
