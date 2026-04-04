@@ -3,13 +3,19 @@ export type BoxStyle = {
     margin?: Margin;
 }
 
-export type Padding = Spacing;
+export type Padding = EdgeInsetsInput;
 
-export type Margin = Spacing;
+export type Margin = EdgeInsetsInput;
 
-export type Spacing = {
+export type EdgeInsets = {
     top: number;
     right: number;
     bottom: number;
     left: number;
 }
+
+export type EdgeInsetsInput = 
+    | number 
+    | [number, number] 
+    | [number, number, number, number] 
+    | EdgeInsets;
