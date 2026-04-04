@@ -6,6 +6,7 @@ import { WorkspaceDailyboardProvider } from "@/src/modules/workspace-dailyboard/
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
+import { Stack } from "@mui/material";
 
 export default function WorkspaceLayout({
   children,
@@ -45,9 +46,12 @@ const LayoutContainer = ({ children }: { children: React.ReactNode }) => {
 const LayoutContent = ({ children }: { children: React.ReactNode }) => (
   <>
     <LayoutNavbar/>
-    <LayoutMonitor>
-      {children}
-    </LayoutMonitor>
+    <Stack direction="row" sx={{ width: "100%", height: "calc(100dvh - 49px)" }}>
+      <LayoutSidebar/>
+      <LayoutMonitor>
+        {children}
+      </LayoutMonitor>
+    </Stack>
   </>
 );
 
@@ -56,18 +60,18 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => (
 const LayoutNavbar = () => {
     return (
         <Box
-            component="nav"
-            sx={{
-            borderBottom: 1,
-            borderColor: "divider",
-            width: "100%",
-            height: "48px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "text.primary",
-            fontSize: "1.5rem",
-            }}
+          component="nav"
+          sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          width: "100%",
+          height: "48px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          color: "text.primary",
+          fontSize: "1.5rem",
+          }}
         >
           <WorkspaceBreadcrumbs />
           <Box
@@ -83,12 +87,30 @@ const LayoutNavbar = () => {
     )
 };
 
+const LayoutSidebar = () => {
+    return (
+        <Box
+            component="aside"
+            sx={{
+                width: "240px",
+                height: "100%",
+                borderRight: 1,
+                borderColor: "divider",
+                display: "flex",
+                flexDirection: "column",
+                bgcolor: "background.paper"
+            }}
+        >
+        </Box>
+    );
+}
+
 const LayoutMonitor = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box
         sx={{
             width: "100%",
-            height: "calc(100dvh - 49px)",
+            height: "100%",
             display: "flex",
             flexDirection: "row",
             bgcolor: "transparent"
