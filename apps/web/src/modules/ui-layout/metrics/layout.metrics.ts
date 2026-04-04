@@ -40,7 +40,7 @@ export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetr
         return;
     }
 
-    const cellSize = metrics.cellSize.full;
+    const cellSize = metrics.cellSize.inner;
 
     layoutEl.style.setProperty("--cell-size", `${cellSize}px`);
 }
