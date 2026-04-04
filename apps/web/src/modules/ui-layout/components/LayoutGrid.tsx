@@ -21,8 +21,8 @@ function LayoutGrid(props : LayoutGridProps) {
 
     return (
         <div ref={ref} className={style.grid} style={{
-            gridTemplateColumns: `repeat(${props.colSpan}, var(--cell-size-inner))`,
-            gridTemplateRows: `repeat(${props.rowSpan}, var(--cell-size-inner))`,
+            gridTemplateColumns: `repeat(${props.colSpan}, var(--grid-cell-size))`,
+            gridTemplateRows: `repeat(${props.rowSpan}, var(--grid-cell-size))`,
         }}/>
     )
 }

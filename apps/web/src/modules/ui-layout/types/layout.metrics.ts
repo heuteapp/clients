@@ -1,6 +1,6 @@
 export interface LayoutMetrics {
     cellSize: {
-        full: number,
-        inner: number,
+        layout: number,
+        grid: number,
     }
 }

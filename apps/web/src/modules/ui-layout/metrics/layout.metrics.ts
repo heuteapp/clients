@@ -21,17 +21,17 @@ export function calculateLayoutMetrics(registry: LayoutRegistry) : LayoutMetrics
 
     const totalGap = 16;
 
-    const cellFullSize = Math.min(
+    const layoutCellSize = Math.min(
         layoutWidth / colCount,
         layoutHeight / rowCount
     );
-
-    const cellSizeInner = cellFullSize - totalGap;
+    
+    const gridCellSize = layoutCellSize - totalGap;
 
     return {
         cellSize: {
-            full: cellFullSize,
-            inner: cellSizeInner,
+            layout: layoutCellSize,
+            grid: gridCellSize,
         }
     }
 }
@@ -44,9 +44,9 @@ export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetr
         return;
     }
 
-    const cellSizeFull = metrics.cellSize.full;
-    const cellSizeInner = metrics.cellSize.inner;
+    const layoutCellSize = metrics.cellSize.layout;
+    const gridCellSize = metrics.cellSize.grid;
 
-    layoutEl.style.setProperty("--cell-size-full", `${cellSizeFull}px`);
-    layoutEl.style.setProperty("--cell-size-inner", `${cellSizeInner}px`);
+    layoutEl.style.setProperty("--layout-cell-size", `${layoutCellSize}px`);
+    layoutEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
 }
