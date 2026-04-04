@@ -2,7 +2,7 @@ import { immer } from "zustand/middleware/immer";
 
 import { LayoutBaseState, StoredLayoutItem, StoredLayoutItemContent, StoredLayoutSectionItem, StoredLayoutSectionItemContent } from "../../types/layout/layout.base.types";
 import { LayoutBase } from "@/src/modules/layout/types/layout.base.types";
-import { getLayoutItem, saveLayoutToState } from "../../utils/layout.utils";
+import { getLayoutItemFromState, saveLayoutToState } from "../../utils/layout.utils";
 
 export const baseLayoutImmer = <
     TLayoutSource extends LayoutBase,
@@ -65,15 +65,15 @@ export const baseLayoutImmer = <
             },
 
             getGlobalLayout: (name: string, version: number) => {
-                return getLayoutItem(get(), "g", name, version);
+                return getLayoutItemFromState(get(), "g", name, version);
             },
 
             getMeLayout: (name: string, version: number) => {
-                return getLayoutItem(get(), "me", name, version);
+                return getLayoutItemFromState(get(), "me", name, version);
             },
 
             getUserLayout: (user: string, name: string, version: number) => {
-                return getLayoutItem(get(), user, name, version);
+                return getLayoutItemFromState(get(), user, name, version);
             },
 
             hasUser: (user: string) => {

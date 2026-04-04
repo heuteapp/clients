@@ -45,7 +45,7 @@ export const saveLayoutToState = <
     });
 };
 
-export const getLayoutItem = <
+export const getLayoutItemFromState = <
     TLayoutSource extends LayoutBaseSource,
     TLayoutItem extends StoredLayoutItem<TLayoutSection>,
     TLayoutItemContent extends StoredLayoutItemContent,
@@ -55,10 +55,10 @@ export const getLayoutItem = <
     state: LayoutBaseState<TLayoutSource, TLayoutItem, TLayoutItemContent, TLayoutSection, TLayoutSectionContent>, 
     owner: string, name: string, version: number
 ): TLayoutItem | null => {
-    const content = getLayoutItemContent(state, owner, name, version);
+    const content = getLayoutItemContentFromState(state, owner, name, version);
     if (!content) return null;
     
-    const sections = getLayoutSectionItemContents(state, content.id);
+    const sections = getLayoutSectionItemContentsFromState(state, content.id);
     
     return {
         ...content,
@@ -68,7 +68,7 @@ export const getLayoutItem = <
 
 
 
-export const getLayoutItemContent = <
+export const getLayoutItemContentFromState = <
     TLayoutSource extends LayoutBaseSource,
     TLayoutItem extends StoredLayoutItem<TLayoutSection>,
     TLayoutItemContent extends StoredLayoutItemContent,
@@ -82,7 +82,7 @@ export const getLayoutItemContent = <
     return key ? state.byId[key] as TLayoutItemContent : null;
 };
 
-export const getLayoutSectionItemContents = <
+export const getLayoutSectionItemContentsFromState = <
     TLayoutSource extends LayoutBaseSource,
     TLayoutItem extends StoredLayoutItem<TLayoutSection>,
     TLayoutItemContent extends StoredLayoutItemContent,
