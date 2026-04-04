@@ -2,15 +2,16 @@ import { LayoutBase, LayoutSectionBase } from "@/src/modules/layout/types/layout
 import { StoredItem, UserBasedStoreState } from "../store.types";
 
 export interface LayoutBaseState<
-    TLayout extends StoredLayoutItem,
+    TLayoutSource extends LayoutBase,
+    TLayoutItem extends StoredLayoutItem,
     TLayoutRoot extends StoredLayoutRootItem<TLayoutSection>,
     TLayoutSection extends StoredLayoutSectionItem
-> extends UserBasedStoreState<TLayout> {
+> extends UserBasedStoreState<TLayoutItem> {
     sectionById: Record<string, StoredLayoutSectionItem>;
 
-    loadGlobalLayout: (layout: TLayout) => void;
-    loadMeLayout: (layout: TLayout) => void;
-    loadUserLayout: (user: string, layout: TLayout) => void;
+    loadGlobalLayout: (layout: TLayoutSource) => void;
+    loadMeLayout: (layout: TLayoutSource) => void;
+    loadUserLayout: (user: string, layout: TLayoutSource) => void;
 
     getGlobalLayout: (name: string, version: number) => TLayoutRoot | null;
     getMeLayout: (name: string, version: number) => TLayoutRoot | null;

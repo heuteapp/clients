@@ -1,7 +1,8 @@
+import { Layout } from "@/src/modules/layout/types/layout.types";
 import { LayoutBaseState, StoredLayoutItem, StoredLayoutRootItem, StoredLayoutSectionItem } from "./layout.base.types";
 import { LayoutSectionStyle, LayoutStyle } from "@/src/modules/layout/types/layout.style.types";
 
-export interface LayoutStyleState extends LayoutBaseState<StoredLayoutStyle, StoredLayoutRootStyle, StoredLayoutSectionStyle> {
+export interface LayoutStyleState extends LayoutBaseState<LayoutStyle, StoredLayoutStyle, StoredLayoutRootStyle, StoredLayoutSectionStyle> {
 
 }
 
