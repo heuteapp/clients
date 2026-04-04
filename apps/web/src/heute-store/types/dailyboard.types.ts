@@ -16,12 +16,10 @@ export interface StoredDailyboard extends StoredItem, DailyboardData {
     categoryId: () => string;
 }
 
-export interface StoredDailyboardCard extends StoredItem, DailyboardCardData {
-    dailyboardId: () => string;
-}
-
-//
-
 export interface StoredDailyboardRoot extends StoredDailyboard {
     cards: StoredDailyboardCard[];
+}
+
+export interface StoredDailyboardCard extends StoredItem, DailyboardCardData {
+    dailyboardId: () => string;
 }

@@ -19,12 +19,10 @@ export interface StoredLayout extends StoredItem, LayoutData {
 
 }
 
-export interface StoredLayoutSection extends StoredItem, LayoutSectionData {
-    layoutId: () => string;
-}
-
-//
-
 export interface StoredLayoutRoot extends StoredLayout {
     sections: StoredLayoutSection[];
+}
+
+export interface StoredLayoutSection extends StoredItem, LayoutSectionData {
+    layoutId: () => string;
 }
