@@ -1,7 +1,6 @@
-import { DailyboardEntity, DailyboardCardEntity } from "@/src/modules/ui-dailyboard/types/dailyboard.entity";
 import { StoredDailyboardCard, StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
 
-export interface DailyboardRootProps extends DailyboardEntity {
+export interface DailyboardRootProps {
     data: StoredDailyboardRoot;
 }
 
@@ -9,7 +8,7 @@ export interface DailyboardCardContainerProps {
     cards: StoredDailyboardCard[];
 }
 
-export interface DailyboardCardProps extends DailyboardCardEntity {
+export interface DailyboardCardProps {
     data: StoredDailyboardCard;
 }
 

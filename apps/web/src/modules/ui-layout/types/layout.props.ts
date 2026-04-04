@@ -1,11 +1,10 @@
-import { LayoutEntity, LayoutSectionEntity } from "@/src/modules/ui-layout/types/layout.entity";
 import { StoredLayoutRoot, StoredLayoutSection } from "@/src/heute-store/types/layout.types";
 
-export interface LayoutRootProps extends LayoutEntity {
+export interface LayoutRootProps {
     data: StoredLayoutRoot;
 }
 
-export interface LayoutSectionProps extends LayoutSectionEntity {
+export interface LayoutSectionProps {
     data: StoredLayoutSection
 }
 

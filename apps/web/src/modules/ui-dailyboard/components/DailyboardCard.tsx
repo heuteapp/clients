@@ -5,14 +5,15 @@ import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboar
 import { useLayoutEffect, useRef } from "react";
 
 function DailyboardCard(props : DailyboardCardProps) {
+    const { data } = props;
     const { registry} = useDailyboardContext();
     const ref = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
-        registry.registerDailyboardCard(props.id, ref, props)
+        registry.registerDailyboardCard(data.id, ref, props)
 
         return () => {
-            registry.unregisterDailyboardCard(props.id)
+            registry.unregisterDailyboardCard(data.id)
         }
     }, [registry]) 
 

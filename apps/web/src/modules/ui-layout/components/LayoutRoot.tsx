@@ -52,7 +52,7 @@ export function LayoutRoot(props: LayoutRootProps) {
       }}
     >
       {sections.map((section) => (
-        <LayoutSection id={section.id} key={section.name} data={section}/>
+        <LayoutSection key={section.name} data={section}/>
       ))}
     </div>
   )

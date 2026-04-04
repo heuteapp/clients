@@ -16,12 +16,12 @@ export function LayoutSection(props : LayoutSectionProps) {
     const { registry } = context!;
 
     useLayoutEffect(() => {
-        registry.registerLayoutSection(props.id, ref, props)
+        registry.registerLayoutSection(data.id, ref, props)
 
         return () => {
-            registry.unregisterLayoutSection(props.id)
+            registry.unregisterLayoutSection(data.id)
         }
-    }, [props.id, registry])
+    }, [data.id, registry])
 
     return (
         <div
@@ -32,7 +32,7 @@ export function LayoutSection(props : LayoutSectionProps) {
                 padding: "8px",
             }}
         >
-            <LayoutGrid sectionId={props.id} colSpan={props.data.position.colSpan} rowSpan={props.data.position.rowSpan} />
+            <LayoutGrid sectionId={data.id} colSpan={props.data.position.colSpan} rowSpan={props.data.position.rowSpan} />
         </div>
     )
 }

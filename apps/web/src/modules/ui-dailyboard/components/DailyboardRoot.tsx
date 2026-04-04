@@ -18,7 +18,6 @@ export function DailyboardRoot(props: DailyboardRootProps) {
   const { source: layoutSource } = useLayoutContext();
   const dailyboardRef = registry.dailyboard.ref;
 
-  
   const cards = props.data.cards;
 
   useLayoutEffect(() => {
@@ -34,7 +33,7 @@ export function DailyboardRoot(props: DailyboardRootProps) {
 
   return (
     <div ref={dailyboardRef} className={style.dailyboard}>
-      <LayoutRoot id={layoutSource.id} data={layoutSource} />
+      <LayoutRoot data={layoutSource} />
       <DailyboardCardContainer cards={cards} />
       <DailyboardGhostCard />
     </div>
