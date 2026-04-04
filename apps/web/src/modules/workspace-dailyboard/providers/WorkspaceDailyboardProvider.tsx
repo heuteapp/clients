@@ -26,7 +26,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
 
     return (
         <LayoutProvider source={layout}>
-            <DailyboardProvider>
+            <DailyboardProvider source={dailyboard}>
                 <WorkspaceDailyboardContext.Provider value={contextValue}>
                     <ProviderContent>
                         {children}
