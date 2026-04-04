@@ -7,11 +7,11 @@ import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
 import { useDailyboardLoader } from "@/src/heute-store/hooks/useDailyboardLoader";
-import { useLayoutStore } from "@/src/heute-store/stores/layout.stores";
+import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
 import { useDailyboardStore } from "@/src/heute-store/stores/dailyboard.store";
 import { StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
-import { StoredLayoutRoot } from "@/src/heute-store/types/layout.types";
 import { WorkspaceDailyboardMetadata } from "../types/workspace-dailyboard.types";
+import { StoredLayoutData } from "@/src/heute-store/types/layout.types";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -45,9 +45,9 @@ const ProviderContent = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-const getDailyboardAndLayout = ({ metadata } : { metadata: WorkspaceDailyboardMetadata }) : { dailyboard: StoredDailyboardRoot | null; layout: StoredLayoutRoot | null } => {
+const getDailyboardAndLayout = ({ metadata } : { metadata: WorkspaceDailyboardMetadata }) : { dailyboard: StoredDailyboardRoot | null; layout: StoredLayoutData | null } => {
     const { getMeDailyboard } = useDailyboardStore();
-    const { getGlobalLayout } = useLayoutStore();
+    const { getGlobalLayout } = useLayoutDataStore();
 
     const dailyboard = getMeDailyboard(metadata.categoryPath, metadata.date!);
     if(!dailyboard) return { dailyboard: null, layout: null };
