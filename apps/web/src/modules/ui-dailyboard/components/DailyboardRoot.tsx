@@ -14,7 +14,7 @@ import { LayoutRoot } from "@/src/modules/ui-layout/components/LayoutRoot";
 
 export function DailyboardRoot(props: DailyboardRootProps) {
   const { registry } = useDailyboardContext();
-  const dailyboardRef = useRef<HTMLDivElement>(null);
+  const dailyboardRef = registry.dailyboard.ref;
 
   
   const layout = props.layout;

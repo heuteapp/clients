@@ -8,12 +8,12 @@ import { DailyboardContext } from "@/src/modules/ui-dailyboard/contexts/dailyboa
 export function DailyboardProvider({ children }: { children: React.ReactNode }) {
     const layout = useLayoutContext();
 
-    const rootRef = React.useRef<HTMLDivElement | null>(null);
-    const registry = useDailyboardRegistry(rootRef, layout.registry);
+    const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
+    const registry = useDailyboardRegistry(dailyboardRef, layout.registry);
     
     const contextValue = React.useMemo(() => ({
-        layout, rootRef, registry
-    }), [layout, rootRef, registry]);
+        layout, registry
+    }), [layout, registry]);
 
     return (
         <DailyboardContext.Provider value={contextValue}>

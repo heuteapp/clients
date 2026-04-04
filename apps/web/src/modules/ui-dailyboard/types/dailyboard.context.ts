@@ -3,6 +3,5 @@ import { DailyboardRegistry } from "./dailyboard.registry";
 
 export interface DailyboardContextValue {    
     layout: LayoutContextValue;
-    rootRef: React.RefObject<HTMLDivElement | null>;
     registry: DailyboardRegistry;    
 }
