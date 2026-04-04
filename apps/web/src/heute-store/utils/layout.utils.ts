@@ -1,4 +1,4 @@
-import { LayoutBaseSource, LayoutBaseState, LayoutSectionBaseSource, StoredLayoutItem, StoredLayoutItemContent, StoredLayoutSectionItem, StoredLayoutSectionItemContent } from "../types/layout/layout.base.types";
+import { LayoutBaseSource, LayoutBaseState, LayoutSectionBaseSource, StoredLayoutItem, StoredLayoutItemContent, StoredLayoutSectionItem, StoredLayoutSectionItemContent } from "../types/layout.types";
 
 export const convertLayoutSourceToItemContent = <
     TSource extends LayoutBaseSource, 

@@ -1,39 +1,51 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { LayoutData } from "@/src/modules/layout/types/layout.data.types";
-import { LayoutState, StoredLayout, StoredLayoutSection, StoredLayoutRoot } from "@/src/heute-store/types/layout.types";
 
-export const useLayoutStore = create<LayoutState>()(
-    devtools(
-        immer((set, get) => ({
+import { LayoutBaseState, StoredLayoutItem, StoredLayoutItemContent, StoredLayoutSectionItem, StoredLayoutSectionItemContent } from "../types/layout.types";
+import { LayoutBase } from "@/src/modules/layout/types/layout.base.types";
+import { getLayoutItemFromState, saveLayoutToState } from "../utils/layout.utils";
+import { devtools } from "zustand/middleware";
+import { create } from "zustand";
+import { LayoutDataState, LayoutStyleState } from "../types/layout.types";
+
+export const withLayoutImmer = <
+    TLayoutSource extends LayoutBase,
+    TLayoutItem extends StoredLayoutItem<TLayoutSection>,
+    TLayoutItemContent extends StoredLayoutItemContent,
+    TLayoutSection extends StoredLayoutSectionItem,
+    TLayoutSectionContent extends StoredLayoutSectionItemContent
+>() => {
+
+    type LayoutState = LayoutBaseState<TLayoutSource, TLayoutItem, TLayoutItemContent, TLayoutSection, TLayoutSectionContent>;
+
+    return (
+        immer<LayoutState>((set, get) => ({
             byId: {},
             sectionById: {},
             userOrder: [],
 
-            loadGlobalLayout: (layout: LayoutData) => {
+            loadGlobalLayout: (layout: TLayoutSource) => {
                 set((state) => {
                     const owner = "g";
-                    saveLayoutToState(state, owner, layout);
+                    saveLayoutToState(state as LayoutState, owner, layout);
                     if (!state.userOrder.includes(owner)) {
                         state.userOrder.push(owner);
                     }
                 });
             },
 
-            loadMeLayout: (layout: LayoutData) => {
+            loadMeLayout: (layout: TLayoutSource) => {
                 set((state) => {
                     const owner = "me";
-                    saveLayoutToState(state, owner, layout);
+                    saveLayoutToState(state as LayoutState, owner, layout);
                     if (!state.userOrder.includes(owner)) {
                         state.userOrder.push(owner);
                     }
                 });
             },
 
-            loadUserLayout: (user: string, layout: LayoutData) => {
+            loadUserLayout: (user: string, layout: TLayoutSource) => {
                 set((state) => {
-                    saveLayoutToState(state, user, layout);
+                    saveLayoutToState(state as LayoutState, user, layout);
 
                     state.userOrder = state.userOrder.filter(u => u !== user);
                     state.userOrder.push(user);
@@ -56,57 +68,43 @@ export const useLayoutStore = create<LayoutState>()(
             },
 
             getGlobalLayout: (name: string, version: number) => {
-                return getLayoutResult(get(), "g", name, version);
+                return getLayoutItemFromState(get(), "g", name, version);
             },
 
             getMeLayout: (name: string, version: number) => {
-                return getLayoutResult(get(), "me", name, version);
+                return getLayoutItemFromState(get(), "me", name, version);
             },
 
             getUserLayout: (user: string, name: string, version: number) => {
-                return getLayoutResult(get(), user, name, version);
+                return getLayoutItemFromState(get(), user, name, version);
             },
-        })),
-        { name: "LayoutStore" }
+
+            hasUser: (user: string) => {
+                return Object.keys(get().byId).some(id => id.startsWith(`${user}@`));
+            },
+
+            sortMe: () => {
+
+            },
+
+            sortUser: (user: string) => {
+
+            },
+
+            clearMe: () => {
+            },
+
+            clearUser: (user: string) => {
+                
+            }
+        }))
     )
+}
+
+export const useLayoutDataStore = create<LayoutDataState>()(
+    devtools(withLayoutImmer(), { name: "LayoutDataStore" })
 );
 
-const saveLayoutToState = (state: any, owner: string, layout: LayoutData) => {
-    const layoutId = `${owner}@${layout.name}/${layout.version}`;
-
-    state.byId[layoutId] = {
-        id: layoutId,
-        ...layout,
-    };
-
-    layout.sections.forEach((section) => {
-        const sectionId = `${layoutId}/${section.name}`;
-        state.sectionById[sectionId] = {
-            id: sectionId,
-            layoutId: () => layoutId,
-            ...section,
-        };
-    });
-};
-
-const getLayout = (state: any, owner: string, name: string, version: number) => {
-    const key = Object.keys(state.byId).find(id => id.startsWith(`${owner}@${name}/${version}`));
-    return key ? state.byId[key] as StoredLayout : null;
-};
-
-const getLayoutResult = (state: any, owner: string, name: string, version: number): StoredLayoutRoot | null => {
-    const layout = getLayout(state, owner, name, version);
-    if (!layout) return null;
-    
-    const sections = getLayoutSections(state, layout.id);
-    
-    return {
-        ...layout,
-        sections,
-    };
-};
-
-const getLayoutSections = (state: LayoutState, layoutId: string | null) => {
-    if (!layoutId) return [];
-    return Object.values(state.sectionById).filter(s => s.layoutId() === layoutId) as StoredLayoutSection[];
-};
+export const useLayoutStyleStore = create<LayoutStyleState>()(
+    devtools(withLayoutImmer(), { name: "LayoutStyleStore" })
+);
