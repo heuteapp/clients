@@ -98,8 +98,8 @@ export function createDailyboardRegistry(dailyboardRef: React.RefObject<HTMLDivE
             const section = registry.layoutRegistry.layout?.sections.get(sectionId);
 
             for (const card of cards.values()) {
-                const placement = card.props?.placement;
-                if (placement?.sectionName === section?.props?.name) {
+                const placement = card.props?.data.placement;
+                if (placement?.sectionName === section?.props?.data.name) {
                     sectionCards.push(card)
                 }
             }
