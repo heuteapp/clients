@@ -4,7 +4,7 @@ import { LayoutBaseState, StoredLayoutItem, StoredLayoutItemContent, StoredLayou
 import { LayoutBase } from "@/src/modules/layout/types/layout.base.types";
 import { getLayoutItemFromState, saveLayoutToState } from "../../utils/layout.utils";
 
-export const baseLayoutImmer = <
+export const withLayoutImmer = <
     TLayoutSource extends LayoutBase,
     TLayoutItem extends StoredLayoutItem<TLayoutSection>,
     TLayoutItemContent extends StoredLayoutItemContent,
