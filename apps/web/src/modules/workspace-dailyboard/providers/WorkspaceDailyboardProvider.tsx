@@ -47,13 +47,12 @@ const ProviderContent = ({ children }: { children: React.ReactNode }) => {
 
 const getDailyboardAndLayout = ({ metadata } : { metadata: WorkspaceDailyboardMetadata }) : { dailyboard: StoredDailyboardRoot | null; layout: StoredLayoutRoot | null } => {
     const { getMeDailyboard } = useDailyboardStore();
-    const dailyboard = getMeDailyboard(metadata.categoryPath, metadata.date!);
+    const { getGlobalLayout } = useLayoutStore();
 
+    const dailyboard = getMeDailyboard(metadata.categoryPath, metadata.date!);
     if(!dailyboard) return { dailyboard: null, layout: null };
 
-    const { getGlobalLayout } = useLayoutStore();
     const layout = getGlobalLayout(dailyboard?.layoutName, dailyboard?.layoutVersion);
-
     if(!layout) return { dailyboard, layout: null };
 
     return { dailyboard, layout };
