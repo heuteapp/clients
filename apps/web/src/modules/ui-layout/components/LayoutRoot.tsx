@@ -10,13 +10,12 @@ import { useLayoutContext } from "../hooks/useLayoutContext";
 
 export function LayoutRoot(props: LayoutRootProps) {
   const { data } = props;
-  const { registry } = useLayoutContext();
+  const { rootRef, registry } = useLayoutContext();
 
   const sections = data.sections;
-  const layoutRef = registry.layout!.ref!;
 
   useLayoutEffect(() => {
-    registry.registerLayout(layoutRef, props)
+    registry.registerLayout(rootRef, props)
 
     return () => {
       registry.unregisterLayout()
@@ -43,7 +42,7 @@ export function LayoutRoot(props: LayoutRootProps) {
 
   return (
     <div 
-      ref={layoutRef} 
+      ref={rootRef} 
       className={style.layout}
       style={{
         gridTemplateColumns: `repeat(${data.colCount}, var(--cell-size))`,
