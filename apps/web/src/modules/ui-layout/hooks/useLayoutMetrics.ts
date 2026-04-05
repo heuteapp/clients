@@ -10,7 +10,7 @@ export const useLayoutMetrics = (registry: LayoutRegistry, dataSource: StoredLay
     React.useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
             metrics.current = calculateLayoutMetrics(registry, dataSource, styleSource);
-            applyLayoutMetrics(registry, metrics.current!);
+            applyLayoutMetrics(registry, metrics.current!, styleSource);
         });
 
         if (registry.layout.ref.current) {

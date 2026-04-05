@@ -49,8 +49,8 @@ export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: Sto
         const totalSpacingX = totalPaddingX + totalMarginX;
         const totalSpacingY = totalPaddingY + totalMarginY;
 
-        const contentWidth = width - totalSpacingX;
-        const contentHeight = height - totalSpacingY;
+        const contentWidth = width - totalSpacingX - 2;
+        const contentHeight = height - totalSpacingY - 2;
 
         const cellWidth = contentWidth / colSpan;
         const cellHeight = contentHeight / rowSpan;
@@ -70,7 +70,7 @@ export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: Sto
     }
 }
 
-export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetrics) {
+export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetrics, styleSource: StoredLayoutStyle | null) {
     const layoutRef = registry.layout.ref;
     const layoutEl = layoutRef.current;
 
@@ -83,4 +83,17 @@ export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetr
 
     layoutEl.style.setProperty("--layout-cell-size", `${layoutCellSize}px`);
     layoutEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
+
+    registry.getLayoutSections()?.forEach(section => {
+        const style = styleSource?.sections.find(s => s.id === section.props?.data.id);
+
+        const padding = normalizeEdgeInsets(style?.box.padding);
+        const margin = normalizeEdgeInsets(style?.box.margin);
+
+        const el = section.ref?.current;
+        if(el) {
+            el.style.padding = `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`;
+            el.style.margin = `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`;
+        }
+    });
 }
