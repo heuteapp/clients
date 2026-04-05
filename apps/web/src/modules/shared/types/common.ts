@@ -10,6 +10,11 @@ export interface Rect {
     height: number;
 }
 
+export interface Size {
+    width: number;
+    height: number;
+}
+
 export interface GridPosition {
     rowIndex: number;
     colIndex: number;
