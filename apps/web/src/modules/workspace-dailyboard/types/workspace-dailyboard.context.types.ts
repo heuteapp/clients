@@ -1,5 +1,6 @@
-import { WorkspaceDailyboardMetadata } from "./workspace-dailyboard.types";
+import { WorkspaceDailyboardMachineSend, WorkspaceDailyboardMachineState } from "./state/workspace-dailyboard.machine.types";
 
 export interface WorkspaceDailyboardContextValue {
-    metadata: WorkspaceDailyboardMetadata;
+    state: WorkspaceDailyboardMachineState;
+    send: WorkspaceDailyboardMachineSend;
 }
