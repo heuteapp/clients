@@ -32,15 +32,15 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                 {
                     name: "first",
                     box: {
-                        padding: 16,
-                        margin: [0, 0, 0, 48]
+                        padding: "2%",
+                        margin: [0, 0, 0, "4%"]
                     }
                 },
                 {
                     name: "second",
                     box: {
-                        padding: 16,
-                        margin: [0, 48, 0, 0]
+                        padding: "2%",
+                        margin: [0, "4%", 0, 0]
                     }
                 }
             ]
