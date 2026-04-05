@@ -8,14 +8,16 @@ export type Padding = EdgeInsetsInput;
 export type Margin = EdgeInsetsInput;
 
 export type EdgeInsets = {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
+    top: EdgeInsetsValue;
+    right: EdgeInsetsValue;
+    bottom: EdgeInsetsValue;
+    left: EdgeInsetsValue;
 }
 
+type EdgeInsetsValue = number | string;
+
 export type EdgeInsetsInput = 
-    | number 
-    | [number, number] 
-    | [number, number, number, number] 
+    | EdgeInsetsValue 
+    | [EdgeInsetsValue, EdgeInsetsValue] 
+    | [EdgeInsetsValue, EdgeInsetsValue, EdgeInsetsValue, EdgeInsetsValue] 
     | EdgeInsets;
