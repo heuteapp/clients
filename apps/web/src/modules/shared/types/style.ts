@@ -7,11 +7,12 @@ export type Padding = SpacingInput;
 
 export type Margin = SpacingInput;
 
-export type Spacing = {
-    top: SpacingInput;
-    right: SpacingInput;
-    bottom: SpacingInput;
-    left: SpacingInput;
+
+export type SpacingInset = {
+    top: Length;
+    right: Length;
+    bottom: Length;
+    left: Length;
 }
 
 export type SpacingResult = {
@@ -25,7 +26,8 @@ export type SpacingInput =
     | Length 
     | [Length, Length] 
     | [Length, Length, Length, Length] 
-    | Spacing;
+    | SpacingInset;
+
 
 export type Length = LengthNumber | LengthString;
 
