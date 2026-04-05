@@ -3,21 +3,32 @@ export type BoxStyle = {
     margin?: Margin;
 }
 
-export type Padding = EdgeInsetsInput;
+export type Padding = SpacingInput;
 
-export type Margin = EdgeInsetsInput;
+export type Margin = SpacingInput;
 
-export type EdgeInsets = {
-    top: EdgeInsetsValue;
-    right: EdgeInsetsValue;
-    bottom: EdgeInsetsValue;
-    left: EdgeInsetsValue;
+export type Spacing = {
+    top: SpacingInput;
+    right: SpacingInput;
+    bottom: SpacingInput;
+    left: SpacingInput;
 }
 
-type EdgeInsetsValue = number | string;
+export type SpacingResult = {
+    top: LengthNumber;
+    right: LengthNumber;
+    bottom: LengthNumber;
+    left: LengthNumber;
+}
 
-export type EdgeInsetsInput = 
-    | EdgeInsetsValue 
-    | [EdgeInsetsValue, EdgeInsetsValue] 
-    | [EdgeInsetsValue, EdgeInsetsValue, EdgeInsetsValue, EdgeInsetsValue] 
-    | EdgeInsets;
+export type SpacingInput = 
+    | Length 
+    | [Length, Length] 
+    | [Length, Length, Length, Length] 
+    | Spacing;
+
+export type Length = LengthNumber | LengthString;
+
+export type LengthNumber = number;
+
+export type LengthString = string;
