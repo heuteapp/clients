@@ -1,6 +1,6 @@
 import { EdgeInsets, EdgeInsetsInput } from "../types/style";
 
-export function normalizeEdgeInsets(input: EdgeInsetsInput): EdgeInsets {
+export function normalizeEdgeInsets(input?: EdgeInsetsInput): EdgeInsets {
     if (typeof input === 'number') {
         return { top: input, right: input, bottom: input, left: input };
     }
@@ -12,5 +12,6 @@ export function normalizeEdgeInsets(input: EdgeInsetsInput): EdgeInsets {
         const [top, right, bottom, left] = input;
         return { top, right, bottom, left };
     }
-    return input;
+    
+    return input || { top: 0, right: 0, bottom: 0, left: 0 };
 }
