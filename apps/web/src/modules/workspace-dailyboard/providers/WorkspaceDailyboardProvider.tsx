@@ -25,7 +25,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     const { dailyboard, layout } = getDailyboardAndLayout({ metadata });
 
     return (
-        <LayoutProvider source={layout}>
+        <LayoutProvider dataSource={layout} styleSource={null}>
             <DailyboardProvider source={dailyboard}>
                 <WorkspaceDailyboardContext.Provider value={contextValue}>
                     <ProviderContent>

@@ -10,7 +10,7 @@ import { useLayoutContext } from "../hooks/useLayoutContext";
 
 export function LayoutRoot(props: LayoutRootProps) {
   const { data } = props;
-  const { registry, source } = useLayoutContext();
+  const { registry, dataSource: source } = useLayoutContext();
 
   const sections = source?.sections ?? [];
   const layoutRef = registry.layout.ref;
