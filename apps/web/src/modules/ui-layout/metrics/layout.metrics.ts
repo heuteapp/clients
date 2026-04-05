@@ -1,7 +1,7 @@
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
 import { LayoutMetrics } from "../types/layout.metrics";
 import { LayoutRegistry } from "../types/layout.registry";
-import { normalizeEdgeInsets } from "../../shared/utils/style";
+import { spacingResult } from "../../shared/utils/style";
 
 export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: StoredLayoutData | null, styleSource: StoredLayoutStyle | null) : LayoutMetrics | null {
     const layoutRef = registry.layout.ref;
@@ -38,11 +38,13 @@ export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: Sto
         const width = colSpan * layoutCellSize;
         const height = rowSpan * layoutCellSize;
 
-        const padding = normalizeEdgeInsets(style?.box.padding);
+        const parent = { width: layoutWidth, height: layoutHeight };
+
+        const padding = spacingResult(style?.box.padding, parent);
         const totalPaddingX = padding.left + padding.right;
         const totalPaddingY = padding.top + padding.bottom;
 
-        const margin = normalizeEdgeInsets(style?.box.margin);
+        const margin = spacingResult(style?.box.margin, parent);
         const totalMarginX = margin.left + margin.right;
         const totalMarginY = margin.top + margin.bottom;
 
@@ -77,6 +79,8 @@ export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetr
     if (!layoutEl) {
         return;
     }
+    
+    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutEl;
 
     const layoutCellSize = metrics.cellSize.layout;
     const gridCellSize = metrics.cellSize.grid;
@@ -87,8 +91,10 @@ export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetr
     registry.getLayoutSections()?.forEach(section => {
         const style = styleSource?.sections.find(s => s.id === section.props?.data.id);
 
-        const padding = normalizeEdgeInsets(style?.box.padding);
-        const margin = normalizeEdgeInsets(style?.box.margin);
+        const parent = { width: layoutWidth, height: layoutHeight };
+
+        const padding = spacingResult(style?.box.padding, parent);
+        const margin = spacingResult(style?.box.margin, parent);
 
         const el = section.ref?.current;
         if(el) {
