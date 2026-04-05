@@ -6,11 +6,9 @@ export const workspaceDailyboardMachine = setup({
         context: {} as WorkspaceDailyboardMachineContext,
         events: {} as WorkspaceDailyboardMachineEvent
     }
-
-    
 }).createMachine({
     context: {
-
+        metadata: null
     },
     id: "workspace-dailyboard",
     initial: "fetching",
