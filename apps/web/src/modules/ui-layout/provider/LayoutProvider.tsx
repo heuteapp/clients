@@ -10,7 +10,7 @@ export function LayoutProvider({ dataSource, styleSource, children }: LayoutProv
     const layoutRef = React.useRef<HTMLDivElement | null>(null);
     const registry = useLayoutRegistry(layoutRef);
 
-    useLayoutMetrics(registry);
+    useLayoutMetrics(registry, dataSource, styleSource);
 
     const contextValue = React.useMemo(() => ({
         dataSource, styleSource, registry

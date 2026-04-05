@@ -1,7 +1,8 @@
+import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
 import { LayoutMetrics } from "../types/layout.metrics";
 import { LayoutRegistry } from "../types/layout.registry";
 
-export function calculateLayoutMetrics(registry: LayoutRegistry) : LayoutMetrics | null {
+export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: StoredLayoutData | null, styleSource: StoredLayoutStyle | null) : LayoutMetrics | null {
     const layoutRef = registry.layout.ref;
     const layoutEl = layoutRef.current;
 
@@ -14,19 +15,6 @@ export function calculateLayoutMetrics(registry: LayoutRegistry) : LayoutMetrics
     if (!layout.props) {
         return null;
     }
-
-    const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutEl;
-    const { colCount, rowCount } = layout.props.data;
-
-
-    const totalGap = 16;
-
-    const layoutCellSize = Math.min(
-        layoutWidth / colCount,
-        layoutHeight / rowCount
-    );
-    
-    const gridCellSize = layoutCellSize - totalGap;
 
     return {
         cellSize: {
