@@ -109,7 +109,6 @@ const LayoutSidebar = () => {
             color="primary" 
             sx={{ m: 1 }} 
             onTouchStart={(e) => {
-              e.preventDefault();
               send({ type: "CREATE_CARD" });
             }}
             onMouseDown={() => {

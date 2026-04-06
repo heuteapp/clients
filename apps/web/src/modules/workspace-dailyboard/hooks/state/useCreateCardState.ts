@@ -17,34 +17,30 @@ export const useCreateCardState = () => {
         const ghostCard = document.getElementById("dailyboard-ghost-card");
         const cardUnit = { col: 6, row: 4 };
 
-        const handleTouchMove = (event: TouchEvent) => {
-            event.preventDefault();
-            const touch = event.touches[0];
-            if(!touch) return;
+        const getCardSize = () => ({
+            width: (metrics.cellSize.grid || 0) * cardUnit.col,
+            height: (metrics.cellSize.grid || 0) * cardUnit.row
+        });
 
-            const cardSize = { 
-                width: (metrics.cellSize.grid || 0) * cardUnit.col,
-                height: (metrics.cellSize.grid || 0) * cardUnit.row
-            }
-
+        const calculatePosition = (clientX: number, clientY: number) => {
+            const cardSize = getCardSize();
             let cellPos = {
-                x: touch.clientX - (cardSize.width / 2),
-                y: touch.clientY - (cardSize.height / 2)
-            }
+                x: clientX - (cardSize.width / 2),
+                y: clientY - (cardSize.height / 2)
+            };
 
-            const gridEl = findGridUnderTouch(touch);
+            const gridEl = findGrid(clientX, clientY);
             if(gridEl) {
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
-
                 const totalCols = Math.round(gridRect.width / cellSize);
                 const totalRows = Math.round(gridRect.height / cellSize);
                 
-                const touchCol0 = Math.floor((touch.clientX - gridRect.left) / cellSize);
-                const touchRow0 = Math.floor((touch.clientY - gridRect.top) / cellSize);
+                const col0 = Math.floor((clientX - gridRect.left) / cellSize);
+                const row0 = Math.floor((clientY - gridRect.top) / cellSize);
 
-                let targetCol0 = touchCol0 - Math.floor(cardUnit.col / 2);
-                let targetRow0 = touchRow0 - Math.floor(cardUnit.row / 2);
+                let targetCol0 = col0 - Math.floor(cardUnit.col / 2);
+                let targetRow0 = row0 - Math.floor(cardUnit.row / 2);
 
                 targetCol0 = Math.max(0, Math.min(targetCol0, totalCols - cardUnit.col));
                 targetRow0 = Math.max(0, Math.min(targetRow0, totalRows - cardUnit.row));
@@ -55,37 +51,57 @@ export const useCreateCardState = () => {
                 };
             }
 
-            if(ghostCard) {
-                ghostCard.style.left = `${cellPos.x}px`;
-                ghostCard.style.top = `${cellPos.y}px`;
-                ghostCard.style.width = `${cardSize.width}px`;
-                ghostCard.style.height = `${cardSize.height}px`;
-            }
+            return cellPos;
         };
 
-        const handleTouchEnd = () => {
-            window.removeEventListener("touchmove", handleTouchMove);
-            window.removeEventListener("touchend", handleTouchEnd);
-            send({ type: "CREATE_CARD_CANCELLED" });
+        const updateGhostCard = (clientX: number, clientY: number) => {
+            if(!ghostCard) return;
+            const cardSize = getCardSize();
+            const pos = calculatePosition(clientX, clientY);
+            
+            ghostCard.style.left = `${pos.x}px`;
+            ghostCard.style.top = `${pos.y}px`;
+            ghostCard.style.width = `${cardSize.width}px`;
+            ghostCard.style.height = `${cardSize.height}px`;
         };
 
-        window.addEventListener("touchmove", handleTouchMove, { passive: false });
-        window.addEventListener("touchend", handleTouchEnd);
+        const handleMove = (clientX: number, clientY: number) => {
+            updateGhostCard(clientX, clientY);
+        };
+
+        const handleEnd = () => {
+            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("mouseup", onMouseUp);
+            window.removeEventListener("touchmove", onTouchMove);
+            window.removeEventListener("touchend", onTouchEnd);
+            send({ type: "CREATE_CARD_SUCCEEDED" });
+        };
+
+        const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
+        const onMouseUp = () => handleEnd();
+        
+        const onTouchMove = (e: TouchEvent) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            if(touch) handleMove(touch.clientX, touch.clientY);
+        };
+        const onTouchEnd = () => handleEnd();
+
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+        window.addEventListener("touchmove", onTouchMove, { passive: false });
+        window.addEventListener("touchend", onTouchEnd);
 
         return () => {
-            window.removeEventListener("touchmove", handleTouchMove);
-            window.removeEventListener("touchend", handleTouchEnd);
+            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("mouseup", onMouseUp);
+            window.removeEventListener("touchmove", onTouchMove);
+            window.removeEventListener("touchend", onTouchEnd);
         };
     }
 }
 
-const findGridUnderTouch = (touch: Touch) => {
-    const element = document.elementFromPoint(touch.clientX, touch.clientY);
-    if(element) {
-        const grid = element.closest("[data-layout-grid-id]");
-        if(grid) {
-            return grid;
-        }
-    }
-    return null;
+const findGrid = (clientX: number, clientY: number) => {
+    const element = document.elementFromPoint(clientX, clientY);
+    return element?.closest("[data-layout-grid-id]") || null;
 }
