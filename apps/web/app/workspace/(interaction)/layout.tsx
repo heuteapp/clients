@@ -8,6 +8,7 @@ import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceC
 import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
 import { Button, Stack } from "@mui/material";
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
+import { useState, useEffect } from "react";
 
 export default function WorkspaceLayout({
   children,
@@ -44,17 +45,27 @@ const LayoutContainer = ({ children }: { children: React.ReactNode }) => {
   return getWrappedContent();
 }
 
-const LayoutContent = ({ children }: { children: React.ReactNode }) => (
-  <>
-    <LayoutNavbar/>
-    <Stack direction="row" sx={{ width: "100%", height: "calc(100dvh - 49px)" }}>
-      <LayoutSidebar/>
-      <LayoutMonitor>
-        {children}
-      </LayoutMonitor>
-    </Stack>
-  </>
-);
+const LayoutContent = ({ children }: { children: React.ReactNode }) => {
+  const context = useWorkspaceContext();
+  const { type } = context.metadata;
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return (
+    <>
+      <LayoutNavbar/>
+      <Stack direction="row" sx={{ width: "100%", height: "calc(100dvh - 49px)" }}>
+        {isClient && type === "dailyboard" && <LayoutSidebar/>}
+        <LayoutMonitor>
+          {children}
+        </LayoutMonitor>
+      </Stack>
+    </>
+  );
+};
 
 //
 
