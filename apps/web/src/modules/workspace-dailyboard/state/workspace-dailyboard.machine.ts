@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
+import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
 import { resolveSourcesAction } from "./workspace-dailyboard.actions";
 
@@ -78,3 +78,11 @@ export const workspaceDailyboardMachine = setup({
 });
 
 export const workspaceDailyboardService = createActor(workspaceDailyboardMachine);
+
+export const isWaiting = (state: WorkspaceDailyboardMachineState): boolean => state.matches("waiting");
+
+export const isFetchingSources = (state: WorkspaceDailyboardMachineState): boolean => state.matches("fetching sources");
+
+export const isReady = (state: WorkspaceDailyboardMachineState): boolean => state.matches("ready");
+
+export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => state.matches("creating card");
