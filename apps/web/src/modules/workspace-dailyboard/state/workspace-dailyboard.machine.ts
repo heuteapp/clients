@@ -15,6 +15,7 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
     }
 }).createMachine({
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOygGIAxAKIAVAMIAJAPoBlAPIBVAEqjB0gNoAGALqJQOVLHKdUXXSAAeiAIwA2AJwAaENWsBWDcwDsAJhuub3q4AvkFOaFi4hCRkVHQMTMwAZmDsBAAW3FAABLCoAK7oRLC8ECZgzNwAbqiY5cmpacS5BUWaOkgg+obGph2WCDYAHB5Wg56uTi4IVgDM3iFhGNj4RKQUNPSMLPXpmTn5hXC8YOjoGMw4lHjsiRgAtkkp6U0HrdpmXUbkJmb9to7OawaGbMby+fyBBYgcLLKJrWKbBLoMB4CDUAQiCQyBTKVRtD4GL4-PqIIYgmZ2DQBCaAhCDKzMYJQrioCBwMwwyKrGIbeIQAndb69UD9Yg2SaIMVQzkraLrOJbVgcTIConCiyIAAs3gl001IKs+rBdlsNjNZrs0qWXLlCL5jwae2ah3gHU+PV+iBmNgNnlG411VkNzBmGjsgzsrkGMxjsc1VoisvhvMVyNRUz0hI9JLp4y8wKsgUDmsGzENc28JvN5stISCQA */
     context: {
         dailyboardData: null,
         layoutData: null,
