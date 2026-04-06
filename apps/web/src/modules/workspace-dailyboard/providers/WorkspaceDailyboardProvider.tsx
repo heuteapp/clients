@@ -32,8 +32,6 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
         }
     }, []);
 
-    useDailyboardLoader();
-
     const contextValue = React.useMemo(() => {
         return { metadata, state, send: workspaceDailyboardService.send };
     }, [metadata, state, workspaceDailyboardService.send]);
@@ -62,12 +60,12 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
         });
     }, [loadGlobalLayout]);
 
-    const { dailyboard, layout } = getDailyboardAndLayout({ metadata });
+    const { dailyboardData, layoutData } = state.context;
     const layoutStyle = getGlobalLayout("default", 1);
 
     return (
-        <LayoutProvider dataSource={layout} styleSource={layoutStyle}>
-            <DailyboardProvider source={dailyboard}>
+        <LayoutProvider dataSource={layoutData} styleSource={layoutStyle}>
+            <DailyboardProvider source={dailyboardData}>
                 <WorkspaceDailyboardContext.Provider value={contextValue}>
                     <ProviderContent>
                         {children}
