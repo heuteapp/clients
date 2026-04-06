@@ -15,7 +15,7 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOygGIAxAKIAVAMIAJAPoBlAPIBVAEqjB0gNoAGALqJQOVLHKdUXXSAAeiAIwA2AJwAaENWsBWDcwDsAJhuub3q4AvkFOaFi4hCRkVHQMTMwAZmDsBAAW3FAABLCoAK7oRLC8ECZgzNwAbqiY5cmpacS5BUWaOkgg+obGph2WCDYAHB5Wg56uTi4IVgDM3iFhGNj4RKQUNPSMLPXpmTn5hXC8YOjoGMw4lHjsiRgAtkkp6U0HrdpmXUbkJmb9to7OawaGbMby+fyBBYgcLLKJrWKbBLoMB4CDUAQiCQyBTKVRtD4GL4-PqIIYgmZ2DQBCaAhCDKzMYJQrioCBwMwwyKrGIbeIQAndb69UD9Yg2SaIMVQzkraLrOJbVgcTIConCiyIAAs3gl001IKs+rBdlsNjNZrs0qWXLlCL5jwae2ah3gHU+PV+iBmNgNnlG411VkNzBmGjsgzsrkGMxjsc1VoisvhvMVyNRUz0hI9JLp4y8wKsgUDmsGzENc28JvN5stISCQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOygGIAxAKIAVAMIAJAPoBlAPIBVAEqjB0gNoAGALqJQOVLHKdUXXSAAeiAIwA2ABzMAnM5cAWGwGYrrq3YBMADQg1IgeAKwezADsfjY2GmFWjjauMR4AvulBaFi4hCRkVHQMTMwAZmDsBAAW3FAABLCoAK7oRLC8ECZgzNwAbqiYPRVV1cRNre2aOkgg+obGprOWCFEaGsy+UWF+fh6OGt47QSEIfnaRYesafgc2UVZ+D5nZGNj4RKQUNPSMLCM1OqNFptOC8MDodAYZg4Sh4dhlDAAW3KlRq4xBU20ZnmRnIJjMK1sDhcbk83l8gWCoQ0NmYuxsYQO-jCUTsSReIBy73yXyKv1K6DAeAg1AEIgkMgUylU0xxBjxBOWiCiUTpjj8SXWtz8GlcuxOoTVzFcEVsNkcYUST053Lyn0KPxKLCFIrFokUggAgsJBJJRF7FAAROWzXGLQkqxwOKIeVweeKxM2OQ0IdnMK7aw4xRl7Oy2t72grfYp-ZgEV2cHj1Ah-Xge72+-2BoMyeSiFSCINd0N6BUR5WrdabOzbXb7Q6mqmnKwePzMa4aDy001hfX3Au5D7F-nO8uVoG1pj1z0+v0B4OSfhegCSABke9iw-38UtQCs1hstjs9gcjtPrH8DNF3ZTU40ZfMsi5Qttz5J0ywrYUqwaI8IBPRtzxbZsADkVDvB8QyfPsFlfSMhy-Ucfwnf9Uz2SJF18Jl9QTOwwkyKCuFQCA4DMO1YMdUsmHlEilXfRBiBsVMJM3HkHRLAUWDYPEeGExU3wsRB9VTLwNjsDRnCeVi42SZIZKLODBP+NFamrCZQXgZ8RPUlYE0iKwHjsUctSsdYwkk6kzkcKJmBSOdPE1G5HFcMz+PkvdXVFVSBzEhBo0cek4x8Ud1lsdzU18Ol-G8DwolcVwNAuUdoqgvjeQEhT9yQw8-iS0jBx2MJ6SXWcouXbYwjsVMNQXTME0SDxwnKjJ2KAA */
     context: {
         dailyboardData: null,
         layoutData: null,
@@ -55,6 +55,22 @@ export const workspaceDailyboardMachine = setup({
             on: {
                 FETCH_SOURCES: {
                     target: "fetching sources"
+                },
+                CREATE_CARD: {
+                    target: "creating card"
+                }
+            }
+        },
+        "creating card": {
+            on: {
+                CREATE_CARD_SUCCEEDED: {
+                    target: "ready"
+                },
+                CREATE_CARD_FAILED: {
+                    target: "ready"
+                },
+                CREATE_CARD_CANCELLED: {
+                    target: "ready"
                 }
             }
         }
