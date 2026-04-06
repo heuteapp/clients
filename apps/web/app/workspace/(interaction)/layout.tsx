@@ -104,9 +104,18 @@ const LayoutSidebar = () => {
                 bgcolor: "background.paper"
             }}
         >
-          <Button variant="contained" color="primary" sx={{ m: 1 }} onClick={() => {
-            send({ type: "CREATE_CARD" });
-          }}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            sx={{ m: 1 }} 
+            onTouchStart={(e) => {
+              e.preventDefault();
+              send({ type: "CREATE_CARD" });
+            }}
+            onMouseDown={() => {
+              send({ type: "CREATE_CARD" });
+            }}
+          >
             Create
           </Button>
         </Box>
