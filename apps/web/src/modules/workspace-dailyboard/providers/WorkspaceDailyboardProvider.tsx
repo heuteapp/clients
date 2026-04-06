@@ -6,12 +6,7 @@ import { LayoutProvider } from "@/src/modules/ui-layout/provider/LayoutProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
-import { useDailyboardLoader } from "@/src/heute-store/hooks/useDailyboardLoader";
-import { useLayoutDataStore, useLayoutStyleStore } from "@/src/heute-store/stores/layout.stores";
-import { useDailyboardStore } from "@/src/heute-store/stores/dailyboard.store";
-import { StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
-import { WorkspaceDailyboardMetadata } from "../types/workspace-dailyboard.types";
-import { StoredLayoutData } from "@/src/heute-store/types/layout.types";
+import { useLayoutStyleStore } from "@/src/heute-store/stores/layout.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
@@ -35,7 +30,6 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     useEffect(() => {
         if(metadata) {
             workspaceDailyboardService.send({ type: "FETCH_SOURCES", dailyboardPath: metadata.categoryPath + "/" + metadata.date?.raw });
-            console.log("FETCH_SOURCES sent with path: ", metadata.categoryPath + "/" + metadata.date?.raw);
         }
     }, [metadata]);
 
