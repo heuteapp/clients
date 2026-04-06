@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { saveSourcesAction, setSourcesAction } from "./workspace-dailyboard.actions";
+import { resolveSourcesAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -12,8 +12,7 @@ export const workspaceDailyboardMachine = setup({
         fetchSources: fetchSourcesActor
     }, 
     actions: {
-        saveSources: saveSourcesAction,
-        setSources: setSourcesAction
+        resolveSources: resolveSourcesAction,
     }
 }).createMachine({
     context: {
@@ -44,7 +43,7 @@ export const workspaceDailyboardMachine = setup({
                 },
                 onDone: {
                     target: "ready",
-                    actions: ["saveSources", "setSources"]
+                    actions: ["resolveSources"]
                 },
                 onError: {
                     target: "waiting"

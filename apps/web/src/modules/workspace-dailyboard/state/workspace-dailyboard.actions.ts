@@ -6,19 +6,7 @@ import { useDailyboardStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
 import { parseYYMMDD } from "../../shared/utils/date.utils";
 
-export const saveSourcesAction = ({event} : { event: WorkspaceDailyboardMachineEvent }) => {
-    if(event.type === "xstate.done.actor.fetch-sources") {
-        const output = event.output;
-
-        const { loadMeDailyboard } = useDailyboardStore.getState();
-        const { loadMeLayout } = useLayoutDataStore.getState();
-
-        loadMeDailyboard(output.categoryPath, responseToDailyboard(output));
-        loadMeLayout(responseToLayout(output.layout));
-    }
-};
-
-export const setSourcesAction = createAssign<
+export const resolveSourcesAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ event }) => {
@@ -26,11 +14,28 @@ export const setSourcesAction = createAssign<
             const output = event.output;
 
             const { getMeDailyboard } = useDailyboardStore.getState();
+            let dailyboardData = getMeDailyboard(output.categoryPath, parseYYMMDD(output.date)!) ?? null;
+
+            if(!dailyboardData) {
+                const { loadMeDailyboard } = useDailyboardStore.getState();
+                loadMeDailyboard(output.categoryPath, responseToDailyboard(output));
+
+                dailyboardData = getMeDailyboard(output.categoryPath, parseYYMMDD(output.date)!) ?? null;
+            }
+
             const { getMeLayout } = useLayoutDataStore.getState();
+            let layoutData = getMeLayout(output.layout.name, output.layout.version) ?? null;
+
+            if(!layoutData) {
+                const { loadMeLayout } = useLayoutDataStore.getState();
+                loadMeLayout(responseToLayout(output.layout));
+
+                layoutData = getMeLayout(output.layout.name, output.layout.version) ?? null;
+            }
 
             return {
-                dailyboardData: getMeDailyboard(output.categoryPath, parseYYMMDD(output.date)!) ?? null,
-                layoutData: getMeLayout(output.layout.name, output.layout.version) ?? null,
+                dailyboardData,
+                layoutData,
                 layoutStyle: null
             };
         }
