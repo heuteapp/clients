@@ -4,6 +4,7 @@ import { AppTheme } from "@/src/modules/ui-shared/themes/mui/AppTheme";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "@/src/modules/ui-auth/providers/AuthProvider";
 import { Suspense } from "react";
+import { inspect } from "@xstate/inspect";
 
 export function AppProviders({ children } : { children: React.ReactNode }) {
 
@@ -17,6 +18,19 @@ export function AppProviders({ children } : { children: React.ReactNode }) {
         </Suspense>
       </AppTheme>
       <Analytics />
+      <XStateInspector />
     </>
   );
+}
+
+const XStateInspector = () => {
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
+
+  inspect({
+    iframe: false,
+  });
+
+  return null;
 }
