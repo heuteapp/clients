@@ -17,7 +17,7 @@ export const useCreateCardState = () => {
         const ghostCard = document.getElementById("dailyboard-ghost-card");
         const cardUnit = { col: 6, row: 4 };
 
-        const handleMouseMove = (event: MouseEvent) => {
+        const handlePointerMove = (event: MouseEvent) => {
             const cardSize = { 
                 width: (metrics.cellSize.grid || 0) * cardUnit.col,
                 height: (metrics.cellSize.grid || 0) * cardUnit.row
@@ -35,7 +35,7 @@ export const useCreateCardState = () => {
 
                 const totalCols = Math.round(gridRect.width / cellSize);
                 const totalRows = Math.round(gridRect.height / cellSize);
-                
+
                 const mouseCol0 = Math.floor((event.clientX - gridRect.left) / cellSize);
                 const mouseRow0 = Math.floor((event.clientY - gridRect.top) / cellSize);
 
@@ -59,14 +59,14 @@ export const useCreateCardState = () => {
             }
         };
 
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseup", () => {
-            window.removeEventListener("mousemove", handleMouseMove);
+        window.addEventListener("pointermove", handlePointerMove);
+        window.addEventListener("pointerup", () => {
+            window.removeEventListener("pointermove", handlePointerMove);
             send({ type: "CREATE_CARD_CANCELLED" });
         }, { once: true });
 
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("pointermove", handlePointerMove);
         };
     }
 }
