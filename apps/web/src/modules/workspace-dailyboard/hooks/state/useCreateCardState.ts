@@ -81,7 +81,6 @@ export const useCreateCardState = () => {
         const onMouseUp = () => handleEnd();
         
         const onTouchMove = (e: TouchEvent) => {
-            e.preventDefault();
             const touch = e.touches[0];
             if(touch) handleMove(touch.clientX, touch.clientY);
         };
