@@ -24,17 +24,20 @@ export const workspaceDailyboardMachine = setup({
     states: {
         "waiting": {
             on: {
-                FETCH: {
-                    target: "fetching"
+                FETCH_SOURCES: {
+                    target: "fetching sources"
                 }
             }
         },
-        "fetching": {
+        "fetching sources": {
             invoke: {
                 src: "fetchData",
+                id: "fetch-sources",
                 input: ({ event }) => {
+                    const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "FETCH_SOURCES" }>;
+
                     return {
-                        dailyboardPath: event.dailyboardPath,
+                        dailyboardPath: fetchEvent.dailyboardPath,
                     };
                 },
                 onDone: {
