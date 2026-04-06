@@ -9,10 +9,15 @@ export const workspaceDailyboardMachine = setup({
     },
     actors: {
         fetchData: fetchDataActor
+    }, 
+    actions: {
+
     }
 }).createMachine({
     context: {
-        metadata: null
+        dailyboardData: null,
+        layoutData: null,
+        layoutStyle: null
     },
     id: "workspace-dailyboard",
     initial: "waiting",
@@ -34,6 +39,7 @@ export const workspaceDailyboardMachine = setup({
                 },
                 onDone: {
                     target: "ready",
+                    actions: []
                 },
                 onError: {
                     target: "waiting"

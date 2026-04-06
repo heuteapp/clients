@@ -1,10 +1,13 @@
 import { ActorRefFrom } from "xstate";
 import { FETCH_EVENT } from "./workspace-dailyboard.events.types";
 import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.machine";
-import { WorkspaceDailyboardMetadata } from "../workspace-dailyboard.types";
+import { StoredDailyboard } from "@/src/heute-store/types/dailyboard.types";
+import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
 
 export type WorkspaceDailyboardMachineContext = {
-  
+  dailyboardData: StoredDailyboard | null;
+  layoutData: StoredLayoutData | null;
+  layoutStyle: StoredLayoutStyle | null;
 }
 
 export type WorkspaceDailyboardMachineEvent = 
