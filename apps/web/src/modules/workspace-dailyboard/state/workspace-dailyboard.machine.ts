@@ -1,6 +1,6 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
-import { fetchDataActor } from "./workspace-dailyboard.actors";
+import { fetchSourcesActor } from "./workspace-dailyboard.actors";
 import { saveSourcesAction, setSourcesAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
@@ -9,7 +9,7 @@ export const workspaceDailyboardMachine = setup({
         events: {} as WorkspaceDailyboardMachineEvent
     },
     actors: {
-        fetchData: fetchDataActor
+        fetchSources: fetchSourcesActor
     }, 
     actions: {
         saveSources: saveSourcesAction,
@@ -33,7 +33,7 @@ export const workspaceDailyboardMachine = setup({
         },
         "fetching sources": {
             invoke: {
-                src: "fetchData",
+                src: "fetchSources",
                 id: "fetch-sources",
                 input: ({ event }) => {
                     const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "FETCH_SOURCES" }>;
@@ -44,7 +44,7 @@ export const workspaceDailyboardMachine = setup({
                 },
                 onDone: {
                     target: "ready",
-                    actions: []
+                    actions: ["saveSources", "setSources"]
                 },
                 onError: {
                     target: "waiting"
@@ -52,7 +52,11 @@ export const workspaceDailyboardMachine = setup({
             }
         },
         "ready": {
-
+            on: {
+                FETCH_SOURCES: {
+                    target: "fetching sources"
+                }
+            }
         }
     }
 });
