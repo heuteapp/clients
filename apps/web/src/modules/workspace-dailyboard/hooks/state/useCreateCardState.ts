@@ -17,30 +17,34 @@ export const useCreateCardState = () => {
         const ghostCard = document.getElementById("dailyboard-ghost-card");
         const cardUnit = { col: 6, row: 4 };
 
-        const handlePointerMove = (event: MouseEvent) => {
+        const handleTouchMove = (event: TouchEvent) => {
+            event.preventDefault();
+            const touch = event.touches[0];
+            if(!touch) return;
+
             const cardSize = { 
                 width: (metrics.cellSize.grid || 0) * cardUnit.col,
                 height: (metrics.cellSize.grid || 0) * cardUnit.row
             }
 
             let cellPos = {
-                x: event.clientX - (cardSize.width / 2),
-                y: event.clientY - (cardSize.height / 2)
+                x: touch.clientX - (cardSize.width / 2),
+                y: touch.clientY - (cardSize.height / 2)
             }
 
-            const gridEl = findGridUnderMouse(event);
+            const gridEl = findGridUnderTouch(touch);
             if(gridEl) {
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
 
                 const totalCols = Math.round(gridRect.width / cellSize);
                 const totalRows = Math.round(gridRect.height / cellSize);
+                
+                const touchCol0 = Math.floor((touch.clientX - gridRect.left) / cellSize);
+                const touchRow0 = Math.floor((touch.clientY - gridRect.top) / cellSize);
 
-                const mouseCol0 = Math.floor((event.clientX - gridRect.left) / cellSize);
-                const mouseRow0 = Math.floor((event.clientY - gridRect.top) / cellSize);
-
-                let targetCol0 = mouseCol0 - Math.floor(cardUnit.col / 2);
-                let targetRow0 = mouseRow0 - Math.floor(cardUnit.row / 2);
+                let targetCol0 = touchCol0 - Math.floor(cardUnit.col / 2);
+                let targetRow0 = touchRow0 - Math.floor(cardUnit.row / 2);
 
                 targetCol0 = Math.max(0, Math.min(targetCol0, totalCols - cardUnit.col));
                 targetRow0 = Math.max(0, Math.min(targetRow0, totalRows - cardUnit.row));
@@ -59,23 +63,26 @@ export const useCreateCardState = () => {
             }
         };
 
-        window.addEventListener("pointermove", handlePointerMove);
-        window.addEventListener("pointerup", () => {
-            window.removeEventListener("pointermove", handlePointerMove);
+        const handleTouchEnd = () => {
+            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("touchend", handleTouchEnd);
             send({ type: "CREATE_CARD_CANCELLED" });
-        }, { once: true });
+        };
+
+        window.addEventListener("touchmove", handleTouchMove, { passive: false });
+        window.addEventListener("touchend", handleTouchEnd);
 
         return () => {
-            window.removeEventListener("pointermove", handlePointerMove);
+            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("touchend", handleTouchEnd);
         };
     }
 }
 
-const findGridUnderMouse = (event: MouseEvent) => {
-    const element = document.elementFromPoint(event.clientX, event.clientY);
+const findGridUnderTouch = (touch: Touch) => {
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
     if(element) {
         const grid = element.closest("[data-layout-grid-id]");
-
         if(grid) {
             return grid;
         }
