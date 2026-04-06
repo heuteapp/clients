@@ -8,7 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function WorkspaceDailyboardPage() {
     const { metadata } = useWorkspaceDailyboardContext();
-    const { categoryPath, date } = metadata;
+    const { categoryPath, date } = metadata!;
     const { getMeDailyboard } = useDailyboardStore();
     const { getGlobalLayout } = useLayoutDataStore();
 
@@ -21,7 +21,7 @@ export default function WorkspaceDailyboardPage() {
     }
 
     const layout = getGlobalLayout(dailyboard.layoutName, dailyboard.layoutVersion);
-    
+
     if(!layout) {
         return (
             <CircularProgress />

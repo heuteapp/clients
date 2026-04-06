@@ -4,7 +4,7 @@ import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } fr
 import { responseToLayout } from "@/src/api/responses/layout.response";
 import { useDailyboardStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
-import { parseYYMMDD } from "../../shared/utils/date.utils";
+import { isoToYYMMDD } from "../../shared/utils/date.utils";
 
 export const resolveSourcesAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
@@ -14,23 +14,24 @@ export const resolveSourcesAction = createAssign<
             const output = event.output;
 
             const { getMeDailyboard } = useDailyboardStore.getState();
-            let dailyboardData = getMeDailyboard(output.categoryPath, parseYYMMDD(output.date)!) ?? null;
+
+            let dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
 
             if(!dailyboardData) {
                 const { loadMeDailyboard } = useDailyboardStore.getState();
                 loadMeDailyboard(output.categoryPath, responseToDailyboard(output));
 
-                dailyboardData = getMeDailyboard(output.categoryPath, parseYYMMDD(output.date)!) ?? null;
+                dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
             }
 
-            const { getMeLayout } = useLayoutDataStore.getState();
-            let layoutData = getMeLayout(output.layout.name, output.layout.version) ?? null;
+            const { getGlobalLayout } = useLayoutDataStore.getState();
+            let layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
 
             if(!layoutData) {
-                const { loadMeLayout } = useLayoutDataStore.getState();
-                loadMeLayout(responseToLayout(output.layout));
+                const { loadGlobalLayout } = useLayoutDataStore.getState();
+                loadGlobalLayout(responseToLayout(output.layout));
 
-                layoutData = getMeLayout(output.layout.name, output.layout.version) ?? null;
+                layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
             }
 
             return {

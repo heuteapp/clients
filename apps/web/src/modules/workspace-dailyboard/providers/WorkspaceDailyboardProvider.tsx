@@ -90,16 +90,3 @@ const ProviderContent = ({ children }: { children: React.ReactNode }) => {
         <>{children}</>
     )
 }
-
-const getDailyboardAndLayout = ({ metadata } : { metadata: WorkspaceDailyboardMetadata }) : { dailyboard: StoredDailyboardRoot | null; layout: StoredLayoutData | null } => {
-    const { getMeDailyboard } = useDailyboardStore();
-    const { getGlobalLayout } = useLayoutDataStore();
-
-    const dailyboard = getMeDailyboard(metadata.categoryPath, metadata.date!);
-    if(!dailyboard) return { dailyboard: null, layout: null };
-
-    const layout = getGlobalLayout(dailyboard?.layoutName, dailyboard?.layoutVersion);
-    if(!layout) return { dailyboard, layout: null };
-
-    return { dailyboard, layout };
-}
