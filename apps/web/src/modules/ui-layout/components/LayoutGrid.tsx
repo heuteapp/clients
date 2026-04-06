@@ -20,10 +20,15 @@ function LayoutGrid(props : LayoutGridProps) {
     }, [props.sectionId, registry])
 
     return (
-        <div ref={ref} className={style.grid} style={{
-            gridTemplateColumns: `repeat(${props.colSpan}, var(--grid-cell-size))`,
-            gridTemplateRows: `repeat(${props.rowSpan}, var(--grid-cell-size))`,
-        }}/>
+        <div 
+            data-layout-grid-id={props.sectionId}
+            data-layout-grid-colspan={props.colSpan}
+            data-layout-grid-rowspan={props.rowSpan}
+            ref={ref} className={style.grid} style={{
+                gridTemplateColumns: `repeat(${props.colSpan}, var(--grid-cell-size))`,
+                gridTemplateRows: `repeat(${props.rowSpan}, var(--grid-cell-size))`,
+            }}
+        />
     )
 }
 
