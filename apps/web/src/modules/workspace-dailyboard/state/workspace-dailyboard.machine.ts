@@ -1,6 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchDataActor } from "./workspace-dailyboard.actors";
+import { saveSourcesAction, setSourcesAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -11,7 +12,8 @@ export const workspaceDailyboardMachine = setup({
         fetchData: fetchDataActor
     }, 
     actions: {
-
+        saveSources: saveSourcesAction,
+        setSources: setSourcesAction
     }
 }).createMachine({
     context: {

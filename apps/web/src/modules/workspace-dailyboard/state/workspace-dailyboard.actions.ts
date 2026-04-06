@@ -6,18 +6,27 @@ import { useDailyboardStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
 import { parseYYMMDD } from "../../shared/utils/date.utils";
 
-export const setSources = createAssign<
+export const saveSourcesAction = ({event} : { event: WorkspaceDailyboardMachineEvent }) => {
+    if(event.type === "xstate.done.actor.fetch-sources") {
+        const output = event.output;
+
+        const { loadMeDailyboard } = useDailyboardStore.getState();
+        const { loadMeLayout } = useLayoutDataStore.getState();
+
+        loadMeDailyboard(output.categoryPath, responseToDailyboard(output));
+        loadMeLayout(responseToLayout(output.layout));
+    }
+};
+
+export const setSourcesAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ event }) => {
         if(event.type === "xstate.done.actor.fetch-sources") {
             const output = event.output;
 
-            const { loadMeDailyboard, getMeDailyboard } = useDailyboardStore.getState();
-            const { loadMeLayout, getMeLayout } = useLayoutDataStore.getState();
-
-            loadMeDailyboard(output.categoryPath, responseToDailyboard(output));
-            loadMeLayout(responseToLayout(output.layout));
+            const { getMeDailyboard } = useDailyboardStore.getState();
+            const { getMeLayout } = useLayoutDataStore.getState();
 
             return {
                 dailyboardData: getMeDailyboard(output.categoryPath, parseYYMMDD(output.date)!) ?? null,
