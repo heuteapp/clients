@@ -3,7 +3,7 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 
 export const useCreateCardState = () => {
-    const { state } = useWorkspaceDailyboardContext();
+    const { send, state } = useWorkspaceDailyboardContext();
     
     useEffect(() => {
         if(isCreatingCard(state)) {
@@ -12,6 +12,10 @@ export const useCreateCardState = () => {
             };
 
             window.addEventListener("mousemove", handleMouseMove);
+            window.addEventListener("mouseup", () => {
+                window.removeEventListener("mousemove", handleMouseMove);
+                send({ type: "CREATE_CARD_CANCELLED" });
+            }, { once: true });
 
             return () => {
                 window.removeEventListener("mousemove", handleMouseMove);

@@ -6,7 +6,8 @@ import { WorkspaceDailyboardProvider } from "@/src/modules/workspace-dailyboard/
 import { WorkspaceProvider } from "@/src/modules/workspace/providers/WorkspaceProvider";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/WorkspaceBreadcrumbs";
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
+import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
 
 export default function WorkspaceLayout({
   children,
@@ -88,6 +89,8 @@ const LayoutNavbar = () => {
 };
 
 const LayoutSidebar = () => {
+  const { send } = useWorkspaceDailyboardContext();
+
     return (
         <Box
             component="aside"
@@ -101,6 +104,11 @@ const LayoutSidebar = () => {
                 bgcolor: "background.paper"
             }}
         >
+          <Button variant="contained" color="primary" sx={{ m: 1 }} onClick={() => {
+            send({ type: "CREATE_CARD" });
+          }}>
+            Create
+          </Button>
         </Box>
     );
 }
