@@ -32,6 +32,13 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
         }
     }, []);
 
+    useEffect(() => {
+        if(metadata) {
+            workspaceDailyboardService.send({ type: "FETCH_SOURCES", dailyboardPath: metadata.categoryPath + "/" + metadata.date?.raw });
+            console.log("FETCH_SOURCES sent with path: ", metadata.categoryPath + "/" + metadata.date?.raw);
+        }
+    }, [metadata]);
+
     const contextValue = React.useMemo(() => {
         return { metadata, state, send: workspaceDailyboardService.send };
     }, [metadata, state, workspaceDailyboardService.send]);
