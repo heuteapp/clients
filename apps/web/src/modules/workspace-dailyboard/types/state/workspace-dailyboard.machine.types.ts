@@ -1,5 +1,5 @@
 import { ActorRefFrom } from "xstate";
-import { DONE_FETCH_SOURCES_EVENT, FETCH_SOURCES_EVENT } from "./workspace-dailyboard.events.types";
+import { FetchSourcesEvents } from "./workspace-dailyboard.events.types";
 import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.machine";
 import { StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
@@ -11,8 +11,7 @@ export type WorkspaceDailyboardMachineContext = {
 }
 
 export type WorkspaceDailyboardMachineEvent = 
-  | FETCH_SOURCES_EVENT
-  | DONE_FETCH_SOURCES_EVENT
+  | FetchSourcesEvents
 
 //
 
