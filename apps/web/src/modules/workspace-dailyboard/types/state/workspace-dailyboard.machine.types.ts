@@ -4,7 +4,7 @@ import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.mac
 import { WorkspaceDailyboardMetadata } from "../workspace-dailyboard.types";
 
 export type WorkspaceDailyboardMachineContext = {
-  metadata: WorkspaceDailyboardMetadata | null;
+  
 }
 
 export type WorkspaceDailyboardMachineEvent = 

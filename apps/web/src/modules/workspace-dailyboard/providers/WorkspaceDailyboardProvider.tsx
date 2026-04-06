@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DailyboardProvider } from "@/src/modules/ui-dailyboard/provider/DailyboardProvider"
 import { LayoutProvider } from "@/src/modules/ui-layout/provider/LayoutProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
@@ -12,16 +12,31 @@ import { useDailyboardStore } from "@/src/heute-store/stores/dailyboard.store";
 import { StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
 import { WorkspaceDailyboardMetadata } from "../types/workspace-dailyboard.types";
 import { StoredLayoutData } from "@/src/heute-store/types/layout.types";
+import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
+    const [state, setState] = useState(() => workspaceDailyboardService.getSnapshot());  
     const { loadGlobalLayout, getGlobalLayout } = useLayoutStyleStore();
+
+    useEffect(() => {
+        workspaceDailyboardService.start();
+
+        const subscription = workspaceDailyboardService.subscribe((newState) => {
+            setState(newState);
+        });
+        
+        return () =>  {
+            subscription.unsubscribe();
+            workspaceDailyboardService.stop(); 
+        }
+    }, []);
 
     useDailyboardLoader();
 
     const contextValue = React.useMemo(() => {
-        return { metadata };
-    }, [metadata]);
+        return { metadata, state, send: workspaceDailyboardService.send };
+    }, [metadata, state, workspaceDailyboardService.send]);
 
     useEffect(() => {
         loadGlobalLayout({

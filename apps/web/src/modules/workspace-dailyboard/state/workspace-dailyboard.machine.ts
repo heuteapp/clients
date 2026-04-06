@@ -1,4 +1,4 @@
-import { createActor, createMachine, setup } from "xstate";
+import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 
 export const workspaceDailyboardMachine = setup({
@@ -11,9 +11,28 @@ export const workspaceDailyboardMachine = setup({
         metadata: null
     },
     id: "workspace-dailyboard",
-    initial: "fetching",
+    initial: "waiting",
     states: {
+        "waiting": {
+            on: {
+                FETCH: {
+                    target: "fetching"
+                }
+            }
+        },
         "fetching": {
+            invoke: {
+                src: "fetchDailyboard",
+                onDone: {
+                    target: "ready",
+                },
+                onError: {
+                    target: "waiting"
+                }
+            }
+        },
+        "ready": {
+
         }
     }
 });
