@@ -30,8 +30,8 @@ export function DailyboardRoot(props: DailyboardRootProps) {
     }
   }, [registry])
   
-  if(!layoutData) return null;
   if(!dailyboardCards) return null;
+  if(!layoutData) return null;
 
   return (
     <div 
