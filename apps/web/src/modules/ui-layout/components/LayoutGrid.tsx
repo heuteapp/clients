@@ -22,6 +22,7 @@ function LayoutGrid(props : LayoutGridProps) {
     return (
         <div 
             data-layout-grid
+            data-layout-grid-section-id={props.sectionId}
             data-layout-grid-colspan={props.colSpan}
             data-layout-grid-rowspan={props.rowSpan}
             ref={ref} className={style.grid} style={{

@@ -17,6 +17,8 @@ export const useCreateCardState = () => {
         const ghostCard = document.getElementById("dailyboard-ghost-card");
         const cardUnit = { col: 6, row: 4 };
 
+        let gridEl : HTMLDivElement | null = null;
+
         const getCardSize = () => ({
             width: (metrics.cellSize.grid || 0) * cardUnit.col,
             height: (metrics.cellSize.grid || 0) * cardUnit.row
@@ -29,7 +31,7 @@ export const useCreateCardState = () => {
                 y: clientY - (cardSize.height / 2)
             };
 
-            const gridEl = findGrid(clientX, clientY);
+            gridEl = findGrid(clientX, clientY);
             if(gridEl) {
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
@@ -74,7 +76,13 @@ export const useCreateCardState = () => {
             window.removeEventListener("mouseup", onMouseUp);
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
-            send({ type: "CREATE_CARD_SUCCEEDED" });
+
+            if(gridEl) {
+                send({ type: "CREATE_CARD_SUCCEEDED" });
+            }
+            else {
+                send({ type: "CREATE_CARD_CANCELLED" });
+            }
         };
 
         const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
