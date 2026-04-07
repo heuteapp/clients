@@ -14,14 +14,23 @@ export const useCreateCardState = () => {
     }, [state]);
 
     const useCreatingCard = () => {
-        const ghostCard = document.getElementById("dailyboard-ghost-card");
+        const ghostCard = document.createElement("div");
+        ghostCard.id = "dailyboard-ghost-card";
+        ghostCard.style.position = "fixed";
+        ghostCard.style.pointerEvents = "none";
+        ghostCard.style.zIndex = "1000";
+        ghostCard.style.border = "2px dashed #206eff";
+        ghostCard.style.borderRadius = "8px";
+        ghostCard.style.boxSizing = 'border-box';
+
+        document.body.appendChild(ghostCard);
         const cardUnit = { col: 6, row: 4 };
 
         let gridEl : HTMLDivElement | null = null;
 
         const getCardSize = () => ({
-            width: (metrics.cellSize.grid || 0) * cardUnit.col,
-            height: (metrics.cellSize.grid || 0) * cardUnit.row
+            width: ((metrics.cellSize.grid || 0) * cardUnit.col) - 16,
+            height: ((metrics.cellSize.grid || 0) * cardUnit.row) - 16
         });
 
         const calculatePosition = (clientX: number, clientY: number) => {
@@ -48,8 +57,8 @@ export const useCreateCardState = () => {
                 targetRow0 = Math.max(0, Math.min(targetRow0, totalRows - cardUnit.row));
 
                 cellPos = {
-                    x: gridRect.left + (targetCol0 * cellSize),
-                    y: gridRect.top + (targetRow0 * cellSize)
+                    x: gridRect.left + (targetCol0 * cellSize) + 8,
+                    y: gridRect.top + (targetRow0 * cellSize) + 8
                 };
             }
 
