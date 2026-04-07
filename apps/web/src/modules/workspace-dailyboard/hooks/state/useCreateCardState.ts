@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
-import { GridRect, GridSize } from "@/src/modules/shared/types/common";
+import { GridRect, GridSize, Rect } from "@/src/modules/shared/types/common";
 
 export const useCreateCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -22,19 +22,13 @@ export const useCreateCardState = () => {
         const cardUnit = { colSpan: 6, rowSpan: 4 };
 
         let gridEl : HTMLDivElement | null = null;
+        let ghostCardPos : Rect | null = null;
 
         const calculatePosition = (clientX: number, clientY: number) => {
             const size = {
                 width: ((metrics.cellSize.grid || 0) * cardUnit.colSpan),
                 height: ((metrics.cellSize.grid || 0) * cardUnit.rowSpan)
             }
-
-            let cellPos = {
-                x: clientX - (size.width / 2),
-                y: clientY - (size.height / 2),
-                width: size.width,
-                height: size.height
-            };
 
             gridEl = findGrid(clientX, clientY);
             if(gridEl) {
@@ -48,20 +42,29 @@ export const useCreateCardState = () => {
                 const cardPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
                 const gap = gridRect.width * 0.005;
-                cellPos = calcCardPos(gridRect, gap, sectionSize, cardPos);
+                ghostCardPos = calcCardPos(gridRect, gap, sectionSize, cardPos);
             }
-
-            return cellPos;
+            else {
+                ghostCardPos = {
+                    x: clientX - (size.width / 2),
+                    y: clientY - (size.height / 2),
+                    width: size.width,
+                    height: size.height
+                };
+            }
         };
 
         const updateGhostCard = (clientX: number, clientY: number) => {
             if(!ghostCard) return;
-            const pos = calculatePosition(clientX, clientY);
+
+            calculatePosition(clientX, clientY);
+
+            if(!ghostCardPos) return;
             
-            ghostCard.style.left = `${pos.x}px`;
-            ghostCard.style.top = `${pos.y}px`;
-            ghostCard.style.width = `${pos.width}px`;
-            ghostCard.style.height = `${pos.height}px`;
+            ghostCard.style.left = `${ghostCardPos.x}px`;
+            ghostCard.style.top = `${ghostCardPos.y}px`;
+            ghostCard.style.width = `${ghostCardPos.width}px`;
+            ghostCard.style.height = `${ghostCardPos.height}px`;
         };
 
         const handleMove = (clientX: number, clientY: number) => {
@@ -74,8 +77,8 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
 
-            if(gridEl) {
-                send({ type: "CREATE_CARD_SUCCEEDED" });
+            if(gridEl && ghostCardPos) {
+                send({ type: "CREATE_CARD_SUCCEEDED", position: ghostCardPos });
             }
             else {
                 send({ type: "CREATE_CARD_CANCELLED" });

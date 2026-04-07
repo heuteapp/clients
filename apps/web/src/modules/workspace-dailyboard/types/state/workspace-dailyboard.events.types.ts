@@ -1,4 +1,5 @@
 import { DailyboardResponse } from "@/src/api/models/responses/dailyboard.response";
+import { Rect } from "@/src/modules/shared/types/common";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
 export type FetchSourcesEvents = FETCH_SOURCES_EVENT | DONE_FETCH_SOURCES_EVENT | ERROR_FETCH_SOURCES_EVENT;
@@ -13,7 +14,7 @@ export type CreateCardEvents = CREATE_CARD_EVENT | CREATE_CARD_SUCCEEDED_EVENT |
 
 export type CREATE_CARD_EVENT = { type: "CREATE_CARD" };
 
-export type CREATE_CARD_SUCCEEDED_EVENT = { type: "CREATE_CARD_SUCCEEDED" };
+export type CREATE_CARD_SUCCEEDED_EVENT = { type: "CREATE_CARD_SUCCEEDED", position: Rect };
 
 export type CREATE_CARD_FAILED_EVENT = { type: "CREATE_CARD_FAILED" };
 
