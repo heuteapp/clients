@@ -22,6 +22,7 @@ function DailyboardCardContainer(props : DailyboardCardContainerProps) {
 
     return (
         <div 
+            data-dailyboard-card-container
             className={style.cardContainer} 
             ref={ref}
         >

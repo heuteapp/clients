@@ -15,10 +15,12 @@ import { useLayoutContext } from "../../ui-layout/hooks/useLayoutContext";
 
 export function DailyboardRoot(props: DailyboardRootProps) {
   const { registry } = useDailyboardContext();
-  const { dataSource } = useLayoutContext();
-  const dailyboardRef = registry.dailyboard.ref;
 
-  const cards = props.data.cards;
+  const { data: dailyboardData } = props;
+  const dailyboardRef = registry.dailyboard.ref;
+  const dailyboardCards = dailyboardData.cards;
+
+  const { dataSource: layoutData } = useLayoutContext();
 
   useLayoutEffect(() => {
     registry.registerDailyboard(dailyboardRef, props)
@@ -28,13 +30,20 @@ export function DailyboardRoot(props: DailyboardRootProps) {
     }
   }, [registry])
   
-  if(!dataSource) return null;
-  if(!cards) return null;
+  if(!layoutData) return null;
+  if(!dailyboardCards) return null;
 
   return (
-    <div ref={dailyboardRef} className={style.dailyboard}>
-      <LayoutRoot data={dataSource} />
-      <DailyboardCardContainer cards={cards} />
+    <div 
+      data-dailyboard-id={dailyboardData.id}
+      data-dailyboard-layout-name={layoutData.name}
+      data-dailyboard-layout-version={layoutData.version}
+      data-dailyboard-date={dailyboardData.date}
+      ref={dailyboardRef} 
+      className={style.dailyboard}
+    >
+      <LayoutRoot data={layoutData} />
+      <DailyboardCardContainer cards={dailyboardCards} />
       <DailyboardGhostCard />
     </div>
   )

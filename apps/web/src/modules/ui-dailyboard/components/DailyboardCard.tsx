@@ -19,13 +19,8 @@ function DailyboardCard(props : DailyboardCardProps) {
 
     return (
         <div 
-            className={style.card} 
-            style={{
-                left: "var(--card-left)",
-                top: "var(--card-top)",
-                width: "var(--card-width)",
-                height: "var(--card-height)",
-            }}
+            data-dailyboard-card-id={data.id}
+            className={style.card}
             ref={ref}
         >
         </div>
