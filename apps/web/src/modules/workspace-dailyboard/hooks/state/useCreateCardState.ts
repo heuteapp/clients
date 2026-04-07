@@ -3,6 +3,7 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, GridSize, Rect } from "@/src/modules/shared/types/common";
+import { findGridElement, getGridMeta } from "@/src/modules/ui-layout/utils/dom.utils";
 
 export const useCreateCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -30,7 +31,7 @@ export const useCreateCardState = () => {
                 height: ((metrics.cellSize.grid || 0) * cardUnit.rowSpan)
             }
 
-            gridEl = findGrid(clientX, clientY);
+            gridEl = findGridElement(clientX, clientY);
             if(gridEl) {
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
@@ -107,23 +108,6 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchend", onTouchEnd);
         };
     }
-}
-
-const findGrid = (clientX: number, clientY: number): HTMLDivElement | null => {
-    const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest<HTMLDivElement>("[data-layout-grid]") || null;
-}
-
-const getGridMeta = (gridEl: HTMLDivElement) => {
-    const totalCols = parseInt(gridEl.dataset.layoutGridColspan || "0", 10);
-    const totalRows = parseInt(gridEl.dataset.layoutGridRowspan || "0", 10);
-
-    const sectionSize = {
-        colSpan: totalCols,
-        rowSpan: totalRows
-    };
-    
-    return { sectionSize };
 }
 
 const calcMouseIndex = (clientX: number, clientY: number, gridRect: DOMRect, cellSize: number) => {
