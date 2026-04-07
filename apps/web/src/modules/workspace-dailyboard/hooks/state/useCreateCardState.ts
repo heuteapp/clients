@@ -79,6 +79,7 @@ export const useCreateCardState = () => {
             }
             else {
                 send({ type: "CREATE_CARD_CANCELLED" });
+                document.body.removeChild(ghostCard);
             }
         };
 
