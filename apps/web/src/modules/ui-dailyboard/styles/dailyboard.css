@@ -1,0 +1,9 @@
+#dailyboard-ghost-card {
+    position: fixed;
+    width: 0px;
+    height: 0px;
+    border: 2px dashed rgba(90,124,255,1);
+    border-radius: 6px;    
+    box-sizing: border-box;
+    pointer-events: none;
+}

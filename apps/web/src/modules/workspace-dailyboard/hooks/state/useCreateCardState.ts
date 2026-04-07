@@ -16,12 +16,6 @@ export const useCreateCardState = () => {
     const useCreatingCard = () => {
         const ghostCard = document.createElement("div");
         ghostCard.id = "dailyboard-ghost-card";
-        ghostCard.style.position = "fixed";
-        ghostCard.style.pointerEvents = "none";
-        ghostCard.style.zIndex = "1000";
-        ghostCard.style.border = "2px dashed #206eff";
-        ghostCard.style.borderRadius = "8px";
-        ghostCard.style.boxSizing = 'border-box';
 
         document.body.appendChild(ghostCard);
         const cardUnit = { col: 6, row: 4 };

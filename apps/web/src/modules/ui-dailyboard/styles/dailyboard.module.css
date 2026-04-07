@@ -21,12 +21,3 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     box-sizing: border-box;
 }
-
-.ghostCard {
-    position: fixed;
-    width: 0px;
-    height: 0px;
-    border: 2px dashed rgba(90,124,255,1);
-    border-radius: 6px;
-    pointer-events: none;
-}
