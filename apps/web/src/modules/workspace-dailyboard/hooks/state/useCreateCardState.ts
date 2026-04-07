@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
-import { GridRect, GridSize, Rect } from "@/src/modules/shared/types/common";
-import { findGridElement, getGridMeta } from "@/src/modules/ui-layout/utils/dom.utils";
+import { Rect } from "@/src/modules/shared/types/common";
+import { findGridElement, getCellAtCursor, getGridMeta } from "@/src/modules/ui-layout/utils/dom.utils";
+import { getCardAnchorCell, getCardPixelRect } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 
 export const useCreateCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -37,13 +38,13 @@ export const useCreateCardState = () => {
                 const cellSize = metrics.cellSize.grid || 0;
 
                 const { sectionSize } = getGridMeta(gridEl);
-                const { col: mouseCol, row: mouseRow } = calcMouseIndex(clientX, clientY, gridRect, cellSize);
-                let { col: cardCol, row: cardRow } = calcCardIndex(mouseCol, mouseRow, sectionSize, cardUnit);
+                const { col: mouseCol, row: mouseRow } = getCellAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
+                let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, sectionSize, cardUnit);
 
                 const cardPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
                 const gap = gridRect.width * 0.005;
-                ghostCardPos = calcCardPos(gridRect, gap, sectionSize, cardPos);
+                ghostCardPos = getCardPixelRect(gridRect, gap, sectionSize, cardPos);
             }
             else {
                 ghostCardPos = {
@@ -107,50 +108,5 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
         };
-    }
-}
-
-const calcMouseIndex = (clientX: number, clientY: number, gridRect: DOMRect, cellSize: number) => {
-    const col = Math.floor((clientX - gridRect.left) / cellSize);
-    const row = Math.floor((clientY - gridRect.top) / cellSize);
-    return { col, row };
-}
-
-const calcCardIndex = (mouseCol: number, mouseRow: number, sectionSize: GridSize, cardSize: GridSize) => {
-    let col = mouseCol - Math.floor(cardSize.colSpan / 2);
-    let row = mouseRow - Math.floor(cardSize.rowSpan / 2);
-
-    col = Math.max(0, Math.min(col, sectionSize.colSpan - cardSize.colSpan));
-    row = Math.max(0, Math.min(row, sectionSize.rowSpan - cardSize.rowSpan));
-
-    return { col, row };
-}
-
-const calcCardPos = (gridRect: DOMRect, gap: number, sectionSize: GridSize, cardPos: GridRect) => {
-
-    const localGridRect = {
-        left: (gridRect.left) + gap,
-        top: (gridRect.top) + gap,
-        width: gridRect.width - gap * 2,
-        height: gridRect.height - gap * 2
-    }
-
-    const stepSize = {
-        width: localGridRect.width / sectionSize.colSpan,
-        height: localGridRect.height / sectionSize.rowSpan
-    }
-
-    const rawPosition = {
-        left: localGridRect.left + (cardPos.colIndex) * stepSize.width,
-        top: localGridRect.top + (cardPos.rowIndex) * stepSize.height,
-        width: cardPos.colSpan * stepSize.width,
-        height: cardPos.rowSpan * stepSize.height,
-    }
-
-    return {
-        x: rawPosition.left + gap,
-        y: rawPosition.top + gap,
-        width: rawPosition.width - gap * 2,
-        height: rawPosition.height - gap * 2
     }
 }
