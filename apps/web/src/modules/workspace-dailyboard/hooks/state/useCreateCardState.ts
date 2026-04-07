@@ -23,16 +23,17 @@ export const useCreateCardState = () => {
 
         let gridEl : HTMLDivElement | null = null;
 
-        const getCardSize = () => ({
-            width: ((metrics.cellSize.grid || 0) * cardUnit.col),
-            height: ((metrics.cellSize.grid || 0) * cardUnit.row)
-        });
-
         const calculatePosition = (clientX: number, clientY: number) => {
-            const cardSize = getCardSize();
+            const size = {
+                width: ((metrics.cellSize.grid || 0) * cardUnit.col),
+                height: ((metrics.cellSize.grid || 0) * cardUnit.row)
+            }
+
             let cellPos = {
-                x: clientX - (cardSize.width / 2),
-                y: clientY - (cardSize.height / 2)
+                x: clientX - (size.width / 2),
+                y: clientY - (size.height / 2),
+                width: size.width,
+                height: size.height
             };
 
             gridEl = findGrid(clientX, clientY);
@@ -44,9 +45,39 @@ export const useCreateCardState = () => {
                 const { col: mouseCol, row: mouseRow } = calcMouseIndex(clientX, clientY, gridRect, cellSize);
                 let { col: cardCol, row: cardRow } = calcCardIndex(mouseCol, mouseRow, cardUnit.col, cardUnit.row, totalCols, totalRows);
 
+                const gap = gridRect.width * 0.005; // 2% gap
+
+                const localGridRect = {
+                    left: (gridRect.left) + gap,
+                    top: (gridRect.top) + gap,
+                    width: gridRect.width - gap * 2,
+                    height: gridRect.height - gap * 2
+                }
+
+                const stepSize = {
+                    width: localGridRect.width / totalCols,
+                    height: localGridRect.height / totalRows
+                }
+
+                const rawPosition = {
+                    left: localGridRect.left + (cardCol) * stepSize.width,
+                    top: localGridRect.top + (cardRow) * stepSize.height,
+                    width: cardUnit.col * stepSize.width,
+                    height: cardUnit.row * stepSize.height,
+                }
+
+                const position = {
+                    left: rawPosition.left + gap,
+                    top: rawPosition.top + gap,
+                    width: rawPosition.width - gap * 2,
+                    height: rawPosition.height - gap * 2
+                }
+
                 cellPos = {
-                    x: gridRect.left + (cardCol * cellSize),
-                    y: gridRect.top + (cardRow * cellSize)
+                    x: position.left,
+                    y: position.top,
+                    width: position.width,
+                    height: position.height
                 };
             }
 
@@ -55,13 +86,12 @@ export const useCreateCardState = () => {
 
         const updateGhostCard = (clientX: number, clientY: number) => {
             if(!ghostCard) return;
-            const cardSize = getCardSize();
             const pos = calculatePosition(clientX, clientY);
             
             ghostCard.style.left = `${pos.x}px`;
             ghostCard.style.top = `${pos.y}px`;
-            ghostCard.style.width = `${cardSize.width}px`;
-            ghostCard.style.height = `${cardSize.height}px`;
+            ghostCard.style.width = `${pos.width}px`;
+            ghostCard.style.height = `${pos.height}px`;
         };
 
         const handleMove = (clientX: number, clientY: number) => {
