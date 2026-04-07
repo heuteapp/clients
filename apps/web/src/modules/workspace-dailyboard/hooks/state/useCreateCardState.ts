@@ -100,7 +100,7 @@ export const useCreateCardState = () => {
     }
 }
 
-const findGrid = (clientX: number, clientY: number) => {
+const findGrid = (clientX: number, clientY: number): HTMLDivElement | null => {
     const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest("[data-layout-grid-id]") || null;
+    return element?.closest<HTMLDivElement>("[data-layout-grid]") || null;
 }
