@@ -45,40 +45,8 @@ export const useCreateCardState = () => {
                 const { col: mouseCol, row: mouseRow } = calcMouseIndex(clientX, clientY, gridRect, cellSize);
                 let { col: cardCol, row: cardRow } = calcCardIndex(mouseCol, mouseRow, cardUnit.col, cardUnit.row, totalCols, totalRows);
 
-                const gap = gridRect.width * 0.005; // 2% gap
-
-                const localGridRect = {
-                    left: (gridRect.left) + gap,
-                    top: (gridRect.top) + gap,
-                    width: gridRect.width - gap * 2,
-                    height: gridRect.height - gap * 2
-                }
-
-                const stepSize = {
-                    width: localGridRect.width / totalCols,
-                    height: localGridRect.height / totalRows
-                }
-
-                const rawPosition = {
-                    left: localGridRect.left + (cardCol) * stepSize.width,
-                    top: localGridRect.top + (cardRow) * stepSize.height,
-                    width: cardUnit.col * stepSize.width,
-                    height: cardUnit.row * stepSize.height,
-                }
-
-                const position = {
-                    left: rawPosition.left + gap,
-                    top: rawPosition.top + gap,
-                    width: rawPosition.width - gap * 2,
-                    height: rawPosition.height - gap * 2
-                }
-
-                cellPos = {
-                    x: position.left,
-                    y: position.top,
-                    width: position.width,
-                    height: position.height
-                };
+                const gap = gridRect.width * 0.005;
+                cellPos = calcCardPos(gridRect, gap, totalCols, totalRows, cardCol, cardRow, cardUnit.col, cardUnit.row);
             }
 
             return cellPos;
@@ -160,4 +128,33 @@ const calcCardIndex = (mouseCol: number, mouseRow: number, colSpan: number, rowS
     row = Math.max(0, Math.min(row, totalRows - rowSpan));
 
     return { col, row };
+}
+
+const calcCardPos = (gridRect: DOMRect, gap: number, totalCols: number, totalRows: number, cardCol: number, cardRow: number, cardColSpan: number, cardRowSpan: number) => {
+
+    const localGridRect = {
+        left: (gridRect.left) + gap,
+        top: (gridRect.top) + gap,
+        width: gridRect.width - gap * 2,
+        height: gridRect.height - gap * 2
+    }
+
+    const stepSize = {
+        width: localGridRect.width / totalCols,
+        height: localGridRect.height / totalRows
+    }
+
+    const rawPosition = {
+        left: localGridRect.left + (cardCol) * stepSize.width,
+        top: localGridRect.top + (cardRow) * stepSize.height,
+        width: cardColSpan * stepSize.width,
+        height: cardRowSpan * stepSize.height,
+    }
+
+    return {
+        x: rawPosition.left + gap,
+        y: rawPosition.top + gap,
+        width: rawPosition.width - gap * 2,
+        height: rawPosition.height - gap * 2
+    }
 }
