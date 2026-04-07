@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
-import { parse } from "path";
+import { GridRect, GridSize } from "@/src/modules/shared/types/common";
 
 export const useCreateCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -19,14 +19,14 @@ export const useCreateCardState = () => {
         ghostCard.id = "dailyboard-ghost-card";
 
         document.body.appendChild(ghostCard);
-        const cardUnit = { col: 6, row: 4 };
+        const cardUnit = { colSpan: 6, rowSpan: 4 };
 
         let gridEl : HTMLDivElement | null = null;
 
         const calculatePosition = (clientX: number, clientY: number) => {
             const size = {
-                width: ((metrics.cellSize.grid || 0) * cardUnit.col),
-                height: ((metrics.cellSize.grid || 0) * cardUnit.row)
+                width: ((metrics.cellSize.grid || 0) * cardUnit.colSpan),
+                height: ((metrics.cellSize.grid || 0) * cardUnit.rowSpan)
             }
 
             let cellPos = {
@@ -41,12 +41,14 @@ export const useCreateCardState = () => {
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
 
-                const { totalCols, totalRows } = getGridMeta(gridEl);
+                const { sectionSize } = getGridMeta(gridEl);
                 const { col: mouseCol, row: mouseRow } = calcMouseIndex(clientX, clientY, gridRect, cellSize);
-                let { col: cardCol, row: cardRow } = calcCardIndex(mouseCol, mouseRow, cardUnit.col, cardUnit.row, totalCols, totalRows);
+                let { col: cardCol, row: cardRow } = calcCardIndex(mouseCol, mouseRow, sectionSize, cardUnit);
+
+                const cardPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
                 const gap = gridRect.width * 0.005;
-                cellPos = calcCardPos(gridRect, gap, totalCols, totalRows, cardCol, cardRow, cardUnit.col, cardUnit.row);
+                cellPos = calcCardPos(gridRect, gap, sectionSize, cardPos);
             }
 
             return cellPos;
@@ -111,7 +113,13 @@ const findGrid = (clientX: number, clientY: number): HTMLDivElement | null => {
 const getGridMeta = (gridEl: HTMLDivElement) => {
     const totalCols = parseInt(gridEl.dataset.layoutGridColspan || "0", 10);
     const totalRows = parseInt(gridEl.dataset.layoutGridRowspan || "0", 10);
-    return { totalCols, totalRows };
+
+    const sectionSize = {
+        colSpan: totalCols,
+        rowSpan: totalRows
+    };
+    
+    return { sectionSize };
 }
 
 const calcMouseIndex = (clientX: number, clientY: number, gridRect: DOMRect, cellSize: number) => {
@@ -120,17 +128,17 @@ const calcMouseIndex = (clientX: number, clientY: number, gridRect: DOMRect, cel
     return { col, row };
 }
 
-const calcCardIndex = (mouseCol: number, mouseRow: number, colSpan: number, rowSpan: number, totalCols: number, totalRows: number) => {
-    let col = mouseCol - Math.floor(colSpan / 2);
-    let row = mouseRow - Math.floor(rowSpan / 2);
+const calcCardIndex = (mouseCol: number, mouseRow: number, sectionSize: GridSize, cardSize: GridSize) => {
+    let col = mouseCol - Math.floor(cardSize.colSpan / 2);
+    let row = mouseRow - Math.floor(cardSize.rowSpan / 2);
 
-    col = Math.max(0, Math.min(col, totalCols - colSpan));
-    row = Math.max(0, Math.min(row, totalRows - rowSpan));
+    col = Math.max(0, Math.min(col, sectionSize.colSpan - cardSize.colSpan));
+    row = Math.max(0, Math.min(row, sectionSize.rowSpan - cardSize.rowSpan));
 
     return { col, row };
 }
 
-const calcCardPos = (gridRect: DOMRect, gap: number, totalCols: number, totalRows: number, cardCol: number, cardRow: number, cardColSpan: number, cardRowSpan: number) => {
+const calcCardPos = (gridRect: DOMRect, gap: number, sectionSize: GridSize, cardPos: GridRect) => {
 
     const localGridRect = {
         left: (gridRect.left) + gap,
@@ -140,15 +148,15 @@ const calcCardPos = (gridRect: DOMRect, gap: number, totalCols: number, totalRow
     }
 
     const stepSize = {
-        width: localGridRect.width / totalCols,
-        height: localGridRect.height / totalRows
+        width: localGridRect.width / sectionSize.colSpan,
+        height: localGridRect.height / sectionSize.rowSpan
     }
 
     const rawPosition = {
-        left: localGridRect.left + (cardCol) * stepSize.width,
-        top: localGridRect.top + (cardRow) * stepSize.height,
-        width: cardColSpan * stepSize.width,
-        height: cardRowSpan * stepSize.height,
+        left: localGridRect.left + (cardPos.colIndex) * stepSize.width,
+        top: localGridRect.top + (cardPos.rowIndex) * stepSize.height,
+        width: cardPos.colSpan * stepSize.width,
+        height: cardPos.rowSpan * stepSize.height,
     }
 
     return {
