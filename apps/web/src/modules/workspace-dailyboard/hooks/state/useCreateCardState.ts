@@ -32,6 +32,7 @@ export const useCreateCardState = () => {
         let sectionEl: HTMLDivElement | null = null;        
         let ghostCardGridPos : GridRect | null = null;
         let ghostCardPos : Rect | null = null;
+        let isOverlapping = false;
 
         const calculatePosition = (clientX: number, clientY: number) => {
             const size = {
@@ -60,9 +61,9 @@ export const useCreateCardState = () => {
 
                 const cards = findDailyboardCardsForSection(dailyboardEl, sectionName);
 
-                const overlappingCard = isDailyboardCardOverlappingForCards(ghostCardGridPos, cards.map(getDailyboardCardData));
+                isOverlapping = isDailyboardCardOverlappingForCards(ghostCardGridPos, cards.map(getDailyboardCardData));
 
-                if(overlappingCard) {
+                if(isOverlapping) {
                     ghostCard.classList.add("overlapping");
                 }
                 else {
@@ -106,7 +107,7 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
 
-            if(gridEl && ghostCardGridPos && ghostCardPos && sectionEl) {
+            if(gridEl && ghostCardGridPos && ghostCardPos && sectionEl && !isOverlapping) {
                 const { name: sectionName } = getSectionData(sectionEl)!;
 
                 const placement : DailyboardCardPlacement = {
