@@ -25,6 +25,8 @@ export function LayoutSection(props : LayoutSectionProps) {
 
     return (
         <div
+            data-section
+            data-section-name={data.name}
             ref={ref}
             className={style.section}
             style={{
