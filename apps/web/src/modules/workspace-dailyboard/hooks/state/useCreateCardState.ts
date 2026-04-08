@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
-import { Rect } from "@/src/modules/shared/types/common";
-import { findGridElement, getCellAtCursor, getGridMeta } from "@/src/modules/ui-layout/utils/dom.utils";
+import { GridRect, Rect } from "@/src/modules/shared/types/common";
+import { findGridElement, getCellAtCursor, getGridMeta, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
 import { getCardAnchorCell, getCardPixelRect } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export const useCreateCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -24,6 +25,8 @@ export const useCreateCardState = () => {
         const cardUnit = { colSpan: 6, rowSpan: 4 };
 
         let gridEl : HTMLDivElement | null = null;
+        let sectionEl: HTMLDivElement | null = null;        
+        let ghostCardGridPos : GridRect | null = null;
         let ghostCardPos : Rect | null = null;
 
         const calculatePosition = (clientX: number, clientY: number) => {
@@ -34,6 +37,8 @@ export const useCreateCardState = () => {
 
             gridEl = findGridElement(clientX, clientY);
             if(gridEl) {
+                sectionEl = getSectionParent(gridEl);
+
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
 
@@ -41,12 +46,16 @@ export const useCreateCardState = () => {
                 const { col: mouseCol, row: mouseRow } = getCellAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
                 let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, sectionSize, cardUnit);
 
-                const cardPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
+                ghostCardGridPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
                 const gap = gridRect.width * 0.005;
-                ghostCardPos = getCardPixelRect(gridRect, gap, sectionSize, cardPos);
+                ghostCardPos = getCardPixelRect(gridRect, gap, sectionSize, ghostCardGridPos);
             }
             else {
+                sectionEl = null;
+
+                ghostCardGridPos = null;
+
                 ghostCardPos = {
                     x: clientX - (size.width / 2),
                     y: clientY - (size.height / 2),
@@ -79,8 +88,15 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
 
-            if(gridEl && ghostCardPos) {
-                send({ type: "CREATE_CARD_SUCCEEDED", position: ghostCardPos });
+            if(gridEl && ghostCardGridPos && ghostCardPos && sectionEl) {
+                const { name: sectionName } = getSectionMeta(sectionEl);
+
+                const placement : DailyboardCardPlacement = {
+                    sectionName: sectionName || "",
+                    position: ghostCardGridPos
+                }
+
+                send({ type: "CREATE_CARD_SUCCEEDED", placement });
             }
             else {
                 send({ type: "CREATE_CARD_CANCELLED" });
