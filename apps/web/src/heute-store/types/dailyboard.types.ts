@@ -29,7 +29,7 @@ export interface StoredDailyboardItem<
 }
 
 export interface StoredDailyboardCardItem extends StoredItem, DailyboardCardBase {
-    layoutId: () => string;
+    dailyboardId: () => string;
 }
 
 export type StoredDailyboardItemContent = Omit<StoredDailyboardItem, "cards">;
