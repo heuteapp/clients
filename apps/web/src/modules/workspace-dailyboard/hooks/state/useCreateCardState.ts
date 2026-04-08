@@ -12,11 +12,11 @@ export const useCreateCardState = () => {
     
     useEffect(() => {
         if(isCreatingCard(state)) {
-            return useCreatingCard();
+            return resolveCreatingCard();
         }
     }, [state]);
 
-    const useCreatingCard = () => {
+    const resolveCreatingCard = () => {
         const ghostCard = document.createElement("div");
         ghostCard.id = "dailyboard-ghost-card";
 
