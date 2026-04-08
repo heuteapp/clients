@@ -25,7 +25,7 @@ export const useCreateCardState = () => {
         ghostCard.id = "dailyboard-ghost-card";
 
         document.body.appendChild(ghostCard);
-        const cardUnit = { colSpan: 6, rowSpan: 4 };
+        const cardUnit = state.context.ghostCard?.size || { colSpan: 1, rowSpan: 1 };
 
         let gridEl : HTMLDivElement | null = null;
         let sectionEl: HTMLDivElement | null = null;        
