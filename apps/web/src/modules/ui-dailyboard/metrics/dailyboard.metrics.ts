@@ -1,6 +1,6 @@
 import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetrics } from "../types/dailyboard.metrics";
 import { getCardPixelRect, getDailyboardCardData } from "../utils/dom.utils";
-import { findGridInSubtree, getGridMeta } from "../../ui-layout/utils/dom.utils";
+import { findGridInSubtree, getGridData } from "../../ui-layout/utils/dom.utils";
 
 export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetrics => {
     return {
@@ -20,7 +20,7 @@ export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) =>
         const gridEl = findGridInSubtree(sectionEl);
         if (!gridEl) return;
 
-        const gridData = getGridMeta(gridEl);
+        const gridData = getGridData(gridEl);
         if (!gridData) return;
 
         const gridRect = gridEl.getBoundingClientRect();
@@ -34,7 +34,7 @@ export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) =>
             const data = getDailyboardCardData(cardEl);
             if (!data) return;
 
-            const cardRect = getCardPixelRect(gridRect, 8, gridData.sectionSize, data);
+            const cardRect = getCardPixelRect(gridRect, 8, { colSpan: gridData.colSpan, rowSpan: gridData.rowSpan }, data);
 
             cardEl.style.left = `${cardRect.x}px`;
             cardEl.style.top = `${cardRect.y}px`;

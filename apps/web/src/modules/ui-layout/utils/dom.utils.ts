@@ -17,17 +17,14 @@ export const findGridAtPoint = (clientX: number, clientY: number): HTMLDivElemen
 
 //
 
-export const getGridMeta = (gridEl: HTMLDivElement) => {
-    const totalCols = parseInt(gridEl.dataset.layoutGridColspan || "0", 10);
-    const totalRows = parseInt(gridEl.dataset.layoutGridRowspan || "0", 10);
-
-    const sectionSize = {
-        colSpan: totalCols,
-        rowSpan: totalRows
+export const getGridData = (gridEl: HTMLDivElement) => {
+    return {
+        colSpan: parseInt(gridEl.dataset.layoutGridColspan || "0", 10),
+        rowSpan: parseInt(gridEl.dataset.layoutGridRowspan || "0", 10)
     };
-    
-    return { sectionSize };
 }
+
+//
 
 export const getCellAtCursor = (client: Pointer, gridRect: DOMRect, cellSize: number) => {
     const col = Math.floor((client.x - gridRect.left) / cellSize);

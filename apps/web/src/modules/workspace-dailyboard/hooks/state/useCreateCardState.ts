@@ -3,7 +3,7 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
-import { findGridAtPoint, getCellAtCursor, getDailyboardParent, getGridMeta, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
+import { findGridAtPoint, getCellAtCursor, getDailyboardParent, getGridData, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
 import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
@@ -49,14 +49,15 @@ export const useCreateCardState = () => {
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
 
-                const { sectionSize } = getGridMeta(gridEl);
+                const gridData = getGridData(gridEl);
+                const gridSize = { colSpan: gridData.colSpan, rowSpan: gridData.rowSpan };
                 const { col: mouseCol, row: mouseRow } = getCellAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
-                let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, sectionSize, cardUnit);
+                let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, gridSize, cardUnit);
 
                 ghostCardGridPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
                 const gap = gridRect.width * 0.005;
-                ghostCardPos = getCardPixelRect(gridRect, gap, sectionSize, ghostCardGridPos);
+                ghostCardPos = getCardPixelRect(gridRect, gap, gridSize, ghostCardGridPos);
 
                 const cards = getDailyboardCardsForSection(dailyboardEl, sectionName);
 
