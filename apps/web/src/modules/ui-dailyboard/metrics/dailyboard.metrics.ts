@@ -1,16 +1,14 @@
-import { DailyboardMetrics } from "../types/dailyboard.metrics";
-import { LayoutMetrics } from "../../ui-layout/types/layout.metrics";
-import { DailyboardRegistry } from "../types/dailyboard.registry";
+import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetrics } from "../types/dailyboard.metrics";
 import { getCardPixelRect, getDailyboardCardData } from "../utils/dom.utils";
-import { getGridFromSection, getGridMeta, getSectionMeta } from "../../ui-layout/utils/dom.utils";
+import { getGridFromSection, getGridMeta } from "../../ui-layout/utils/dom.utils";
 
-export const calculateDailyboardMetrics = (layoutMetrics: LayoutMetrics) : DailyboardMetrics => {
+export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetrics => {
     return {
-        layout: layoutMetrics
+        layout
     }
 }
 
-export const applyDailyboardMetrics = (registry: DailyboardRegistry, metrics: DailyboardMetrics) => {
+export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) => {
     const sections = registry.layoutRegistry.getLayoutSections();
 
     sections?.forEach(section => {
