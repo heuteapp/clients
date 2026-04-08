@@ -29,12 +29,13 @@ export const convertDailyboardCardSourceToItemContent = <
 
 export const saveDailyboardToState = <
     TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
     TDailyboardCardItemContent extends StoredDailyboardCardItemContent
 >(
-    state: DailyboardBaseState<TDailyboardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
     owner: string, 
     dailyboard: TDailyboardSource
 ) => {
@@ -50,12 +51,13 @@ export const saveDailyboardToState = <
 
 export const getDailyboardItemFromState = <
     TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
     TDailyboardCardItemContent extends StoredDailyboardCardItemContent
 >(
-    state: DailyboardBaseState<TDailyboardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
     owner: string, 
     categoryPath: string, 
     date: YYMMDDDate
@@ -73,12 +75,13 @@ export const getDailyboardItemFromState = <
 
 export const getDailyboardItemContentFromState = <
     TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
     TDailyboardCardItemContent extends StoredDailyboardCardItemContent
 >(  
-    state: DailyboardBaseState<TDailyboardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     owner: string, 
     categoryPath: string, 
     date: YYMMDDDate
@@ -89,14 +92,77 @@ export const getDailyboardItemContentFromState = <
 
 export const getDailyboardCardItemContentsFromState = <
     TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
     TDailyboardCardItemContent extends StoredDailyboardCardItemContent
 >(
-    state: DailyboardBaseState<TDailyboardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
     dailyboardId: string | null
 ) => {
     if (!dailyboardId) return [];
     return Object.values(state.cardById).filter(card => card.dailyboardId() === dailyboardId) as TDailyboardCardItemContent[];
+};
+
+//
+
+// dailyboard.utils.ts - Eklenecek yardımcı fonksiyonlar
+
+export const addCardToDailyboardState = <
+    TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
+    TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
+    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardCardItem extends StoredDailyboardCardItem,
+    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+>(
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
+    categoryPath: string,
+    date: YYMMDDDate,
+    card: TDailyboardCardSource
+): boolean => {
+    const dailyboardContent = getDailyboardItemContentFromState(state, "me", categoryPath, date);
+    if (!dailyboardContent) return false;
+
+    const dailyboardId = dailyboardContent.id;
+    const cardId = `${dailyboardId}/${card.name}`;
+    
+    if (state.cardById[cardId]) {
+        console.warn(`Card already exists with name: ${card.name}`);
+        return false;
+    }
+
+    state.cardById[cardId] = convertDailyboardCardSourceToItemContent<TDailyboardCardSource, TDailyboardCardItemContent>(cardId, card);
+    
+    return true;
+};
+
+export const removeCardFromDailyboardState = <
+    TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
+    TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
+    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardCardItem extends StoredDailyboardCardItem,
+    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+>(
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
+    categoryPath: string,
+    date: YYMMDDDate,
+    cardName: string
+): boolean => {
+    const dailyboardContent = getDailyboardItemContentFromState(state, "me", categoryPath, date);
+    if (!dailyboardContent) return false;
+
+    const dailyboardId = dailyboardContent.id;
+    const cardId = `${dailyboardId}/${cardName}`;
+    
+    if (!state.cardById[cardId]) {
+        console.warn(`Card not found with name: ${cardName}`);
+        return false;
+    }
+
+    delete state.cardById[cardId];
+    
+    return true;
 };

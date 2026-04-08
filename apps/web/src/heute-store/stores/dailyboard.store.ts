@@ -9,13 +9,14 @@ import {
     StoredDailyboardCardItem, 
     StoredDailyboardCardItemContent 
 } from "../types/dailyboard.types";
-import { DailyboardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
-import { getDailyboardItemFromState, saveDailyboardToState } from "../utils/dailyboard.utils";
+import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
+import { addCardToDailyboardState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState } from "../utils/dailyboard.utils";
 import { DailyboardDataState } from "../types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
 export const withDailyboardImmer = <
     TDailyboardSource extends DailyboardBase,
+    TDailyboardCardSource extends DailyboardCardBase,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
@@ -24,6 +25,7 @@ export const withDailyboardImmer = <
 
     type DailyboardState = DailyboardBaseState<
         TDailyboardSource, 
+        TDailyboardCardSource,
         TDailyboardItem, 
         TDailyboardItemContent, 
         TDailyboardCardItem, 
@@ -79,6 +81,18 @@ export const withDailyboardImmer = <
 
             getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
                 return getDailyboardItemFromState(get(), user, categoryPath, date);
+            },
+
+            addCard: (categoryPath: string, date: YYMMDDDate, card: TDailyboardCardSource) => {
+                set((state) => {
+                    addCardToDailyboardState(state as DailyboardState, categoryPath, date, card);
+                });
+            },
+
+            removeCard: (categoryPath: string, date: YYMMDDDate, cardName: string) => {
+                set((state) => {
+                    removeCardFromDailyboardState(state as DailyboardState, categoryPath, date, cardName);
+                });
             },
 
             hasUser: (user: string) => {

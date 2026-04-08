@@ -4,6 +4,7 @@ import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
 export interface DailyboardBaseState<
     TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
@@ -16,6 +17,9 @@ export interface DailyboardBaseState<
 
     getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => TDailyboardItem | null;
     getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => TDailyboardItem | null;
+
+    addCard: (categoryPath: string, date: YYMMDDDate, card: TDailyboardCardSource) => void;
+    removeCard: (categoryPath: string,  date: YYMMDDDate, cardName: string) => void;
 }
 
 export type DailyboardBaseSource = DailyboardBase;
@@ -42,6 +46,7 @@ import { DailyboardData, DailyboardCardData } from "@/src/modules/dailyboard/typ
 
 export interface DailyboardDataState extends DailyboardBaseState<
     DailyboardDataSource,
+    DailyboardCardDataSource,
     StoredDailyboardData,
     StoredDailyboardDataContent,
     StoredDailyboardCardData,
