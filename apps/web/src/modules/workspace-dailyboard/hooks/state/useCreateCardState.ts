@@ -3,7 +3,7 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
-import { findGridElement, getCellAtCursor, getDailyboardParent, getGridMeta, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
+import { findGridAtPoint, getCellAtCursor, getDailyboardParent, getGridMeta, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
 import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
@@ -39,7 +39,7 @@ export const useCreateCardState = () => {
                 height: ((metrics.cellSize.grid || 0) * cardUnit.rowSpan)
             }
 
-            gridEl = findGridElement(clientX, clientY);
+            gridEl = findGridAtPoint(clientX, clientY);
             sectionEl = gridEl ? getSectionParent(gridEl) : null;
             dailyboardEl = sectionEl ? getDailyboardParent(sectionEl) : null;
 

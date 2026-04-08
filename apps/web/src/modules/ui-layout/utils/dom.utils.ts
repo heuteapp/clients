@@ -1,14 +1,21 @@
 import { Pointer } from "../../shared/types/common";
 
-export const findGridElement = (clientX: number, clientY: number): HTMLDivElement | null => {
+export const findGridInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+    const gridEl = el.querySelector<HTMLDivElement>("[data-layout-section-grid]");
+    return gridEl || null;
+}
+
+export const findGridClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+    const gridEl = el.closest<HTMLDivElement>("[data-layout-section-grid]");
+    return gridEl || null;
+}
+
+export const findGridAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
     const element = document.elementFromPoint(clientX, clientY);
     return element?.closest<HTMLDivElement>("[data-layout-section-grid]") || null;
 }
 
-export const getGridFromSection = (sectionEl: HTMLDivElement): HTMLDivElement | null => {
-    const gridEl = sectionEl.querySelector<HTMLDivElement>("[data-layout-section-grid]");
-    return gridEl || null;
-}
+//
 
 export const getGridMeta = (gridEl: HTMLDivElement) => {
     const totalCols = parseInt(gridEl.dataset.layoutGridColspan || "0", 10);
