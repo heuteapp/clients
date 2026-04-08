@@ -1,13 +1,22 @@
-#dailyboard-ghost-card {
+#dailyboard-ghost-card, #dailyboard-suggested-card {
     position: fixed;
     width: 0px;
     height: 0px;
-    border: 2px dashed rgba(90,124,255,1);
     border-radius: 6px;    
     box-sizing: border-box;
+    border: 2px dashed;
     pointer-events: none;
+    transition: border-color 0.2s;
+}
+
+#dailyboard-ghost-card {
+    border: 2px dashed rgba(90,124,255,1);
 }
 
 #dailyboard-ghost-card.overlapping {
     border-color: rgb(255, 90, 90);
+}
+
+#dailyboard-suggested-card {    
+    border: 2px dashed rgb(101, 255, 90);
 }

@@ -25,6 +25,10 @@ export const useCreateCardState = () => {
         const ghostCard = document.createElement("div");
         ghostCard.id = "dailyboard-ghost-card";
 
+        let suggestedCard : HTMLDivElement | null = null;
+        let suggestedCardGridPos : GridRect | null = null;
+        let suggestedCardPos : Rect | null = null;
+
         document.body.appendChild(ghostCard);
         const cardUnit = state.context.ghostCard?.size || { colSpan: 1, rowSpan: 1 };
 
@@ -57,6 +61,9 @@ export const useCreateCardState = () => {
 
                 ghostCardGridPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
+                const gap = 8;
+                ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos);
+
                 const cards = findDailyboardCardsForSection(dailyboardEl, sectionName);
 
                 const cardRects = cards.map(getDailyboardCardData);
@@ -64,18 +71,21 @@ export const useCreateCardState = () => {
 
                 if(isOverlapping) {
                     const bestPos = findBestGridRectPosition(ghostCardGridPos, cardRects, gridSize);
-                    
-                    if (bestPos) {
 
-                        ghostCardGridPos = bestPos;
+                    if (bestPos) {
+                        suggestedCardGridPos = bestPos;
+                        suggestedCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, suggestedCardGridPos);
+                    }
+                    else {
+                        suggestedCardGridPos = null;
+                        suggestedCardPos = null;
                     }
                 }
                 else {
                     ghostCard.classList.remove("overlapping");
+                    suggestedCardGridPos = null;
+                    suggestedCardPos = null;
                 }
-
-                const gap = 8;
-                ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos);
             }
             else {
                 sectionEl = null;
@@ -102,6 +112,25 @@ export const useCreateCardState = () => {
             ghostCard.style.top = `${ghostCardPos.y}px`;
             ghostCard.style.width = `${ghostCardPos.width}px`;
             ghostCard.style.height = `${ghostCardPos.height}px`;
+
+            if(suggestedCardPos) {
+                if(!suggestedCard) {
+                    suggestedCard = document.createElement("div");
+                    suggestedCard.id = "dailyboard-suggested-card";
+                    document.body.appendChild(suggestedCard);
+                }
+
+                suggestedCard.style.left = `${suggestedCardPos.x}px`;
+                suggestedCard.style.top = `${suggestedCardPos.y}px`;
+                suggestedCard.style.width = `${suggestedCardPos.width}px`;
+                suggestedCard.style.height = `${suggestedCardPos.height}px`;
+            }
+            else {
+                if(suggestedCard) {
+                    document.body.removeChild(suggestedCard);
+                    suggestedCard = null;
+                }
+            }
         };
 
         const handleMove = (clientX: number, clientY: number) => {
@@ -129,6 +158,10 @@ export const useCreateCardState = () => {
             }
 
             document.body.removeChild(ghostCard);
+
+            if(suggestedCard) {
+                document.body.removeChild(suggestedCard);
+            }
         };
 
         const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
