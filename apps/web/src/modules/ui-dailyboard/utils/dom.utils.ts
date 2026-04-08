@@ -54,3 +54,8 @@ export const getDailyboardCardData = (cardEl: HTMLElement) => {
         rowSpan: rowSpan ? parseInt(rowSpan, 10) : 0
     };
 }
+
+export const getDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
+    const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card-section-name="${sectionName}"]`);
+    return Array.from(cardElements) as HTMLDivElement[];
+}
