@@ -146,12 +146,12 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
 
-            if(gridEl && ghostCardGridPos && ghostCardPos && sectionEl && !isOverlapping) {
+            if(gridEl && ghostCardGridPos && ghostCardPos && sectionEl && (!isOverlapping || suggestedCardGridPos)) {
                 const { name: sectionName } = getSectionData(sectionEl)!;
 
                 const placement : DailyboardCardPlacement = {
                     sectionName: sectionName || "",
-                    position: ghostCardGridPos
+                    position: suggestedCardGridPos ? suggestedCardGridPos : ghostCardGridPos
                 }
 
                 send({ type: "CREATE_CARD_SUCCEEDED", categoryPath, date: date!, placement });
