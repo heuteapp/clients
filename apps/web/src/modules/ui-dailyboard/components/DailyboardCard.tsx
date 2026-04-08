@@ -15,17 +15,18 @@ function DailyboardCard(props : DailyboardCardProps) {
         return () => {
             registry.unregisterDailyboardCard(dailyboardCardData.id)
         }
-    }, [registry]) 
+    }, [registry])
 
     const dailyboardCardContent = dailyboardCardData.material;
-    const placement = dailyboardCardData.placement?.position;
+    const placement = dailyboardCardData.placement;
 
-    const placementAttrs = placement?.colIndex !== undefined ? {
+    const placementAttrs = placement !== null ? {
         'data-dailyboard-card-placed': true,
-        'data-dailyboard-card-col-index': placement.colIndex,
-        'data-dailyboard-card-row-index': placement.rowIndex,
-        'data-dailyboard-card-col-span': placement.colSpan,
-        'data-dailyboard-card-row-span': placement.rowSpan,
+        'data-dailyboard-card-section-name': placement.sectionName,
+        'data-dailyboard-card-col-index': placement.position.colIndex,
+        'data-dailyboard-card-row-index': placement.position.rowIndex,
+        'data-dailyboard-card-col-span': placement.position.colSpan,
+        'data-dailyboard-card-row-span': placement.position.rowSpan,
     } : {};
 
     return (
