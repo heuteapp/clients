@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
+import { isReadyCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { Rect } from "@/src/modules/shared/types/common";
@@ -11,7 +11,7 @@ export const useCreateCardState = () => {
     const { metrics } = useLayoutContext();
     
     useEffect(() => {
-        if(isCreatingCard(state)) {
+        if(isReadyCreatingCard(state)) {
             return resolveCreatingCard();
         }
     }, [state]);

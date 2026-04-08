@@ -15,7 +15,7 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOygGIAxAKIAVAMIAJAPoBlAPIBVAEqjB0gNoAGALqJQOVLHKdUXXSAAeiAIwA2ABzMAnM5cAWGwGYrrq3YBMADQg1IgeAKwezADsfjY2GmFWjjauMR4AvulBaFi4hCRkVHQMTMwAZmDsBAAW3FAABLCoAK7oRLC8ECZgzNwAbqiYPRVV1cRNre2aOkgg+obGprOWCFEaGsy+UWF+fh6OGt47QSEIfnaRYesafgc2UVZ+D5nZGNj4RKQUNPSMLCM1OqNFptOC8MDodAYZg4Sh4dhlDAAW3KlRq4xBU20ZnmRnIJjMK1sDhcbk83l8gWCoQ0NmYuxsYQO-jCUTsSReIBy73yXyKv1K6DAeAg1AEIgkMgUylU0xxBjxBOWiCiUTpjj8SXWtz8GlcuxOoTVzFcEVsNkcYUST053Lyn0KPxKLCFIrFokUggAgsJBJJRF7FAAROWzXGLQkqxwOKIeVweeKxM2OQ0IdnMK7aw4xRl7Oy2t72grfYp-ZgEV2cHj1Ah-Xge72+-2BoMyeSiFSCINd0N6BUR5WrdabOzbXb7Q6mqmnKwePzMa4aDy001hfX3Au5D7F-nO8uVoG1pj1z0+v0B4OSfhegCSABke9iw-38UtQCs1hstjs9gcjtPrH8DNF3ZTU40ZfMsi5Qttz5J0ywrYUqwaI8IBPRtzxbZsADkVDvB8QyfPsFlfSMhy-Ucfwnf9Uz2SJF18Jl9QTOwwkyKCuFQCA4DMO1YMdUsmHlEilXfRBiBsVMJM3HkHRLAUWDYPEeGExU3wsRB9VTLwNjsDRnCeVi42SZIZKLODBP+NFamrCZQXgZ8RPUlYE0iKwHjsUctSsdYwkk6kzkcKJmBSOdPE1G5HFcMz+PkvdXVFVSBzEhBo0cek4x8Ud1lsdzU18Ol-G8DwolcVwNAuUdoqgvjeQEhT9yQw8-iS0jBx2MJ6SXWcouXbYwjsVMNQXTME0SDxwnKjJ2KAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOygGIAxAKIAVAMIAJAPoBlAPIBVAEqjB0gNoAGALqJQOVLHKdUXXSAAeiAGwBOABzMNAZgCMAJjdW3AFisuArHZuADQg1IjuDjbR0RpWGjb+GslWAL6poWhYuIQkZFR0DEzMAGZg7AQAFtxQAASwqACu6ESwvBAmYMzcAG6omF1lFZXEDc2tmjpIIPqGxqbTlgj+IWGI-jZWzPFWAOxObk7e0S776ZkY2PhEpBQ09IwsQ1U19U0tcLxg6OgYzDiUPDsEoYAC2pXKVVG7wm2jMsyM5BMZiWtgczncnh8fkCq3CCDsLmYxxidg0gQ0QQ0LnOICyV1ytwKD2K6DAeAg1G6EEoYF4okUggAgsJBJJRELFAARSbwgyI5GLRBOeLMfyuTzedUrFw2byhfGufxquxOA6BXbHLUuNIZOmXHI3fL3IosNkcrnkHl8oRiKRyJQqdRw6YI+Yo6z2RwarG+AJBA3KqwOQJmpw2JwWmynWn0x15O6FR7Md2c5gEd2cHi1AiPfmCkViiXSmTyUQqQRSzuy0Py8NKhCeIn2bxOS1a7O63yJhAqraUtMZrM2-y5h3XAvM10l9llivsqt1WtMevC0XiyVSyT8IUASQAMt2Q3o+0iFqAlkPmCOx94Jy4pysGdvBtE0zRWOxvE8JxCScNdsg3JkXWLUsuX3IFXmPCBT0bC8WwlAA5FR70fGVnxmV9FQ-RAvx-ccNgAvUgLWBBfF2RxTXAhddn8Fw7HSO0uFQCA4DMPNEOdIsmDlOY3wjBBiBsGdiFtC4EMZSSWRYNhER4GSFXfCxECgmc7HnTi3FNXZNlcZx4IZJ1Cy0iFhleMYPngXtZKooyEBsZJmCOX8-C1DZXBnAD5ySZIfACcl-BWez8yQqS3V3fEX28wylnTGcPHRCyvCggCXA0XYkokpzt1Q7leX0-tqOWEDo3cKxR1sPiNDxJMbA4xdMzsaycztcSNKqlD0vLStMMeeq5IHQaZwOLYXDTNxojcZITgE1IgA */
     context: {
         dailyboardData: null,
         layoutData: null,
@@ -37,7 +37,6 @@ export const workspaceDailyboardMachine = setup({
                 id: "fetch-sources",
                 input: ({ event }) => {
                     const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "FETCH_SOURCES" }>;
-
                     return {
                         dailyboardPath: fetchEvent.dailyboardPath,
                     };
@@ -52,25 +51,30 @@ export const workspaceDailyboardMachine = setup({
             }
         },
         "ready": {
-            on: {
-                FETCH_SOURCES: {
-                    target: "fetching sources"
+            initial: "idle",
+            states: {
+                "idle": {
+                    on: {
+                        CREATE_CARD: {
+                            target: "creating card"
+                        },
+                        FETCH_SOURCES: {
+                            target: "#workspace-dailyboard.fetching sources"
+                        }
+                    }
                 },
-                CREATE_CARD: {
-                    target: "creating card"
-                }
-            }
-        },
-        "creating card": {
-            on: {
-                CREATE_CARD_SUCCEEDED: {
-                    target: "ready"
-                },
-                CREATE_CARD_FAILED: {
-                    target: "ready"
-                },
-                CREATE_CARD_CANCELLED: {
-                    target: "ready"
+                "creating card": {
+                    on: {
+                        CREATE_CARD_SUCCEEDED: {
+                            target: "idle"
+                        },
+                        CREATE_CARD_FAILED: {
+                            target: "idle"
+                        },
+                        CREATE_CARD_CANCELLED: {
+                            target: "idle"
+                        }
+                    }
                 }
             }
         }
@@ -79,10 +83,17 @@ export const workspaceDailyboardMachine = setup({
 
 export const workspaceDailyboardService = createActor(workspaceDailyboardMachine);
 
-export const isWaiting = (state: WorkspaceDailyboardMachineState): boolean => state.matches("waiting");
+export const isWaiting = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches("waiting");
 
-export const isFetchingSources = (state: WorkspaceDailyboardMachineState): boolean => state.matches("fetching sources");
+export const isFetchingSources = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches("fetching sources");
 
-export const isReady = (state: WorkspaceDailyboardMachineState): boolean => state.matches("ready");
+export const isReady = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches("ready");
 
-export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => state.matches("creating card");
+export const isReadyIdle = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ ready: "idle" });
+
+export const isReadyCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ ready: "creating card" });
