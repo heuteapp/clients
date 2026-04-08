@@ -1,25 +1,35 @@
-import { Dailyboard, DailyboardCardData, DailyboardData } from "@/src/modules/dailyboard/types/dailyboard.types";
+import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
-export interface DailyboardState extends UserBasedStoreState<StoredDailyboard> {
-    cardById: Record<string, StoredDailyboardCard>;
+export interface DailyboardBaseState<
+    TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
+    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardCardItem extends StoredDailyboardCardItem,
+    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+> extends UserBasedStoreState<TDailyboardItemContent> {
+    cardById: Record<string, TDailyboardCardItemContent>;
 
-    loadMeDailyboard: (categoryPath: string, dailyboard: Dailyboard) => void;
-    loadUserDailyboard: (user: string, categoryPath: string, dailyboard: Dailyboard) => void;
+    loadMeDailyboard: (dailyboard: TDailyboardSource) => void;
+    loadUserDailyboard: (user: string, dailyboard: TDailyboardSource) => void;
 
-    getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => StoredDailyboardRoot | null;
-    getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => StoredDailyboardRoot | null;
+    getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => TDailyboardItem | null;
+    getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => TDailyboardItem | null;
 }
 
-export interface StoredDailyboard extends StoredItem, DailyboardData {
-    categoryId: () => string;
+export type DailyboardBaseSource = DailyboardBase;
+
+export type DailyboardCardBaseSource = DailyboardCardBase;
+
+export interface StoredDailyboardItem<TDailyboardCard extends StoredDailyboardCardItem> extends StoredItem, DailyboardBase {
+    cards: TDailyboardCard[];
 }
 
-export interface StoredDailyboardRoot extends StoredDailyboard {
-    cards: StoredDailyboardCard[];
+export interface StoredDailyboardCardItem extends StoredItem, DailyboardCardBase {
+    layoutId: () => string;
 }
 
-export interface StoredDailyboardCard extends StoredItem, DailyboardCardData {
-    dailyboardId: () => string;
-}
+export type StoredDailyboardItemContent = Omit<StoredDailyboardItem<StoredDailyboardCardItem>, "cards">;
+
+export type StoredDailyboardCardItemContent = StoredDailyboardCardItem;
