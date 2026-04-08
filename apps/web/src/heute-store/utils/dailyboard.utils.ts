@@ -39,7 +39,7 @@ export const saveDailyboardToState = <
     owner: string, 
     dailyboard: TDailyboardSource
 ) => {
-    const dailyboardId = `${owner}@${dailyboard.categoryPath}@${dailyboard.date}`;
+    const dailyboardId = `${owner}@${dailyboard.categoryPath}@${dailyboard.date.raw}`;
 
     state.byId[dailyboardId] = convertDailyboardSourceToItemContent(dailyboardId, dailyboard);
 
@@ -86,7 +86,7 @@ export const getDailyboardItemContentFromState = <
     categoryPath: string, 
     date: YYMMDDDate
 ) => {
-    const key = Object.keys(state.byId).find(id => id.startsWith(`${owner}@${categoryPath}@${date}`));
+    const key = Object.keys(state.byId).find(id => id.startsWith(`${owner}@${categoryPath}@${date.raw}`));
     return key ? state.byId[key] as TDailyboardItemContent : null;
 };
 
