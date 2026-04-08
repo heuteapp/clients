@@ -2,10 +2,9 @@
 
 import "@/src/modules/ui-dailyboard/styles/dailyboard.css";
 import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.css"
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect } from "react";
 
 import DailyboardCardContainer from "./DailyboardCardContainer";
-import DailyboardGhostCard from "./DailyboardGhostCard";
 
 import { useDailyboardContext } from "../hooks/useDailyboardContext";
 import { DailyboardRootProps } from "../types/dailyboard.props";
@@ -45,7 +44,6 @@ export function DailyboardRoot(props: DailyboardRootProps) {
     >
       <LayoutRoot data={layoutData} />
       <DailyboardCardContainer cards={dailyboardCards} />
-      <DailyboardGhostCard />
     </div>
   )
 }
