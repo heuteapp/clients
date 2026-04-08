@@ -42,8 +42,8 @@ export const getSectionData = (sectionEl: HTMLDivElement) => {
         position: {
             colIndex: parseInt(sectionEl.dataset.layoutSectionColIndex || "0", 10),
             rowIndex: parseInt(sectionEl.dataset.layoutSectionRowIndex || "0", 10),
-            colSpan: parseInt(sectionEl.dataset.layoutSectionColspan || "0", 10),
-            rowSpan: parseInt(sectionEl.dataset.layoutSectionRowspan || "0", 10)
+            colSpan: parseInt(sectionEl.dataset.layoutSectionColSpan || "0", 10),
+            rowSpan: parseInt(sectionEl.dataset.layoutSectionRowSpan || "0", 10)
         }
     };
 }
@@ -63,16 +63,4 @@ export const getCellAtCursor = (client: Pointer, gridRect: DOMRect, cellSize: nu
     const col = Math.floor((client.x - gridRect.left) / cellSize);
     const row = Math.floor((client.y - gridRect.top) / cellSize);
     return { col, row };
-}
-
-//
-
-export const getDailyboardParent = (el: HTMLDivElement): HTMLDivElement | null => {
-    const parent = el.closest<HTMLDivElement>("[data-dailyboard-id]");
-
-    if(!parent) {
-        return null;
-    }
-
-    return parent as HTMLDivElement;
 }

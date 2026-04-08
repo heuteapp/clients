@@ -59,3 +59,17 @@ export const getDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, secti
     const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card-section-name="${sectionName}"]`);
     return Array.from(cardElements) as HTMLDivElement[];
 }
+
+
+
+//
+
+export const getDailyboardParent = (el: HTMLDivElement): HTMLDivElement | null => {
+    const parent = el.closest<HTMLDivElement>("[data-dailyboard-id]");
+
+    if(!parent) {
+        return null;
+    }
+
+    return parent as HTMLDivElement;
+}
