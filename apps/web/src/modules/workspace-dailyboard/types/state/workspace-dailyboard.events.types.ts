@@ -11,12 +11,10 @@ export type DONE_FETCH_SOURCES_EVENT = DoneActorEvent<DailyboardResponse, "fetch
 
 export type ERROR_FETCH_SOURCES_EVENT = ErrorActorEvent<"fetch-sources">;
 
-export type CreateCardEvents = CREATE_CARD_EVENT | CREATE_CARD_SUCCEEDED_EVENT | CREATE_CARD_FAILED_EVENT | CREATE_CARD_CANCELLED_EVENT;
+export type CreateCardEvents = CREATE_CARD_EVENT | CREATE_CARD_SUCCEEDED_EVENT | CREATE_CARD_CANCELLED_EVENT;
 
 export type CREATE_CARD_EVENT = { type: "CREATE_CARD" };
 
 export type CREATE_CARD_SUCCEEDED_EVENT = { type: "CREATE_CARD_SUCCEEDED", categoryPath: string, date: YYMMDDDate, placement: DailyboardCardPlacement };
-
-export type CREATE_CARD_FAILED_EVENT = { type: "CREATE_CARD_FAILED" };
 
 export type CREATE_CARD_CANCELLED_EVENT = { type: "CREATE_CARD_CANCELLED" };

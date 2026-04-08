@@ -16,7 +16,7 @@ export const workspaceDailyboardMachine = setup({
         createCard: createCardAction
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxADEAogBUAwgAkA+gGUA8gFUASlLEKA2gAYAuolA5Uscp1RcjIAB6IAjLoAsAdmYBmJ+5eeXT+wBM9vYANCDUiACs9gAczLouAGzRiZ4xAU4ZAL5ZYWhYuIQkZFR0DEysHNy8AGZg7AQAFtUABLCoAK7oRLBCEJZgfFwAbqiYg3UNjcTtXT16hkggJmYWVkt2CJEBYREIMfbMkbon9i4AnO7Rkck5eRjY+ESkFDT0jCxs5tXMk02ts26cCEYHQ6AwzBwlDw7BqGAAtr96k0Zp0gbAFtYVt9LNZNo5XB4vD5XP4gqFwohXLojklIk5EjFkuldJFIncQPlHkUXqV3hV0GA8BBqHwBMIpGoxABBCRiORSaVqAAimKW2LWeMQ7kSNMi7kCvjJjnOTl2iAC50O5zpyTOqUSficHK5hWeJTe5RYguFov4glEklkilUGi0auMphx61Am0S5ziugNASNgRN5oQnnOzHSyUSQQyuvOiRdDzdxVeZQ+zB9IuYBB9nB4LQIHyEkplcoVSuVihUUk0YmVQ4jyyjmo2FsS1pixMiGc8AWYrjz0SSOqdpYKTwrfK9NaFdYbQqbUBbbY7svlipVchE0oAkgAZEcGLHj8i4ycIALT5gJucF3OJcbWSTxmRcGJLi3bl3UrflvUPUVjxhVpWyYdspSvbtb0VAA5TQnxfVU33VD8v1jKcZ0AykECcLxlzpcDIhiSDoI5LhUAgOBrFdHdeU9D531WT8Y1sRBiHODNiBLXJOTLfiPSrCovlPYToy1fYXCXTxvFTIJdCk2irjiSIkmnM53ELexUhg8sBOUz4qh4MVBHUidKIQYCaV0kk-DTQyM1cSJmHsSIE0SJxTSTSKmTsxT4P3VSfj+Zpm0BHp3NEzTAn8I4wqLfzySChl4jpBkmRYgJWXZOS+J5JSEIPX0soo8TMyMvZqqcRjV3tDd6PihrEurWs-XFVqxM2elDiTQ1SQCzrtWODxfxuAsGUM2T7m3Ya91GpD60bNChLIkS2s2ViF10Jdtj69dHQZHIciAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxADEAogBUAwgAkA+gGUA8gFUASlLEKA2gAYAuolA5Uscp1RcjIAB6IAjLoBMAdmYBmACzuAHADZPAFZAzwBOe1DAgBoQakRA+3dmJyc-Px8nXRdEl117AF98mLQsXEISMio6BiZWDm5eADMwdgIACwaAAlhUAFd0IlghCEswPi4AN1RMMebWtuIe-sG9QyQQEzMLK3W7BECnGLiEH3tmQN1L+0z-F09dTwKikBLsfCJSChp6RhY2cwazDm7S6SwGcCEYHQ6AwzBwlDw7EaGAAtkCWu1Fn1wbBVtZNgDLNY9o5XB5vP4giFwpEjohPH5AswXKk-HkXD53M4En5CsUMG9yp8qj9augwHgINQ+AJhFI1GIAIISMRyKSKtQAETx6wJ22JiHcF3O7muKQuTk8nN00ViiCc4WYoRcjP87hSugyTj5LwFZQ+lW+NRY4sl0v4glEklkilUGi0OuMpkJO1Aez8HOYulNlvsp0STnc7jpCC8nidLr8jndvnsdc8Pte-oqX2qv2YoalzAIoc4PE6BF+QnlSpVao1msUKikmjEmrniY2yf1u3tCSdPgpl0yoU8LncfhL7lCTgraS87uC9ye-NK7xbIuDHYlXZ7Er7UAHQ5HytV6q144AHKaAAMiBC4GPiy7kESq4IE466hJuvjbrou77oedqlp4p57oyfgnvcCTOO4hTPFwqAQHA1hNvewpBr8UFbDBqa2IgxChCWxB+Fmlx8fxfHeI2fp0YGba1P8H5MSmBonAc5IoX4XL2I8LhHoESQshmhaFi4LihKawl3kKYmin89Q8DKgjSSuaaIKElwKT4uhKXkqklnuugeGhSFoSEvgZEZgoBq2Zl1AClnAh0-ZgoMNksbJZpnAkgQEWEflcphxyeI8ySshhoSRF6gRBc29HiSGL7HEmzGwXZpacVhmTlnhwQHgZBGJKRzy0SZoVPp24ayvFdVsfsThnNm1yMiyOUpFlhpBMweFVtmhb5ippWif17aDd2vZdIOTAjaxew+GpWFcl5PgpdkHKegEZH5EAA */
     context: {
         dailyboardData: null,
         layoutData: null,
@@ -74,9 +74,6 @@ export const workspaceDailyboardMachine = setup({
                         CREATE_CARD_SUCCEEDED: {
                             target: "idle",
                             actions: ["createCard"]
-                        },
-                        CREATE_CARD_FAILED: {
-                            target: "idle"
                         },
                         CREATE_CARD_CANCELLED: {
                             target: "idle"
