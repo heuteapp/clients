@@ -4,8 +4,9 @@ import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext"
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
 import { findGridAtPoint, calcGridPointerAtCursor, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
-import { calcDailyboardCardGridIndexes, calcDailyboardCardFixedRect, getDailyboardCardData, findDailyboardCardsForSection, findDailyboardClosest, isDailyboardCardOverlappingForCards } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { calcDailyboardCardGridIndexes, calcDailyboardCardFixedRect, getDailyboardCardData, findDailyboardCardsForSection, findDailyboardClosest } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { isGridRectOverlappingSome } from "@/src/modules/shared/utils/common";
 
 export const useCreateCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();
@@ -61,7 +62,7 @@ export const useCreateCardState = () => {
 
                 const cards = findDailyboardCardsForSection(dailyboardEl, sectionName);
 
-                isOverlapping = isDailyboardCardOverlappingForCards(ghostCardGridPos, cards.map(getDailyboardCardData));
+                isOverlapping = isGridRectOverlappingSome(ghostCardGridPos, cards.map(getDailyboardCardData));
 
                 if(isOverlapping) {
                     ghostCard.classList.add("overlapping");

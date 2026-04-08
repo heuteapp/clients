@@ -6,3 +6,7 @@ export const isGridRectOverlapping = (a: GridRect, b: GridRect) => {
              a.rowIndex + a.rowSpan <= b.rowIndex ||
              a.rowIndex >= b.rowIndex + b.rowSpan);
 }
+
+export const isGridRectOverlappingSome = (rect: GridRect, others: GridRect[]) => {
+    return others.some(other => isGridRectOverlapping(rect, other));
+}
