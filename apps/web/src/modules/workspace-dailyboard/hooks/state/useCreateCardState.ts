@@ -6,7 +6,7 @@ import { GridRect, Rect } from "@/src/modules/shared/types/common";
 import { findGridAtPoint, calcGridPointerAtCursor, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
 import { calcDailyboardCardGridIndexes, calcDailyboardCardFixedRect, getDailyboardCardData, findDailyboardCardsForSection, findDailyboardClosest } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
-import { isGridRectOverlappingSome } from "@/src/modules/shared/utils/common";
+import { findBestGridRectPosition, isGridRectOverlappingSome } from "@/src/modules/shared/utils/common";
 
 export const useCreateCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();
@@ -57,19 +57,25 @@ export const useCreateCardState = () => {
 
                 ghostCardGridPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
-                const gap = gridRect.width * 0.005;
-                ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos);
-
                 const cards = findDailyboardCardsForSection(dailyboardEl, sectionName);
 
-                isOverlapping = isGridRectOverlappingSome(ghostCardGridPos, cards.map(getDailyboardCardData));
+                const cardRects = cards.map(getDailyboardCardData);
+                isOverlapping = isGridRectOverlappingSome(ghostCardGridPos, cardRects);
 
                 if(isOverlapping) {
-                    ghostCard.classList.add("overlapping");
+                    const bestPos = findBestGridRectPosition(ghostCardGridPos, cardRects, gridSize);
+                    
+                    if (bestPos) {
+
+                        ghostCardGridPos = bestPos;
+                    }
                 }
                 else {
                     ghostCard.classList.remove("overlapping");
                 }
+
+                const gap = 8;
+                ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos);
             }
             else {
                 sectionEl = null;
