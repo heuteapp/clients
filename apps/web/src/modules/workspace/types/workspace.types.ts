@@ -1,6 +1,4 @@
-import React from "react";
 import { PathSegmentsResult } from "@/src/modules/ui-shared/types/path-segments.types";
-import { BreadcrumbsItem } from "@/src/modules/ui-base/types/breadcrumbs.types";
 import { YYMMDDDate } from "../../shared/types/date.types";
 
 export type WorkspaceMetadata = {
