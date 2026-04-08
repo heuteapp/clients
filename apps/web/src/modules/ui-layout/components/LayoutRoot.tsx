@@ -43,6 +43,7 @@ export function LayoutRoot(props: LayoutRootProps) {
 
   return (
     <div 
+      data-layout
       ref={layoutRef} 
       className={style.layout}
       style={{

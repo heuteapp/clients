@@ -25,8 +25,12 @@ export function LayoutSection(props : LayoutSectionProps) {
 
     return (
         <div
-            data-section
-            data-section-name={data.name}
+            data-layout-section
+            data-layout-section-name={data.name}
+            data-layout-section-col-index={props.data.position.colIndex}
+            data-layout-section-row-index={props.data.position.rowIndex}
+            data-layout-section-col-span={props.data.position.colSpan}
+            data-layout-section-row-span={props.data.position.rowSpan}
             ref={ref}
             className={style.section}
             style={{

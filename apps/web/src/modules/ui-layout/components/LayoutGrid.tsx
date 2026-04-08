@@ -21,10 +21,7 @@ function LayoutGrid(props : LayoutGridProps) {
 
     return (
         <div 
-            data-layout-section-grid
-            data-layout-grid-section-id={props.sectionId}
-            data-layout-grid-colspan={props.colSpan}
-            data-layout-grid-rowspan={props.rowSpan}
+            data-layout-grid
             ref={ref} className={style.grid} style={{
                 gridTemplateColumns: `repeat(${props.colSpan}, var(--grid-cell-size))`,
                 gridTemplateRows: `repeat(${props.rowSpan}, var(--grid-cell-size))`,

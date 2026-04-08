@@ -3,7 +3,7 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
-import { findGridAtPoint, getCellAtCursor, getDailyboardParent, getGridData, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
+import { findGridAtPoint, getCellAtCursor, getDailyboardParent, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
 import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
@@ -40,17 +40,16 @@ export const useCreateCardState = () => {
             }
 
             gridEl = findGridAtPoint(clientX, clientY);
-            sectionEl = gridEl ? getSectionParent(gridEl) : null;
+            sectionEl = gridEl ? findSectionClosest(gridEl) : null;
             dailyboardEl = sectionEl ? getDailyboardParent(sectionEl) : null;
 
             if(gridEl && sectionEl && dailyboardEl) {
-                const { name: sectionName } = getSectionMeta(sectionEl);
+                const { name: sectionName, position: gridPos } = getSectionDataForGrid(gridEl)!;
 
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
 
-                const gridData = getGridData(gridEl);
-                const gridSize = { colSpan: gridData.colSpan, rowSpan: gridData.rowSpan };
+                const gridSize = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
                 const { col: mouseCol, row: mouseRow } = getCellAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
                 let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, gridSize, cardUnit);
 
@@ -116,7 +115,7 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchend", onTouchEnd);
 
             if(gridEl && ghostCardGridPos && ghostCardPos && sectionEl) {
-                const { name: sectionName } = getSectionMeta(sectionEl);
+                const { name: sectionName } = getSectionData(sectionEl)!;
 
                 const placement : DailyboardCardPlacement = {
                     sectionName: sectionName || "",
