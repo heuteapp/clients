@@ -9,6 +9,7 @@ import { WorkspaceBreadcrumbs } from "@/src/modules/workspace/components/Workspa
 import { Button, Stack } from "@mui/material";
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
 import { useState, useEffect } from "react";
+import { GridSize } from "@/src/modules/shared/types/common";
 
 export default function WorkspaceLayout({
   children,
@@ -102,34 +103,43 @@ const LayoutNavbar = () => {
 const LayoutSidebar = () => {
   const { send } = useWorkspaceDailyboardContext();
 
-    return (
-        <Box
-            component="aside"
-            sx={{
-                width: "240px",
-                height: "100%",
-                borderRight: 1,
-                borderColor: "divider",
-                display: "flex",
-                flexDirection: "column",
-                bgcolor: "background.paper"
-            }}
-        >
-          <Button 
-            variant="contained" 
-            color="primary" 
-            sx={{ m: 1 }} 
-            onTouchStart={(e) => {
-              send({ type: "CREATE_CARD" });
-            }}
-            onMouseDown={() => {
-              send({ type: "CREATE_CARD" });
-            }}
-          >
-            Create
-          </Button>
-        </Box>
-    );
+  const createButton = (cardSize: GridSize) => (
+    <Button 
+      variant="contained" 
+      color="primary" 
+      sx={{ m: 1 }} 
+      onTouchStart={(e) => {
+        send({ type: "CREATE_CARD", cardSize });
+      }}
+      onMouseDown={() => {
+        send({ type: "CREATE_CARD", cardSize });
+      }}
+    >
+      Create {cardSize.colSpan}x{cardSize.rowSpan} Card
+    </Button>
+  );
+
+  return (
+      <Box
+          component="aside"
+          sx={{
+              width: "240px",
+              height: "100%",
+              borderRight: 1,
+              borderColor: "divider",
+              display: "flex",
+              flexDirection: "column",
+              bgcolor: "background.paper"
+          }}
+      >
+        {createButton({ colSpan: 3, rowSpan: 4 })}
+        {createButton({ colSpan: 6, rowSpan: 4 })}
+        {createButton({ colSpan: 9, rowSpan: 4 })}
+        {createButton({ colSpan: 3, rowSpan: 2 })}
+        {createButton({ colSpan: 6, rowSpan: 2 })}
+        {createButton({ colSpan: 9, rowSpan: 2 })}
+      </Box>
+  );
 }
 
 const LayoutMonitor = ({ children }: { children: React.ReactNode }) => {
