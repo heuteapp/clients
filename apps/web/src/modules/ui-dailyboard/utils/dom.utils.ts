@@ -43,8 +43,8 @@ export const calcDailyboardCardGridIndexes = (mouseCol: number, mouseRow: number
     let col = mouseCol - Math.floor(cardSize.colSpan / 2);
     let row = mouseRow - Math.floor(cardSize.rowSpan / 2);
 
-    col = Math.max(0, Math.min(col, sectionSize.colSpan - cardSize.colSpan));
-    row = Math.max(0, Math.min(row, sectionSize.rowSpan - cardSize.rowSpan));
+    col = Math.max(1, Math.min(col, sectionSize.colSpan - cardSize.colSpan + 1));
+    row = Math.max(1, Math.min(row, sectionSize.rowSpan - cardSize.rowSpan + 1));
 
     return { col, row };
 }
@@ -64,8 +64,8 @@ export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, sect
     }
 
     const rawPosition = {
-        left: localGridRect.left + (cardPos.colIndex) * stepSize.width,
-        top: localGridRect.top + (cardPos.rowIndex) * stepSize.height,
+        left: localGridRect.left + (cardPos.colIndex - 1) * stepSize.width,
+        top: localGridRect.top + (cardPos.rowIndex - 1) * stepSize.height,
         width: cardPos.colSpan * stepSize.width,
         height: cardPos.rowSpan * stepSize.height,
     }

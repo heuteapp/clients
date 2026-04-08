@@ -60,7 +60,7 @@ export const getSectionDataForGrid = (gridEl: HTMLDivElement) => {
 //
 
 export const calcGridPointerAtCursor = (client: Pointer, gridRect: DOMRect, cellSize: number) => {
-    const col = Math.floor((client.x - gridRect.left) / cellSize);
-    const row = Math.floor((client.y - gridRect.top) / cellSize);
+    const col = Math.floor((client.x - gridRect.left) / cellSize) + 1;
+    const row = Math.floor((client.y - gridRect.top) / cellSize) + 1;
     return { col, row };
 }
