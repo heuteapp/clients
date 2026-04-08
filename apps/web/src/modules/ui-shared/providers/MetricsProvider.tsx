@@ -12,6 +12,12 @@ export function MetricsProvider({ children, targets }: MetricsProviderProps) {
         return true;
     }, []);
 
+    const unsubscribe = useCallback((targetName: string) => {
+        functionsRef.current.delete(targetName);
+        forceUpdate();
+        return true;
+    }, []);
+
     useEffect(() => {
         if(functionsRef.current.size === 0) return;
 
@@ -27,7 +33,7 @@ export function MetricsProvider({ children, targets }: MetricsProviderProps) {
     }, [targets]);
 
     return (
-        <MetricsContext.Provider value={{ targets, subscribe }}>
+        <MetricsContext.Provider value={{ targets, subscribe, unsubscribe }}>
             {children}
         </MetricsContext.Provider>
     );
