@@ -1,4 +1,4 @@
 export interface MetricsContextValue {
-    target: string;
+    targets: string[];
     subscribe: (target: string, fn: () => void) => boolean;
 }

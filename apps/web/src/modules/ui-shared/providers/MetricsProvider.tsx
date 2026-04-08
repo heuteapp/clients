@@ -2,30 +2,32 @@ import { useCallback, useEffect } from "react";
 import { MetricsContext } from "../contexts/ui.context";
 import React from "react";
 
-export function MetricsProvider({ children, target }: MetricsProviderProps) {
-    const [func, setFunc] = React.useState<(() => void) | null>(null);
+export function MetricsProvider({ children, targets }: MetricsProviderProps) {
+    const functionsRef = React.useRef<Map<string, () => void>>(new Map());
+    const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
-    const subscribe = useCallback((t: string, fn: () => void) => {
-        if(t === target) {
-            setFunc(fn);
-            return true;
-        }
-        return false;
-    }, [target]);
+    const subscribe = useCallback((targetName: string, fn: () => void) => {
+        functionsRef.current.set(targetName, fn);
+        forceUpdate();
+        return true;
+    }, []);
 
     useEffect(() => {
-        if(!func) return;
+        if(functionsRef.current.size === 0) return;
 
-        const observer = new ResizeObserver(func);
+        const observer = new ResizeObserver(() => {
+            for (const targetName of targets) {
+                const fn = functionsRef.current.get(targetName);
+                if(fn) fn();
+            }
+        });
+        
         observer.observe(document.body);
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [func]);
+        return () => observer.disconnect();
+    }, [targets]);
 
     return (
-        <MetricsContext.Provider value={{ target, subscribe }}>
+        <MetricsContext.Provider value={{ targets, subscribe }}>
             {children}
         </MetricsContext.Provider>
     );
@@ -33,5 +35,5 @@ export function MetricsProvider({ children, target }: MetricsProviderProps) {
 
 export type MetricsProviderProps = {
     children: React.ReactNode;
-    target: string;
+    targets: string[];
 }
