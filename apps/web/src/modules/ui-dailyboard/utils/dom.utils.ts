@@ -77,3 +77,16 @@ export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, sect
         height: rawPosition.height - gap * 2
     }
 }
+
+//
+
+export const isDailyboardCardOverlapping = (a: GridRect, b: GridRect) => {
+    return !(a.colIndex + a.colSpan <= b.colIndex ||
+             a.colIndex >= b.colIndex + b.colSpan ||
+             a.rowIndex + a.rowSpan <= b.rowIndex ||
+             a.rowIndex >= b.rowIndex + b.rowSpan);
+}
+
+export const isDailyboardCardOverlappingForCards = (cardPos: GridRect, cards: GridRect[]) => {
+    return cards.some(card => isDailyboardCardOverlapping(cardPos, card));
+}
