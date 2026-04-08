@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { createCardAction, resolveSourcesAction } from "./workspace-dailyboard.actions";
+import { createCardAction, resolveSourcesAction, setGhostCardAction, unsetGhostCardAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -13,6 +13,8 @@ export const workspaceDailyboardMachine = setup({
     }, 
     actions: {
         resolveSources: resolveSourcesAction,
+        setGhostCard: setGhostCardAction,
+        unsetGhostCard: unsetGhostCardAction,
         createCard: createCardAction
     }
 }).createMachine({
@@ -20,7 +22,8 @@ export const workspaceDailyboardMachine = setup({
     context: {
         dailyboardData: null,
         layoutData: null,
-        layoutStyle: null
+        layoutStyle: null,
+        ghostCard: null
     },
     id: "workspace-dailyboard",
     initial: "waiting",
@@ -62,7 +65,8 @@ export const workspaceDailyboardMachine = setup({
                 "idle": {
                     on: {
                         CREATE_CARD: {
-                            target: "creating card"
+                            target: "creating card",
+                            actions: ["setGhostCard"]
                         },
                         FETCH_SOURCES: {
                             target: "#workspace-dailyboard.waiting.fetching sources"
@@ -78,7 +82,8 @@ export const workspaceDailyboardMachine = setup({
                         CREATE_CARD_CANCELLED: {
                             target: "idle"
                         }
-                    }
+                    },
+                    exit: ["unsetGhostCard"]
                 }
             }
         }
