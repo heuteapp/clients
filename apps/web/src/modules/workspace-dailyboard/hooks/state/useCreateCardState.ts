@@ -84,8 +84,9 @@ export const useCreateCardState = () => {
             }
             else {
                 send({ type: "CREATE_CARD_CANCELLED" });
-                document.body.removeChild(ghostCard);
             }
+
+            document.body.removeChild(ghostCard);
         };
 
         const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
