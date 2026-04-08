@@ -18,7 +18,7 @@ export const useLayoutMetrics = (registry: LayoutRegistry, dataSource: StoredLay
         return () => {
             unsubscribe("layout");
         }
-    }, [dataSource, styleSource]);
+    }, [registry, dataSource, styleSource]);
 
     return metrics.current!;
 }
