@@ -1,5 +1,6 @@
 import { DailyboardResponse } from "@/src/api/models/responses/dailyboard.response";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
 export type FetchSourcesEvents = FETCH_SOURCES_EVENT | DONE_FETCH_SOURCES_EVENT | ERROR_FETCH_SOURCES_EVENT;
@@ -14,7 +15,7 @@ export type CreateCardEvents = CREATE_CARD_EVENT | CREATE_CARD_SUCCEEDED_EVENT |
 
 export type CREATE_CARD_EVENT = { type: "CREATE_CARD" };
 
-export type CREATE_CARD_SUCCEEDED_EVENT = { type: "CREATE_CARD_SUCCEEDED", placement: DailyboardCardPlacement };
+export type CREATE_CARD_SUCCEEDED_EVENT = { type: "CREATE_CARD_SUCCEEDED", categoryPath: string, date: YYMMDDDate, placement: DailyboardCardPlacement };
 
 export type CREATE_CARD_FAILED_EVENT = { type: "CREATE_CARD_FAILED" };
 

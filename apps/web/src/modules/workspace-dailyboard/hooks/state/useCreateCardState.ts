@@ -8,6 +8,9 @@ import { getCardAnchorCell, getCardPixelRect } from "@/src/modules/ui-dailyboard
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export const useCreateCardState = () => {
+    const { metadata } = useWorkspaceDailyboardContext();
+    const { categoryPath, date } = metadata;
+
     const { send, state } = useWorkspaceDailyboardContext();
     const { metrics } = useLayoutContext();
     
@@ -96,7 +99,7 @@ export const useCreateCardState = () => {
                     position: ghostCardGridPos
                 }
 
-                send({ type: "CREATE_CARD_SUCCEEDED", placement });
+                send({ type: "CREATE_CARD_SUCCEEDED", categoryPath, date: date!, placement });
             }
             else {
                 send({ type: "CREATE_CARD_CANCELLED" });

@@ -5,6 +5,7 @@ import { responseToLayout } from "@/src/api/responses/layout.response";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
 import { isoToYYMMDD } from "../../shared/utils/date.utils";
+import { DailyboardCardData } from "../../dailyboard/types/dailyboard.data.types";
 
 export const resolveSourcesAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
@@ -44,3 +45,19 @@ export const resolveSourcesAction = createAssign<
         return {};
     }
 );
+
+export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachineEvent } ) => {
+    if(event.type !== "CREATE_CARD_SUCCEEDED") return;
+
+    const { addCard } = useDailyboardDataStore.getState();
+
+    const dailyboardCard : DailyboardCardData = {
+        name: crypto.randomUUID(),
+        material: {
+            title: null
+        },
+        placement: event.placement
+    }
+
+    addCard(event.categoryPath, event.date, dailyboardCard);
+}
