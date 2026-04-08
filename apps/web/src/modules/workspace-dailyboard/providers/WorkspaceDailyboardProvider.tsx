@@ -9,6 +9,7 @@ import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboa
 import { useLayoutStyleStore } from "@/src/heute-store/stores/layout.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 import { WorkspaceDailyboardStateSideEffects } from "./WorkspaceDailyboardStateSideEffects";
+import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -66,16 +67,18 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     const layoutStyle = getGlobalLayout("default", 1);
 
     return (
-        <LayoutProvider dataSource={layoutData} styleSource={layoutStyle}>
-            <DailyboardProvider dataSource={dailyboardData}>
-                <WorkspaceDailyboardContext.Provider value={contextValue}>
-                    <WorkspaceDailyboardStateSideEffects />
-                    <ProviderContent>
-                        {children}
-                    </ProviderContent>
-                </WorkspaceDailyboardContext.Provider>
-            </DailyboardProvider>
-        </LayoutProvider>
+        <MetricsProvider target="dailyboard">
+            <LayoutProvider dataSource={layoutData} styleSource={layoutStyle}>
+                <DailyboardProvider dataSource={dailyboardData}>
+                    <WorkspaceDailyboardContext.Provider value={contextValue}>
+                        <WorkspaceDailyboardStateSideEffects />
+                        <ProviderContent>
+                            {children}
+                        </ProviderContent>
+                    </WorkspaceDailyboardContext.Provider>
+                </DailyboardProvider>
+            </LayoutProvider>
+        </MetricsProvider>
     )
 }
 
