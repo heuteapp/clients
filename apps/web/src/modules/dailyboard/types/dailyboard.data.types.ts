@@ -10,6 +10,11 @@ export interface DailyboardCardData extends DailyboardCardBase {
     placement: DailyboardCardPlacement | null;
 }
 
+export type DailyboardDataContent = Omit<DailyboardData, "cards">;
+
+export type DailyboardCardDataContent = DailyboardCardData;
+
+
 //
 
 export interface DailyboardCardMaterial {
