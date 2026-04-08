@@ -25,7 +25,9 @@ export type LayoutBaseSource = LayoutBase;
 
 export type LayoutSectionBaseSource = LayoutSectionBase;
 
-export interface StoredLayoutItem<TLayoutSection extends StoredLayoutSectionItem> extends StoredItem, LayoutBase {
+export interface StoredLayoutItem<
+    TLayoutSection extends StoredLayoutSectionItem = StoredLayoutSectionItem
+> extends StoredItem, LayoutBase {
     sections: TLayoutSection[];
 }
 
@@ -39,7 +41,7 @@ export type StoredLayoutSectionItemContent = StoredLayoutSectionItem;
 
 //
 
-import { LayoutData, LayoutDataContent, LayoutSectionDataContent } from "@/src/modules/layout/types/layout.data.types";
+import { LayoutData, LayoutSectionData } from "@/src/modules/layout/types/layout.data.types";
 
 export interface LayoutDataState extends LayoutBaseState<
     LayoutData, 
@@ -52,11 +54,13 @@ export interface LayoutDataState extends LayoutBaseState<
 
 //
 
-export interface StoredLayoutData extends StoredLayoutItem<StoredLayoutSectionData>, LayoutDataContent {
-
+export interface StoredLayoutData<
+    TLayoutSection extends StoredLayoutSectionData = StoredLayoutSectionData
+> extends StoredLayoutItem<TLayoutSection>, LayoutData {
+    sections: TLayoutSection[];
 }
 
-export interface StoredLayoutSectionData extends StoredLayoutSectionItem, LayoutSectionDataContent {
+export interface StoredLayoutSectionData extends StoredLayoutSectionItem, LayoutSectionData {
 
 }
 
@@ -66,7 +70,7 @@ export type StoredLayoutSectionDataContent = StoredLayoutSectionData;
 
 //
 
-import { LayoutSectionStyleContent, LayoutStyle, LayoutStyleContent } from "@/src/modules/layout/types/layout.style.types";
+import { LayoutStyle, LayoutSectionStyle } from "@/src/modules/layout/types/layout.style.types";
 
 export interface LayoutStyleState extends LayoutBaseState<
     LayoutStyle, 
@@ -79,11 +83,13 @@ export interface LayoutStyleState extends LayoutBaseState<
 
 //
 
-export interface StoredLayoutStyle extends StoredLayoutItem<StoredLayoutSectionStyle>, LayoutStyleContent {
-
+export interface StoredLayoutStyle<
+    TLayoutSection extends StoredLayoutSectionStyle = StoredLayoutSectionStyle
+> extends StoredLayoutItem<TLayoutSection>, LayoutStyle {
+    sections: TLayoutSection[];
 }
 
-export interface StoredLayoutSectionStyle extends StoredLayoutSectionItem, LayoutSectionStyleContent {
+export interface StoredLayoutSectionStyle extends StoredLayoutSectionItem, LayoutSectionStyle {
 
 }
 
