@@ -3,11 +3,15 @@ import { FetchSourcesEvents, CreateCardEvents } from "./workspace-dailyboard.eve
 import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.machine";
 import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
+import { GridSize } from "@/src/modules/shared/types/common";
 
 export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
+  ghostCard: {
+    size: GridSize;
+  } | null;
 }
 
 export type WorkspaceDailyboardMachineEvent = 
