@@ -71,10 +71,10 @@ export const useCreateCardState = () => {
                 });
 
                 if(overlappingCard) {
-                    ghostCard.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+                    ghostCard.classList.add("overlapping");
                 }
                 else {
-                    ghostCard.style.backgroundColor = "transparent";
+                    ghostCard.classList.remove("overlapping");
                 }
             }
             else {

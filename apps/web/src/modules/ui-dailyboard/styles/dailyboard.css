@@ -7,3 +7,7 @@
     box-sizing: border-box;
     pointer-events: none;
 }
+
+#dailyboard-ghost-card.overlapping {
+    border-color: rgb(255, 90, 90);
+}
