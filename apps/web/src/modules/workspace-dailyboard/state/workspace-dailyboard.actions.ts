@@ -46,6 +46,36 @@ export const resolveSourcesAction = createAssign<
     }
 );
 
+export const setGhostCardAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ event }) => {
+        if(event.type === "CREATE_CARD") {
+            return {
+                ghostCard: {
+                    size: event.cardSize
+                }
+            }
+        }
+
+        return {};
+    }
+);
+
+export const unsetGhostCardAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ event }) => {
+        if(event.type === "CREATE_CARD_SUCCEEDED" || event.type === "CREATE_CARD_CANCELLED") {
+            return {
+                ghostCard: null
+            }
+        }
+
+        return {};
+    }
+);
+
 export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachineEvent } ) => {
     if(event.type !== "CREATE_CARD_SUCCEEDED") return;
 
