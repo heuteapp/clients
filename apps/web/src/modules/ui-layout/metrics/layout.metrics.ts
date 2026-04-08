@@ -1,9 +1,7 @@
-import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
-import { LayoutMetrics } from "../types/layout.metrics";
-import { LayoutRegistry } from "../types/layout.registry";
+import { LayoutMetrics, CalculateLayoutMetricsProps, ApplyLayoutMetricsProps } from "../types/layout.metrics";
 import { spacingResult } from "../../shared/utils/style";
 
-export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: StoredLayoutData | null, styleSource: StoredLayoutStyle | null) : LayoutMetrics | null {
+export function calculateLayoutMetrics({ registry, dataSource, styleSource }: CalculateLayoutMetricsProps) : LayoutMetrics | null {
     const layoutRef = registry.layout.ref;
     const layoutEl = layoutRef.current;
 
@@ -72,7 +70,7 @@ export function calculateLayoutMetrics(registry: LayoutRegistry, dataSource: Sto
     }
 }
 
-export function applyLayoutMetrics(registry: LayoutRegistry, metrics: LayoutMetrics, styleSource: StoredLayoutStyle | null) {
+export function applyLayoutMetrics({ registry, metrics, styleSource }: ApplyLayoutMetricsProps) {
     const layoutRef = registry.layout.ref;
     const layoutEl = layoutRef.current;
 
