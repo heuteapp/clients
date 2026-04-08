@@ -3,8 +3,8 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
-import { findGridElement, getCellAtCursor, getGridMeta, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
-import { getCardAnchorCell, getCardPixelRect } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { findGridElement, getCellAtCursor, getDailyboardParent, getGridMeta, getSectionMeta, getSectionParent } from "@/src/modules/ui-layout/utils/dom.utils";
+import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export const useCreateCardState = () => {
@@ -28,6 +28,7 @@ export const useCreateCardState = () => {
         const cardUnit = state.context.ghostCard?.size || { colSpan: 1, rowSpan: 1 };
 
         let gridEl : HTMLDivElement | null = null;
+        let dailyboardEl : HTMLDivElement | null = null;
         let sectionEl: HTMLDivElement | null = null;        
         let ghostCardGridPos : GridRect | null = null;
         let ghostCardPos : Rect | null = null;
@@ -39,8 +40,11 @@ export const useCreateCardState = () => {
             }
 
             gridEl = findGridElement(clientX, clientY);
-            if(gridEl) {
-                sectionEl = getSectionParent(gridEl);
+            sectionEl = gridEl ? getSectionParent(gridEl) : null;
+            dailyboardEl = sectionEl ? getDailyboardParent(sectionEl) : null;
+
+            if(gridEl && sectionEl && dailyboardEl) {
+                const { name: sectionName } = getSectionMeta(sectionEl);
 
                 const gridRect = gridEl.getBoundingClientRect();
                 const cellSize = metrics.cellSize.grid || 0;
@@ -53,6 +57,25 @@ export const useCreateCardState = () => {
 
                 const gap = gridRect.width * 0.005;
                 ghostCardPos = getCardPixelRect(gridRect, gap, sectionSize, ghostCardGridPos);
+
+                const cards = getDailyboardCardsForSection(dailyboardEl, sectionName);
+
+                const overlappingCard = cards.find(card => {
+                    const cardRect = getDailyboardCardData(card);
+                    if(!ghostCardGridPos) return;
+
+                    return !(ghostCardGridPos.colIndex + ghostCardGridPos.colSpan <= cardRect.colIndex ||
+                             ghostCardGridPos.colIndex >= cardRect.colIndex + cardRect.colSpan ||
+                             ghostCardGridPos.rowIndex + ghostCardGridPos.rowSpan <= cardRect.rowIndex ||
+                             ghostCardGridPos.rowIndex >= cardRect.rowIndex + cardRect.rowSpan);
+                });
+
+                if(overlappingCard) {
+                    ghostCard.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+                }
+                else {
+                    ghostCard.style.backgroundColor = "transparent";
+                }
             }
             else {
                 sectionEl = null;

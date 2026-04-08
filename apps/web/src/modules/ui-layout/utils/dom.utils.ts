@@ -30,10 +30,20 @@ export const getCellAtCursor = (client: Pointer, gridRect: DOMRect, cellSize: nu
 
 //
 
-export const getSectionParent = (gridEl: HTMLDivElement): HTMLDivElement | null => {
-    const parent = gridEl.parentElement;
+export const getSectionParent = (el: HTMLDivElement): HTMLDivElement | null => {
+    const parent = el.parentElement;
 
     if(!parent?.dataset.section) {
+        return null;
+    }
+
+    return parent as HTMLDivElement;
+}
+
+export const getDailyboardParent = (el: HTMLDivElement): HTMLDivElement | null => {
+    const parent = el.closest<HTMLDivElement>("[data-dailyboard-id]");
+
+    if(!parent) {
         return null;
     }
 
