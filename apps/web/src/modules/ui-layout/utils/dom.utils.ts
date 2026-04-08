@@ -22,3 +22,15 @@ export const getCellAtCursor = (client: Pointer, gridRect: DOMRect, cellSize: nu
     const row = Math.floor((client.y - gridRect.top) / cellSize);
     return { col, row };
 }
+
+//
+
+export const getSectionParent = (gridEl: HTMLDivElement): HTMLDivElement | null => {
+    const parent = gridEl.parentElement;
+
+    if(!parent?.dataset.section) {
+        return null;
+    }
+
+    return parent as HTMLDivElement;
+}
