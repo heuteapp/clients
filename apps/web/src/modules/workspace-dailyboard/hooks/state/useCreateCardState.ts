@@ -74,7 +74,7 @@ export const useCreateCardState = () => {
 
                     if (bestPos) {
                         suggestedCardGridPos = bestPos;
-                        suggestedCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, suggestedCardGridPos);
+                        suggestedCardPos = calcDailyboardCardFixedRect(gridRect, gap * 1.5, gridSize, suggestedCardGridPos);
                     }
                     else {
                         suggestedCardGridPos = null;
@@ -98,6 +98,9 @@ export const useCreateCardState = () => {
                     width: size.width,
                     height: size.height
                 };
+
+                                    suggestedCardGridPos = null;
+                    suggestedCardPos = null;
             }
         };
 
