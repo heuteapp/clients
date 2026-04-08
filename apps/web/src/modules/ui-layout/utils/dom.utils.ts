@@ -34,3 +34,9 @@ export const getSectionParent = (gridEl: HTMLDivElement): HTMLDivElement | null 
 
     return parent as HTMLDivElement;
 }
+
+export const getSectionMeta = (sectionEl: HTMLDivElement) => {
+    const name = sectionEl.dataset.sectionName || "";
+
+    return { name };
+}
