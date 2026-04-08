@@ -4,7 +4,7 @@ import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext"
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
 import { findGridAtPoint, calcGridPointerAtCursor, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
-import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection, getDailyboardClosest } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { calcDailyboardCardGridIndexes, calcDailyboardCardFixedRect, getDailyboardCardData, findDailyboardCardsForSection, findDailyboardClosest } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export const useCreateCardState = () => {
@@ -41,7 +41,7 @@ export const useCreateCardState = () => {
 
             gridEl = findGridAtPoint(clientX, clientY);
             sectionEl = gridEl ? findSectionClosest(gridEl) : null;
-            dailyboardEl = sectionEl ? getDailyboardClosest(sectionEl) : null;
+            dailyboardEl = sectionEl ? findDailyboardClosest(sectionEl) : null;
 
             if(gridEl && sectionEl && dailyboardEl) {
                 const { name: sectionName, position: gridPos } = getSectionDataForGrid(gridEl)!;
@@ -51,14 +51,14 @@ export const useCreateCardState = () => {
 
                 const gridSize = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
                 const { col: mouseCol, row: mouseRow } = calcGridPointerAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
-                let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, gridSize, cardUnit);
+                let { col: cardCol, row: cardRow } = calcDailyboardCardGridIndexes(mouseCol, mouseRow, gridSize, cardUnit);
 
                 ghostCardGridPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
 
                 const gap = gridRect.width * 0.005;
-                ghostCardPos = getCardPixelRect(gridRect, gap, gridSize, ghostCardGridPos);
+                ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos);
 
-                const cards = getDailyboardCardsForSection(dailyboardEl, sectionName);
+                const cards = findDailyboardCardsForSection(dailyboardEl, sectionName);
 
                 const overlappingCard = cards.find(card => {
                     const cardRect = getDailyboardCardData(card);
