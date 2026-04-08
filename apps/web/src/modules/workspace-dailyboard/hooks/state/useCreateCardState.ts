@@ -3,7 +3,7 @@ import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
-import { findGridAtPoint, getCellAtCursor, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
+import { findGridAtPoint, calcGridPointerAtCursor, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
 import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection, getDailyboardParent } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
@@ -50,7 +50,7 @@ export const useCreateCardState = () => {
                 const cellSize = metrics.cellSize.grid || 0;
 
                 const gridSize = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
-                const { col: mouseCol, row: mouseRow } = getCellAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
+                const { col: mouseCol, row: mouseRow } = calcGridPointerAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
                 let { col: cardCol, row: cardRow } = getCardAnchorCell(mouseCol, mouseRow, gridSize, cardUnit);
 
                 ghostCardGridPos = { colIndex: cardCol, rowIndex: cardRow, colSpan: cardUnit.colSpan, rowSpan: cardUnit.rowSpan };
