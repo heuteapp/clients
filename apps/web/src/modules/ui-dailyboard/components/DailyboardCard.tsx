@@ -22,10 +22,10 @@ function DailyboardCard(props : DailyboardCardProps) {
 
     const placementAttrs = placement?.colIndex !== undefined ? {
         'data-dailyboard-card-placed': true,
-        'data-dailyboard-card-colindex': placement.colIndex,
-        'data-dailyboard-card-rowindex': placement.rowIndex,
-        'data-dailyboard-card-colspan': placement.colSpan,
-        'data-dailyboard-card-rowspan': placement.rowSpan,
+        'data-dailyboard-card-col-index': placement.colIndex,
+        'data-dailyboard-card-row-index': placement.rowIndex,
+        'data-dailyboard-card-col-span': placement.colSpan,
+        'data-dailyboard-card-row-span': placement.rowSpan,
     } : {};
 
     return (

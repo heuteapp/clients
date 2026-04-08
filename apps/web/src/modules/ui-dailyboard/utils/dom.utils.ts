@@ -38,3 +38,19 @@ export const getCardPixelRect = (gridRect: DOMRect, gap: number, sectionSize: Gr
         height: rawPosition.height - gap * 2
     }
 }
+
+//
+
+export const getDailyboardCardData = (cardEl: HTMLElement) => {
+    const colIndex = cardEl.dataset.dailyboardCardColIndex;
+    const rowIndex = cardEl.dataset.dailyboardCardRowIndex;
+    const colSpan = cardEl.dataset.dailyboardCardColSpan;
+    const rowSpan = cardEl.dataset.dailyboardCardRowSpan;
+
+    return {
+        colIndex: colIndex ? parseInt(colIndex, 10) : 0,
+        rowIndex: rowIndex ? parseInt(rowIndex, 10) : 0,
+        colSpan: colSpan ? parseInt(colSpan, 10) : 0,
+        rowSpan: rowSpan ? parseInt(rowSpan, 10) : 0
+    };
+}

@@ -13,9 +13,7 @@ export const useDailyboardMetrics = (registry: DailyboardRegistry, layoutMetrics
             applyDailyboardMetrics(registry, metrics.current!);
         });
 
-        if (registry.dailyboard.ref.current) {
-            resizeObserver.observe(registry.dailyboard.ref.current);
-        }
+        resizeObserver.observe(document.body);
 
         return () => {
             resizeObserver.disconnect();

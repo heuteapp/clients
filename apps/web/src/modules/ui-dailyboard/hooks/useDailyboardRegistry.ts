@@ -4,11 +4,5 @@ import { createDailyboardRegistry } from "@/src/modules/ui-dailyboard/registries
 import { LayoutRegistry } from "@/src/modules/ui-layout/types/layout.registry";
 
 export const useDailyboardRegistry = (dailyboardRef: React.RefObject<HTMLDivElement | null>, layoutRegistry: LayoutRegistry) : DailyboardRegistry => {
-    const registry = React.useRef<DailyboardRegistry>(null);
-
-    React.useEffect(() => {
-        registry.current = createDailyboardRegistry(dailyboardRef, layoutRegistry);
-    }, []);
-
-    return registry.current!;
+   return React.useRef<DailyboardRegistry>(createDailyboardRegistry(dailyboardRef, layoutRegistry)).current!;
 }

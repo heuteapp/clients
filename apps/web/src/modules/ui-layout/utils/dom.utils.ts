@@ -2,7 +2,12 @@ import { Pointer } from "../../shared/types/common";
 
 export const findGridElement = (clientX: number, clientY: number): HTMLDivElement | null => {
     const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest<HTMLDivElement>("[data-layout-grid]") || null;
+    return element?.closest<HTMLDivElement>("[data-layout-section-grid]") || null;
+}
+
+export const getGridFromSection = (sectionEl: HTMLDivElement): HTMLDivElement | null => {
+    const gridEl = sectionEl.querySelector<HTMLDivElement>("[data-layout-section-grid]");
+    return gridEl || null;
 }
 
 export const getGridMeta = (gridEl: HTMLDivElement) => {
