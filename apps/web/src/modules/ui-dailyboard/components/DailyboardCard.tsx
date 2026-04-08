@@ -20,20 +20,18 @@ function DailyboardCard(props : DailyboardCardProps) {
     const dailyboardCardContent = dailyboardCardData.material;
     const placement = dailyboardCardData.placement;
 
-    const placementAttrs = placement !== null ? {
-        'data-dailyboard-card-placed': true,
-        'data-dailyboard-card-section-name': placement.sectionName,
-        'data-dailyboard-card-col-index': placement.position.colIndex,
-        'data-dailyboard-card-row-index': placement.position.rowIndex,
-        'data-dailyboard-card-col-span': placement.position.colSpan,
-        'data-dailyboard-card-row-span': placement.position.rowSpan,
-    } : {};
+    if(!placement) return null;
 
     return (
         <div 
+            data-dailyboard-card
             data-dailyboard-card-id={dailyboardCardData.id}
             data-dailyboard-card-title={dailyboardCardContent.title}
-            {...placementAttrs}
+            data-dailyboard-card-section-name={placement.sectionName}
+            data-dailyboard-card-col-index={placement.position.colIndex}
+            data-dailyboard-card-row-index={placement.position.rowIndex}
+            data-dailyboard-card-col-span={placement.position.colSpan}
+            data-dailyboard-card-row-span={placement.position.rowSpan}
             className={style.card}
             ref={ref}
         >

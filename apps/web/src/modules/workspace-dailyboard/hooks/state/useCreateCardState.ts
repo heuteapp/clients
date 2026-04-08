@@ -4,7 +4,7 @@ import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext"
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { GridRect, Rect } from "@/src/modules/shared/types/common";
 import { findGridAtPoint, calcGridPointerAtCursor, getSectionDataForGrid, getSectionData, findSectionClosest } from "@/src/modules/ui-layout/utils/dom.utils";
-import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection, getDailyboardParent } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { getCardAnchorCell, getCardPixelRect, getDailyboardCardData, getDailyboardCardsForSection, getDailyboardClosest } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export const useCreateCardState = () => {
@@ -41,7 +41,7 @@ export const useCreateCardState = () => {
 
             gridEl = findGridAtPoint(clientX, clientY);
             sectionEl = gridEl ? findSectionClosest(gridEl) : null;
-            dailyboardEl = sectionEl ? getDailyboardParent(sectionEl) : null;
+            dailyboardEl = sectionEl ? getDailyboardClosest(sectionEl) : null;
 
             if(gridEl && sectionEl && dailyboardEl) {
                 const { name: sectionName, position: gridPos } = getSectionDataForGrid(gridEl)!;

@@ -1,5 +1,14 @@
 import { GridRect, GridSize } from "../../shared/types/common";
 
+
+
+export const getDailyboardClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+    const parent = el.closest<HTMLDivElement>("[data-dailyboard]");
+    return parent || null;
+}
+
+//
+
 export const getCardAnchorCell = (mouseCol: number, mouseRow: number, sectionSize: GridSize, cardSize: GridSize) => {
     let col = mouseCol - Math.floor(cardSize.colSpan / 2);
     let row = mouseRow - Math.floor(cardSize.rowSpan / 2);
@@ -58,18 +67,4 @@ export const getDailyboardCardData = (cardEl: HTMLElement) => {
 export const getDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
     const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card-section-name="${sectionName}"]`);
     return Array.from(cardElements) as HTMLDivElement[];
-}
-
-
-
-//
-
-export const getDailyboardParent = (el: HTMLDivElement): HTMLDivElement | null => {
-    const parent = el.closest<HTMLDivElement>("[data-dailyboard-id]");
-
-    if(!parent) {
-        return null;
-    }
-
-    return parent as HTMLDivElement;
 }
