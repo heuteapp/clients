@@ -1,20 +1,20 @@
-import { StoredDailyboardCard, StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
+import { StoredDailyboardData, StoredDailyboardCardData } from "@/src/heute-store/types/dailyboard.types";
 
 export interface DailyboardRootProps {
-    data: StoredDailyboardRoot;
+    data: StoredDailyboardData;
 }
 
 export interface DailyboardCardContainerProps {
-    cards: StoredDailyboardCard[];
+    cards: StoredDailyboardCardData[];
 }
 
 export interface DailyboardCardProps {
-    data: StoredDailyboardCard;
+    data: StoredDailyboardCardData;
 }
 
 //
 
 export interface DailyboardProviderProps {
-    source: StoredDailyboardRoot | null;
+    dataSource: StoredDailyboardData | null;
     children: React.ReactNode;
 }

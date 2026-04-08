@@ -1,20 +1,21 @@
-import { Dailyboard, DailyboardCard } from "@/src/modules/dailyboard/types/dailyboard.types";
+import { DailyboardData, DailyboardCardData } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 import { DailyboardCardResponse, DailyboardResponse } from "../models/responses/dailyboard.response";
 import { isoToYYMMDD } from "@/src/modules/shared/utils/date.utils";
 
-export function responseToDailyboard(response: DailyboardResponse): Dailyboard {
-    return {
+export function responseToDailyboard(response: DailyboardResponse): DailyboardData {
+    return {        
+        categoryPath: response.categoryPath,
+        date: isoToYYMMDD(response.date)!,
         layoutName: response.layout.name,
         layoutVersion: response.layout.version,
-        date: isoToYYMMDD(response.date)!,
         cards: response.cards.map(responseToDailyboardCard)
     };
 }
 
-function responseToDailyboardCard(cardResponse: DailyboardCardResponse): DailyboardCard {
+function responseToDailyboardCard(cardResponse: DailyboardCardResponse): DailyboardCardData {
     return {
         name: cardResponse.name,
-        content: {
+        material: {
             title: cardResponse.title ?? null,
         },
         placement: 

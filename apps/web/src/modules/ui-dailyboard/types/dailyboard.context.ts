@@ -1,9 +1,9 @@
 import { LayoutContextValue } from "@/src/modules/ui-layout/types/layout.context";
 import { DailyboardRegistry } from "./dailyboard.registry";
-import { StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
+import { StoredDailyboardData} from "@/src/heute-store/types/dailyboard.types";
 
 export interface DailyboardContextValue {    
-    source: StoredDailyboardRoot | null;
+    dataSource: StoredDailyboardData | null;
     layout: LayoutContextValue;
     registry: DailyboardRegistry;    
 }

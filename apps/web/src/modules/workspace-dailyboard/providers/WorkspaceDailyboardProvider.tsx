@@ -67,7 +67,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
 
     return (
         <LayoutProvider dataSource={layoutData} styleSource={layoutStyle}>
-            <DailyboardProvider source={dailyboardData}>
+            <DailyboardProvider dataSource={dailyboardData}>
                 <WorkspaceDailyboardContext.Provider value={contextValue}>
                     <WorkspaceDailyboardStateSideEffects />
                     <ProviderContent>

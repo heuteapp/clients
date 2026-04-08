@@ -6,15 +6,15 @@ import { useDailyboardRegistry } from "@/src/modules/ui-dailyboard/hooks/useDail
 import { DailyboardContext } from "@/src/modules/ui-dailyboard/contexts/dailyboard.context";
 import { DailyboardProviderProps } from "../types/dailyboard.props";
 
-export function DailyboardProvider({ source, children }: DailyboardProviderProps) {
+export function DailyboardProvider({ dataSource, children }: DailyboardProviderProps) {
     const layout = useLayoutContext();
 
     const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
     const registry = useDailyboardRegistry(dailyboardRef, layout.registry);
     
     const contextValue = React.useMemo(() => ({
-        source, layout, registry
-    }), [source, layout, registry]);
+        dataSource, layout, registry
+    }), [dataSource, layout, registry]);
 
     return (
         <DailyboardContext.Provider value={contextValue}>

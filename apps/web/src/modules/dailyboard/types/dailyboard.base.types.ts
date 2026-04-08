@@ -1,9 +1,10 @@
 import { YYMMDDDate } from "../../shared/types/date.types";
 
 export interface DailyboardBase {
+    categoryPath: string;
+    date: YYMMDDDate;
     layoutName: string;
     layoutVersion: number;
-    date: YYMMDDDate;
     cards: DailyboardCardBase[];
 }
 

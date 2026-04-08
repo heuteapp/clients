@@ -17,7 +17,7 @@ function DailyboardCard(props : DailyboardCardProps) {
         }
     }, [registry]) 
 
-    const dailyboardCardContent = dailyboardCardData.content;
+    const dailyboardCardContent = dailyboardCardData.material;
     const placement = dailyboardCardData.placement?.position;
 
     const placementAttrs = placement?.colIndex !== undefined ? {

@@ -1,11 +1,11 @@
 import { ActorRefFrom } from "xstate";
 import { FetchSourcesEvents, CreateCardEvents } from "./workspace-dailyboard.events.types";
 import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.machine";
-import { StoredDailyboardRoot } from "@/src/heute-store/types/dailyboard.types";
+import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
 
 export type WorkspaceDailyboardMachineContext = {
-  dailyboardData: StoredDailyboardRoot | null;
+  dailyboardData: StoredDailyboardData | null;
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
 }
