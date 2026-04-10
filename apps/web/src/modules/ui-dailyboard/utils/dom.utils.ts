@@ -11,8 +11,14 @@ export const findDailyboardClosest = (el: HTMLDivElement): HTMLDivElement | null
 }
 
 export const findDailyboardAtCursor = (clientX: number, clientY: number): HTMLDivElement | null => {
-    const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest<HTMLDivElement>("[data-dailyboard]") || null;
+    const allElements = document.elementsFromPoint(clientX, clientY);
+    
+    for (const element of allElements) {
+        const dailyboard = (element as HTMLElement).closest<HTMLDivElement>("[data-dailyboard]");
+        if (dailyboard) return dailyboard;
+    }
+    
+    return null;
 }
 
 export const findDailyboardCardInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
@@ -26,8 +32,14 @@ export const findDailyboardCardClosest = (el: HTMLDivElement): HTMLDivElement | 
 }
 
 export const findDailyboardCardAtCursor = (clientX: number, clientY: number): HTMLDivElement | null => {
-    const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest<HTMLDivElement>("[data-dailyboard-card]") || null;
+    const allElements = document.elementsFromPoint(clientX, clientY);
+    
+    for (const element of allElements) {
+        const card = (element as HTMLElement).closest<HTMLDivElement>("[data-dailyboard-card]");
+        if (card) return card;
+    }
+    
+    return null;
 }
 
 export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
@@ -38,12 +50,14 @@ export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sect
 //
 
 export const getDailyboardCardData = (cardEl: HTMLElement) => {
+    const key = cardEl.dataset.dailyboardCardKey;
     const colIndex = cardEl.dataset.dailyboardCardColIndex;
     const rowIndex = cardEl.dataset.dailyboardCardRowIndex;
     const colSpan = cardEl.dataset.dailyboardCardColSpan;
     const rowSpan = cardEl.dataset.dailyboardCardRowSpan;
 
     return {
+        key: key || "",
         colIndex: colIndex ? parseInt(colIndex, 10) : 0,
         rowIndex: rowIndex ? parseInt(rowIndex, 10) : 0,
         colSpan: colSpan ? parseInt(colSpan, 10) : 0,

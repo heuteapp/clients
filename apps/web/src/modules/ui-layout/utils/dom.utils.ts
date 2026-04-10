@@ -11,8 +11,14 @@ export const findGridClosest = (el: HTMLDivElement): HTMLDivElement | null => {
 }
 
 export const findGridAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
-    const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest<HTMLDivElement>("[data-layout-grid]") || null;
+    const allElements = document.elementsFromPoint(clientX, clientY);
+    
+    for (const element of allElements) {
+        const grid = (element as HTMLElement).closest<HTMLDivElement>("[data-layout-grid]");
+        if (grid) return grid;
+    }
+    
+    return null;
 }
 
 export const findSectionInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
@@ -26,8 +32,14 @@ export const findSectionClosest = (el: HTMLDivElement): HTMLDivElement | null =>
 }
 
 export const findSectionAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
-    const element = document.elementFromPoint(clientX, clientY);
-    return element?.closest<HTMLDivElement>("[data-layout-section]") || null;
+    const allElements = document.elementsFromPoint(clientX, clientY);
+    
+    for (const element of allElements) {
+        const section = (element as HTMLElement).closest<HTMLDivElement>("[data-layout-section]");
+        if (section) return section;
+    }
+    
+    return null;
 }
 
 //
