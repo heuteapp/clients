@@ -24,3 +24,14 @@
 [data-dailyboard-card].editing {
     border-color: rgba(196, 196, 59, 0.754);
 }
+
+[data-dailyboard-card].editing.resize-mode {
+    cursor: nw-resize;
+    box-shadow: 0 0 0 2px blue;
+}
+
+[data-dailyboard-card].editing.move-mode {
+    cursor: grabbing;
+    box-shadow: 0 0 0 2px green;
+    opacity: 0.9;
+}
