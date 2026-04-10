@@ -20,7 +20,7 @@ export const workspaceDailyboardMachine = setup({
         createCard: createCardAction
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxADEAogBUAwgAkA+gGUA8gFUASlLEKA2gAYAuolA5Uscp1RcjIAB6IAjLoBMAdmYBmACzuAHADZPAFZAzwBOe1DAgBoQakRA+3dmJyc-Px8nXRdEl117AF98mLQsXEISMio6BiZWDm5eADMwdgIACwaAAlhUAFd0IlghCEswPi4AN1RMMebWtuIe-sG9QyQQEzMLK3W7BECnGLiEH3tmQN1L+0z-F09dTwKikBLsfCJSChp6RhY2cwazDm7S6SwGcCEYHQ6AwzBwlDw7EaGAAtkCWu1Fn1wbBVtZNgDLNY9o5XB5vP4giFwpEjohPH5AswXKk-HkXD53M4En5CsUMG9yp8qj9augwHgINQ+AJhFI1GIAIISMRyKSKtQAETx6wJ22JiHcF3O7muKQuTk8nN00ViiCc4WYoRcjP87hSugyTj5LwFZQ+lW+NRY4sl0v4glEklkilUGi0OuMpkJO1Aez8HOYulNlvsp0STnc7jpCC8nidLr8jndvnsdc8Pte-oqX2qv2YoalzAIoc4PE6BF+QnlSpVao1msUKikmjEmrniY2yf1u3tCSdPgpl0yoU8LncfhL7lCTgraS87uC9ye-NK7xbIuDHYlXZ7Er7UAHQ5HytV6q144AHKaAAMiBC4GPiy7kESq4IE466hJuvjbrou77oedqlp4p57oyfgnvcCTOO4hTPFwqAQHA1hNvewpBr8UFbDBqa2IgxChCWxB+Fmlx8fxfHeI2fp0YGba1P8H5MSmBonAc5IoX4XL2I8LhHoESQshmhaFi4LihKawl3kKYmin89Q8DKgjSSuaaIKElwKT4uhKXkqklnuugeGhSFoSEvgZEZgoBq2Zl1AClnAh0-ZgoMNksbJZpnAkgQEWEflcphxyeI8ySshhoSRF6gRBc29HiSGL7HEmzGwXZpacVhmTlnhwQHgZBGJKRzy0SZoVPp24ayvFdVsfsThnNm1yMiyOUpFlhpBMweFVtmhb5ippWif17aDd2vZdIOTAjaxew+GpWFcl5PgpdkHKegEZH5EAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxAGUA8gFUASgGEAoiID6AMTkAVGQAlFUuQEUJCtXIAiAbQAMAXUSgcqWOU6outkAA9EAJgCMADgBWZgBOAGYAdgAWYIA2P2iAiz8AGhBqRB9IyKDggNCLYIsfUJiw4OCAXwrUtCxcQhIyKjoGJlYObl4AMzB2AgALToACWFQAV3QiWCEIFzA+LgA3VEx5nr7+4lGJqcsbJBB7R2dXA88EAK9U9IQ-H2ZEiyLI0J9Eu8rqkFrsfCJSCg0eiMFhsJydZjrAbDbaTOBCMDodAYZg4Sh4dhdDAAW0hvQGW3GcNgezcR3BLjc5y8XjuzFCtIscT8MQivgC1wyoWCfmY2VetJpoXybyqNQwvwaAOawLa6DAeAg1D4AmE4mk8iUqg02l0BiMplJB3JJypGXC3Pp4USAT8LKiwR8Pk5CB8XnC4WY4Qsr2KLJZsTF3wl9X+TSBrRY8sVyv4giEMgAglITIoZLpE8YdPpDCJjOZrGSHBTTqBzk7Ivc4tbiuVLhYsi7wn5PYEYl5bRYPdlAkGfqHGoCWiDmNGlSr40mU4pTABJNTZ-V5w2F43F01nRDBcIuryOkLhGIBYI0yKHu6RPshv6DmWR0cK8cEaOcHhDAgghPJ1PpuSZuSKCIEgyPIpgrvsdjruQlKbq6bxVi2AS1rkXgNpELqlPchSvPkPolF4pRXnUN7ShGI5jsqz4Kq+UDvp+U4-hmWZJgAcvIAAy7HgUWxzQaWHgZD4MQITW3IoWhGGVnyPqZHkbzHuURGSmGQ6ylGj7KpA4Jvh+bQmnxnRftOc4LgACmISh6rm+ZGpBvEwWWiDClhckMhaASRDEFgES6PgFDkeQFLkmQFA2SkDqRw5yhpzBaTRdF6VBLiGQxM4mPOgGzgAWgBVkGgWEGHEl-HnM5ISue6oQeV5PlpIg1qhHygXhGEFpeAynzisRUrhlF6kxrFEDabRuksPpyU8EZqYmWmYgscos5SAAstxa72SV9XhF4ITVna7rCW86F1bcUTMKh+Ste6fihPE4Ukb1akPgNcXDKNqLFSl35pRlrEcVxBU8SWZoIB622xC2e2Hk6HkunJXoycJASlKE0ThHdPWqfeFGDcNCUsNiqCLJ9xnpWZFmAcBoEmKtdlA7BwqNd6ryeT6fjeUUvkNkE-IVi1XmsqE6MqXe5ExS9OkjgTROTalM3mUov1yJxNNFetwPCjEZ3+M2PiOr43kpMd5SROV+QskkcSXELt5kdFz1DfFb3yo4ABexPTaTmU5RTIFyGBANrXTjkIGVuQ4ZV1XeTETbeabfoxJ53LedbkWPdj4sjaLrvu99C4iNlAGK8rAe0xuwfCibnktnEXm5JEe7R8dR7bTzeQntdrJeFUXxcKgEBwG4-b3ZjIKA2XAkIMQbousQMQpw995gjRY98cDqF+SEERIRXQk0r5tKa-yQUdzdaNfEPGMi20S8QnGYArw5E+obam+iSju9XMdIWNT6Cdnl5URsjzxHtfDoPA8QbBhESKYD8NoIC8Gebm5RgoMhKNyXyERGphwKOyW0HpgFX36kqWB6tG43FQpXQ8to-BhB9LkdsBDbZENjKqEhsE-KZGYNWAIlxIh+D3H5UIsMUbwxwrkC01p8Hn2vJfJhT0nwvleqPQO49yz115O1LI2shIekdBhYIJs3SxHKFHGhTpGF9XkZpB2SimBsODvEWGPhPRhzeO2Uox4toWLTmLGxEtErrU6PYiexRP43D8i1M6toE5JwSAg7xWNfG4zelLIJKjV6wURjtCG7otqsh3F-BsvIj7tyeGeHwCTRb22SVncgbseDBPOFk8GzZckEQiDHAKF1PI8Ofp8KoQA */
     context: {
         dailyboardData: null,
         layoutData: null,
@@ -77,7 +77,8 @@ export const workspaceDailyboardMachine = setup({
                             actions: ["setCardCreateSession"]
                         },
                         CARD_EDIT_REQUESTED: {
-                            
+                            target: "editing card",
+                            actions: ["setCardEditSession"]
                         }
                     }
                 },
@@ -94,7 +95,47 @@ export const workspaceDailyboardMachine = setup({
                     exit: ["unsetCardCreateSession"]
                 },
                 "editing card": {
-                    
+                    initial: "positioning",
+                    states: {
+                        "positioning": {
+                            on: {
+
+                                CARD_EDIT_POS_REQUESTED: {
+                                    target: "moving"
+                                },
+                                CARD_EDIT_SIZE_REQUESTED: {
+                                    target: "resizing"
+                                },
+                                CARD_EDIT_CONFIRMED: {
+                                    target: "#workspace-dailyboard.ready.idle"
+                                },
+                                CARD_EDIT_CANCELLED: {
+                                    target: "#workspace-dailyboard.ready.idle"
+                                }
+                            },
+                        },
+                        "moving": {
+                            on: {
+                                CARD_EDIT_POS_SUCCEEDED: {
+                                    target: "positioning",
+                                },
+                                CARD_EDIT_POS_CANCELLED: {
+                                    target: "positioning",
+                                }
+                            },
+                        },
+                        "resizing": {
+                            on: {
+                                CARD_EDIT_SIZE_SUCCEEDED: {
+                                    target: "positioning",
+                                },
+                                CARD_EDIT_SIZE_CANCELLED: {
+                                    target: "positioning",
+                                }
+                            },
+                        },
+                    },
+                    exit: ["unsetCardEditSession"]
                 }
             }
         }
