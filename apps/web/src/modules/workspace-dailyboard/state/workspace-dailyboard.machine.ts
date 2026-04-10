@@ -65,12 +65,15 @@ export const workspaceDailyboardMachine = setup({
             states: {
                 "idle": {
                     on: {
+                        SOURCES_FETCH_REQUESTED: {
+                            target: "#workspace-dailyboard.waiting.fetching sources"
+                        },
                         CARD_CREATE_REQUESTED: {
                             target: "creating card",
                             actions: ["setGhostCard"]
                         },
-                        SOURCES_FETCH_REQUESTED: {
-                            target: "#workspace-dailyboard.waiting.fetching sources"
+                        CARD_EDIT_REQUESTED: {
+                            
                         }
                     }
                 },
@@ -87,7 +90,7 @@ export const workspaceDailyboardMachine = setup({
                     exit: ["unsetGhostCard"]
                 },
                 "editing card": {
-
+                    
                 }
             }
         }
