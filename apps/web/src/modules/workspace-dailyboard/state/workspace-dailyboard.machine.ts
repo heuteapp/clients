@@ -95,9 +95,9 @@ export const workspaceDailyboardMachine = setup({
                     exit: ["unsetCardCreateSession"]
                 },
                 "editing card": {
-                    initial: "positioning",
+                    initial: "idle",
                     states: {
-                        "positioning": {
+                        "idle": {
                             on: {
 
                                 CARD_EDIT_POS_REQUESTED: {
@@ -117,20 +117,20 @@ export const workspaceDailyboardMachine = setup({
                         "moving": {
                             on: {
                                 CARD_EDIT_POS_SUCCEEDED: {
-                                    target: "positioning",
+                                    target: "idle",
                                 },
                                 CARD_EDIT_POS_CANCELLED: {
-                                    target: "positioning",
+                                    target: "idle",
                                 }
                             },
                         },
                         "resizing": {
                             on: {
                                 CARD_EDIT_SIZE_SUCCEEDED: {
-                                    target: "positioning",
+                                    target: "idle",
                                 },
                                 CARD_EDIT_SIZE_CANCELLED: {
-                                    target: "positioning",
+                                    target: "idle",
                                 }
                             },
                         },
@@ -161,3 +161,15 @@ export const isReadyIdle = (state: WorkspaceDailyboardMachineState): boolean =>
 
 export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => 
     state.matches({ "ready": "creating card" });
+
+export const isEditingCard = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": "editing card" });
+
+export const isEditingCardIdle = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": { "editing card": "idle" } });
+
+export const isEditingCardMoving = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": { "editing card": "moving" } });
+
+export const isEditingCardResizing = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": { "editing card": "resizing" } });
