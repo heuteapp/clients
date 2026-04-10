@@ -28,10 +28,10 @@ export type EditCardEvent =
 
 export type EditPosCardEvent =
     | { type: "CARD_EDIT_POS_REQUESTED"; }
-    | { type: "CARD_EDIT_POS_SUCCEEDED"; position: GridPosition}
+    | { type: "CARD_EDIT_POS_COMPLETED"; position: GridPosition}
     | { type: "CARD_EDIT_POS_CANCELLED"; }
 
 export type EditSizeCardEvent =
     | { type: "CARD_EDIT_SIZE_REQUESTED"; }
-    | { type: "CARD_EDIT_SIZE_SUCCEEDED"; size: GridSize}
+    | { type: "CARD_EDIT_SIZE_COMPLETED"; size: GridSize}
     | { type: "CARD_EDIT_SIZE_CANCELLED"; }

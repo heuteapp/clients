@@ -116,7 +116,7 @@ export const workspaceDailyboardMachine = setup({
                         },
                         "moving": {
                             on: {
-                                CARD_EDIT_POS_SUCCEEDED: {
+                                CARD_EDIT_POS_COMPLETED: {
                                     target: "idle",
                                 },
                                 CARD_EDIT_POS_CANCELLED: {
@@ -126,7 +126,7 @@ export const workspaceDailyboardMachine = setup({
                         },
                         "resizing": {
                             on: {
-                                CARD_EDIT_SIZE_SUCCEEDED: {
+                                CARD_EDIT_SIZE_COMPLETED: {
                                     target: "idle",
                                 },
                                 CARD_EDIT_SIZE_CANCELLED: {
