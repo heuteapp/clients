@@ -48,13 +48,13 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                 {
                     name: "first",
                     box: {
-                        padding: "1%",
+                        padding: ["2%", 0],
                     }
                 },
                 {
                     name: "second",
                     box: {
-                        padding: "1%",
+                        padding: ["2%", 0],
                     }
                 }
             ]
