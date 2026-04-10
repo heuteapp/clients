@@ -27,9 +27,11 @@ export const useEditCardState = () => {
 
         const entryEditingState = () => {
             removeEditRequestListener();
+            editRequestHammer.current?.destroy();
+            editRequestHammer.current = null;
+
             addOutsideClickListener();
             initListener.current = false;
-            editRequestHammer.current = new Hammer(document.body);
 
             const card = currentCard.current;
             if(card) {
@@ -38,13 +40,13 @@ export const useEditCardState = () => {
         }
 
         const exitEditingState = () => {
+            editRequestHammer.current = new Hammer(document.body);
             addEditRequestListener();
+
             removeOutsideClickListener();
             initListener.current = true;
 
-            editRequestHammer.current?.destroy();
-            editRequestHammer.current = null;
-            
+
             const card = currentCard.current!;
 
             if(card) {
@@ -79,9 +81,7 @@ export const useEditCardState = () => {
         }
 
         const addEditRequestListener = () => {
-            if(editRequestHammer.current) {            
-                editRequestHammer.current.on("doubletap", handleEditRequest);
-            }
+            editRequestHammer.current?.on("doubletap", handleEditRequest);
         };
 
         const addOutsideClickListener = () => {
@@ -89,9 +89,7 @@ export const useEditCardState = () => {
         };
 
         const removeEditRequestListener = () => {
-            if (editRequestHammer.current) {
-                editRequestHammer.current.off("doubletap", handleEditRequest);
-            }
+            editRequestHammer.current?.off("doubletap", handleEditRequest);
         };
 
         const removeOutsideClickListener = () => {
