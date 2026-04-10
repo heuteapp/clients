@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { isEditingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
-import { findDailyboardCardAtCursor } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 
 export const useEditCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -11,6 +11,7 @@ export const useEditCardState = () => {
     const initListener = useRef(false);
 
     useEffect(() => {
+        console.log(state.value);
         if (isEditingCard(state)) {
             if(initListener.current) {
                 removeListener();
@@ -28,7 +29,10 @@ export const useEditCardState = () => {
     const handleCardEdit = (event: MouseEvent) => {
         const card = findDailyboardCardAtCursor(event.clientX, event.clientY);
 
-        console.log("Card at cursor:", card);
+        if(card) {
+            const data = getDailyboardCardData(card);
+            send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
+        }
     }
 
     const addListener = () => {
