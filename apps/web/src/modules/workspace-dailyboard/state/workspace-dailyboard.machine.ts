@@ -33,7 +33,7 @@ export const workspaceDailyboardMachine = setup({
             states: {
                 "idle": {
                     on: {
-                        FETCH_SOURCES: {
+                        FETCH_SOURCES_REQUESTED: {
                             target: "fetching sources"
                         }
                     }
@@ -43,7 +43,7 @@ export const workspaceDailyboardMachine = setup({
                         src: "fetchSources",
                         id: "fetch-sources",
                         input: ({ event }) => {
-                            const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "FETCH_SOURCES" }>;
+                            const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "FETCH_SOURCES_REQUESTED" }>;
                             return {
                                 dailyboardPath: fetchEvent.dailyboardPath,
                             };
@@ -64,11 +64,11 @@ export const workspaceDailyboardMachine = setup({
             states: {
                 "idle": {
                     on: {
-                        CREATE_CARD: {
+                        CREATE_CARD_REQUESTED: {
                             target: "creating card",
                             actions: ["setGhostCard"]
                         },
-                        FETCH_SOURCES: {
+                        FETCH_SOURCES_REQUESTED: {
                             target: "#workspace-dailyboard.waiting.fetching sources"
                         }
                     }

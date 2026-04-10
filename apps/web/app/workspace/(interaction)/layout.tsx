@@ -109,10 +109,10 @@ const LayoutSidebar = () => {
       color="primary" 
       sx={{ m: 1 }} 
       onTouchStart={(e) => {
-        send({ type: "CREATE_CARD", cardSize });
+        send({ type: "CREATE_CARD_REQUESTED", cardSize });
       }}
       onMouseDown={() => {
-        send({ type: "CREATE_CARD", cardSize });
+        send({ type: "CREATE_CARD_REQUESTED", cardSize });
       }}
     >
       Create {cardSize.colSpan}x{cardSize.rowSpan} Card

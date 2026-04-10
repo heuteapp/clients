@@ -50,7 +50,7 @@ export const setGhostCardAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ event }) => {
-        if(event.type === "CREATE_CARD") {
+        if(event.type === "CREATE_CARD_REQUESTED") {
             return {
                 ghostCard: {
                     size: event.cardSize
