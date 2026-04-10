@@ -20,3 +20,7 @@
 #dailyboard-suggested-card {    
     border: 2px dashed rgb(101, 255, 90);
 }
+
+[data-dailyboard-card].editing {
+    border-color: rgba(196, 196, 59, 0.754);
+}
