@@ -72,6 +72,34 @@ export const unsetCardCreateSessionAction = createAssign<
     }
 );
 
+export const setCardEditSessionAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ context, event }) => {
+        if(event.type === "CARD_EDIT_REQUESTED") {
+            context.sessions.cardEdit = {
+                cardKey: event.cardKey
+            }
+        }
+
+        return context;
+    }
+);
+
+export const unsetCardEditSessionAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ context, event }) => {
+        if(event.type === "CARD_EDIT_CONFIRMED" || event.type === "CARD_EDIT_CANCELLED") {
+            context.sessions.cardEdit = null;
+        }
+
+        return context;
+    }
+);
+
+//
+
 export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachineEvent } ) => {
     if(event.type !== "CARD_CREATE_SUCCEEDED") return;
 
