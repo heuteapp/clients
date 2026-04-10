@@ -132,10 +132,6 @@ const LayoutSidebar = () => {
               bgcolor: "background.paper"
           }}
       >
-        {createButton({ colSpan: 4, rowSpan: 2 })}
-        {createButton({ colSpan: 6, rowSpan: 2 })}
-        {createButton({ colSpan: 8, rowSpan: 2 })}
-        {createButton({ colSpan: 12, rowSpan: 2 })}
         {createButton({ colSpan: 4, rowSpan: 3 })}
         {createButton({ colSpan: 6, rowSpan: 3 })}
         {createButton({ colSpan: 8, rowSpan: 3 })}
