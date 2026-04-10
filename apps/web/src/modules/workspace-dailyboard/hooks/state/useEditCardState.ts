@@ -24,6 +24,10 @@ export const useEditCardState = () => {
 
         if(!hammerRef.current) {
             hammerRef.current = new Hammer(document.body);
+
+            const focusTap = new Hammer.Tap({ event: 'focustap', taps: 2, interval: 300 });
+
+            hammerRef.current.add([focusTap]);
         }
 
         checkEditingState();
@@ -32,7 +36,7 @@ export const useEditCardState = () => {
     const checkEditingState = () => {
 
         const entryEditingState = () => {
-            removeEditRequestListener();
+            removeFocusListener();
 
             addOutsideClickListener();
             initListener.current = false;
@@ -44,7 +48,7 @@ export const useEditCardState = () => {
         }
 
         const exitEditingState = () => {
-            addEditRequestListener();
+            addFocusListener();
 
             removeOutsideClickListener();
             initListener.current = true;
@@ -58,7 +62,7 @@ export const useEditCardState = () => {
             }
         }
 
-        const handleEditRequest = (e: any) => {
+        const handleFocusTap = (e: any) => {
             const { center } = e;
             
             const card = findDailyboardCardAtCursor(center.x, center.y);
@@ -83,16 +87,16 @@ export const useEditCardState = () => {
             }
         }
 
-        const addEditRequestListener = () => {
-            hammerRef.current?.on("doubletap", handleEditRequest);
+        const addFocusListener = () => {
+            hammerRef.current?.on("focustap", handleFocusTap);
         };
 
         const addOutsideClickListener = () => {
             document.addEventListener("pointerdown", handleOutsideClick);
         };
 
-        const removeEditRequestListener = () => {
-            hammerRef.current?.off("doubletap", handleEditRequest);
+        const removeFocusListener = () => {
+            hammerRef.current?.off("focustap", handleFocusTap);
         };
 
         const removeOutsideClickListener = () => {
