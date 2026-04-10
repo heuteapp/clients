@@ -21,13 +21,24 @@ export const useEditCardState = () => {
             removeEditRequestListener();
             addOutsideClickListener();
             initListener.current = false;
+
+            const card = currentCard.current;
+            if(card) {
+                card.classList.add("editing");
+            }
         }
 
         const exitEditingState = () => {
             addEditRequestListener();
             removeOutsideClickListener();
             initListener.current = true;
-            currentCard.current = null;
+
+            const card = currentCard.current!;
+
+            if(card) {
+                card.classList.remove("editing");
+                currentCard.current = null;
+            }
         }
 
         const handleEditRequest = (event: MouseEvent) => {
@@ -51,7 +62,6 @@ export const useEditCardState = () => {
             const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
             
             if (clickedCard !== currentCard.current) {
-                currentCard.current = null;
                 send({ type: "CARD_EDIT_CANCELLED" });
             }
         }
@@ -73,7 +83,6 @@ export const useEditCardState = () => {
         };
         
         //
-
 
         if (isEditingCard(state)) {
             if(initListener.current) {
