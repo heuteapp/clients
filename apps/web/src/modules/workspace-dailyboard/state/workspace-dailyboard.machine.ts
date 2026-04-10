@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { createCardAction, resolveSourcesAction, setGhostCardAction, unsetGhostCardAction } from "./workspace-dailyboard.actions";
+import { createCardAction, resolveSourcesAction, setCardCreateSessionAction, unsetCardCreateSessionAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -13,8 +13,8 @@ export const workspaceDailyboardMachine = setup({
     }, 
     actions: {
         resolveSources: resolveSourcesAction,
-        setGhostCard: setGhostCardAction,
-        unsetGhostCard: unsetGhostCardAction,
+        setCardCreateSession: setCardCreateSessionAction,
+        unsetCardCreateSession: unsetCardCreateSessionAction,
         createCard: createCardAction
     }
 }).createMachine({
@@ -23,8 +23,10 @@ export const workspaceDailyboardMachine = setup({
         dailyboardData: null,
         layoutData: null,
         layoutStyle: null,
-        create: null,
-        edit: null
+        sessions: {
+            cardCreate: null,
+            cardEdit: null
+        }
     },
     id: "workspace-dailyboard",
     initial: "waiting",
@@ -70,7 +72,7 @@ export const workspaceDailyboardMachine = setup({
                         },
                         CARD_CREATE_REQUESTED: {
                             target: "creating card",
-                            actions: ["setGhostCard"]
+                            actions: ["setCardCreateSession"]
                         },
                         CARD_EDIT_REQUESTED: {
                             
@@ -87,7 +89,7 @@ export const workspaceDailyboardMachine = setup({
                             target: "idle"
                         }
                     },
-                    exit: ["unsetGhostCard"]
+                    exit: ["unsetCardCreateSession"]
                 },
                 "editing card": {
                     

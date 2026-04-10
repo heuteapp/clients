@@ -46,33 +46,29 @@ export const resolveSourcesAction = createAssign<
     }
 );
 
-export const setGhostCardAction = createAssign<
+export const setCardCreateSessionAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
-    ({ event }) => {
+    ({ context, event }) => {
         if(event.type === "CARD_CREATE_REQUESTED") {
-            return {
-                create: {
-                    size: event.cardSize
-                }
+            context.sessions.cardCreate = {
+                size: event.cardSize
             }
         }
 
-        return {};
+        return context;
     }
 );
 
-export const unsetGhostCardAction = createAssign<
+export const unsetCardCreateSessionAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
-    ({ event }) => {
+    ({ context, event }) => {
         if(event.type === "CARD_CREATE_SUCCEEDED" || event.type === "CARD_CREATE_CANCELLED") {
-            return {
-                create: null
-            }
+            context.sessions.cardCreate = null;
         }
 
-        return {};
+        return context;
     }
 );
 

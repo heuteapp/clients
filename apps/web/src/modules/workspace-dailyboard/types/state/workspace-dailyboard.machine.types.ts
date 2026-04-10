@@ -9,12 +9,14 @@ export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
-  create: {
-    size: GridSize;
-  } | null;
-  edit: {
-    cardKey: string;
-  } | null;
+  sessions: {
+    cardCreate: {
+      size: GridSize;
+    } | null;
+    cardEdit: {
+      cardKey: string;
+    } | null;
+  }
 }
 
 export type WorkspaceDailyboardMachineEvent = 
