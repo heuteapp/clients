@@ -1,7 +1,7 @@
 import { GridRect, GridSize } from "../../shared/types/common";
 
 export const findDailyboardInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
-    const child = el.querySelector<HTMLDivElement>("[data-dailyboard-id]");
+    const child = el.querySelector<HTMLDivElement>("[data-dailyboard]");
     return child || null;
 }
 
@@ -15,6 +15,20 @@ export const findDailyboardAtCursor = (clientX: number, clientY: number): HTMLDi
     return element?.closest<HTMLDivElement>("[data-dailyboard]") || null;
 }
 
+export const findDailyboardCardInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+    const child = el.querySelector<HTMLDivElement>("[data-dailyboard-card]");
+    return child || null;
+}
+
+export const findDailyboardCardClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+    const parent = el.closest<HTMLDivElement>("[data-dailyboard-card]");
+    return parent || null;
+}
+
+export const findDailyboardCardAtCursor = (clientX: number, clientY: number): HTMLDivElement | null => {
+    const element = document.elementFromPoint(clientX, clientY);
+    return element?.closest<HTMLDivElement>("[data-dailyboard-card]") || null;
+}
 
 export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
     const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card-section-name="${sectionName}"]`);
