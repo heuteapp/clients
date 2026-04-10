@@ -7,13 +7,15 @@ import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 
 export const useEditCardState = () => {
+    const { Hammer } = useHammerLoader();
+
     const { send, state } = useWorkspaceDailyboardContext();
     const { metrics } = useLayoutContext();
 
     const initListener = useRef(false);
     const currentCard = useRef<HTMLElement | null>(null);
-    const { Hammer } = useHammerLoader();
-    const hammerInstance = useRef<any>(null);
+    
+    const editRequestHammer = useRef<HammerManager | null>(null);
 
     useEffect(() => {
         console.log(state.value);
@@ -73,8 +75,8 @@ export const useEditCardState = () => {
         }
 
         const addEditRequestListener = () => {
-            hammerInstance.current = new Hammer(document.body);
-            hammerInstance.current.on("doubletap", handleEditRequest);
+            editRequestHammer.current = new Hammer(document.body);
+            editRequestHammer.current.on("doubletap", handleEditRequest);
         };
 
         const addOutsideClickListener = () => {
@@ -82,10 +84,10 @@ export const useEditCardState = () => {
         };
 
         const removeEditRequestListener = () => {
-            if (hammerInstance.current) {
-                hammerInstance.current.off("doubletap", handleEditRequest);
-                hammerInstance.current.destroy();
-                hammerInstance.current = null;
+            if (editRequestHammer.current) {
+                editRequestHammer.current.off("doubletap", handleEditRequest);
+                editRequestHammer.current.destroy();
+                editRequestHammer.current = null;
             }
         };
 
