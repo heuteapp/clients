@@ -9,29 +9,49 @@ export const useEditCardState = () => {
     const { metrics } = useLayoutContext();
 
     const initListener = useRef(false);
+    const currentCard = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         console.log(state.value);
         if (isEditingCard(state)) {
             if(initListener.current) {
                 removeEditRequestListener();
+                addOutsideClickListener();
                 initListener.current = false;
             }
         }
         else {
             if(!initListener.current) {
                 addEditRequestListener();
+                removeOutsideClickListener();
                 initListener.current = true;
             }
         }
     }, [state]);
 
     const handleEditRequest = (event: MouseEvent) => {
-        const card = findDailyboardCardAtCursor(event.clientX, event.clientY);
+        const { clientX, clientY } = event;
+        
+        const card = findDailyboardCardAtCursor(clientX, clientY);
 
         if(card) {
+            currentCard.current = card;
+            
             const data = getDailyboardCardData(card);
             send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
+        }
+    }
+
+    const handleOutsideClick = (event: PointerEvent) => {
+        if (!currentCard.current) return;
+        
+        const { clientX, clientY } = event;
+        
+        const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
+        
+        if (clickedCard !== currentCard.current) {
+            currentCard.current = null;
+            send({ type: "CARD_EDIT_CANCELLED" });
         }
     }
 
@@ -39,7 +59,15 @@ export const useEditCardState = () => {
         document.addEventListener("dblclick", handleEditRequest);
     };
 
+    const addOutsideClickListener = () => {
+        document.addEventListener("pointerdown", handleOutsideClick);
+    };
+
     const removeEditRequestListener = () => {
         document.removeEventListener("dblclick", handleEditRequest);
+    };
+
+    const removeOutsideClickListener = () => {
+        document.removeEventListener("pointerdown", handleOutsideClick);
     };
 }
