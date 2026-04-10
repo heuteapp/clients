@@ -24,10 +24,12 @@ export const useEditCardState = () => {
 
         if(!hammerRef.current) {
             hammerRef.current = new Hammer(document.body);
+            const tapRecognizer = hammerRef.current.get('tap');
 
             const focusTap = new Hammer.Tap({ event: 'focustap', taps: 2, interval: 300 });
+            focusTap.recognizeWith(tapRecognizer);
 
-            hammerRef.current.add([focusTap]);
+            hammerRef.current.add(focusTap);
         }
 
         checkEditingState();
