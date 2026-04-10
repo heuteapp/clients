@@ -21,10 +21,10 @@ export type CreateCardEvent =
 
 export type EditCardEvent =
     | { type: "CARD_EDIT_REQUESTED"; cardKey: string }
-    | EditMoveCardEvent
+    | EditPosCardEvent
     | { type: "CARD_EDIT_SUCCEEDED";}
 
-export type EditMoveCardEvent =
-    | { type: "CARD_EDIT_MOVE_REQUESTED"; cardKey: string }
-    | { type: "CARD_EDIT_MOVE_COMPLETED"; cardKey: string; position: GridPosition}
-    | { type: "CARD_EDIT_MOVE_CANCELLED"; cardKey: string }
+export type EditPosCardEvent =
+    | { type: "CARD_EDIT_POS_REQUESTED"; cardKey: string }
+    | { type: "CARD_EDIT_POS_COMPLETED"; cardKey: string; position: GridPosition}
+    | { type: "CARD_EDIT_POS_CANCELLED"; cardKey: string }
