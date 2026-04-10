@@ -42,6 +42,9 @@ export const useEditCardState = () => {
             removeOutsideClickListener();
             initListener.current = true;
 
+            editRequestHammer.current?.destroy();
+            editRequestHammer.current = null;
+            
             const card = currentCard.current!;
 
             if(card) {
@@ -88,8 +91,6 @@ export const useEditCardState = () => {
         const removeEditRequestListener = () => {
             if (editRequestHammer.current) {
                 editRequestHammer.current.off("doubletap", handleEditRequest);
-                editRequestHammer.current.destroy();
-                editRequestHammer.current = null;
             }
         };
 
