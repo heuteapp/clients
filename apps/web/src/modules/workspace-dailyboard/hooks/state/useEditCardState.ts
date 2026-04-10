@@ -14,19 +14,19 @@ export const useEditCardState = () => {
         console.log(state.value);
         if (isEditingCard(state)) {
             if(initListener.current) {
-                removeListener();
+                removeEditRequestListener();
                 initListener.current = false;
             }
         }
         else {
             if(!initListener.current) {
-                addListener();
+                addEditRequestListener();
                 initListener.current = true;
             }
         }
     }, [state]);
 
-    const handleCardEdit = (event: MouseEvent) => {
+    const handleEditRequest = (event: MouseEvent) => {
         const card = findDailyboardCardAtCursor(event.clientX, event.clientY);
 
         if(card) {
@@ -35,11 +35,11 @@ export const useEditCardState = () => {
         }
     }
 
-    const addListener = () => {
-        document.addEventListener("dblclick", handleCardEdit);
+    const addEditRequestListener = () => {
+        document.addEventListener("dblclick", handleEditRequest);
     };
 
-    const removeListener = () => {
-        document.removeEventListener("dblclick", handleCardEdit);
+    const removeEditRequestListener = () => {
+        document.removeEventListener("dblclick", handleEditRequest);
     };
 }
