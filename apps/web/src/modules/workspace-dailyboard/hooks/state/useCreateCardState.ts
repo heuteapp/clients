@@ -16,12 +16,8 @@ export const useCreateCardState = () => {
     const { metrics } = useLayoutContext();
     
     useEffect(() => {
-        if(isCreatingCard(state)) {
-            return resolveCreatingCard();
-        }
-    }, [state]);
+        if(!isCreatingCard(state)) return;
 
-    const resolveCreatingCard = () => {
         const ghostCard = document.createElement("div");
         ghostCard.id = "dailyboard-ghost-card";
 
@@ -187,5 +183,5 @@ export const useCreateCardState = () => {
             window.removeEventListener("touchmove", onTouchMove);
             window.removeEventListener("touchend", onTouchEnd);
         };
-    }
+    }, [state]);
 }
