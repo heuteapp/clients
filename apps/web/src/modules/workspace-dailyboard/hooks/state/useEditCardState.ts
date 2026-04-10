@@ -15,20 +15,24 @@ export const useEditCardState = () => {
     const initListener = useRef(false);
     const currentCard = useRef<HTMLElement | null>(null);
     
-    const editRequestHammer = useRef<HammerManager | null>(null);
+    const hammerRef = useRef<HammerManager | null>(null);
 
     useEffect(() => {
+        if(!Hammer) return;
+
         console.log(state.value);
+
+        if(!hammerRef.current) {
+            hammerRef.current = new Hammer(document.body);
+        }
+
         checkEditingState();
     }, [state, Hammer]);
 
     const checkEditingState = () => {
-        if(!Hammer) return;
 
         const entryEditingState = () => {
             removeEditRequestListener();
-            editRequestHammer.current?.destroy();
-            editRequestHammer.current = null;
 
             addOutsideClickListener();
             initListener.current = false;
@@ -40,7 +44,6 @@ export const useEditCardState = () => {
         }
 
         const exitEditingState = () => {
-            editRequestHammer.current = new Hammer(document.body);
             addEditRequestListener();
 
             removeOutsideClickListener();
@@ -81,7 +84,7 @@ export const useEditCardState = () => {
         }
 
         const addEditRequestListener = () => {
-            editRequestHammer.current?.on("doubletap", handleEditRequest);
+            hammerRef.current?.on("doubletap", handleEditRequest);
         };
 
         const addOutsideClickListener = () => {
@@ -89,7 +92,7 @@ export const useEditCardState = () => {
         };
 
         const removeEditRequestListener = () => {
-            editRequestHammer.current?.off("doubletap", handleEditRequest);
+            hammerRef.current?.off("doubletap", handleEditRequest);
         };
 
         const removeOutsideClickListener = () => {
