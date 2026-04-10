@@ -26,6 +26,7 @@ function DailyboardCard(props : DailyboardCardProps) {
         <div 
             data-dailyboard-card
             data-dailyboard-card-id={dailyboardCardData.id}
+            data-dailyboard-card-key={dailyboardCardData.name}
             data-dailyboard-card-title={dailyboardCardContent.title}
             data-dailyboard-card-section-name={placement.sectionName}
             data-dailyboard-card-col-index={placement.position.colIndex}
