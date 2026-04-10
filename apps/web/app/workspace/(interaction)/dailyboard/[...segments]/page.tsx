@@ -3,6 +3,7 @@
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
 import { DailyboardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardRoot";
+import { WorkspaceDailyboardView } from "@/src/modules/workspace-dailyboard/components/WorkspaceDailyboardView";
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -29,6 +30,6 @@ export default function WorkspaceDailyboardPage() {
     }
 
     return (
-        <DailyboardRoot data={dailyboard} />
+        <WorkspaceDailyboardView data={dailyboard} />
     )
 }
