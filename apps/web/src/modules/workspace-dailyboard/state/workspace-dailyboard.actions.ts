@@ -50,7 +50,7 @@ export const setGhostCardAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ event }) => {
-        if(event.type === "CREATE_CARD_REQUESTED") {
+        if(event.type === "CARD_CREATE_REQUESTED") {
             return {
                 ghostCard: {
                     size: event.cardSize
@@ -66,7 +66,7 @@ export const unsetGhostCardAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ event }) => {
-        if(event.type === "CREATE_CARD_SUCCEEDED" || event.type === "CREATE_CARD_CANCELLED") {
+        if(event.type === "CARD_CREATE_SUCCEEDED" || event.type === "CARD_CREATE_CANCELLED") {
             return {
                 ghostCard: null
             }
@@ -77,7 +77,7 @@ export const unsetGhostCardAction = createAssign<
 );
 
 export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachineEvent } ) => {
-    if(event.type !== "CREATE_CARD_SUCCEEDED") return;
+    if(event.type !== "CARD_CREATE_SUCCEEDED") return;
 
     const { addCard } = useDailyboardDataStore.getState();
 

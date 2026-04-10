@@ -154,10 +154,10 @@ export const useCreateCardState = () => {
                     position: suggestedCardGridPos ? suggestedCardGridPos : ghostCardGridPos
                 }
 
-                send({ type: "CREATE_CARD_SUCCEEDED", categoryPath, date: date!, placement });
+                send({ type: "CARD_CREATE_SUCCEEDED", categoryPath, date: date!, placement });
             }
             else {
-                send({ type: "CREATE_CARD_CANCELLED" });
+                send({ type: "CARD_CREATE_CANCELLED" });
             }
 
             document.body.removeChild(ghostCard);

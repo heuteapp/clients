@@ -33,7 +33,7 @@ export const workspaceDailyboardMachine = setup({
             states: {
                 "idle": {
                     on: {
-                        FETCH_SOURCES_REQUESTED: {
+                        SOURCES_FETCH_REQUESTED: {
                             target: "fetching sources"
                         }
                     }
@@ -43,7 +43,7 @@ export const workspaceDailyboardMachine = setup({
                         src: "fetchSources",
                         id: "fetch-sources",
                         input: ({ event }) => {
-                            const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "FETCH_SOURCES_REQUESTED" }>;
+                            const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "SOURCES_FETCH_REQUESTED" }>;
                             return {
                                 dailyboardPath: fetchEvent.dailyboardPath,
                             };
@@ -64,22 +64,22 @@ export const workspaceDailyboardMachine = setup({
             states: {
                 "idle": {
                     on: {
-                        CREATE_CARD_REQUESTED: {
+                        CARD_CREATE_REQUESTED: {
                             target: "creating card",
                             actions: ["setGhostCard"]
                         },
-                        FETCH_SOURCES_REQUESTED: {
+                        SOURCES_FETCH_REQUESTED: {
                             target: "#workspace-dailyboard.waiting.fetching sources"
                         }
                     }
                 },
                 "creating card": {
                     on: {
-                        CREATE_CARD_SUCCEEDED: {
+                        CARD_CREATE_SUCCEEDED: {
                             target: "idle",
                             actions: ["createCard"]
                         },
-                        CREATE_CARD_CANCELLED: {
+                        CARD_CREATE_CANCELLED: {
                             target: "idle"
                         }
                     },
