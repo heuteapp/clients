@@ -9,8 +9,11 @@ export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
-  ghostCard: {
+  create: {
     size: GridSize;
+  } | null;
+  edit: {
+    cardKey: string;
   } | null;
 }
 

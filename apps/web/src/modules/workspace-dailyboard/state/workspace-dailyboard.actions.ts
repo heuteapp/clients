@@ -52,7 +52,7 @@ export const setGhostCardAction = createAssign<
     ({ event }) => {
         if(event.type === "CARD_CREATE_REQUESTED") {
             return {
-                ghostCard: {
+                create: {
                     size: event.cardSize
                 }
             }
@@ -68,7 +68,7 @@ export const unsetGhostCardAction = createAssign<
     ({ event }) => {
         if(event.type === "CARD_CREATE_SUCCEEDED" || event.type === "CARD_CREATE_CANCELLED") {
             return {
-                ghostCard: null
+                create: null
             }
         }
 

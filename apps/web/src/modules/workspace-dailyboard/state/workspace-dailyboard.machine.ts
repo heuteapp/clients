@@ -23,7 +23,8 @@ export const workspaceDailyboardMachine = setup({
         dailyboardData: null,
         layoutData: null,
         layoutStyle: null,
-        ghostCard: null
+        create: null,
+        edit: null
     },
     id: "workspace-dailyboard",
     initial: "waiting",
@@ -84,6 +85,9 @@ export const workspaceDailyboardMachine = setup({
                         }
                     },
                     exit: ["unsetGhostCard"]
+                },
+                "editing card": {
+
                 }
             }
         }
