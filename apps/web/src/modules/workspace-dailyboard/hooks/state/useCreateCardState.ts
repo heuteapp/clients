@@ -30,7 +30,7 @@ export const useCreateCardState = () => {
         let suggestedCardPos : Rect | null = null;
 
         document.body.appendChild(ghostCard);
-        const cardUnit = state.context.create?.size || { colSpan: 1, rowSpan: 1 };
+        const cardUnit = state.context.sessions.cardCreate?.size || { colSpan: 1, rowSpan: 1 };
 
         let gridEl : HTMLDivElement | null = null;
         let dailyboardEl : HTMLDivElement | null = null;
