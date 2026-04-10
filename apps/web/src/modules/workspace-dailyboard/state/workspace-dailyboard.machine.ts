@@ -96,16 +96,16 @@ export const isWaiting = (state: WorkspaceDailyboardMachineState): boolean =>
     state.matches("waiting");
 
 export const isWaitingIdle = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ waiting: "idle" });
+    state.matches({ "waiting": "idle" });
 
 export const isFetchingSources = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ waiting: "fetching sources" });
+    state.matches({ "waiting": "fetching sources" });
 
 export const isReady = (state: WorkspaceDailyboardMachineState): boolean => 
     state.matches("ready");
 
 export const isReadyIdle = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ ready: "idle" });
+    state.matches({ "ready": "idle" });
 
 export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ ready: "creating card" });
+    state.matches({ "ready": "creating card" });
