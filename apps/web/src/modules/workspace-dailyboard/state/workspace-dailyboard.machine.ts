@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { createCardAction, resolveSourcesAction, setCardCreateSessionAction, unsetCardCreateSessionAction } from "./workspace-dailyboard.actions";
+import { createCardAction, resolveSourcesAction, setCardCreateSessionAction, setCardEditSessionAction, unsetCardCreateSessionAction, unsetCardEditSessionAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -15,6 +15,8 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
         setCardCreateSession: setCardCreateSessionAction,
         unsetCardCreateSession: unsetCardCreateSessionAction,
+        setCardEditSession: setCardEditSessionAction,
+        unsetCardEditSession: unsetCardEditSessionAction,
         createCard: createCardAction
     }
 }).createMachine({
