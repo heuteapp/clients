@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { isEditingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
@@ -10,13 +12,17 @@ export const useEditCardState = () => {
 
     const initListener = useRef(false);
     const currentCard = useRef<HTMLElement | null>(null);
+    const { Hammer } = useHammerLoader();
+    const hammerInstance = useRef<any>(null);
 
     useEffect(() => {
         console.log(state.value);
         checkEditingState();
-    }, [state]);
+    }, [state, Hammer]);
 
     const checkEditingState = () => {
+        if(!Hammer) return;
+
         const entryEditingState = () => {
             removeEditRequestListener();
             addOutsideClickListener();
@@ -41,10 +47,10 @@ export const useEditCardState = () => {
             }
         }
 
-        const handleEditRequest = (event: MouseEvent) => {
-            const { clientX, clientY } = event;
+        const handleEditRequest = (e: any) => {
+            const { center } = e;
             
-            const card = findDailyboardCardAtCursor(clientX, clientY);
+            const card = findDailyboardCardAtCursor(center.x, center.y);
 
             if(card) {
                 currentCard.current = card;
@@ -67,7 +73,8 @@ export const useEditCardState = () => {
         }
 
         const addEditRequestListener = () => {
-            document.addEventListener("dblclick", handleEditRequest);
+            hammerInstance.current = new Hammer(document.body);
+            hammerInstance.current.on("doubletap", handleEditRequest);
         };
 
         const addOutsideClickListener = () => {
@@ -75,15 +82,17 @@ export const useEditCardState = () => {
         };
 
         const removeEditRequestListener = () => {
-            document.removeEventListener("dblclick", handleEditRequest);
+            if (hammerInstance.current) {
+                hammerInstance.current.off("doubletap", handleEditRequest);
+                hammerInstance.current.destroy();
+                hammerInstance.current = null;
+            }
         };
 
         const removeOutsideClickListener = () => {
             document.removeEventListener("pointerdown", handleOutsideClick);
         };
         
-        //
-
         if (isEditingCard(state)) {
             if(initListener.current) {
                 entryEditingState();
@@ -95,4 +104,24 @@ export const useEditCardState = () => {
             }
         }
     }
+}
+
+export function useHammerLoader() {
+  const [Hammer, setHammer] = useState<HammerStatic | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    import("hammerjs")
+      .then((module) => {
+        setHammer(() => module.default);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setLoading(false);
+      });
+  }, []);
+
+  return { Hammer, loading, error };
 }
