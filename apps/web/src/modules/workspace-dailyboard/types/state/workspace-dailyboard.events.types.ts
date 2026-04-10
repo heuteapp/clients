@@ -1,6 +1,6 @@
 import { DailyboardResponse } from "@/src/api/models/responses/dailyboard.response";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
-import { GridSize } from "@/src/modules/shared/types/common";
+import { GridPosition, GridSize, Pointer } from "@/src/modules/shared/types/common";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
@@ -18,3 +18,13 @@ export type CreateCardEvent =
         placement: DailyboardCardPlacement;
         }
     | { type: "CARD_CREATE_CANCELLED" };
+
+export type EditCardEvent =
+    | { type: "CARD_EDIT_REQUESTED"; cardKey: string }
+    | EditMoveCardEvent
+    | { type: "CARD_EDIT_SUCCEEDED";}
+
+export type EditMoveCardEvent =
+    | { type: "CARD_EDIT_MOVE_REQUESTED"; cardKey: string }
+    | { type: "CARD_EDIT_MOVE_COMPLETED"; cardKey: string; position: GridPosition}
+    | { type: "CARD_EDIT_MOVE_CANCELLED"; cardKey: string }
