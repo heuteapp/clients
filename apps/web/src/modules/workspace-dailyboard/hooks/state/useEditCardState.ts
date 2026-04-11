@@ -1,284 +1,237 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { isEditingCard, isEditingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
-import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 import { useDailyboardCardDragPlacement } from "../../../tools-dailyboard/hooks/useDailyboardCardDragPlacement";
 
 export const useEditCardState = () => {
     const { Hammer } = useHammerLoader();
-
     const { send, state } = useWorkspaceDailyboardContext();
-    const { metrics } = useLayoutContext();
-
     const { dragCard } = useDailyboardCardDragPlacement();
-
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata;
+
+    // Refs for latest values
+    const categoryPathRef = useRef(categoryPath);
+    const dateRef = useRef(date);
+    const sendRef = useRef(send);
+    const dragCardRef = useRef(dragCard);
+
+    useEffect(() => {
+        categoryPathRef.current = categoryPath;
+        dateRef.current = date;
+        sendRef.current = send;
+        dragCardRef.current = dragCard;
+    }, [categoryPath, date, send, dragCard]);
+
+    const hammerRef = useRef<HammerManager | null>(null);
+    const currentCard = useRef<HTMLElement | null>(null);
+    const focusTapCard = useRef<HTMLElement | null>(null);
+    const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
+    const focusPanPosRequest = useRef<boolean>(false);
+    const isMounted = useRef(true);
 
     const initFocusState = useRef(false);
     const initEditingState = useRef(false);
     const initEditingPosState = useRef(false);
 
-    const focusTapCard = useRef<HTMLElement | null>(null);
-    const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
+    // ---------- Helper Functions ----------
+    const sendEditRequest = useCallback((card: HTMLElement) => {
+        currentCard.current = card;
 
-    const focusPanPosRequest = useRef<boolean>(false);
+        const data = getDailyboardCardData(card);
+        sendRef.current({
+            type: "CARD_EDIT_REQUESTED",
+            categoryPath: categoryPathRef.current,
+            date: dateRef.current!,
+            cardKey: data.key,
+        });
+    }, []);
 
-    const currentCard = useRef<HTMLElement | null>(null);
-    
-    const hammerRef = useRef<HammerManager | null>(null);
+    const sendEditMoveRequest = useCallback((card: HTMLElement) => {
+        focusPanPosRequest.current = true;
+        sendEditRequest(card);
+    }, [sendEditRequest]);
 
-    useEffect(() => {
-        if(!Hammer) return;
+    const sendEditCancel = useCallback(() => {
+        sendRef.current({ type: "CARD_EDIT_CANCELLED" });
+    }, []);
 
-        console.log(state.value);
+    // ---------- Event Handlers ----------
+    const handleFocusTap = useCallback((e: HammerInput) => {
+        const { center } = e;
+        const card = findDailyboardCardAtCursor(center.x, center.y);
+        if (!card) return;
 
-        if(!hammerRef.current) {
-            hammerRef.current = new Hammer(document.body);
-
-            const tapRecognizer = hammerRef.current.get('tap');
-            const pressRecognizer = hammerRef.current.get('press');
-            const panRecognizer = hammerRef.current.get('pan');
-
-            const focusTap = new Hammer.Tap({ event: 'focustap', taps: 1, interval: 300 });
-            focusTap.recognizeWith(tapRecognizer);
-
-            const focusPress = new Hammer.Press({ event: 'focuspress', time: 200 });
-            focusPress.recognizeWith(pressRecognizer);
-
-            const focusPan = new Hammer.Pan({ event: 'focuspan', threshold: 10, pointers: 0 });
-            focusPan.recognizeWith(panRecognizer);
-
-            const editingPosPan = new Hammer.Pan({ event: 'editingpospan', threshold: 15, pointers: 0 });
-            editingPosPan.recognizeWith([panRecognizer, focusPan]);
-
-            hammerRef.current.add(focusTap);
-            hammerRef.current.add(focusPress);
-            hammerRef.current.add(focusPan);
-            hammerRef.current.add(editingPosPan);
-        }
-
-        checkEditingState();
-    }, [state, Hammer]);
-
-    const checkEditingState = () => {
-
-        const entryFocusState = () => {
-            addFocusListeners();
-
-            initFocusState.current = true;
-        }
-
-        const entryEditingState = () => {
-            addEditingListeners();
-
-            const card = currentCard.current;
-            if(card) {
-                card.classList.add("editing");
-            }
-
-            if(focusPanPosRequest.current) {
-                send({ type: "CARD_EDIT_POS_REQUESTED" });
-                focusPanPosRequest.current = false;
-            }
-
-            initEditingState.current = true;
-        }
-
-        const entryEditingPosState = () => {
-            addEditingPosListeners();
-
-            const { colSpan, rowSpan, key } = getDailyboardCardData(currentCard.current!);
-
-            dragCard({ cardSize: { colSpan, rowSpan }, targetCardKey: key }, (result) => {
-                if(result.success && result.placement) {
-                    send({ type: 'CARD_EDIT_POS_COMPLETED', placement: result.placement });
-                }
-            });
-
-            const card = currentCard.current;
-            if(card) {
-                card.classList.add("moving");
-            }
-
-            initEditingPosState.current = true;
-        }
-
-        const exitFocusState = () => {
-            removeFocusListeners();
-
-            focusTapCard.current = null;
-
-            if(focusTapResetTimeout.current) {
-                clearTimeout(focusTapResetTimeout.current);
-            }
-
-            initFocusState.current = false;
-        }
-
-        const exitEditingState = () => {
-            removeEditingListeners();
-
-            const card = currentCard.current!;
-
-            if(card) {
-                card.classList.remove("editing");
-                currentCard.current = null;
-            }
-
-            initEditingState.current = false;
-        }
-
-        const exitEditingPosState = () => {
-            removeEditingPosListeners();
-
-            const card = currentCard.current;
-
-            if(card) {
-                card.classList.remove("moving");
-            }
-
-            initEditingPosState.current = false;
-        }
-
-        //
-
-        const sendEditRequest = (card: HTMLElement) => {
-            currentCard.current = card;
-            
-            const data = getDailyboardCardData(card);
-            send({ type: "CARD_EDIT_REQUESTED", categoryPath, date: date!, cardKey: data.key })
-        }
-
-        const sendEditMoveRequest = (card: HTMLElement) => {
-            sendEditRequest(card);
-            focusPanPosRequest.current = true;
-        }
-
-        const sendEditCancel = () => {
-            send({ type: "CARD_EDIT_CANCELLED" });
-        }
-
-        //
-
-        const handleFocusTap = (e: any) => {
-            const { center } = e;
-
-            const card = findDailyboardCardAtCursor(center.x, center.y);
-
-            if(card) {
-                if(!focusTapCard.current) {
-                    focusTapCard.current = card;
-
-                    focusTapResetTimeout.current = setTimeout(() => {
-                        focusTapCard.current = null;
-                    }, 300);
-                }
-                else {
-                    if(focusTapCard.current === card) {
-                        clearTimeout(focusTapResetTimeout.current!);
-
-                        sendEditRequest(card);
-                    }
-                }
+        if (!focusTapCard.current) {
+            focusTapCard.current = card;
+            focusTapResetTimeout.current = setTimeout(() => {
+                if (isMounted.current) focusTapCard.current = null;
+            }, 300);
+        } else {
+            if (focusTapCard.current === card) {
+                if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+                sendEditRequest(card);
             }
         }
+    }, [sendEditRequest]);
 
-        const handleFocusPress = (e: any) => {
-            if(focusTapCard.current) {
-                clearTimeout(focusTapResetTimeout.current!);
-
-                sendEditRequest(focusTapCard.current);
-            }
+    const handleFocusPress = useCallback(() => {
+        if (focusTapCard.current) {
+            if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+            sendEditRequest(focusTapCard.current);
         }
+    }, [sendEditRequest]);
 
-        const handleFocusPan = (e: any) => {
-            if(focusTapCard.current) {
-                clearTimeout(focusTapResetTimeout.current!);
-
-                sendEditMoveRequest(focusTapCard.current);
-            }
+    const handleFocusPan = useCallback(() => {
+        if (focusTapCard.current) {
+            if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+            sendEditMoveRequest(focusTapCard.current);
         }
+    }, [sendEditMoveRequest]);
 
-        const handleEditingPointerDown = (event: PointerEvent) => {
-            if (!currentCard.current) return;
-            
-            const { clientX, clientY } = event;
-            
-            const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
-            
-            if (clickedCard !== currentCard.current) {
-                sendEditCancel();
-            }
-        }
-
-        const handleEditingPosPan = (e: any) => {
-            console.log("Editing pos pan detected, sending move request");
-        }
-
-        const handleEditingPosPanEnd = (e: any) => {
+    const handleEditingPointerDown = useCallback((event: PointerEvent) => {
+        if (!currentCard.current) return;
+        const { clientX, clientY } = event;
+        const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
+        if (clickedCard !== currentCard.current) {
             sendEditCancel();
         }
+    }, [sendEditCancel]);
 
-        const addFocusListeners = () => {
-            hammerRef.current?.on("focustap", handleFocusTap);
-            hammerRef.current?.on("focuspress", handleFocusPress);
-            hammerRef.current?.on("focuspan", handleFocusPan);
-        };
+    const handleEditingPosPan = useCallback(() => {}, []);
+    const handleEditingPosPanEnd = useCallback(() => {
+        sendEditCancel();
+    }, [sendEditCancel]);
 
-        const addEditingListeners = () => {
-            document.addEventListener("pointerdown", handleEditingPointerDown);
-        };
+    // ---------- State Entry/Exit ----------
+    const entryFocusState = useCallback(() => {
+        if (!hammerRef.current) return;
+        hammerRef.current.on("focustap", handleFocusTap);
+        hammerRef.current.on("focuspress", handleFocusPress);
+        hammerRef.current.on("focuspan", handleFocusPan);
+        initFocusState.current = true;
+    }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
-        const addEditingPosListeners = () => {
-            hammerRef.current?.on("editingpospan", handleEditingPosPan);
-            hammerRef.current?.on("editingpospanend", handleEditingPosPanEnd);
+    const exitFocusState = useCallback(() => {
+        if (!hammerRef.current) return;
+        hammerRef.current.off("focustap", handleFocusTap);
+        hammerRef.current.off("focuspress", handleFocusPress);
+        hammerRef.current.off("focuspan", handleFocusPan);
+        if (focusTapResetTimeout.current) {
+            clearTimeout(focusTapResetTimeout.current);
+            focusTapResetTimeout.current = null;
         }
+        focusTapCard.current = null;
+        initFocusState.current = false;
+    }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
-        const removeFocusListeners = () => {
-            hammerRef.current?.off("focustap", handleFocusTap);
-            hammerRef.current?.off("focuspress", handleFocusPress);
-            hammerRef.current?.off("focuspan", handleFocusPan);
-        };
+    const entryEditingState = useCallback(() => {
+        document.addEventListener("pointerdown", handleEditingPointerDown);
+        const card = currentCard.current;
+        if (card) card.classList.add("editing");
+        if (focusPanPosRequest.current) {
+            sendRef.current({ type: "CARD_EDIT_POS_REQUESTED" });
+            focusPanPosRequest.current = false;
+        }
+        initEditingState.current = true;
+    }, [handleEditingPointerDown]);
 
-        const removeEditingListeners = () => {
+    const exitEditingState = useCallback(() => {
+        document.removeEventListener("pointerdown", handleEditingPointerDown);
+        const card = currentCard.current;
+        if (card) {
+            card.classList.remove("editing");
+            currentCard.current = null;
+        }
+        initEditingState.current = false;
+    }, [handleEditingPointerDown]);
+
+    const entryEditingPosState = useCallback(() => {
+        if (!hammerRef.current) return;
+        hammerRef.current.on("editingpospan", handleEditingPosPan);
+        hammerRef.current.on("editingpospanend", handleEditingPosPanEnd);
+        const card = currentCard.current;
+        if (!card) return;
+        const { colSpan, rowSpan, key } = getDailyboardCardData(card);
+        let isActive = true;
+        dragCardRef.current({ cardSize: { colSpan, rowSpan }, targetCardKey: key }, (result) => {
+            if (!isActive || !isMounted.current) return;
+            if (result.success && result.placement) {
+                sendRef.current({ type: "CARD_EDIT_POS_COMPLETED", placement: result.placement });
+            }
+        });
+        card.classList.add("moving");
+        initEditingPosState.current = true;
+        return () => { isActive = false; };
+    }, [handleEditingPosPan, handleEditingPosPanEnd]);
+
+    const exitEditingPosState = useCallback(() => {
+        if (!hammerRef.current) return;
+        hammerRef.current.off("editingpospan", handleEditingPosPan);
+        hammerRef.current.off("editingpospanend", handleEditingPosPanEnd);
+        const card = currentCard.current;
+        if (card) card.classList.remove("moving");
+        initEditingPosState.current = false;
+    }, [handleEditingPosPan, handleEditingPosPanEnd]);
+
+    // ---------- Hammer Setup ----------
+    useEffect(() => {
+        if (!Hammer) return;
+        if (!hammerRef.current) {
+            const hammer = new Hammer(document.body);
+            const tapRecognizer = hammer.get("tap");
+            const pressRecognizer = hammer.get("press");
+            const panRecognizer = hammer.get("pan");
+
+            const focusTap = new Hammer.Tap({ event: "focustap", taps: 1, interval: 300 });
+            focusTap.recognizeWith(tapRecognizer);
+
+            const focusPress = new Hammer.Press({ event: "focuspress", time: 200 });
+            focusPress.recognizeWith(pressRecognizer);
+
+            const focusPan = new Hammer.Pan({ event: "focuspan", threshold: 10, pointers: 0 });
+            focusPan.recognizeWith(panRecognizer);
+            
+            const editingPosPan = new Hammer.Pan({ event: "editingpospan", threshold: 15, pointers: 0 });
+            editingPosPan.recognizeWith([panRecognizer, focusPan]);
+
+            hammer.add(focusTap);
+            hammer.add(focusPress);
+            hammer.add(focusPan);
+            hammer.add(editingPosPan);
+            hammerRef.current = hammer;
+        }
+        return () => {
+            isMounted.current = false;
+            if (hammerRef.current) {
+                hammerRef.current.destroy();
+                hammerRef.current = null;
+            }
+            if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
             document.removeEventListener("pointerdown", handleEditingPointerDown);
         };
+    }, [Hammer, handleEditingPointerDown]);
 
-        const removeEditingPosListeners = () => {
-            hammerRef.current?.off("editingpospan", handleEditingPosPan);
-            hammerRef.current?.off("editingpospanend", handleEditingPosPanEnd);
-        }
-        
+    useEffect(() => {
+        if (!hammerRef.current) return;
         if (isEditingCard(state)) {
-            if(initFocusState.current) {
-                exitFocusState();
-            }
-
-            if(isEditingCardMoving(state) && !initEditingPosState.current) {
+            if (initFocusState.current) exitFocusState();
+            if (isEditingCardMoving(state) && !initEditingPosState.current) {
                 entryEditingPosState();
-            }
-
-            if(!initEditingState.current) {
-                entryEditingState();
-            }
-        }
-        else {
-            if(!initFocusState.current) {
-                entryFocusState();
-            }
-
-            if(!isEditingCardMoving(state) && initEditingState.current) {
+            } else if (!isEditingCardMoving(state) && initEditingPosState.current) {
                 exitEditingPosState();
             }
-
-            if(initEditingState.current) {
-                exitEditingState();
+            if (!initEditingState.current) {
+                entryEditingState();
             }
+        } else {
+            if (!initFocusState.current) entryFocusState();
+            if (initEditingPosState.current) exitEditingPosState();
+            if (initEditingState.current) exitEditingState();
         }
-    }
-}
+    }, [state, entryFocusState, exitFocusState, entryEditingState, exitEditingState, entryEditingPosState, exitEditingPosState]);
+};
