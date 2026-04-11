@@ -7,7 +7,7 @@ import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPoi
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 import { useEffect, useRef, useState } from "react";
 
-export const useGhostCard = () => {
+export const useCardPlacementByDrag = () => {
     const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
     const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement | null) => void) | null>(null);  
       
@@ -51,7 +51,7 @@ export const useGhostCard = () => {
 
     //
 
-    const start = (cardSize: GridSize, onFinish: (placement: DailyboardCardPlacement | null) => void) => {
+    const drag = (cardSize: GridSize, onFinish: (placement: DailyboardCardPlacement | null) => void) => {
         if(!stateRef.current) {
             setState({ cardSize });
             onFinishCallbackRef.current = onFinish;
@@ -61,9 +61,10 @@ export const useGhostCard = () => {
         return false;
     }
 
-    const finish = () => {
+    const drop = () => {
         if(stateRef.current) {
             setState(null);
+
             if(destroy()) {
                 onFinishCallbackRef.current?.(resolvePlacement());
                 return true;
@@ -79,10 +80,7 @@ export const useGhostCard = () => {
         const { x, y } = event.center;
         updateGhostCard(x, y);
     }
-
-    const handleGhostCardPanEnd = (event: HammerInput) => {
-        finish();
-    }
+    
     //
 
     const initialize = () => {
@@ -96,7 +94,7 @@ export const useGhostCard = () => {
 
         document.body.appendChild(ghostCardElement.current);
         hammerRef.current?.on("ghostcardpan", handleGhostCardPan);
-        hammerRef.current?.on("ghostcardpanend", handleGhostCardPanEnd);
+        hammerRef.current?.on("ghostcardpanend", drop);
 
         return true;
     }
@@ -113,7 +111,7 @@ export const useGhostCard = () => {
         }
 
         hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
-        hammerRef.current?.off("ghostcardpanend", handleGhostCardPanEnd);
+        hammerRef.current?.off("ghostcardpanend", drop);
 
         dailyboardElement.current = null;
         return true;
@@ -255,5 +253,5 @@ export const useGhostCard = () => {
         }
     };
 
-    return { start };
+    return { start: drag };
 }

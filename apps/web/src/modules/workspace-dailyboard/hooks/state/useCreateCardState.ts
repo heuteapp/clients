@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
-import { useGhostCard } from "../helpers/useGhostCard";
+import { useCardPlacementByDrag } from "../helpers/useGhostCard";
 
 export const useCreateCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata;
 
     const { send, state } = useWorkspaceDailyboardContext();
-    const { start } = useGhostCard();
+    const { start } = useCardPlacementByDrag();
     
     useEffect(() => {
         if(isCreatingCard(state)) {
