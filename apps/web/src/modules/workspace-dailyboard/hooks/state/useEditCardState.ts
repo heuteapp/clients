@@ -91,7 +91,7 @@ export const useEditCardState = () => {
 
             const { colSpan, rowSpan } = getDailyboardCardData(currentCard.current!);
 
-            dragCard({ colSpan, rowSpan }, (placement) => {
+            dragCard({ cardSize: { colSpan, rowSpan } }, (placement) => {
                 console.log("Edit card moved, new placement:", placement);
             });
 

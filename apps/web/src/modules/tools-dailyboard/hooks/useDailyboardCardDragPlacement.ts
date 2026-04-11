@@ -6,12 +6,13 @@ import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext
 import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 import { useEffect, useRef, useState } from "react";
+import { DailyboardCardPlacementResult, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
 
 export const useDailyboardCardDragPlacement = () => {
-    const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
+    const [state, setState] = useState<DailyboardCardPlacementState | null>(null);
       
     const stateRef = useRef(state);
-    const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement | null) => void) | null>(null);  
+    const onFinishCallbackRef = useRef<((result: DailyboardCardPlacementResult) => void) | null>(null);  
     
     const { metrics } = useLayoutContext();
 
@@ -51,9 +52,9 @@ export const useDailyboardCardDragPlacement = () => {
 
     //
 
-    const drag = (cardSize: GridSize, onFinish: (placement: DailyboardCardPlacement | null) => void) => {
+    const drag = (input: DailyboardCardPlacementState, onFinish: (result: DailyboardCardPlacementResult) => void) => {
         if(!stateRef.current) {
-            setState({ cardSize });
+            setState(input);
             onFinishCallbackRef.current = onFinish;
             return initialize();
         }
@@ -64,7 +65,7 @@ export const useDailyboardCardDragPlacement = () => {
     const drop = () => {
         if(stateRef.current) {
             setState(null);
-            onFinishCallbackRef.current?.(resolvePlacement());
+            onFinishCallbackRef.current?.(resolveResult());
             return destroy();
         }
 
@@ -123,6 +124,17 @@ export const useDailyboardCardDragPlacement = () => {
         suggestedCardPos.current = null;
 
         return true;
+    }
+
+    const resolveResult = (): DailyboardCardPlacementResult => {
+        const placement = resolvePlacement();
+
+        if(placement) {
+            return { state: state!, success: true, placement };
+        }
+        else {
+            return { state: state!, success: false, placement: null };
+        }
     }
 
     const resolvePlacement = (): DailyboardCardPlacement | null => {

@@ -14,9 +14,9 @@ export const useCreateCardState = () => {
         if(isCreatingCard(state)) {
             const cardSize = state.context.sessions.cardCreate?.size || { colSpan: 4, rowSpan: 3 };
             
-            drag(cardSize, (placement) => {
-                if(placement) {
-                    send({ type: 'CARD_CREATE_SUCCEEDED', categoryPath, date: date!, placement });
+            drag({ cardSize }, (result) => {
+                if(result.success && result.placement) {
+                    send({ type: 'CARD_CREATE_SUCCEEDED', categoryPath, date: date!, placement: result.placement });
                 }
                 else {
                     send({ type: 'CARD_CREATE_CANCELLED' });
