@@ -13,6 +13,10 @@ export const useEditCardState = () => {
     const { metrics } = useLayoutContext();
 
     const initListener = useRef(false);
+
+    const focusTapCard = useRef<HTMLElement | null>(null);
+    const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
+
     const currentCard = useRef<HTMLElement | null>(null);
     
     const hammerRef = useRef<HammerManager | null>(null);
@@ -32,7 +36,7 @@ export const useEditCardState = () => {
             const focusTap = new Hammer.Tap({ event: 'focustap', taps: 1, interval: 300 });
             focusTap.recognizeWith(tapRecognizer);
 
-            const focusPress = new Hammer.Press({ event: 'focuspress', time: 500 });
+            const focusPress = new Hammer.Press({ event: 'focuspress', time: 150 });
             focusPress.recognizeWith(pressRecognizer);
 
             const focusPan = new Hammer.Pan({ event: 'focuspan', threshold: 10, pointers: 0 });
@@ -65,6 +69,7 @@ export const useEditCardState = () => {
             initListener.current = true;
 
             const card = currentCard.current!;
+            focusTapCard.current = null;
 
             if(card) {
                 card.classList.remove("editing");
@@ -74,27 +79,47 @@ export const useEditCardState = () => {
 
         //
 
-        const handleFocus = (e: any) => {
-            const { center } = e;
-
-            const card = findDailyboardCardAtCursor(center.x, center.y);
-
-            if(card) {
-                currentCard.current = card;
-                
-                const data = getDailyboardCardData(card);
-                send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
-            }
+        const handleFocus = (card: HTMLElement) => {
+            currentCard.current = card;
+            
+            const data = getDailyboardCardData(card);
+            send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
         }
 
         //
 
         const handleFocusTap = (e: any) => {
-            console.log("Focus tap detected");
+            const { center } = e;
+
+            const card = findDailyboardCardAtCursor(center.x, center.y);
+
+            if(card) {
+                if(!focusTapCard.current) {
+                    focusTapCard.current = card;
+
+                    focusTapResetTimeout.current = setTimeout(() => {
+                        focusTapCard.current = null;
+                        console.log("Focus tap reset");
+                    }, 300);
+                }
+                else {
+                    if(focusTapCard.current === card) {
+                        console.log("Focus tap detected on card", card);
+                        clearTimeout(focusTapResetTimeout.current!);
+
+                        handleFocus(card);
+                    }
+                }
+            }
         }
 
         const handleFocusPress = (e: any) => {
-            console.log("Focus press detected");
+            if(focusTapCard.current) {
+                console.log("Focus press detected on card", focusTapCard.current);
+                clearTimeout(focusTapResetTimeout.current!);
+
+                handleFocus(focusTapCard.current);
+            }
         }
 
         const handleFocusPan = (e: any) => {
