@@ -107,6 +107,11 @@ export const useGhostCard = () => {
         document.body.removeChild(ghostCardElement.current);
         ghostCardElement.current = null;
 
+        if(suggestedCardElement.current) {
+            document.body.removeChild(suggestedCardElement.current);
+            suggestedCardElement.current = null;
+        }
+
         hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
         hammerRef.current?.off("ghostcardpanend", handleGhostCardPanEnd);
 
