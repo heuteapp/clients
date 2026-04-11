@@ -55,13 +55,13 @@ export const useEditCardState = () => {
     const checkEditingState = () => {
 
         const entryFocusState = () => {
-            addFocusListener();
+            addFocusListeners();
 
             initFocusState.current = true;
         }
 
         const entryEditingState = () => {
-            addEditListener();
+            addEditingListeners();
 
             const card = currentCard.current;
             if(card) {
@@ -86,7 +86,7 @@ export const useEditCardState = () => {
         }
 
         const exitFocusState = () => {
-            removeFocusListener();
+            removeFocusListeners();
 
             focusTapCard.current = null;
 
@@ -98,8 +98,7 @@ export const useEditCardState = () => {
         }
 
         const exitEditingState = () => {
-            removeEditListener();
-
+            removeEditingListeners();
 
             const card = currentCard.current!;
 
@@ -189,23 +188,23 @@ export const useEditCardState = () => {
             }
         }
 
-        const addFocusListener = () => {
+        const addFocusListeners = () => {
             hammerRef.current?.on("focustap", handleFocusTap);
             hammerRef.current?.on("focuspress", handleFocusPress);
             hammerRef.current?.on("focuspan", handleFocusPan);
         };
 
-        const addEditListener = () => {
+        const addEditingListeners = () => {
             document.addEventListener("pointerdown", handleOutsideClick);
         };
 
-        const removeFocusListener = () => {
+        const removeFocusListeners = () => {
             hammerRef.current?.off("focustap", handleFocusTap);
             hammerRef.current?.off("focuspress", handleFocusPress);
             hammerRef.current?.off("focuspan", handleFocusPan);
         };
 
-        const removeEditListener = () => {
+        const removeEditingListeners = () => {
             document.removeEventListener("pointerdown", handleOutsideClick);
         };
         
