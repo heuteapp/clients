@@ -80,7 +80,7 @@ export const useCardPlacementByDrag = () => {
         const { x, y } = event.center;
         updateGhostCard(x, y);
     }
-    
+
     //
 
     const initialize = () => {
@@ -103,17 +103,28 @@ export const useCardPlacementByDrag = () => {
         if(!ghostCardElement.current) return true;
         
         document.body.removeChild(ghostCardElement.current);
-        ghostCardElement.current = null;
 
         if(suggestedCardElement.current) {
             document.body.removeChild(suggestedCardElement.current);
-            suggestedCardElement.current = null;
         }
 
         hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
         hammerRef.current?.off("ghostcardpanend", drop);
 
         dailyboardElement.current = null;
+        sectionElement.current = null;
+        sectionElementData.current = null;
+        gridElement.current = null;
+
+        ghostCardElement.current = null;
+        ghostCardGridPos.current = null;
+        ghostCardPos.current = null;
+        isGhostCardOverlapping.current = false;
+
+        suggestedCardElement.current = null;
+        suggestedCardGridPos.current = null;
+        suggestedCardPos.current = null;
+
         return true;
     }
 
@@ -253,5 +264,5 @@ export const useCardPlacementByDrag = () => {
         }
     };
 
-    return { start: drag };
+    return { drag };
 }
