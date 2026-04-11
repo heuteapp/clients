@@ -36,7 +36,7 @@ export const useEditCardState = () => {
             const focusTap = new Hammer.Tap({ event: 'focustap', taps: 1, interval: 300 });
             focusTap.recognizeWith(tapRecognizer);
 
-            const focusPress = new Hammer.Press({ event: 'focuspress', time: 150 });
+            const focusPress = new Hammer.Press({ event: 'focuspress', time: 200 });
             focusPress.recognizeWith(pressRecognizer);
 
             const focusPan = new Hammer.Pan({ event: 'focuspan', threshold: 10, pointers: 0 });
@@ -115,7 +115,6 @@ export const useEditCardState = () => {
 
         const handleFocusPress = (e: any) => {
             if(focusTapCard.current) {
-                console.log("Focus press detected on card", focusTapCard.current);
                 clearTimeout(focusTapResetTimeout.current!);
 
                 handleFocus(focusTapCard.current);
@@ -123,7 +122,12 @@ export const useEditCardState = () => {
         }
 
         const handleFocusPan = (e: any) => {
-            console.log("Focus pan detected");
+            if(focusTapCard.current) {
+                console.log("Focus pan detected, cancelling focus tap");
+                clearTimeout(focusTapResetTimeout.current!);
+
+                handleFocus(focusTapCard.current);
+            }
         }
 
         const handleOutsideClick = (event: PointerEvent) => {
