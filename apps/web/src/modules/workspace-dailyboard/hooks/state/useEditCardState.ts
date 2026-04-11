@@ -12,7 +12,8 @@ export const useEditCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
     const { metrics } = useLayoutContext();
 
-    const initListener = useRef(false);
+    const initFocusState = useRef(false);
+    const initEditingState = useRef(false);
 
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -52,11 +53,14 @@ export const useEditCardState = () => {
 
     const checkEditingState = () => {
 
+        const entryFocusState = () => {
+            addFocusListener();
+
+            initFocusState.current = true;
+        }
+
         const entryEditingState = () => {
             addEditListener();
-            removeFocusListener();
-
-            initListener.current = false;
 
             const card = currentCard.current;
             if(card) {
@@ -67,21 +71,34 @@ export const useEditCardState = () => {
                 send({ type: "CARD_EDIT_POS_REQUESTED" });
                 focusPanPosRequest.current = false;
             }
+
+            initEditingState.current = true;
+        }
+
+        const exitFocusState = () => {
+            removeFocusListener();
+
+            focusTapCard.current = null;
+
+            if(focusTapResetTimeout.current) {
+                clearTimeout(focusTapResetTimeout.current);
+            }
+
+            initFocusState.current = false;
         }
 
         const exitEditingState = () => {
-            addFocusListener();
             removeEditListener();
 
-            initListener.current = true;
 
             const card = currentCard.current!;
-            focusTapCard.current = null;
 
             if(card) {
                 card.classList.remove("editing");
                 currentCard.current = null;
             }
+
+            initEditingState.current = false;
         }
 
         //
@@ -175,12 +192,20 @@ export const useEditCardState = () => {
         };
         
         if (isEditingCard(state)) {
-            if(initListener.current) {
+            if(initFocusState.current) {
+                exitFocusState();
+            }
+
+            if(!initEditingState.current) {
                 entryEditingState();
             }
         }
         else {
-            if(!initListener.current) {
+            if(!initFocusState.current) {
+                entryFocusState();
+            }
+
+            if(initEditingState.current) {
                 exitEditingState();
             }
         }
