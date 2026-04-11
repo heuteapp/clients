@@ -7,8 +7,13 @@ import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 import { useEffect, useRef, useState } from "react";
 
 export const useGhostCard = () => {
-    const [isActive, setIsActive] = useState(false);
-    const [cardSize, setCardSize] = useState<GridSize | null>(null);
+    const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
+    
+    const stateRef = useRef(state);
+
+    useEffect(() => {
+        stateRef.current = state;
+    }, [state]);
     
     const { metrics } = useLayoutContext();
 
@@ -39,15 +44,13 @@ export const useGhostCard = () => {
 
             hammerRef.current.add(ghostCardPan);
         }
-    }, [isActive, Hammer]);
+    }, [state, Hammer]);
 
     //
 
     const start = (cardSize: GridSize) => {
-        if(!isActive) {
-            setIsActive(true);
-            setCardSize(cardSize);
-
+        if(!state) {
+            setState({ cardSize });
             return initialize();
         }
 
@@ -55,10 +58,8 @@ export const useGhostCard = () => {
     }
 
     const finish = () => {
-        if(isActive) {
-            setIsActive(false);
-            setCardSize(null);
-
+        if(state) {
+            setState(null);
             return destroy();
         }
 
@@ -103,7 +104,9 @@ export const useGhostCard = () => {
     //
 
     const calculatePosition = (clientX: number, clientY: number) => {
-        if(!isActive || !cardSize) return;
+        if(!stateRef.current) return;
+
+        const { cardSize } = stateRef.current;
 
         const size = {
             width: ((metrics.cellSize.grid || 0) * cardSize.colSpan),
