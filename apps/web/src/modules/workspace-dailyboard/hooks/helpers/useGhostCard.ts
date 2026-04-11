@@ -64,11 +64,8 @@ export const useCardPlacementByDrag = () => {
     const drop = () => {
         if(stateRef.current) {
             setState(null);
-
-            if(destroy()) {
-                onFinishCallbackRef.current?.(resolvePlacement());
-                return true;
-            }
+            onFinishCallbackRef.current?.(resolvePlacement());
+            return destroy();
         }
 
         return false;
