@@ -94,8 +94,10 @@ export const useEditCardState = () => {
 
             const { colSpan, rowSpan, key } = getDailyboardCardData(currentCard.current!);
 
-            dragCard({ cardSize: { colSpan, rowSpan }, targetCardKey: key }, (placement) => {
-                console.log("Edit card moved, new placement:", placement);
+            dragCard({ cardSize: { colSpan, rowSpan }, targetCardKey: key }, (result) => {
+                if(result.success && result.placement) {
+                    send({ type: 'CARD_EDIT_POS_COMPLETED', placement: result.placement });
+                }
             });
 
             const card = currentCard.current;
@@ -196,7 +198,6 @@ export const useEditCardState = () => {
 
         const handleFocusPan = (e: any) => {
             if(focusTapCard.current) {
-                console.log("Focus pan detected, cancelling focus tap");
                 clearTimeout(focusTapResetTimeout.current!);
 
                 sendEditMoveRequest(focusTapCard.current);
