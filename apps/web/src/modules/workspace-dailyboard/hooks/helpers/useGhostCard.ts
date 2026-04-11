@@ -49,7 +49,7 @@ export const useGhostCard = () => {
     //
 
     const start = (cardSize: GridSize) => {
-        if(!state) {
+        if(!stateRef.current) {
             setState({ cardSize });
             return initialize();
         }
@@ -58,7 +58,7 @@ export const useGhostCard = () => {
     }
 
     const finish = () => {
-        if(state) {
+        if(stateRef.current) {
             setState(null);
             return destroy();
         }
@@ -96,7 +96,7 @@ export const useGhostCard = () => {
 
     const destroy = () => {
         if(!ghostCardElement.current) return true;
-
+        
         document.body.removeChild(ghostCardElement.current);
         ghostCardElement.current = null;
 
