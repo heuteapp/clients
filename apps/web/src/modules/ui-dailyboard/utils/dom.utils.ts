@@ -1,11 +1,11 @@
 import { GridRect, GridSize } from "../../shared/types/common";
 
-export const findDailyboardInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+export const findDailyboardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-dailyboard]");
     return child || null;
 }
 
-export const findDailyboardClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+export const findDailyboardClosest = (el: Element): HTMLDivElement | null => {
     const parent = el.closest<HTMLDivElement>("[data-dailyboard]");
     return parent || null;
 }
@@ -21,12 +21,12 @@ export const findDailyboardAtCursor = (clientX: number, clientY: number): HTMLDi
     return null;
 }
 
-export const findDailyboardCardInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+export const findDailyboardCardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-dailyboard-card]");
     return child || null;
 }
 
-export const findDailyboardCardClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+export const findDailyboardCardClosest = (el: Element): HTMLDivElement | null => {
     const parent = el.closest<HTMLDivElement>("[data-dailyboard-card]");
     return parent || null;
 }
