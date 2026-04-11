@@ -78,6 +78,8 @@ export const setCardEditSessionAction = createAssign<
     ({ context, event }) => {
         if(event.type === "CARD_EDIT_REQUESTED") {
             context.sessions.cardEdit = {
+                categoryPath: event.categoryPath,
+                date: event.date,
                 cardKey: event.cardKey
             }
         }

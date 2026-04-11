@@ -4,6 +4,7 @@ import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.mac
 import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
 import { GridSize } from "@/src/modules/shared/types/common";
+import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
 export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
@@ -14,6 +15,8 @@ export type WorkspaceDailyboardMachineContext = {
       size: GridSize;
     } | null;
     cardEdit: {
+      categoryPath: string;
+      date: YYMMDDDate;
       cardKey: string;
     } | null;
   }

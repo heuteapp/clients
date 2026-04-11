@@ -16,6 +16,9 @@ export const useEditCardState = () => {
 
     const { dragCard } = useDailyboardCardDragPlacement();
 
+    const { metadata } = useWorkspaceDailyboardContext();
+    const { categoryPath, date } = metadata;
+
     const initFocusState = useRef(false);
     const initEditingState = useRef(false);
     const initEditingPosState = useRef(false);
@@ -146,7 +149,7 @@ export const useEditCardState = () => {
             currentCard.current = card;
             
             const data = getDailyboardCardData(card);
-            send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
+            send({ type: "CARD_EDIT_REQUESTED", categoryPath, date: date!, cardKey: data.key })
         }
 
         const sendEditMoveRequest = (card: HTMLElement) => {
