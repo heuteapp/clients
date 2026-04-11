@@ -72,6 +72,10 @@ export const useGhostCard = () => {
         const { x, y } = event.center;
         updateGhostCard(x, y);
     }
+
+    const handleGhostCardPanEnd = (event: HammerInput) => {
+        finish();
+    }
     //
 
     const initialize = () => {
@@ -85,6 +89,7 @@ export const useGhostCard = () => {
 
         document.body.appendChild(ghostCardElement.current);
         hammerRef.current?.on("ghostcardpan", handleGhostCardPan);
+        hammerRef.current?.on("ghostcardpanend", handleGhostCardPanEnd);
 
         return true;
     }
@@ -96,6 +101,7 @@ export const useGhostCard = () => {
         ghostCardElement.current = null;
 
         hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
+        hammerRef.current?.off("ghostcardpanend", handleGhostCardPanEnd);
 
         dailyboardElement.current = null;
         return true;
