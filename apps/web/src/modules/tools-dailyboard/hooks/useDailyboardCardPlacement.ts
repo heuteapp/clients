@@ -9,13 +9,9 @@ import { useEffect, useRef, useState } from "react";
 
 export const useCardPlacementByDrag = () => {
     const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
-    const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement | null) => void) | null>(null);  
       
     const stateRef = useRef(state);
-
-    useEffect(() => {
-        stateRef.current = state;
-    }, [state]);
+    const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement | null) => void) | null>(null);  
     
     const { metrics } = useLayoutContext();
 
@@ -35,6 +31,10 @@ export const useCardPlacementByDrag = () => {
     const suggestedCardElement = useRef<HTMLDivElement | null>(null);
     const suggestedCardGridPos = useRef<GridRect | null>(null);
     const suggestedCardPos = useRef<Rect | null>(null);
+
+    useEffect(() => {
+        stateRef.current = state;
+    }, [state]);
 
     useEffect(() => {
         if(Hammer && !hammerRef.current) {

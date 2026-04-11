@@ -6,7 +6,7 @@ import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext"
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
-import { useCardPlacementByDrag } from "../helpers/useGhostCard";
+import { useCardPlacementByDrag } from "../../../tools-dailyboard/hooks/useDailyboardCardPlacement";
 
 export const useEditCardState = () => {
     const { Hammer } = useHammerLoader();
