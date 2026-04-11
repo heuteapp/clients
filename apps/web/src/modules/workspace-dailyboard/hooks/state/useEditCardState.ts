@@ -5,6 +5,7 @@ import { isEditingCard, isEditingCardMoving } from "../../state/workspace-dailyb
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 
 export const useEditCardState = () => {
     const { Hammer } = useHammerLoader();
@@ -267,24 +268,4 @@ export const useEditCardState = () => {
             }
         }
     }
-}
-
-export function useHammerLoader() {
-  const [Hammer, setHammer] = useState<HammerStatic | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    import("hammerjs")
-      .then((module) => {
-        setHammer(() => module.default);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
-
-  return { Hammer, loading, error };
 }
