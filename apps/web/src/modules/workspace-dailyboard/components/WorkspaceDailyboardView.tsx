@@ -2,7 +2,7 @@ import { DailyboardRoot } from "../../ui-dailyboard/components/DailyboardRoot";
 import { WorkspaceDailyboardProps } from "../types/workspace-dailyboard.props";
 
 export function WorkspaceDailyboardView({ data }: WorkspaceDailyboardProps) {
-    const padding = "36px";
+    const padding = "72px 36px";
 
     return (
         <div
