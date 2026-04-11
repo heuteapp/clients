@@ -160,7 +160,10 @@ export const updateCardInDailyboardState = <
 
         console.log("Updating card in state with ID:", cardId, "Current card data:", card);
 
-        cardUpdates(card as TDailyboardCardItemContent);
+
+        if(card) {
+            cardUpdates(card as TDailyboardCardItemContent);
+        }
     });
 };
 
