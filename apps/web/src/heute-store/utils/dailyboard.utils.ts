@@ -155,21 +155,12 @@ export const updateCardInDailyboardState = <
 ): DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent> => {
     
     return produce(state, (draft) => {
-        const dailyboardContent = getDailyboardItemContentFromState(state, "me", categoryPath, date);
-        if (!dailyboardContent) return;
+        const cardId = `me@${categoryPath}@${date.raw}/${cardKey}`;
+        const card = draft.cardById[cardId];
 
-        const dailyboardId = dailyboardContent.id;
-        const cardId = `${dailyboardId}/${cardKey}`;
-        
-        const existingCard = draft.cardById[cardId];
-        if (!existingCard) {
-            console.warn(`Card not found with key: ${cardKey}`);
-            return;
-        }
+        console.log("Updating card in state with ID:", cardId, "Current card data:", card);
 
-        cardUpdates(existingCard as TDailyboardCardItemContent);
-
-        return draft;
+        cardUpdates(card as TDailyboardCardItemContent);
     });
 };
 

@@ -15,7 +15,7 @@ function DailyboardCard(props : DailyboardCardProps) {
         return () => {
             registry.unregisterDailyboardCard(dailyboardCardData.id)
         }
-    }, [registry])
+    }, [registry, props.data])
 
     const dailyboardCardContent = dailyboardCardData.material;
     const placement = dailyboardCardData.placement;
