@@ -48,12 +48,7 @@ export const useGhostCard = () => {
             setIsActive(true);
             setCardSize(cardSize);
 
-            dailyboardElement.current = findDailyboardInSubtree(document.body);
-
-            createGhostCard();
-            addListeners();
-
-            return true;
+            return initialize();
         }
 
         return false;
@@ -64,12 +59,7 @@ export const useGhostCard = () => {
             setIsActive(false);
             setCardSize(null);
 
-            dailyboardElement.current = null;
-
-            removeGhostCard();
-            removeListeners();
-
-            return true;
+            return destroy();
         }
 
         return false;
@@ -78,34 +68,36 @@ export const useGhostCard = () => {
     //
 
     const handleGhostCardPan = (event: HammerInput) => {
-        console.log("ghost card pan", event);
+        const { x, y } = event.center;
+        updateGhostCard(x, y);
     }
-
-    const addListeners = () => {
-        hammerRef.current?.on("ghostcardpan", handleGhostCardPan);
-    }
-
-    const removeListeners = () => {
-        hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
-    }
-
     //
 
-    const createGhostCard = () => {
-        if(!dailyboardElement.current) return;
-        if(ghostCardElement.current) return;
+    const initialize = () => {
+        dailyboardElement.current = findDailyboardInSubtree(document.body);
+
+        if(!dailyboardElement.current) return false;
+        if(ghostCardElement.current) return false;
 
         ghostCardElement.current = document.createElement("div");
         ghostCardElement.current.id = "dailyboard-ghost-card";
 
         document.body.appendChild(ghostCardElement.current);
+        hammerRef.current?.on("ghostcardpan", handleGhostCardPan);
+
+        return true;
     }
 
-    const removeGhostCard = () => {
-        if(!ghostCardElement.current) return;
+    const destroy = () => {
+        if(!ghostCardElement.current) return true;
 
         document.body.removeChild(ghostCardElement.current);
         ghostCardElement.current = null;
+
+        hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
+
+        dailyboardElement.current = null;
+        return true;
     }
 
     //
@@ -125,6 +117,7 @@ export const useGhostCard = () => {
         const dailyboardEl = dailyboardElement.current = sectionElement.current ? findDailyboardClosest(sectionElement.current) : null;
 
         const isOverlapping = isGhostCardOverlapping.current = false;
+
 
         if(
             gridEl && 
