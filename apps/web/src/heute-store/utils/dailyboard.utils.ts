@@ -168,6 +168,8 @@ export const updateCardInDailyboardState = <
         }
 
         cardUpdates(existingCard as TDailyboardCardItemContent);
+
+        return draft;
     });
 };
 
