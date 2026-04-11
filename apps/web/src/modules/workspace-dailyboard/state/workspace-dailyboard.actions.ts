@@ -117,3 +117,15 @@ export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachine
 
     addCard(event.categoryPath, event.date, dailyboardCard);
 }
+
+export const moveCardAction = ({ context, event } : { context: WorkspaceDailyboardMachineContext, event: WorkspaceDailyboardMachineEvent } ) => {
+    if(event.type !== "CARD_EDIT_POS_COMPLETED") return;
+    
+    const { categoryPath, date, cardKey } = context.sessions.cardEdit!;
+
+    const { updateCard } = useDailyboardDataStore.getState();
+    
+    updateCard(categoryPath, date, cardKey, (draft) => {
+        draft.placement = event.placement;
+    });
+}
