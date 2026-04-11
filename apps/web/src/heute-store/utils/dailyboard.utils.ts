@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DailyboardBaseSource, DailyboardBaseState, DailyboardCardBaseSource, StoredDailyboardItem, StoredDailyboardItemContent, StoredDailyboardCardItem, StoredDailyboardCardItemContent } from "../types/dailyboard.types";
 
@@ -136,6 +137,39 @@ export const addCardToDailyboardState = <
     state.cardById[cardId] = convertDailyboardCardSourceToItemContent<TDailyboardCardSource, TDailyboardCardItemContent>(cardId, card);
     
     return true;
+};
+
+export const updateCardInDailyboardState = <
+    TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
+    TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
+    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardCardItem extends StoredDailyboardCardItem,
+    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+>(
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
+    categoryPath: string,
+    date: YYMMDDDate,
+    cardKey: string,
+    cardUpdates: (draftCard: TDailyboardCardItemContent) => void
+): boolean => {
+    type DailyboardState = DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>;
+    
+    return produce(state, (draft) => {
+        const dailyboardContent = getDailyboardItemContentFromState(draft as DailyboardState, "me", categoryPath, date);
+        if (!dailyboardContent) return;
+
+        const dailyboardId = dailyboardContent.id;
+        const cardId = `${dailyboardId}/${cardKey}`;
+        
+        const existingCard = draft.cardById[cardId];
+        if (!existingCard) {
+            console.warn(`Card not found with key: ${cardKey}`);
+            return;
+        }
+
+        cardUpdates(existingCard as TDailyboardCardItemContent);
+    }) !== state;
 };
 
 export const removeCardFromDailyboardState = <
