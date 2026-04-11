@@ -3,6 +3,7 @@ import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modul
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
+import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 import { useEffect, useRef, useState } from "react";
 
 export const useGhostCard = () => {
@@ -10,6 +11,9 @@ export const useGhostCard = () => {
     const [cardSize, setCardSize] = useState<GridSize | null>(null);
     
     const { metrics } = useLayoutContext();
+
+    const { Hammer } = useHammerLoader();
+    const hammerRef = useRef<HammerManager | null>(null);
 
     const dailyboardElement = useRef<HTMLDivElement | null>(null);
     const sectionElement = useRef<HTMLDivElement | null>(null);
@@ -25,17 +29,84 @@ export const useGhostCard = () => {
     const suggestedCardPos = useRef<Rect | null>(null);
 
     useEffect(() => {
-        if(isActive && cardSize) {
+        if(Hammer && !hammerRef.current) {
+            hammerRef.current = new Hammer(document.body);
+
+            const pan = hammerRef.current.get('pan');
+
+            const ghostCardPan = new Hammer.Pan({ event: 'ghostcardpan', threshold: 0, pointers: 1 });
+            ghostCardPan.recognizeWith(pan);
+
+            hammerRef.current.add(ghostCardPan);
+        }
+    }, [isActive, Hammer]);
+
+    //
+
+    const start = (cardSize: GridSize) => {
+        if(!isActive) {
+            setIsActive(true);
+            setCardSize(cardSize);
+
             dailyboardElement.current = findDailyboardInSubtree(document.body);
 
             createGhostCard();
+            addListeners();
+
+            return true;
         }
-        else {
+
+        return false;
+    }
+
+    const finish = () => {
+        if(isActive) {
+            setIsActive(false);
+            setCardSize(null);
+
             dailyboardElement.current = null;
 
             removeGhostCard();
+            removeListeners();
+
+            return true;
         }
-    }, [isActive]);
+
+        return false;
+    }
+
+    //
+
+    const handleGhostCardPan = (event: HammerInput) => {
+        console.log("ghost card pan", event);
+    }
+
+    const addListeners = () => {
+        hammerRef.current?.on("ghostcardpan", handleGhostCardPan);
+    }
+
+    const removeListeners = () => {
+        hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
+    }
+
+    //
+
+    const createGhostCard = () => {
+        if(!dailyboardElement.current) return;
+        if(ghostCardElement.current) return;
+
+        ghostCardElement.current = document.createElement("div");
+        ghostCardElement.current.id = "dailyboard-ghost-card";
+
+        document.body.appendChild(ghostCardElement.current);
+    }
+
+    const removeGhostCard = () => {
+        if(!ghostCardElement.current) return;
+
+        document.body.removeChild(ghostCardElement.current);
+        ghostCardElement.current = null;
+    }
 
     //
 
@@ -147,47 +218,6 @@ export const useGhostCard = () => {
             }
         }
     };
-
-    //
-
-    const createGhostCard = () => {
-        if(!dailyboardElement.current) return;
-        if(ghostCardElement.current) return;
-
-        ghostCardElement.current = document.createElement("div");
-        ghostCardElement.current.id = "dailyboard-ghost-card";
-
-        document.body.appendChild(ghostCardElement.current);
-    }
-
-    const removeGhostCard = () => {
-        if(!ghostCardElement.current) return;
-
-        document.body.removeChild(ghostCardElement.current);
-        ghostCardElement.current = null;
-    }
-
-    //
-
-    const start = (cardSize: GridSize) => {
-        if(!isActive) {
-            setIsActive(true);
-            setCardSize(cardSize);
-            return true;
-        }
-
-        return false;
-    }
-
-    const finish = () => {
-        if(isActive) {
-            setIsActive(false);
-            setCardSize(null);
-            return true;
-        }
-
-        return false;
-    }
 
     return { start, finish };
 }
