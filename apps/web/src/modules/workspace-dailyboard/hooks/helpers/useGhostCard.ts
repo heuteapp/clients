@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 
 export const useGhostCard = () => {
     const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
-    const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement) => void) | null>(null);  
+    const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement | null) => void) | null>(null);  
       
     const stateRef = useRef(state);
 
@@ -51,7 +51,7 @@ export const useGhostCard = () => {
 
     //
 
-    const start = (cardSize: GridSize, onFinish: (placement: DailyboardCardPlacement) => void) => {
+    const start = (cardSize: GridSize, onFinish: (placement: DailyboardCardPlacement | null) => void) => {
         if(!stateRef.current) {
             setState({ cardSize });
             onFinishCallbackRef.current = onFinish;
@@ -65,12 +65,7 @@ export const useGhostCard = () => {
         if(stateRef.current) {
             setState(null);
             if(destroy()) {
-                const placement = {
-                    sectionName: sectionElementData.current!.name,
-                    position: ghostCardGridPos.current!
-                }
-
-                onFinishCallbackRef.current?.(placement);
+                onFinishCallbackRef.current?.(resolvePlacement());
                 return true;
             }
         }
@@ -117,6 +112,15 @@ export const useGhostCard = () => {
 
         dailyboardElement.current = null;
         return true;
+    }
+
+    const resolvePlacement = (): DailyboardCardPlacement | null => {
+        if(!sectionElementData.current || !ghostCardGridPos.current) return null;
+
+        return {
+            sectionName: sectionElementData.current.name,
+            position: suggestedCardGridPos.current || ghostCardGridPos.current
+        }
     }
 
     //
