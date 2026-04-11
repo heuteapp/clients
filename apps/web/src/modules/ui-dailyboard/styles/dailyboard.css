@@ -32,6 +32,5 @@
 
 [data-dailyboard-card].editing.moving {
     cursor: grabbing;   
-    box-shadow: 0 0 0 2px blue;
-    opacity: 0.9;
+    opacity: 0.4;
 }
