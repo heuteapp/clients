@@ -190,7 +190,7 @@ export const useEditCardState = () => {
             }
         }
 
-        const handleOutsideClick = (event: PointerEvent) => {
+        const handleEditingPointerDown = (event: PointerEvent) => {
             if (!currentCard.current) return;
             
             const { clientX, clientY } = event;
@@ -217,7 +217,7 @@ export const useEditCardState = () => {
         };
 
         const addEditingListeners = () => {
-            document.addEventListener("pointerdown", handleOutsideClick);
+            document.addEventListener("pointerdown", handleEditingPointerDown);
         };
 
         const addEditingPosListeners = () => {
@@ -232,7 +232,7 @@ export const useEditCardState = () => {
         };
 
         const removeEditingListeners = () => {
-            document.removeEventListener("pointerdown", handleOutsideClick);
+            document.removeEventListener("pointerdown", handleEditingPointerDown);
         };
 
         const removeEditingPosListeners = () => {
