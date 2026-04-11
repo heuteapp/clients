@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { isEditingCard } from "../../state/workspace-dailyboard.machine";
+import { isEditingCard, isEditingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
@@ -14,6 +14,7 @@ export const useEditCardState = () => {
 
     const initFocusState = useRef(false);
     const initEditingState = useRef(false);
+    const initEditingPosState = useRef(false);
 
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -75,6 +76,15 @@ export const useEditCardState = () => {
             initEditingState.current = true;
         }
 
+        const entryEditingPosState = () => {
+            const card = currentCard.current;
+            if(card) {
+                card.classList.add("moving");
+            }
+
+            initEditingPosState.current = true;
+        }
+
         const exitFocusState = () => {
             removeFocusListener();
 
@@ -99,6 +109,16 @@ export const useEditCardState = () => {
             }
 
             initEditingState.current = false;
+        }
+
+        const exitEditingPosState = () => {
+            const card = currentCard.current;
+
+            if(card) {
+                card.classList.remove("moving");
+            }
+
+            initEditingPosState.current = false;
         }
 
         //
@@ -128,12 +148,10 @@ export const useEditCardState = () => {
 
                     focusTapResetTimeout.current = setTimeout(() => {
                         focusTapCard.current = null;
-                        console.log("Focus tap reset");
                     }, 300);
                 }
                 else {
                     if(focusTapCard.current === card) {
-                        console.log("Focus tap detected on card", card);
                         clearTimeout(focusTapResetTimeout.current!);
 
                         sendEditRequest(card);
@@ -196,6 +214,10 @@ export const useEditCardState = () => {
                 exitFocusState();
             }
 
+            if(isEditingCardMoving(state) && !initEditingPosState.current) {
+                entryEditingPosState();
+            }
+
             if(!initEditingState.current) {
                 entryEditingState();
             }
@@ -203,6 +225,10 @@ export const useEditCardState = () => {
         else {
             if(!initFocusState.current) {
                 entryFocusState();
+            }
+
+            if(!isEditingCardMoving(state) && initEditingState.current) {
+                exitEditingPosState();
             }
 
             if(initEditingState.current) {

@@ -25,13 +25,13 @@
     border-color: rgba(196, 196, 59, 0.754);
 }
 
-[data-dailyboard-card].editing.resize-mode {
-    cursor: nw-resize;
-    box-shadow: 0 0 0 2px blue;
+[data-dailyboard-card].editing.resizing {
+    cursor: nw-resize;    
+    box-shadow: 0 0 0 2px green;
 }
 
-[data-dailyboard-card].editing.move-mode {
-    cursor: grabbing;
-    box-shadow: 0 0 0 2px green;
+[data-dailyboard-card].editing.moving {
+    cursor: grabbing;   
+    box-shadow: 0 0 0 2px blue;
     opacity: 0.9;
 }
