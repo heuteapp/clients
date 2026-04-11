@@ -114,6 +114,40 @@ export const useGhostCard = () => {
         }
     };
 
+    const updateGhostCard = (clientX: number, clientY: number) => {
+        const ghostCard = ghostCardElement.current;
+
+        if(!ghostCard) return;
+
+        calculatePosition(clientX, clientY);
+
+        if(!ghostCardPos.current) return;
+        
+        ghostCard.style.left = `${ghostCardPos.current.x}px`;
+        ghostCard.style.top = `${ghostCardPos.current.y}px`;
+        ghostCard.style.width = `${ghostCardPos.current.width}px`;
+        ghostCard.style.height = `${ghostCardPos.current.height}px`;
+
+        if(suggestedCardPos.current) {
+            if(!suggestedCardElement.current) {
+                suggestedCardElement.current = document.createElement("div");
+                suggestedCardElement.current.id = "dailyboard-suggested-card";
+                document.body.appendChild(suggestedCardElement.current);
+            }
+
+            suggestedCardElement.current.style.left = `${suggestedCardPos.current.x}px`;
+            suggestedCardElement.current.style.top = `${suggestedCardPos.current.y}px`;
+            suggestedCardElement.current.style.width = `${suggestedCardPos.current.width}px`;
+            suggestedCardElement.current.style.height = `${suggestedCardPos.current.height}px`;
+        }
+        else {
+            if(suggestedCardElement.current) {
+                document.body.removeChild(suggestedCardElement.current);
+                suggestedCardElement.current = null;
+            }
+        }
+    };
+
     //
 
     const createGhostCard = () => {
