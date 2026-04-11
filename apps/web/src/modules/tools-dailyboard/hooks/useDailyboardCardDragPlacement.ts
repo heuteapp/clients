@@ -273,5 +273,5 @@ export const useDailyboardCardDragPlacement = () => {
         }
     };
 
-    return { drag };
+    return { dragCard: drag };
 }

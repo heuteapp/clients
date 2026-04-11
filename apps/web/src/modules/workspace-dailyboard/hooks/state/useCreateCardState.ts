@@ -8,13 +8,13 @@ export const useCreateCardState = () => {
     const { categoryPath, date } = metadata;
 
     const { send, state } = useWorkspaceDailyboardContext();
-    const { drag } = useDailyboardCardDragPlacement();
+    const { dragCard } = useDailyboardCardDragPlacement();
     
     useEffect(() => {
         if(isCreatingCard(state)) {
             const cardSize = state.context.sessions.cardCreate?.size || { colSpan: 4, rowSpan: 3 };
             
-            drag({ cardSize }, (result) => {
+            dragCard({ cardSize }, (result) => {
                 if(result.success && result.placement) {
                     send({ type: 'CARD_CREATE_SUCCEEDED', categoryPath, date: date!, placement: result.placement });
                 }
@@ -23,5 +23,5 @@ export const useCreateCardState = () => {
                 }
             });
         }
-    }, [state, drag]);
+    }, [state, dragCard]);
 }

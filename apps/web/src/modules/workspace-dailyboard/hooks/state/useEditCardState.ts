@@ -14,7 +14,7 @@ export const useEditCardState = () => {
     const { send, state } = useWorkspaceDailyboardContext();
     const { metrics } = useLayoutContext();
 
-    const { drag: dragCard } = useDailyboardCardDragPlacement();
+    const { dragCard } = useDailyboardCardDragPlacement();
 
     const initFocusState = useRef(false);
     const initEditingState = useRef(false);
