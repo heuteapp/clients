@@ -1,3 +1,4 @@
+import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 import { GridRect, GridSize, Rect } from "@/src/modules/shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/shared/utils/common";
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
@@ -8,7 +9,8 @@ import { useEffect, useRef, useState } from "react";
 
 export const useGhostCard = () => {
     const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
-    
+    const onFinishCallbackRef = useRef<((placement: DailyboardCardPlacement) => void) | null>(null);  
+      
     const stateRef = useRef(state);
 
     useEffect(() => {
@@ -22,6 +24,7 @@ export const useGhostCard = () => {
 
     const dailyboardElement = useRef<HTMLDivElement | null>(null);
     const sectionElement = useRef<HTMLDivElement | null>(null);
+    const sectionElementData = useRef<{ name: string, position: GridRect } | null>(null);
     const gridElement = useRef<HTMLDivElement | null>(null);
 
     const ghostCardElement = useRef<HTMLDivElement | null>(null);
@@ -48,9 +51,10 @@ export const useGhostCard = () => {
 
     //
 
-    const start = (cardSize: GridSize) => {
+    const start = (cardSize: GridSize, onFinish: (placement: DailyboardCardPlacement) => void) => {
         if(!stateRef.current) {
             setState({ cardSize });
+            onFinishCallbackRef.current = onFinish;
             return initialize();
         }
 
@@ -60,7 +64,15 @@ export const useGhostCard = () => {
     const finish = () => {
         if(stateRef.current) {
             setState(null);
-            return destroy();
+            if(destroy()) {
+                const placement = {
+                    sectionName: sectionElementData.current!.name,
+                    position: ghostCardGridPos.current!
+                }
+
+                onFinishCallbackRef.current?.(placement);
+                return true;
+            }
         }
 
         return false;
@@ -125,15 +137,14 @@ export const useGhostCard = () => {
         const sectionEl = sectionElement.current = gridElement.current ? findSectionClosest(gridElement.current) : null;
         const dailyboardEl = dailyboardElement.current = sectionElement.current ? findDailyboardClosest(sectionElement.current) : null;
 
-        const isOverlapping = isGhostCardOverlapping.current = false;
-
+        isGhostCardOverlapping.current = false;
 
         if(
             gridEl && 
             sectionEl && 
             dailyboardEl
         ) {
-            const { name: sectionName, position: gridPos } = getSectionDataForGrid(gridEl)!;
+            const { name: sectionName, position: gridPos } = sectionElementData.current = getSectionDataForGrid(gridEl)!;
 
             const gridRect = gridEl.getBoundingClientRect();
             const cellSize = metrics.cellSize.grid || 0;
@@ -152,7 +163,7 @@ export const useGhostCard = () => {
             const cardRects = cards.map(getDailyboardCardData);
             isGhostCardOverlapping.current = isGridRectOverlappingSome(ghostCardGridPos.current, cardRects);
 
-            if(isOverlapping) {
+            if(isGhostCardOverlapping.current) {
                 const bestPos = findBestGridRectPosition(ghostCardGridPos.current, cardRects, gridSize);
 
                 if (bestPos) {
@@ -172,6 +183,7 @@ export const useGhostCard = () => {
         }
         else {
             sectionElement.current = null;
+            sectionElementData.current= null;
 
             ghostCardGridPos.current = null;
 
@@ -221,5 +233,5 @@ export const useGhostCard = () => {
         }
     };
 
-    return { start, finish };
+    return { start };
 }
