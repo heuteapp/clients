@@ -14,7 +14,6 @@ export const useEditCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata;
 
-    // Refs for latest values
     const categoryPathRef = useRef(categoryPath);
     const dateRef = useRef(date);
     const sendRef = useRef(send);
@@ -95,14 +94,15 @@ export const useEditCardState = () => {
 
     const handleEditingPointerDown = useCallback((event: PointerEvent) => {
         if (!currentCard.current) return;
+
         const { clientX, clientY } = event;
         const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
+
         if (clickedCard !== currentCard.current) {
             sendEditCancel();
         }
     }, [sendEditCancel]);
 
-    const handleEditingPosPan = useCallback(() => {}, []);
     const handleEditingPosPanEnd = useCallback(() => {
         sendEditCancel();
     }, [sendEditCancel]);
@@ -110,21 +110,26 @@ export const useEditCardState = () => {
     // ---------- State Entry/Exit ----------
     const entryFocusState = useCallback(() => {
         if (!hammerRef.current) return;
+
         hammerRef.current.on("focustap", handleFocusTap);
         hammerRef.current.on("focuspress", handleFocusPress);
         hammerRef.current.on("focuspan", handleFocusPan);
         initFocusState.current = true;
+
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
     const exitFocusState = useCallback(() => {
         if (!hammerRef.current) return;
+
         hammerRef.current.off("focustap", handleFocusTap);
         hammerRef.current.off("focuspress", handleFocusPress);
         hammerRef.current.off("focuspan", handleFocusPan);
+
         if (focusTapResetTimeout.current) {
             clearTimeout(focusTapResetTimeout.current);
             focusTapResetTimeout.current = null;
         }
+
         focusTapCard.current = null;
         initFocusState.current = false;
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
@@ -132,51 +137,63 @@ export const useEditCardState = () => {
     const entryEditingState = useCallback(() => {
         document.addEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
+
         if (card) card.classList.add("editing");
         if (focusPanPosRequest.current) {
             sendRef.current({ type: "CARD_EDIT_POS_REQUESTED" });
             focusPanPosRequest.current = false;
         }
+
         initEditingState.current = true;
     }, [handleEditingPointerDown]);
 
     const exitEditingState = useCallback(() => {
         document.removeEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
+
         if (card) {
             card.classList.remove("editing");
             currentCard.current = null;
         }
+
         initEditingState.current = false;
     }, [handleEditingPointerDown]);
 
     const entryEditingPosState = useCallback(() => {
         if (!hammerRef.current) return;
-        hammerRef.current.on("editingpospan", handleEditingPosPan);
+
         hammerRef.current.on("editingpospanend", handleEditingPosPanEnd);
         const card = currentCard.current;
+
         if (!card) return;
+
         const { colSpan, rowSpan, key } = getDailyboardCardData(card);
         let isActive = true;
+
         dragCardRef.current({ cardSize: { colSpan, rowSpan }, targetCardKey: key }, (result) => {
             if (!isActive || !isMounted.current) return;
             if (result.success && result.placement) {
                 sendRef.current({ type: "CARD_EDIT_POS_COMPLETED", placement: result.placement });
             }
         });
+
         card.classList.add("moving");
         initEditingPosState.current = true;
-        return () => { isActive = false; };
-    }, [handleEditingPosPan, handleEditingPosPanEnd]);
+
+        return () => { 
+            isActive = false; 
+        };
+    }, [handleEditingPosPanEnd]);
 
     const exitEditingPosState = useCallback(() => {
         if (!hammerRef.current) return;
-        hammerRef.current.off("editingpospan", handleEditingPosPan);
+
         hammerRef.current.off("editingpospanend", handleEditingPosPanEnd);
         const card = currentCard.current;
+        
         if (card) card.classList.remove("moving");
         initEditingPosState.current = false;
-    }, [handleEditingPosPan, handleEditingPosPanEnd]);
+    }, [handleEditingPosPanEnd]);
 
     // ---------- Hammer Setup ----------
     useEffect(() => {
@@ -211,6 +228,7 @@ export const useEditCardState = () => {
                 hammerRef.current.destroy();
                 hammerRef.current = null;
             }
+
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
             document.removeEventListener("pointerdown", handleEditingPointerDown);
         };
@@ -218,8 +236,10 @@ export const useEditCardState = () => {
 
     useEffect(() => {
         if (!hammerRef.current) return;
+
         if (isEditingCard(state)) {
             if (initFocusState.current) exitFocusState();
+            
             if (isEditingCardMoving(state) && !initEditingPosState.current) {
                 entryEditingPosState();
             } else if (!isEditingCardMoving(state) && initEditingPosState.current) {
