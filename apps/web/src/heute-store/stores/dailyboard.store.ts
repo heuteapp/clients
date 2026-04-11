@@ -91,7 +91,7 @@ export const withDailyboardImmer = <
 
             updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TDailyboardCardItemContent) => void) => {
                 set((state) => {
-                    updateCardInDailyboardState(state as DailyboardState, categoryPath, date, cardKey, cardUpdates);
+                    return updateCardInDailyboardState(state as DailyboardState, categoryPath, date, cardKey, cardUpdates);
                 });
             },
 

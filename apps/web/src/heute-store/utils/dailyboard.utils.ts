@@ -145,18 +145,17 @@ export const updateCardInDailyboardState = <
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
     TDailyboardItemContent extends StoredDailyboardItemContent,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemContent,
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     categoryPath: string,
     date: YYMMDDDate,
     cardKey: string,
     cardUpdates: (draftCard: TDailyboardCardItemContent) => void
-): boolean => {
-    type DailyboardState = DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>;
+): DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent> => {
     
     return produce(state, (draft) => {
-        const dailyboardContent = getDailyboardItemContentFromState(draft as DailyboardState, "me", categoryPath, date);
+        const dailyboardContent = getDailyboardItemContentFromState(state, "me", categoryPath, date);
         if (!dailyboardContent) return;
 
         const dailyboardId = dailyboardContent.id;
@@ -169,7 +168,7 @@ export const updateCardInDailyboardState = <
         }
 
         cardUpdates(existingCard as TDailyboardCardItemContent);
-    }) !== state;
+    });
 };
 
 export const removeCardFromDailyboardState = <
