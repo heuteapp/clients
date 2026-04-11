@@ -17,6 +17,8 @@ export const useEditCardState = () => {
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
 
+    const focusPanPosRequest = useRef<boolean>(false);
+
     const currentCard = useRef<HTMLElement | null>(null);
     
     const hammerRef = useRef<HammerManager | null>(null);
@@ -60,6 +62,11 @@ export const useEditCardState = () => {
             if(card) {
                 card.classList.add("editing");
             }
+
+            if(focusPanPosRequest.current) {
+                send({ type: "CARD_EDIT_POS_REQUESTED" });
+                focusPanPosRequest.current = false;
+            }
         }
 
         const exitEditingState = () => {
@@ -79,11 +86,16 @@ export const useEditCardState = () => {
 
         //
 
-        const handleFocus = (card: HTMLElement) => {
+        const sendEditRequest = (card: HTMLElement) => {
             currentCard.current = card;
             
             const data = getDailyboardCardData(card);
             send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
+        }
+
+        const sendEditMoveRequest = (card: HTMLElement) => {
+            sendEditRequest(card);
+            focusPanPosRequest.current = true;
         }
 
         //
@@ -107,7 +119,7 @@ export const useEditCardState = () => {
                         console.log("Focus tap detected on card", card);
                         clearTimeout(focusTapResetTimeout.current!);
 
-                        handleFocus(card);
+                        sendEditRequest(card);
                     }
                 }
             }
@@ -117,7 +129,7 @@ export const useEditCardState = () => {
             if(focusTapCard.current) {
                 clearTimeout(focusTapResetTimeout.current!);
 
-                handleFocus(focusTapCard.current);
+                sendEditRequest(focusTapCard.current);
             }
         }
 
@@ -126,7 +138,7 @@ export const useEditCardState = () => {
                 console.log("Focus pan detected, cancelling focus tap");
                 clearTimeout(focusTapResetTimeout.current!);
 
-                handleFocus(focusTapCard.current);
+                sendEditMoveRequest(focusTapCard.current);
             }
         }
 
