@@ -198,7 +198,10 @@ export const useDailyboardCardDragPlacement = () => {
             const gap = 8;
             ghostCardPos.current = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos.current);
 
-            const cards = findDailyboardCardsForSection(dailyboardEl, sectionName);
+            const cards = findDailyboardCardsForSection(dailyboardEl, sectionName).filter(card => {
+                const cardData = getDailyboardCardData(card);
+                return cardData.key !== stateRef.current!.targetCardKey;
+            });
 
             const cardRects = cards.map(getDailyboardCardData);
             isGhostCardOverlapping.current = isGridRectOverlappingSome(ghostCardGridPos.current, cardRects);
