@@ -122,10 +122,23 @@ export const useGhostCard = () => {
     const resolvePlacement = (): DailyboardCardPlacement | null => {
         if(!sectionElementData.current || !ghostCardGridPos.current) return null;
 
+        const sectionName = sectionElementData.current.name;
+        const position = resolvePosition();
+
+        if(!position) return null;
+
         return {
-            sectionName: sectionElementData.current.name,
-            position: suggestedCardGridPos.current || ghostCardGridPos.current
+            sectionName,
+            position
         }
+    }
+
+    const resolvePosition = (): GridRect | null => {
+        if(isGhostCardOverlapping.current) {
+            return suggestedCardGridPos.current;
+        }
+
+        return ghostCardGridPos.current;
     }
 
     //
