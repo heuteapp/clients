@@ -10,7 +10,7 @@ import {
     StoredDailyboardCardItemContent 
 } from "../types/dailyboard.types";
 import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
-import { addCardToDailyboardState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState } from "../utils/dailyboard.utils";
+import { addCardToDailyboardState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
 import { DailyboardDataState } from "../types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
@@ -86,6 +86,12 @@ export const withDailyboardImmer = <
             addCard: (categoryPath: string, date: YYMMDDDate, card: TDailyboardCardSource) => {
                 set((state) => {
                     addCardToDailyboardState(state as DailyboardState, categoryPath, date, card);
+                });
+            },
+
+            updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TDailyboardCardItemContent) => void) => {
+                set((state) => {
+                    updateCardInDailyboardState(state as DailyboardState, categoryPath, date, cardKey, cardUpdates);
                 });
             },
 
