@@ -28,7 +28,7 @@ export type EditCardEvent =
 
 export type EditPosCardEvent =
     | { type: "CARD_EDIT_POS_REQUESTED"; }
-    | { type: "CARD_EDIT_POS_COMPLETED"; position: GridPosition}
+    | { type: "CARD_EDIT_POS_COMPLETED"; placement: DailyboardCardPlacement }
     | { type: "CARD_EDIT_POS_CANCELLED"; }
 
 export type EditSizeCardEvent =
