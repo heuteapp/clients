@@ -24,18 +24,21 @@ export const useEditCardState = () => {
 
         if(!hammerRef.current) {
             hammerRef.current = new Hammer(document.body);
+
             const tapRecognizer = hammerRef.current.get('tap');
+            const pressRecognizer = hammerRef.current.get('press');
             const panRecognizer = hammerRef.current.get('pan');
 
-            const focusTap = new Hammer.Tap({ event: 'focustap', taps: 2, interval: 300 });
+            const focusTap = new Hammer.Tap({ event: 'focustap', taps: 1, interval: 300 });
             focusTap.recognizeWith(tapRecognizer);
 
-            const movePan = new Hammer.Pan({ event: 'movepan', threshold: 10, pointers: 0 });
-            movePan.recognizeWith(panRecognizer);
+            const focusPress = new Hammer.Press({ event: 'focuspress', time: 500 });
+            focusPress.recognizeWith(pressRecognizer);
 
-            movePan.requireFailure(focusTap);
+            const focusPan = new Hammer.Pan({ event: 'focuspan', threshold: 10, pointers: 0 });
+            focusPan.recognizeWith(panRecognizer);
 
-            hammerRef.current.add([focusTap, movePan]);
+            hammerRef.current.add([focusTap, focusPress, focusPan]);
         }
 
         checkEditingState();
@@ -44,9 +47,9 @@ export const useEditCardState = () => {
     const checkEditingState = () => {
 
         const entryEditingState = () => {
+            addEditListener();
             removeFocusListener();
 
-            addOutsideClickListener();
             initListener.current = false;
 
             const card = currentCard.current;
@@ -57,10 +60,9 @@ export const useEditCardState = () => {
 
         const exitEditingState = () => {
             addFocusListener();
+            removeEditListener();
 
-            removeOutsideClickListener();
             initListener.current = true;
-
 
             const card = currentCard.current!;
 
@@ -70,9 +72,11 @@ export const useEditCardState = () => {
             }
         }
 
-        const handleFocusTap = (e: any) => {
+        //
+
+        const handleFocus = (e: any) => {
             const { center } = e;
-            
+
             const card = findDailyboardCardAtCursor(center.x, center.y);
 
             if(card) {
@@ -81,6 +85,20 @@ export const useEditCardState = () => {
                 const data = getDailyboardCardData(card);
                 send({ type: "CARD_EDIT_REQUESTED", cardKey: data.key })
             }
+        }
+
+        //
+
+        const handleFocusTap = (e: any) => {
+            console.log("Focus tap detected");
+        }
+
+        const handleFocusPress = (e: any) => {
+            console.log("Focus press detected");
+        }
+
+        const handleFocusPan = (e: any) => {
+            console.log("Focus pan detected");
         }
 
         const handleOutsideClick = (event: PointerEvent) => {
@@ -97,17 +115,21 @@ export const useEditCardState = () => {
 
         const addFocusListener = () => {
             hammerRef.current?.on("focustap", handleFocusTap);
+            hammerRef.current?.on("focuspress", handleFocusPress);
+            hammerRef.current?.on("focuspan", handleFocusPan);
         };
 
-        const addOutsideClickListener = () => {
+        const addEditListener = () => {
             document.addEventListener("pointerdown", handleOutsideClick);
         };
 
         const removeFocusListener = () => {
             hammerRef.current?.off("focustap", handleFocusTap);
+            hammerRef.current?.off("focuspress", handleFocusPress);
+            hammerRef.current?.off("focuspan", handleFocusPan);
         };
 
-        const removeOutsideClickListener = () => {
+        const removeEditListener = () => {
             document.removeEventListener("pointerdown", handleOutsideClick);
         };
         
