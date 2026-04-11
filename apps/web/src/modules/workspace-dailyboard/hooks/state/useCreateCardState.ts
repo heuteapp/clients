@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { isCreatingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
-import { useCardPlacementByDrag } from "../../../tools-dailyboard/hooks/useDailyboardCardPlacement";
+import { useDailyboardCardDragPlacement } from "../../../tools-dailyboard/hooks/useDailyboardCardDragPlacement";
 
 export const useCreateCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata;
 
     const { send, state } = useWorkspaceDailyboardContext();
-    const { drag } = useCardPlacementByDrag();
+    const { drag } = useDailyboardCardDragPlacement();
     
     useEffect(() => {
         if(isCreatingCard(state)) {

@@ -7,7 +7,7 @@ import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPoi
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
 import { useEffect, useRef, useState } from "react";
 
-export const useCardPlacementByDrag = () => {
+export const useDailyboardCardDragPlacement = () => {
     const [state, setState] = useState<{ cardSize: GridSize } | null>(null);
       
     const stateRef = useRef(state);
