@@ -121,6 +121,9 @@ export const workspaceDailyboardMachine = setup({
                                 },
                                 CARD_EDIT_POS_CANCELLED: {
                                     target: "idle",
+                                },
+                                CARD_EDIT_CANCELLED: {
+                                    target: "#workspace-dailyboard.ready.idle"
                                 }
                             },
                         },
@@ -131,6 +134,9 @@ export const workspaceDailyboardMachine = setup({
                                 },
                                 CARD_EDIT_SIZE_CANCELLED: {
                                     target: "idle",
+                                },
+                                CARD_EDIT_CANCELLED: {
+                                    target: "#workspace-dailyboard.ready.idle"
                                 }
                             },
                         },
