@@ -46,7 +46,13 @@ export const useEditCardState = () => {
             const focusPan = new Hammer.Pan({ event: 'focuspan', threshold: 10, pointers: 0 });
             focusPan.recognizeWith(panRecognizer);
 
-            hammerRef.current.add([focusTap, focusPress, focusPan]);
+            const editingPosPan = new Hammer.Pan({ event: 'editingpospan', threshold: 15, pointers: 0 });
+            editingPosPan.recognizeWith([panRecognizer, focusPan]);
+
+            hammerRef.current.add(focusTap);
+            hammerRef.current.add(focusPress);
+            hammerRef.current.add(focusPan);
+            hammerRef.current.add(editingPosPan);
         }
 
         checkEditingState();
@@ -77,6 +83,8 @@ export const useEditCardState = () => {
         }
 
         const entryEditingPosState = () => {
+            addEditingPosListeners();
+
             const card = currentCard.current;
             if(card) {
                 card.classList.add("moving");
@@ -111,6 +119,8 @@ export const useEditCardState = () => {
         }
 
         const exitEditingPosState = () => {
+            removeEditingPosListeners();
+
             const card = currentCard.current;
 
             if(card) {
@@ -188,6 +198,10 @@ export const useEditCardState = () => {
             }
         }
 
+        const handleEditingPosPan = (e: any) => {
+            console.log("Editing pos pan detected, sending move request");
+        }
+
         const addFocusListeners = () => {
             hammerRef.current?.on("focustap", handleFocusTap);
             hammerRef.current?.on("focuspress", handleFocusPress);
@@ -198,6 +212,10 @@ export const useEditCardState = () => {
             document.addEventListener("pointerdown", handleOutsideClick);
         };
 
+        const addEditingPosListeners = () => {
+            hammerRef.current?.on("editingpospan", handleEditingPosPan);
+        }
+
         const removeFocusListeners = () => {
             hammerRef.current?.off("focustap", handleFocusTap);
             hammerRef.current?.off("focuspress", handleFocusPress);
@@ -207,6 +225,10 @@ export const useEditCardState = () => {
         const removeEditingListeners = () => {
             document.removeEventListener("pointerdown", handleOutsideClick);
         };
+
+        const removeEditingPosListeners = () => {
+            hammerRef.current?.off("editingpospan", handleEditingPosPan);
+        }
         
         if (isEditingCard(state)) {
             if(initFocusState.current) {
