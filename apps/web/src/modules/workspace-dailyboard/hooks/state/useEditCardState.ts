@@ -144,6 +144,10 @@ export const useEditCardState = () => {
             focusPanPosRequest.current = true;
         }
 
+        const sendEditCancel = () => {
+            send({ type: "CARD_EDIT_CANCELLED" });
+        }
+
         //
 
         const handleFocusTap = (e: any) => {
@@ -194,12 +198,16 @@ export const useEditCardState = () => {
             const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
             
             if (clickedCard !== currentCard.current) {
-                send({ type: "CARD_EDIT_CANCELLED" });
+                sendEditCancel();
             }
         }
 
         const handleEditingPosPan = (e: any) => {
             console.log("Editing pos pan detected, sending move request");
+        }
+
+        const handleEditingPosPanEnd = (e: any) => {
+            sendEditCancel();
         }
 
         const addFocusListeners = () => {
@@ -214,6 +222,7 @@ export const useEditCardState = () => {
 
         const addEditingPosListeners = () => {
             hammerRef.current?.on("editingpospan", handleEditingPosPan);
+            hammerRef.current?.on("editingpospanend", handleEditingPosPanEnd);
         }
 
         const removeFocusListeners = () => {
@@ -228,6 +237,7 @@ export const useEditCardState = () => {
 
         const removeEditingPosListeners = () => {
             hammerRef.current?.off("editingpospan", handleEditingPosPan);
+            hammerRef.current?.off("editingpospanend", handleEditingPosPanEnd);
         }
         
         if (isEditingCard(state)) {
