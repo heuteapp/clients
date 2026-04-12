@@ -80,7 +80,7 @@ export const setCardEditingSessionAction = createAssign<
             context.sessions.cardEditing = {
                 categoryPath: event.categoryPath,
                 date: event.date,
-                cardKey: event.cardKey
+                cardKey: event.cardKey,
             }
         }
 

@@ -14,7 +14,7 @@ export type WorkspaceDailyboardMachineContext = {
     cardCreation: {
       size: GridSize;
     } | null;
-    cardEditing: {
+    cardEditing: {      
       categoryPath: string;
       date: YYMMDDDate;
       cardKey: string;
