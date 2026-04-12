@@ -11,32 +11,15 @@
 .layout .section {
     align-content: center;
     justify-items: center;
-    transition: background-color 0.2s ease;
 }
+
 .layout .section .grid {
     display: grid;
     align-items: center;
     justify-items: center;
-
-    background: #1a1d24;
-
-    outline: 1px solid #2a2f3a;
-    border-radius: 6px;
-
-    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-
-    transition: 
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
-}
-
-[data-interaction-card-create] .layout .section [data-grid-hover].grid {
-    background: #212630;
-    border-color: #3a4150;
-
-    box-shadow: 
-        0 6px 20px rgba(0,0,0,0.45),
-        0 0 0 1px rgba(90,124,255,0.15);
+    background: rgb(24, 25, 28);
+    backdrop-filter: blur(2px);
+    outline: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
