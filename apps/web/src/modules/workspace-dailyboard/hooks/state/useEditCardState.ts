@@ -40,6 +40,7 @@ export const useEditCardState = () => {
     const currentCard = useRef<HTMLElement | null>(null);
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
+    const placingPanUsed = useRef(false);
     const isMounted = useRef(true);
 
     const initFocusState = useRef(false);
@@ -111,13 +112,16 @@ export const useEditCardState = () => {
     }, [sendEditCancel]);
 
     const handlePlacingPan = useCallback(() => {
-        if(isPlacingCardIdle(stateRef.current)) {
+        if(isPlacingCardIdle(stateRef.current) && !placingPanUsed.current) {
             sendRef.current({ type: "CARD_PLACE_REPOSITION_REQUESTED" });
+            placingPanUsed.current = true;
         }
     }, []);
 
     const handlePlacingPanEnd = useCallback(() => {
-        sendEditCancel();
+        if (placingPanUsed.current) {
+            placingPanUsed.current = false;
+        }
     }, [sendEditCancel]);
 
     // ---------- State Entry/Exit ----------
@@ -151,6 +155,7 @@ export const useEditCardState = () => {
         if (!hammerContext.current) return;
       
         hammerContext.current.manager.on("placingpan", handlePlacingPan);
+        hammerContext.current.manager.on("placingpanend", handlePlacingPanEnd);
         document.addEventListener("pointerdown", handlePlacingPointerDown);
         const card = currentCard.current;
 
@@ -163,6 +168,7 @@ export const useEditCardState = () => {
         if (!hammerContext.current) return;
 
         hammerContext.current.manager.off("placingpan", handlePlacingPan);
+        hammerContext.current.manager.off("placingpanend", handlePlacingPanEnd);
         document.removeEventListener("pointerdown", handlePlacingPointerDown);
         const card = currentCard.current;
 
@@ -177,7 +183,6 @@ export const useEditCardState = () => {
     const entryEditingPosState = useCallback(() => {
         if (!hammerContext.current) return;
 
-        hammerContext.current.manager.on("placingpanend", handlePlacingPanEnd);
         const card = currentCard.current;
 
         if (!card) return;
@@ -191,7 +196,6 @@ export const useEditCardState = () => {
                 sendRef.current({ type: "CARD_PLACE_REPOSITION_COMPLETED", placement: result.placement });
             }
         });
-        console.log("Entering editing position state", card);
 
         card.classList.add("moving");
         initEditingPosState.current = true;
@@ -204,10 +208,7 @@ export const useEditCardState = () => {
     const exitEditingPosState = useCallback(() => {
         if (!hammerContext.current) return;
 
-        hammerContext.current.manager.off("placingpanend", handlePlacingPanEnd);
         const card = currentCard.current;
-
-        console.log("Exiting editing position state", card);
         
         if (card) card.classList.remove("moving");
         initEditingPosState.current = false;
