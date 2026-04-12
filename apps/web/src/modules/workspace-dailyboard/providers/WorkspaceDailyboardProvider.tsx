@@ -10,6 +10,7 @@ import { useLayoutStyleStore } from "@/src/heute-store/stores/layout.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 import { WorkspaceDailyboardStateSideEffects } from "./WorkspaceDailyboardStateSideEffects";
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
+import { WorkspaceDailyboardCardDialog } from "../components/WorkspaceDailyboardCardDialog";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -73,6 +74,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                         <ProviderContent>
                             {children}
                         </ProviderContent>
+                        <WorkspaceDailyboardCardDialog />
                     </WorkspaceDailyboardContext.Provider>
                 </DailyboardProvider>
             </LayoutProvider>
