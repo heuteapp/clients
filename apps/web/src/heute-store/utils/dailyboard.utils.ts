@@ -91,6 +91,24 @@ export const getDailyboardItemContentFromState = <
     return key ? state.byId[key] as TDailyboardItemContent : null;
 };
 
+export const getDailyboardCardItemFromState = <
+    TDailyboardSource extends DailyboardBaseSource,
+    TDailyboardCardSource extends DailyboardCardBaseSource,
+    TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
+    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardCardItem extends StoredDailyboardCardItem,
+    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+>(
+    state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
+    owner: string, 
+    categoryPath: string, 
+    date: YYMMDDDate,
+    cardKey: string
+) => {
+    const cardId = `${owner}@${categoryPath}@${date.raw}/${cardKey}`;
+    return state.cardById[cardId] as unknown as TDailyboardCardItem || null;
+};
+
 export const getDailyboardCardItemContentsFromState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
