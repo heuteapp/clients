@@ -102,13 +102,13 @@ export const useEditCardState = () => {
         }
     }, [sendEditCancel]);
 
-    const handleEditingPosPan = useCallback(() => {
+    const handlePlacingPan = useCallback(() => {
         if(isPlacingCardIdle(stateRef.current)) {
             sendRef.current({ type: "CARD_PLACE_REPOSITION_REQUESTED" });
         }
     }, []);
 
-    const handleEditingPosPanEnd = useCallback(() => {
+    const handlePlacingPanEnd = useCallback(() => {
         sendEditCancel();
     }, [sendEditCancel]);
 
@@ -139,10 +139,10 @@ export const useEditCardState = () => {
         initFocusState.current = false;
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
-    const entryEditingState = useCallback(() => {  
+    const entryPlacingState = useCallback(() => {  
         if (!hammerRef.current) return;
       
-        hammerRef.current.on("editingpospan", handleEditingPosPan);
+        hammerRef.current.on("placingpan", handlePlacingPan);
         document.addEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
 
@@ -151,10 +151,10 @@ export const useEditCardState = () => {
         initEditingState.current = true;
     }, [handleEditingPointerDown]);
 
-    const exitEditingState = useCallback(() => {
+    const exitPlacingState = useCallback(() => {
         if (!hammerRef.current) return;
 
-        hammerRef.current.off("editingpospan", handleEditingPosPan);
+        hammerRef.current.off("placingpan", handlePlacingPan);
         document.removeEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
 
@@ -169,7 +169,7 @@ export const useEditCardState = () => {
     const entryEditingPosState = useCallback(() => {
         if (!hammerRef.current) return;
 
-        hammerRef.current.on("editingpospanend", handleEditingPosPanEnd);
+        hammerRef.current.on("placingpanend", handlePlacingPanEnd);
         const card = currentCard.current;
 
         if (!card) return;
@@ -191,19 +191,19 @@ export const useEditCardState = () => {
         return () => { 
             isActive = false; 
         };
-    }, [handleEditingPosPanEnd]);
+    }, [handlePlacingPanEnd]);
 
     const exitEditingPosState = useCallback(() => {
         if (!hammerRef.current) return;
 
-        hammerRef.current.off("editingpospanend", handleEditingPosPanEnd);
+        hammerRef.current.off("placingpanend", handlePlacingPanEnd);
         const card = currentCard.current;
 
         console.log("Exiting editing position state", card);
         
         if (card) card.classList.remove("moving");
         initEditingPosState.current = false;
-    }, [handleEditingPosPanEnd]);
+    }, [handlePlacingPanEnd]);
 
     // ---------- Hammer Setup ----------
     useEffect(() => {
@@ -223,13 +223,13 @@ export const useEditCardState = () => {
             const focusPan = new Hammer.Pan({ event: "focuspan", threshold: 10, pointers: 0 });
             focusPan.recognizeWith(panRecognizer);
             
-            const editingPosPan = new Hammer.Pan({ event: "editingpospan", threshold: 15, pointers: 0 });
-            editingPosPan.recognizeWith([panRecognizer, focusPan]);
+            const placingPan = new Hammer.Pan({ event: "placingpan", threshold: 15, pointers: 0 });
+            placingPan.recognizeWith([panRecognizer, focusPan]);
 
             hammer.add(focusTap);
             hammer.add(focusPress);
             hammer.add(focusPan);
-            hammer.add(editingPosPan);
+            hammer.add(placingPan);
             hammerRef.current = hammer;
         }
         return () => {
@@ -256,12 +256,12 @@ export const useEditCardState = () => {
                 exitEditingPosState();
             }
             if (!initEditingState.current) {
-                entryEditingState();
+                entryPlacingState();
             }
         } else {
             if (!initFocusState.current) entryFocusState();
             if (initEditingPosState.current) exitEditingPosState();
-            if (initEditingState.current) exitEditingState();
+            if (initEditingState.current) exitPlacingState();
         }
-    }, [state, entryFocusState, exitFocusState, entryEditingState, exitEditingState, entryEditingPosState, exitEditingPosState]);
+    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryEditingPosState, exitEditingPosState]);
 };
