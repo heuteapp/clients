@@ -189,6 +189,9 @@ export const isReadyIdle = (state: WorkspaceDailyboardMachineState): boolean =>
 export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => 
     state.matches({ "ready": "creating card" });
 
+export const isEditingCard = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": "editing card" });
+
 export const isPlacingCard = (state: WorkspaceDailyboardMachineState): boolean => 
     state.matches({ "ready": "placing card" });
 
@@ -200,3 +203,8 @@ export const isPlacingCardMoving = (state: WorkspaceDailyboardMachineState): boo
 
 export const isPlacingCardResizing = (state: WorkspaceDailyboardMachineState): boolean => 
     state.matches({ "ready": { "placing card": "resizing" } });
+
+//
+
+export const isModifyingCard = (state: WorkspaceDailyboardMachineState): boolean =>
+    isEditingCard(state) || isPlacingCard(state);
