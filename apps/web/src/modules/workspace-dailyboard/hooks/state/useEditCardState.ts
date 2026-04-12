@@ -61,6 +61,18 @@ export const useEditCardState = () => {
         });
     }, []);
 
+    const sendEditRequest = useCallback((card: HTMLElement) => {
+        currentCard.current = card;
+        currentCardData.current = getDailyboardCardData(card);
+
+        sendRef.current({
+            type: "CARD_EDIT_REQUESTED",
+            categoryPath: categoryPathRef.current,
+            date: dateRef.current!,
+            cardKey: currentCardData.current.key,
+        });
+    }, []);
+
     // ---------- Event Handlers ----------
     const handleFocusTap = useCallback((e: HammerInput) => {
         const { center } = e;
@@ -70,6 +82,8 @@ export const useEditCardState = () => {
         if (focusTapCard.current) {
             if (focusTapCard.current === card) {
                 if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+
+                sendEditRequest(card);
             }
         } else {
             focusTapCard.current = card;
@@ -82,6 +96,7 @@ export const useEditCardState = () => {
     const handleFocusPress = useCallback(() => {
         if (focusTapCard.current) {
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+
             sendPlaceRequest(focusTapCard.current);
         }
     }, [sendPlaceRequest]);
@@ -89,6 +104,7 @@ export const useEditCardState = () => {
     const handleFocusPan = useCallback(() => {
         if (focusTapCard.current) {
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+            
             sendPlaceRequest(focusTapCard.current);
         }
     }, [sendPlaceRequest]);
