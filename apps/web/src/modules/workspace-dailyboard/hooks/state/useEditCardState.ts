@@ -191,7 +191,7 @@ export const useEditCardState = () => {
         initEditingState.current = false;
     }, [handlePlacingPointerDown]);
 
-    const entryEditingPosState = useCallback(() => {
+    const entryPlacingMoveState = useCallback(() => {
         if (!hammerContext.current) return;
 
         const card = currentCard.current;
@@ -216,7 +216,7 @@ export const useEditCardState = () => {
         };
     }, [handlePlacingPanEnd]);
 
-    const exitEditingPosState = useCallback(() => {
+    const exitPlacingMoveState = useCallback(() => {
         if (!hammerContext.current) return;
 
         const card = currentCard.current;
@@ -283,17 +283,17 @@ export const useEditCardState = () => {
             if (initFocusState.current) exitFocusState();
             
             if (isPlacingCardMoving(stateRef.current) && !initEditingPosState.current) {
-                entryEditingPosState();
+                entryPlacingMoveState();
             } else if (!isPlacingCardMoving(stateRef.current) && initEditingPosState.current) {
-                exitEditingPosState();
+                exitPlacingMoveState();
             }
             if (!initEditingState.current) {
                 entryPlacingState();
             }
         } else {
             if (!initFocusState.current) entryFocusState();
-            if (initEditingPosState.current) exitEditingPosState();
+            if (initEditingPosState.current) exitPlacingMoveState();
             if (initEditingState.current) exitPlacingState();
         }
-    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryEditingPosState, exitEditingPosState]);
+    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryPlacingMoveState, exitPlacingMoveState]);
 };
