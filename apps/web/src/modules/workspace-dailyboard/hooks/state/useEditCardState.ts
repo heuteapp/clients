@@ -28,7 +28,15 @@ export const useEditCardState = () => {
         dragCardRef.current = dragCard;
     }, [state, categoryPath, date, send, dragCard]);
 
-    const hammerRef = useRef<HammerManager | null>(null);
+    const hammerContext = useRef<{
+        manager: HammerManager;
+        focusTap: TapRecognizer | null;
+        focusPress: PressRecognizer | null;
+        focusPan: PanRecognizer | null;
+        placingPan: PanRecognizer | null;
+        placingMovePan: PanRecognizer | null;
+    } | null>(null);
+
     const currentCard = useRef<HTMLElement | null>(null);
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -114,21 +122,21 @@ export const useEditCardState = () => {
 
     // ---------- State Entry/Exit ----------
     const entryFocusState = useCallback(() => {
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
 
-        hammerRef.current.on("focustap", handleFocusTap);
-        hammerRef.current.on("focuspress", handleFocusPress);
-        hammerRef.current.on("focuspan", handleFocusPan);
+        hammerContext.current.manager.on("focustap", handleFocusTap);
+        hammerContext.current.manager.on("focuspress", handleFocusPress);
+        hammerContext.current.manager.on("focuspan", handleFocusPan);
         initFocusState.current = true;
 
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
     const exitFocusState = useCallback(() => {
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
 
-        hammerRef.current.off("focustap", handleFocusTap);
-        hammerRef.current.off("focuspress", handleFocusPress);
-        hammerRef.current.off("focuspan", handleFocusPan);
+        hammerContext.current.manager.off("focustap", handleFocusTap);
+        hammerContext.current.manager.off("focuspress", handleFocusPress);
+        hammerContext.current.manager.off("focuspan", handleFocusPan);
 
         if (focusTapResetTimeout.current) {
             clearTimeout(focusTapResetTimeout.current);
@@ -140,9 +148,9 @@ export const useEditCardState = () => {
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
     const entryPlacingState = useCallback(() => {  
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
       
-        hammerRef.current.on("placingpan", handlePlacingPan);
+        hammerContext.current.manager.on("placingpan", handlePlacingPan);
         document.addEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
 
@@ -152,9 +160,9 @@ export const useEditCardState = () => {
     }, [handleEditingPointerDown]);
 
     const exitPlacingState = useCallback(() => {
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
 
-        hammerRef.current.off("placingpan", handlePlacingPan);
+        hammerContext.current.manager.off("placingpan", handlePlacingPan);
         document.removeEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
 
@@ -167,9 +175,9 @@ export const useEditCardState = () => {
     }, [handleEditingPointerDown]);
 
     const entryEditingPosState = useCallback(() => {
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
 
-        hammerRef.current.on("placingpanend", handlePlacingPanEnd);
+        hammerContext.current.manager.on("placingpanend", handlePlacingPanEnd);
         const card = currentCard.current;
 
         if (!card) return;
@@ -194,9 +202,9 @@ export const useEditCardState = () => {
     }, [handlePlacingPanEnd]);
 
     const exitEditingPosState = useCallback(() => {
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
 
-        hammerRef.current.off("placingpanend", handlePlacingPanEnd);
+        hammerContext.current.manager.off("placingpanend", handlePlacingPanEnd);
         const card = currentCard.current;
 
         console.log("Exiting editing position state", card);
@@ -208,35 +216,48 @@ export const useEditCardState = () => {
     // ---------- Hammer Setup ----------
     useEffect(() => {
         if (!Hammer) return;
-        if (!hammerRef.current) {
-            const hammer = new Hammer(document.body);
-            const tapRecognizer = hammer.get("tap");
-            const pressRecognizer = hammer.get("press");
-            const panRecognizer = hammer.get("pan");
+        if (!hammerContext.current) {
 
-            const focusTap = new Hammer.Tap({ event: "focustap", taps: 1, interval: 300 });
-            focusTap.recognizeWith(tapRecognizer);
+            hammerContext.current = {
+                manager: new Hammer(document.body),
+                focusTap: null,
+                focusPress: null,
+                focusPan: null,
+                placingPan: null,
+                placingMovePan: null,
+            };
 
-            const focusPress = new Hammer.Press({ event: "focuspress", time: 200 });
-            focusPress.recognizeWith(pressRecognizer);
+            const context = hammerContext.current;
 
-            const focusPan = new Hammer.Pan({ event: "focuspan", threshold: 10, pointers: 0 });
-            focusPan.recognizeWith(panRecognizer);
-            
-            const placingPan = new Hammer.Pan({ event: "placingpan", threshold: 15, pointers: 0 });
-            placingPan.recognizeWith([panRecognizer, focusPan]);
+            const tapRecognizer = context.manager.get("tap");
+            const pressRecognizer = context.manager.get("press");
+            const panRecognizer = context.manager.get("pan");
 
-            hammer.add(focusTap);
-            hammer.add(focusPress);
-            hammer.add(focusPan);
-            hammer.add(placingPan);
-            hammerRef.current = hammer;
+            context.focusTap = new Hammer.Tap({ event: "focustap", taps: 1, interval: 300 });
+            context.focusTap.recognizeWith(tapRecognizer);
+
+            context.focusPress = new Hammer.Press({ event: "focuspress", time: 200 });
+            context.focusPress.recognizeWith(pressRecognizer);
+
+            context.focusPan = new Hammer.Pan({ event: "focuspan", threshold: 10, pointers: 0 });
+            context.focusPan.recognizeWith(panRecognizer);
+
+            context.placingPan = new Hammer.Pan({ event: "placingpan", threshold: 15, pointers: 0 });
+            context.placingPan.recognizeWith([panRecognizer, context.focusPan]);
+
+            context.manager.add([
+                context.focusTap,
+                context.focusPress,
+                context.focusPan,
+                context.placingPan,
+            ]);
         }
+
         return () => {
             isMounted.current = false;
-            if (hammerRef.current) {
-                hammerRef.current.destroy();
-                hammerRef.current = null;
+            if (hammerContext.current) {
+                hammerContext.current.manager.destroy();
+                hammerContext.current = null;
             }
 
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
@@ -245,7 +266,7 @@ export const useEditCardState = () => {
     }, [Hammer, handleEditingPointerDown]);
 
     useEffect(() => {
-        if (!hammerRef.current) return;
+        if (!hammerContext.current) return;
 
         if (isPlacingCard(stateRef.current)) {
             if (initFocusState.current) exitFocusState();
