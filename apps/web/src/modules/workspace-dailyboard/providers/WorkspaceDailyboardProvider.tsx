@@ -47,14 +47,14 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
             sections: [
                 {
                     name: "first",
-                    box: {
-                        padding: ["2%", 0],
+                    box: {                        
+                        padding: [0, 0, "2%", 0],
                     }
                 },
                 {
                     name: "second",
-                    box: {
-                        padding: ["2%", 0],
+                    box: {                        
+                        padding: ["2%", 0, 0, 0],
                     }
                 }
             ]
