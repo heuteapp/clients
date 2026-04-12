@@ -65,16 +65,15 @@ export const useEditCardState = () => {
         const card = findDailyboardCardAtCursor(center.x, center.y);
         if (!card) return;
 
-        if (!focusTapCard.current) {
+        if (focusTapCard.current) {
+            if (focusTapCard.current === card) {
+                if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
+            }
+        } else {
             focusTapCard.current = card;
             focusTapResetTimeout.current = setTimeout(() => {
                 if (isMounted.current) focusTapCard.current = null;
             }, 300);
-        } else {
-            if (focusTapCard.current === card) {
-                if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-                sendEditRequest(card);
-            }
         }
     }, [sendEditRequest]);
 
