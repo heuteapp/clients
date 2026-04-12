@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { isPlacingCard, isPlacingCardIdle, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
+import { isEditingCard, isModifyingCard, isPlacingCard, isPlacingCardIdle, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
@@ -46,7 +46,8 @@ export const useEditCardState = () => {
 
     const initFocusState = useRef(false);
     const initEditingState = useRef(false);
-    const initEditingPosState = useRef(false);
+    const initPlacingState = useRef(false);
+    const initPlacingMoveState = useRef(false);
 
     // ---------- Helper Functions ----------
     const sendPlaceRequest = useCallback((card: HTMLElement) => {
@@ -160,6 +161,24 @@ export const useEditCardState = () => {
         initFocusState.current = false;
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
+    const entryEditingState = useCallback(() => {
+        const card = currentCard.current;
+        if (card) {
+            card.classList.add("editing");
+        }
+
+        initEditingState.current = true;
+    }, []);
+
+    const exitEditingState = useCallback(() => {
+        const card = currentCard.current;
+        if (card) {
+            card.classList.remove("editing");
+        }
+
+        initEditingState.current = false;
+    }, []);
+
     const entryPlacingState = useCallback(() => {  
         if (!hammerContext.current) return;
       
@@ -170,7 +189,7 @@ export const useEditCardState = () => {
 
         if (card) card.classList.add("editing");
 
-        initEditingState.current = true;
+        initPlacingState.current = true;
     }, [handlePlacingPointerDown]);
 
     const exitPlacingState = useCallback(() => {
@@ -188,7 +207,7 @@ export const useEditCardState = () => {
             currentCardData.current = null;
         }
 
-        initEditingState.current = false;
+        initPlacingState.current = false;
     }, [handlePlacingPointerDown]);
 
     const entryPlacingMoveState = useCallback(() => {
@@ -209,7 +228,7 @@ export const useEditCardState = () => {
         });
 
         card.classList.add("moving");
-        initEditingPosState.current = true;
+        initPlacingMoveState.current = true;
 
         return () => { 
             isActive = false; 
@@ -222,7 +241,7 @@ export const useEditCardState = () => {
         const card = currentCard.current;
         
         if (card) card.classList.remove("moving");
-        initEditingPosState.current = false;
+        initPlacingMoveState.current = false;
     }, [handlePlacingPanEnd]);
 
     // ---------- Hammer Setup ----------
@@ -279,21 +298,27 @@ export const useEditCardState = () => {
     useEffect(() => {
         if (!hammerContext.current) return;
 
-        if (isPlacingCard(stateRef.current)) {
+        if(isModifyingCard(state)) {
             if (initFocusState.current) exitFocusState();
-            
-            if (isPlacingCardMoving(stateRef.current) && !initEditingPosState.current) {
-                entryPlacingMoveState();
-            } else if (!isPlacingCardMoving(stateRef.current) && initEditingPosState.current) {
-                exitPlacingMoveState();
+
+            if (isEditingCard(state) && !initEditingState.current) {
+                entryEditingState();
+            } else if (!isEditingCard(state) && initEditingState.current) {
+                exitEditingState();
             }
-            if (!initEditingState.current) {
+
+            if (isPlacingCard(state) && !initPlacingState.current) {
                 entryPlacingState();
+            } else if (!isPlacingCard(state) && initPlacingState.current) {
+                exitPlacingState();
             }
-        } else {
+        }
+        else {
             if (!initFocusState.current) entryFocusState();
-            if (initEditingPosState.current) exitPlacingMoveState();
-            if (initEditingState.current) exitPlacingState();
+
+            if (initEditingState.current) exitEditingState();
+            if (initPlacingState.current) exitPlacingState();
+            if (initPlacingMoveState.current) exitPlacingMoveState();
         }
     }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryPlacingMoveState, exitPlacingMoveState]);
 };
