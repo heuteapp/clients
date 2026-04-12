@@ -34,7 +34,6 @@ export const useEditCardState = () => {
         focusPress: PressRecognizer | null;
         focusPan: PanRecognizer | null;
         placingPan: PanRecognizer | null;
-        placingMovePan: PanRecognizer | null;
     } | null>(null);
 
     const currentCard = useRef<HTMLElement | null>(null);
@@ -224,8 +223,7 @@ export const useEditCardState = () => {
                 focusTap: null,
                 focusPress: null,
                 focusPan: null,
-                placingPan: null,
-                placingMovePan: null,
+                placingPan: null
             };
 
             const context = hammerContext.current;
