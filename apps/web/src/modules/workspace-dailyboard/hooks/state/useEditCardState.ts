@@ -312,6 +312,12 @@ export const useEditCardState = () => {
             } else if (!isPlacingCard(state) && initPlacingState.current) {
                 exitPlacingState();
             }
+
+            if (isPlacingCardMoving(state) && !initPlacingMovingState.current) {
+                entryPlacingMovingState();
+            } else if (!isPlacingCardMoving(state) && initPlacingMovingState.current) {
+                exitPlacingMovingState();
+            }
         }
         else {
             if (!initFocusState.current) entryFocusState();
