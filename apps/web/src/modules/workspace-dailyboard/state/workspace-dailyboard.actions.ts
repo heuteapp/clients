@@ -51,7 +51,7 @@ export const setCardCreationSessionAction = createAssign<
 >(
     ({ context, event }) => {
         if(event.type === "CARD_CREATE_REQUESTED") {
-            context.sessions.cardCreate = {
+            context.sessions.cardCreation = {
                 size: event.cardSize
             }
         }
@@ -65,7 +65,7 @@ export const unsetCardCreationSessionAction = createAssign<
 >(
     ({ context, event }) => {
         if(event.type === "CARD_CREATE_SUCCEEDED" || event.type === "CARD_CREATE_CANCELLED") {
-            context.sessions.cardCreate = null;
+            context.sessions.cardCreation = null;
         }
 
         return context;
@@ -77,7 +77,7 @@ export const setCardPlacingSessionAction = createAssign<
 >(
     ({ context, event }) => {
         if(event.type === "CARD_PLACE_REQUESTED") {
-            context.sessions.cardEdit = {
+            context.sessions.cardPlacing = {
                 categoryPath: event.categoryPath,
                 date: event.date,
                 cardKey: event.cardKey
@@ -93,7 +93,7 @@ export const unsetCardPlacingSessionAction = createAssign<
 >(
     ({ context, event }) => {
         if(event.type === "CARD_PLACE_CONFIRMED" || event.type === "CARD_PLACE_CANCELLED") {
-            context.sessions.cardEdit = null;
+            context.sessions.cardPlacing = null;
         }
 
         return context;
@@ -121,7 +121,7 @@ export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachine
 export const moveCardAction = ({ context, event } : { context: WorkspaceDailyboardMachineContext, event: WorkspaceDailyboardMachineEvent } ) => {
     if(event.type !== "CARD_PLACE_REPOSITION_COMPLETED") return;
     
-    const { categoryPath, date, cardKey } = context.sessions.cardEdit!;
+    const { categoryPath, date, cardKey } = context.sessions.cardPlacing!;
 
     const { updateCard } = useDailyboardDataStore.getState();
     

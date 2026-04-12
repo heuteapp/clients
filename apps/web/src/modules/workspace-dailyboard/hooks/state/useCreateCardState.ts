@@ -12,7 +12,7 @@ export const useCreateCardState = () => {
     
     useEffect(() => {
         if(isCreatingCard(state)) {
-            const cardSize = state.context.sessions.cardCreate?.size || { colSpan: 4, rowSpan: 3 };
+            const cardSize = state.context.sessions.cardCreation?.size || { colSpan: 4, rowSpan: 3 };
             
             dragCard({ cardSize }, (result) => {
                 if(result.success && result.placement) {

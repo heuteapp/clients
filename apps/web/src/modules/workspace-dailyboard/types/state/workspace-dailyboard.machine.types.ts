@@ -11,10 +11,10 @@ export type WorkspaceDailyboardMachineContext = {
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
   sessions: {
-    cardCreate: {
+    cardCreation: {
       size: GridSize;
     } | null;
-    cardEdit: {
+    cardPlacing: {
       categoryPath: string;
       date: YYMMDDDate;
       cardKey: string;

@@ -27,8 +27,8 @@ export const workspaceDailyboardMachine = setup({
         layoutData: null,
         layoutStyle: null,
         sessions: {
-            cardCreate: null,
-            cardEdit: null
+            cardCreation: null,
+            cardPlacing: null
         }
     },
     id: "workspace-dailyboard",
