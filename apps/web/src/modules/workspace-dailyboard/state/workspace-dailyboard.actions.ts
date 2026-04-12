@@ -46,7 +46,7 @@ export const resolveSourcesAction = createAssign<
     }
 );
 
-export const setCardCreateSessionAction = createAssign<
+export const setCardCreationSessionAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ context, event }) => {
@@ -60,7 +60,7 @@ export const setCardCreateSessionAction = createAssign<
     }
 );
 
-export const unsetCardCreateSessionAction = createAssign<
+export const unsetCardCreationSessionAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ context, event }) => {
@@ -72,11 +72,11 @@ export const unsetCardCreateSessionAction = createAssign<
     }
 );
 
-export const setCardEditSessionAction = createAssign<
+export const setCardPlacingSessionAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ context, event }) => {
-        if(event.type === "CARD_EDIT_REQUESTED") {
+        if(event.type === "CARD_PLACE_REQUESTED") {
             context.sessions.cardEdit = {
                 categoryPath: event.categoryPath,
                 date: event.date,
@@ -88,11 +88,11 @@ export const setCardEditSessionAction = createAssign<
     }
 );
 
-export const unsetCardEditSessionAction = createAssign<
+export const unsetCardPlacingSessionAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ context, event }) => {
-        if(event.type === "CARD_EDIT_CONFIRMED" || event.type === "CARD_EDIT_CANCELLED") {
+        if(event.type === "CARD_PLACE_CONFIRMED" || event.type === "CARD_PLACE_CANCELLED") {
             context.sessions.cardEdit = null;
         }
 
@@ -119,7 +119,7 @@ export const createCardAction = ({ event } : { event: WorkspaceDailyboardMachine
 }
 
 export const moveCardAction = ({ context, event } : { context: WorkspaceDailyboardMachineContext, event: WorkspaceDailyboardMachineEvent } ) => {
-    if(event.type !== "CARD_EDIT_POS_COMPLETED") return;
+    if(event.type !== "CARD_PLACE_REPOSITION_COMPLETED") return;
     
     const { categoryPath, date, cardKey } = context.sessions.cardEdit!;
 

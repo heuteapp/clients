@@ -1,6 +1,6 @@
 import { DailyboardResponse } from "@/src/api/models/responses/dailyboard.response";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
-import { GridPosition, GridSize } from "@/src/modules/shared/types/common";
+import { GridSize } from "@/src/modules/shared/types/common";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
@@ -19,19 +19,19 @@ export type CreateCardEvent =
         }
     | { type: "CARD_CREATE_CANCELLED" };
 
-export type EditCardEvent =
-    | { type: "CARD_EDIT_REQUESTED"; categoryPath: string, date: YYMMDDDate, cardKey: string }
-    | EditPosCardEvent
-    | EditSizeCardEvent
-    | { type: "CARD_EDIT_CONFIRMED"; }
-    | { type: "CARD_EDIT_CANCELLED"; }
+export type CardPlaceEvent =
+    | { type: "CARD_PLACE_REQUESTED"; categoryPath: string, date: YYMMDDDate, cardKey: string }
+    | CardPlaceRepositionEvent
+    | CardPlaceResizeEvent
+    | { type: "CARD_PLACE_CONFIRMED"; }
+    | { type: "CARD_PLACE_CANCELLED"; }
 
-export type EditPosCardEvent =
-    | { type: "CARD_EDIT_POS_REQUESTED"; }
-    | { type: "CARD_EDIT_POS_COMPLETED"; placement: DailyboardCardPlacement }
-    | { type: "CARD_EDIT_POS_CANCELLED"; }
+export type CardPlaceRepositionEvent =
+    | { type: "CARD_PLACE_REPOSITION_REQUESTED"; }
+    | { type: "CARD_PLACE_REPOSITION_COMPLETED"; placement: DailyboardCardPlacement }
+    | { type: "CARD_PLACE_REPOSITION_CANCELLED"; }
 
-export type EditSizeCardEvent =
-    | { type: "CARD_EDIT_SIZE_REQUESTED"; }
-    | { type: "CARD_EDIT_SIZE_COMPLETED"; size: GridSize}
-    | { type: "CARD_EDIT_SIZE_CANCELLED"; }
+export type CardPlaceResizeEvent =
+    | { type: "CARD_PLACE_RESIZE_REQUESTED"; }
+    | { type: "CARD_PLACE_RESIZE_COMPLETED"; placement: DailyboardCardPlacement}
+    | { type: "CARD_PLACE_RESIZE_CANCELLED"; }

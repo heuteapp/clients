@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { createCardAction, moveCardAction, resolveSourcesAction, setCardCreateSessionAction, setCardEditSessionAction, unsetCardCreateSessionAction, unsetCardEditSessionAction } from "./workspace-dailyboard.actions";
+import { createCardAction, moveCardAction, resolveSourcesAction, setCardCreationSessionAction, setCardPlacingSessionAction, unsetCardCreationSessionAction, unsetCardPlacingSessionAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -13,10 +13,10 @@ export const workspaceDailyboardMachine = setup({
     }, 
     actions: {
         resolveSources: resolveSourcesAction,
-        setCardCreateSession: setCardCreateSessionAction,
-        unsetCardCreateSession: unsetCardCreateSessionAction,
-        setCardEditSession: setCardEditSessionAction,
-        unsetCardEditSession: unsetCardEditSessionAction,
+        setCardCreationSession: setCardCreationSessionAction,
+        unsetCardCreationSession: unsetCardCreationSessionAction,
+        setCardPlacingSession: setCardPlacingSessionAction,
+        unsetCardPlacingSession: unsetCardPlacingSessionAction,
         createCard: createCardAction,
         placeCard: moveCardAction
     }
@@ -75,11 +75,11 @@ export const workspaceDailyboardMachine = setup({
                         },
                         CARD_CREATE_REQUESTED: {
                             target: "creating card",
-                            actions: ["setCardCreateSession"]
+                            actions: ["setCardCreationSession"]
                         },
-                        CARD_EDIT_REQUESTED: {
-                            target: "editing card",
-                            actions: ["setCardEditSession"]
+                        CARD_PLACE_REQUESTED: {
+                            target: "placing card",
+                            actions: ["setCardPlacingSession"]
                         }
                     }
                 },
@@ -93,57 +93,57 @@ export const workspaceDailyboardMachine = setup({
                             target: "idle"
                         }
                     },
-                    exit: ["unsetCardCreateSession"]
+                    exit: ["unsetCardCreationSession"]
                 },
-                "editing card": {
+                "placing card": {
                     initial: "idle",
                     states: {
                         "idle": {
                             on: {
 
-                                CARD_EDIT_POS_REQUESTED: {
+                                CARD_PLACE_REPOSITION_REQUESTED: {
                                     target: "moving"
                                 },
-                                CARD_EDIT_SIZE_REQUESTED: {
+                                CARD_PLACE_RESIZE_REQUESTED: {
                                     target: "resizing"
                                 },
-                                CARD_EDIT_CONFIRMED: {
+                                CARD_PLACE_CONFIRMED: {
                                     target: "#workspace-dailyboard.ready.idle"
                                 },
-                                CARD_EDIT_CANCELLED: {
+                                CARD_PLACE_CANCELLED: {
                                     target: "#workspace-dailyboard.ready.idle"
                                 }
                             },
                         },
                         "moving": {
                             on: {
-                                CARD_EDIT_POS_COMPLETED: {
+                                CARD_PLACE_REPOSITION_COMPLETED: {
                                     target: "idle",
                                     actions: ["placeCard"]
                                 },
-                                CARD_EDIT_POS_CANCELLED: {
+                                CARD_PLACE_REPOSITION_CANCELLED: {
                                     target: "idle",
                                 },
-                                CARD_EDIT_CANCELLED: {
+                                CARD_PLACE_CANCELLED: {
                                     target: "#workspace-dailyboard.ready.idle"
                                 }
                             },
                         },
                         "resizing": {
                             on: {
-                                CARD_EDIT_SIZE_COMPLETED: {
+                                CARD_PLACE_RESIZE_COMPLETED: {
                                     target: "idle",
                                 },
-                                CARD_EDIT_SIZE_CANCELLED: {
+                                CARD_PLACE_RESIZE_CANCELLED: {
                                     target: "idle",
                                 },
-                                CARD_EDIT_CANCELLED: {
+                                CARD_PLACE_CANCELLED: {
                                     target: "#workspace-dailyboard.ready.idle"
                                 }
                             },
                         },
                     },
-                    exit: ["unsetCardEditSession"]
+                    exit: ["unsetCardPlacingSession"]
                 }
             }
         }
@@ -170,14 +170,14 @@ export const isReadyIdle = (state: WorkspaceDailyboardMachineState): boolean =>
 export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => 
     state.matches({ "ready": "creating card" });
 
-export const isEditingCard = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ "ready": "editing card" });
+export const isPlacingCard = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": "placing card" });
 
-export const isEditingCardIdle = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ "ready": { "editing card": "idle" } });
+export const isPlacingCardIdle = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": { "placing card": "idle" } });
 
-export const isEditingCardMoving = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ "ready": { "editing card": "moving" } });
+export const isPlacingCardMoving = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": { "placing card": "moving" } });
 
-export const isEditingCardResizing = (state: WorkspaceDailyboardMachineState): boolean => 
-    state.matches({ "ready": { "editing card": "resizing" } });
+export const isPlacingCardResizing = (state: WorkspaceDailyboardMachineState): boolean => 
+    state.matches({ "ready": { "placing card": "resizing" } });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { isEditingCard, isEditingCardMoving } from "../../state/workspace-dailyboard.machine";
+import { isPlacingCard, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
@@ -43,7 +43,7 @@ export const useEditCardState = () => {
 
         const data = getDailyboardCardData(card);
         sendRef.current({
-            type: "CARD_EDIT_REQUESTED",
+            type: "CARD_PLACE_REQUESTED",
             categoryPath: categoryPathRef.current,
             date: dateRef.current!,
             cardKey: data.key,
@@ -56,7 +56,7 @@ export const useEditCardState = () => {
     }, [sendEditRequest]);
 
     const sendEditCancel = useCallback(() => {
-        sendRef.current({ type: "CARD_EDIT_CANCELLED" });
+        sendRef.current({ type: "CARD_PLACE_CANCELLED" });
     }, []);
 
     // ---------- Event Handlers ----------
@@ -139,7 +139,7 @@ export const useEditCardState = () => {
 
         if (card) card.classList.add("editing");
         if (focusPanPosRequest.current) {
-            sendRef.current({ type: "CARD_EDIT_POS_REQUESTED" });
+            sendRef.current({ type: "CARD_PLACE_REPOSITION_REQUESTED" });
             focusPanPosRequest.current = false;
         }
 
@@ -172,7 +172,7 @@ export const useEditCardState = () => {
         dragCardRef.current({ cardSize: { colSpan, rowSpan }, targetCardKey: key }, (result) => {
             if (!isActive || !isMounted.current) return;
             if (result.success && result.placement) {
-                sendRef.current({ type: "CARD_EDIT_POS_COMPLETED", placement: result.placement });
+                sendRef.current({ type: "CARD_PLACE_REPOSITION_COMPLETED", placement: result.placement });
             }
         });
 
@@ -236,12 +236,12 @@ export const useEditCardState = () => {
     useEffect(() => {
         if (!hammerRef.current) return;
 
-        if (isEditingCard(state)) {
+        if (isPlacingCard(state)) {
             if (initFocusState.current) exitFocusState();
             
-            if (isEditingCardMoving(state) && !initEditingPosState.current) {
+            if (isPlacingCardMoving(state) && !initEditingPosState.current) {
                 entryEditingPosState();
-            } else if (!isEditingCardMoving(state) && initEditingPosState.current) {
+            } else if (!isPlacingCardMoving(state) && initEditingPosState.current) {
                 exitEditingPosState();
             }
             if (!initEditingState.current) {
