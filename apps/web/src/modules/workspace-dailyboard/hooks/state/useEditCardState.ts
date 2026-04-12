@@ -99,7 +99,7 @@ export const useEditCardState = () => {
         }
     }, [sendEditMoveRequest]);
 
-    const handleEditingPointerDown = useCallback((event: PointerEvent) => {
+    const handlePlacingPointerDown = useCallback((event: PointerEvent) => {
         if (!currentCard.current) return;
 
         const { clientX, clientY } = event;
@@ -151,19 +151,19 @@ export const useEditCardState = () => {
         if (!hammerContext.current) return;
       
         hammerContext.current.manager.on("placingpan", handlePlacingPan);
-        document.addEventListener("pointerdown", handleEditingPointerDown);
+        document.addEventListener("pointerdown", handlePlacingPointerDown);
         const card = currentCard.current;
 
         if (card) card.classList.add("editing");
 
         initEditingState.current = true;
-    }, [handleEditingPointerDown]);
+    }, [handlePlacingPointerDown]);
 
     const exitPlacingState = useCallback(() => {
         if (!hammerContext.current) return;
 
         hammerContext.current.manager.off("placingpan", handlePlacingPan);
-        document.removeEventListener("pointerdown", handleEditingPointerDown);
+        document.removeEventListener("pointerdown", handlePlacingPointerDown);
         const card = currentCard.current;
 
         if (card) {
@@ -172,7 +172,7 @@ export const useEditCardState = () => {
         }
 
         initEditingState.current = false;
-    }, [handleEditingPointerDown]);
+    }, [handlePlacingPointerDown]);
 
     const entryEditingPosState = useCallback(() => {
         if (!hammerContext.current) return;
@@ -261,9 +261,9 @@ export const useEditCardState = () => {
             }
 
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-            document.removeEventListener("pointerdown", handleEditingPointerDown);
+            document.removeEventListener("pointerdown", handlePlacingPointerDown);
         };
-    }, [Hammer, handleEditingPointerDown]);
+    }, [Hammer, handlePlacingPointerDown]);
 
     useEffect(() => {
         if (!hammerContext.current) return;
