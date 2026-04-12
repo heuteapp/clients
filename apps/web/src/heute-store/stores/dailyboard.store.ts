@@ -10,7 +10,7 @@ import {
     StoredDailyboardCardItemContent 
 } from "../types/dailyboard.types";
 import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
-import { addCardToDailyboardState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
+import { addCardToDailyboardState, getDailyboardCardItemFromState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
 import { DailyboardDataState } from "../types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
@@ -81,6 +81,14 @@ export const withDailyboardImmer = <
 
             getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
                 return getDailyboardItemFromState(get(), user, categoryPath, date);
+            },
+
+            getMeDailyboardCard: (categoryPath: string, date: YYMMDDDate, cardKey: string) => {
+                return getDailyboardCardItemFromState(get(), "me", categoryPath, date, cardKey);
+            },
+
+            getUserDailyboardCard: (user: string, categoryPath: string, date: YYMMDDDate, cardKey: string) => {
+                return getDailyboardCardItemFromState(get(), user, categoryPath, date, cardKey);
             },
 
             addCard: (categoryPath: string, date: YYMMDDDate, card: TDailyboardCardSource) => {

@@ -18,6 +18,9 @@ export interface DailyboardBaseState<
     getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => TDailyboardItem | null;
     getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => TDailyboardItem | null;
 
+    getMeDailyboardCard: (categoryPath: string, date: YYMMDDDate, cardKey: string) => TDailyboardCardItem | null;
+    getUserDailyboardCard: (user: string, categoryPath: string, date: YYMMDDDate, cardKey: string) => TDailyboardCardItem | null;
+
     addCard: (categoryPath: string, date: YYMMDDDate, card: TDailyboardCardSource) => void;
     updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draft: TDailyboardCardItemContent) => void) => void;
     removeCard: (categoryPath: string,  date: YYMMDDDate, cardName: string) => void;
