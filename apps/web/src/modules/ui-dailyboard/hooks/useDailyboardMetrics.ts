@@ -5,20 +5,20 @@ import { DailyboardRegistry } from "../types/dailyboard.registry";
 import { LayoutMetrics } from "../../ui-layout/types/layout.metrics";
 import { useMetricsContext } from "../../ui-shared/hooks/useMetricsContext";
 
-export const useDailyboardMetrics = (registry: DailyboardRegistry, layoutMetrics: LayoutMetrics) : DailyboardMetrics => {
+export const useDailyboardMetrics = (metricsId: string, registry: DailyboardRegistry, layoutMetrics: LayoutMetrics) : DailyboardMetrics => {
     const { subscribe, unsubscribe } = useMetricsContext();
     const metrics = React.useRef<DailyboardMetrics>(null);
 
     React.useEffect(() => {
-        subscribe("dailyboard", () => {
+        subscribe(metricsId, () => {
             metrics.current = calculateDailyboardMetrics({layout: layoutMetrics});
             applyDailyboardMetrics({registry, metrics: metrics.current!});
         });
 
         return () => {
-            unsubscribe("dailyboard");
+            unsubscribe(metricsId);
         }
-    }, [registry, layoutMetrics]);
+    }, [metricsId, registry, layoutMetrics]);
 
     return metrics.current!;
 }

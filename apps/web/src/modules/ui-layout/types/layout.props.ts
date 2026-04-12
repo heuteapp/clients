@@ -15,6 +15,7 @@ export interface LayoutGridProps  {
 }
 
 export interface LayoutProviderProps {
+    metricsId?: string;
     dataSource: StoredLayoutData | null;
     styleSource: StoredLayoutStyle | null;
     children: React.ReactNode;

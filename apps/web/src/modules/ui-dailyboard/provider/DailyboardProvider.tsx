@@ -7,13 +7,13 @@ import { DailyboardContext } from "@/src/modules/ui-dailyboard/contexts/dailyboa
 import { DailyboardProviderProps } from "../types/dailyboard.props";
 import { useDailyboardMetrics } from "../hooks/useDailyboardMetrics";
 
-export function DailyboardProvider({ dataSource, children }: DailyboardProviderProps) {
+export function DailyboardProvider({ metricsId, dataSource, children }: DailyboardProviderProps) {
     const layout = useLayoutContext();
 
     const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
     const registry = useDailyboardRegistry(dailyboardRef, layout.registry);
 
-    const metrics = useDailyboardMetrics(registry, layout.metrics);
+    const metrics = useDailyboardMetrics(metricsId ?? "dailyboard", registry, layout.metrics);
     
     const contextValue = React.useMemo(() => ({
         dataSource, layout, registry, metrics
