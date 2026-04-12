@@ -21,16 +21,16 @@
     border: 2px dashed rgb(101, 255, 90);
 }
 
-[data-dailyboard-card].editing {
+[data-dailyboard-card].placing {
     border-color: rgba(196, 196, 59, 0.754);
 }
 
-[data-dailyboard-card].editing.resizing {
+[data-dailyboard-card].placing.resizing {
     cursor: nw-resize;    
     box-shadow: 0 0 0 2px green;
 }
 
-[data-dailyboard-card].editing.moving {
+[data-dailyboard-card].placing.moving {
     cursor: grabbing;   
     opacity: 0.4;
 }

@@ -47,7 +47,7 @@ export const useEditCardState = () => {
     const initFocusState = useRef(false);
     const initEditingState = useRef(false);
     const initPlacingState = useRef(false);
-    const initPlacingMoveState = useRef(false);
+    const initPlacingMovingState = useRef(false);
 
     // ---------- Helper Functions ----------
     const sendPlaceRequest = useCallback((card: HTMLElement) => {
@@ -187,7 +187,7 @@ export const useEditCardState = () => {
         document.addEventListener("pointerdown", handlePlacingPointerDown);
         const card = currentCard.current;
 
-        if (card) card.classList.add("editing");
+        if (card) card.classList.add("placing");
 
         initPlacingState.current = true;
     }, [handlePlacingPointerDown]);
@@ -201,7 +201,7 @@ export const useEditCardState = () => {
         const card = currentCard.current;
 
         if (card) {
-            card.classList.remove("editing");
+            card.classList.remove("placing");
 
             currentCard.current = null;
             currentCardData.current = null;
@@ -210,7 +210,7 @@ export const useEditCardState = () => {
         initPlacingState.current = false;
     }, [handlePlacingPointerDown]);
 
-    const entryPlacingMoveState = useCallback(() => {
+    const entryPlacingMovingState = useCallback(() => {
         if (!hammerContext.current) return;
 
         const card = currentCard.current;
@@ -228,20 +228,20 @@ export const useEditCardState = () => {
         });
 
         card.classList.add("moving");
-        initPlacingMoveState.current = true;
+        initPlacingMovingState.current = true;
 
         return () => { 
             isActive = false; 
         };
     }, [handlePlacingPanEnd]);
 
-    const exitPlacingMoveState = useCallback(() => {
+    const exitPlacingMovingState = useCallback(() => {
         if (!hammerContext.current) return;
 
         const card = currentCard.current;
         
         if (card) card.classList.remove("moving");
-        initPlacingMoveState.current = false;
+        initPlacingMovingState.current = false;
     }, [handlePlacingPanEnd]);
 
     // ---------- Hammer Setup ----------
@@ -318,7 +318,7 @@ export const useEditCardState = () => {
 
             if (initEditingState.current) exitEditingState();
             if (initPlacingState.current) exitPlacingState();
-            if (initPlacingMoveState.current) exitPlacingMoveState();
+            if (initPlacingMovingState.current) exitPlacingMovingState();
         }
-    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryPlacingMoveState, exitPlacingMoveState]);
+    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryPlacingMovingState, exitPlacingMovingState]);
 };
