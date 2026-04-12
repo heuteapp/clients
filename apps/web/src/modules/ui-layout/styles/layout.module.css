@@ -20,6 +20,6 @@
     background: rgb(24, 25, 28);
     backdrop-filter: blur(2px);
     outline: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: 1vw;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
