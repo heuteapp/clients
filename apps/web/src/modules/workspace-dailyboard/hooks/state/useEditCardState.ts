@@ -37,6 +37,8 @@ export const useEditCardState = () => {
     } | null>(null);
 
     const currentCard = useRef<HTMLElement | null>(null);
+    const currentCardData = useRef<{ key: string; colSpan: number; rowSpan: number } | null>(null);
+
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
     const placingPanUsed = useRef(false);
@@ -47,24 +49,16 @@ export const useEditCardState = () => {
     const initEditingPosState = useRef(false);
 
     // ---------- Helper Functions ----------
-    const sendEditRequest = useCallback((card: HTMLElement) => {
+    const sendPlaceRequest = useCallback((card: HTMLElement) => {
         currentCard.current = card;
+        currentCardData.current = getDailyboardCardData(card);
 
-        const data = getDailyboardCardData(card);
         sendRef.current({
             type: "CARD_PLACE_REQUESTED",
             categoryPath: categoryPathRef.current,
             date: dateRef.current!,
-            cardKey: data.key,
+            cardKey: currentCardData.current.key,
         });
-    }, []);
-
-    const sendEditMoveRequest = useCallback((card: HTMLElement) => {
-        sendEditRequest(card);
-    }, [sendEditRequest]);
-
-    const sendEditCancel = useCallback(() => {
-        sendRef.current({ type: "CARD_PLACE_CANCELLED" });
     }, []);
 
     // ---------- Event Handlers ----------
@@ -83,21 +77,21 @@ export const useEditCardState = () => {
                 if (isMounted.current) focusTapCard.current = null;
             }, 300);
         }
-    }, [sendEditRequest]);
+    }, [sendPlaceRequest]);
 
     const handleFocusPress = useCallback(() => {
         if (focusTapCard.current) {
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-            sendEditRequest(focusTapCard.current);
+            sendPlaceRequest(focusTapCard.current);
         }
-    }, [sendEditRequest]);
+    }, [sendPlaceRequest]);
 
     const handleFocusPan = useCallback(() => {
         if (focusTapCard.current) {
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-            sendEditMoveRequest(focusTapCard.current);
+            sendPlaceRequest(focusTapCard.current);
         }
-    }, [sendEditMoveRequest]);
+    }, [sendPlaceRequest]);
 
     const handlePlacingPointerDown = useCallback((event: PointerEvent) => {
         if (!currentCard.current) return;
@@ -106,9 +100,9 @@ export const useEditCardState = () => {
         const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
 
         if (clickedCard !== currentCard.current) {
-            sendEditCancel();
+            sendRef.current({ type: "CARD_PLACE_CANCELLED" });
         }
-    }, [sendEditCancel]);
+    }, []);
 
     const handlePlacingPan = useCallback(() => {
         if(isPlacingCardIdle(stateRef.current) && !placingPanUsed.current) {
@@ -121,7 +115,7 @@ export const useEditCardState = () => {
         if (placingPanUsed.current) {
             placingPanUsed.current = false;
         }
-    }, [sendEditCancel]);
+    }, []);
 
     // ---------- State Entry/Exit ----------
     const entryFocusState = useCallback(() => {
@@ -173,7 +167,9 @@ export const useEditCardState = () => {
 
         if (card) {
             card.classList.remove("editing");
+
             currentCard.current = null;
+            currentCardData.current = null;
         }
 
         initEditingState.current = false;
