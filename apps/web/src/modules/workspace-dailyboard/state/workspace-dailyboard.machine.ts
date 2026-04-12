@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { createCardAction, moveCardAction, resolveSourcesAction, setCardCreationSessionAction, setCardPlacingSessionAction, unsetCardCreationSessionAction, unsetCardPlacingSessionAction } from "./workspace-dailyboard.actions";
+import { createCardAction, moveCardAction, resolveSourcesAction, setCardCreationSessionAction, setCardEditingSessionAction, setCardPlacingSessionAction, unsetCardCreationSessionAction, unsetCardEditingSessionAction, unsetCardPlacingSessionAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -15,6 +15,8 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
         setCardCreationSession: setCardCreationSessionAction,
         unsetCardCreationSession: unsetCardCreationSessionAction,
+        setCardEditingSession: setCardEditingSessionAction,
+        unsetCardEditingSession: unsetCardEditingSessionAction,
         setCardPlacingSession: setCardPlacingSessionAction,
         unsetCardPlacingSession: unsetCardPlacingSessionAction,
         createCard: createCardAction,
@@ -28,6 +30,7 @@ export const workspaceDailyboardMachine = setup({
         layoutStyle: null,
         sessions: {
             cardCreation: null,
+            cardEditing: null,
             cardPlacing: null
         }
     },
@@ -77,6 +80,10 @@ export const workspaceDailyboardMachine = setup({
                             target: "creating card",
                             actions: ["setCardCreationSession"]
                         },
+                        CARD_EDIT_REQUESTED: {
+                            target: "editing card",
+                            actions: ["setCardEditingSession"]
+                        },
                         CARD_PLACE_REQUESTED: {
                             target: "placing card",
                             actions: ["setCardPlacingSession"]
@@ -94,6 +101,18 @@ export const workspaceDailyboardMachine = setup({
                         }
                     },
                     exit: ["unsetCardCreationSession"]
+                },
+                "editing card": {
+                    on: {
+                        CARD_EDIT_CONFIRMED: {
+                            target: "idle",
+                            actions: []
+                        },
+                        CARD_EDIT_CANCELLED: {
+                            target: "idle"
+                        }
+                    },
+                    exit: ["unsetCardEditingSession"]
                 },
                 "placing card": {
                     initial: "idle",

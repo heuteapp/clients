@@ -19,6 +19,11 @@ export type CreateCardEvent =
         }
     | { type: "CARD_CREATE_CANCELLED" };
 
+export type EditCardEvent =
+    | { type: "CARD_EDIT_REQUESTED"; categoryPath: string, date: YYMMDDDate, cardKey: string }
+    | { type: "CARD_EDIT_CONFIRMED"; }
+    | { type: "CARD_EDIT_CANCELLED"; }
+
 export type CardPlaceEvent =
     | { type: "CARD_PLACE_REQUESTED"; categoryPath: string, date: YYMMDDDate, cardKey: string }
     | CardPlaceRepositionEvent
