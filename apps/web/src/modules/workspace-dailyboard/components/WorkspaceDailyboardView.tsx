@@ -9,7 +9,7 @@ export function WorkspaceDailyboardView({ data }: WorkspaceDailyboardProps) {
                 height: "100%",
                 padding: "2%",
                 boxSizing: "border-box",
-                background: "rgba(9, 12, 15, 0.5)",
+                background: "rgba(15, 17, 21, 1)",
                 display: "flex",
             }}
         >

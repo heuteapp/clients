@@ -14,9 +14,9 @@
 
 .card {
     position: fixed;
-    background: linear-gradient(145deg, #1a1c1e 0%, #1f2124 60%, #24262a 100%);
+    background: linear-gradient(145deg,#252a35,#272c39 60%,#2b303c);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 1vw;
+    border-radius: 0.5vw;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.02);
     box-sizing: border-box;    
 }
