@@ -9,6 +9,9 @@ export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetri
 }
 
 export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) => {
+    const dailyboardEl = registry.dailyboard.ref?.current;
+    if (!dailyboardEl) return;
+
     const sections = registry.layoutRegistry.getLayoutSections();
 
     sections?.forEach(section => {
@@ -34,7 +37,9 @@ export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) =>
             const data = getDailyboardCardData(cardEl);
             if (!data) return;
 
-            const cardRect = calcDailyboardCardFixedRect(gridRect, 8, gridData.position, data);
+            const { clientWidth: cardWidth } = dailyboardEl;
+
+            const cardRect = calcDailyboardCardFixedRect(gridRect, cardWidth * 0.0075, gridData.position, data);
 
             cardEl.style.left = `${cardRect.x}px`;
             cardEl.style.top = `${cardRect.y}px`;

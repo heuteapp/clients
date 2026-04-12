@@ -111,7 +111,7 @@ export const useDailyboardCardDragPlacement = () => {
                 rowSpan: cardSize.rowSpan,
             };
 
-            const gap = 8;
+            const gap = dailyboardEl.clientWidth * 0.0075;
             ghostCardPos.current = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos.current);
 
             const cards = findDailyboardCardsForSection(dailyboardEl, sectionName).filter((card) => {
