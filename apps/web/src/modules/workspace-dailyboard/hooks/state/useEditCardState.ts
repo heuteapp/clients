@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { isPlacingCard, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
+import { isPlacingCard, isPlacingCardIdle, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
@@ -14,23 +14,24 @@ export const useEditCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata;
 
+    const stateRef = useRef(state);
     const categoryPathRef = useRef(categoryPath);
     const dateRef = useRef(date);
     const sendRef = useRef(send);
     const dragCardRef = useRef(dragCard);
 
     useEffect(() => {
+        stateRef.current = state;
         categoryPathRef.current = categoryPath;
         dateRef.current = date;
         sendRef.current = send;
         dragCardRef.current = dragCard;
-    }, [categoryPath, date, send, dragCard]);
+    }, [state, categoryPath, date, send, dragCard]);
 
     const hammerRef = useRef<HammerManager | null>(null);
     const currentCard = useRef<HTMLElement | null>(null);
     const focusTapCard = useRef<HTMLElement | null>(null);
     const focusTapResetTimeout = useRef<NodeJS.Timeout | null>(null);
-    const focusPanPosRequest = useRef<boolean>(false);
     const isMounted = useRef(true);
 
     const initFocusState = useRef(false);
@@ -51,7 +52,6 @@ export const useEditCardState = () => {
     }, []);
 
     const sendEditMoveRequest = useCallback((card: HTMLElement) => {
-        focusPanPosRequest.current = true;
         sendEditRequest(card);
     }, [sendEditRequest]);
 
@@ -102,6 +102,12 @@ export const useEditCardState = () => {
         }
     }, [sendEditCancel]);
 
+    const handleEditingPosPan = useCallback(() => {
+        if(isPlacingCardIdle(stateRef.current)) {
+            sendRef.current({ type: "CARD_PLACE_REPOSITION_REQUESTED" });
+        }
+    }, []);
+
     const handleEditingPosPanEnd = useCallback(() => {
         sendEditCancel();
     }, [sendEditCancel]);
@@ -133,20 +139,22 @@ export const useEditCardState = () => {
         initFocusState.current = false;
     }, [handleFocusTap, handleFocusPress, handleFocusPan]);
 
-    const entryEditingState = useCallback(() => {
+    const entryEditingState = useCallback(() => {  
+        if (!hammerRef.current) return;
+      
+        hammerRef.current.on("editingpospan", handleEditingPosPan);
         document.addEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
 
         if (card) card.classList.add("editing");
-        if (focusPanPosRequest.current) {
-            sendRef.current({ type: "CARD_PLACE_REPOSITION_REQUESTED" });
-            focusPanPosRequest.current = false;
-        }
 
         initEditingState.current = true;
     }, [handleEditingPointerDown]);
 
     const exitEditingState = useCallback(() => {
+        if (!hammerRef.current) return;
+
+        hammerRef.current.off("editingpospan", handleEditingPosPan);
         document.removeEventListener("pointerdown", handleEditingPointerDown);
         const card = currentCard.current;
 
@@ -175,6 +183,7 @@ export const useEditCardState = () => {
                 sendRef.current({ type: "CARD_PLACE_REPOSITION_COMPLETED", placement: result.placement });
             }
         });
+        console.log("Entering editing position state", card);
 
         card.classList.add("moving");
         initEditingPosState.current = true;
@@ -189,6 +198,8 @@ export const useEditCardState = () => {
 
         hammerRef.current.off("editingpospanend", handleEditingPosPanEnd);
         const card = currentCard.current;
+
+        console.log("Exiting editing position state", card);
         
         if (card) card.classList.remove("moving");
         initEditingPosState.current = false;
@@ -236,12 +247,12 @@ export const useEditCardState = () => {
     useEffect(() => {
         if (!hammerRef.current) return;
 
-        if (isPlacingCard(state)) {
+        if (isPlacingCard(stateRef.current)) {
             if (initFocusState.current) exitFocusState();
             
-            if (isPlacingCardMoving(state) && !initEditingPosState.current) {
+            if (isPlacingCardMoving(stateRef.current) && !initEditingPosState.current) {
                 entryEditingPosState();
-            } else if (!isPlacingCardMoving(state) && initEditingPosState.current) {
+            } else if (!isPlacingCardMoving(stateRef.current) && initEditingPosState.current) {
                 exitEditingPosState();
             }
             if (!initEditingState.current) {
