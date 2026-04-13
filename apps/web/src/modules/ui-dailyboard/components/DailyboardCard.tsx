@@ -48,6 +48,7 @@ function DailyboardCard(props : DailyboardCardProps) {
             ref={ref}
         >
             <div
+                data-dailyboard-card-header
                 className={style.header}
             >
                 {dailyboardCardContent.title}
