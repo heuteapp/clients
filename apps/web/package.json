@@ -19,6 +19,7 @@
     "@xstate/inspect": "^0.8.0",
     "@xstate/react": "^6.1.0",
     "axios": "^1.13.6",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "hammerjs": "^2.0.8",
     "immer": "^11.1.4",
