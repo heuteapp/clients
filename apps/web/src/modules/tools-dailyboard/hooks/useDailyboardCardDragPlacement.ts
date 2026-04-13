@@ -14,6 +14,8 @@ export const useDailyboardCardDragPlacement = () => {
     const onFinishCallbackRef = useRef<((result: DailyboardCardPlacementResult) => void) | null>(null);
 
     const { metrics } = useLayoutContext();
+    const metricsRef = useRef(metrics);
+
     const { Hammer } = useHammerLoader();
     const hammerRef = useRef<HammerManager | null>(null);
 
@@ -34,7 +36,8 @@ export const useDailyboardCardDragPlacement = () => {
 
     useEffect(() => {
         stateRef.current = state;
-    }, [state]);
+        metricsRef.current = metrics;
+    }, [state, metrics]);
 
     useEffect(() => {
         if (Hammer && !hammerRef.current) {
@@ -79,7 +82,7 @@ export const useDailyboardCardDragPlacement = () => {
         if (!stateRef.current) return;
 
         const { cardSize, targetCardKey } = stateRef.current;
-        const cellSize = metrics.cellSize.grid || 0;
+        const cellSize = metricsRef.current.value?.cellSize.grid || 0;
         const size = {
             width: cellSize * cardSize.colSpan,
             height: cellSize * cardSize.rowSpan,
