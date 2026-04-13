@@ -3,6 +3,9 @@ import { DailyboardRegistry } from "./dailyboard.registry";
 
 export interface DailyboardMetrics {
     layout: LayoutMetrics;
+    cardSize: {
+        headerHeight: number;
+    }
 }
 
 export interface CalculateDailyboardMetrics {

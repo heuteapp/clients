@@ -3,8 +3,13 @@ import { calcDailyboardCardFixedRect, getDailyboardCardData } from "../utils/dom
 import { findGridInSubtree, getSectionDataForGrid } from "../../ui-layout/utils/dom.utils";
 
 export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetrics => {
+    const cardSize = {
+        headerHeight: layout.cellSize.grid * 0.5,
+    }
+
     return {
-        layout
+        layout,
+        cardSize
     }
 }
 
