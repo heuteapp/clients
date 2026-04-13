@@ -1,4 +1,4 @@
-import style from "@/src/modules/ui-layout/styles/layout.module.css"
+import style from "@/src/modules/ui-layout/styles/layout.module.scss"
 
 import { useLayoutEffect, useRef } from "react"
 
