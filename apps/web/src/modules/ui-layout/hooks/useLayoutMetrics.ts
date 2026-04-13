@@ -7,11 +7,11 @@ import { useMetricsContext } from "../../ui-shared/hooks/useMetricsContext";
 
 export const useLayoutMetrics = (metricsId: string, registry: LayoutRegistry, dataSource: StoredLayoutData | null, styleSource: StoredLayoutStyle | null) : LayoutMetrics => {
     const { subscribe, unsubscribe } = useMetricsContext();
-    const metrics = React.useRef<LayoutMetrics>(null);
+    const metrics = React.useRef<LayoutMetrics>({ value: null });
 
     React.useEffect(() => {
         subscribe(metricsId, () => {
-            metrics.current = calculateLayoutMetrics({ registry, dataSource, styleSource });
+            metrics.current.value = calculateLayoutMetrics({ registry, dataSource, styleSource });
             applyLayoutMetrics({ registry, metrics: metrics.current!, styleSource });
         });
 

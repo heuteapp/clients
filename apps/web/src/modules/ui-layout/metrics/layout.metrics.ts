@@ -1,7 +1,7 @@
-import { LayoutMetrics, CalculateLayoutMetricsProps, ApplyLayoutMetricsProps } from "../types/layout.metrics";
+import { CalculateLayoutMetricsProps, ApplyLayoutMetricsProps, LayoutMetricsValue } from "../types/layout.metrics";
 import { spacingResult } from "../../shared/utils/style";
 
-export function calculateLayoutMetrics({ registry, dataSource, styleSource }: CalculateLayoutMetricsProps) : LayoutMetrics | null {
+export function calculateLayoutMetrics({ registry, dataSource, styleSource }: CalculateLayoutMetricsProps) : LayoutMetricsValue | null {
     const layoutRef = registry.layout.ref;
     const layoutEl = layoutRef.current;
 
@@ -78,16 +78,17 @@ export function calculateLayoutMetrics({ registry, dataSource, styleSource }: Ca
 
 export function applyLayoutMetrics({ registry, metrics, styleSource }: ApplyLayoutMetricsProps) {
     const layoutRef = registry.layout.ref;
+    
     const layoutEl = layoutRef.current;
+    if (!layoutEl) return;
 
-    if (!layoutEl) {
-        return;
-    }
+    const metricsValue = metrics.value;
+    if(!metricsValue) return;
     
     const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutEl;
 
-    const layoutCellSize = metrics.cellSize.layout;
-    const gridCellSize = metrics.cellSize.grid;
+    const layoutCellSize = metricsValue.cellSize.layout;
+    const gridCellSize = metricsValue.cellSize.grid;
 
     layoutEl.style.setProperty("--layout-cell-size", `${layoutCellSize}px`);
     layoutEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
