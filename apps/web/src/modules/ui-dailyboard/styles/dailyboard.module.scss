@@ -31,6 +31,83 @@
                 width: 100%;
                 flex: 1;
                 background: rgba(28, 32, 39, 1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .colorButtons {
+                    display: flex;
+                    gap: 8px;
+                }
+
+                .colorBtn {
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 5%;
+                    border: none;
+                    cursor: pointer;
+                    transition: transform 0.2s;
+                }
+
+                .colorBtn:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        .card.uc-red {
+            border: 1px solid rgba(180, 70, 70, 0.35);
+            .header {
+                background-color: rgb(58, 42, 44);
+                border-bottom: 1px solid rgba(180, 70, 70, 0.25);
+            }
+        }
+
+        .card.uc-orange {
+            border: 1px solid rgba(200, 120, 60, 0.35);
+            .header {
+                background-color: rgb(58, 50, 40);
+                border-bottom: 1px solid rgba(200, 120, 60, 0.25);
+            }
+        }
+
+        .card.uc-yellow {
+            border: 1px solid rgba(200, 180, 60, 0.35);
+            .header {
+                background-color: rgb(58, 56, 40);
+                border-bottom: 1px solid rgba(200, 180, 60, 0.25);
+            }
+        }
+
+        .card.uc-green {
+            border: 1px solid rgba(70, 170, 80, 0.35);
+            .header {
+                background-color: rgb(42, 58, 44);
+                border-bottom: 1px solid rgba(70, 170, 80, 0.25);
+            }
+        }
+
+        .card.uc-blue {
+            border: 1px solid rgba(60, 120, 200, 0.35);
+            .header {
+                background-color: rgb(40, 48, 62);
+                border-bottom: 1px solid rgba(60, 120, 200, 0.25);
+            }
+        }
+
+        .card.uc-pink {
+            border: 1px solid rgba(200, 80, 140, 0.35);
+            .header {
+                background-color: rgb(58, 42, 54);
+                border-bottom: 1px solid rgba(200, 80, 140, 0.25);
+            }
+        }
+
+        .card.uc-purple {
+            border: 1px solid rgba(140, 80, 200, 0.35);
+            .header {
+                background-color: rgb(50, 42, 62);
+                border-bottom: 1px solid rgba(140, 80, 200, 0.25);
             }
         }
     }

@@ -2,7 +2,7 @@ import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
 
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 function DailyboardCard(props : DailyboardCardProps) {
     const { data: dailyboardCardData } = props;
@@ -20,6 +20,17 @@ function DailyboardCard(props : DailyboardCardProps) {
     const dailyboardCardContent = dailyboardCardData.material;
     const placement = dailyboardCardData.placement;
 
+    const [cardColor, setCardColor] = useState('');
+
+    const handleColorChange = (e: React.MouseEvent<HTMLButtonElement>, color: string) => {
+        if (color === '') {
+            setCardColor('');
+        }
+        else {
+            setCardColor('uc-' + color);
+        }
+    };
+
     if(!placement) return null;
 
     return (
@@ -33,7 +44,7 @@ function DailyboardCard(props : DailyboardCardProps) {
             data-dailyboard-card-row-index={placement.position.rowIndex}
             data-dailyboard-card-col-span={placement.position.colSpan}
             data-dailyboard-card-row-span={placement.position.rowSpan}
-            className={style.card}
+            className={`${style.card} ${style[cardColor]}`}
             ref={ref}
         >
             <div
@@ -44,6 +55,16 @@ function DailyboardCard(props : DailyboardCardProps) {
             <div
                 className={style.content}
             >
+            <div className={style.colorButtons}>
+                <button className={style.colorBtn} data-color="none" onClick={(e) => handleColorChange(e, '')} style={{background: '#3f3f3f' }}></button>
+                <button className={style.colorBtn} data-color="red" onClick={(e) => handleColorChange(e, 'red')} style={{background: '#d44'}}></button>
+                <button className={style.colorBtn} data-color="orange" onClick={(e) => handleColorChange(e, 'orange')} style={{background: '#e87c30'}}></button>
+                <button className={style.colorBtn} data-color="yellow" onClick={(e) => handleColorChange(e, 'yellow')} style={{background: '#e8c83c'}}></button>
+                <button className={style.colorBtn} data-color="green" onClick={(e) => handleColorChange(e, 'green')} style={{background: '#4aa84c'}}></button>
+                <button className={style.colorBtn} data-color="blue" onClick={(e) => handleColorChange(e, 'blue')} style={{background: '#4a7ac8'}}></button>
+                <button className={style.colorBtn} data-color="pink" onClick={(e) => handleColorChange(e, 'pink')} style={{background: '#d46a8c'}}></button>
+                <button className={style.colorBtn} data-color="purple" onClick={(e) => handleColorChange(e, 'purple')} style={{background: '#8c4ac8'}}></button>
+            </div>
 
             </div>
         </div>
