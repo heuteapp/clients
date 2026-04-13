@@ -13,7 +13,7 @@ export const useDailyboardMetrics = (metricsId: string, registry: DailyboardRegi
 
     React.useEffect(() => {
         subscribe(metricsId, () => {
-            metrics.current.value = calculateDailyboardMetrics({layout: layoutMetrics});
+            metrics.current.value = calculateDailyboardMetrics({layout: layoutMetrics.value});
             applyDailyboardMetrics({registry, metrics: metrics.current!});
         });
 
