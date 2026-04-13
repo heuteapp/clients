@@ -56,58 +56,58 @@
         }
 
         .card.uc-red {
-            border: 1px solid rgba(180, 70, 70, 0.35);
+            border: 1px solid rgba(255, 50, 50, 0.5);
             .header {
-                background-color: rgb(58, 42, 44);
-                border-bottom: 1px solid rgba(180, 70, 70, 0.25);
+                background-color: rgb(140, 55, 55);
+                border-bottom: 1px solid rgba(255, 50, 50, 0.4);
             }
         }
 
         .card.uc-orange {
-            border: 1px solid rgba(200, 120, 60, 0.35);
+            border: 1px solid rgba(255, 100, 20, 0.5);
             .header {
-                background-color: rgb(58, 50, 40);
-                border-bottom: 1px solid rgba(200, 120, 60, 0.25);
+                background-color: rgb(140, 75, 45);
+                border-bottom: 1px solid rgba(255, 100, 20, 0.4);
             }
         }
 
         .card.uc-yellow {
-            border: 1px solid rgba(200, 180, 60, 0.35);
+            border: 1px solid rgba(255, 235, 50, 0.5);
             .header {
-                background-color: rgb(58, 56, 40);
-                border-bottom: 1px solid rgba(200, 180, 60, 0.25);
+                background-color: rgb(130, 120, 50);
+                border-bottom: 1px solid rgba(255, 235, 50, 0.4);
             }
         }
 
         .card.uc-green {
-            border: 1px solid rgba(70, 170, 80, 0.35);
+            border: 1px solid rgba(50, 255, 80, 0.5);
             .header {
-                background-color: rgb(42, 58, 44);
-                border-bottom: 1px solid rgba(70, 170, 80, 0.25);
+                background-color: rgb(55, 130, 65);
+                border-bottom: 1px solid rgba(50, 255, 80, 0.4);
             }
         }
 
         .card.uc-blue {
-            border: 1px solid rgba(60, 120, 200, 0.35);
+            border: 1px solid rgba(60, 140, 255, 0.5);
             .header {
-                background-color: rgb(40, 48, 62);
-                border-bottom: 1px solid rgba(60, 120, 200, 0.25);
+                background-color: rgb(55, 80, 135);
+                border-bottom: 1px solid rgba(60, 140, 255, 0.4);
             }
         }
 
         .card.uc-pink {
-            border: 1px solid rgba(200, 80, 140, 0.35);
+            border: 1px solid rgba(255, 70, 160, 0.5);
             .header {
-                background-color: rgb(58, 42, 54);
-                border-bottom: 1px solid rgba(200, 80, 140, 0.25);
+                background-color: rgb(140, 65, 100);
+                border-bottom: 1px solid rgba(255, 70, 160, 0.4);
             }
         }
 
         .card.uc-purple {
-            border: 1px solid rgba(140, 80, 200, 0.35);
+            border: 1px solid rgba(170, 80, 255, 0.5);
             .header {
-                background-color: rgb(50, 42, 62);
-                border-bottom: 1px solid rgba(140, 80, 200, 0.25);
+                background-color: rgb(100, 65, 140);
+                border-bottom: 1px solid rgba(170, 80, 255, 0.4);
             }
         }
     }
