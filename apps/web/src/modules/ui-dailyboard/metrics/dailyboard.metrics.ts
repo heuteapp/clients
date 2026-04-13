@@ -7,7 +7,7 @@ export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetri
     if(!layoutValue) return null;
 
     const cardSize = {
-        headerHeight: layoutValue.cellSize.grid * 0.8,
+        headerHeight: layoutValue.cellSize.grid * 1,
     }
 
     return {
