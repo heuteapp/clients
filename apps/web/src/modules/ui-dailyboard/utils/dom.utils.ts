@@ -42,6 +42,29 @@ export const findDailyboardCardAtCursor = (clientX: number, clientY: number): HT
     return null;
 }
 
+export const findDailyboardCardHeaderInSubtree = (el: Element): HTMLDivElement | null => {
+    const child = el.querySelector<HTMLDivElement>("[data-dailyboard-card-header]");
+    return child || null;
+}
+
+export const findDailyboardCardHeaderClosest = (el: Element): HTMLDivElement | null => {
+    const parent = el.closest<HTMLDivElement>("[data-dailyboard-card-header]");
+    return parent || null;
+}
+
+export const findDailyboardCardHeaderAtCursor = (clientX: number, clientY: number): HTMLDivElement | null => {
+    const allElements = document.elementsFromPoint(clientX, clientY);
+    
+    for (const element of allElements) {
+        const header = (element as HTMLElement).closest<HTMLDivElement>("[data-dailyboard-card-header]");
+        if (header) return header;
+    }
+    
+    return null;
+}
+
+//
+
 export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
     const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card-section-name="${sectionName}"]`);
     return Array.from(cardElements) as HTMLDivElement[];
