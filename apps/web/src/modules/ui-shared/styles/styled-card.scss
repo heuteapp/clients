@@ -1,5 +1,5 @@
 .heute {
-    .content-card {
+    .content-card, [data-dailyboard-card-type="content"] {
         display: flex;
         flex-direction: column;
         border: 1px solid rgba(255, 255, 255, 0.125);
@@ -42,7 +42,7 @@
         }
     }
 
-    .content-card.uc-red {
+    .content-card.uc-red, [data-dailyboard-card-type="content"].uc-red {
         border: 1px solid rgba(255, 50, 50, 0.5);
         .header {
             background-color: rgb(140, 55, 55);
@@ -50,7 +50,7 @@
         }
     }
 
-    .content-card.uc-orange {
+    .content-card.uc-orange, [data-dailyboard-card-type="content"].uc-orange {
         border: 1px solid rgba(255, 100, 20, 0.5);
         .header {
             background-color: rgb(140, 75, 45);
@@ -58,7 +58,7 @@
         }
     }
 
-    .content-card.uc-yellow {
+    .content-card.uc-yellow, [data-dailyboard-card-type="content"].uc-yellow {
         border: 1px solid rgba(255, 235, 50, 0.5);
         .header {
             background-color: rgb(130, 120, 50);
@@ -66,7 +66,7 @@
         }
     }
 
-    .content-card.uc-green {
+    .content-card.uc-green, [data-dailyboard-card-type="content"].uc-green {
         border: 1px solid rgba(50, 255, 80, 0.5);
         .header {
             background-color: rgb(55, 130, 65);
@@ -74,7 +74,7 @@
         }
     }
 
-    .content-card.uc-blue {
+    .content-card.uc-blue, [data-dailyboard-card-type="content"].uc-blue {
         border: 1px solid rgba(60, 140, 255, 0.5);
         .header {
             background-color: rgb(55, 80, 135);
@@ -82,7 +82,7 @@
         }
     }
 
-    .content-card.uc-pink {
+    .content-card.uc-pink, [data-dailyboard-card-type="content"].uc-pink {
         border: 1px solid rgba(255, 70, 160, 0.5);
         .header {
             background-color: rgb(140, 65, 100);
@@ -90,7 +90,7 @@
         }
     }
 
-    .content-card.uc-purple {
+    .content-card.uc-purple, [data-dailyboard-card-type="content"].uc-purple {
         border: 1px solid rgba(170, 80, 255, 0.5);
         .header {
             background-color: rgb(100, 65, 140);

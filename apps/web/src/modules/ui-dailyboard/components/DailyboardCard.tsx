@@ -37,6 +37,7 @@ function DailyboardCard(props : DailyboardCardProps) {
     return (
         <div 
             data-dailyboard-card
+            data-dailyboard-card-type={"content"}
             data-dailyboard-card-id={dailyboardCardData.id}
             data-dailyboard-card-key={dailyboardCardData.name}
             data-dailyboard-card-title={dailyboardCardContent.title}
