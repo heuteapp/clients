@@ -2,7 +2,6 @@ import React from "react";
 import { DailyboardMetrics } from "../types/dailyboard.metrics";
 import { applyDailyboardMetrics, calculateDailyboardMetrics } from "../metrics/dailyboard.metrics";
 import { DailyboardRegistry } from "../types/dailyboard.registry";
-import { LayoutMetrics } from "../../ui-layout/types/layout.metrics";
 import { useMetricsContext } from "../../ui-shared/hooks/useMetricsContext";
 import { useLayoutContext } from "../../ui-layout/hooks/useLayoutContext";
 

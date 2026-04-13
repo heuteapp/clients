@@ -1,5 +1,5 @@
 import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetricsValue } from "../types/dailyboard.metrics";
-import { calcDailyboardCardFixedRect, getDailyboardCardData } from "../utils/dom.utils";
+import { calcDailyboardCardFixedRect, findDailyboardCardHeaderInSubtree, getDailyboardCardData } from "../utils/dom.utils";
 import { findGridInSubtree, getSectionDataForGrid } from "../../ui-layout/utils/dom.utils";
 
 export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetricsValue | null => {
@@ -7,7 +7,7 @@ export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetri
     if(!layoutValue) return null;
 
     const cardSize = {
-        headerHeight: layoutValue.cellSize.grid * 0.5,
+        headerHeight: layoutValue.cellSize.grid * 0.8,
     }
 
     return {
@@ -16,7 +16,7 @@ export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetri
     }
 }
 
-export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) => {
+export const applyDailyboardMetrics = ({ metrics, registry } : ApplyDailyboardMetrics) => {
     const dailyboardEl = registry.dailyboard.ref?.current;
     if (!dailyboardEl) return;
 
@@ -44,6 +44,12 @@ export const applyDailyboardMetrics = ({ registry } : ApplyDailyboardMetrics) =>
 
             const data = getDailyboardCardData(cardEl);
             if (!data) return;
+
+            const cardHeaderEl = findDailyboardCardHeaderInSubtree(cardEl);
+            if(cardHeaderEl) {
+                const headerHeight = metrics.value?.cardSize.headerHeight || 0;
+                cardHeaderEl.style.height = `${headerHeight}px`;
+            }
 
             const { clientWidth: cardWidth } = dailyboardEl;
 
