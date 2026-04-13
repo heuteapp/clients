@@ -15,11 +15,11 @@
             display: grid;
             align-items: center;
             justify-items: center;
-            background: rgb(26, 28, 34);
-            backdrop-filter: blur(2px);
-            outline: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.5vw;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background: rgba(26, 30, 37, 0.85);
+            backdrop-filter: blur(8px);
+            outline: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75vw;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
         }
     }
 }
