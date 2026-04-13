@@ -22,6 +22,11 @@ export function calculateLayoutMetrics({ registry, dataSource, styleSource }: Ca
         height: layoutHeight,
     };
 
+    const viewRatio = {
+        width: document.body.clientWidth / viewSize.width,
+        height: document.body.clientHeight / viewSize.height,
+    }
+
     const layoutCellWidth = layoutWidth / layout.props.data.colCount;
     const layoutCellHeight = layoutHeight / layout.props.data.rowCount;
 
@@ -69,6 +74,7 @@ export function calculateLayoutMetrics({ registry, dataSource, styleSource }: Ca
 
     return {
         viewSize,
+        viewRatio,
         cellSize: {
             layout: layoutCellSize,
             grid: gridCellSize,

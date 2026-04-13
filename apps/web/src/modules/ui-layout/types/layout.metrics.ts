@@ -10,6 +10,10 @@ export interface LayoutMetricsValue {
         width: number;
         height: number;
     },
+    viewRatio: {
+        width: number;
+        height: number;
+    },
     cellSize: {
         layout: number,
         grid: number,
