@@ -2,7 +2,7 @@ import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/lay
 import { LayoutRegistry } from "./layout.registry"
 
 export interface LayoutMetrics {
-    layoutSize: {
+    viewSize: {
         width: number;
         height: number;
     },

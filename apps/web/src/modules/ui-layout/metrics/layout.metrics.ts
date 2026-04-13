@@ -17,7 +17,7 @@ export function calculateLayoutMetrics({ registry, dataSource, styleSource }: Ca
 
     const { clientWidth: layoutWidth, clientHeight: layoutHeight } = layoutEl;
 
-    const layoutSize = {
+    const viewSize = {
         width: layoutWidth,
         height: layoutHeight,
     };
@@ -68,7 +68,7 @@ export function calculateLayoutMetrics({ registry, dataSource, styleSource }: Ca
     });
 
     return {
-        layoutSize,
+        viewSize,
         cellSize: {
             layout: layoutCellSize,
             grid: gridCellSize,
