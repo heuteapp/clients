@@ -13,7 +13,7 @@ export function DailyboardProvider({ metricsId, dataSource, children }: Dailyboa
     const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
     const registry = useDailyboardRegistry(dailyboardRef, layout.registry);
 
-    const metrics = useDailyboardMetrics(metricsId ?? "dailyboard", registry, layout.metrics);
+    const metrics = useDailyboardMetrics(metricsId ?? "dailyboard", registry);
     
     const contextValue = React.useMemo(() => ({
         dataSource, layout, registry, metrics

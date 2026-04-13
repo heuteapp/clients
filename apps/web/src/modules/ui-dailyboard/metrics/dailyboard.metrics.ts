@@ -1,10 +1,13 @@
-import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetrics } from "../types/dailyboard.metrics";
+import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetricsValue } from "../types/dailyboard.metrics";
 import { calcDailyboardCardFixedRect, getDailyboardCardData } from "../utils/dom.utils";
 import { findGridInSubtree, getSectionDataForGrid } from "../../ui-layout/utils/dom.utils";
 
-export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetrics => {
+export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetricsValue | null => {
+    const layoutValue = layout.value;
+    if(!layoutValue) return null;
+
     const cardSize = {
-        headerHeight: layout.cellSize.grid * 0.5,
+        headerHeight: layoutValue.cellSize.grid * 0.5,
     }
 
     return {
