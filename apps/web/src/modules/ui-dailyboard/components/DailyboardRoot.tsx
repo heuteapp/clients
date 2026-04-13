@@ -1,7 +1,7 @@
 "use client"
 
 import "@/src/modules/ui-dailyboard/styles/dailyboard.css";
-import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.css"
+import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
 import { useLayoutEffect } from "react";
 
 import DailyboardCardContainer from "./DailyboardCardContainer";

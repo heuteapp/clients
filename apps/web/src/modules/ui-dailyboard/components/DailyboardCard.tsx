@@ -1,4 +1,4 @@
-import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.css"
+import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
 
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
@@ -36,6 +36,16 @@ function DailyboardCard(props : DailyboardCardProps) {
             className={style.card}
             ref={ref}
         >
+            <div
+                className={style.header}
+            >
+                {dailyboardCardContent.title}
+            </div>
+            <div
+                className={style.content}
+            >
+
+            </div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.css"
+import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
 
 import { useLayoutEffect, useRef } from "react";
 import DailyboardCard from "./DailyboardCard"
