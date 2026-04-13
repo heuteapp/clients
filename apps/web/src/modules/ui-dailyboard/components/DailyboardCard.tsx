@@ -3,6 +3,7 @@ import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
 import { useLayoutEffect, useRef, useState } from "react";
+import clsx from "clsx";
 
 function DailyboardCard(props : DailyboardCardProps) {
     const { data: dailyboardCardData } = props;
@@ -44,19 +45,19 @@ function DailyboardCard(props : DailyboardCardProps) {
             data-dailyboard-card-row-index={placement.position.rowIndex}
             data-dailyboard-card-col-span={placement.position.colSpan}
             data-dailyboard-card-row-span={placement.position.rowSpan}
-            className={`${style.card} ${style[cardColor]}`}
+            className={clsx(style.card, style[cardColor])}
             ref={ref}
         >
             <div
                 data-dailyboard-card-header
-                className={style.header}
+                className={'header'}
             >
                 {dailyboardCardContent.title}
             </div>
             <div
-                className={style.content}
+                className={'body'}
             >
-            <div className={style.colorButtons}>
+            <div className={clsx('colorButtons', style.colorButtons)}>
                 <button className={style.colorBtn} data-color="none" onClick={(e) => handleColorChange(e, '')} style={{background: '#3f3f3f' }}></button>
                 <button className={style.colorBtn} data-color="red" onClick={(e) => handleColorChange(e, 'red')} style={{background: '#d44'}}></button>
                 <button className={style.colorBtn} data-color="orange" onClick={(e) => handleColorChange(e, 'orange')} style={{background: '#e87c30'}}></button>
