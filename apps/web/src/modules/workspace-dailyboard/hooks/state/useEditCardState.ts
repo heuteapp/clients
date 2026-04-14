@@ -122,13 +122,17 @@ export const useEditCardState = () => {
             if (focusTapCard.current === card) {
                 if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
 
-                sendEditRequest(card);
+                setTimeout(() => {
+                    if (isMounted.current) {
+                        sendEditRequest(card);
+                    }
+                }, 50);
             }
         } else {
             focusTapCard.current = card;
             focusTapResetTimeout.current = setTimeout(() => {
                 if (isMounted.current) focusTapCard.current = null;
-            }, 300);
+            }, 500);
         }
     }, [sendEditRequest]);
 
@@ -145,15 +149,33 @@ export const useEditCardState = () => {
                 }
             }
             
-            if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-            sendPlaceRequest(focusTapCard.current);
+            if (focusTapResetTimeout.current) {
+                clearTimeout(focusTapResetTimeout.current);
+                focusTapResetTimeout.current = null;
+            }
+            
+            const cardToPlace = focusTapCard.current;
+            focusTapCard.current = null;
+            
+            if (cardToPlace) {
+                sendPlaceRequest(cardToPlace);
+            }
         }
     }, [sendPlaceRequest]);
 
     const handleFocusPan = useCallback(() => {
         if (focusTapCard.current) {
-            if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-            sendPlaceRequest(focusTapCard.current);
+            if (focusTapResetTimeout.current) {
+                clearTimeout(focusTapResetTimeout.current);
+                focusTapResetTimeout.current = null;
+            }
+            
+            const cardToPlace = focusTapCard.current;
+            focusTapCard.current = null;
+            
+            if (cardToPlace) {
+                sendPlaceRequest(cardToPlace);
+            }
         }
     }, [sendPlaceRequest]);
 
