@@ -9,26 +9,24 @@ import { fromPromise } from "xstate";
 export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
     ({ sendBack }) => {
         if (typeof window === "undefined") {
-            sendBack({ 
+            return sendBack({ 
                 type: 'SESSION_HYDRATE_FAILURE',
                 error: "Session hydration can only be performed in the browser",
             });
-            return;
         }
 
         const raw = localStorage.getItem("auth");
         if (!raw) {
-            sendBack({ 
+            return sendBack({ 
                 type: 'SESSION_HYDRATE_FAILURE',
                 error: "No auth data found in localStorage",
             });
-            return;
         }
 
         heuteApi.me.check()
 
         .then(profile => {
-            sendBack({ 
+            return sendBack({ 
                 type: 'SESSION_HYDRATE_SUCCESS',
                 accessToken: JSON.parse(raw).accessToken,
                 profile: profile!,
@@ -41,16 +39,14 @@ export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
             if (newSessionHeader) {
                 const newSession = JSON.parse(newSessionHeader as string);
 
-                sendBack({ 
+                return sendBack({ 
                     type: "SESSION_REFRESH_REQUEST",
                     accessToken: newSession.accessToken,
                     profile: newSession.profile,
                 });
-                
-                return;
             }
 
-            sendBack({ 
+            return sendBack({ 
                 type: 'SESSION_HYDRATE_FAILURE',
                 error: error?.message || "Failed to hydrate session",
             });

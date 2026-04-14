@@ -56,14 +56,25 @@ export const authMachine = setup({
     "checking session": {
       invoke: {
         src: "hydrateAuth",
-        id: "check-auth",
-        onDone: [
-          {
+        id: "hydrate-auth",
+        on: {
+          SESSION_HYDRATE_SUCCESS: {
             target: "authenticated",
-            actions: "setAuth"
+            actions: [
+              "setAuth",
+              "persistAuth",
+              "unsetError"
+            ]
+          },
+          SESSION_HYDRATE_FAILURE: {
+            target: "checking registration",
+            actions: "setError"
+          },
+          SESSION_REFRESH_REQUEST: {
+            target: "checking session",
+            actions: ["setAuth", "persistAuth"]
           }
-        ],
-        onError: { target: "checking registration" },
+        }
       }
     },
 
