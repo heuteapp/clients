@@ -50,6 +50,44 @@ export const useEditCardState = () => {
     const initPlacingMovingState = useRef(false);
 
     // ---------- Helper Functions ----------
+    const isInteractiveElement = (element: HTMLElement): boolean => {
+        const interactiveSelectors = [
+            'button',
+            'a',
+            '[role="button"]',
+            'input',
+            'textarea',
+            'select',
+            '[contenteditable="true"]',
+            '.btn',
+            '.button',
+            '[data-interactive="true"]'
+        ];
+        
+        let current: HTMLElement | null = element;
+        while (current && current !== document.body) {
+            for (const selector of interactiveSelectors) {
+                if (current.matches(selector)) {
+                    return true;
+                }
+            }
+            current = current.parentElement;
+        }
+        return false;
+    };
+
+    const getTargetCard = (x: number, y: number): HTMLElement | null => {
+        const elementsAtCursor = document.elementsFromPoint(x, y);
+        
+        for (const element of elementsAtCursor) {
+            if (element instanceof HTMLElement && isInteractiveElement(element)) {
+                return null;
+            }
+        }
+        
+        return findDailyboardCardAtCursor(x, y);
+    };
+
     const sendPlaceRequest = useCallback((card: HTMLElement) => {
         currentCard.current = card;
         currentCardData.current = getDailyboardCardData(card);
@@ -77,7 +115,7 @@ export const useEditCardState = () => {
     // ---------- Event Handlers ----------
     const handleFocusTap = useCallback((e: HammerInput) => {
         const { center } = e;
-        const card = findDailyboardCardAtCursor(center.x, center.y);
+        const card = getTargetCard(center.x, center.y);
         if (!card) return;
 
         if (focusTapCard.current) {
@@ -92,12 +130,22 @@ export const useEditCardState = () => {
                 if (isMounted.current) focusTapCard.current = null;
             }, 300);
         }
-    }, [sendPlaceRequest]);
+    }, [sendEditRequest]);
 
     const handleFocusPress = useCallback(() => {
         if (focusTapCard.current) {
+            const rect = focusTapCard.current.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const elementsAtCenter = document.elementsFromPoint(centerX, centerY);
+            
+            for (const element of elementsAtCenter) {
+                if (element instanceof HTMLElement && isInteractiveElement(element)) {
+                    return;
+                }
+            }
+            
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-
             sendPlaceRequest(focusTapCard.current);
         }
     }, [sendPlaceRequest]);
@@ -105,7 +153,6 @@ export const useEditCardState = () => {
     const handleFocusPan = useCallback(() => {
         if (focusTapCard.current) {
             if (focusTapResetTimeout.current) clearTimeout(focusTapResetTimeout.current);
-            
             sendPlaceRequest(focusTapCard.current);
         }
     }, [sendPlaceRequest]);
@@ -114,6 +161,15 @@ export const useEditCardState = () => {
         if (!currentCard.current) return;
 
         const { clientX, clientY } = event;
+        
+        const elementsAtCursor = document.elementsFromPoint(clientX, clientY);
+        for (const element of elementsAtCursor) {
+            if (element instanceof HTMLElement && isInteractiveElement(element)) {
+                sendRef.current({ type: "CARD_PLACE_CANCELLED" });
+                return;
+            }
+        }
+        
         const clickedCard = findDailyboardCardAtCursor(clientX, clientY);
 
         if (clickedCard !== currentCard.current) {
@@ -190,7 +246,7 @@ export const useEditCardState = () => {
         if (card) card.classList.add("placing");
 
         initPlacingState.current = true;
-    }, [handlePlacingPointerDown]);
+    }, [handlePlacingPointerDown, handlePlacingPan, handlePlacingPanEnd]);
 
     const exitPlacingState = useCallback(() => {
         if (!hammerContext.current) return;
@@ -208,7 +264,7 @@ export const useEditCardState = () => {
         }
 
         initPlacingState.current = false;
-    }, [handlePlacingPointerDown]);
+    }, [handlePlacingPointerDown, handlePlacingPan, handlePlacingPanEnd]);
 
     const entryPlacingMovingState = useCallback(() => {
         if (!hammerContext.current) return;
@@ -233,7 +289,7 @@ export const useEditCardState = () => {
         return () => { 
             isActive = false; 
         };
-    }, [handlePlacingPanEnd]);
+    }, []);
 
     const exitPlacingMovingState = useCallback(() => {
         if (!hammerContext.current) return;
@@ -242,7 +298,7 @@ export const useEditCardState = () => {
         
         if (card) card.classList.remove("moving");
         initPlacingMovingState.current = false;
-    }, [handlePlacingPanEnd]);
+    }, []);
 
     // ---------- Hammer Setup ----------
     useEffect(() => {
@@ -326,5 +382,5 @@ export const useEditCardState = () => {
             if (initPlacingState.current) exitPlacingState();
             if (initPlacingMovingState.current) exitPlacingMovingState();
         }
-    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryPlacingMovingState, exitPlacingMovingState]);
+    }, [state, entryFocusState, exitFocusState, entryPlacingState, exitPlacingState, entryPlacingMovingState, exitPlacingMovingState, entryEditingState, exitEditingState]);
 };
