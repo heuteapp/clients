@@ -203,7 +203,6 @@ const LayoutSidebar = () => {
               <Button
                 key={`${size.col}x${size.row}`}
                 size="small"
-                variant="outlined"
                 sx={{ color: "white", borderColor: "white", fontSize: "0.7rem", minWidth: 0, px: 1 }}
                 onMouseDown={() => handleQuickCreate(size.col, size.row)}
                 onTouchStart={() => handleQuickCreate(size.col, size.row)}
@@ -219,7 +218,6 @@ const LayoutSidebar = () => {
               <Button
                 key={`${size.col}x${size.row}`}
                 size="small"
-                variant="outlined"
                 sx={{ color: "white", borderColor: "white", fontSize: "0.7rem", minWidth: 0, px: 1 }}
                 onMouseDown={() => handleQuickCreate(size.col, size.row)}
                 onTouchStart={() => handleQuickCreate(size.col, size.row)}
