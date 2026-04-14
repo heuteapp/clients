@@ -111,6 +111,24 @@ const LayoutSidebar = () => {
     send({ type: "CARD_CREATE_REQUESTED", cardSize: { colSpan, rowSpan } });
   };
 
+  const handleQuickCreate = (col: number, row: number) => {
+    send({ type: "CARD_CREATE_REQUESTED", cardSize: { colSpan: col, rowSpan: row } });
+  };
+
+  const quickSizes = [
+    { col: 4, row: 3 },
+    { col: 8, row: 3 },
+    { col: 12, row: 3 },
+    { col: 24, row: 3 },
+    { col: 4, row: 6 },
+    { col: 8, row: 6 },
+    { col: 12, row: 6 },
+    { col: 24, row: 6 },
+  ];
+
+  const firstRow = quickSizes.slice(0, 4);
+  const secondRow = quickSizes.slice(4, 8);
+
   return (
     <Box
       component="aside"
@@ -177,6 +195,40 @@ const LayoutSidebar = () => {
       >
         Create {colSpan}x{rowSpan} Card
       </Button>
+
+      <Stack direction="column" spacing={1}>
+          {/* 1. satır */}
+          <Stack direction="row" spacing={1} justifyContent="space-between">
+            {firstRow.map((size) => (
+              <Button
+                key={`${size.col}x${size.row}`}
+                size="small"
+                variant="outlined"
+                sx={{ color: "white", borderColor: "white", fontSize: "0.7rem", minWidth: 0, px: 1 }}
+                onMouseDown={() => handleQuickCreate(size.col, size.row)}
+                onTouchStart={() => handleQuickCreate(size.col, size.row)}
+              >
+                {size.col}x{size.row}
+              </Button>
+            ))}
+          </Stack>
+
+          {/* 2. satır */}
+          <Stack direction="row" spacing={1} justifyContent="space-between">
+            {secondRow.map((size) => (
+              <Button
+                key={`${size.col}x${size.row}`}
+                size="small"
+                variant="outlined"
+                sx={{ color: "white", borderColor: "white", fontSize: "0.7rem", minWidth: 0, px: 1 }}
+                onMouseDown={() => handleQuickCreate(size.col, size.row)}
+                onTouchStart={() => handleQuickCreate(size.col, size.row)}
+              >
+                {size.col}x{size.row}
+              </Button>
+            ))}
+          </Stack>
+        </Stack>
     </Box>
   );
 };
