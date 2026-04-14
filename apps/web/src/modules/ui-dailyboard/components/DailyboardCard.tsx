@@ -46,7 +46,7 @@ function DailyboardCard(props : DailyboardCardProps) {
             data-dailyboard-card-row-index={placement.position.rowIndex}
             data-dailyboard-card-col-span={placement.position.colSpan}
             data-dailyboard-card-row-span={placement.position.rowSpan}
-            className={clsx(style.card, cardColor)}
+            className={clsx('heute-card', style.card, cardColor)}
             ref={ref}
         >
             <div
