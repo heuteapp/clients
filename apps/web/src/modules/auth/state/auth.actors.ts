@@ -1,29 +1,62 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
 import { heuteApi } from "@/src/api/heuteApi";
 import { AuthSession } from "@/src/modules/auth/types/auth.types";
-import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/modules/auth/types/auth.actors";
+import { SessionHydrateActorEvent, SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/modules/auth/types/auth.actors";
 import { AuthRegistration } from "@/src/modules/auth/types/auth.types";
 import { createCallback } from "@/src/modules/auth/utils/create-callback";
 import { fromPromise } from "xstate";
 
-export const hydrateAuthActor = fromPromise<AuthSession | null>(async () => {
-    if (typeof window === "undefined") return null;
+export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
+    ({ sendBack }) => {
+        if (typeof window === "undefined") {
+            sendBack({ 
+                type: 'SESSION_HYDRATE_FAILURE',
+                error: "Session hydration can only be performed in the browser",
+            });
+            return;
+        }
 
-    const raw = localStorage.getItem("auth");
-    if (!raw) throw new Error("No auth data found in localStorage");
+        const raw = localStorage.getItem("auth");
+        if (!raw) {
+            sendBack({ 
+                type: 'SESSION_HYDRATE_FAILURE',
+                error: "No auth data found in localStorage",
+            });
+            return;
+        }
 
-    try {
-        const authSession = JSON.parse(raw);
-        
-        const profile = await heuteApi.me.check();        
-        return { ...authSession, profile };
-    } catch {
-        //localStorage.removeItem("auth");
-        
-        console.error("Failed to hydrate auth session, clearing invalid data");
-        throw new Error("Failed to hydrate auth session");
+        heuteApi.me.check()
+
+        .then(profile => {
+            sendBack({ 
+                type: 'SESSION_HYDRATE_SUCCESS',
+                accessToken: JSON.parse(raw).accessToken,
+                profile: profile!,
+            });
+        })
+
+        .catch(error => {
+            const newSessionHeader = error.response.headers["x-new-auth-session"];
+            
+            if (newSessionHeader) {
+                const newSession = JSON.parse(newSessionHeader as string);
+
+                sendBack({ 
+                    type: "SESSION_REFRESH_REQUEST",
+                    accessToken: newSession.accessToken,
+                    profile: newSession.profile,
+                });
+                
+                return;
+            }
+
+            sendBack({ 
+                type: 'SESSION_HYDRATE_FAILURE',
+                error: error?.message || "Failed to hydrate session",
+            });
+        });
     }
-});
+);
 
 export const hydrateRegistrationActor = fromPromise<AuthRegistration | null>(
     async () => {
