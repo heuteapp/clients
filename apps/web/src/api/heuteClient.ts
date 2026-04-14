@@ -43,6 +43,20 @@ heuteClient.interceptors.response.use(
     },
     (error) => {
         if (error.response?.status === 401) {
+            const newSessionHeader = error.response.headers["x-new-auth-session"];
+            
+            if (newSessionHeader) {
+                try {
+                    const newSession = JSON.parse(newSessionHeader);
+                    
+                    localStorage.setItem("auth", JSON.stringify(newSession));
+                    
+                    console.log("Session refreshed automatically", newSession);
+                } catch (e) {
+                    console.error("Failed to parse new session", e);
+                }
+            }
+
             authService.send({ type: "SIGN_OUT" });
         }
         return Promise.reject(error);
