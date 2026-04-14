@@ -31,10 +31,26 @@ heuteClient.interceptors.request.use((config) => {
 
 heuteClient.interceptors.response.use(
     (response) => response,
-    (error) => {
-        if (error.response?.status === 401) {
-            console.warn("401 detected, let actor handle refresh");
+    async (error) => {
+        const originalRequest = error.config;
+        
+        if (error.response?.status === 401 || error.response?.status === 403) {
+            if (originalRequest.url === '/auth/refresh') {
+                return Promise.reject(error);
+            }
+            
+            try {
+                const { data } = await heuteClient.post('/auth/refresh');
+                const { accessToken } = data;
+                
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+                return heuteClient(originalRequest);
+            } catch (refreshError) {
+                localStorage.removeItem('auth');
+                return Promise.reject(refreshError);
+            }
         }
+        
         return Promise.reject(error);
     }
 );
