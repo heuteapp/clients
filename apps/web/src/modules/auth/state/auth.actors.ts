@@ -66,13 +66,11 @@ AuthSession | null
                 } catch (refreshError) {
                     console.error("Refresh failed:", refreshError);
                     localStorage.removeItem("auth");
-                    localStorage.removeItem("accessToken");
                     throw new Error("Token expired and refresh failed");
                 }
             }
             
             localStorage.removeItem("auth");
-            localStorage.removeItem("accessToken");
             throw error;
         }
     }

@@ -33,7 +33,7 @@ heuteClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            authService.send({ type: "SIGN_OUT" });
+            console.warn("401 detected, let actor handle refresh");
         }
         return Promise.reject(error);
     }
