@@ -2,7 +2,7 @@ import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/a
 import { createAssign } from "@/src/modules/auth/utils/create-assign";
 
 export const resolveAuthData = (event: AuthMachineEvent) => {
-    if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFY_EMAIL_COMPLETED" || event.type === "VERIFY_EMAIL_SUCCESS" || event.type === "SESSION_REFRESH") {
+    if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFY_EMAIL_COMPLETED" || event.type === "VERIFY_EMAIL_SUCCESS" || event.type === "SESSION_REFRESH_REQUEST") {
         console.log("Resolving auth data from event:", event);
         
         return {

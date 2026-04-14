@@ -47,7 +47,7 @@ export const authMachine = setup({
         3000: "checking session"
       },
       on: {
-        SESSION_REFRESH: {
+        SESSION_REFRESH_REQUEST: {
           target: "checking session",
           actions: ["setAuth", "persistAuth"]
         }

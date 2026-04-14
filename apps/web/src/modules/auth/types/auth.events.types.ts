@@ -6,7 +6,12 @@ export type HYDRATE_EVENT = { type: "HYDRATE" };
 
 //
 
-export type SessionRefreshEvent = { type: "SESSION_REFRESH", accessToken: string, profile: AuthProfile };
+export type SessionHydrateEvent = 
+    | { type: "SESSION_HYDRATE_SUCCESS", accessToken: string, profile: AuthProfile }
+    | { type: "SESSION_HYDRATE_FAILURE", error: string }
+
+export type SessionRefreshEvent = 
+    | { type: "SESSION_REFRESH_REQUEST", accessToken: string, profile: AuthProfile };
 
 //
 
