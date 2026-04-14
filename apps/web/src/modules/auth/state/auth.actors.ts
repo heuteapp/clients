@@ -5,25 +5,21 @@ import { SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/
 import { AuthRegistration } from "@/src/modules/auth/types/auth.types";
 import { createCallback } from "@/src/modules/auth/utils/create-callback";
 import { fromPromise } from "xstate";
-import { withAccessToken } from "@/src/api/token.helper";
 
 export const hydrateAuthActor = fromPromise<AuthSession | null>(async () => {
     if (typeof window === "undefined") return null;
 
     const raw = localStorage.getItem("auth");
-    if (!raw) return null;
+    if (!raw) throw new Error("No auth data found in localStorage");
 
     try {
         const authSession = JSON.parse(raw);
         
-        const profile = await withAccessToken(authSession.accessToken, () => 
-            heuteApi.me.check()
-        );
-        
+        const profile = await heuteApi.me.check();        
         return { ...authSession, profile };
     } catch {
         localStorage.removeItem("auth");
-        return null;
+        throw new Error("Failed to hydrate auth session");
     }
 });
 
@@ -32,13 +28,13 @@ export const hydrateRegistrationActor = fromPromise<AuthRegistration | null>(
         if (typeof window === "undefined") return null;
 
         const raw = localStorage.getItem("registration");
-        if (!raw) return null;
+        if (!raw) throw new Error("No registration data found in localStorage");
 
         try {
             return JSON.parse(raw) as AuthRegistration;
         } catch {
             localStorage.removeItem("registration");
-            return null;
+            throw new Error("Failed to hydrate registration session");
         }
     }
 );
