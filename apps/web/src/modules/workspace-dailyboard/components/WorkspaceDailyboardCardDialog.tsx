@@ -24,15 +24,24 @@ export function WorkspaceDailyboardCardDialog() {
   const card = cardRef.current;
   const pos = card?.placement?.position;
 
+  const dialogRatio = useMemo(() => {
+    if (!metrics.value || !pos) return 1;
+    return Math.max(metrics.value.layout.viewRatio.width, metrics.value.layout.viewRatio.height);
+  }, [metrics.value, pos]);
+
   const dialogSize = useMemo(() => {
     if (!metrics.value || !pos) return { width: 10, height: 10 };
-    const ratio = Math.max(metrics.value.layout.viewRatio.width, metrics.value.layout.viewRatio.height);
     const grid = metrics.value.layout.cellSize.layout * 1.1;
     return {
-      width: grid * pos.colSpan * ratio,
-      height: grid * pos.rowSpan * ratio,
+      width: grid * pos.colSpan * dialogRatio,
+      height: grid * pos.rowSpan * dialogRatio,
     };
-  }, [metrics.value, pos]);
+  }, [metrics.value, pos, dialogRatio]);
+
+  const dialogHeaderHeight = useMemo(() => {
+    if (!metrics.value) return 10;
+    return metrics.value.cardSize.headerHeight * dialogRatio;
+  }, [metrics.value, dialogRatio]);
 
   const isOpen = isEditingCard(state);
 
@@ -52,14 +61,26 @@ export function WorkspaceDailyboardCardDialog() {
         },
       }}
     >
-      <DialogContent>
-        {pos ? (
-          <Box>
-            {metrics.value?.layout.viewRatio.width.toFixed(2)} : {metrics.value?.layout.viewRatio.height.toFixed(2)}
-          </Box>
-        ) : (
-          <Typography variant="h6">No card data available</Typography>
-        )}
+      <DialogContent
+        className='heute-card'
+        data-dailyboard-card-type={"content"}
+        sx={{
+          padding: 0,
+        }}
+      >
+        <div
+          className='header'
+          style={{
+            height: dialogHeaderHeight,
+          }}
+        >
+          {" "}
+        </div>
+        <div
+          className='body'
+        >
+
+        </div>
       </DialogContent>
     </Dialog>
   );
