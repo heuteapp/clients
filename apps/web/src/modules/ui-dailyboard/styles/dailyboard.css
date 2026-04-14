@@ -36,6 +36,6 @@
 }
 
 [data-dailyboard-card].editing {
-    box-shadow: 0 0 0 2px blue;
-    opacity: 0.8;
+    opacity: 0.4;
+    transition: 0.2s opacity ease-out;
 }
