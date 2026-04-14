@@ -6,6 +6,10 @@ export type HYDRATE_EVENT = { type: "HYDRATE" };
 
 //
 
+export type SessionRefreshEvent = { type: "SESSION_REFRESH", accessToken: string, profile: AuthProfile };
+
+//
+
 export type SIGN_IN_EVENT = { type: "SIGN_IN"; identifier: string; password: string };
 
 export type SIGN_IN_SUCCESS_EVENT = { type: "SIGN_IN_SUCCESS"; accessToken: string; profile: AuthProfile };

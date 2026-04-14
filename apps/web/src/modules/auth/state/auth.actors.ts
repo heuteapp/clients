@@ -18,7 +18,9 @@ export const hydrateAuthActor = fromPromise<AuthSession | null>(async () => {
         const profile = await heuteApi.me.check();        
         return { ...authSession, profile };
     } catch {
-        localStorage.removeItem("auth");
+        //localStorage.removeItem("auth");
+        
+        console.error("Failed to hydrate auth session, clearing invalid data");
         throw new Error("Failed to hydrate auth session");
     }
 });

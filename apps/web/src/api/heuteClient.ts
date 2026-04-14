@@ -1,5 +1,10 @@
-import axios from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { authService } from "../modules/auth/state/auth.machine";
+
+// Retry için custom config tipi
+interface RetryableConfig extends InternalAxiosRequestConfig {
+    _retry?: boolean;
+}
 
 export const heuteClient = axios.create({
     baseURL: "/api",
@@ -24,45 +29,41 @@ heuteClient.interceptors.request.use((config) => {
 });
 
 heuteClient.interceptors.response.use(
-    (response) => {
-        const newSessionHeader = response.headers["x-new-auth-session"];
+    (response) => response,
+    async (error: AxiosError) => {
+        const originalRequest = error.config as RetryableConfig;
         
-        if (newSessionHeader) {
-            try {
-                const newSession = JSON.parse(newSessionHeader);
-                
-                localStorage.setItem("auth", JSON.stringify(newSession));
-                
-                console.log("Session refreshed automatically", newSession);
-            } catch (e) {
-                console.error("Failed to parse new session", e);
-            }
-        }
-        
-        return response;
-    },
-    (error) => {
-        if (error.response?.status === 401) {
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            
             const newSessionHeader = error.response.headers["x-new-auth-session"];
-            let isUnauthorized = true;
+            console.log("Received 401, attempting to refresh session...", { newSessionHeader });
             
             if (newSessionHeader) {
                 try {
-                    const newSession = JSON.parse(newSessionHeader);
+                    const newSession = JSON.parse(newSessionHeader as string);
+                                        console.log(authService.getSnapshot().value);
+
+                    authService.send({ 
+                        type: "SESSION_REFRESH",
+                        accessToken: newSession.accessToken,
+                        profile: newSession.profile,
+                    });
+
+                    console.log(authService.getSnapshot().value);
                     
-                    localStorage.setItem("auth", JSON.stringify(newSession));
+                    originalRequest.headers.Authorization = `Bearer ${newSession.accessToken}`;
                     
-                    console.log("Session refreshed automatically", newSession);
-                    isUnauthorized = false;
+                    return heuteClient(originalRequest);
+                    
                 } catch (e) {
                     console.error("Failed to parse new session", e);
                 }
             }
-
-            if (isUnauthorized) {
-                authService.send({ type: "SIGN_OUT" });
-            }
+            
+            authService.send({ type: "SIGN_OUT" });
         }
+        
         return Promise.reject(error);
     }
 );

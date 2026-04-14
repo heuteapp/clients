@@ -40,9 +40,20 @@ export const authMachine = setup({
     error: null,
   },
   id: "auth",
-  initial: "checking auth",
+  initial: "awaiting session",
   states: {
-    "checking auth": {
+    "awaiting session": {
+      after: {
+        3000: "checking session"
+      },
+      on: {
+        SESSION_REFRESH: {
+          target: "checking session",
+          actions: ["setAuth", "persistAuth"]
+        }
+      }
+    },
+    "checking session": {
       invoke: {
         src: "hydrateAuth",
         id: "check-auth",
@@ -79,6 +90,10 @@ export const authMachine = setup({
             "clearAuth"
           ]
         },
+        SESSION_REFRESH: {
+          target: "checking session",
+          actions: ["setAuth", "persistAuth"]
+        }
       },
     },
 
@@ -234,7 +249,7 @@ export const authService = createActor(authMachine);
 //
 
 
-export const isCheckingAuth = (state: AuthMachineState) => state.matches("checking auth");
+export const isCheckingSession = (state: AuthMachineState) => state.matches("checking session");
 
 export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration");
 
@@ -256,7 +271,7 @@ export const isVerifyExpired = (state: AuthMachineState) => state.matches("verif
 
 //
 
-export const isAnyChecking = (state: AuthMachineState) => isCheckingAuth(state) || isCheckingRegistration(state);
+export const isAnyChecking = (state: AuthMachineState) => isCheckingSession(state) || isCheckingRegistration(state);
 
 export const isAnyAuthenticated = (state: AuthMachineState) => isAuthenticated(state) || isUnauthenticated(state);
 
