@@ -100,71 +100,99 @@ const LayoutNavbar = () => {
     )
 };
 
+import { Slider, Typography } from "@mui/material";
+
 const LayoutSidebar = () => {
   const { send } = useWorkspaceDailyboardContext();
+  const [colSpan, setColSpan] = useState(12);
+  const [rowSpan, setRowSpan] = useState(3);
 
-  const createButton = (cardSize: GridSize) => (
-    <Button 
-      variant="contained" 
-      color="primary" 
-      sx={{ m: 1 }} 
-      onTouchStart={(e) => {
-        send({ type: "CARD_CREATE_REQUESTED", cardSize });
-      }}
-      onMouseDown={() => {
-        send({ type: "CARD_CREATE_REQUESTED", cardSize });
-      }}
-    >
-      Create {cardSize.colSpan}x{cardSize.rowSpan} Card
-    </Button>
-  );
+  const handleCreate = () => {
+    send({ type: "CARD_CREATE_REQUESTED", cardSize: { colSpan, rowSpan } });
+  };
 
   return (
-      <Box
-          component="aside"
-          sx={{
-              width: "240px",
-              height: "100%",
-              borderRight: 1,
-              borderColor: "divider",
-              display: "flex",
-              flexDirection: "column",
-              bgcolor: "background.paper"
-          }}
+    <Box
+      component="aside"
+      sx={{
+        width: 240,
+        height: "100%",
+        borderRight: 1,
+        borderColor: "divider",
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        p: 2,
+        bgcolor: "background.paper",
+      }}
+    >
+      <Typography
+        variant="subtitle2"
+        sx={{ color: "white", fontSize: "1.2rem", fontWeight: 500 }}
       >
-        {createButton({ colSpan: 4, rowSpan: 3 })}
-        {createButton({ colSpan: 6, rowSpan: 3 })}
-        {createButton({ colSpan: 8, rowSpan: 3 })}
-        {createButton({ colSpan: 12, rowSpan: 3 })}
-        {createButton({ colSpan: 4, rowSpan: 6 })}
-        {createButton({ colSpan: 6, rowSpan: 6 })}
-        {createButton({ colSpan: 8, rowSpan: 6 })}
-        {createButton({ colSpan: 12, rowSpan: 6 })}
+        Kart Boyutu Seç
+      </Typography>
+
+      <Box>
+        <Typography
+          variant="caption"
+          sx={{ color: "white", fontSize: "1rem", display: "block", mb: 0.5 }}
+        >
+          Sütun Genişliği (colSpan): {colSpan}
+        </Typography>
+        <Slider
+          value={colSpan}
+          min={3}
+          max={24}
+          step={1}
+          onChange={(_, val) => setColSpan(val as number)}
+          valueLabelDisplay="auto"
+          sx={{ color: "primary.main" }} // slider rengi temadan alınır, beyaz metinle uyumlu
+        />
       </Box>
+
+      <Box>
+        <Typography
+          variant="caption"
+          sx={{ color: "white", fontSize: "1rem", display: "block", mb: 0.5 }}
+        >
+          Satır Yüksekliği (rowSpan): {rowSpan}
+        </Typography>
+        <Slider
+          value={rowSpan}
+          min={2}
+          max={6}
+          step={1}
+          onChange={(_, val) => setRowSpan(val as number)}
+          valueLabelDisplay="auto"
+        />
+      </Box>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onTouchStart={handleCreate}
+        onMouseDown={handleCreate}
+        sx={{ mt: 1, color: "white", fontSize: "1rem" }}
+      >
+        Create {colSpan}x{rowSpan} Card
+      </Button>
+    </Box>
   );
-}
+};
 
 const LayoutMonitor = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box
-        sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "row",
-            bgcolor: "transparent"
-        }}
+      sx={{
+        flexGrow: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "transparent",
+      }}
     >
-        <Box
-            sx={{
-                flexGrow: 1,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
-            {children}
-        </Box>
+      {children}
     </Box>
   );
-}
+};
