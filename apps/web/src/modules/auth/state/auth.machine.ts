@@ -37,14 +37,21 @@ export const authMachine = setup({
           },
           on: {
             SESSION_HYDRATE_SUCCESS: {
+              target: "#auth.authenticated",
             },
             SESSION_HYDRATE_FAILURE: {
             },
             SESSION_REFRESH_REQUEST: {
+              target: "refreshing",
             }
           }
+        },
+        "refreshing": {
+
         }
       }
+    },
+    "authenticated": {
     }
   },
 });
