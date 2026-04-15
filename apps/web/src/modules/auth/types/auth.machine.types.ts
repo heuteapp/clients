@@ -5,6 +5,7 @@ import { authMachine } from "@/src/modules/auth/state/auth.machine";
 
 export interface AuthMachineContext {
   auth: AuthSession | null;
+  refreshedOnce?: boolean;
   registration: AuthRegistration | null;
   error: string | null;
 }

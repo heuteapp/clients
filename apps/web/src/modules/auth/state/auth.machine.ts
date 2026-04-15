@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
-import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
+import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAsRefreshedAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAsRefreshedAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -17,6 +17,8 @@ export const authMachine = setup({
     verifyEmail: verifyEmailActor,
   },
   actions: {
+    setAsRefreshed: setAsRefreshedAction,
+    unsetAsRefreshed: unsetAsRefreshedAction,
     setAuth: setAuthAction,
     unsetAuth: unsetAuthAction,
     persistAuth: persistAuthAction,
@@ -40,22 +42,16 @@ export const authMachine = setup({
     error: null,
   },
   id: "auth",
-  initial: "awaiting session",
+  initial: "checking session",
   states: {
-    "awaiting session": {
-      after: {
-        3000: "checking session"
-      },
-      on: {
-        SESSION_REFRESH_REQUEST: {
-          target: "checking session",
-          actions: ["setAuth", "persistAuth"]
-        }
-      }
-    },
     "checking session": {
       invoke: {
         src: "hydrateAuth",
+        input: ({ context }) => {
+          return {
+            refreshedOnce: context.refreshedOnce || false,
+          }
+        },
         id: "hydrate-auth",
         on: {
           SESSION_HYDRATE_SUCCESS: {
@@ -63,7 +59,8 @@ export const authMachine = setup({
             actions: [
               "setAuth",
               "persistAuth",
-              "unsetError"
+              "unsetError",
+              "unsetAsRefreshed"
             ]
           },
           SESSION_HYDRATE_FAILURE: {
@@ -72,7 +69,7 @@ export const authMachine = setup({
           },
           SESSION_REFRESH_REQUEST: {
             target: "checking session",
-            actions: ["setAuth", "persistAuth"]
+            actions: ["setAuth", "persistAuth", "setAsRefreshed"]
           }
         }
       }
@@ -101,9 +98,9 @@ export const authMachine = setup({
             "clearAuth"
           ]
         },
-        SESSION_REFRESH: {
+        SESSION_REFRESH_REQUEST: {
           target: "checking session",
-          actions: ["setAuth", "persistAuth"]
+          actions: ["setAuth", "persistAuth", "setAsRefreshed"]
         }
       },
     },

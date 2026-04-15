@@ -20,6 +20,26 @@ export const resolveAuthData = (event: AuthMachineEvent) => {
 
 //
 
+export const setAsRefreshedAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    () => {
+        return {
+            refreshedOnce: true,
+        };
+    }
+);
+
+export const unsetAsRefreshedAction = createAssign<
+    AuthMachineContext, AuthMachineEvent
+>(
+    () => {
+        return {
+            refreshedOnce: false,
+        };
+    }
+);
+
 export const setAuthAction = createAssign<
     AuthMachineContext, AuthMachineEvent
 >(

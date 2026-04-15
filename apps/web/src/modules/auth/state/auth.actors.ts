@@ -6,8 +6,8 @@ import { AuthRegistration } from "@/src/modules/auth/types/auth.types";
 import { createCallback } from "@/src/modules/auth/utils/create-callback";
 import { fromPromise } from "xstate";
 
-export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
-    ({ sendBack }) => {
+export const hydrateAuthActor = createCallback<{ refreshedOnce: boolean }, SessionHydrateActorEvent>(
+    ({ input, sendBack }) => {
         if (typeof window === "undefined") {
             return sendBack({ 
                 type: 'SESSION_HYDRATE_FAILURE',
@@ -23,6 +23,7 @@ export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
             });
         }
 
+
         heuteApi.me.check()
 
         .then(profile => {
@@ -34,6 +35,13 @@ export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
         })
 
         .catch(error => {
+            if(input.refreshedOnce) {
+                return sendBack({ 
+                    type: "SESSION_HYDRATE_FAILURE",
+                    error: "Session hydration failed after refresh attempt: " + (error?.message || "Unknown error"),
+                });
+            }
+
             const newSessionHeader = error.response.headers["x-new-auth-session"];
             
             if (newSessionHeader) {
@@ -46,6 +54,7 @@ export const hydrateAuthActor = createCallback<void, SessionHydrateActorEvent>(
                 });
             }
 
+            localStorage.removeItem("auth");
             return sendBack({ 
                 type: 'SESSION_HYDRATE_FAILURE',
                 error: error?.message || "Failed to hydrate session",
