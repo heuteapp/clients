@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
+import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, refreshSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
 import { sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
@@ -150,3 +150,23 @@ export const authMachine = setup({
 });
 
 export const authService = createActor(authMachine);
+
+//
+
+export const isRedirecting = (state: AuthMachineState): boolean => state.matches("redirecting");
+
+export const isAwaiting = (state: AuthMachineState): boolean => state.matches("awaiting");
+
+export const isAwaitingSession = (state: AuthMachineState): boolean => state.matches({ awaiting: "session" });
+
+export const isAwaitingSessionHydrating = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "hydrating" } });
+
+export const isAwaitingSessionRefreshing = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "refreshing" } });
+
+export const isAwaitingRegistration = (state: AuthMachineState): boolean => state.matches({ awaiting: "registration" });
+
+export const isAuthenticated = (state: AuthMachineState): boolean => state.matches("authenticated");
+
+export const isUnauthenticated = (state: AuthMachineState): boolean => state.matches("unauthenticated");
+
+export const isSigningIn = (state: AuthMachineState): boolean => state.matches({ signing: "in" });
