@@ -42,6 +42,7 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
 
                 return sendBack({ 
                     type: "SESSION_REFRESH_REQUEST",
+                    input: newSession
                 });
             }
 
