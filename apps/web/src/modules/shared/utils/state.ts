@@ -1,13 +1,23 @@
 export const safeMatches = <T>(
-    state: T,
-    value: T extends { matches: (value: infer V) => boolean } ? V : never
+  state: T,
+  value?: T extends { matches: (v: infer V) => boolean } ? V : never
 ): boolean => {
-    if (state && typeof state === 'object' && 'matches' in state) {
-        const matches = (state as any).matches;
-        if (typeof matches === 'function') {
-            return matches(value);
+    try {
+        if (!state || typeof state !== 'object') {
+            return false;
         }
+        
+        const matches = (state as any).matches;
+        if (typeof matches !== 'function') {
+            return false;
+        }
+        
+        if (value === undefined || value === null) {
+            return false;
+        }
+        
+        return matches(value);
+    } catch (error) {
+        return false;
     }
-
-    return false;
 };
