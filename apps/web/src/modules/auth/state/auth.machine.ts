@@ -70,8 +70,21 @@ export const authMachine = setup({
       }
     },
     "authenticated": {
+      on: {
+        SIGN_OUT_REQUEST: {
+          target: "unauthenticated",
+        }
+      }
     },
     "unauthenticated": {
+      on: {
+        SIGN_IN_REQUEST: {
+
+        },
+        SIGN_UP_REQUEST: {
+          
+        }
+      }
     }
   },
 });
