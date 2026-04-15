@@ -7,6 +7,8 @@ export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, Auth
             throw new Error("Invalid event");
         }
 
+        localStorage.setItem("session", JSON.stringify(event.output));
+
         return {
             session: event.output,
             error: null,
@@ -19,6 +21,8 @@ export const sessionHydrateFailureAction = createAssign<AuthMachineContext, Auth
         if (event.type !== "SESSION_HYDRATE_FAILURE") {
             throw new Error("Invalid event");
         }
+
+        localStorage.removeItem("session");
 
         return {
             session: null,
@@ -48,6 +52,8 @@ export const signInSuccessAction = createAssign<AuthMachineContext, AuthMachineE
             throw new Error("Invalid event");
         }
 
+        localStorage.setItem("session", JSON.stringify(event.output));
+
         return {
             session: event.output,
             error: null,
@@ -60,6 +66,8 @@ export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineE
         if (event.type !== "SIGN_IN_FAILURE") {
             throw new Error("Invalid event");
         }
+
+        localStorage.removeItem("session");
 
         return {
             session: null,
