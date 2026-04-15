@@ -8,25 +8,53 @@ export type AuthEvent =
     | SignUpEvent
     | SignOutEvent;
 
+//
+
 export type SessionHydrateEvent = 
-    | { type: 'SESSION_HYDRATE_REQUEST'; }
-    | { type: 'SESSION_HYDRATE_SUCCESS'; output: AuthSession; }
-    | { type: 'SESSION_HYDRATE_FAILURE'; error: string; }
+    | SessionHydrateRequestEvent
+    | SessionHydrateSuccessEvent
+    | SessionHydrateFailureEvent;
+
+export type SessionHydrateRequestEvent = { type: 'SESSION_HYDRATE_REQUEST'; }
+export type SessionHydrateSuccessEvent = { type: 'SESSION_HYDRATE_SUCCESS'; output: AuthSession; }
+export type SessionHydrateFailureEvent = { type: 'SESSION_HYDRATE_FAILURE'; error: string; }
+
+//
 
 export type SessionRefreshEvent =
-    | { type: 'SESSION_REFRESH_REQUEST'; input: AuthSession; }
-    | { type: 'SESSION_REFRESH_SUCCESS'; output: AuthSession; }
-    | { type: 'SESSION_REFRESH_FAILURE'; error: string; }
+    | SessionRefreshRequestEvent
+    | SessionRefreshSuccessEvent
+    | SessionRefreshFailureEvent;
+
+export type SessionRefreshRequestEvent = { type: 'SESSION_REFRESH_REQUEST'; input: AuthSession; }
+export type SessionRefreshSuccessEvent = { type: 'SESSION_REFRESH_SUCCESS'; output: AuthSession; }
+export type SessionRefreshFailureEvent = { type: 'SESSION_REFRESH_FAILURE'; error: string; }
+
+//
 
 export type SignInEvent =
-    | { type: 'SIGN_IN_REQUEST'; input: SignInRequest; }
-    | { type: 'SIGN_IN_SUCCESS'; output: AuthSession; }
-    | { type: 'SIGN_IN_FAILURE'; error: string; }
+    | SignInRequestEvent
+    | SignInSuccessEvent
+    | SignInFailureEvent;
+
+export type SignInRequestEvent = { type: 'SIGN_IN_REQUEST'; input: SignInRequest; }
+export type SignInSuccessEvent = { type: 'SIGN_IN_SUCCESS'; output: AuthSession; }
+export type SignInFailureEvent = { type: 'SIGN_IN_FAILURE'; error: string; }
+
+//
 
 export type SignUpEvent =
-    | { type: 'SIGN_UP_REQUEST'; input: SignUpRequest; }
-    | { type: 'SIGN_UP_SUCCESS'; output: AuthRegistration; }
-    | { type: 'SIGN_UP_FAILURE'; error: string; }
+    | SignUpRequestEvent
+    | SignUpSuccessEvent
+    | SignUpFailureEvent;
+
+export type SignUpRequestEvent = { type: 'SIGN_UP_REQUEST'; input: SignUpRequest; }
+export type SignUpSuccessEvent = { type: 'SIGN_UP_SUCCESS'; output: AuthRegistration; }
+export type SignUpFailureEvent = { type: 'SIGN_UP_FAILURE'; error: string; }
+
+//
 
 export type SignOutEvent =
-    | { type: 'SIGN_OUT_REQUEST'; }
+    | SignOutRequestEvent
+
+export type SignOutRequestEvent = { type: 'SIGN_OUT_REQUEST'; }
