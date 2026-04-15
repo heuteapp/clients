@@ -12,7 +12,7 @@ export const heuteClient = axios.create({
 });
 
 heuteClient.interceptors.request.use((config) => {
-    const authSession = localStorage.getItem("auth");
+    const authSession = localStorage.getItem("session");
     
     if (authSession) {
         try {
