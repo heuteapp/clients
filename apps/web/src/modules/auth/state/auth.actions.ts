@@ -38,8 +38,46 @@ export const sessionRefreshRequestAction = createAssign<AuthMachineContext, Auth
         }
 
         return {
-            session: event.input,
             error: null,
+            temp: {
+                accessToken: event.input.accessToken,
+            }
+        }
+    }
+);
+
+export const sessionRefreshSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_REFRESH_SUCCESS") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("session", JSON.stringify(event.output));
+
+        return {
+            session: event.output,
+            error: null,
+            temp: {
+                accessToken: null,
+            }
+        }
+    }
+);
+
+export const sessionRefreshFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_REFRESH_FAILURE") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.removeItem("session");
+
+        return {
+            session: null,
+            error: event.error,
+            temp: {
+                accessToken: null,
+            }
         }
     }
 );
