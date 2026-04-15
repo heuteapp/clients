@@ -1,6 +1,6 @@
 import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
-import { hydrateSessionActor } from "./auth.actors";
+import { hydrateSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
 
 export const authMachine = setup({
@@ -10,7 +10,8 @@ export const authMachine = setup({
 
   },
   actors: {
-    hydrateSession: hydrateSessionActor
+    hydrateSession: hydrateSessionActor,
+    signIn: signInActor
   },
   actions: {
 
@@ -82,7 +83,23 @@ export const authMachine = setup({
 
         },
         SIGN_UP_REQUEST: {
-          
+
+        }
+      }
+    },
+    "signing": {
+      states: {
+        "in": {
+          invoke: {        
+            src: "signIn",
+            input: ({ event }) => {
+              if (event.type == "SIGN_IN_REQUEST") {
+                return event.input;
+              }                
+              
+              throw new Error("Invalid event");
+            }
+          },
         }
       }
     }
