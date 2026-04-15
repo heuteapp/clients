@@ -1,12 +1,22 @@
 import { SignInRequest } from "@/src/api/models/requests/auth.request";
-import { SessionHydrateEvent, SessionRefreshEvent, SignInFailureEvent, SignInSuccessEvent } from "./auth.events.types";
+import { SessionHydrateFailureEvent, SessionHydrateSuccessEvent, SessionRefreshFailureEvent, SessionRefreshRequestEvent, SessionRefreshSuccessEvent, SignInFailureEvent, SignInSuccessEvent } from "./auth.events.types";
+import { AuthSession } from "./auth.types";
 
 
 export type SessionHydrateActorInput = void;
 
 export type SessionHydrateActorEvent =
-  | SessionHydrateEvent
-  | SessionRefreshEvent;
+  | SessionHydrateSuccessEvent
+  | SessionHydrateFailureEvent
+  | SessionRefreshRequestEvent;
+
+//
+
+export type SessionRefreshActorInput = AuthSession;
+
+export type SessionRefreshActorEvent =
+  | SessionRefreshSuccessEvent
+  | SessionRefreshFailureEvent;
 
 //
 
