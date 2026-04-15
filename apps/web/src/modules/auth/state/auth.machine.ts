@@ -52,6 +52,7 @@ export const authMachine = setup({
       ]
     },
     "awaiting": {
+      initial: "session",
       states: {
         "session": {
           initial: "hydrating",
@@ -121,7 +122,18 @@ export const authMachine = setup({
       }
     },
     "signing": {
+      initial: "idle",
       states: {
+        "idle": {
+          on: {
+            SIGN_IN_REQUEST: {
+              target: "in",
+            },
+            SIGN_UP_REQUEST: {
+              target: "in",
+            }
+          }
+        },
         "in": {
           invoke: {        
             src: "signIn",
