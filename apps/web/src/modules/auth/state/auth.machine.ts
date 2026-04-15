@@ -76,7 +76,26 @@ export const authMachine = setup({
               }
             },
             "refreshing": {
+              invoke: {
+                src: "refreshSession",
+                input: ({ event })  => {
+                  if (event.type !== "SESSION_REFRESH_REQUEST") {
+                    throw new Error("Invalid event");
+                  }
 
+                  return event.input;
+                },
+                on: {
+                  SESSION_REFRESH_SUCCESS: {
+                    target: "#auth.authenticated",
+                    actions: "sessionRefreshSuccess"
+                  },
+                  SESSION_REFRESH_FAILURE: {
+                    target: "#auth.unauthenticated",
+                    actions: "sessionRefreshFailure"
+                  }
+                }
+              }
             }
           }
         },
