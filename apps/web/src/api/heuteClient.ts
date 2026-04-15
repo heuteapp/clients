@@ -2,11 +2,6 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import { authService } from "../modules/auth/state/auth.machine";
 import { AuthSession } from "../modules/auth/types/auth.types";
 
-// Retry için custom config tipi
-interface RetryableConfig extends InternalAxiosRequestConfig {
-    _retry?: boolean;
-}
-
 export const heuteClient = axios.create({
     baseURL: "/api",
     withCredentials: true,
