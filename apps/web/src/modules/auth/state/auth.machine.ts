@@ -1,6 +1,6 @@
 import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
-import { hydrateSessionActor, signInActor } from "./auth.actors";
+import { hydrateSessionActor, refreshSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
 import { sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
 
@@ -12,6 +12,7 @@ export const authMachine = setup({
   },
   actors: {
     hydrateSession: hydrateSessionActor,
+    refreshSession: refreshSessionActor,
     signIn: signInActor
   },
   actions: {

@@ -1,5 +1,5 @@
 import { heuteApi } from "@/src/api/heuteApi";
-import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput } from "../types/auth.actors";
+import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput, SessionRefreshActorInput, SessionRefreshActorEvent } from "../types/auth.actors";
 import { createCallback } from "../utils/create-callback";
 import { AuthSession } from "../types/auth.types";
 
@@ -46,10 +46,34 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
                 });
             }
 
-            localStorage.removeItem("session");
             return sendBack({ 
                 type: 'SESSION_HYDRATE_FAILURE',
                 error: error?.message || "Failed to hydrate session",
+            });
+        });
+    }
+);
+
+export const refreshSessionActor = createCallback<SessionRefreshActorInput, SessionRefreshActorEvent>(
+    ({ input, sendBack }) => {
+        heuteApi.me.check()
+
+        .then(profile => {
+            const newSession = {
+                ...input,
+                profile: profile!,
+            };
+
+            return sendBack({ 
+                type: 'SESSION_REFRESH_SUCCESS',
+                output: newSession,
+            });
+        })
+
+        .catch(error => {
+            return sendBack({ 
+                type: 'SESSION_REFRESH_FAILURE',
+                error: error?.message || "Failed to refresh session",
             });
         });
     }
