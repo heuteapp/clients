@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
-import { signInFailureAction, signInSuccessAction } from "./auth.actions";
+import { sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshRequestAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -15,6 +15,9 @@ export const authMachine = setup({
     signIn: signInActor
   },
   actions: {
+    sessionHydrateSuccess: sessionHydrateSuccessAction,
+    sessionHydrateFailure: sessionHydrateFailureAction,
+    sessionRefreshRequest: sessionRefreshRequestAction,
     signInSuccess: signInSuccessAction,
     signInFailure: signInFailureAction
   },
@@ -54,12 +57,15 @@ export const authMachine = setup({
               on: {
                 SESSION_HYDRATE_SUCCESS: {
                   target: "#auth.authenticated",
+                  actions: "sessionHydrateSuccess"
                 },
                 SESSION_HYDRATE_FAILURE: {
                   target: "#auth.unauthenticated",
+                  actions: "sessionHydrateFailure"
                 },
                 SESSION_REFRESH_REQUEST: {
                   target: "refreshing",
+                  actions: "sessionRefreshRequest"
                 }
               }
             },
