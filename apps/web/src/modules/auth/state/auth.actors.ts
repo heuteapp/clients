@@ -1,5 +1,5 @@
 import { heuteApi } from "@/src/api/heuteApi";
-import { SessionHydrateActorInput, SessionHydrateActorEvent } from "../types/auth.actors";
+import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput } from "../types/auth.actors";
 import { createCallback } from "../utils/create-callback";
 import { AuthSession } from "../types/auth.types";
 
@@ -52,5 +52,29 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
                 error: error?.message || "Failed to hydrate session",
             });
         });
+    }
+);
+
+export const signInActor = createCallback<SignInActorInput, SignInActorEvent>(
+    ({ input, sendBack }) => {
+        heuteApi.auth.signIn(input)
+            .then(response => {
+                const session = {
+                    accessToken: response.accessToken,
+                    profile: response.profile,
+                };
+                localStorage.setItem("session", JSON.stringify(session));
+                
+                sendBack({ 
+                    type: 'SIGN_IN_SUCCESS',
+                    output: session,
+                });
+            })
+            .catch((err: any) => {
+                sendBack({ 
+                    type: 'SIGN_IN_FAILURE', 
+                    error: err?.message || "Unknown error from sign in" 
+                });
+            });
     }
 );
