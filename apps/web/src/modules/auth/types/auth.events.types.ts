@@ -1,10 +1,10 @@
 import { AuthSession } from "./auth.types";
 
 export type AuthEvent =
-    | SessionHydratedEvent
+    | SessionHydrateEvent
     | SessionRefreshEvent;
 
-export type SessionHydratedEvent = 
+export type SessionHydrateEvent = 
     | { type: 'SESSION_HYDRATE_REQUEST'; }
     | { type: 'SESSION_HYDRATE_SUCCESS'; output: AuthSession; }
     | { type: 'SESSION_HYDRATE_FAILURE'; error: string; }
