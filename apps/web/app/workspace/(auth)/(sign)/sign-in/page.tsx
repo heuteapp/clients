@@ -20,9 +20,8 @@ export default function SignInPage() {
     event.preventDefault();
     
     send({ 
-      type: "SIGN_IN", 
-      identifier, 
-      password 
+      type: "SIGN_IN_REQUEST", 
+      input: { identifier, password }
     });
   };
 

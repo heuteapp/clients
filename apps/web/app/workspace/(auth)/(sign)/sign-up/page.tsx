@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
-import { isAuthenticated, isSigningUp } from "@/src/modules/auth/state/auth.machine";
+import { isSigningUp } from "@/src/modules/auth/state/auth.machine";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -53,10 +53,8 @@ export default function SignUpPage() {
     }
     
     send({ 
-      type: "SIGN_UP", 
-      username,
-      email,
-      password 
+      type: "SIGN_UP_REQUEST", 
+      input: { username, email, password }
     });
   };
 
