@@ -170,3 +170,7 @@ export const isAuthenticated = (state: AuthMachineState): boolean => state.match
 export const isUnauthenticated = (state: AuthMachineState): boolean => state.matches("unauthenticated");
 
 export const isSigningIn = (state: AuthMachineState): boolean => state.matches({ signing: "in" });
+
+//
+
+export const isSignLocked = (state: AuthMachineState): boolean => isRedirecting(state) || isAwaiting(state);
