@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
-import { sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshRequestAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
+import { sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -18,6 +18,8 @@ export const authMachine = setup({
     sessionHydrateSuccess: sessionHydrateSuccessAction,
     sessionHydrateFailure: sessionHydrateFailureAction,
     sessionRefreshRequest: sessionRefreshRequestAction,
+    sessionRefreshSuccess: sessionRefreshSuccessAction,
+    sessionRefreshFailure: sessionRefreshFailureAction,
     signInSuccess: signInSuccessAction,
     signInFailure: signInFailureAction
   },
