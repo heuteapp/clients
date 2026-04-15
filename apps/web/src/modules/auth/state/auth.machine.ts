@@ -1,5 +1,6 @@
 import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
+import { hydrateSessionActor } from "./auth.actors";
 
 export const authMachine = setup({
   types: {
@@ -8,7 +9,7 @@ export const authMachine = setup({
 
   },
   actors: {
-
+    hydrateSession: hydrateSessionActor
   },
   actions: {
 
@@ -25,9 +26,13 @@ export const authMachine = setup({
     error: null,
   },
   id: "auth",
-  initial: "checking session",
+  initial: "hydrating session",
   states: {
-
+    "hydrating session": {
+      invoke: {
+        src: "hydrateSession",
+      }
+    }
   },
 });
 
