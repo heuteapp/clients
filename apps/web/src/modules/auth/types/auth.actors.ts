@@ -1,18 +1,8 @@
-import { SIGN_IN_FAILURE_EVENT, SIGN_IN_SUCCESS_EVENT, SIGN_UP_SUCCESS_EVENT, SIGN_UP_FAILURE_EVENT, VERIFY_EMAIL_EXPIRED_EVENT, VERIFY_EMAIL_SUCCESS_EVENT, VERIFY_EMAIL_FAILED_EVENT, SessionHydrateEvent, SessionRefreshEvent } from "./auth.events.types";
+import { SessionHydrateEvent, SessionRefreshEvent } from "./auth.events.types";
+
+
+export type SessionHydrateActorInput = void;
 
 export type SessionHydrateActorEvent =
   | SessionHydrateEvent
   | SessionRefreshEvent;
-
-export type SignInActorEvents = 
-  | SIGN_IN_SUCCESS_EVENT
-  | SIGN_IN_FAILURE_EVENT;
-
-export type SignUpActorEvents = 
-  | SIGN_UP_SUCCESS_EVENT
-  | SIGN_UP_FAILURE_EVENT
-
-export type VerifyEmailActorEvents =
-  | VERIFY_EMAIL_SUCCESS_EVENT
-  | VERIFY_EMAIL_FAILED_EVENT
-  | VERIFY_EMAIL_EXPIRED_EVENT;
