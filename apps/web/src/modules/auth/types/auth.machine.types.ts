@@ -1,7 +1,7 @@
 import { AuthRegistration, AuthSession } from "@/src/modules/auth/types/auth.types";
-import { DONE_ACTOR_CHECK_AUTH_EVENT, DONE_ACTOR_CHECK_REGISTRATION_EVENT, HYDRATE_EVENT, SessionHydrateEvent, SessionRefreshEvent, SIGN_IN_ALL_EVENTS, SIGN_OUT_EVENT, SignUpEvents, VerifyEmailEvents } from "./auth.events.types";
 import { ActorRefFrom } from "xstate";
 import { authMachine } from "@/src/modules/auth/state/auth.machine";
+import { AuthEvent } from "./auth.events.types";
 
 export interface AuthMachineContext {
   auth: AuthSession | null;
@@ -11,15 +11,7 @@ export interface AuthMachineContext {
 }
 
 export type AuthMachineEvent =
-  | SessionHydrateEvent
-  | SessionRefreshEvent
-  | SIGN_IN_ALL_EVENTS
-  | SignUpEvents
-  | VerifyEmailEvents
-  | SIGN_OUT_EVENT
-  | HYDRATE_EVENT
-  | DONE_ACTOR_CHECK_AUTH_EVENT
-  | DONE_ACTOR_CHECK_REGISTRATION_EVENT
+  | AuthEvent
 
 //
 
