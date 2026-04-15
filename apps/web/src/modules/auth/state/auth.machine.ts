@@ -30,6 +30,9 @@ export const authMachine = setup({
     session: null,    
     registration: null,
     error: null,
+    temp: {
+      accessToken: null
+    }
   },
   id: "auth",
   initial: "redirecting",

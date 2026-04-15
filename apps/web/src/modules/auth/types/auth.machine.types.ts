@@ -5,9 +5,11 @@ import { AuthEvent } from "./auth.events.types";
 
 export interface AuthMachineContext {
   session: AuthSession | null;
-  refreshedOnce?: boolean;
   registration: AuthRegistration | null;
   error: string | null;
+  temp: {
+    accessToken: string | null;
+  }
 }
 
 export type AuthMachineEvent =
