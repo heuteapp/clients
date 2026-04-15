@@ -28,9 +28,22 @@ export const authMachine = setup({
   id: "auth",
   initial: "hydrating session",
   states: {
-    "hydrating session": {
-      invoke: {
-        src: "hydrateSession",
+    "awaiting session": {
+      initial: "hydrating",
+      states: {
+        "hydrating": {
+          invoke: {
+            src: "hydrateSession",
+          },
+          on: {
+            SESSION_HYDRATE_SUCCESS: {
+            },
+            SESSION_HYDRATE_FAILURE: {
+            },
+            SESSION_REFRESH_REQUEST: {
+            }
+          }
+        }
       }
     }
   },
