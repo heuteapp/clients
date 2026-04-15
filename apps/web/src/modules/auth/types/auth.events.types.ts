@@ -5,7 +5,8 @@ export type AuthEvent =
     | SessionHydrateEvent
     | SessionRefreshEvent
     | SignInEvent
-    | SignUpEvent;
+    | SignUpEvent
+    | SignOutEvent;
 
 export type SessionHydrateEvent = 
     | { type: 'SESSION_HYDRATE_REQUEST'; }
@@ -26,3 +27,6 @@ export type SignUpEvent =
     | { type: 'SIGN_UP_REQUEST'; input: SignUpRequest; }
     | { type: 'SIGN_UP_SUCCESS'; output: AuthRegistration; }
     | { type: 'SIGN_UP_FAILURE'; error: string; }
+
+export type SignOutEvent =
+    | { type: 'SIGN_OUT_REQUEST'; }
