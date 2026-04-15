@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
-import { signInSuccessAction } from "./auth.actions";
+import { signInFailureAction, signInSuccessAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -16,6 +16,7 @@ export const authMachine = setup({
   },
   actions: {
     signInSuccess: signInSuccessAction,
+    signInFailure: signInFailureAction
   },
   guards: {
     hasRegistration: hasRegistrationGuard
@@ -108,6 +109,7 @@ export const authMachine = setup({
             },
             SIGN_IN_FAILURE: {
               target: "#auth.unauthenticated",
+              actions: "signInFailure"
             }
           }
         }
