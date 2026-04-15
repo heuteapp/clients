@@ -156,6 +156,8 @@ export const authMachine = setup({
               actions: "signInFailure"
             }
           }
+        },
+        "up": {
         }
       }
     }
@@ -183,6 +185,8 @@ export const isAuthenticated = (state: AuthMachineState): boolean => safeMatches
 export const isUnauthenticated = (state: AuthMachineState): boolean => safeMatches(state, "unauthenticated");
 
 export const isSigningIn = (state: AuthMachineState): boolean => safeMatches(state, { signing: "in" });
+
+export const isSigningUp = (state: AuthMachineState): boolean => safeMatches(state, { signing: "up" });
 
 //
 
