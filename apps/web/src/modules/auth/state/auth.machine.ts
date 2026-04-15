@@ -1,6 +1,7 @@
 import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor } from "./auth.actors";
+import { hasRegistrationGuard } from "./auth.guards";
 
 export const authMachine = setup({
   types: {
@@ -15,11 +16,10 @@ export const authMachine = setup({
 
   },
   guards: {
-    isAuthenticated: ({ context }) => !!context.auth,
-    isRegistrationAwaiting: ({ context }) => !!context.registration
+    hasRegistration: hasRegistrationGuard
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOmQd2QEt1CA7KbWOWQge1O0wE8IAnZE8gYgGUBRHjwCSAeQByAfQASATQAiAJQCCAFT4SeAVQDC2gTwDaABgC6iUAAdaNEvXMgAHogAcAViPZnAdncBmI85GAJwATEa+vgA0IEyIvgAsAIzYIe4BQa4hvkHxRiEAvvnRaFi4BMRkFFSwNPSMLOycULz6opKyiqrqAGJKQgAymgp8xmZIIFY2dKT2TgiJedhGyyurK4nRsQgh8c7YaUYAbF7+h4eJF76FxRg4+ERNlNTT9WwclS2CbRLD3cM8Uh+fAAipoBCpRvZJhU7OM5r4vMlcodUidXIcjK5fK5NogQmF9itsq5XEE8s5nFdriBSLQIHB7CVMFDrDCZnDEABaJLYIJ8-kC-nOQ64hDc5KCyX86lM7CsSCEeUAYyaLKmsNAc3iIVF8UOQUJyxRQWcIVNiSpN1K9wq5DVbNmiEOSzWrqMiXiutc2HiAqy6RCfNc8RltzKD0qTxq03ttnZmsQwZdbtWHtFFt8yfdpIiQS8OVD1vKj2qtQYzDeqvG0LjjvmWR9oUSpoSZqMXi8ov88WTCz1RiSOWchbuxcjpZe8oAZvLYJhKrGYxyEIdMtgEgjXF5zs5m4kRTE8SFkqtiaTycKR7hbmBSCQlRxIIuNY5E53DwgvIHe8s27lfYUhRAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgE6QEt8BjdAgOygGIBtABgF1FQAHAe1gLLfOZAA9EARgDsAVmyihADnHSxANgUBmACyqRAGhABPYWIBM2EaoCcpw8rqqDquspEBfR9rRY8hEmUq0hTJCDsnNy8AYIIohJSsmLySmoa2noRptLGZqYK8g6mdAYGYs6uGDjIAO7IXBRQ2LBwnDzYmDoQuMje1ADKAKKdnQCSAPIAcgD6ABIAmgAiAEoAggAq3aOdAKoAwhu9nfT+rBxVPHzhQkJ2xgl0dCJ0KiJKSYgFpsZi1wZCYmbndPJFIDcpQqVUotXqBEazVa7WqVB6fSGYymcyWKwAYvN+gAZNazbp7PhBI6hUCnX6XdTXW73R66RDvITYArXZRfUyqISmZSZAFA7DlSodcGwBrkJotNodeE7JGjfHo-Gdcby7oARTWvUWhICxJCJ0QSiZBgUihsdFS0m5BieCGU0jo2HeH1NIiEShMzhcIHIbAgcD4QKJh31YUQAFoFLbw7ZsNd4wmE+c+SUPBAiGBSNVg8FIaSBIgbLaviJsJyjcpbDchA5lCn3ILQVAcySDXb7dhpKoHFkMrlTVH6QgVGXzJlUgUTSZFPXgULqiKxS3Q2TEPaFJ3uw8u2O7opbSbXmPzCIHjJpNIvrOBSDhXVRXmJTCOsu823u6pNz2d+Y94PksoYils61hspyHIiNICjXo2d4Qo0+AAGb4LAmDZrqIZvmGCAckYBj2Oc0j2lapi2La9pMgmJpAe6Ciet6-KwQu+BQAQsDoFKWEHLmxzYXYn5dt+fZ-sW7zYMePKmnQYhqByMElGA5BkMQ7SQK+vGrsOWhDpen4JsoRp0fhhQMamqDkECinKapEDqfm4RAbashGCBkEliI3J1l6QA */
   context: {
     auth: null,    
     registration: null,
@@ -29,7 +29,15 @@ export const authMachine = setup({
   initial: "redirecting",
   states: {
     "redirecting": {
-
+      always: [
+        {
+          guard: "hasRegistration",
+          target: "awaiting.registration"
+        },
+        {
+          target: "awaiting.session"
+        }
+      ]
     },
     "awaiting": {
       states: {
