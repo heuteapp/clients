@@ -100,6 +100,14 @@ export const authMachine = setup({
               throw new Error("Invalid event");
             }
           },
+          on: {
+            SIGN_IN_SUCCESS: {
+              target: "#auth.authenticated",
+            },
+            SIGN_IN_FAILURE: {
+              target: "#auth.unauthenticated",
+            }
+          }
         }
       }
     }
