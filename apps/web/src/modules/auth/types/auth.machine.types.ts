@@ -4,7 +4,7 @@ import { authMachine } from "@/src/modules/auth/state/auth.machine";
 import { AuthEvent } from "./auth.events.types";
 
 export interface AuthMachineContext {
-  auth: AuthSession | null;
+  session: AuthSession | null;
   refreshedOnce?: boolean;
   registration: AuthRegistration | null;
   error: string | null;
