@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/modules/auth/state/auth.machine";
+import { authService } from "@/src/modules/auth/state/auth.machine";
 import { AuthContext } from "@/src/modules/ui-auth/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";
-import { heuteApi } from "@/src/api/heuteApi";
-import { withAccessToken } from "@/src/api/token.helper";
 import { AuthProviderProps } from "@/src/modules/ui-auth/types/auth.props";
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -32,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }, []);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const verify = async () => {
             if(!authHash || !authHash.refresh_token) {
                 return;
@@ -115,8 +113,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
         }
 
-    }, [router, pathname, state]);
-
+    }, [router, pathname, state]);*/
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
             {children}
