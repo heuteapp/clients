@@ -1,10 +1,11 @@
-import { SignInRequest } from "@/src/api/models/requests/auth.request";
-import { AuthSession } from "./auth.types";
+import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
+import { AuthRegistration, AuthSession } from "./auth.types";
 
 export type AuthEvent =
     | SessionHydrateEvent
     | SessionRefreshEvent
-    | SignInEvent;
+    | SignInEvent
+    | SignUpEvent;
 
 export type SessionHydrateEvent = 
     | { type: 'SESSION_HYDRATE_REQUEST'; }
@@ -20,3 +21,8 @@ export type SignInEvent =
     | { type: 'SIGN_IN_REQUEST'; input: SignInRequest; }
     | { type: 'SIGN_IN_SUCCESS'; output: AuthSession; }
     | { type: 'SIGN_IN_FAILURE'; error: string; }
+
+export type SignUpEvent =
+    | { type: 'SIGN_UP_REQUEST'; input: SignUpRequest; }
+    | { type: 'SIGN_UP_SUCCESS'; output: AuthRegistration; }
+    | { type: 'SIGN_UP_FAILURE'; error: string; }
