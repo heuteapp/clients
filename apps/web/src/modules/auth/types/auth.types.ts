@@ -12,5 +12,6 @@ export interface AuthProfile {
 
 export interface AuthRegistration {
     email: string;
+    createdAt: number;
     expiredAt: number;
 }
