@@ -12,27 +12,27 @@ export const resolveSourcesAction = createAssign<
 >(
     ({ event }) => {
         if(event.type === "xstate.done.actor.fetch-sources") {
-            const output = event.payload;
+            const output = event.output;
 
             const { getMeDailyboard } = useDailyboardDataStore.getState();
 
-            let dailyboardData = getMeDailyboard(payload.categoryPath, isoToYYMMDD(payload.date)!) ?? null;
+            let dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
 
             if(!dailyboardData) {
                 const { loadMeDailyboard } = useDailyboardDataStore.getState();
                 loadMeDailyboard(responseToDailyboard(output));
 
-                dailyboardData = getMeDailyboard(payload.categoryPath, isoToYYMMDD(payload.date)!) ?? null;
+                dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
             }
 
             const { getGlobalLayout } = useLayoutDataStore.getState();
-            let layoutData = getGlobalLayout(payload.layout.name, payload.layout.version) ?? null;
+            let layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
 
             if(!layoutData) {
                 const { loadGlobalLayout } = useLayoutDataStore.getState();
-                loadGlobalLayout(responseToLayout(payload.layout));
+                loadGlobalLayout(responseToLayout(output.layout));
 
-                layoutData = getGlobalLayout(payload.layout.name, payload.layout.version) ?? null;
+                layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
             }
 
             return {
