@@ -306,7 +306,7 @@ export const isSigningUp = (state: AuthMachineState): boolean => state.matches({
 //
 
 export const isSignLocked = (state: AuthMachineState): boolean => 
-  isRedirecting(state) || isAwaiting(state) || isAuthenticated(state);
+  isRedirecting(state) || isAwaiting(state) || isAuthenticatedValid(state);
 
 export const isVerificationLocked = (state: AuthMachineState): boolean => 
   isRedirecting(state) || isAwaitingSession(state) || isAuthenticated(state) || isSigning(state);

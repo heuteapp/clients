@@ -23,7 +23,7 @@ export default function WorkspacePage() {
             <Button
                 variant="contained"
                 color="error"
-                onClick={() => send({ type: "SIGN_OUT" })}
+                onClick={() => send({ type: "SIGN_OUT_REQUEST" })}
                 sx={{
                     textTransform: "none",
                 }}

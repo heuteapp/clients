@@ -83,7 +83,6 @@ export const unauthenticatedEntryAction = createAssign<AuthMachineContext, AuthM
         return {
             session: null,
             registration: null,
-            error: null,
             temp: {
                 accessToken: null,
             }
