@@ -95,15 +95,15 @@ export const authMachine = setup({
 
                   return event.input;
                 },
-                on: {
-                  SESSION_REFRESH_SUCCESS: {
-                    target: "#auth.authenticated",
-                    actions: "sessionRefreshSuccess"
-                  },
-                  SESSION_REFRESH_FAILURE: {
-                    target: "#auth.unauthenticated",
-                    actions: "sessionRefreshFailure"
-                  }
+              },
+              on: {
+                SESSION_REFRESH_SUCCESS: {
+                  target: "#auth.authenticated",
+                  actions: "sessionRefreshSuccess"
+                },
+                SESSION_REFRESH_FAILURE: {
+                  target: "#auth.unauthenticated",
+                  actions: "sessionRefreshFailure"
                 }
               }
             }
