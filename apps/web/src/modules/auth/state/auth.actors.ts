@@ -157,8 +157,8 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
             return;
         }
 
-        const authRaw = localStorage.getItem("auth");
-        if (!authRaw) {
+        const sessionStr = localStorage.getItem("session");
+        if (!sessionStr) {
             sendBack({ 
                 type: 'VERIFY_EMAIL_ERROR', 
                 error: "No auth data found in localStorage for verification" 
@@ -166,9 +166,9 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
             return;
         }
 
-        let authData: AuthSession;
+        let session: AuthSession;
         try {
-            authData = JSON.parse(authRaw) as AuthSession;
+            session = JSON.parse(sessionStr) as AuthSession;
         } catch {
             sendBack({ 
                 type: 'VERIFY_EMAIL_ERROR', 
@@ -177,7 +177,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
             return;
         }
 
-        if (!authData.accessToken || !authData.profile) {
+        if (!session.accessToken || !session.profile) {
             sendBack({ 
                 type: 'VERIFY_EMAIL_ERROR', 
                 error: "Invalid auth data: missing token or profile" 
@@ -187,7 +187,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
 
         sendBack({ 
             type: 'VERIFY_EMAIL_DONE',
-            payload: authData,
+            payload: session,
         });
     }
 );

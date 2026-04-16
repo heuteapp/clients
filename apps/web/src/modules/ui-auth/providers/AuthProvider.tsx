@@ -51,7 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if(onVerifycationPage && isAwaitingRegistrationPending(state)) {
             verify();
         }
-    }, [authHash?.access_token, authHash?.refresh_token, state]);
+    }, []);
 
     useEffect(() => {
         if (isAuthenticatedInvalid(state) && pathname?.startsWith("/workspace")) {

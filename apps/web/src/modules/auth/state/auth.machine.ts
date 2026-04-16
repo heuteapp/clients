@@ -154,18 +154,18 @@ export const authMachine = setup({
 
                   return context.registration!;
                 },
-                on: {
-                  VERIFY_EMAIL_DONE: {
-                    target: "done",
-                  },
-                  VERIFY_EMAIL_ERROR: {
-                    target: "pending",
-                  },
-                  VERIFY_EMAIL_EXPIRED: { 
-                    target: "expired",
-                  },
+              },
+              on: {
+                VERIFY_EMAIL_DONE: {
+                  target: "done",
                 },
-              }
+                VERIFY_EMAIL_ERROR: {
+                  target: "pending",
+                },
+                VERIFY_EMAIL_EXPIRED: { 
+                  target: "expired",
+                },
+              },
             },
             "done": {
               after: {
