@@ -127,3 +127,33 @@ export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineE
         }
     }
 );
+
+export const signUpSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SIGN_UP_SUCCESS") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("registration", JSON.stringify(event.output));
+
+        return {
+            session: null,
+            error: null,
+        }
+    }
+);
+
+export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SIGN_UP_FAILURE") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.removeItem("registration");
+
+        return {
+            session: null,
+            error: event.error,
+        }
+    }
+);
