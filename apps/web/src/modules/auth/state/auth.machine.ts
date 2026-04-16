@@ -141,26 +141,19 @@ export const authMachine = setup({
                 src: "verifyEmail",
                 input: ({ context }) => context.registration!,
                 on: {
-                  VERIFY_EMAIL_SUCCESS: {
-                    target: "succeeded",
+                  VERIFY_EMAIL_DONE: {
+                    target: "finishing",
                   },
-                  VERIFY_EMAIL_FAILED: {
+                  VERIFY_EMAIL_ERROR: {
                     target: "pending",
                   },
                   VERIFY_EMAIL_EXPIRED: { 
-                    target: "expired",
+                    target: "finishing",
                   },
                 },
               },
               states: {
-                "succeeded": {
-                  on: {
-                    VERIFY_EMAIL_FINALIZE: {
-                      target: "#auth.authenticated",
-                    }
-                  }
-                },
-                "expired": {
+                "finishing": {
                   after: {
                     20000: {
                       target: "#auth.unauthenticated",
