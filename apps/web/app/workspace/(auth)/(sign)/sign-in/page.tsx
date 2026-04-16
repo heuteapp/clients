@@ -2,12 +2,10 @@
 import React, { useState } from "react";
 import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
-import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { isSigningIn } from "@/src/modules/auth/state/auth.machine";
 
 export default function SignInPage() {
-  const router = useRouter();
   const { state, send } = useAuthContext();
   
   const [identifier, setIdentifier] = useState("");
