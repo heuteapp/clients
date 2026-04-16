@@ -107,9 +107,12 @@ export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
     ({ input, sendBack }) => {
         heuteApi.auth.signUp(input)
             .then(_ => {
+                const dateNow = Date.now();
+
                 const registration : AuthRegistration = {
                     email: input.email,
-                    expiredAt: 20 * 60 * 1000,
+                    createdAt: dateNow,
+                    expiredAt: dateNow + (20 * 60 * 1000),
                 };
                 
                 sendBack({ 
