@@ -23,11 +23,7 @@ export const sessionHydrateFailureAction = createAssign<AuthMachineContext, Auth
             throw new Error("Invalid event");
         }
 
-        localStorage.removeItem("session");
-
         return {
-            session: null,
-            registration: null,
             error: event.error,
         }
     }
@@ -73,15 +69,8 @@ export const sessionRefreshFailureAction = createAssign<AuthMachineContext, Auth
             throw new Error("Invalid event");
         }
 
-        localStorage.removeItem("session");
-
         return {
-            session: null,
-            registration: null,
             error: event.error,
-            temp: {
-                accessToken: null,
-            }
         }
     }
 );
@@ -89,6 +78,7 @@ export const sessionRefreshFailureAction = createAssign<AuthMachineContext, Auth
 export const unauthenticatedEntryAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     () => {
         localStorage.removeItem("session");
+        localStorage.removeItem("registration");
 
         return {
             session: null,
@@ -125,11 +115,7 @@ export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineE
             throw new Error("Invalid event");
         }
 
-        localStorage.removeItem("session");
-
         return {
-            session: null,
-            registration: null,
             error: event.error,
         }
     }
@@ -157,11 +143,7 @@ export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineE
             throw new Error("Invalid event");
         }
 
-        localStorage.removeItem("registration");
-
         return {
-            session: null,
-            registration: null,
             error: event.error,
         }
     }
