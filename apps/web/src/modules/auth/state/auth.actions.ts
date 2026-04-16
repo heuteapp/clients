@@ -229,7 +229,7 @@ export const verifyEmailAssumeAction = createAssign<AuthMachineContext, AuthMach
     }
 );
 
-export const verifyEmailSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+export const verifyEmailDoneAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
         if (event.type !== "VERIFY_EMAIL_DONE") {
             throw new Error("Invalid event");
@@ -245,7 +245,7 @@ export const verifyEmailSuccessAction = createAssign<AuthMachineContext, AuthMac
     }
 );
 
-export const verifyEmailFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+export const verifyEmailErrorAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
         if (event.type !== "VERIFY_EMAIL_ERROR") {
             throw new Error("Invalid event");
@@ -260,7 +260,7 @@ export const verifyEmailFailureAction = createAssign<AuthMachineContext, AuthMac
     }
 );
 
-export const verifyEmailTimeoutAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+export const verifyEmailExpiredAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ context, event }) => {
         if (event.type !== "VERIFY_EMAIL_EXPIRED") {
             throw new Error("Invalid event");

@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { hasRegistrationGuard, hasSessionGuard } from "./auth.guards";
-import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailSuccessAction, verifyEmailFailureAction, verifyEmailTimeoutAction, redirectingEntryAction } from "./auth.actions";
+import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailDoneAction, verifyEmailErrorAction, verifyEmailExpiredAction, redirectingEntryAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -32,9 +32,9 @@ export const authMachine = setup({
     verifyEmailRequest: verifyEmailRequestAction,
     verifyEmailConfirm: verifyEmailConfirmAction,
     verifyEmailAssume: verifyEmailAssumeAction,
-    verifyEmailSuccess: verifyEmailSuccessAction,
-    verifyEmailFailure: verifyEmailFailureAction,
-    verifyEmailTimeout: verifyEmailTimeoutAction
+    verifyEmailDone: verifyEmailDoneAction,
+    verifyEmailError: verifyEmailErrorAction,
+    verifyEmailExpired: verifyEmailExpiredAction
   },
   guards: {
     hasRegistration: hasRegistrationGuard,
@@ -161,12 +161,15 @@ export const authMachine = setup({
               on: {
                 VERIFY_EMAIL_DONE: {
                   target: "done",
+                  actions: "verifyEmailDone"
                 },
                 VERIFY_EMAIL_ERROR: {
                   target: "pending",
+                  actions: "verifyEmailError"
                 },
                 VERIFY_EMAIL_EXPIRED: { 
                   target: "expired",
+                  actions: "verifyEmailExpired"
                 },
               },
             },
