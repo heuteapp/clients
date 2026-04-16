@@ -74,6 +74,9 @@ importers:
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
+      react-hash-control:
+        specifier: ^1.0.3
+        version: 1.0.3
       xstate:
         specifier: ^5.28.0
         version: 5.28.0
@@ -3083,6 +3086,9 @@ packages:
     peerDependencies:
       react: ^19.2.3
 
+  react-hash-control@1.0.3:
+    resolution: {integrity: sha512-GPMsl4iV3mIZnyFLbr4+hAaWDlKQs525rwG51HEG90EcfZYDrpPDZt6xoFD0uLMjrjo1QpuQoWPEM3BUNZvAdw==}
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -3094,6 +3100,10 @@ packages:
     peerDependencies:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
+
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
 
   react@19.2.3:
     resolution: {integrity: sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==}
@@ -6899,6 +6909,10 @@ snapshots:
       react: 19.2.3
       scheduler: 0.27.0
 
+  react-hash-control@1.0.3:
+    dependencies:
+      react: 18.3.1
+
   react-is@16.13.1: {}
 
   react-is@19.2.4: {}
@@ -6911,6 +6925,10 @@ snapshots:
       prop-types: 15.8.1
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
 
   react@19.2.3: {}
 
