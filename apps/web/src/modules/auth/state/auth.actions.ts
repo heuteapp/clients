@@ -178,11 +178,7 @@ export const verifyEmailConfirmAction = createAssign<AuthMachineContext, AuthMac
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("session", JSON.stringify(event.payload));
-
         return {
-            session: event.payload,
-            registration: null,
             error: null,
         }
     }

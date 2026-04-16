@@ -128,7 +128,7 @@ export const authMachine = setup({
                   actions: "verifyEmailRequest"
                 },
                 VERIFY_EMAIL_CONFIRM: {
-                  target: "#auth.authenticated.valid",
+                  target: "validating",
                   actions: "verifyEmailConfirm"
                 },
                 VERIFY_EMAIL_ASSUME: {
@@ -140,7 +140,17 @@ export const authMachine = setup({
             "validating": {
               invoke: {
                 src: "verifyEmail",
-                input: ({ context }) => context.registration!,
+                input: ({ event, context }) => {
+                  if(event.type == "VERIFY_EMAIL_REQUEST") {
+                    return context.registration!;
+                  }
+
+                  if(event.type == "VERIFY_EMAIL_CONFIRM") {
+                    return event.registration;
+                  }
+
+                  throw new Error("Invalid event");
+                },
                 on: {
                   VERIFY_EMAIL_DONE: {
                     target: "done",
