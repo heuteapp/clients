@@ -1,9 +1,9 @@
-export const hasRegistrationGuard = (): boolean => {
-  const registration = localStorage.getItem("registration");
-  return !!registration;
+import { AuthMachineContext } from "../types/auth.machine.types";
+
+export const hasRegistrationGuard = ({ context }: { context: AuthMachineContext }): boolean => {
+  return !!context.registration;
 };
 
-export const hasSessionGuard = (): boolean => {
-  const session = localStorage.getItem("session");
-  return !!session;
+export const hasSessionGuard = ({ context }: { context: AuthMachineContext }): boolean => {
+  return !!context.session;
 };
