@@ -39,8 +39,15 @@ export const authMachine = setup({
     }
   },
   id: "auth",
-  initial: "redirecting",
+  initial: "idle",
   states: {
+    "idle": {
+      on: {
+        REDIRECT_REQUEST: {
+          target: "redirecting"
+        }
+      }
+    },
     "redirecting": {
       always: [
         {
@@ -168,25 +175,25 @@ export const authService = createActor(authMachine);
 
 //
 
-export const isRedirecting = (state: AuthMachineState): boolean => safeMatches(state, "redirecting");
+export const isRedirecting = (state: AuthMachineState): boolean => state.matches("redirecting");
 
-export const isAwaiting = (state: AuthMachineState): boolean => safeMatches(state, "awaiting")
+export const isAwaiting = (state: AuthMachineState): boolean => state.matches("awaiting")
 
-export const isAwaitingSession = (state: AuthMachineState): boolean => safeMatches(state, { awaiting: "session" });
+export const isAwaitingSession = (state: AuthMachineState): boolean => state.matches({ awaiting: "session" });
 
-export const isAwaitingSessionHydrating = (state: AuthMachineState): boolean => safeMatches(state, { awaiting: { session: "hydrating" } });
+export const isAwaitingSessionHydrating = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "hydrating" } });
 
-export const isAwaitingSessionRefreshing = (state: AuthMachineState): boolean => safeMatches(state, { awaiting: { session: "refreshing" } });
+export const isAwaitingSessionRefreshing = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "refreshing" } });
 
-export const isAwaitingRegistration = (state: AuthMachineState): boolean => safeMatches(state, { awaiting: "registration" });
+export const isAwaitingRegistration = (state: AuthMachineState): boolean => state.matches({ awaiting: "registration" });
 
-export const isAuthenticated = (state: AuthMachineState): boolean => safeMatches(state, "authenticated");
+export const isAuthenticated = (state: AuthMachineState): boolean => state.matches("authenticated");
 
-export const isUnauthenticated = (state: AuthMachineState): boolean => safeMatches(state, "unauthenticated");
+export const isUnauthenticated = (state: AuthMachineState): boolean => state.matches("unauthenticated");
 
-export const isSigningIn = (state: AuthMachineState): boolean => safeMatches(state, { signing: "in" });
+export const isSigningIn = (state: AuthMachineState): boolean => state.matches({ signing: "in" });
 
-export const isSigningUp = (state: AuthMachineState): boolean => safeMatches(state, { signing: "up" });
+export const isSigningUp = (state: AuthMachineState): boolean => state.matches({ signing: "up" });
 
 //
 

@@ -2,6 +2,7 @@ import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.req
 import { AuthRegistration, AuthSession } from "./auth.types";
 
 export type AuthEvent =
+    | RedirectEvent
     | SessionHydrateEvent
     | SessionRefreshEvent
     | SignInEvent
@@ -9,6 +10,8 @@ export type AuthEvent =
     | SignOutEvent;
 
 //
+
+export type RedirectEvent = { type: 'REDIRECT_REQUEST'; }
 
 export type SessionHydrateEvent = 
     | SessionHydrateRequestEvent

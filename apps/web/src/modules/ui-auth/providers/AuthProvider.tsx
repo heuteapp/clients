@@ -23,6 +23,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         authService.start();
 
         const subscription = authService.subscribe((newState) => {
+            console.log("Auth state updated:", newState);
             setState(newState);
         });
         
@@ -31,6 +32,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
             authService.stop(); 
         }
     }, []);
+
+    useEffect(() => {
+        if(state.matches("idle")) {
+            authService.send({ type: "REDIRECT_REQUEST" });
+        }
+    }, [state]);
 
     /*useEffect(() => {
         const verify = async () => {
