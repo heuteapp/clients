@@ -183,8 +183,6 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
             return;
         }
 
-        localStorage.removeItem("registration");
-
         sendBack({ 
             type: 'VERIFY_EMAIL_SUCCESS',
             output: authData,
