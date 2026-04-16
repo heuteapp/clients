@@ -63,8 +63,8 @@ export type VerifyEmailEvent =
     | VerifyEmailConfirmEvent
     | VerifyEmailAssumeEvent
     | VerifyEmailDoneEvent
-    | VerifyEmailTimeoutEvent
-    | VerifyEmailErrorEvent;
+    | VerifyEmailErrorEvent
+    | VerifyEmailTimeoutEvent;
 
 export type VerifyEmailRequestEvent = { type: 'VERIFY_EMAIL_REQUEST'; }
 
@@ -74,10 +74,9 @@ export type VerifyEmailAssumeEvent = { type: 'VERIFY_EMAIL_ASSUME'; error?: stri
 
 export type VerifyEmailDoneEvent = { type: 'VERIFY_EMAIL_DONE'; payload: AuthSession; }
 
-export type VerifyEmailTimeoutEvent = { type: 'VERIFY_EMAIL_TIMEOUT'; email: string; }
-
 export type VerifyEmailErrorEvent = { type: 'VERIFY_EMAIL_ERROR'; error: string; }
 
+export type VerifyEmailTimeoutEvent = { type: 'VERIFY_EMAIL_TIMEOUT'; email: string; }
 
 //
 
