@@ -69,7 +69,7 @@ export type VerifyEmailEvent =
 
 export type VerifyEmailRequestEvent = { type: 'VERIFY_EMAIL_REQUEST'; }
 
-export type VerifyEmailConfirmEvent = { type: 'VERIFY_EMAIL_CONFIRM'; session: AuthSession; }
+export type VerifyEmailConfirmEvent = { type: 'VERIFY_EMAIL_CONFIRM'; accessToken: string; }
 
 export type VerifyEmailAssumeEvent = { type: 'VERIFY_EMAIL_ASSUME'; error?: string; }
 
