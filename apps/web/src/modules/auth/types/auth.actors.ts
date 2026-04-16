@@ -1,13 +1,13 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
-import { SessionHydrateFailureEvent, SessionHydrateSuccessEvent, SessionRefreshFailureEvent, SessionRefreshRequestEvent, SessionRefreshSuccessEvent, SignInFailureEvent, SignInSuccessEvent, SignUpFailureEvent, SignUpSuccessEvent, VerifyEmailFailureEvent, VerifyEmailSuccessEvent, VerifyEmailTimeoutEvent } from "./auth.events.types";
+import { SessionHydrateErrorEvent, SessionHydrateDoneEvent, SessionRefreshErrorEvent, SessionRefreshRequestEvent, SessionRefreshDoneEvent, SignInErrorEvent, SignInDoneEvent, SignUpErrorEvent, SignUpDoneEvent, VerifyEmailErrorEvent, VerifyEmailDoneEvent, VerifyEmailTimeoutEvent } from "./auth.events.types";
 import { AuthRegistration, AuthSession } from "./auth.types";
 
 
 export type SessionHydrateActorInput = void;
 
 export type SessionHydrateActorEvent =
-  | SessionHydrateSuccessEvent
-  | SessionHydrateFailureEvent
+  | SessionHydrateDoneEvent
+  | SessionHydrateErrorEvent
   | SessionRefreshRequestEvent;
 
 //
@@ -15,28 +15,28 @@ export type SessionHydrateActorEvent =
 export type SessionRefreshActorInput = AuthSession;
 
 export type SessionRefreshActorEvent =
-  | SessionRefreshSuccessEvent
-  | SessionRefreshFailureEvent;
+  | SessionRefreshDoneEvent
+  | SessionRefreshErrorEvent;
 
 //
 
 export type SignInActorInput = SignInRequest;
 
 export type SignInActorEvent = 
-  | SignInSuccessEvent
-  | SignInFailureEvent
+  | SignInDoneEvent
+  | SignInErrorEvent
 
 export type SignUpActorInput = SignUpRequest;
 
 export type SignUpActorEvent = 
-  | SignUpSuccessEvent
-  | SignUpFailureEvent
+  | SignUpDoneEvent
+  | SignUpErrorEvent
 
 //
 
 export type VerifyEmailActorInput = AuthRegistration;
 
 export type VerifyEmailActorEvent = 
-  | VerifyEmailSuccessEvent
-  | VerifyEmailFailureEvent
+  | VerifyEmailDoneEvent
+  | VerifyEmailErrorEvent
   | VerifyEmailTimeoutEvent

@@ -7,7 +7,7 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
     ({ input, sendBack }) => {
         if (typeof window === "undefined") {
             return sendBack({ 
-                type: 'SESSION_HYDRATE_FAILURE',
+                type: 'SESSION_HYDRATE_ERROR',
                 error: "Session hydration can only be performed in the browser",
             });
         }
@@ -15,7 +15,7 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
         const raw = localStorage.getItem("session");
         if (!raw) {
             return sendBack({ 
-                type: 'SESSION_HYDRATE_FAILURE',
+                type: 'SESSION_HYDRATE_ERROR',
                 error: "No session data found in localStorage",
             });
         }
@@ -26,7 +26,7 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
 
         .then(profile => {
             return sendBack({ 
-                type: 'SESSION_HYDRATE_SUCCESS',
+                type: 'SESSION_HYDRATE_DONE',
                 output: {
                     ...sessionData,
                     profile: profile!
@@ -47,7 +47,7 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
             }
 
             return sendBack({ 
-                type: 'SESSION_HYDRATE_FAILURE',
+                type: 'SESSION_HYDRATE_ERROR',
                 error: error?.message || "Failed to hydrate session",
             });
         });
@@ -65,14 +65,14 @@ export const refreshSessionActor = createCallback<SessionRefreshActorInput, Sess
             };
 
             return sendBack({ 
-                type: 'SESSION_REFRESH_SUCCESS',
+                type: 'SESSION_REFRESH_DONE',
                 output: newSession,
             });
         })
 
         .catch(error => {
             return sendBack({ 
-                type: 'SESSION_REFRESH_FAILURE',
+                type: 'SESSION_REFRESH_ERROR',
                 error: error?.message || "Failed to refresh session",
             });
         });
@@ -90,13 +90,13 @@ export const signInActor = createCallback<SignInActorInput, SignInActorEvent>(
                 localStorage.setItem("session", JSON.stringify(session));
                 
                 sendBack({ 
-                    type: 'SIGN_IN_SUCCESS',
+                    type: 'SIGN_IN_DONE',
                     output: session,
                 });
             })
             .catch(error => {
                 sendBack({ 
-                    type: 'SIGN_IN_FAILURE', 
+                    type: 'SIGN_IN_ERROR', 
                     error: error?.message || "Unknown error from sign in" 
                 });
             });
@@ -113,13 +113,13 @@ export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
                 };
                 
                 sendBack({ 
-                    type: 'SIGN_UP_SUCCESS',
+                    type: 'SIGN_UP_DONE',
                     output: registration,
                 });
             })
             .catch(error => {
                 sendBack({ 
-                    type: 'SIGN_UP_FAILURE', 
+                    type: 'SIGN_UP_ERROR', 
                     error: error?.message || "Unknown error from sign up" 
                 });
             });
@@ -132,7 +132,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
 
         if (!registration) {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILURE', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "No registration data available for verification" 
             });
             return;
@@ -140,7 +140,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
 
         if (typeof window === "undefined") {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILURE', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "Verification can only be performed in the browser" 
             });
             return;
@@ -158,7 +158,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
         const authRaw = localStorage.getItem("auth");
         if (!authRaw) {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILURE', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "No auth data found in localStorage for verification" 
             });
             return;
@@ -169,7 +169,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
             authData = JSON.parse(authRaw) as AuthSession;
         } catch {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILURE', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "Failed to parse auth data" 
             });
             return;
@@ -177,14 +177,14 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
 
         if (!authData.accessToken || !authData.profile) {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILURE', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "Invalid auth data: missing token or profile" 
             });
             return;
         }
 
         sendBack({ 
-            type: 'VERIFY_EMAIL_SUCCESS',
+            type: 'VERIFY_EMAIL_DONE',
             output: authData,
         });
     }

@@ -80,11 +80,11 @@ export const authMachine = setup({
                 src: "hydrateSession",
               },
               on: {
-                SESSION_HYDRATE_SUCCESS: {
+                SESSION_HYDRATE_DONE: {
                   target: "#auth.authenticated",
                   actions: "sessionHydrateSuccess"
                 },
-                SESSION_HYDRATE_FAILURE: {
+                SESSION_HYDRATE_ERROR: {
                   target: "#auth.unauthenticated",
                   actions: "sessionHydrateFailure"
                 },
@@ -106,11 +106,11 @@ export const authMachine = setup({
                 },
               },
               on: {
-                SESSION_REFRESH_SUCCESS: {
+                SESSION_REFRESH_DONE: {
                   target: "#auth.authenticated",
                   actions: "sessionRefreshSuccess"
                 },
-                SESSION_REFRESH_FAILURE: {
+                SESSION_REFRESH_ERROR: {
                   target: "#auth.unauthenticated",
                   actions: "sessionRefreshFailure"
                 }
@@ -200,11 +200,11 @@ export const authMachine = setup({
             }
           },
           on: {
-            SIGN_IN_SUCCESS: {
+            SIGN_IN_DONE: {
               target: "#auth.authenticated",
               actions: "signInSuccess"
             },
-            SIGN_IN_FAILURE: {
+            SIGN_IN_ERROR: {
               target: "#auth.unauthenticated",
               actions: "signInFailure"
             }
@@ -222,11 +222,11 @@ export const authMachine = setup({
             }
           },
           on: {
-            SIGN_UP_SUCCESS: {
+            SIGN_UP_DONE: {
               target: "#auth.awaiting.registration",
               actions: "signUpSuccess"
             },
-            SIGN_UP_FAILURE: {
+            SIGN_UP_ERROR: {
               target: "#auth.unauthenticated",
               actions: "signUpFailure"
             }

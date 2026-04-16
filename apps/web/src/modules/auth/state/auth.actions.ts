@@ -3,7 +3,7 @@ import { createAssign } from "@/src/modules/auth/utils/create-assign";
 
 export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SESSION_HYDRATE_SUCCESS") {
+        if (event.type !== "SESSION_HYDRATE_DONE") {
             throw new Error("Invalid event");
         }
 
@@ -19,7 +19,7 @@ export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, Auth
 
 export const sessionHydrateFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SESSION_HYDRATE_FAILURE") {
+        if (event.type !== "SESSION_HYDRATE_ERROR") {
             throw new Error("Invalid event");
         }
 
@@ -46,7 +46,7 @@ export const sessionRefreshRequestAction = createAssign<AuthMachineContext, Auth
 
 export const sessionRefreshSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SESSION_REFRESH_SUCCESS") {
+        if (event.type !== "SESSION_REFRESH_DONE") {
             throw new Error("Invalid event");
         }
 
@@ -65,7 +65,7 @@ export const sessionRefreshSuccessAction = createAssign<AuthMachineContext, Auth
 
 export const sessionRefreshFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SESSION_REFRESH_FAILURE") {
+        if (event.type !== "SESSION_REFRESH_ERROR") {
             throw new Error("Invalid event");
         }
 
@@ -95,7 +95,7 @@ export const unauthenticatedEntryAction = createAssign<AuthMachineContext, AuthM
 
 export const signInSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SIGN_IN_SUCCESS") {
+        if (event.type !== "SIGN_IN_DONE") {
             throw new Error("Invalid event");
         }
 
@@ -111,7 +111,7 @@ export const signInSuccessAction = createAssign<AuthMachineContext, AuthMachineE
 
 export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SIGN_IN_FAILURE") {
+        if (event.type !== "SIGN_IN_ERROR") {
             throw new Error("Invalid event");
         }
 
@@ -123,7 +123,7 @@ export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineE
 
 export const signUpSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SIGN_UP_SUCCESS") {
+        if (event.type !== "SIGN_UP_DONE") {
             throw new Error("Invalid event");
         }
 
@@ -139,7 +139,7 @@ export const signUpSuccessAction = createAssign<AuthMachineContext, AuthMachineE
 
 export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "SIGN_UP_FAILURE") {
+        if (event.type !== "SIGN_UP_ERROR") {
             throw new Error("Invalid event");
         }
 
@@ -191,7 +191,7 @@ export const verifyEmailAssumeAction = createAssign<AuthMachineContext, AuthMach
 
 export const verifyEmailSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "VERIFY_EMAIL_SUCCESS") {
+        if (event.type !== "VERIFY_EMAIL_DONE") {
             throw new Error("Invalid event");
         }
 
@@ -207,7 +207,7 @@ export const verifyEmailSuccessAction = createAssign<AuthMachineContext, AuthMac
 
 export const verifyEmailFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type !== "VERIFY_EMAIL_FAILURE") {
+        if (event.type !== "VERIFY_EMAIL_ERROR") {
             throw new Error("Invalid event");
         }
 
