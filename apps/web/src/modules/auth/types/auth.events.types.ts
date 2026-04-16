@@ -7,6 +7,7 @@ export type AuthEvent =
     | SessionRefreshEvent
     | SignInEvent
     | SignUpEvent
+    | VerifyEmailEvent
     | SignOutEvent;
 
 //
@@ -54,6 +55,13 @@ export type SignUpEvent =
 export type SignUpRequestEvent = { type: 'SIGN_UP_REQUEST'; input: SignUpRequest; }
 export type SignUpSuccessEvent = { type: 'SIGN_UP_SUCCESS'; output: AuthRegistration; }
 export type SignUpFailureEvent = { type: 'SIGN_UP_FAILURE'; error: string; }
+
+//
+
+export type VerifyEmailEvent =
+    | VerifyEmailRequestEvent;
+
+export type VerifyEmailRequestEvent = { type: 'VERIFY_EMAIL_REQUEST'; }
 
 //
 

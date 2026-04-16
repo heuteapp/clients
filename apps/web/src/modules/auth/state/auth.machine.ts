@@ -112,6 +112,30 @@ export const authMachine = setup({
           }
         },
         "registration": {
+          states: {
+            "pending": {
+              on: {
+                VERIFY_EMAIL_REQUEST: {
+                  target: "verifying",
+                },
+                VERIFY_EMAIL_CONFIRM: {
+                  target: "#auth.authenticated"
+                },
+                VERIFY_EMAIL_ASSUMED: {
+                  target: "#auth.unauthenticated"
+                }
+              }
+            },
+            "verifying": {
+              states: {
+                "successed": {
+                },
+                "expired": {
+
+                }
+              }
+            }
+          }
         }
       }
     },
