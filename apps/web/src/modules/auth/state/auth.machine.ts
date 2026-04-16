@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, refreshSessionActor, signInActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
-import { sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
+import { entryUnauthenticatedAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
 import { safeMatches } from "../../shared/utils/state";
 
 export const authMachine = setup({
@@ -22,6 +22,7 @@ export const authMachine = setup({
     sessionRefreshRequest: sessionRefreshRequestAction,
     sessionRefreshSuccess: sessionRefreshSuccessAction,
     sessionRefreshFailure: sessionRefreshFailureAction,
+    entryUnauthenticated: entryUnauthenticatedAction,
     signInSuccess: signInSuccessAction,
     signInFailure: signInFailureAction
   },
@@ -120,6 +121,7 @@ export const authMachine = setup({
       }
     },
     "unauthenticated": {
+      entry: "entryUnauthenticated",
       on: {
         SIGN_IN_REQUEST: {
 
