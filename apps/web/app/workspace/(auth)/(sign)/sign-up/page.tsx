@@ -15,7 +15,7 @@ export default function SignUpPage() {
   const [passwordError, setPasswordError] = useState("");
 
   const isLoading = isSigningUp(state);
-  const error = state.context.error;
+  const error = state.context.error?.id == "signUp" ? state.context.error : null;
 
   const validatePasswords = () => {
     if (password !== confirmPassword) {
@@ -82,7 +82,7 @@ export default function SignUpPage() {
           required
           error={!!error && !email}
           disabled={isLoading}
-          helperText={error && !email ? error : ""}
+          helperText={error && !email ? error.message : ""}
         />
         
         <TextField
@@ -125,7 +125,7 @@ export default function SignUpPage() {
       <Box sx={{ mt: 2, textAlign: "center", minHeight: 24 }}>
         {error && (
           <Typography color="error">
-            {error}
+            {error.message}
           </Typography>
         )}
       </Box>
