@@ -24,7 +24,10 @@ export const sessionHydrateFailureAction = createAssign<AuthMachineContext, Auth
         }
 
         return {
-            error: event.error,
+            error: {
+                id: "sessionHydrate",
+                message: event.error,
+            },
         }
     }
 );
@@ -70,7 +73,10 @@ export const sessionRefreshFailureAction = createAssign<AuthMachineContext, Auth
         }
 
         return {
-            error: event.error,
+            error: {
+                id: "sessionRefresh",
+                message: event.error,
+            },
         }
     }
 );
@@ -115,7 +121,10 @@ export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineE
         }
 
         return {
-            error: event.error,
+            error: {
+                id: "signIn",
+                message: event.error,
+            },
         }
     }
 );
@@ -143,7 +152,10 @@ export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineE
         }
 
         return {
-            error: event.error,
+            error: {
+                id: "signUp",
+                message: event.error,
+            },
         }
     }
 );
@@ -183,7 +195,10 @@ export const verifyEmailAssumeAction = createAssign<AuthMachineContext, AuthMach
         }
 
         return {
-            error: event.error || "Assumed email verification failure",
+            error: {
+                id: "verifyEmail",
+                message: event.error || "Assumed email verification failure",
+            },
         }
     }
 );
@@ -211,7 +226,10 @@ export const verifyEmailFailureAction = createAssign<AuthMachineContext, AuthMac
         }
 
         return {
-            error: event.error,
+            error: {
+                id: "verifyEmail",
+                message: event.error,
+            },
         }
     }
 );
@@ -226,7 +244,10 @@ export const verifyEmailTimeoutAction = createAssign<AuthMachineContext, AuthMac
 
         return {
             registration: null,
-            error: `Verification timed out for ${context.registration?.email || "(unknown email)"}`,
+            error: {
+                id: "verifyEmail",
+                message: `Verification timed out for ${context.registration?.email || "(unknown email)"}`,
+            },
         }
     }
 );

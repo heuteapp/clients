@@ -6,7 +6,10 @@ import { AuthEvent } from "./auth.events.types";
 export interface AuthMachineContext {
   session: AuthSession | null;
   registration: AuthRegistration | null;
-  error: string | null;
+  error: {
+    id: string;
+    message: string;
+  } | null;
   temp: {
     accessToken: string | null;
   }

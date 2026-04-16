@@ -12,7 +12,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
 
   const isLoading = isSigningIn(state);
-  const error = state.context.error;
+  const error = state.context.error?.id == "signIn" ? state.context.error : null;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,7 +70,7 @@ export default function SignInPage() {
       <Box sx={{ mt: 2, textAlign: "center", minHeight: 24 }}>
         {error && (
           <Typography color="error">
-            {error}
+            {error.message}
           </Typography>
         )}
       </Box>
