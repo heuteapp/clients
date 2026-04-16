@@ -1,5 +1,5 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
-import { SessionHydrateErrorEvent, SessionHydrateDoneEvent, SessionRefreshErrorEvent, SessionRefreshRequestEvent, SessionRefreshDoneEvent, SignInErrorEvent, SignInDoneEvent, SignUpErrorEvent, SignUpDoneEvent, VerifyEmailErrorEvent, VerifyEmailDoneEvent, VerifyEmailTimeoutEvent } from "./auth.events.types";
+import { SessionHydrateErrorEvent, SessionHydrateDoneEvent, SessionRefreshErrorEvent, SessionRefreshRequestEvent, SessionRefreshDoneEvent, SignInErrorEvent, SignInDoneEvent, SignUpErrorEvent, SignUpDoneEvent, VerifyEmailErrorEvent, VerifyEmailDoneEvent, VerifyEmailExpiredEvent } from "./auth.events.types";
 import { AuthRegistration, AuthSession } from "./auth.types";
 
 
@@ -39,4 +39,4 @@ export type VerifyEmailActorInput = AuthRegistration;
 export type VerifyEmailActorEvent = 
   | VerifyEmailDoneEvent
   | VerifyEmailErrorEvent
-  | VerifyEmailTimeoutEvent
+  | VerifyEmailExpiredEvent

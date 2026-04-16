@@ -149,8 +149,8 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
         if (Date.now() > registration.expiredAt) {
             localStorage.removeItem("registration");
             sendBack({ 
-                type: 'VERIFY_EMAIL_TIMEOUT', 
-                email: registration.email,
+                type: 'VERIFY_EMAIL_EXPIRED', 
+                registration
             });
             return;
         }
