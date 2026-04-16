@@ -16,23 +16,23 @@ export const resolveSourcesAction = createAssign<
 
             const { getMeDailyboard } = useDailyboardDataStore.getState();
 
-            let dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
+            let dailyboardData = getMeDailyboard(payload.categoryPath, isoToYYMMDD(payload.date)!) ?? null;
 
             if(!dailyboardData) {
                 const { loadMeDailyboard } = useDailyboardDataStore.getState();
                 loadMeDailyboard(responseToDailyboard(output));
 
-                dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
+                dailyboardData = getMeDailyboard(payload.categoryPath, isoToYYMMDD(payload.date)!) ?? null;
             }
 
             const { getGlobalLayout } = useLayoutDataStore.getState();
-            let layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
+            let layoutData = getGlobalLayout(payload.layout.name, payload.layout.version) ?? null;
 
             if(!layoutData) {
                 const { loadGlobalLayout } = useLayoutDataStore.getState();
-                loadGlobalLayout(responseToLayout(output.layout));
+                loadGlobalLayout(responseToLayout(payload.layout));
 
-                layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
+                layoutData = getGlobalLayout(payload.layout.name, payload.layout.version) ?? null;
             }
 
             return {
