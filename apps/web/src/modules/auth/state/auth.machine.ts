@@ -81,11 +81,11 @@ export const authMachine = setup({
               },
               on: {
                 SESSION_HYDRATE_DONE: {
-                  target: "#auth.authenticated",
+                  target: "#auth.authenticated.valid",
                   actions: "sessionHydrateSuccess"
                 },
                 SESSION_HYDRATE_ERROR: {
-                  target: "#auth.unauthenticated",
+                  target: "#auth.authenticated.invalid",
                   actions: "sessionHydrateFailure"
                 },
                 SESSION_REFRESH_REQUEST: {
@@ -107,11 +107,11 @@ export const authMachine = setup({
               },
               on: {
                 SESSION_REFRESH_DONE: {
-                  target: "#auth.authenticated",
+                  target: "#auth.authenticated.valid",
                   actions: "sessionRefreshSuccess"
                 },
                 SESSION_REFRESH_ERROR: {
-                  target: "#auth.unauthenticated",
+                  target: "#auth.authenticated.invalid",
                   actions: "sessionRefreshFailure"
                 }
               }
@@ -128,11 +128,11 @@ export const authMachine = setup({
                   actions: "verifyEmailRequest"
                 },
                 VERIFY_EMAIL_CONFIRM: {
-                  target: "#auth.authenticated",
+                  target: "#auth.authenticated.valid",
                   actions: "verifyEmailConfirm"
                 },
                 VERIFY_EMAIL_ASSUME: {
-                  target: "#auth.unauthenticated",
+                  target: "#auth.authenticated.invalid",
                   actions: "verifyEmailAssume"
                 }
               }
@@ -157,24 +157,24 @@ export const authMachine = setup({
             "done": {
               after: {
                 20000: {
-                  target: "#auth.authenticated",
+                  target: "#auth.authenticated.valid",
                 }
               },
               on: {
                 VERIFY_EMAIL_FINALIZE: {
-                  target: "#auth.authenticated",
+                  target: "#auth.authenticated.valid",
                 }
               }
             },
             "expired": {
               after: {
                 20000: {
-                  target: "#auth.unauthenticated",
+                  target: "#auth.authenticated.invalid",
                 }
               },
               on: {
                 VERIFY_EMAIL_FINALIZE: {
-                  target: "#auth.unauthenticated",
+                  target: "#auth.authenticated.invalid",
                 }
               }
             }
@@ -231,11 +231,11 @@ export const authMachine = setup({
           },
           on: {
             SIGN_IN_DONE: {
-              target: "#auth.authenticated",
+              target: "#auth.authenticated.valid",
               actions: "signInSuccess"
             },
             SIGN_IN_ERROR: {
-              target: "#auth.unauthenticated",
+              target: "#auth.authenticated.invalid",
               actions: "signInFailure"
             }
           }
@@ -257,7 +257,7 @@ export const authMachine = setup({
               actions: "signUpSuccess"
             },
             SIGN_UP_ERROR: {
-              target: "#auth.unauthenticated",
+              target: "#auth.authenticated.invalid",
               actions: "signUpFailure"
             }
           }
