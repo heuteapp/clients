@@ -148,3 +148,86 @@ export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineE
         }
     }
 );
+
+export const verifyEmailRequestAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_REQUEST") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: null,
+        }
+    }
+);
+
+export const verifyEmailConfirmAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_CONFIRM") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("session", JSON.stringify(event.output));
+
+        return {
+            session: event.output,
+            registration: null,
+            error: null,
+        }
+    }
+);
+
+export const verifyEmailAssumeAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_ASSUME") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: event.error || "Assumed email verification failure",
+        }
+    }
+);
+
+export const verifyEmailSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_SUCCESS") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("session", JSON.stringify(event.output));
+
+        return {
+            session: event.output,
+            registration: null,
+            error: null,
+        }
+    }
+);
+
+export const verifyEmailFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_FAILURE") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: event.error,
+        }
+    }
+);
+
+export const verifyEmailTimeoutAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_TIMEOUT") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.removeItem("registration");
+
+        return {
+            registration: null,
+            error: `Verification timed out for ${event.email}`,
+        }
+    }
+);
