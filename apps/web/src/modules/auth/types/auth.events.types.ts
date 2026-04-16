@@ -59,9 +59,25 @@ export type SignUpFailureEvent = { type: 'SIGN_UP_FAILURE'; error: string; }
 //
 
 export type VerifyEmailEvent =
-    | VerifyEmailRequestEvent;
+    | VerifyEmailRequestEvent
+    | VerifyEmailConfirmEvent
+    | VerifyEmailAssumeEvent
+    | VerifyEmailSuccessEvent
+    | VerifyEmailTimeoutEvent
+    | VerifyEmailFailureEvent;
 
 export type VerifyEmailRequestEvent = { type: 'VERIFY_EMAIL_REQUEST'; }
+
+export type VerifyEmailConfirmEvent = { type: 'VERIFY_EMAIL_CONFIRM'; }
+
+export type VerifyEmailAssumeEvent = { type: 'VERIFY_EMAIL_ASSUME'; error?: string; }
+
+export type VerifyEmailSuccessEvent = { type: 'VERIFY_EMAIL_SUCCESS'; }
+
+export type VerifyEmailTimeoutEvent = { type: 'VERIFY_EMAIL_TIMEOUT'; }
+
+export type VerifyEmailFailureEvent = { type: 'VERIFY_EMAIL_FAILURE'; error: string; }
+
 
 //
 
