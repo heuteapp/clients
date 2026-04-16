@@ -151,19 +151,17 @@ export const authMachine = setup({
                     target: "finishing",
                   },
                 },
+              }
+            },
+            "finishing": {
+              after: {
+                20000: {
+                  target: "#auth.unauthenticated",
+                }
               },
-              states: {
-                "finishing": {
-                  after: {
-                    20000: {
-                      target: "#auth.unauthenticated",
-                    }
-                  },
-                  on: {
-                    VERIFY_EMAIL_FINALIZE: {
-                      target: "#auth.authenticated",
-                    }
-                  }
+              on: {
+                VERIFY_EMAIL_FINALIZE: {
+                  target: "#auth.authenticated",
                 }
               }
             }
@@ -266,6 +264,12 @@ export const isAwaitingSessionHydrating = (state: AuthMachineState): boolean => 
 export const isAwaitingSessionRefreshing = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "refreshing" } });
 
 export const isAwaitingRegistration = (state: AuthMachineState): boolean => state.matches({ awaiting: "registration" });
+
+export const isAwaitingRegistrationPending = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "pending" } });
+
+export const isAwaitingRegistrationVerifying = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "verifying" } });
+
+export const isAwaitingRegistrationFinishing = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "finishing" } });
 
 export const isAuthenticated = (state: AuthMachineState): boolean => state.matches("authenticated");
 
