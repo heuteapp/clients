@@ -76,7 +76,7 @@ export type VerifyEmailDoneEvent = { type: 'VERIFY_EMAIL_DONE'; payload: AuthSes
 
 export type VerifyEmailErrorEvent = { type: 'VERIFY_EMAIL_ERROR'; error: string; }
 
-export type VerifyEmailExpiredEvent = { type: 'VERIFY_EMAIL_EXPIRED'; registration: AuthRegistration; }
+export type VerifyEmailExpiredEvent = { type: 'VERIFY_EMAIL_EXPIRED'; }
 
 //
 

@@ -218,7 +218,7 @@ export const verifyEmailFailureAction = createAssign<AuthMachineContext, AuthMac
 );
 
 export const verifyEmailTimeoutAction = createAssign<AuthMachineContext, AuthMachineEvent>(
-    ({ event }) => {
+    ({ context, event }) => {
         if (event.type !== "VERIFY_EMAIL_EXPIRED") {
             throw new Error("Invalid event");
         }
@@ -227,7 +227,7 @@ export const verifyEmailTimeoutAction = createAssign<AuthMachineContext, AuthMac
 
         return {
             registration: null,
-            error: `Verification timed out for ${event.registration.email}`,
+            error: `Verification timed out for ${context.registration?.email || "(unknown email)"}`,
         }
     }
 );
