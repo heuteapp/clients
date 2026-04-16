@@ -86,7 +86,7 @@ export const sessionRefreshFailureAction = createAssign<AuthMachineContext, Auth
     }
 );
 
-export const entryUnauthenticatedAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+export const unauthenticatedEntryAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     () => {
         localStorage.removeItem("session");
 
