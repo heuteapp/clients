@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
-import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction } from "./auth.actions";
+import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailSuccessAction, verifyEmailFailureAction, verifyEmailTimeoutAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -27,6 +27,12 @@ export const authMachine = setup({
     signInFailure: signInFailureAction,
     signUpSuccess: signUpSuccessAction,
     signUpFailure: signUpFailureAction,
+    verifyEmailRequest: verifyEmailRequestAction,
+    verifyEmailConfirm: verifyEmailConfirmAction,
+    verifyEmailAssume: verifyEmailAssumeAction,
+    verifyEmailSuccess: verifyEmailSuccessAction,
+    verifyEmailFailure: verifyEmailFailureAction,
+    verifyEmailTimeout: verifyEmailTimeoutAction
   },
   guards: {
     hasRegistration: hasRegistrationGuard
@@ -117,12 +123,15 @@ export const authMachine = setup({
               on: {
                 VERIFY_EMAIL_REQUEST: {
                   target: "verifying",
+                  actions: "verifyEmailRequest"
                 },
                 VERIFY_EMAIL_CONFIRM: {
-                  target: "#auth.authenticated"
+                  target: "#auth.authenticated",
+                  actions: "verifyEmailConfirm"
                 },
                 VERIFY_EMAIL_ASSUMED: {
-                  target: "#auth.unauthenticated"
+                  target: "#auth.unauthenticated",
+                  actions: "verifyEmailAssume"
                 }
               }
             },
