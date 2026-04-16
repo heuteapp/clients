@@ -141,15 +141,11 @@ export const authMachine = setup({
               invoke: {
                 src: "verifyEmail",
                 input: ({ event, context }) => {
-                  if(event.type == "VERIFY_EMAIL_REQUEST") {
-                    return context.registration!;
+                  if(event.type !== "VERIFY_EMAIL_REQUEST" && event.type !== "VERIFY_EMAIL_CONFIRM") {
+                    throw new Error("Invalid event");
                   }
 
-                  if(event.type == "VERIFY_EMAIL_CONFIRM") {
-                    return event.registration;
-                  }
-
-                  throw new Error("Invalid event");
+                  return context.registration!;
                 },
                 on: {
                   VERIFY_EMAIL_DONE: {
