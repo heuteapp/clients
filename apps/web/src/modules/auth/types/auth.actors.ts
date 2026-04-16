@@ -1,6 +1,6 @@
 import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
-import { SessionHydrateFailureEvent, SessionHydrateSuccessEvent, SessionRefreshFailureEvent, SessionRefreshRequestEvent, SessionRefreshSuccessEvent, SignInFailureEvent, SignInSuccessEvent, SignUpFailureEvent, SignUpSuccessEvent } from "./auth.events.types";
-import { AuthSession } from "./auth.types";
+import { SessionHydrateFailureEvent, SessionHydrateSuccessEvent, SessionRefreshFailureEvent, SessionRefreshRequestEvent, SessionRefreshSuccessEvent, SignInFailureEvent, SignInSuccessEvent, SignUpFailureEvent, SignUpSuccessEvent, VerifyEmailFailureEvent, VerifyEmailSuccessEvent, VerifyEmailTimeoutEvent } from "./auth.events.types";
+import { AuthRegistration, AuthSession } from "./auth.types";
 
 
 export type SessionHydrateActorInput = void;
@@ -31,3 +31,12 @@ export type SignUpActorInput = SignUpRequest;
 export type SignUpActorEvent = 
   | SignUpSuccessEvent
   | SignUpFailureEvent
+
+//
+
+export type VerifyEmailActorInput = AuthRegistration;
+
+export type VerifyEmailActorEvent = 
+  | VerifyEmailSuccessEvent
+  | VerifyEmailFailureEvent
+  | VerifyEmailTimeoutEvent

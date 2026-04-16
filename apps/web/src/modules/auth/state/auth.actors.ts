@@ -1,5 +1,5 @@
 import { heuteApi } from "@/src/api/heuteApi";
-import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput, SessionRefreshActorInput, SessionRefreshActorEvent, SignUpActorEvent, SignUpActorInput } from "../types/auth.actors";
+import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput, SessionRefreshActorInput, SessionRefreshActorEvent, SignUpActorEvent, SignUpActorInput, VerifyEmailActorEvent, VerifyEmailActorInput } from "../types/auth.actors";
 import { createCallback } from "../utils/create-callback";
 import { AuthRegistration, AuthSession } from "../types/auth.types";
 
@@ -123,5 +123,71 @@ export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
                     error: error?.message || "Unknown error from sign up" 
                 });
             });
+    }
+);
+
+export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmailActorEvent>(
+    ({ input, sendBack }) => {
+        const registration = input;
+
+        if (!registration) {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_FAILURE', 
+                error: "No registration data available for verification" 
+            });
+            return;
+        }
+
+        if (typeof window === "undefined") {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_FAILURE', 
+                error: "Verification can only be performed in the browser" 
+            });
+            return;
+        }
+
+        if (Date.now() > registration.expiredAt) {
+            localStorage.removeItem("registration");
+            sendBack({ 
+                type: 'VERIFY_EMAIL_TIMEOUT', 
+                email: registration.email,
+            });
+            return;
+        }
+
+        const authRaw = localStorage.getItem("auth");
+        if (!authRaw) {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_FAILURE', 
+                error: "No auth data found in localStorage for verification" 
+            });
+            return;
+        }
+
+        let authData: AuthSession;
+        try {
+            authData = JSON.parse(authRaw) as AuthSession;
+        } catch {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_FAILURE', 
+                error: "Failed to parse auth data" 
+            });
+            return;
+        }
+
+        if (!authData.accessToken || !authData.profile) {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_FAILURE', 
+                error: "Invalid auth data: missing token or profile" 
+            });
+            return;
+        }
+
+        localStorage.removeItem("registration");
+
+        sendBack({ 
+            type: 'VERIFY_EMAIL_SUCCESS',
+            output: authData,
+        });
     }
 );
