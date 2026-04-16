@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService } from "@/src/modules/auth/state/auth.machine";
+import { authService, isAuthenticatedInvalid, isAuthenticatedValid, isAwaitingRegistration, isAwaitingRegistrationDone, isSigningIn, isSigningUp } from "@/src/modules/auth/state/auth.machine";
 import { AuthContext } from "@/src/modules/ui-auth/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";
@@ -69,10 +69,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if(onVerifycationPage && isAwaitingVerification(state)) {
             verify();
         }
-    }, [authHash?.access_token, authHash?.refresh_token, state]);
+    }, [authHash?.access_token, authHash?.refresh_token, state]);*/
 
     useEffect(() => {
-        if (isUnauthenticated(state) && pathname?.startsWith("/workspace")) {
+        if (isAuthenticatedInvalid(state) && pathname?.startsWith("/workspace")) {
             if (onSignInPage || onSignUpPage) {
                 return;
             }
@@ -81,15 +81,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
             return;
         }
 
-        if(isAuthenticated(state)) {
+        if(isAuthenticatedValid(state)) {
             if(onSignInPage || onSignUpPage || onVerifycationPage) {
                 window.location.href = "/workspace/dailyboard";
                 return;
             }
         }
         else {
-            if(isVerifySuccessed(state) && !onVerifycationPage) {
-                authService.send({ type: "VERIFY_EMAIL_FINISHED" });
+            if(isAwaitingRegistrationDone(state) && !onVerifycationPage) {
+                authService.send({ type: "VERIFY_EMAIL_FINALIZE" });
                 return;
             }
 
@@ -115,14 +115,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     return;
                 }
 
-                if(!onVerifycationPage && isAwaitingVerification(state)) {
+                if(!onVerifycationPage && isAwaitingRegistration(state)) {
                     window.location.href = "/workspace/verification";
                     return;
                 }
             }
         }
 
-    }, [router, pathname, state]);*/
+    }, [router, pathname, state]);
 
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
