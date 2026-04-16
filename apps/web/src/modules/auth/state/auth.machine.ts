@@ -152,7 +152,10 @@ export const authMachine = setup({
                     throw new Error("Invalid event");
                   }
 
-                  return context.registration!;
+                  return {
+                    registration: context.registration!,
+                    accessToken: (context.session?.accessToken || context.temp.accessToken)!
+                  };
                 },
               },
               on: {

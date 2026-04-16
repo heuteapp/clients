@@ -56,12 +56,6 @@ export default function VerificationPage() {
         send({ type: "VERIFY_EMAIL_ASSUME" });
     };
 
-    if(authHash) {
-        return (
-            <CircularProgress />
-        )
-    }
-
     if(isAwaitingRegistrationDone(state)) {
         return (
             <Card sx={{ 

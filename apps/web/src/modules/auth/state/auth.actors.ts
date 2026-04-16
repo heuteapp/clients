@@ -131,7 +131,7 @@ export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
 
 export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmailActorEvent>(
     ({ input, sendBack }) => {
-        const registration = input;
+        const registration = input.registration;
 
         if (!registration) {
             sendBack({ 
@@ -157,37 +157,23 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
             return;
         }
 
-        const sessionStr = localStorage.getItem("session");
-        if (!sessionStr) {
+        heuteApi.me.check()
+
+        .then(profile => {
+            sendBack({ 
+                type: 'VERIFY_EMAIL_DONE',
+                payload: {
+                    accessToken: input.accessToken,
+                    profile: profile!,
+                },
+            });
+        })
+
+        .catch(error => {
             sendBack({ 
                 type: 'VERIFY_EMAIL_ERROR', 
-                error: "No auth data found in localStorage for verification" 
+                error: error?.message || "Failed to verify email", 
             });
-            return;
-        }
-
-        let session: AuthSession;
-        try {
-            session = JSON.parse(sessionStr) as AuthSession;
-        } catch {
-            sendBack({ 
-                type: 'VERIFY_EMAIL_ERROR', 
-                error: "Failed to parse auth data" 
-            });
-            return;
-        }
-
-        if (!session.accessToken || !session.profile) {
-            sendBack({ 
-                type: 'VERIFY_EMAIL_ERROR', 
-                error: "Invalid auth data: missing token or profile" 
-            });
-            return;
-        }
-
-        sendBack({ 
-            type: 'VERIFY_EMAIL_DONE',
-            payload: session,
-        });
+        })
     }
 );

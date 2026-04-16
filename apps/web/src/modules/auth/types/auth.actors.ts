@@ -34,7 +34,10 @@ export type SignUpActorEvent =
 
 //
 
-export type VerifyEmailActorInput = AuthRegistration;
+export type VerifyEmailActorInput = {
+  registration: AuthRegistration;
+  accessToken: string;
+}
 
 export type VerifyEmailActorEvent = 
   | VerifyEmailDoneEvent
