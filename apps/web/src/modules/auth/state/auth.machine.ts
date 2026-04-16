@@ -1,6 +1,6 @@
 import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
-import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor } from "./auth.actors";
+import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
 import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailSuccessAction, verifyEmailFailureAction, verifyEmailTimeoutAction } from "./auth.actions";
 
@@ -14,7 +14,8 @@ export const authMachine = setup({
     hydrateSession: hydrateSessionActor,
     refreshSession: refreshSessionActor,
     signIn: signInActor,
-    signUp: signUpActor
+    signUp: signUpActor,
+    verifyEmail: verifyEmailActor
   },
   actions: {
     sessionHydrateSuccess: sessionHydrateSuccessAction,
@@ -129,18 +130,26 @@ export const authMachine = setup({
                   target: "#auth.authenticated",
                   actions: "verifyEmailConfirm"
                 },
-                VERIFY_EMAIL_ASSUMED: {
+                VERIFY_EMAIL_ASSUME: {
                   target: "#auth.unauthenticated",
                   actions: "verifyEmailAssume"
                 }
               }
             },
             "verifying": {
+              invoke: {
+                src: "verifyEmail",
+                input: ({ context }) => context.registration!
+              },
               states: {
-                "successed": {
+                "succeeded": {
                 },
                 "expired": {
-
+                  after: {
+                    20000: {
+                      target: "#auth.unauthenticated",
+                    }
+                  }
                 }
               }
             }
