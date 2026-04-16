@@ -27,7 +27,7 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
         .then(profile => {
             return sendBack({ 
                 type: 'SESSION_HYDRATE_DONE',
-                output: {
+                payload: {
                     ...sessionData,
                     profile: profile!
                 },
@@ -66,7 +66,7 @@ export const refreshSessionActor = createCallback<SessionRefreshActorInput, Sess
 
             return sendBack({ 
                 type: 'SESSION_REFRESH_DONE',
-                output: newSession,
+                payload: newSession,
             });
         })
 
@@ -91,7 +91,7 @@ export const signInActor = createCallback<SignInActorInput, SignInActorEvent>(
                 
                 sendBack({ 
                     type: 'SIGN_IN_DONE',
-                    output: session,
+                    payload: session,
                 });
             })
             .catch(error => {
@@ -114,7 +114,7 @@ export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
                 
                 sendBack({ 
                     type: 'SIGN_UP_DONE',
-                    output: registration,
+                    payload: registration,
                 });
             })
             .catch(error => {
@@ -185,7 +185,7 @@ export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmai
 
         sendBack({ 
             type: 'VERIFY_EMAIL_DONE',
-            output: authData,
+            payload: authData,
         });
     }
 );

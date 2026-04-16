@@ -12,7 +12,7 @@ export const resolveSourcesAction = createAssign<
 >(
     ({ event }) => {
         if(event.type === "xstate.done.actor.fetch-sources") {
-            const output = event.output;
+            const output = event.payload;
 
             const { getMeDailyboard } = useDailyboardDataStore.getState();
 

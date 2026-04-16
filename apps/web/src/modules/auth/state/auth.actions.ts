@@ -7,10 +7,10 @@ export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, Auth
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("session", JSON.stringify(event.output));
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
         return {
-            session: event.output,
+            session: event.payload,
             registration: null,
             error: null,
         }
@@ -50,10 +50,10 @@ export const sessionRefreshSuccessAction = createAssign<AuthMachineContext, Auth
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("session", JSON.stringify(event.output));
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
         return {
-            session: event.output,
+            session: event.payload,
             registration: null,
             error: null,
             temp: {
@@ -99,10 +99,10 @@ export const signInSuccessAction = createAssign<AuthMachineContext, AuthMachineE
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("session", JSON.stringify(event.output));
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
         return {
-            session: event.output,
+            session: event.payload,
             registration: null,
             error: null,
         }
@@ -127,11 +127,11 @@ export const signUpSuccessAction = createAssign<AuthMachineContext, AuthMachineE
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("registration", JSON.stringify(event.output));
+        localStorage.setItem("registration", JSON.stringify(event.payload));
 
         return {
             session: null,
-            registration: event.output,
+            registration: event.payload,
             error: null,
         }
     }
@@ -167,10 +167,10 @@ export const verifyEmailConfirmAction = createAssign<AuthMachineContext, AuthMac
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("session", JSON.stringify(event.output));
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
         return {
-            session: event.output,
+            session: event.payload,
             registration: null,
             error: null,
         }
@@ -195,10 +195,10 @@ export const verifyEmailSuccessAction = createAssign<AuthMachineContext, AuthMac
             throw new Error("Invalid event");
         }
 
-        localStorage.setItem("session", JSON.stringify(event.output));
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
         return {
-            session: event.output,
+            session: event.payload,
             registration: null,
             error: null,
         }
