@@ -124,10 +124,10 @@ export const authMachine = setup({
       entry: "entryUnauthenticated",
       on: {
         SIGN_IN_REQUEST: {
-
+          target: "signing.in",
         },
         SIGN_UP_REQUEST: {
-
+          target: "signing.up",
         }
       }
     },
