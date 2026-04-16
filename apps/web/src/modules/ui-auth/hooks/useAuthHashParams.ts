@@ -1,4 +1,4 @@
-import { useHashParams } from "@/src/modules/ui-shared/hooks/useHashParams";
+import { useHashParams } from "react-hash-control";
 
 //
 

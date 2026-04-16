@@ -1,7 +1,8 @@
 import { createActor, setup } from "xstate";
-import { hydrateAuthActor, hydrateRegistrationActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
-import { clearAuthAction, clearRegistrationAction, persistAuthAction, persistRegistrationAction, setAsRefreshedAction, setAuthAction, setErrorAction, setRegistrationAction, unsetAsRefreshedAction, unsetAuthAction, unsetErrorAction, unsetRegistrationAction } from "./auth.actions";
+import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
+import { hasRegistrationGuard, hasSessionGuard } from "./auth.guards";
+import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailDoneAction, verifyEmailErrorAction, verifyEmailExpiredAction, redirectingEntryAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -10,242 +11,275 @@ export const authMachine = setup({
 
   },
   actors: {
-    hydrateAuth: hydrateAuthActor,
-    hydrateRegistration: hydrateRegistrationActor,
+    hydrateSession: hydrateSessionActor,
+    refreshSession: refreshSessionActor,
     signIn: signInActor,
     signUp: signUpActor,
-    verifyEmail: verifyEmailActor,
+    verifyEmail: verifyEmailActor
   },
   actions: {
-    setAsRefreshed: setAsRefreshedAction,
-    unsetAsRefreshed: unsetAsRefreshedAction,
-    setAuth: setAuthAction,
-    unsetAuth: unsetAuthAction,
-    persistAuth: persistAuthAction,
-    clearAuth: clearAuthAction,
-    setRegistration: setRegistrationAction,
-    unsetRegistration: unsetRegistrationAction,
-    persistRegistration: persistRegistrationAction,
-    clearRegistration: clearRegistrationAction,
-    setError: setErrorAction,
-    unsetError: unsetErrorAction,
+    redirectingEntry: redirectingEntryAction,
+    sessionHydrateSuccess: sessionHydrateSuccessAction,
+    sessionHydrateFailure: sessionHydrateFailureAction,
+    sessionRefreshRequest: sessionRefreshRequestAction,
+    sessionRefreshSuccess: sessionRefreshSuccessAction,
+    sessionRefreshFailure: sessionRefreshFailureAction,
+    unauthenticatedEntry: unauthenticatedEntryAction,
+    signInSuccess: signInSuccessAction,
+    signInFailure: signInFailureAction,
+    signUpSuccess: signUpSuccessAction,
+    signUpFailure: signUpFailureAction,
+    verifyEmailRequest: verifyEmailRequestAction,
+    verifyEmailConfirm: verifyEmailConfirmAction,
+    verifyEmailAssume: verifyEmailAssumeAction,
+    verifyEmailDone: verifyEmailDoneAction,
+    verifyEmailError: verifyEmailErrorAction,
+    verifyEmailExpired: verifyEmailExpiredAction
   },
   guards: {
-    isAuthenticated: ({ context }) => !!context.auth,
-    isRegistrationAwaiting: ({ context }) => !!context.registration
+    hasRegistration: hasRegistrationGuard,
+    hasSession: hasSessionGuard,
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgMabFwGsBLAOygAI0sBiCAezLG3IDcGiX9CiBaGpgDaABgC6iUAAcGsEuhJNJIAB6IAzOoBM2EeoCMWgGz7NAVi0itAFgA0IAJ6J9+6-uwB2fSICc6kfpGvh7W1gC+YfaCeATE5FSCtGAATskMydhSADbI6ABm6QC2MbwCGMLiyjJyCkpIqhraugbGpuoWVnaOiBY+un4hPoFGWmZmHhFR5SVxFJTJYFAksOjJuYpk9Ews7JzcsfwLSytrtWSiEvXV8hvKaggAHD4PnmYielra6n76PvZOCA62BMHlGPhE1iePjMkxA0R4syoR2Wq3WTCSqXSmRy+SKM0OixRpw2FyqshudVA9yeLw8bw+Xx+f26j3c9ICPmeWh8NgeE0icOmgjAZAUuFykFoAGUAJIAcQAcgB9ADyAFUACqkq7ks53RBaGwiYGglyuAIPB5af7OQxGbDPazqB5GMyQswPaxGWHRVBkYWikji9CS2WKpUyhXa6S6271e6Gsx9fR8q2GiFBDw2hD6JO0+lu36fawedQ+6Z+gNiiUQaXy5VqgAK0ZA1z18YNo2s2HUdMhlrM+i8uezLp0dI8D00fLpWkM5aw2DkUDI8Uo5Dr4cjSqlaoAwnuAKJSqUtttxqnOB653RenneKwQkQPbOGKfAvkWfzgnm+Bc4ZdVzmDcw2VbcADEAEEZQAGTVAAlQ8z1jSkGhza8zFvIx73eSxrGfV8nR0N1sLMb4zFdEtwgFaJALXVApE3BtGx3fcjxPZCagvNCaVed4vk+JlsxMdRsHGKxPUHIYTAef8lxIFd6MY0ClSbJUoNghCkMqHUuNQ6lnj4hlBIMZkAWeUS3knLRLR8IxQUhOTkAAd2QG45jYFISDyIM0U2AA1Q94JlcCAE0lUPABZaCYM4ikyH1HNNA8XRJyfF0jGsD0zMQaxoWBFwfFBCFezGGEaKFVz3KoTzkm83yzloQLgrCiLotgpU9xVSLGxgw8NUPAAROL20vJLe1Sh50qMTLsuzJNjRCOcRhm-C3XKqZF1q7yHDXMBCjcrImqCkLwqimLWIPY9Tx0mM9ISjt0JvDMcMffCXxZb57Q8Sj1s9EQTC0OTtryXa5n2w7jpas72pg9SYqGkbuPuUwPGTUZ3js59PizT7OWBD0HgokJ+JMYGvNBvaDpII7mtOtqLsPAANRsZUQ4bbtbFCHrGlNnrvOdcPS7NQhS4wxkyoYSyMdRQnJurQcoWBUFwXA4FgSUkf0g0AdEkRrOeTLSznLoAUsRb6X8T5XE5Cx5Z2ygwBUKQSAWWBaBUFYJWwZA8hDZIAAp2QASloaIQYcR3ndduAtZ5tDDXwk05xcfCUytEWiodLKtA8THwQtcqBTIBgIDgZRBDJe7Er4Ixsz4TDOSb5vm-Ub0KsXBFSDmSvdPixLrGtFkXFGD8QlLESeTsuSu7XZETj8qv+8ewd3Fl3t3rzomXDMeaITEgZDX8LevCc8oRWrEMICX0aE4BlLtFCUw3lzOlX0CUSnTpZ8rH8AJ282jgSs59AzBkgDfZGBo07YHFj4PKQQsoplfO8b668hi9GdH+DuAEFJASoOQCB2scwy3cNCAwFhn5TUnK+MqwJRhtCeL4L0QNsHyUUnMBihD473DzujN4mh8IrVltmLGwJfDfG8JoFw9knJVQUB5CmDVuLniISPY09kUwAy5O0YSFFdDvD0JoGwrpJz20puDamWQuGJUCADbAg8UyhCKu6D6AIsrJjIb2NGedsIyNYRHJWKs1awA1tfPut8Ey62wN4aEIRMrfCtOoEW+9BxjGME6cYZFZL+IppHJ2Ls3bWMepYUsMDZbG1fplIebi7LZzIiIMiHgt58mohEIAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgJYQBswBiAJQFEARASQoGEAVAfQoEUBVcgZQYG0AGALqJQABwD2sXOlziAdiJAAPRAEYAbABZs-Xf1UBWAJzrT-AwHYANCACeidbuyH1AZk2WATJ4Ac3nwC+ATZoWNgATpC4kQDGMnJQxALCSCASUjLyiioIjp7Yrqqemq5Gmoaa6qquNva5-Pma-G6eZrrqRp5BIRg4kRDRYHG4CUmqKWKS0rIKqTl5BUUlZRVVNXaIfvk+xh6eFppGJj6BwSChfVGx8Ym8nhNpU5mzoPMNi8Wl5QaV1bWbqmwBj0-EqunKRgO3XOvWwyAA7shpglsLA4FJ5NhMLYIOFkDdiFxuFxqAB5AByTAAEgBNSikACCDHITEoFPIyUU6WmWTmaiM-Fc2E87l8gvUFgM7k0-wQFk8RmFxx8lR8DVcXTOFzhiORUFR6JmWJxeIJRK4JIp1LpjOZTHIpFIpNInNS3Oe2X5guForVrglUs0Mo2CFU+gszgM6mKRg1PglGmh2oRSJuBtgGLkxtx+JGiXNlspFAAYhQuFSWOQONw+EIuU8Zp7Q-ttD8jH4dhZ-X51LLY4qWj4LO3Ba1PKok7CU3r05mImAAGaRWCYPOE4lkovkUvcCts8kcutuhu815eoUizRi-2S6WyvwGYXA9reSGqVRGSdhadptEZo2REucCrqMBabpWO7lvajrOq6kwZI2fKhgKF6+uKt5Bn247CoKRQWPhRgfqoFhfjgP55vOUC4LA6CmkaohgHIAyjAAag61DFjS9oALIMtQAAylbVjwcGPAhp7KGo+jqEChg-K4rhSpYfwhi02BNC0nRVMRDSkTqqYUZEVE0XRmIMUxa5saQHFceQvECUwdAUsWtDcaJ7qIWeobSbJBjyYpikWCpdRSjJHgavw+Hvh0oJ6eRKJGdRtG5mZjHMYkVk2TxfGCQyFrsNxh4PB5Ek5B+3qXteAbuNYIYKYqpQKd4kWaD4JhRnFuppolJkpVmABuyAEPguasexnHZQ5+5FfW4kvJJoa-NgHa6EcIr8CqwYhVKOGFDsoquEFn5alOXWGWAxnJc82CDcNECjRl422fZgkOk6LpHvBPLzWV4rYBY6h+WKXYeBospBvwQJ6PGGjeGGpidQZCUXUlpkDUNI0EplE12Tl9oABoAAq0FQ7knj9ahLSt-Bra4G2YSGHgRp4z5uMOvidIjM49VdRoQPIJDY89eMueSDL8dQABaM3HnNTblahV5+tVmi1SFCkFJUvyBZCsZc91KO9dd-NyCQSg0fiYBwgu6BgOEAAUngggAlMQyZncjl1o9gJtgGTctIQrPpK+hgZq4gBg+EKKpaL4JSVF2JEnd+Hv6jz3tgEooiDBAxBC5Ngmi+LUsy19HqByhwdVRh4cICUj7uFoFgqgcdMaAY+vnV7fXYJn2f9MQ5voJb1u2w7Tt6K77tI2nhu85ifc5-733y5XlXKzX4M7MtWseH5NMmIpcW9IxMgxJbEA3RjuckgA4pSpLsMwbCcCJn1iSvSHFCUy0Cq1w5R3fH2Dazg4wlAaAmJOPRvwnzkGfC+eA5C3XwISag98mDUC3MJWsxVyZNgVF2XyqtmjygVLKYckNBw-B+E0aopxoFkVgfA22l8RjIJvmgyk7BCZCVfjg2an8vIEKFAYCoFgSGvnBu2bAmknalGaMUehMIwhSCgHICi+AiCoPQZg3hNZl7ly8k1AcQ5uzxlCrKUwioTi+CCroKMpgO7JxwKo9RKJNEkDvlwnhL99HvxKhTBAxiZGmPUCcQG-pLEfgKH4FCnQ2ryj0q4jRchtGUl0dNAxnkFqKUIs4IK8pDrxNlO+VqkZoyqCDM3A4bgkm4DUSktJGDKRvVgv4vBSFFJR2WgcGOJR6q9jqledSCoOjjkqAYMcmg6kNJRKgUQTTuGsnZFk0qiAukyR2J0H4bhY5bTUN-ZwNMmheDVADdQMy3H6nmYsnhrSPq4IDkYywiodkA1BqCHY+yEDFDCgDZ8CSPyWCCGcOQ4gIBwEUBcARhiFoAFpBl1ARToEEqKQRQOUTgDxMLsk5CvJYpwgM3BM38P4PS-RBjDASDitZQT8LClUEOVWRQm5O1rpYCMLhpTHJFPhTu1LZaCIWvhERcl9iuHjO1WurRHzPkih0NYQVNQMP0jOP8mYaWBLDE4PC8ZoyFHZrXHYgItkeA2vDJxKr4r6nVUabEOYbiavlp85w+w9UimIp0Wu-YCi7D8uUeGkJ+U2sNJiQCy4QJQCdYHPyj5-60MZQoocfZSi+rKP698zQg3ONVQbbusKAlNj8ICURQMuySsBrXAKKLdA+BcJ6mmwbKKox7uZdK0avKSt8pM8tCrLCWJ-htXwjgqgJ2mTm61zajZGnYQ9DtC0WUXkFPofQhxSjyllFKHwMjhzNwUh+Q4Sjp7cznt7X286yriMBJVLQTQaZkJDJYMKBDQZbv0Ee06M8p3zyzIvfoF61BXqrre1aD66itUhqrMwVRhy5KPhOphuBz4sIAz88Vv9QTymksCb5jjlodilCzWMgNj5YFPkhhB7DUMimwm1TDTt26gmAduwc4DWgFNI5gcjyHICIKo4K2FOR2OKkirur5aowzfNvDE3wlgtnN1VpcvMqHCjGBCYnUch1iJSKFMOIwfkFLNwVKUJT7jCBgBU2y9Th1NMFMsW4bAJhow0x7OOKEObknuPmoWzpgYZGKLORKZokSQySnyG2SZewtCiPHSqzz1zRAqalNHYwIp-SmBhuyutSp9NdkIpU45IKAhAA */
   context: {
-    auth: null,    
+    session: null,    
     registration: null,
     error: null,
+    temp: {
+      accessToken: null
+    }
   },
   id: "auth",
-  initial: "checking session",
+  initial: "idle",
   states: {
-    "checking session": {
-      invoke: {
-        src: "hydrateAuth",
-        input: ({ context }) => {
-          return {
-            refreshedOnce: context.refreshedOnce || false,
+    "idle": {
+      on: {
+        REDIRECT_REQUEST: {
+          target: "redirecting"
+        }
+      }
+    },
+    "redirecting": {
+      entry: "redirectingEntry",
+      always: [
+        {
+          guard: "hasRegistration",
+          target: "awaiting.registration"
+        },
+        {
+          guard: "hasSession",
+          target: "awaiting.session"
+        },
+        {
+          target: "authenticated.invalid"
+        }
+      ]
+    },
+    "awaiting": {
+      initial: "session",
+      states: {
+        "session": {
+          initial: "hydrating",
+          states: {
+            "hydrating": {
+              invoke: {
+                src: "hydrateSession",
+              },
+              on: {
+                SESSION_HYDRATE_DONE: {
+                  target: "#auth.authenticated.valid",
+                  actions: "sessionHydrateSuccess"
+                },
+                SESSION_HYDRATE_ERROR: {
+                  target: "#auth.authenticated.invalid",
+                  actions: "sessionHydrateFailure"
+                },
+                SESSION_REFRESH_REQUEST: {
+                  target: "refreshing",
+                  actions: "sessionRefreshRequest"
+                }
+              }
+            },
+            "refreshing": {
+              invoke: {
+                src: "refreshSession",
+                input: ({ event })  => {
+                  if (event.type !== "SESSION_REFRESH_REQUEST") {
+                    throw new Error("Invalid event");
+                  }
+
+                  return event.input;
+                },
+              },
+              on: {
+                SESSION_REFRESH_DONE: {
+                  target: "#auth.authenticated.valid",
+                  actions: "sessionRefreshSuccess"
+                },
+                SESSION_REFRESH_ERROR: {
+                  target: "#auth.authenticated.invalid",
+                  actions: "sessionRefreshFailure"
+                }
+              }
+            }
           }
         },
-        id: "hydrate-auth",
-        on: {
-          SESSION_HYDRATE_SUCCESS: {
-            target: "authenticated",
-            actions: [
-              "setAuth",
-              "persistAuth",
-              "unsetError",
-              "unsetAsRefreshed"
-            ]
-          },
-          SESSION_HYDRATE_FAILURE: {
-            target: "checking registration",
-            actions: "setError"
-          },
-          SESSION_REFRESH_REQUEST: {
-            target: "checking session",
-            actions: ["setAuth", "persistAuth", "setAsRefreshed"]
+        "registration": {
+          initial: "pending",
+          states: {
+            "pending": {
+              on: {
+                VERIFY_EMAIL_REQUEST: {
+                  target: "validating",
+                  actions: "verifyEmailRequest"
+                },
+                VERIFY_EMAIL_CONFIRM: {
+                  target: "validating",
+                  actions: "verifyEmailConfirm"
+                },
+                VERIFY_EMAIL_ASSUME: {
+                  target: "#auth.authenticated.invalid",
+                  actions: "verifyEmailAssume"
+                }
+              }
+            },
+            "validating": {
+              invoke: {
+                src: "verifyEmail",
+                input: ({ event, context }) => {
+                  if(event.type !== "VERIFY_EMAIL_REQUEST" && event.type !== "VERIFY_EMAIL_CONFIRM") {
+                    throw new Error("Invalid event");
+                  }
+
+                  return {
+                    registration: context.registration!,
+                    accessToken: (context.session?.accessToken || context.temp.accessToken)!
+                  };
+                },
+              },
+              on: {
+                VERIFY_EMAIL_DONE: {
+                  target: "done",
+                  actions: "verifyEmailDone"
+                },
+                VERIFY_EMAIL_ERROR: {
+                  target: "pending",
+                  actions: "verifyEmailError"
+                },
+                VERIFY_EMAIL_EXPIRED: { 
+                  target: "expired",
+                  actions: "verifyEmailExpired"
+                },
+              },
+            },
+            "done": {
+              after: {
+                20000: {
+                  target: "#auth.authenticated.valid",
+                }
+              },
+              on: {
+                VERIFY_EMAIL_FINALIZE: {
+                  target: "#auth.authenticated.valid",
+                }
+              }
+            },
+            "expired": {
+              after: {
+                20000: {
+                  target: "#auth.authenticated.invalid",
+                }
+              },
+              on: {
+                VERIFY_EMAIL_FINALIZE: {
+                  target: "#auth.authenticated.invalid",
+                }
+              }
+            }
           }
         }
       }
     },
-
-    "checking registration": {
-      invoke: {
-        src: "hydrateRegistration",
-        id: "check-registration",
-        onDone: [
-          {
-            target: "awaiting verification",
-            actions: "setRegistration",
-          }
-        ],
-        onError: { target: "unauthenticated" },
-      }
-    },
-
     "authenticated": {
-      on: {
-        SIGN_OUT: {
-          target: "unauthenticated",
-          actions: [
-            "unsetAuth",
-            "clearAuth"
-          ]
-        },
-        SESSION_REFRESH_REQUEST: {
-          target: "checking session",
-          actions: ["setAuth", "persistAuth", "setAsRefreshed"]
-        }
-      },
-    },
-
-    "unauthenticated": {
-      on: {
-        SIGN_IN: {
-          target: "signing in",
-        },
-        SIGN_UP: {
-          target: "signing up",
-        },
-      },
-    },
-
-    "signing in": {
-      invoke: {        
-        src: "signIn",
-        input: ({ event }) => {
-          if (event.type !== "SIGN_IN") {
-            throw new Error("Invalid event");
+      initial: "invalid",
+      states: {
+        "valid": {
+          on: {
+            SIGN_OUT_REQUEST: {
+              target: "invalid",
+            }
           }
-
-          return {
-            identifier: event.identifier,
-            password: event.password,
-          };
-        }
-      },
-      on: {
-        SIGN_IN_SUCCESS: { 
-          target: "authenticated",
-          actions: [
-            "setAuth",
-            "persistAuth",
-            "unsetError"
-          ]
         },
-        SIGN_IN_FAILURE: { target: "unauthenticated", actions: "setError" },
-      }
-    },
-
-    "signing up": {
-      invoke: {
-        src: "signUp",
-        input: ({ event }) => {
-          if (event.type !== "SIGN_UP") {
-            throw new Error("Invalid event");
+        "invalid": {
+          entry: "unauthenticatedEntry",
+          on: {
+            SIGN_IN_REQUEST: {
+              target: "#auth.signing.in",
+            },
+            SIGN_UP_REQUEST: {
+              target: "#auth.signing.up",
+            }
           }
-
-          return {
-            username: event.username,
-            email: event.email,
-            password: event.password,
-          };
-        }
-      },
-      on: {
-        SIGN_UP_SUCCESS: {
-          target: "awaiting verification",
-          actions: [
-            "setRegistration",
-            "persistRegistration",
-            "unsetError"
-          ]
-        },
-        SIGN_UP_FAILURE: {
-          target: "unauthenticated",
-          actions: "setError"
         }
       }
     },
-
-    "awaiting verification": {
-      on: {
-        VERIFY_EMAIL: { 
-          target: "verifying email",
+    "signing": {
+      initial: "idle",
+      states: {
+        "idle": {
+          on: {
+            SIGN_IN_REQUEST: {
+              target: "in",
+            },
+            SIGN_UP_REQUEST: {
+              target: "up",
+            }
+          }
         },
-        VERIFY_EMAIL_COMPLETED: {
-          target: "authenticated",
-          actions: [
-            "setAuth",
-            "persistAuth",
-            "unsetRegistration",
-            "clearRegistration",
-            "unsetError"
-          ]
+        "in": {
+          invoke: {        
+            src: "signIn",
+            input: ({ event }) => {
+              if (event.type == "SIGN_IN_REQUEST") {
+                return event.input;
+              }                
+              
+              throw new Error("Invalid event");
+            }
+          },
+          on: {
+            SIGN_IN_DONE: {
+              target: "#auth.authenticated.valid",
+              actions: "signInSuccess"
+            },
+            SIGN_IN_ERROR: {
+              target: "#auth.authenticated.invalid",
+              actions: "signInFailure"
+            }
+          }
         },
-        VERIFY_EMAIL_ASSUMED: {
-          target: "unauthenticated",
-          actions: [
-            "unsetRegistration",
-            "clearRegistration",
-            "unsetError"
-          ]
-        }
-      }
-    },
-
-    "verifying email": {
-      invoke: {
-        src: "verifyEmail",
-        input: ({ context }) => context.registration
-      },
-      on: {
-        VERIFY_EMAIL_SUCCESS: {
-          target: "verify successed",
-        },
-        VERIFY_EMAIL_FAILED: {
-          target: "awaiting verification",
-          actions: "setError"
-        },
-        VERIFY_EMAIL_EXPIRED: { 
-          target: "verify expired",
-          actions: [
-            "unsetRegistration",
-            "clearRegistration",
-            "unsetError"
-          ]
-        },
-      },
-    },
-
-    "verify successed": {
-      entry: [
-        "setAuth",
-        "persistAuth",
-        "unsetRegistration",
-        "clearRegistration",
-        "unsetError"
-      ],
-      on: {
-        VERIFY_EMAIL_FINISHED: {
-          target: "authenticated"
-        }
-      }
-    },
-
-    "verify expired": {
-      after: {
-        20000: "unauthenticated"
-      },
-      on: {
-        VERIFY_EMAIL_FINISHED: {
-          target: "unauthenticated"
+        "up": {
+          invoke: {        
+            src: "signUp",
+            input: ({ event }) => {
+              if (event.type == "SIGN_UP_REQUEST") {
+                return event.input;
+              }
+              
+              throw new Error("Invalid event");
+            }
+          },
+          on: {
+            SIGN_UP_DONE: {
+              target: "#auth.awaiting.registration",
+              actions: "signUpSuccess"
+            },
+            SIGN_UP_ERROR: {
+              target: "#auth.authenticated.invalid",
+              actions: "signUpFailure"
+            }
+          }
         }
       }
     }
@@ -256,41 +290,42 @@ export const authService = createActor(authMachine);
 
 //
 
+export const isRedirecting = (state: AuthMachineState): boolean => state.matches("redirecting");
 
-export const isCheckingSession = (state: AuthMachineState) => state.matches("checking session");
+export const isAwaiting = (state: AuthMachineState): boolean => state.matches("awaiting")
 
-export const isCheckingRegistration = (state: AuthMachineState) => state.matches("checking registration");
+export const isAwaitingSession = (state: AuthMachineState): boolean => state.matches({ awaiting: "session" });
 
-export const isAuthenticated = (state: AuthMachineState) => state.matches("authenticated");
+export const isAwaitingSessionHydrating = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "hydrating" } });
 
-export const isUnauthenticated = (state: AuthMachineState) => state.matches("unauthenticated");
+export const isAwaitingSessionRefreshing = (state: AuthMachineState): boolean => state.matches({ awaiting: { session: "refreshing" } });
 
-export const isSigningIn = (state: AuthMachineState) => state.matches("signing in");
+export const isAwaitingRegistration = (state: AuthMachineState): boolean => state.matches({ awaiting: "registration" });
 
-export const isSigningUp = (state: AuthMachineState) => state.matches("signing up");
+export const isAwaitingRegistrationPending = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "pending" } });
 
-export const isAwaitingVerification = (state: AuthMachineState) => state.matches("awaiting verification");
+export const isAwaitingRegistrationValidating = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "validating" } });
 
-export const isVerifyingEmail = (state: AuthMachineState) => state.matches("verifying email");
+export const isAwaitingRegistrationDone = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "done" } });
 
-export const isVerifySuccessed = (state: AuthMachineState) => state.matches("verify successed");
+export const isAwaitingRegistrationExpired = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "expired" } });
 
-export const isVerifyExpired = (state: AuthMachineState) => state.matches("verify expired");
+export const isAuthenticated = (state: AuthMachineState): boolean => state.matches("authenticated");
+
+export const isAuthenticatedValid = (state: AuthMachineState): boolean => state.matches({ authenticated: "valid" });
+
+export const isAuthenticatedInvalid = (state: AuthMachineState): boolean => state.matches({ authenticated: "invalid" });
+
+export const isSigning = (state: AuthMachineState): boolean => state.matches("signing");
+
+export const isSigningIn = (state: AuthMachineState): boolean => state.matches({ signing: "in" });
+
+export const isSigningUp = (state: AuthMachineState): boolean => state.matches({ signing: "up" });
 
 //
 
-export const isAnyChecking = (state: AuthMachineState) => isCheckingSession(state) || isCheckingRegistration(state);
+export const isSignLocked = (state: AuthMachineState): boolean => 
+  isRedirecting(state) || isAwaiting(state) || isAuthenticatedValid(state);
 
-export const isAnyAuthenticated = (state: AuthMachineState) => isAuthenticated(state) || isUnauthenticated(state);
-
-export const isAnySigning = (state: AuthMachineState) => isSigningIn(state) || isSigningUp(state);
-
-export const isAnyVerifying = (state: AuthMachineState) => isVerifyingEmail(state);
-
-export const isAnyVerification = (state: AuthMachineState) => isAwaitingVerification(state) || isAnyVerifying(state) || isVerifySuccessed(state) || isVerifyExpired(state);
-
-//
-
-export const isSignLocked = (state: AuthMachineState) => isAnyChecking(state) || isAuthenticated(state)|| isAnyVerification(state);
-
-export const isVerificationLocked = (state: AuthMachineState) => isAnyChecking(state) || isAnyAuthenticated(state) || isAnySigning(state);
+export const isVerificationLocked = (state: AuthMachineState): boolean => 
+  isRedirecting(state) || isAwaitingSession(state) || isAuthenticated(state) || isSigning(state);

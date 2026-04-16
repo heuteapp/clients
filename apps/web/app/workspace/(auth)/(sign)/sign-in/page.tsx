@@ -2,27 +2,24 @@
 import React, { useState } from "react";
 import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
-import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { isSigningIn } from "@/src/modules/auth/state/auth.machine";
 
 export default function SignInPage() {
-  const router = useRouter();
   const { state, send } = useAuthContext();
   
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
   const isLoading = isSigningIn(state);
-  const error = state.context.error;
+  const error = state.context.error?.id == "signIn" ? state.context.error : null;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     send({ 
-      type: "SIGN_IN", 
-      identifier, 
-      password 
+      type: "SIGN_IN_REQUEST", 
+      input: { identifier, password }
     });
   };
 
@@ -73,7 +70,7 @@ export default function SignInPage() {
       <Box sx={{ mt: 2, textAlign: "center", minHeight: 24 }}>
         {error && (
           <Typography color="error">
-            {error}
+            {error.message}
           </Typography>
         )}
       </Box>

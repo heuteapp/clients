@@ -1,13 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Typography, TextField, Button, Link, CircularProgress, Box } from "@mui/material";
 import NextLink from 'next/link';
-import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
-import { isAuthenticated, isSigningUp } from "@/src/modules/auth/state/auth.machine";
+import { isSigningUp } from "@/src/modules/auth/state/auth.machine";
 
 export default function SignUpPage() {
-  const router = useRouter();
   const { state, send } = useAuthContext();
   
   const [username, setUsername] = useState("");
@@ -17,7 +15,7 @@ export default function SignUpPage() {
   const [passwordError, setPasswordError] = useState("");
 
   const isLoading = isSigningUp(state);
-  const error = state.context.error;
+  const error = state.context.error?.id == "signUp" ? state.context.error : null;
 
   const validatePasswords = () => {
     if (password !== confirmPassword) {
@@ -53,10 +51,8 @@ export default function SignUpPage() {
     }
     
     send({ 
-      type: "SIGN_UP", 
-      username,
-      email,
-      password 
+      type: "SIGN_UP_REQUEST", 
+      input: { username, email, password }
     });
   };
 
@@ -86,7 +82,7 @@ export default function SignUpPage() {
           required
           error={!!error && !email}
           disabled={isLoading}
-          helperText={error && !email ? error : ""}
+          helperText={error && !email ? error.message : ""}
         />
         
         <TextField
@@ -129,7 +125,7 @@ export default function SignUpPage() {
       <Box sx={{ mt: 2, textAlign: "center", minHeight: 24 }}>
         {error && (
           <Typography color="error">
-            {error}
+            {error.message}
           </Typography>
         )}
       </Box>

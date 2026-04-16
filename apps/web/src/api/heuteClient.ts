@@ -1,10 +1,6 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 import { authService } from "../modules/auth/state/auth.machine";
-
-// Retry için custom config tipi
-interface RetryableConfig extends InternalAxiosRequestConfig {
-    _retry?: boolean;
-}
+import { AuthSession } from "../modules/auth/types/auth.types";
 
 export const heuteClient = axios.create({
     baseURL: "/api",
@@ -12,17 +8,24 @@ export const heuteClient = axios.create({
 });
 
 heuteClient.interceptors.request.use((config) => {
-    const authSession = localStorage.getItem("auth");
     
-    if (authSession) {
-        try {
-            const { accessToken } = JSON.parse(authSession);
+    try {
+        const tempAccessToken = authService.getSnapshot().context.temp.accessToken;
+        if(tempAccessToken) {
+            config.headers.Authorization = `Bearer ${tempAccessToken}`;
+            return config;
+        }
+
+        const authSession = localStorage.getItem("session");
+        if(authSession) {
+            const { accessToken } = JSON.parse(authSession) as AuthSession;
             if (accessToken) {
                 config.headers.Authorization = `Bearer ${accessToken}`;
+                return config;
             }
-        } catch (e) {
-            console.error("Failed to parse auth session", e);
         }
+    } catch (e) {
+        console.error("Failed to parse auth session", e);
     }
     
     return config;

@@ -1,62 +1,89 @@
-import { AuthProfile } from "@/src/modules/auth/types/auth.types";
-import { DoneActorEvent } from "xstate";
+import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
+import { AuthRegistration, AuthSession } from "./auth.types";
+
+export type AuthEvent =
+    | RedirectEvent
+    | SessionHydrateEvent
+    | SessionRefreshEvent
+    | SignInEvent
+    | SignUpEvent
+    | VerifyEmailEvent
+    | SignOutEvent;
 
 //
-export type HYDRATE_EVENT = { type: "HYDRATE" };
 
-//
+export type RedirectEvent = { type: 'REDIRECT_REQUEST'; }
 
 export type SessionHydrateEvent = 
-    | { type: "SESSION_HYDRATE_SUCCESS", accessToken: string, profile: AuthProfile }
-    | { type: "SESSION_HYDRATE_FAILURE", error: string }
+    | SessionHydrateRequestEvent
+    | SessionHydrateDoneEvent
+    | SessionHydrateErrorEvent;
 
-export type SessionRefreshEvent = 
-    | { type: "SESSION_REFRESH_REQUEST", accessToken: string, profile: AuthProfile };
-
-//
-
-export type SIGN_IN_EVENT = { type: "SIGN_IN"; identifier: string; password: string };
-
-export type SIGN_IN_SUCCESS_EVENT = { type: "SIGN_IN_SUCCESS"; accessToken: string; profile: AuthProfile };
-
-export type SIGN_IN_FAILURE_EVENT = { type: "SIGN_IN_FAILURE"; error: string };
-
-export type SIGN_IN_ALL_EVENTS = SIGN_IN_EVENT | SIGN_IN_SUCCESS_EVENT | SIGN_IN_FAILURE_EVENT;
+export type SessionHydrateRequestEvent = { type: 'SESSION_HYDRATE_REQUEST'; }
+export type SessionHydrateDoneEvent = { type: 'SESSION_HYDRATE_DONE'; payload: AuthSession; }
+export type SessionHydrateErrorEvent = { type: 'SESSION_HYDRATE_ERROR'; error: string; }
 
 //
 
-export type SIGN_UP_EVENT = { type: "SIGN_UP"; username: string; email: string; password: string };
+export type SessionRefreshEvent =
+    | SessionRefreshRequestEvent
+    | SessionRefreshDoneEvent
+    | SessionRefreshErrorEvent;
 
-export type SIGN_UP_SUCCESS_EVENT = { type: "SIGN_UP_SUCCESS", email: string };
-
-export type SIGN_UP_FAILURE_EVENT = { type: "SIGN_UP_FAILURE"; error: string };
-
-export type SignUpEvents = SIGN_UP_EVENT | SIGN_UP_SUCCESS_EVENT | SIGN_UP_FAILURE_EVENT;
-
-//
-
-export type VERIFY_EMAIL_EVENT = { type: "VERIFY_EMAIL"; };
-
-export type VERIFY_EMAIL_COMPLETED_EVENT = { type: "VERIFY_EMAIL_COMPLETED"; accessToken: string; profile: AuthProfile };
-
-export type VERIFY_EMAIL_SUCCESS_EVENT = { type: "VERIFY_EMAIL_SUCCESS"; accessToken: string; profile: AuthProfile };
-
-export type VERIFY_EMAIL_FAILED_EVENT = { type: "VERIFY_EMAIL_FAILED"; error: string };
-
-export type VERIFY_EMAIL_EXPIRED_EVENT = { type: "VERIFY_EMAIL_EXPIRED"; email: string };
-
-export type VERIFY_EMAIL_FINISHED_EVENT = { type: "VERIFY_EMAIL_FINISHED"; };
-
-export type VERIFY_EMAIL_ASSUMED_EVENT = { type: "VERIFY_EMAIL_ASSUMED"; };
-
-export type VerifyEmailEvents = VERIFY_EMAIL_EVENT | VERIFY_EMAIL_COMPLETED_EVENT | VERIFY_EMAIL_SUCCESS_EVENT | VERIFY_EMAIL_FAILED_EVENT | VERIFY_EMAIL_EXPIRED_EVENT | VERIFY_EMAIL_FINISHED_EVENT | VERIFY_EMAIL_ASSUMED_EVENT;
+export type SessionRefreshRequestEvent = { type: 'SESSION_REFRESH_REQUEST'; input: AuthSession; }
+export type SessionRefreshDoneEvent = { type: 'SESSION_REFRESH_DONE'; payload: AuthSession; }
+export type SessionRefreshErrorEvent = { type: 'SESSION_REFRESH_ERROR'; error: string; }
 
 //
 
-export type SIGN_OUT_EVENT = { type: "SIGN_OUT" };
+export type SignInEvent =
+    | SignInRequestEvent
+    | SignInDoneEvent
+    | SignInErrorEvent;
+
+export type SignInRequestEvent = { type: 'SIGN_IN_REQUEST'; input: SignInRequest; }
+export type SignInDoneEvent = { type: 'SIGN_IN_DONE'; payload: AuthSession; }
+export type SignInErrorEvent = { type: 'SIGN_IN_ERROR'; error: string; }
 
 //
 
-export type DONE_ACTOR_CHECK_AUTH_EVENT = DoneActorEvent<{ accessToken: string, profile: AuthProfile }, "check-auth">;
+export type SignUpEvent =
+    | SignUpRequestEvent
+    | SignUpDoneEvent
+    | SignUpErrorEvent;
 
-export type DONE_ACTOR_CHECK_REGISTRATION_EVENT = DoneActorEvent<{ email: string, expiredAt: number } | null, "check-registration">;
+export type SignUpRequestEvent = { type: 'SIGN_UP_REQUEST'; input: SignUpRequest; }
+export type SignUpDoneEvent = { type: 'SIGN_UP_DONE'; payload: AuthRegistration; }
+export type SignUpErrorEvent = { type: 'SIGN_UP_ERROR'; error: string; }
+
+//
+
+export type VerifyEmailEvent =
+    | VerifyEmailRequestEvent
+    | VerifyEmailConfirmEvent
+    | VerifyEmailAssumeEvent
+    | VerifyEmailDoneEvent
+    | VerifyEmailErrorEvent
+    | VerifyEmailExpiredEvent
+    | VerifyEmailFinalizeEvent;
+
+export type VerifyEmailRequestEvent = { type: 'VERIFY_EMAIL_REQUEST'; }
+
+export type VerifyEmailConfirmEvent = { type: 'VERIFY_EMAIL_CONFIRM'; accessToken: string; }
+
+export type VerifyEmailAssumeEvent = { type: 'VERIFY_EMAIL_ASSUME'; error?: string; }
+
+export type VerifyEmailDoneEvent = { type: 'VERIFY_EMAIL_DONE'; payload: AuthSession; }
+
+export type VerifyEmailErrorEvent = { type: 'VERIFY_EMAIL_ERROR'; error: string; }
+
+export type VerifyEmailExpiredEvent = { type: 'VERIFY_EMAIL_EXPIRED'; }
+
+export type VerifyEmailFinalizeEvent = { type: 'VERIFY_EMAIL_FINALIZE'; }
+
+//
+
+export type SignOutEvent =
+    | SignOutRequestEvent
+
+export type SignOutRequestEvent = { type: 'SIGN_OUT_REQUEST'; }

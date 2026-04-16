@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService, isUnauthenticated, isSigningIn, isSigningUp, isAwaitingVerification, isAuthenticated, isVerifySuccessed } from "@/src/modules/auth/state/auth.machine";
+import { authService, isAuthenticatedInvalid, isAuthenticatedValid, isAwaitingRegistration, isAwaitingRegistrationDone, isAwaitingRegistrationPending, isSigningIn, isSigningUp } from "@/src/modules/auth/state/auth.machine";
 import { AuthContext } from "@/src/modules/ui-auth/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";
-import { heuteApi } from "@/src/api/heuteApi";
-import { withAccessToken } from "@/src/api/token.helper";
 import { AuthProviderProps } from "@/src/modules/ui-auth/types/auth.props";
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -33,39 +31,32 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }, []);
 
     useEffect(() => {
+        if(state.matches("idle")) {
+            authService.send({ type: "REDIRECT_REQUEST" });
+        }
+    }, [state]);
+
+    useEffect(() => {
         const verify = async () => {
             if(!authHash || !authHash.refresh_token) {
                 return;
             }
 
-            try {
-                await heuteApi.auth.refresh();
+            authService.send({ 
+                type: "VERIFY_EMAIL_CONFIRM",                        
+                accessToken: authHash.access_token,
+            });
 
-                const profile = await withAccessToken(authHash.access_token, async () => {
-                    return await heuteApi.me.check();
-                });
-
-                if(!profile) {
-                    throw new Error("Profil information could not be retrieved after email verification.");
-                }
-
-                authService.send({ 
-                    type: "VERIFY_EMAIL_COMPLETED", 
-                    accessToken: authHash.access_token,
-                    profile
-                });
-            } catch (err) {
-                console.error("Email verification errorı:", err);
-            }
+            window.location.hash = "";
         };
 
-        if(onVerifycationPage && isAwaitingVerification(state)) {
+        if(onVerifycationPage && isAwaitingRegistrationPending(state)) {
             verify();
         }
-    }, [authHash?.access_token, authHash?.refresh_token, state]);
+    }, [authHash?.access_token, authHash?.refresh_token, onVerifycationPage, state]);
 
     useEffect(() => {
-        if (isUnauthenticated(state) && pathname?.startsWith("/workspace")) {
+        if (isAuthenticatedInvalid(state) && pathname?.startsWith("/workspace")) {
             if (onSignInPage || onSignUpPage) {
                 return;
             }
@@ -74,15 +65,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
             return;
         }
 
-        if(isAuthenticated(state)) {
+        if(isAuthenticatedValid(state)) {
             if(onSignInPage || onSignUpPage || onVerifycationPage) {
                 window.location.href = "/workspace/dailyboard";
                 return;
             }
         }
         else {
-            if(isVerifySuccessed(state) && !onVerifycationPage) {
-                authService.send({ type: "VERIFY_EMAIL_FINISHED" });
+            if(isAwaitingRegistrationDone(state) && !onVerifycationPage) {
+                authService.send({ type: "VERIFY_EMAIL_FINALIZE" });
                 return;
             }
 
@@ -108,7 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     return;
                 }
 
-                if(!onVerifycationPage && isAwaitingVerification(state)) {
+                if(!onVerifycationPage && isAwaitingRegistration(state)) {
                     window.location.href = "/workspace/verification";
                     return;
                 }
@@ -119,6 +110,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
+            {(process.env.NODE_ENV === "development") && JSON.stringify(state.value)}
             {children}
         </AuthContext.Provider>
     );

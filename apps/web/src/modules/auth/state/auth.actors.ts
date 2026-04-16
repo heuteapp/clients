@@ -1,47 +1,40 @@
-import { SignInRequest, SignUpRequest } from "@/src/api/models/requests/auth.request";
 import { heuteApi } from "@/src/api/heuteApi";
-import { AuthSession } from "@/src/modules/auth/types/auth.types";
-import { SessionHydrateActorEvent, SignInActorEvents, SignUpActorEvents, VerifyEmailActorEvents } from "@/src/modules/auth/types/auth.actors";
-import { AuthRegistration } from "@/src/modules/auth/types/auth.types";
-import { createCallback } from "@/src/modules/auth/utils/create-callback";
-import { fromPromise } from "xstate";
+import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput, SessionRefreshActorInput, SessionRefreshActorEvent, SignUpActorEvent, SignUpActorInput, VerifyEmailActorEvent, VerifyEmailActorInput } from "../types/auth.actors";
+import { createCallback } from "../utils/create-callback";
+import { AuthRegistration, AuthSession } from "../types/auth.types";
 
-export const hydrateAuthActor = createCallback<{ refreshedOnce: boolean }, SessionHydrateActorEvent>(
+export const hydrateSessionActor = createCallback<SessionHydrateActorInput, SessionHydrateActorEvent>(
     ({ input, sendBack }) => {
         if (typeof window === "undefined") {
             return sendBack({ 
-                type: 'SESSION_HYDRATE_FAILURE',
+                type: 'SESSION_HYDRATE_ERROR',
                 error: "Session hydration can only be performed in the browser",
             });
         }
 
-        const raw = localStorage.getItem("auth");
+        const raw = localStorage.getItem("session");
         if (!raw) {
             return sendBack({ 
-                type: 'SESSION_HYDRATE_FAILURE',
-                error: "No auth data found in localStorage",
+                type: 'SESSION_HYDRATE_ERROR',
+                error: "No session data found in localStorage",
             });
         }
-
+        
+        const sessionData = JSON.parse(raw) as AuthSession;
 
         heuteApi.me.check()
 
         .then(profile => {
             return sendBack({ 
-                type: 'SESSION_HYDRATE_SUCCESS',
-                accessToken: JSON.parse(raw).accessToken,
-                profile: profile!,
+                type: 'SESSION_HYDRATE_DONE',
+                payload: {
+                    ...sessionData,
+                    profile: profile!
+                },
             });
         })
 
         .catch(error => {
-            if(input.refreshedOnce) {
-                return sendBack({ 
-                    type: "SESSION_HYDRATE_FAILURE",
-                    error: "Session hydration failed after refresh attempt: " + (error?.message || "Unknown error"),
-                });
-            }
-
             const newSessionHeader = error.response.headers["x-new-auth-session"];
             
             if (newSessionHeader) {
@@ -49,37 +42,44 @@ export const hydrateAuthActor = createCallback<{ refreshedOnce: boolean }, Sessi
 
                 return sendBack({ 
                     type: "SESSION_REFRESH_REQUEST",
-                    accessToken: newSession.accessToken,
-                    profile: newSession.profile,
+                    input: newSession
                 });
             }
 
-            localStorage.removeItem("auth");
             return sendBack({ 
-                type: 'SESSION_HYDRATE_FAILURE',
+                type: 'SESSION_HYDRATE_ERROR',
                 error: error?.message || "Failed to hydrate session",
             });
         });
     }
 );
 
-export const hydrateRegistrationActor = fromPromise<AuthRegistration | null>(
-    async () => {
-        if (typeof window === "undefined") return null;
+export const refreshSessionActor = createCallback<SessionRefreshActorInput, SessionRefreshActorEvent>(
+    ({ input, sendBack }) => {
+        heuteApi.me.check()
 
-        const raw = localStorage.getItem("registration");
-        if (!raw) throw new Error("No registration data found in localStorage");
+        .then(profile => {
+            const newSession = {
+                ...input,
+                profile: profile!,
+            };
 
-        try {
-            return JSON.parse(raw) as AuthRegistration;
-        } catch {
-            localStorage.removeItem("registration");
-            throw new Error("Failed to hydrate registration session");
-        }
+            return sendBack({ 
+                type: 'SESSION_REFRESH_DONE',
+                payload: newSession,
+            });
+        })
+
+        .catch(error => {
+            return sendBack({ 
+                type: 'SESSION_REFRESH_ERROR',
+                error: error?.message || "Failed to refresh session",
+            });
+        });
     }
 );
 
-export const signInActor = createCallback<SignInRequest, SignInActorEvents>(
+export const signInActor = createCallback<SignInActorInput, SignInActorEvent>(
     ({ input, sendBack }) => {
         heuteApi.auth.signIn(input)
             .then(response => {
@@ -87,54 +87,55 @@ export const signInActor = createCallback<SignInRequest, SignInActorEvents>(
                     accessToken: response.accessToken,
                     profile: response.profile,
                 };
-                localStorage.setItem("auth", JSON.stringify(session));
+                localStorage.setItem("session", JSON.stringify(session));
                 
                 sendBack({ 
-                    type: 'SIGN_IN_SUCCESS',
-                    accessToken: response.accessToken,
-                    profile: response.profile,
+                    type: 'SIGN_IN_DONE',
+                    payload: session,
                 });
             })
-            .catch((err: any) => {
+            .catch(error => {
                 sendBack({ 
-                    type: 'SIGN_IN_FAILURE', 
-                    error: err?.message || "Unknown error from sign in" 
+                    type: 'SIGN_IN_ERROR', 
+                    error: error?.message || "Unknown error from sign in" 
                 });
             });
     }
 );
 
-export const signUpActor = createCallback<SignUpRequest, SignUpActorEvents>(
+export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
     ({ input, sendBack }) => {
         heuteApi.auth.signUp(input)
-            .then((response) => {
-                const registration: AuthRegistration = {
+            .then(_ => {
+                const dateNow = Date.now();
+
+                const registration : AuthRegistration = {
                     email: input.email,
-                    expiredAt: Date.now() + 24 * 60 * 60 * 1000,
+                    createdAt: dateNow,
+                    expiredAt: dateNow + (20 * 60 * 1000),
                 };
-                localStorage.setItem("registration", JSON.stringify(registration));
                 
                 sendBack({ 
-                    type: 'SIGN_UP_SUCCESS',
-                    email: input.email,
+                    type: 'SIGN_UP_DONE',
+                    payload: registration,
                 });
             })
-            .catch((err: any) => {
+            .catch(error => {
                 sendBack({ 
-                    type: 'SIGN_UP_FAILURE', 
-                    error: err?.message || "Unknown error from sign up" 
+                    type: 'SIGN_UP_ERROR', 
+                    error: error?.message || "Unknown error from sign up" 
                 });
             });
     }
 );
 
-export const verifyEmailActor = createCallback<AuthRegistration | null, VerifyEmailActorEvents>(
+export const verifyEmailActor = createCallback<VerifyEmailActorInput, VerifyEmailActorEvent>(
     ({ input, sendBack }) => {
-        const registration = input;
+        const registration = input.registration;
 
         if (!registration) {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILED', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "No registration data available for verification" 
             });
             return;
@@ -142,7 +143,7 @@ export const verifyEmailActor = createCallback<AuthRegistration | null, VerifyEm
 
         if (typeof window === "undefined") {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILED', 
+                type: 'VERIFY_EMAIL_ERROR', 
                 error: "Verification can only be performed in the browser" 
             });
             return;
@@ -151,46 +152,28 @@ export const verifyEmailActor = createCallback<AuthRegistration | null, VerifyEm
         if (Date.now() > registration.expiredAt) {
             localStorage.removeItem("registration");
             sendBack({ 
-                type: 'VERIFY_EMAIL_EXPIRED', 
-                email: registration.email,
+                type: 'VERIFY_EMAIL_EXPIRED'
             });
             return;
         }
 
-        const authRaw = localStorage.getItem("auth");
-        if (!authRaw) {
+        heuteApi.me.check()
+
+        .then(profile => {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILED', 
-                error: "No auth data found in localStorage for verification" 
+                type: 'VERIFY_EMAIL_DONE',
+                payload: {
+                    accessToken: input.accessToken,
+                    profile: profile!,
+                },
             });
-            return;
-        }
+        })
 
-        let authData: AuthSession;
-        try {
-            authData = JSON.parse(authRaw) as AuthSession;
-        } catch {
+        .catch(error => {
             sendBack({ 
-                type: 'VERIFY_EMAIL_FAILED', 
-                error: "Failed to parse auth data" 
+                type: 'VERIFY_EMAIL_ERROR', 
+                error: error?.message || "Failed to verify email", 
             });
-            return;
-        }
-
-        if (!authData.accessToken || !authData.profile) {
-            sendBack({ 
-                type: 'VERIFY_EMAIL_FAILED', 
-                error: "Invalid auth data: missing token or profile" 
-            });
-            return;
-        }
-
-        localStorage.removeItem("registration");
-
-        sendBack({ 
-            type: 'VERIFY_EMAIL_SUCCESS',
-            accessToken: authData.accessToken,
-            profile: authData.profile,
-        });
+        })
     }
 );

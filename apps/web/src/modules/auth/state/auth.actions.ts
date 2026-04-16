@@ -1,144 +1,280 @@
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
 import { createAssign } from "@/src/modules/auth/utils/create-assign";
 
-export const resolveAuthData = (event: AuthMachineEvent) => {
-    if (event.type === "SIGN_IN_SUCCESS" || event.type === "VERIFY_EMAIL_COMPLETED" || event.type === "VERIFY_EMAIL_SUCCESS" || event.type === "SESSION_REFRESH_REQUEST") {
-        console.log("Resolving auth data from event:", event);
-        
-        return {
-            accessToken: event.accessToken,
-            profile: event.profile,
-        };
-    }
-
-    if (event.type === "xstate.done.actor.check-auth") {
-        return event.output;
-    }
-
-    throw new Error("Invalid event type for auth: " + event.type);
-};
-
-//
-
-export const setAsRefreshedAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    () => {
-        return {
-            refreshedOnce: true,
-        };
-    }
-);
-
-export const unsetAsRefreshedAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    () => {
-        return {
-            refreshedOnce: false,
-        };
-    }
-);
-
-export const setAuthAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
+export const redirectingEntryAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        return {
-            auth: resolveAuthData(event),
-            error: null
-        };
-    }
-);
+        if(event.type !== "REDIRECT_REQUEST") {
+            throw new Error("Invalid event");
+        }
 
-export const unsetAuthAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    () => {
+        const sessionStr = localStorage.getItem("session");
+        const session = sessionStr 
+            ? JSON.parse(sessionStr) 
+            : null;
+
+        const registrationStr = localStorage.getItem("registration");
+        const registration = registrationStr 
+            ? JSON.parse(registrationStr) 
+            : null;
+
         return {
-            auth: null,
+            session,
+            registration,
             error: null,
-        };
+            temp: {
+                accessToken: null
+            }
+        }
     }
 );
 
-export const persistAuthAction = ({ context }: { context: AuthMachineContext }) => {
-    if (!context.auth) return;
+export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_HYDRATE_DONE") {
+            throw new Error("Invalid event");
+        }
 
-    localStorage.setItem("auth", JSON.stringify(context.auth));
-};
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
-export const clearAuthAction = () => {
-    localStorage.removeItem("auth");
-};
+        return {
+            session: event.payload,
+            registration: null,
+            error: null,
+        }
+    }
+);
+
+export const sessionHydrateFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_HYDRATE_ERROR") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: {
+                id: "sessionHydrate",
+                message: event.error,
+            },
+        }
+    }
+);
+
+export const sessionRefreshRequestAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_REFRESH_REQUEST") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: null,
+            temp: {
+                accessToken: event.input.accessToken,
+            }
+        }
+    }
+);
+
+export const sessionRefreshSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_REFRESH_DONE") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("session", JSON.stringify(event.payload));
+
+        return {
+            session: event.payload,
+            registration: null,
+            error: null,
+            temp: {
+                accessToken: null,
+            }
+        }
+    }
+);
+
+export const sessionRefreshFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SESSION_REFRESH_ERROR") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: {
+                id: "sessionRefresh",
+                message: event.error,
+            },
+        }
+    }
+);
+
+export const unauthenticatedEntryAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    () => {
+        localStorage.removeItem("session");
+        localStorage.removeItem("registration");
+
+        return {
+            session: null,
+            registration: null,
+            temp: {
+                accessToken: null,
+            }
+        }
+    }
+);
 
 //
 
-export const setRegistrationAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
+export const signInSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
-        if (event.type === "SIGN_UP_SUCCESS") {
-            return {
-                registration: {
-                    email: event.email,
-                    expiredAt: Date.now() + 10 * 60 * 1000,
-                },
-            };
+        if (event.type !== "SIGN_IN_DONE") {
+            throw new Error("Invalid event");
         }
 
-        if (event.type === "xstate.done.actor.check-registration") {
-            return {
-                registration: event.output,
-            };
-        }
+        localStorage.setItem("session", JSON.stringify(event.payload));
 
-        throw new Error("Invalid event type for registration: " + event.type);
+        return {
+            session: event.payload,
+            registration: null,
+            error: null,
+        }
     }
 );
 
-export const unsetRegistrationAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    () => {
+export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SIGN_IN_ERROR") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: {
+                id: "signIn",
+                message: event.error,
+            },
+        }
+    }
+);
+
+export const signUpSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SIGN_UP_DONE") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("registration", JSON.stringify(event.payload));
+
+        return {
+            session: null,
+            registration: event.payload,
+            error: null,
+        }
+    }
+);
+
+export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "SIGN_UP_ERROR") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: {
+                id: "signUp",
+                message: event.error,
+            },
+        }
+    }
+);
+
+export const verifyEmailRequestAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_REQUEST") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: null,
+        }
+    }
+);
+
+export const verifyEmailConfirmAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_CONFIRM") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: null,
+            temp: {
+                accessToken: event.accessToken,
+            }
+        }
+    }
+);
+
+export const verifyEmailAssumeAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_ASSUME") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: {
+                id: "verifyEmail",
+                message: event.error || "Assumed email verification failure",
+            },
+        }
+    }
+);
+
+export const verifyEmailDoneAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_DONE") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.setItem("session", JSON.stringify(event.payload));
+        localStorage.removeItem("registration");
+
+        return {
+            session: event.payload,
+            registration: null,
+            error: null,
+        }
+    }
+);
+
+export const verifyEmailErrorAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if (event.type !== "VERIFY_EMAIL_ERROR") {
+            throw new Error("Invalid event");
+        }
+
+        return {
+            error: {
+                id: "verifyEmail",
+                message: event.error,
+            },
+        }
+    }
+);
+
+export const verifyEmailExpiredAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ context, event }) => {
+        if (event.type !== "VERIFY_EMAIL_EXPIRED") {
+            throw new Error("Invalid event");
+        }
+
+        localStorage.removeItem("registration");
+
         return {
             registration: null,
-        };
-    }
-);
-
-export const persistRegistrationAction = ({ context }: { context: AuthMachineContext }) => {
-    if (!context.registration) return;
-
-    localStorage.setItem("registration", JSON.stringify(context.registration));
-};
-
-export const clearRegistrationAction = () => {
-    localStorage.removeItem("registration");
-};
-
-//
-
-export const setErrorAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    ({ event }) => {
-        if (event.type !== "SIGN_IN_FAILURE" && event.type !== "SIGN_UP_FAILURE" && event.type !== "VERIFY_EMAIL_FAILED") {
-            throw new Error("Invalid event type for setError action");
+            error: {
+                id: "verifyEmail",
+                message: `Verification timed out for ${context.registration?.email || "(unknown email)"}`,
+            },
         }
-
-        return {
-            error: event.error,
-        };
-    }
-);
-
-export const unsetErrorAction = createAssign<
-    AuthMachineContext, AuthMachineEvent
->(
-    () => {
-        return {
-            error: null,
-        };
     }
 );
