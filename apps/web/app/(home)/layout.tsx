@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Box } from "@mui/material";
 import { HeuteCompactBrand } from "@/src/modules/ui-shared/components/HeuteBrand";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
-import { isAuthenticated, isUnauthenticated } from "@/src/modules/auth/state/auth.machine";
+import { isAuthenticatedInvalid, isAuthenticatedValid } from "@/src/modules/auth/state/auth.machine";
 import { HeuteLink } from "@/src/modules/ui-shared/components/HeuteLink";
 
 export default function WorkspaceLayout({
@@ -53,7 +53,7 @@ export default function WorkspaceLayout({
               justifyContent: "flex-end",
             }}
           >
-            {isUnauthenticated(state) && (
+            {isAuthenticatedInvalid(state) && (
               <>
                 <HeuteLink href="/workspace/sign-in" linkType="external" className="navbar-link" id={"navbar-link-sign-in"}>
                   Sign In
@@ -64,7 +64,7 @@ export default function WorkspaceLayout({
               </>
             )}
 
-            {isAuthenticated(state) && (
+            {isAuthenticatedValid(state) && (
               <>                
                 <HeuteLink href="/workspace/dailyboard" linkType="external" className="navbar-link" id={"navbar-link-workspace"}>
                   Workspace

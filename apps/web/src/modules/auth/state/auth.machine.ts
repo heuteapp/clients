@@ -183,20 +183,25 @@ export const authMachine = setup({
       }
     },
     "authenticated": {
-      on: {
-        SIGN_OUT_REQUEST: {
-          target: "unauthenticated",
-        }
-      }
-    },
-    "unauthenticated": {
-      entry: "unauthenticatedEntry",
-      on: {
-        SIGN_IN_REQUEST: {
-          target: "signing.in",
+      initial: "invalid",
+      states: {
+        "valid": {
+          on: {
+            SIGN_OUT_REQUEST: {
+              target: "invalid",
+            }
+          }
         },
-        SIGN_UP_REQUEST: {
-          target: "signing.up",
+        "invalid": {
+          entry: "unauthenticatedEntry",
+          on: {
+            SIGN_IN_REQUEST: {
+              target: "#auth.signing.in",
+            },
+            SIGN_UP_REQUEST: {
+              target: "#auth.signing.up",
+            }
+          }
         }
       }
     },
@@ -288,7 +293,9 @@ export const isAwaitingRegistrationExpired = (state: AuthMachineState): boolean 
 
 export const isAuthenticated = (state: AuthMachineState): boolean => state.matches("authenticated");
 
-export const isUnauthenticated = (state: AuthMachineState): boolean => state.matches("unauthenticated");
+export const isAuthenticatedValid = (state: AuthMachineState): boolean => state.matches({ authenticated: "valid" });
+
+export const isAuthenticatedInvalid = (state: AuthMachineState): boolean => state.matches({ authenticated: "invalid" });
 
 export const isSigning = (state: AuthMachineState): boolean => state.matches("signing");
 
@@ -299,7 +306,7 @@ export const isSigningUp = (state: AuthMachineState): boolean => state.matches({
 //
 
 export const isSignLocked = (state: AuthMachineState): boolean => 
-  isRedirecting(state) || isAwaiting(state) || isAuthenticated(state) || isUnauthenticated(state);
+  isRedirecting(state) || isAwaiting(state) || isAuthenticated(state);
 
 export const isVerificationLocked = (state: AuthMachineState): boolean => 
-  isRedirecting(state) || isAwaitingSession(state) || isAuthenticated(state) || isUnauthenticated(state) || isSigning(state);
+  isRedirecting(state) || isAwaitingSession(state) || isAuthenticated(state) || isSigning(state);
