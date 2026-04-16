@@ -46,12 +46,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 type: "VERIFY_EMAIL_CONFIRM",                        
                 accessToken: authHash.access_token,
             });
+
+            window.location.hash = "";
         };
 
         if(onVerifycationPage && isAwaitingRegistrationPending(state)) {
             verify();
         }
-    }, []);
+    }, [authHash?.access_token, authHash?.refresh_token, onVerifycationPage, state]);
 
     useEffect(() => {
         if (isAuthenticatedInvalid(state) && pathname?.startsWith("/workspace")) {

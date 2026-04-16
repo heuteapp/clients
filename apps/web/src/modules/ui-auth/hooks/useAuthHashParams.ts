@@ -1,10 +1,11 @@
-import { useHashParams } from "@/src/modules/ui-shared/hooks/useHashParams";
+import { useHashParams } from "react-hash-control";
 
 //
 
 export function useAuthHashParams(): AuthHashParams | null {
   const hash = useHashParams();
 
+  console.log("Hash params:", hash);
   if (!hash.access_token) return null;
 
   const authParams: AuthHashParams = {
