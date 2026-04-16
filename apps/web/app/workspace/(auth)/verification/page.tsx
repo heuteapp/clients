@@ -1,12 +1,12 @@
 "use client";
 
-import { isAwaitingVerification, isVerifyExpired, isVerifySuccessed } from "@/src/modules/auth/state/auth.machine";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";
 import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { isAwaitingRegistrationDone, isAwaitingRegistrationExpired, isAwaitingRegistrationPending } from "@/src/modules/auth/state/auth.machine";
 
 export default function VerificationPage() {
     const authHash = useAuthHashParams();
@@ -23,8 +23,8 @@ export default function VerificationPage() {
 
     useEffect(() => {
         const handleFocus = () => {
-            if (isAwaitingVerification(state)) {
-                send({ type: "VERIFY_EMAIL" });
+            if (isAwaitingRegistrationPending(state)) {
+                send({ type: "VERIFY_EMAIL_REQUEST" });
             }
         };
 
@@ -36,7 +36,7 @@ export default function VerificationPage() {
     }, [state, send]);
 
     useEffect(() => {
-        if (isVerifyExpired(state)) {
+        if (isAwaitingRegistrationExpired(state)) {
             const timer = setInterval(() => {
                 setCountdown((prev) => {
                     if (prev <= 1) {
@@ -53,7 +53,7 @@ export default function VerificationPage() {
     }, [state, router]);
 
     const handleAssume = () => {
-        send({ type: "VERIFY_EMAIL_ASSUMED" });
+        send({ type: "VERIFY_EMAIL_ASSUME" });
     };
 
     if(authHash) {
@@ -62,7 +62,7 @@ export default function VerificationPage() {
         )
     }
 
-    if(isVerifySuccessed(state)) {
+    if(isAwaitingRegistrationDone(state)) {
         return (
             <Card sx={{ 
                 padding: 4, 
@@ -95,7 +95,7 @@ export default function VerificationPage() {
         )
     }
 
-    if(isVerifyExpired(state)) {
+    if(isAwaitingRegistrationExpired(state)) {
         return (
             <Card sx={{ padding: 3, maxWidth: 400, margin: 16 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2 }}>
@@ -131,7 +131,7 @@ export default function VerificationPage() {
                 <Button 
                     variant="contained" 
                     fullWidth
-                    onClick={() => send({ type: "VERIFY_EMAIL_FINISHED" })}
+                    onClick={() => send({ type: "VERIFY_EMAIL_FINALIZE" })}
                     sx={{
                         borderRadius: 2,
                         textTransform: "none"
