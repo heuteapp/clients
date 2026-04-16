@@ -119,11 +119,12 @@ export const authMachine = setup({
           }
         },
         "registration": {
+          initial: "pending",
           states: {
             "pending": {
               on: {
                 VERIFY_EMAIL_REQUEST: {
-                  target: "verifying",
+                  target: "validating",
                   actions: "verifyEmailRequest"
                 },
                 VERIFY_EMAIL_CONFIRM: {
@@ -136,24 +137,36 @@ export const authMachine = setup({
                 }
               }
             },
-            "verifying": {
+            "validating": {
               invoke: {
                 src: "verifyEmail",
                 input: ({ context }) => context.registration!,
                 on: {
                   VERIFY_EMAIL_DONE: {
-                    target: "finishing",
+                    target: "done",
                   },
                   VERIFY_EMAIL_ERROR: {
                     target: "pending",
                   },
                   VERIFY_EMAIL_EXPIRED: { 
-                    target: "finishing",
+                    target: "expired",
                   },
                 },
               }
             },
-            "finishing": {
+            "done": {
+              after: {
+                20000: {
+                  target: "#auth.authenticated",
+                }
+              },
+              on: {
+                VERIFY_EMAIL_FINALIZE: {
+                  target: "#auth.authenticated",
+                }
+              }
+            },
+            "expired": {
               after: {
                 20000: {
                   target: "#auth.unauthenticated",
@@ -161,7 +174,7 @@ export const authMachine = setup({
               },
               on: {
                 VERIFY_EMAIL_FINALIZE: {
-                  target: "#auth.authenticated",
+                  target: "#auth.unauthenticated",
                 }
               }
             }
@@ -267,9 +280,11 @@ export const isAwaitingRegistration = (state: AuthMachineState): boolean => stat
 
 export const isAwaitingRegistrationPending = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "pending" } });
 
-export const isAwaitingRegistrationVerifying = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "verifying" } });
+export const isAwaitingRegistrationValidating = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "validating" } });
 
-export const isAwaitingRegistrationFinishing = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "finishing" } });
+export const isAwaitingRegistrationDone = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "done" } });
+
+export const isAwaitingRegistrationExpired = (state: AuthMachineState): boolean => state.matches({ awaiting: { registration: "expired" } });
 
 export const isAuthenticated = (state: AuthMachineState): boolean => state.matches("authenticated");
 
