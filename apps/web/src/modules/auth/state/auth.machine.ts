@@ -2,7 +2,7 @@ import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
 import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { hasRegistrationGuard, hasSessionGuard } from "./auth.guards";
-import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailSuccessAction, verifyEmailFailureAction, verifyEmailTimeoutAction } from "./auth.actions";
+import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailSuccessAction, verifyEmailFailureAction, verifyEmailTimeoutAction, redirectingEntryAction } from "./auth.actions";
 
 export const authMachine = setup({
   types: {
@@ -18,6 +18,7 @@ export const authMachine = setup({
     verifyEmail: verifyEmailActor
   },
   actions: {
+    redirectingEntry: redirectingEntryAction,
     sessionHydrateSuccess: sessionHydrateSuccessAction,
     sessionHydrateFailure: sessionHydrateFailureAction,
     sessionRefreshRequest: sessionRefreshRequestAction,
@@ -60,6 +61,7 @@ export const authMachine = setup({
       }
     },
     "redirecting": {
+      entry: "redirectingEntry",
       always: [
         {
           guard: "hasRegistration",

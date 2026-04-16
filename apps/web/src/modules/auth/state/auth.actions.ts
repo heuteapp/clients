@@ -1,6 +1,33 @@
 import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
 import { createAssign } from "@/src/modules/auth/utils/create-assign";
 
+export const redirectingEntryAction = createAssign<AuthMachineContext, AuthMachineEvent>(
+    ({ event }) => {
+        if(event.type !== "REDIRECT_REQUEST") {
+            throw new Error("Invalid event");
+        }
+
+        const sessionStr = localStorage.getItem("session");
+        const session = sessionStr 
+            ? JSON.parse(sessionStr) 
+            : null;
+
+        const registrationStr = localStorage.getItem("registration");
+        const registration = registrationStr 
+            ? JSON.parse(registrationStr) 
+            : null;
+
+        return {
+            session,
+            registration,
+            error: null,
+            temp: {
+                accessToken: null
+            }
+        }
+    }
+);
+
 export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {
         if (event.type !== "SESSION_HYDRATE_DONE") {
