@@ -68,13 +68,13 @@ export type VerifyEmailEvent =
 
 export type VerifyEmailRequestEvent = { type: 'VERIFY_EMAIL_REQUEST'; }
 
-export type VerifyEmailConfirmEvent = { type: 'VERIFY_EMAIL_CONFIRM'; }
+export type VerifyEmailConfirmEvent = { type: 'VERIFY_EMAIL_CONFIRM'; output: AuthSession; }
 
 export type VerifyEmailAssumeEvent = { type: 'VERIFY_EMAIL_ASSUME'; error?: string; }
 
-export type VerifyEmailSuccessEvent = { type: 'VERIFY_EMAIL_SUCCESS'; }
+export type VerifyEmailSuccessEvent = { type: 'VERIFY_EMAIL_SUCCESS'; output: AuthSession; }
 
-export type VerifyEmailTimeoutEvent = { type: 'VERIFY_EMAIL_TIMEOUT'; }
+export type VerifyEmailTimeoutEvent = { type: 'VERIFY_EMAIL_TIMEOUT'; email: string; }
 
 export type VerifyEmailFailureEvent = { type: 'VERIFY_EMAIL_FAILURE'; error: string; }
 
