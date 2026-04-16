@@ -9,7 +9,6 @@ import { AuthProviderProps } from "@/src/modules/ui-auth/types/auth.props";
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const router = useRouter();
-    const [isClient, setIsClient] = useState(false);
     const pathname = usePathname();
     const [state, setState] = useState(() => authService.getSnapshot());  
     const authHash = useAuthHashParams();
@@ -19,11 +18,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const onVerifycationPage = pathname === "/workspace/verification";
 
     useEffect(() => {
-        setIsClient(true);
         authService.start();
 
         const subscription = authService.subscribe((newState) => {
-            console.log("Auth state updated:", newState);
             setState(newState);
         });
         
@@ -111,7 +108,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
-            {(isClient && process.env.NODE_ENV === "development") && JSON.stringify(state.value)}
+            {(process.env.NODE_ENV === "development") && JSON.stringify(state.value)}
             {children}
         </AuthContext.Provider>
     );
