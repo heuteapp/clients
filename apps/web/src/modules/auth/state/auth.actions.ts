@@ -236,6 +236,7 @@ export const verifyEmailDoneAction = createAssign<AuthMachineContext, AuthMachin
         }
 
         localStorage.setItem("session", JSON.stringify(event.payload));
+        localStorage.removeItem("registration");
 
         return {
             session: event.payload,
