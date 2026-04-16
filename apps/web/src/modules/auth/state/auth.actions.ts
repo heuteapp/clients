@@ -11,6 +11,7 @@ export const sessionHydrateSuccessAction = createAssign<AuthMachineContext, Auth
 
         return {
             session: event.output,
+            registration: null,
             error: null,
         }
     }
@@ -26,6 +27,7 @@ export const sessionHydrateFailureAction = createAssign<AuthMachineContext, Auth
 
         return {
             session: null,
+            registration: null,
             error: event.error,
         }
     }
@@ -56,6 +58,7 @@ export const sessionRefreshSuccessAction = createAssign<AuthMachineContext, Auth
 
         return {
             session: event.output,
+            registration: null,
             error: null,
             temp: {
                 accessToken: null,
@@ -74,6 +77,7 @@ export const sessionRefreshFailureAction = createAssign<AuthMachineContext, Auth
 
         return {
             session: null,
+            registration: null,
             error: event.error,
             temp: {
                 accessToken: null,
@@ -88,6 +92,7 @@ export const entryUnauthenticatedAction = createAssign<AuthMachineContext, AuthM
 
         return {
             session: null,
+            registration: null,
             error: null,
             temp: {
                 accessToken: null,
@@ -108,6 +113,7 @@ export const signInSuccessAction = createAssign<AuthMachineContext, AuthMachineE
 
         return {
             session: event.output,
+            registration: null,
             error: null,
         }
     }
@@ -123,6 +129,7 @@ export const signInFailureAction = createAssign<AuthMachineContext, AuthMachineE
 
         return {
             session: null,
+            registration: null,
             error: event.error,
         }
     }
@@ -138,6 +145,7 @@ export const signUpSuccessAction = createAssign<AuthMachineContext, AuthMachineE
 
         return {
             session: null,
+            registration: event.output,
             error: null,
         }
     }
@@ -153,6 +161,7 @@ export const signUpFailureAction = createAssign<AuthMachineContext, AuthMachineE
 
         return {
             session: null,
+            registration: null,
             error: event.error,
         }
     }
