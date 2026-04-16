@@ -1,7 +1,7 @@
 import { heuteApi } from "@/src/api/heuteApi";
-import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput, SessionRefreshActorInput, SessionRefreshActorEvent } from "../types/auth.actors";
+import { SessionHydrateActorInput, SessionHydrateActorEvent, SignInActorEvent, SignInActorInput, SessionRefreshActorInput, SessionRefreshActorEvent, SignUpActorEvent, SignUpActorInput } from "../types/auth.actors";
 import { createCallback } from "../utils/create-callback";
-import { AuthSession } from "../types/auth.types";
+import { AuthRegistration, AuthSession } from "../types/auth.types";
 
 export const hydrateSessionActor = createCallback<SessionHydrateActorInput, SessionHydrateActorEvent>(
     ({ input, sendBack }) => {
@@ -94,10 +94,33 @@ export const signInActor = createCallback<SignInActorInput, SignInActorEvent>(
                     output: session,
                 });
             })
-            .catch((err: any) => {
+            .catch(error => {
                 sendBack({ 
                     type: 'SIGN_IN_FAILURE', 
-                    error: err?.message || "Unknown error from sign in" 
+                    error: error?.message || "Unknown error from sign in" 
+                });
+            });
+    }
+);
+
+export const signUpActor = createCallback<SignUpActorInput, SignUpActorEvent>(
+    ({ input, sendBack }) => {
+        heuteApi.auth.signUp(input)
+            .then(_ => {
+                const registration : AuthRegistration = {
+                    email: input.email,
+                    expiredAt: 20 * 60 * 1000,
+                };
+                
+                sendBack({ 
+                    type: 'SIGN_UP_SUCCESS',
+                    output: registration,
+                });
+            })
+            .catch(error => {
+                sendBack({ 
+                    type: 'SIGN_UP_FAILURE', 
+                    error: error?.message || "Unknown error from sign up" 
                 });
             });
     }

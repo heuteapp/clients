@@ -1,9 +1,8 @@
 import { createActor, setup } from "xstate";
 import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
-import { hydrateSessionActor, refreshSessionActor, signInActor } from "./auth.actors";
+import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor } from "./auth.actors";
 import { hasRegistrationGuard } from "./auth.guards";
 import { entryUnauthenticatedAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction } from "./auth.actions";
-import { safeMatches } from "../../shared/utils/state";
 
 export const authMachine = setup({
   types: {
@@ -14,7 +13,8 @@ export const authMachine = setup({
   actors: {
     hydrateSession: hydrateSessionActor,
     refreshSession: refreshSessionActor,
-    signIn: signInActor
+    signIn: signInActor,
+    signUp: signUpActor
   },
   actions: {
     sessionHydrateSuccess: sessionHydrateSuccessAction,
@@ -140,7 +140,7 @@ export const authMachine = setup({
               target: "in",
             },
             SIGN_UP_REQUEST: {
-              target: "in",
+              target: "up",
             }
           }
         },
@@ -167,6 +167,24 @@ export const authMachine = setup({
           }
         },
         "up": {
+          invoke: {        
+            src: "signUp",
+            input: ({ event }) => {
+              if (event.type == "SIGN_UP_REQUEST") {
+                return event.input;
+              }
+              
+              throw new Error("Invalid event");
+            }
+          },
+          on: {
+            SIGN_UP_SUCCESS: {
+              target: "#auth.awaiting.registration",
+            },
+            SIGN_UP_FAILURE: {
+              target: "#auth.unauthenticated",
+            }
+          }
         }
       }
     }
