@@ -69,7 +69,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     const layoutStyle = getGlobalLayout("default", 1);
 
     return (
-        <MetricsProvider targets={["layout", "dailyboard"]}>
+        <MetricsProvider rootRef={dailyboardRef} targets={["layout", "dailyboard"]}>
             <LayoutProvider rootRef={layoutRef} metricsId="layout"  dataSource={layoutData} styleSource={layoutStyle}>
                 <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
                     <WorkspaceDailyboardContext.Provider value={contextValue}>
