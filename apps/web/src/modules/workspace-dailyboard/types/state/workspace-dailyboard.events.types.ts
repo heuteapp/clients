@@ -4,20 +4,32 @@ import { GridSize } from "@/src/modules/shared/types/common";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
+export type WorkspaceDailyboardEvent =
+    | FetchSourcesEvent
+    | CardCreateEvent
+    | EditCardEvent
+    | CardPlaceEvent;
+
 export type FetchSourcesEvent =
     | { type: "SOURCES_FETCH_REQUESTED"; dailyboardPath: string }
     | DoneActorEvent<DailyboardResponse, "fetch-sources">
     | ErrorActorEvent<"fetch-sources">;
 
-export type CreateCardEvent =
-    | { type: "CARD_CREATE_REQUESTED"; cardSize: GridSize }
-    | {
-        type: "CARD_CREATE_SUCCEEDED";
-        categoryPath: string;
-        date: YYMMDDDate;
-        placement: DailyboardCardPlacement;
-        }
-    | { type: "CARD_CREATE_CANCELLED" };
+export type CardCreateEvent = 
+    | CardCreateRequestEvent
+    | CardCreatePlaceRequestEvent
+    | CardCreatePlaceDoneEvent
+    | CardCreatePlaceCancelEvent;
+
+export type CardCreateRequestEvent = { type: "CARD_CREATE_REQUEST"; };
+
+export type CardCreatePlaceRequestEvent = { type: "CARD_CREATE_PLACE_REQUEST"; cardSize: GridSize };
+
+export type CardCreatePlaceDoneEvent = { type: "CARD_CREATE_PLACE_DONE"; categoryPath: string; date: YYMMDDDate; placement: DailyboardCardPlacement };
+
+export type CardCreatePlaceCancelEvent = { type: "CARD_CREATE_PLACE_CANCEL"; };
+
+//
 
 export type EditCardEvent =
     | { type: "CARD_EDIT_REQUESTED"; categoryPath: string, date: YYMMDDDate, cardKey: string }
