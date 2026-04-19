@@ -28,6 +28,9 @@ export function WorkspaceBreadcrumbs() {
             offset={10}
             items={items}
             animate={animate}
+            sx={{
+                padding: 1
+            }}
         />
     )
 }
