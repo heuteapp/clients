@@ -1,8 +1,7 @@
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
 import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
-import { ChevronLeft, ChevronRight, Add } from "@mui/icons-material";
-import { IconButton, Typography, Slider, Button } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+import { ChevronLeft, ChevronRight, Add, Launch } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
 
 export function LayoutSidebar() {
@@ -72,14 +71,29 @@ const SidebarDailyboardContent = () => {
         onPointerDown={handleAddCard}
         sx={{
           width: 36,
-          height: 36,
-          border: "1.5px solid",
-          borderRadius: 1,
+          height: 48,
+          border: "2px solid",
+          borderRadius: 0.6,
           margin: 1,
           boxSizing: "border-box"
         }}
       >
         <Add />
+      </IconButton>
+      <IconButton 
+        color="secondary"
+        aria-label="add" 
+        onPointerDown={handleAddCard}
+        sx={{
+          width: 36,
+          height: 24,
+          border: "1px solid",
+          borderRadius: 0.6,
+          padding: 1,
+          boxSizing: "border-box"
+        }}
+      >
+        <Launch sx={{ fontSize: 18 }} />
       </IconButton>
     </>
   )
