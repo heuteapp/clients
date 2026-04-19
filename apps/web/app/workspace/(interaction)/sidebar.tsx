@@ -58,7 +58,9 @@ export function LayoutSidebar() {
 const SidebarDailyboardContent = () => {
   const { send } = useWorkspaceDailyboardContext();
 
-  const handleAddCard = () => {
+  const handleAddCard = (e: React.PointerEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     send({ type: "CARD_CREATE_REQUESTED", cardSize: { colSpan: 12, rowSpan: 3 } });
   };
   
