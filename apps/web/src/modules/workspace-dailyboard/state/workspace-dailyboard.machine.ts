@@ -15,7 +15,7 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxAGUA8gFUASgGEAoiID6AMTkAVGQAlFUuQEUJCtQG0ADAF1EoHKljlOqLlZAAPRADZ3AVmZeA7AAcAExepgCMAJxhpgAspl4ANCDUiCEAzMwRXmlhYTERBfGmQREAvqVJaFi4hCRkVHQMTKwc3LwAZmDsBAAWbXwCwuLS8kqqGtq6BkZmlkggNnYOTvNuCH4hvoHRETHuuQVpSSnrob5p7jF+afFekV4B5ZUY2PhEpBQ09IwsbPb9nW6fR4zFgqAArugiLAhBBHGA+FwAG6oTAIwG9YhgyHQ2bORb-RzONZeILHRABMLMfIFSlpAIxIJpNJ+J4gKqvWofBrfZp-TggjHA3jYqFwIRgdDoDDMHCUPDsdoYAC2zCFWIhYtgePmBOWxIpplMmQZaSCeyupnp5PWVuYVu8QXcNxiZpiYTZHJq73qXyaLHQYDwEGoA0EokksgUKnUWh0+kMIhMFnxtkJK1Aa3NMXtRqNaQeESCQQCAT8NpZGSCVrCQT8fhipcZHrZXFQEDgzi9bzqn0aP1TS3IRNWiGIERtxHcubzs9n-k9L29vZ5-pa-x4g-TBoQ+R8-kp8TLkT8pgCNrCnmp2TCzP2jcvpMX1R73L9P3XAt4-EEW-1o4QLxXS2Q8Hj8E8zxtEIcxiG88gKCIiiZZ9OR9PteV+VpBS6Xo2j-YcM1cRAvDOA9ojAiDz2SDxTGnLIcjifIAmdGIUOXN9+z5LCOhw4UwzAfCR0zYiIgCEDyOPCJTyok5Tz8Zh9lE807jNM0W2eF8uV9TjMI3HigX6UVoUEwi1gKHwwi8dwglyBs0l2W8bXcXZrxyGzSxLdx6zY19tIw5hA2DE5rDTf9hIQeyoOY5hqzUrySlJUsfK09C10CkN+JMncywra5mFPNz60bBlq3ccpyiAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxAGUA8gFUASgGEAoiID6AMTkAVGQAlFUuQEUJCtQG0ADAF1EoHKljlOqLlZAAPRADZ3AVmZeA7AAcAIxeAEwhXqZeXgEANCDUiKFeAMzMAJypQabuAekALO6B+QC+JfFoWLiEJGRUdAxMrBzcvABmYOwEABatfALC4tLySqoa2roGRmaWSCA2dg5Oc24Ifsm+gSHh0VEx8Ylr+UEZWUEFpqbb6WUVGNj4RKQUNPSMLGz2fR1dvTzMsFQAFd0ERYEIII4wHwuAA3VCYaE-HrEQEgsEzZwLL6OZyrMIHRDBZj5dJksn5fx+FLpZK3ECVB41Z71N5NT6cf7Iv68NGguBCMDodAYZg4Sh4dhtDAAW2Y3NRwP5sExc2xSzxRMuGQC+RSqRS7nC1PyhIQ7gKJNSphSlNyoRSV3pjOqTzqr0aLHQYDwEGo-UEokksgUKnUWh0+kMIhMFixthxy1Aq1Ceoy5LylICKWCITNKWpzFCNuyARtRWp7lK9K4qAgcGcLsetReDXe8cW5FxK0QxHSZuIPnJw5H6SrXmd91dLdZnuaXx4HcTmoQpJ8-mC+WOfkycQSiCCnitKWyfj1FppoUnVWbLI973nnN4-EES41PYQXjTG6CW6CO-2fcEGSfJj2yXICiKXVryZN1WzZD4Wi5ToelaN8uyTVxEF2TZN23XczXcHJThPUx0n-AIAgtGDpzvNt2SQ9oUJ5AMwHQ7tk2w9IAlw398MAw4LXSZhy0NK4-HWMir3KBkp1vd16MQhcmN+Po+TBdjMNWbIomYEIjRSUIy0CPxPDNakTkuR0LVMPwrlCQIaPk+C529X1DmsBN304hAaTNIz3CLEtTACfx0htSknOZBSEOYNy-VYzSVwCPx80LOzSLLQ0JILMoyiAA */
     context: {
         dailyboardData: null,
         layoutData: null,
@@ -35,7 +35,7 @@ export const workspaceDailyboardMachine = setup({
                 "idle": {
                     on: {
                         SOURCES_FETCH_REQUEST: {
-                            target: "fetching"
+                            target: "fetching.sources"
                         }
                     }
                 },
@@ -78,7 +78,7 @@ export const workspaceDailyboardMachine = setup({
                 "idle": {
                     on: {
                         SOURCES_FETCH_REQUEST: {
-                            target: "#workspace-dailyboard.waiting.fetching"
+                            target: "#workspace-dailyboard.waiting.fetching.sources"
                         }
                     }
                 },
