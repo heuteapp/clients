@@ -1,13 +1,34 @@
 import { DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.data.types";
-import { GridSize } from "../../shared/types/common";
+import { GridRect, GridSize, Rect } from "../../shared/types/common";
+import { LayoutMetrics } from "../../ui-layout/types/layout.metrics";
 
-export interface DailyboardCardPlacementState {
+export interface DailyboardCardPlacementContent {
     cardSize: GridSize;
     targetCardKey?: string;
 }
 
+export interface DailyboardCardPlacementState {
+    content: DailyboardCardPlacementContent | null;
+    hammer: HammerManager | null;
+    layoutMetrics: LayoutMetrics | null;
+
+    dailyboardElement: HTMLDivElement | null;
+    sectionElement: HTMLDivElement | null;
+    sectionElementData: { name: string; position: GridRect } | null;
+    gridElement: HTMLDivElement | null;
+
+    ghostCardElement: HTMLDivElement | null;
+    ghostCardGridPos: GridRect | null;
+    ghostCardPos: Rect | null;
+    isGhostCardOverlapping: boolean;
+
+    suggestedCardElement: HTMLDivElement | null;
+    suggestedCardGridPos: GridRect | null;
+    suggestedCardPos: Rect | null;
+}
+
 export interface DailyboardCardPlacementResult {
-    state: DailyboardCardPlacementState;
+    content: DailyboardCardPlacementContent;
     success: boolean;
     placement: DailyboardCardPlacement | null;
 }

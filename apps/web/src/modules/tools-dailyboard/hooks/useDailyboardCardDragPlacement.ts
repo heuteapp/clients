@@ -1,72 +1,72 @@
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
-import { GridRect, Rect } from "@/src/modules/shared/types/common";
+import { GridRect } from "@/src/modules/shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/shared/utils/common";
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { DailyboardCardPlacementResult, DailyboardCardPlacementContent } from "../type/tools-dailyboard.card-placement.types";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { DailyboardCardPlacementResult, DailyboardCardPlacementContent, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
 
 export const useDailyboardCardDragPlacement = () => {
     const [content, setContent] = useState<DailyboardCardPlacementContent | null>(null);
-    const stateRef = useRef(content);
+    const { metrics: layoutMetrics } = useLayoutContext();
+    const { Hammer } = useHammerContext();
+
+    const state = useMemo<DailyboardCardPlacementState>(() => ({
+        content: null,
+        hammer: null,
+        layoutMetrics: null,
+
+        dailyboardElement: null,
+        sectionElement: null,
+        sectionElementData: null,
+        gridElement: null,
+        
+        ghostCardElement: null,
+        ghostCardGridPos: null,
+        ghostCardPos: null,
+        isGhostCardOverlapping: false,
+
+        suggestedCardElement: null,
+        suggestedCardGridPos: null,
+        suggestedCardPos: null,
+    }), []);
+
     const onFinishCallbackRef = useRef<((result: DailyboardCardPlacementResult) => void) | null>(null);
 
-    const { metrics } = useLayoutContext();
-    const metricsRef = useRef(metrics);
-
-    const { Hammer } = useHammerContext();
-    const hammerRef = useRef<HammerManager | null>(null);
-
-    // DOM element refs
-    const dailyboardElement = useRef<HTMLDivElement | null>(null);
-    const sectionElement = useRef<HTMLDivElement | null>(null);
-    const sectionElementData = useRef<{ name: string; position: GridRect } | null>(null);
-    const gridElement = useRef<HTMLDivElement | null>(null);
-
-    const ghostCardElement = useRef<HTMLDivElement | null>(null);
-    const ghostCardGridPos = useRef<GridRect | null>(null);
-    const ghostCardPos = useRef<Rect | null>(null);
-    const isGhostCardOverlapping = useRef<boolean>(false);
-
-    const suggestedCardElement = useRef<HTMLDivElement | null>(null);
-    const suggestedCardGridPos = useRef<GridRect | null>(null);
-    const suggestedCardPos = useRef<Rect | null>(null);
+    useEffect(() => {
+        state.content = content;
+        state.layoutMetrics = layoutMetrics;
+    }, [content, layoutMetrics, state]);
 
     useEffect(() => {
-        stateRef.current = content;
-        metricsRef.current = metrics;
-    }, [content, metrics]);
+        if (Hammer && !state.hammer) {
+            state.hammer = new Hammer(document.body);
+            const pan = state.hammer.get("pan");
 
-    useEffect(() => {
-        if (Hammer && !hammerRef.current) {
-        hammerRef.current = new Hammer(document.body);
-        const pan = hammerRef.current.get("pan");
-
-        const ghostCardPan = new Hammer.Pan({ event: "ghostcardpan", threshold: 0, pointers: 1 });
-        ghostCardPan.recognizeWith(pan);
-        hammerRef.current.add(ghostCardPan);
+            const ghostCardPan = new Hammer.Pan({ event: "ghostcardpan", threshold: 0, pointers: 1 });
+            ghostCardPan.recognizeWith(pan);
+            state.hammer.add(ghostCardPan);
         }
-    }, [content, Hammer]);
+    }, [Hammer, state]);
 
-    // ------------------------------------------------------------------------
     const resolvePosition = useCallback((): GridRect | null => {
-        if (isGhostCardOverlapping.current) {
-            return suggestedCardGridPos.current;
+        if (state.isGhostCardOverlapping) {
+            return state.suggestedCardGridPos;
         }
-        return ghostCardGridPos.current;
-    }, []);
+        return state.ghostCardGridPos;
+    }, [state.isGhostCardOverlapping, state.suggestedCardGridPos, state.ghostCardGridPos]);
 
     const resolvePlacement = useCallback((): DailyboardCardPlacement | null => {
-        if (!sectionElementData.current || !ghostCardGridPos.current) return null;
+        if (!state.sectionElementData || !state.ghostCardGridPos) return null;
 
-        const sectionName = sectionElementData.current.name;
+        const sectionName = state.sectionElementData.name;
         const position = resolvePosition();
         if (!position) return null;
 
         return { sectionName, position };
-    }, [resolvePosition]);
+    }, [state.sectionElementData, state.ghostCardGridPos, resolvePosition]);
 
     const resolveResult = useCallback((): DailyboardCardPlacementResult => {
         const placement = resolvePlacement();
@@ -77,37 +77,36 @@ export const useDailyboardCardDragPlacement = () => {
         }
     }, [content, resolvePlacement]);
 
-    // ------------------------------------------------------------------------
     const calculatePosition = useCallback((clientX: number, clientY: number) => {
-        if (!stateRef.current) return;
+        if (!state.content) return;
 
-        const { cardSize, targetCardKey } = stateRef.current;
-        const cellSize = metricsRef.current.value?.cellSize.grid || 0;
+        const { cardSize, targetCardKey } = state.content;
+        const cellSize = state.layoutMetrics?.value?.cellSize?.grid || 0;
         const size = {
             width: cellSize * cardSize.colSpan,
             height: cellSize * cardSize.rowSpan,
         };
 
-        const ghostCardEl = ghostCardElement.current!;
-        const gridEl = (gridElement.current = findGridAtPoint(clientX, clientY));
-        const sectionEl = (sectionElement.current = gridEl ? findSectionClosest(gridEl) : null);
-        const dailyboardEl = (dailyboardElement.current = sectionEl ? findDailyboardClosest(sectionEl) : null);
+        const ghostCardEl = state.ghostCardElement!;
+        const gridEl = (state.gridElement = findGridAtPoint(clientX, clientY));
+        const sectionEl = (state.sectionElement = gridEl ? findSectionClosest(gridEl) : null);
+        const dailyboardEl = (state.dailyboardElement = sectionEl ? findDailyboardClosest(sectionEl) : null);
 
-        isGhostCardOverlapping.current = false;
+        state.isGhostCardOverlapping = false;
 
         if (gridEl && sectionEl && dailyboardEl) {
             const sectionData = getSectionDataForGrid(gridEl);
             if (!sectionData) return;
 
             const { name: sectionName, position: gridPos } = sectionData;
-            sectionElementData.current = { name: sectionName, position: gridPos };
+            state.sectionElementData = { name: sectionName, position: gridPos };
 
             const gridRect = gridEl.getBoundingClientRect();
             const gridSize = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
             const { col: mouseCol, row: mouseRow } = calcGridPointerAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
             let { col: cardCol, row: cardRow } = calcDailyboardCardGridIndexes(mouseCol, mouseRow, gridSize, cardSize);
 
-            ghostCardGridPos.current = {
+            state.ghostCardGridPos = {
                 colIndex: cardCol,
                 rowIndex: cardRow,
                 colSpan: cardSize.colSpan,
@@ -115,7 +114,7 @@ export const useDailyboardCardDragPlacement = () => {
             };
 
             const gap = dailyboardEl.clientWidth * 0.0075;
-            ghostCardPos.current = calcDailyboardCardFixedRect(gridRect, gap, gridSize, ghostCardGridPos.current);
+            state.ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, state.ghostCardGridPos);
 
             const cards = findDailyboardCardsForSection(dailyboardEl, sectionName).filter((card) => {
                 const cardData = getDailyboardCardData(card);
@@ -123,138 +122,129 @@ export const useDailyboardCardDragPlacement = () => {
             });
 
             const cardRects = cards.map(getDailyboardCardData);
-            isGhostCardOverlapping.current = isGridRectOverlappingSome(ghostCardGridPos.current, cardRects);
+            state.isGhostCardOverlapping = isGridRectOverlappingSome(state.ghostCardGridPos, cardRects);
 
-            if (isGhostCardOverlapping.current) {
-                const bestPos = findBestGridRectPosition(ghostCardGridPos.current, cardRects, gridSize);
+            if (state.isGhostCardOverlapping) {
+                const bestPos = findBestGridRectPosition(state.ghostCardGridPos, cardRects, gridSize);
                 if (bestPos) {
-                    suggestedCardGridPos.current = bestPos;
-                    suggestedCardPos.current = calcDailyboardCardFixedRect(gridRect, gap, gridSize, suggestedCardGridPos.current);
+                    state.suggestedCardGridPos = bestPos;
+                    state.suggestedCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, state.suggestedCardGridPos);
                 } else {
-                    suggestedCardGridPos.current = null;
-                    suggestedCardPos.current = null;
+                    state.suggestedCardGridPos = null;
+                    state.suggestedCardPos = null;
                 }
-            } 
-            else {
+            } else {
                 ghostCardEl.classList.remove("overlapping");
-                suggestedCardGridPos.current = null;
-                suggestedCardPos.current = null;
+                state.suggestedCardGridPos = null;
+                state.suggestedCardPos = null;
             }
-        } 
-        else {
-            sectionElement.current = null;
-            sectionElementData.current = null;
-            ghostCardGridPos.current = null;
-            ghostCardPos.current = {
+        } else {
+            state.sectionElement = null;
+            state.sectionElementData = null;
+            state.ghostCardGridPos = null;
+            state.ghostCardPos = {
                 x: clientX - size.width / 2,
                 y: clientY - size.height / 2,
                 width: size.width,
                 height: size.height,
             };
-            suggestedCardGridPos.current = null;
-            suggestedCardPos.current = null;
+            state.suggestedCardGridPos = null;
+            state.suggestedCardPos = null;
         }
-    },[metrics]);
+    }, [state]);
 
-    const updateGhostCard = useCallback(
-        (clientX: number, clientY: number) => {
-        const ghostCard = ghostCardElement.current;
+    const updateGhostCard = useCallback((clientX: number, clientY: number) => {
+        const ghostCard = state.ghostCardElement;
         if (!ghostCard) return;
 
         calculatePosition(clientX, clientY);
-        if (!ghostCardPos.current) return;
+        if (!state.ghostCardPos) return;
 
-        ghostCard.style.left = `${ghostCardPos.current.x}px`;
-        ghostCard.style.top = `${ghostCardPos.current.y}px`;
-        ghostCard.style.width = `${ghostCardPos.current.width}px`;
-        ghostCard.style.height = `${ghostCardPos.current.height}px`;
+        ghostCard.style.left = `${state.ghostCardPos.x}px`;
+        ghostCard.style.top = `${state.ghostCardPos.y}px`;
+        ghostCard.style.width = `${state.ghostCardPos.width}px`;
+        ghostCard.style.height = `${state.ghostCardPos.height}px`;
 
-        if (suggestedCardPos.current) {
-            if (!suggestedCardElement.current) {
-                suggestedCardElement.current = document.createElement("div");
-                suggestedCardElement.current.id = "dailyboard-suggested-card";
-                document.body.appendChild(suggestedCardElement.current);
+        if (state.suggestedCardPos) {
+            if (!state.suggestedCardElement) {
+                state.suggestedCardElement = document.createElement("div");
+                state.suggestedCardElement.id = "dailyboard-suggested-card";
+                document.body.appendChild(state.suggestedCardElement);
             }
 
-            suggestedCardElement.current.style.left = `${suggestedCardPos.current.x}px`;
-            suggestedCardElement.current.style.top = `${suggestedCardPos.current.y}px`;
-            suggestedCardElement.current.style.width = `${suggestedCardPos.current.width}px`;
-            suggestedCardElement.current.style.height = `${suggestedCardPos.current.height}px`;
-        } 
-        else if (suggestedCardElement.current) {
-            document.body.removeChild(suggestedCardElement.current);
-            suggestedCardElement.current = null;
+            state.suggestedCardElement.style.left = `${state.suggestedCardPos.x}px`;
+            state.suggestedCardElement.style.top = `${state.suggestedCardPos.y}px`;
+            state.suggestedCardElement.style.width = `${state.suggestedCardPos.width}px`;
+            state.suggestedCardElement.style.height = `${state.suggestedCardPos.height}px`;
+        } else if (state.suggestedCardElement) {
+            document.body.removeChild(state.suggestedCardElement);
+            state.suggestedCardElement = null;
         }
-        },
-        [calculatePosition]
-    );
+    }, [state, calculatePosition]);
 
     const handleGhostCardPan = useCallback((event: HammerInput) => {
         const { x, y } = event.center;
         updateGhostCard(x, y);
     }, [updateGhostCard]);
 
-    // ------------------------------------------------------------------------
     const destroy = useCallback(() => {
-        if (!ghostCardElement.current) return true;
+        if (!state.ghostCardElement) return true;
 
-        document.body.removeChild(ghostCardElement.current);
-        if (suggestedCardElement.current) {
-            document.body.removeChild(suggestedCardElement.current);
+        document.body.removeChild(state.ghostCardElement);
+        if (state.suggestedCardElement) {
+            document.body.removeChild(state.suggestedCardElement);
         }
 
-        hammerRef.current?.off("ghostcardpan", handleGhostCardPan);
-        hammerRef.current?.off("ghostcardpanend", drop);
+        state.hammer?.off("ghostcardpan", handleGhostCardPan);
+        state.hammer?.off("ghostcardpanend", drop);
 
-        // Clear refs
-        dailyboardElement.current = null;
-        sectionElement.current = null;
-        sectionElementData.current = null;
-        gridElement.current = null;
-        ghostCardElement.current = null;
-        ghostCardGridPos.current = null;
-        ghostCardPos.current = null;
-        isGhostCardOverlapping.current = false;
-        suggestedCardElement.current = null;
-        suggestedCardGridPos.current = null;
-        suggestedCardPos.current = null;
-
-        return true;
-    }, [handleGhostCardPan]);
-
-    const initialize = useCallback(() => {
-        dailyboardElement.current = findDailyboardInSubtree(document.body);
-        if (!dailyboardElement.current) return false;
-        if (ghostCardElement.current) return false;
-
-        ghostCardElement.current = document.createElement("div");
-        ghostCardElement.current.id = "dailyboard-ghost-card";
-        document.body.appendChild(ghostCardElement.current);
-
-        hammerRef.current?.on("ghostcardpan", handleGhostCardPan);
-        hammerRef.current?.on("ghostcardpanend", drop);
+        state.dailyboardElement = null;
+        state.sectionElement = null;
+        state.sectionElementData = null;
+        state.gridElement = null;
+        state.ghostCardElement = null;
+        state.ghostCardGridPos = null;
+        state.ghostCardPos = null;
+        state.isGhostCardOverlapping = false;
+        state.suggestedCardElement = null;
+        state.suggestedCardGridPos = null;
+        state.suggestedCardPos = null;
 
         return true;
-    }, [handleGhostCardPan]);
+    }, [state, handleGhostCardPan]);
 
-    // ------------------------------------------------------------------------
     const drop = useCallback(() => {
-        if (stateRef.current) {
+        if (state.content) {
             setContent(null);
             onFinishCallbackRef.current?.(resolveResult());
             destroy();
         }
         return false;
-    }, [destroy, resolveResult]);
+    }, [state.content, destroy, resolveResult]);
+
+    const initialize = useCallback(() => {
+        state.dailyboardElement = findDailyboardInSubtree(document.body);
+        if (!state.dailyboardElement) return false;
+        if (state.ghostCardElement) return false;
+
+        state.ghostCardElement = document.createElement("div");
+        state.ghostCardElement.id = "dailyboard-ghost-card";
+        document.body.appendChild(state.ghostCardElement);
+
+        state.hammer?.on("ghostcardpan", handleGhostCardPan);
+        state.hammer?.on("ghostcardpanend", drop);
+
+        return true;
+    }, [state, handleGhostCardPan, drop]);
 
     const drag = useCallback((input: DailyboardCardPlacementContent, onFinish: (result: DailyboardCardPlacementResult) => void) => {
-        if (!stateRef.current) {
+        if (!state.content) {
             setContent(input);
             onFinishCallbackRef.current = onFinish;
             return initialize();
         }
         return false;
-    }, [initialize]);
+    }, [state.content, initialize]);
 
     return { dragCard: drag };
 };
