@@ -21,36 +21,50 @@ export const hydrateSessionActor = createCallback<SessionHydrateActorInput, Sess
         }
         
         const sessionData = JSON.parse(raw) as AuthSession;
-
-        heuteApi.me.check()
-
-        .then(profile => {
-            return sendBack({ 
-                type: 'SESSION_HYDRATE_DONE',
-                payload: {
-                    ...sessionData,
-                    profile: profile!
-                },
-            });
-        })
-
-        .catch(error => {
-            const newSessionHeader = error.response.headers["x-new-auth-session"];
-            
-            if (newSessionHeader) {
-                const newSession = JSON.parse(newSessionHeader as string);
-
+        
+        const checkWithRetry = async (retryCount = 0, maxRetries = 3) => {
+            try {
+                const profile = await heuteApi.me.check();
+                
                 return sendBack({ 
-                    type: "SESSION_REFRESH_REQUEST",
-                    input: newSession
+                    type: 'SESSION_HYDRATE_DONE',
+                    payload: { ...sessionData, profile: profile! },
+                });
+                
+            } catch (error: any) {
+                const status = error?.response?.status;
+                const isRetryable = !status || status >= 500 || error?.code === 'ECONNABORTED';
+                
+                if (isRetryable && retryCount < maxRetries) {
+                    const delay = Math.pow(2, retryCount) * 1000;
+                    console.log(`Retry ${retryCount + 1}/${maxRetries} after ${delay}ms`);
+                    
+                    setTimeout(() => checkWithRetry(retryCount + 1, maxRetries), delay);
+                    return;
+                }
+                
+                const newSessionHeader = error.response?.headers["x-new-auth-session"];
+                
+                if (newSessionHeader) {
+                    const newSession = JSON.parse(newSessionHeader as string);
+                    return sendBack({ 
+                        type: "SESSION_REFRESH_REQUEST",
+                        input: newSession
+                    });
+                }
+                
+                if (status === 401) {
+                    localStorage.removeItem("session");
+                }
+                
+                return sendBack({ 
+                    type: 'SESSION_HYDRATE_ERROR',
+                    error: error?.message || "Failed to hydrate session",
                 });
             }
-
-            return sendBack({ 
-                type: 'SESSION_HYDRATE_ERROR',
-                error: error?.message || "Failed to hydrate session",
-            });
-        });
+        };
+        
+        checkWithRetry();
     }
 );
 
