@@ -6,11 +6,11 @@ import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext
 import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { DailyboardCardPlacementResult, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
+import { DailyboardCardPlacementResult, DailyboardCardPlacementContent } from "../type/tools-dailyboard.card-placement.types";
 
 export const useDailyboardCardDragPlacement = () => {
-    const [state, setState] = useState<DailyboardCardPlacementState | null>(null);
-    const stateRef = useRef(state);
+    const [content, setContent] = useState<DailyboardCardPlacementContent | null>(null);
+    const stateRef = useRef(content);
     const onFinishCallbackRef = useRef<((result: DailyboardCardPlacementResult) => void) | null>(null);
 
     const { metrics } = useLayoutContext();
@@ -35,9 +35,9 @@ export const useDailyboardCardDragPlacement = () => {
     const suggestedCardPos = useRef<Rect | null>(null);
 
     useEffect(() => {
-        stateRef.current = state;
+        stateRef.current = content;
         metricsRef.current = metrics;
-    }, [state, metrics]);
+    }, [content, metrics]);
 
     useEffect(() => {
         if (Hammer && !hammerRef.current) {
@@ -48,7 +48,7 @@ export const useDailyboardCardDragPlacement = () => {
         ghostCardPan.recognizeWith(pan);
         hammerRef.current.add(ghostCardPan);
         }
-    }, [state, Hammer]);
+    }, [content, Hammer]);
 
     // ------------------------------------------------------------------------
     const resolvePosition = useCallback((): GridRect | null => {
@@ -71,11 +71,11 @@ export const useDailyboardCardDragPlacement = () => {
     const resolveResult = useCallback((): DailyboardCardPlacementResult => {
         const placement = resolvePlacement();
         if (placement) {
-            return { state: state!, success: true, placement };
+            return { content: content!, success: true, placement };
         } else {
-            return { state: state!, success: false, placement: null };
+            return { content: content!, success: false, placement: null };
         }
-    }, [state, resolvePlacement]);
+    }, [content, resolvePlacement]);
 
     // ------------------------------------------------------------------------
     const calculatePosition = useCallback((clientX: number, clientY: number) => {
@@ -240,16 +240,16 @@ export const useDailyboardCardDragPlacement = () => {
     // ------------------------------------------------------------------------
     const drop = useCallback(() => {
         if (stateRef.current) {
-            setState(null);
+            setContent(null);
             onFinishCallbackRef.current?.(resolveResult());
             destroy();
         }
         return false;
     }, [destroy, resolveResult]);
 
-    const drag = useCallback((input: DailyboardCardPlacementState, onFinish: (result: DailyboardCardPlacementResult) => void) => {
+    const drag = useCallback((input: DailyboardCardPlacementContent, onFinish: (result: DailyboardCardPlacementResult) => void) => {
         if (!stateRef.current) {
-            setState(input);
+            setContent(input);
             onFinishCallbackRef.current = onFinish;
             return initialize();
         }
