@@ -31,7 +31,7 @@ export function WorkspaceBreadcrumbs() {
         items.push({
             ...navItem,
             render: (item) => (
-                <Box sx={{ display: "flex", justifyContent: "center", width: 128 }}>
+                <Box sx={{ display: "flex", justifyContent: "center", width: 92 }}>
                     {navItem.render ? navItem.render(item) : item.name}
                 </Box>
             )

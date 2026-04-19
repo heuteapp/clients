@@ -6,12 +6,17 @@ import { useState } from "react";
 
 export function LayoutSidebar() {
   const { send } = useWorkspaceDailyboardContext();
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setIsExpanded((prev) => !prev);
+  };
 
   return (
     <Box
       component="aside"
       sx={{
-        width: 64,
+        width: isExpanded ? 192 : 64,
         height: "100%",
         borderRight: 1,
         borderColor: "divider",
@@ -23,6 +28,16 @@ export function LayoutSidebar() {
         flexShrink: 0,
       }}
     >
+      <IconButton 
+        onClick={toggleExpanded}
+        sx={{
+          position: "absolute",
+          bottom: 12,
+          right: 12,
+        }}
+      >
+        {isExpanded ? <ChevronLeft /> : <ChevronRight />}
+      </IconButton>
       <Box
         sx={{
           flex: 1,
