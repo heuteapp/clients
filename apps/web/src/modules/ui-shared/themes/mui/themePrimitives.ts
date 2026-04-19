@@ -32,21 +32,19 @@ const defaultTheme = createTheme();
 const customShadows: Shadows = [...defaultTheme.shadows];
 
 // ------------------------------
-// HEUTEAPP LOGO RENKLERİ (BİREBİR)
-// Mavi: #009AFF / #004F88
-// Turuncu: #FF6500 / #CC4500
+// HEUTEAPP MAVİSİ – DAHA KOYU, DAHA OLGUN
 // ------------------------------
 export const brand = {
-  50: 'hsl(204, 100%, 97%)',   // #E5F5FF
-  100: 'hsl(204, 100%, 92%)',  // #B3E4FF
-  200: 'hsl(204, 100%, 82%)',  // #66CCFF
-  300: 'hsl(204, 100%, 68%)',  // #33B5FF
-  400: 'hsl(204, 100%, 58%)',  // #1AA3FF
-  500: 'hsl(204, 100%, 50%)',  // #009AFF (ANA)
-  600: 'hsl(204, 100%, 44%)',  // #0082D9
-  700: 'hsl(204, 100%, 38%)',  // #006BB3
-  800: 'hsl(204, 100%, 32%)',  // #00548C (daha açık, #004F88 yerine)
-  900: 'hsl(204, 100%, 25%)',  // #003D66
+  50: 'hsl(204, 95%, 94%)',
+  100: 'hsl(204, 90%, 86%)',
+  200: 'hsl(204, 88%, 76%)',
+  300: 'hsl(204, 85%, 64%)',
+  400: 'hsl(204, 85%, 54%)',
+  500: 'hsl(204, 85%, 44%)',   // #0A7ACC
+  600: 'hsl(204, 85%, 38%)',
+  700: 'hsl(204, 85%, 32%)',
+  800: 'hsl(204, 85%, 26%)',
+  900: 'hsl(204, 85%, 20%)',
 };
 
 export const secondaryBrand = {

@@ -63,10 +63,22 @@ const SidebarDailyboardContent = () => {
   };
   
   return (
-    <Box sx={{ marginTop: "auto", marginBottom: "auto" }}>
-      <IconButton color="primary" aria-label="add" onPointerDown={handleAddCard}>
+    <>
+      <IconButton 
+        color="primary"
+        aria-label="add" 
+        onPointerDown={handleAddCard}
+        sx={{
+          width: 36,
+          height: 36,
+          border: "1px solid",
+          borderRadius: 1,
+          margin: 1,
+          boxSizing: "border-box"
+        }}
+      >
         <Add />
       </IconButton>
-    </Box>
+    </>
   )
 }
