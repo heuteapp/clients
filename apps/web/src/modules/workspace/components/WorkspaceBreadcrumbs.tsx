@@ -13,6 +13,12 @@ export function WorkspaceBreadcrumbs() {
             <HeuteIconOnlyBrand 
                 iconSize={24} 
                 link={{ href: item.href, linkType: "external" }}
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: 32,
+                    paddingLeft: "16px",
+                }}
             />
         ),
         animate: false
@@ -28,9 +34,6 @@ export function WorkspaceBreadcrumbs() {
             offset={10}
             items={items}
             animate={animate}
-            sx={{
-                padding: 1
-            }}
         />
     )
 }
