@@ -110,7 +110,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
-            {(process.env.NODE_ENV === "development") && JSON.stringify(state.value)}
             {children}
         </AuthContext.Provider>
     );
