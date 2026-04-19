@@ -3,3 +3,9 @@ export interface MetricsContextValue {
     subscribe: (target: string, fn: () => void) => boolean;
     unsubscribe: (target: string) => boolean;
 }
+
+export interface HammerContextValue {
+    Hammer: HammerStatic | null;
+    loading: boolean;
+    error: null;
+}

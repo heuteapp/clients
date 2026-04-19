@@ -4,11 +4,11 @@ import { useEffect, useRef, useCallback } from "react";
 import { isEditingCard, isModifyingCard, isPlacingCard, isPlacingCardIdle, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
-import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
+import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
 import { useDailyboardCardDragPlacement } from "../../../tools-dailyboard/hooks/useDailyboardCardDragPlacement";
 
 export const useEditCardState = () => {
-    const { Hammer } = useHammerLoader();
+    const { Hammer } = useHammerContext();
     const { send, state } = useWorkspaceDailyboardContext();
     const { dragCard } = useDailyboardCardDragPlacement();
     const { metadata } = useWorkspaceDailyboardContext();

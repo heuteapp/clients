@@ -4,7 +4,7 @@ import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modul
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
-import { useHammerLoader } from "@/src/modules/ui-shared/hooks/useHammerLoader";
+import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { DailyboardCardPlacementResult, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
 
@@ -16,7 +16,7 @@ export const useDailyboardCardDragPlacement = () => {
     const { metrics } = useLayoutContext();
     const metricsRef = useRef(metrics);
 
-    const { Hammer } = useHammerLoader();
+    const { Hammer } = useHammerContext();
     const hammerRef = useRef<HammerManager | null>(null);
 
     // DOM element refs
