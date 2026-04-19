@@ -1,11 +1,12 @@
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
+import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
 import { ChevronLeft, ChevronRight, Add } from "@mui/icons-material";
 import { IconButton, Typography, Slider, Button } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 
 export function LayoutSidebar() {
-  const { send } = useWorkspaceDailyboardContext();
+  const { metadata } = useWorkspaceContext();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
@@ -48,12 +49,19 @@ export function LayoutSidebar() {
           padding: 1
         }}
       >
-        <Box sx={{ marginTop: "auto", marginBottom: "auto" }}>
-          <IconButton color="primary" aria-label="add">
-            <Add />
-          </IconButton>
-        </Box>
+        {metadata.type === "dailyboard" && <SidebarDailyboardContent />}
       </Box>
     </Box>
   );
+}
+
+const SidebarDailyboardContent = () => {
+  const { send } = useWorkspaceDailyboardContext();
+  return (
+    <Box sx={{ marginTop: "auto", marginBottom: "auto" }}>
+      <IconButton color="primary" aria-label="add">
+        <Add />
+      </IconButton>
+    </Box>
+  )
 }

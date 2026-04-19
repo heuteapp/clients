@@ -41,19 +41,11 @@ function LayoutContainer({ children }: { children: React.ReactNode }) {
 }
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
-  const { metadata } = useWorkspaceContext();
-  const { type } = metadata;
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   return (
     <>
       <LayoutNavbar />
       <Stack direction="row" sx={{ width: '100%', height: 'calc(100dvh - 49px)' }}>
-        {isClient && type === 'dailyboard' && <LayoutSidebar />}
+        <LayoutSidebar />
         <LayoutMonitor>{children}</LayoutMonitor>
       </Stack>
     </>
