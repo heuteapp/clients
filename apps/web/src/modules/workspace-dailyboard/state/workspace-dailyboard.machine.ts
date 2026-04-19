@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { resolveSourcesAction } from "./workspace-dailyboard.actions";
+import { fetchingSourcesDoneAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -12,7 +12,7 @@ export const workspaceDailyboardMachine = setup({
         fetchSources: fetchSourcesActor
     }, 
     actions: {
-        resolveSources: resolveSourcesAction,
+        fetchingSourcesDone: fetchingSourcesDoneAction,
     }
 }).createMachine({
     /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxAGUA8gFUASgGEAoiID6AMTkAVGQAlFUuQEUJCtQG0ADAF1EoHKljlOqLlZAAPRADZ3AVmZeA7AAcAIxeAEwhXqZeXgEANCDUiKFeAMzMAJypQabuAekALO6B+QC+JfFoWLiEJGRUdAxMrBzcvABmYOwEABatfALC4tLySqoa2roGRmaWSCA2dg5Oc24Ifsm+gSHh0VEx8Ylr+UEZWUEFpqbb6WUVGNj4RKQUNPSMLGz2fR1dvTzMsFQAFd0ERYEIII4wHwuAA3VCYaE-HrEQEgsEzZwLL6OZyrMIHRDBZj5dJksn5fx+FLpZK3ECVB41Z71N5NT6cf7Iv68NGguBCMDodAYZg4Sh4dhtDAAW2Y3NRwP5sExc2xSzxRMuGQC+RSqRS7nC1PyhIQ7gKJNSphSlNyoRSV3pjOqTzqr0aLHQYDwEGo-UEokksgUKnUWh0+kMIhMFixthxy1Aq1Ceoy5LylICKWCITNKWpzFCNuyARtRWp7lK9K4qAgcGcLsetReDXe8cW5FxK0QxHSZuIPnJw5H6SrXmd91dLdZnuaXx4HcTmoQpJ8-mC+WOfkycQSiCCnitKWyfj1FppoUnVWbLI973nnN4-EES41PYQXjTG6CW6CO-2fcEGSfJj2yXICiKXVryZN1WzZD4Wi5ToelaN8uyTVxEF2TZN23XczXcHJThPUx0n-AIAgtGDpzvNt2SQ9oUJ5AMwHQ7tk2w9IAlw398MAw4LXSZhy0NK4-HWMir3KBkp1vd16MQhcmN+Po+TBdjMNWbIomYEIjRSUIy0CPxPDNakTkuR0LVMPwrlCQIaPk+C529X1DmsBN304hAaTNIz3CLEtTACfx0htSknOZBSEOYNy-VYzSVwCPx80LOzSLLQ0JILMoyiAA */
@@ -61,7 +61,7 @@ export const workspaceDailyboardMachine = setup({
                                 },
                                 onDone: {
                                     target: "#workspace-dailyboard.ready",
-                                    actions: ["resolveSources"]
+                                    actions: "fetchingSourcesDone"
                                 },
                                 onError: {
                                     target: "idle"
@@ -82,6 +82,16 @@ export const workspaceDailyboardMachine = setup({
                         }
                     }
                 },
+                "card": {
+                    initial: "idle",
+                    states: {
+                        "idle": {
+                        },
+                        "creating": {
+
+                        }
+                    }
+                }
             }
         }
     }

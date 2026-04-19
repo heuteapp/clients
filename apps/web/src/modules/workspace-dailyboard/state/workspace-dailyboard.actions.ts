@@ -5,9 +5,8 @@ import { responseToLayout } from "@/src/api/responses/layout.response";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
 import { isoToYYMMDD } from "../../shared/utils/date.utils";
-import { DailyboardCardData } from "../../dailyboard/types/dailyboard.data.types";
 
-export const resolveSourcesAction = createAssign<
+export const fetchingSourcesDoneAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
     ({ event }) => {
