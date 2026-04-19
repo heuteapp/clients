@@ -74,16 +74,14 @@ const SidebarDailyboardContent = () => {
           height: 48,
           border: "2px solid",
           borderRadius: 0.6,
-          margin: 1,
           boxSizing: "border-box"
         }}
       >
         <Add />
       </IconButton>
-      <IconButton 
+      {/*<IconButton 
         color="secondary"
-        aria-label="add" 
-        onPointerDown={handleAddCard}
+        aria-label="add"
         sx={{
           width: 36,
           height: 24,
@@ -94,7 +92,7 @@ const SidebarDailyboardContent = () => {
         }}
       >
         <Launch sx={{ fontSize: 18 }} />
-      </IconButton>
+      </IconButton>*/}
     </>
   )
 }
