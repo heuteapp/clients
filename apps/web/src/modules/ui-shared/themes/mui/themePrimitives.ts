@@ -23,6 +23,7 @@ declare module '@mui/material/styles' {
 
   interface Palette {
     baseShadow: string;
+    secondary: PaletteColor;
   }
 }
 
@@ -30,19 +31,38 @@ const defaultTheme = createTheme();
 
 const customShadows: Shadows = [...defaultTheme.shadows];
 
+// ------------------------------
+// HEUTEAPP LOGO RENKLERİ (BİREBİR)
+// Mavi: #009AFF / #004F88
+// Turuncu: #FF6500 / #CC4500
+// ------------------------------
 export const brand = {
-  50: 'hsl(210, 100%, 95%)',
-  100: 'hsl(210, 100%, 92%)',
-  200: 'hsl(210, 100%, 80%)',
-  300: 'hsl(210, 100%, 65%)',
-  400: 'hsl(210, 98%, 48%)',
-  500: 'hsl(210, 98%, 42%)',
-  600: 'hsl(210, 98%, 55%)',
-  700: 'hsl(210, 100%, 35%)',
-  800: 'hsl(210, 100%, 16%)',
-  900: 'hsl(210, 100%, 21%)',
+  50: 'hsl(204, 100%, 97%)',   // #E5F5FF
+  100: 'hsl(204, 100%, 92%)',  // #B3E4FF
+  200: 'hsl(204, 100%, 82%)',  // #66CCFF
+  300: 'hsl(204, 100%, 68%)',  // #33B5FF
+  400: 'hsl(204, 100%, 58%)',  // #1AA3FF
+  500: 'hsl(204, 100%, 50%)',  // #009AFF (ANA)
+  600: 'hsl(204, 100%, 44%)',  // #0082D9
+  700: 'hsl(204, 100%, 38%)',  // #006BB3
+  800: 'hsl(204, 100%, 32%)',  // #00548C (daha açık, #004F88 yerine)
+  900: 'hsl(204, 100%, 25%)',  // #003D66
 };
 
+export const secondaryBrand = {
+  50: 'hsl(24, 100%, 96%)',
+  100: 'hsl(24, 100%, 90%)',
+  200: 'hsl(24, 100%, 80%)',
+  300: 'hsl(24, 100%, 68%)',
+  400: 'hsl(24, 100%, 58%)',
+  500: 'hsl(24, 100%, 50%)',   // #FF6500
+  600: 'hsl(24, 100%, 44%)',
+  700: 'hsl(20, 100%, 40%)',   // #CC4500
+  800: 'hsl(20, 100%, 32%)',
+  900: 'hsl(20, 100%, 24%)',
+};
+
+// Diğer renkler (gray, green, orange, red, blue) AYNEN KALIYOR
 export const gray = {
   50: 'hsl(0, 0%, 95%)',
   100: 'hsl(0, 0%, 90%)',
@@ -129,9 +149,15 @@ export const colorSchemes = {
       mode: 'light' as PaletteMode,
       primary: {
         light: brand[300],
-        main: brand[400],
-        dark: brand[700],
+        main: brand[500],   // #009AFF – logo mavisi
+        dark: brand[800],   // #004F88
         contrastText: gray[50],
+      },
+      secondary: {
+        light: secondaryBrand[300],
+        main: secondaryBrand[500],   // #FF6500 – logo turuncusu
+        dark: secondaryBrand[700],   // #CC4500
+        contrastText: gray[900],
       },
       info: {
         light: blue[300],
@@ -169,7 +195,7 @@ export const colorSchemes = {
       action: {
         hover: alpha(brand[100], 0.5),
         selected: alpha(brand[200], 0.3),
-        active: brand[400],
+        active: brand[500],
       },
       baseShadow: 'hsla(40, 15%, 10%, 0.05) 0px 4px 16px 0px, hsla(40, 12%, 15%, 0.05) 0px 8px 16px -5px',
     },
@@ -178,10 +204,16 @@ export const colorSchemes = {
     palette: {      
       mode: 'dark' as PaletteMode,
       primary: {
-        light: brand[300],
-        main: brand[400],
-        dark: brand[700],
+        light: brand[400],
+        main: brand[500],
+        dark: brand[800],
         contrastText: gray[50],
+      },
+      secondary: {
+        light: secondaryBrand[400],
+        main: secondaryBrand[500],
+        dark: secondaryBrand[800],
+        contrastText: gray[900],
       },
       info: {
         light: blue[400],
@@ -219,7 +251,7 @@ export const colorSchemes = {
       action: {
         hover: alpha(gray[600], 0.3),
         selected: alpha(gray[600], 0.4),
-        active: brand[400],
+        active: brand[500],
       },
       baseShadow: 'hsla(40, 12%, 5%, 0.7) 0px 4px 16px 0px, hsla(40, 10%, 8%, 0.8) 0px 8px 16px -5px',
     },
