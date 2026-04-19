@@ -73,7 +73,7 @@ const SidebarDailyboardContent = () => {
         sx={{
           width: 36,
           height: 36,
-          border: "1px solid",
+          border: "1.5px solid",
           borderRadius: 1,
           margin: 1,
           boxSizing: "border-box"
