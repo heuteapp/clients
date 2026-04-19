@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import { MetricsContext } from "../contexts/ui.context";
 import React from "react";
 
-export function MetricsProvider({ rootEl, children, targets }: MetricsProviderProps) {
+export function MetricsProvider({ rootRef, children, targets }: MetricsProviderProps) {
     const functionsRef = React.useRef<Map<string, () => void>>(new Map());
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
@@ -20,6 +20,7 @@ export function MetricsProvider({ rootEl, children, targets }: MetricsProviderPr
 
     useEffect(() => {
         if(functionsRef.current.size === 0) return;
+        if(!rootRef?.current) return;
 
         const observer = new ResizeObserver(() => {
             for (const targetName of targets) {
@@ -28,9 +29,9 @@ export function MetricsProvider({ rootEl, children, targets }: MetricsProviderPr
             }
         });
         
-        observer.observe(rootEl || document.body);
+        observer.observe(rootRef?.current || document.body);
         return () => observer.disconnect();
-    }, [rootEl, targets]);
+    }, [rootRef?.current, targets]);
 
     return (
         <MetricsContext.Provider value={{ targets, subscribe, unsubscribe }}>
@@ -40,7 +41,7 @@ export function MetricsProvider({ rootEl, children, targets }: MetricsProviderPr
 }
 
 export type MetricsProviderProps = {
-    rootEl?: HTMLElement;
+    rootRef?: React.RefObject<HTMLDivElement | null>;
     children: React.ReactNode;
     targets: string[];
 }
