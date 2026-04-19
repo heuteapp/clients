@@ -35,7 +35,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
 
     useEffect(() => {
         if(metadata) {
-        workspaceDailyboardService.send({ type: "SOURCES_FETCH_REQUESTED", dailyboardPath: metadata.categoryPath + "/" + metadata.date?.raw });
+        workspaceDailyboardService.send({ type: "SOURCES_FETCH_REQUEST", dailyboardPath: metadata.categoryPath + "/" + metadata.date?.raw });
         }
     }, [metadata]);
 

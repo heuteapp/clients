@@ -15,7 +15,7 @@ export const workspaceDailyboardMachine = setup({
         resolveSources: resolveSourcesAction,
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxAGUA8gFUASgGEAoiID6AMTkAVGQAlFUuQEUJCtXIAiAbQAMAXUSgcqWOU6outkAA9EAJgCMAdgBmZj8ANgBWEJ8AFi8Avx8wrzCAGhBqRGiosOYATjCAgoAOCz9EgOiAXwrUtCxcQhIyKjoGJlYObl4AMzB2AgALToACWFQAV3QiWCEIFzA+LgA3VEx5nr7+4lGJqcsbJBB7R2dXA88ERNT0hEKfZiicx8Kw24CokIsoqpqMbHwiUgUGj0RgsNhOTrMdYDYbbSZwIRgdDoDDMHCUPDsLoYAC2UN6Ay243hsD2biOEJcbnOXi8IRyzASkUiPkipT8VwyARyhXu+TihRCAWKOSiX2qIFqfwagOaILa6DAeAg1D4AmE4mk8iUqg02l0BiMpjJBwpJ2pGT8Xj8zC8FnKgT88UeXk5CB81ptfntUVZITpdJCfm+kt+9QBTWBrRYiuVqv4giEMgAglITIoZLpk8YdPpDCJjOZrOSHJTTqBzj4PQywgkwjlYiEHn4ohy0og-IUbc9-U2G1EuwkQ1Lw40gS1QcxYyq1YmU2nFKYAJJqXOGgvG4um0vms6IHJt65eHJ3A-hCJNkKDsLDsP-Mdy6NTpUzgixzg8IYEUFJ1PpzNyNmciKCIEgyPIpibvsdg7uQVJ7u6PjcswtZhPWjbNq2br0qe9pIRYx6FFkvi3nU96ylGk7Tqqb5Kh+UBfj+87-lmOYpgAcvIAAyXFQSWxxweWHgZNENZ1g2AR9i2h6IE2dxRPaFhhAOoTVjeEojuRkYTgqL6qpAEKft+bQJsIzGLiYK6KAACmISgGvmhYmjBAnwRWiDlAyFjed58QBBYOQhOEURuj4AXZHkBSdietZKQEpHShG47yjGenMAZ9GMSZ6q-guy6riIS4AFrAQ5RpFtBhywW5wkIJ5zA+b5+GBcFbqlEEWQBLShRvNJHoJaOFE6alcbpRAhkMcZLCmbl6b5RmYjscoS5SAAsnx26uUJ5yhBYwSBT13JKVEwo5G6XZRLa9rdXahSBWhA1aclT7UWNE1ZdNOXmfNHHcbxFX8WWFoILt+1XgUOTHadbr5Hc3r+U6ckFP4j0ytpKXPqNGXDFNzA4qgiydLNFlWbZSgyGIq3WbxTlbi5QMIV1e2lN5XgnbSoSQyF7bup82Sdf5bwNp2x6o0lj5UWl2NGZO+OEzwxPzWTGbJpxcg8Rt9O7u5dVsw17xEcKWT1jkcRuo8l2Rd1JSfB8Xhiw+lG6Vj42ZbjiqOAAXkT32WQVxXARTVM05rVVbcD9WNSUzVBcpbUEbksOJA2tYqQ7Q0Y690uTZLXs+3+JP+yVKtqxrAObQzOtdV4toHU2YQ+kKaHYYkfIIyzXiFAGVQSlwqAQHAbiaWjz2goD2u1cQHpusQIQNVHC9KcGGl3iPEttOC9Hj4JwM+E8wThB88QWJEgoBKFndzwLJQFIkTrxSvZFr07YIdDws5gNvNU0rbB8RNHJ8fBn1CgpII9ogqxweLSe2j9EqO2Gu0Ca+INiwmJFML+21vDvCCF1W4sRrQn0KKFOIQRIpxHCuUJShR07oxenpDBEcQhujtJdVs4RvSHV9GFGBPwn7ixfpjGcpkGEITCgnVCLwygKQsF3GGbxgiKW5H4E8QUHg0NHs7V874cZjwrhPSsvo54nySLWFsVZ6znx5vSS61Zj63TCgOdR68Rozmzh9EROsiIw38IncosRAreVeE4gRWdXY6OyoIDxtUkKuh5mFZRtp6zeSARAnq1DYGDVoZLF271cZy06FE84HwgjKKvJeNmSEGyhU+Lya+QtrRdxyMEhBoTcm53IN7HghTZL2jBoKd4FTuSxOuN6CK+Rur+jFF3HwPcKhAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDpkKAXcgOymfIkpgAxAGUA8gFUASgGEAoiID6AMTkAVGQAlFUuQEUJCtQG0ADAF1EoHKljlOqLlZAAPRADZ3AVmZeA7AAcAExepgCMAJxhpgAspl4ANCDUiCEAzMwRXmlhYTERBfGmQREAvqVJaFi4hCRkVHQMTKwc3LwAZmDsBAAWbXwCwuLS8kqqGtq6BkZmlkggNnYOTvNuCH4hvoHRETHuuQVpSSnrob5p7jF+afFekV4B5ZUY2PhEpBQ09IwsbPb9nW6fR4zFgqAArugiLAhBBHGA+FwAG6oTAIwG9YhgyHQ2bORb-RzONZeILHRABMLMfIFSlpAIxIJpNJ+J4gKqvWofBrfZp-TggjHA3jYqFwIRgdDoDDMHCUPDsdoYAC2zCFWIhYtgePmBOWxIpplMmQZaSCeyupnp5PWVuYVu8QXcNxiZpiYTZHJq73qXyaLHQYDwEGoA0EokksgUKnUWh0+kMIhMFnxtkJK1Aa3NMXtRqNaQeESCQQCAT8NpZGSCVrCQT8fhipcZHrZXFQEDgzi9bzqn0aP1TS3IRNWiGIERtxHcubzs9n-k9L29vZ5-pa-x4g-TBoQ+R8-kp8TLkT8pgCNrCnmp2TCzP2jcvpMX1R73L9P3XAt4-EEW-1o4QLxXS2Q8Hj8E8zxtEIcxiG88gKCIiiZZ9OR9PteV+VpBS6Xo2j-YcM1cRAvDOA9ojAiDz2SDxTGnLIcjifIAmdGIUOXN9+z5LCOhw4UwzAfCR0zYiIgCEDyOPCJTyok5Tz8Zh9lE807jNM0W2eF8uV9TjMI3HigX6UVoUEwi1gKHwwi8dwglyBs0l2W8bXcXZrxyGzSxLdx6zY19tIw5hA2DE5rDTf9hIQeyoOY5hqzUrySlJUsfK09C10CkN+JMncywra5mFPNz60bBlq3ccpyiAA */
     context: {
         dailyboardData: null,
         layoutData: null,
@@ -34,27 +34,39 @@ export const workspaceDailyboardMachine = setup({
             states: {
                 "idle": {
                     on: {
-                        SOURCES_FETCH_REQUESTED: {
-                            target: "fetching sources"
+                        SOURCES_FETCH_REQUEST: {
+                            target: "fetching"
                         }
                     }
                 },
-                "fetching sources": {
-                    invoke: {
-                        src: "fetchSources",
-                        id: "fetch-sources",
-                        input: ({ event }) => {
-                            const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "SOURCES_FETCH_REQUESTED" }>;
-                            return {
-                                dailyboardPath: fetchEvent.dailyboardPath,
-                            };
+                "fetching": {
+                    initial: "idle",
+                    states: {
+                        "idle": {
+                            on: {
+                                SOURCES_FETCH_REQUEST: {
+                                    target: "sources"
+                                }
+                            }
                         },
-                        onDone: {
-                            target: "#workspace-dailyboard.ready",
-                            actions: ["resolveSources"]
-                        },
-                        onError: {
-                            target: "idle"
+                        "sources": {
+                            invoke: {
+                                src: "fetchSources",
+                                id: "fetch-sources",
+                                input: ({ event }) => {
+                                    const fetchEvent = event as Extract<WorkspaceDailyboardMachineEvent, { type: "SOURCES_FETCH_REQUEST" }>;
+                                    return {
+                                        dailyboardPath: fetchEvent.dailyboardPath,
+                                    };
+                                },
+                                onDone: {
+                                    target: "#workspace-dailyboard.ready",
+                                    actions: ["resolveSources"]
+                                },
+                                onError: {
+                                    target: "idle"
+                                }
+                            }
                         }
                     }
                 }
@@ -65,8 +77,8 @@ export const workspaceDailyboardMachine = setup({
             states: {                
                 "idle": {
                     on: {
-                        SOURCES_FETCH_REQUESTED: {
-                            target: "#workspace-dailyboard.waiting.fetching sources"
+                        SOURCES_FETCH_REQUEST: {
+                            target: "#workspace-dailyboard.waiting.fetching"
                         }
                     }
                 },

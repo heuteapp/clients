@@ -5,13 +5,13 @@ import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
 export type WorkspaceDailyboardEvent =
-    | FetchSourcesEvent
+    | SourcesFetchEvent
     | CardCreateEvent
     | EditCardEvent
     | CardPlaceEvent;
 
-export type FetchSourcesEvent =
-    | { type: "SOURCES_FETCH_REQUESTED"; dailyboardPath: string }
+export type SourcesFetchEvent =
+    | { type: "SOURCES_FETCH_REQUEST"; dailyboardPath: string }
     | DoneActorEvent<DailyboardResponse, "fetch-sources">
     | ErrorActorEvent<"fetch-sources">;
 
