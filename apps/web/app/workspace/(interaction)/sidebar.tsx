@@ -57,9 +57,14 @@ export function LayoutSidebar() {
 
 const SidebarDailyboardContent = () => {
   const { send } = useWorkspaceDailyboardContext();
+
+  const handleAddCard = () => {
+    send({ type: "CARD_CREATE_REQUESTED", cardSize: { colSpan: 12, rowSpan: 3 } });
+  };
+  
   return (
     <Box sx={{ marginTop: "auto", marginBottom: "auto" }}>
-      <IconButton color="primary" aria-label="add">
+      <IconButton color="primary" aria-label="add" onPointerDown={handleAddCard}>
         <Add />
       </IconButton>
     </Box>
