@@ -6,9 +6,8 @@ import { LayoutContext } from "@/src/modules/ui-layout/contexts/layout.context";
 import { useLayoutMetrics } from "../hooks/useLayoutMetrics";
 import { LayoutProviderProps } from "../types/layout.props";
 
-export function LayoutProvider({ metricsId, dataSource, styleSource, children }: LayoutProviderProps) {
-    const layoutRef = React.useRef<HTMLDivElement | null>(null);
-    const registry = useLayoutRegistry(layoutRef);
+export function LayoutProvider({ rootRef, metricsId, dataSource, styleSource, children }: LayoutProviderProps) {
+    const registry = useLayoutRegistry(rootRef);
 
     const metrics = useLayoutMetrics(metricsId ?? "layout", registry, dataSource, styleSource);
 

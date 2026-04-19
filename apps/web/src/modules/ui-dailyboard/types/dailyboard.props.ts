@@ -15,6 +15,7 @@ export interface DailyboardCardProps {
 //
 
 export interface DailyboardProviderProps {
+    rootRef: React.RefObject<HTMLDivElement | null>;
     metricsId?: string;
     dataSource: StoredDailyboardData | null;
     children: React.ReactNode;

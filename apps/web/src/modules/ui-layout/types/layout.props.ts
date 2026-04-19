@@ -15,6 +15,7 @@ export interface LayoutGridProps  {
 }
 
 export interface LayoutProviderProps {
+    rootRef: React.RefObject<HTMLDivElement | null>;
     metricsId?: string;
     dataSource: StoredLayoutData | null;
     styleSource: StoredLayoutStyle | null;

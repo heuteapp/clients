@@ -17,6 +17,9 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     const [state, setState] = useState(() => workspaceDailyboardService.getSnapshot());  
     const { loadGlobalLayout, getGlobalLayout } = useLayoutStyleStore();
 
+    const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
+    const layoutRef = React.useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
         workspaceDailyboardService.start();
 
@@ -67,8 +70,8 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
 
     return (
         <MetricsProvider targets={["layout", "dailyboard"]}>
-            <LayoutProvider metricsId="layout"  dataSource={layoutData} styleSource={layoutStyle}>
-                <DailyboardProvider metricsId="dailyboard" dataSource={dailyboardData}>
+            <LayoutProvider rootRef={layoutRef} metricsId="layout"  dataSource={layoutData} styleSource={layoutStyle}>
+                <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
                     <WorkspaceDailyboardContext.Provider value={contextValue}>
                         <WorkspaceDailyboardStateSideEffects />
                         <ProviderContent>
