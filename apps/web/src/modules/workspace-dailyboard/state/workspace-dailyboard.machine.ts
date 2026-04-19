@@ -61,7 +61,16 @@ export const workspaceDailyboardMachine = setup({
             }
         },
         "ready": {
-            
+            initial: "idle",
+            states: {                
+                "idle": {
+                    on: {
+                        SOURCES_FETCH_REQUESTED: {
+                            target: "#workspace-dailyboard.waiting.fetching sources"
+                        }
+                    }
+                },
+            }
         }
     }
 });
