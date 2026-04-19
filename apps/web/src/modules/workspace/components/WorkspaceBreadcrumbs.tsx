@@ -2,6 +2,7 @@ import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
 import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
 import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
 import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
+import Box from "@mui/material/Box";
 
 export function WorkspaceBreadcrumbs() {
     const { breadcrumbs } = useWorkspaceContext();
@@ -24,7 +25,20 @@ export function WorkspaceBreadcrumbs() {
         animate: false
     }
 
-    const items = [rootItem, ...breadcrumbs.items];
+    const items = [rootItem];
+    const [navItem, ...restItems] = breadcrumbs.items;
+    if(navItem) {
+        items.push({
+            ...navItem,
+            render: (item) => (
+                <Box sx={{ display: "flex", justifyContent: "center", width: 128 }}>
+                    {navItem.render ? navItem.render(item) : item.name}
+                </Box>
+            )
+        });
+        items.push(...restItems);
+    }
+
     const animate = breadcrumbs.animate;
 
     return (
