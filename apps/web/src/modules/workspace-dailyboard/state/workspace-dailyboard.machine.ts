@@ -80,15 +80,25 @@ export const workspaceDailyboardMachine = setup({
                     initial: "creating",
                     states: {
                         creating: {
-                            initial: "placing",
+                            initial: "editing",
                             states: {
+                                editing: {
+                                    on: {
+                                        CARD_CREATE_PLACE_REQUEST: {
+                                            target: "placing"
+                                        },
+                                        CARD_CREATE_CANCEL: {
+                                            target: "#workspace-dailyboard.ready.idle"
+                                        }
+                                    }
+                                },
                                 placing: {
                                     on: {
                                         CARD_CREATE_PLACE_DONE: {
                                             target: "#workspace-dailyboard.ready.idle"
                                         },
                                         CARD_CREATE_PLACE_CANCEL: {
-                                            target: "#workspace-dailyboard.ready.idle"
+                                            target: "editing"
                                         }
                                     }
                                 }
