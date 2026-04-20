@@ -21,9 +21,7 @@ export const workspaceDailyboardMachine = setup({
         layoutData: null,
         layoutStyle: null,
         sessions: {
-            cardCreation: null,
-            cardEditing: null,
-            cardPlacing: null
+            card: null
         }
     },
     id: "workspace-dailyboard",
@@ -79,6 +77,9 @@ export const workspaceDailyboardMachine = setup({
                     on: {
                         SOURCES_FETCH_REQUEST: {
                             target: "#workspace-dailyboard.waiting.fetching.sources"
+                        },
+                        CARD_CREATE_REQUEST: {
+                            target: "creating.placing"
                         }
                     }
                 },
@@ -88,7 +89,30 @@ export const workspaceDailyboardMachine = setup({
                         "idle": {
                         },
                         "creating": {
-
+                            initial: "idle",
+                            states: {
+                                "idle": {
+                                    
+                                },
+                                "placing": {
+                                    on: {
+                                        CARD_CREATE_PLACE_DONE: {
+                                            target: "#workspace-dailyboard.ready.idle"
+                                        },
+                                        CARD_CREATE_PLACE_CANCEL: {
+                                            target: "#workspace-dailyboard.ready.idle"
+                                        }
+                                    }
+                                }
+                            },
+                            on: {
+                                CARD_CREATE_PLACE_REQUEST: {
+                                    target: "creating.placing"
+                                },
+                                CARD_CREATE_CANCEL: {
+                                    target: "#workspace-dailyboard.ready.idle"
+                                }
+                            }
                         }
                     }
                 }

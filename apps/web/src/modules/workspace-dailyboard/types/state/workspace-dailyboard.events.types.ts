@@ -17,11 +17,14 @@ export type SourcesFetchEvent =
 
 export type CardCreateEvent = 
     | CardCreateRequestEvent
+    | CardCreateCancelEvent
     | CardCreatePlaceRequestEvent
     | CardCreatePlaceDoneEvent
     | CardCreatePlaceCancelEvent;
 
 export type CardCreateRequestEvent = { type: "CARD_CREATE_REQUEST"; };
+
+export type CardCreateCancelEvent = { type: "CARD_CREATE_CANCEL"; };
 
 export type CardCreatePlaceRequestEvent = { type: "CARD_CREATE_PLACE_REQUEST"; cardSize: GridSize };
 

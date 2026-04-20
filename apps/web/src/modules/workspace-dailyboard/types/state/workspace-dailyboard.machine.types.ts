@@ -11,19 +11,25 @@ export type WorkspaceDailyboardMachineContext = {
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
   sessions: {
-    cardCreation: {
-      size: GridSize;
-    } | null;
-    cardEditing: {      
-      categoryPath: string;
-      date: YYMMDDDate;
-      cardKey: string;
-    } | null;
-    cardPlacing: {
-      categoryPath: string;
-      date: YYMMDDDate;
-      cardKey: string;
-    } | null;
+    card: {
+      creating: {
+        placing: {
+          size: GridSize;
+        } | null
+      } | null,
+      modifying: {
+        editing: {
+          categoryPath: string;
+          date: YYMMDDDate;
+          cardKey: string;
+        } | null,
+        placing: {
+          categoryPath: string;
+          date: YYMMDDDate;
+          cardKey: string;
+        } | null
+      }
+    } | null
   }
 }
 
