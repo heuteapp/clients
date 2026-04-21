@@ -13,13 +13,19 @@ export interface DailyboardCardViewProps {
 }
 
 export interface DailyboardCardRootProps {
+    data: StoredDailyboardCardData;
     ref: React.RefObject<HTMLDivElement | null>;
     className?: {
         body?: string[];
         title?: string[];
-        face?: string[];
+        frontFace?: string[];
+        backFace?: string[];
     },
-    data: StoredDailyboardCardData;
+    render?: {
+        title?: (data: StoredDailyboardCardData) => React.ReactNode;
+        frontFace?: (data: StoredDailyboardCardData) => React.ReactNode;
+        backFace?: (data: StoredDailyboardCardData) => React.ReactNode;
+    }
 }
 
 //
