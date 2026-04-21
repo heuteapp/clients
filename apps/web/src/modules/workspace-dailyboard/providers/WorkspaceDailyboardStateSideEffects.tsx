@@ -5,7 +5,7 @@ import { useEditCardState } from "../hooks/state/useEditCardState";
 
 export function WorkspaceDailyboardStateSideEffects() {
     useCreateCardState();
-    useEditCardState();
+    //useEditCardState();
 
     return null;
 }
