@@ -37,7 +37,6 @@ function DailyboardCard(props : DailyboardCardProps) {
     return (
         <div 
             data-dailyboard-card
-            data-dailyboard-card-type={"content"}
             data-dailyboard-card-id={dailyboardCardData.id}
             data-dailyboard-card-key={dailyboardCardData.name}
             data-dailyboard-card-title={dailyboardCardContent.title}
@@ -51,24 +50,13 @@ function DailyboardCard(props : DailyboardCardProps) {
         >
             <div
                 data-dailyboard-card-header
-                className={'header'}
+                className={'title'}
             >
                 {dailyboardCardContent.title}
             </div>
             <div
-                className={'body'}
+                className={'face'}
             >
-            <div className={clsx('colorButtons', style.colorButtons)}>
-                <button className={'colorBtn'} data-color="none" onClick={(e) => handleColorChange(e, '')} style={{background: '#3f3f3f' }}></button>
-                <button className={'colorBtn'} data-color="red" onClick={(e) => handleColorChange(e, 'red')} style={{background: '#d44'}}></button>
-                <button className={'colorBtn'} data-color="orange" onClick={(e) => handleColorChange(e, 'orange')} style={{background: '#e87c30'}}></button>
-                <button className={'colorBtn'} data-color="yellow" onClick={(e) => handleColorChange(e, 'yellow')} style={{background: '#e8c83c'}}></button>
-                <button className={'colorBtn'} data-color="green" onClick={(e) => handleColorChange(e, 'green')} style={{background: '#4aa84c'}}></button>
-                <button className={'colorBtn'} data-color="blue" onClick={(e) => handleColorChange(e, 'blue')} style={{background: '#4a7ac8'}}></button>
-                <button className={'colorBtn'} data-color="pink" onClick={(e) => handleColorChange(e, 'pink')} style={{background: '#d46a8c'}}></button>
-                <button className={'colorBtn'} data-color="purple" onClick={(e) => handleColorChange(e, 'purple')} style={{background: '#8c4ac8'}}></button>
-            </div>
-
             </div>
         </div>
     )

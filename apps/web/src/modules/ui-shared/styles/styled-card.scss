@@ -7,7 +7,13 @@
     box-sizing: border-box;    
     overflow: hidden;
 
-    .body {
+    .title {
+        width: 100%;
+        background-color: rgb(42, 47, 58);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.125);
+    }
+
+    .face {
         width: 100%;
         flex: 1;
         background: rgba(28, 32, 39, 1);
@@ -17,37 +23,9 @@
     }
 }
 
-.heute-card[data-dailyboard-card-type="content"] {
-    .header {
-        width: 100%;
-        background-color: rgb(42, 47, 58);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.125);
-    }
-
-    .body {
-        .colorButtons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .colorBtn {
-            width: 12px;
-            height: 12px;
-            border-radius: 5%;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .colorBtn:hover {
-            transform: scale(1.1);
-        }
-    }
-}
-
 .heute-card[data-dailyboard-card-type="content"].uc-red {
     border: 1px solid rgba(255, 50, 50, 0.5);
-    .header {
+    .title {
         background-color: rgb(140, 55, 55);
         border-bottom: 1px solid rgba(255, 50, 50, 0.4);
     }
@@ -55,7 +33,7 @@
 
 .heute-card[data-dailyboard-card-type="content"].uc-orange {
     border: 1px solid rgba(255, 100, 20, 0.5);
-    .header {
+    .title {
         background-color: rgb(140, 75, 45);
         border-bottom: 1px solid rgba(255, 100, 20, 0.4);
     }
@@ -63,7 +41,7 @@
 
 .heute-card[data-dailyboard-card-type="content"].uc-yellow {
     border: 1px solid rgba(255, 235, 50, 0.5);
-    .header {
+    .title {
         background-color: rgb(130, 120, 50);
         border-bottom: 1px solid rgba(255, 235, 50, 0.4);
     }
@@ -71,7 +49,7 @@
 
 .heute-card[data-dailyboard-card-type="content"].uc-green {
     border: 1px solid rgba(50, 255, 80, 0.5);
-    .header {
+    .title {
         background-color: rgb(55, 130, 65);
         border-bottom: 1px solid rgba(50, 255, 80, 0.4);
     }
@@ -79,7 +57,7 @@
 
 .heute-card[data-dailyboard-card-type="content"].uc-blue {
     border: 1px solid rgba(60, 140, 255, 0.5);
-    .header {
+    .title {
         background-color: rgb(55, 80, 135);
         border-bottom: 1px solid rgba(60, 140, 255, 0.4);
     }
@@ -87,7 +65,7 @@
 
 .heute-card[data-dailyboard-card-type="content"].uc-pink {
     border: 1px solid rgba(255, 70, 160, 0.5);
-    .header {
+    .title {
         background-color: rgb(140, 65, 100);
         border-bottom: 1px solid rgba(255, 70, 160, 0.4);
     }
@@ -95,7 +73,7 @@
 
 .heute-card[data-dailyboard-card-type="content"].uc-purple {
     border: 1px solid rgba(170, 80, 255, 0.5);
-    .header {
+    .title {
         background-color: rgb(100, 65, 140);
         border-bottom: 1px solid rgba(170, 80, 255, 0.4);
     }
