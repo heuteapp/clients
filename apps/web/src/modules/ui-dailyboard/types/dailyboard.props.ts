@@ -1,6 +1,7 @@
-import { StoredDailyboardData, StoredDailyboardCardData } from "@/src/heute-store/types/dailyboard.types";
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
+import { StoredDailyboardData, StoredDailyboardCardData } from "@/src/heute-store/types/dailyboard.types";
+import { DailyboardCardMaterial } from "../../dailyboard/types/dailyboard.data.types";
 
 export interface DailyboardRootProps {
     data: StoredDailyboardData;
@@ -15,7 +16,7 @@ export interface DailyboardCardViewProps {
 }
 
 export interface DailyboardCardRootProps {
-    data: StoredDailyboardCardData;
+    content: DailyboardCardMaterial;
     ref: React.RefObject<HTMLDivElement | null>;
     isFrontFace: boolean;
     className?: {
@@ -31,9 +32,9 @@ export interface DailyboardCardRootProps {
         backFace?: SxProps<Theme>;
     },
     render?: {
-        title?: (data: StoredDailyboardCardData) => React.ReactNode;
-        frontFace?: (data: StoredDailyboardCardData) => React.ReactNode;
-        backFace?: (data: StoredDailyboardCardData) => React.ReactNode;
+        title?: (content: DailyboardCardMaterial) => React.ReactNode;
+        frontFace?: (content: DailyboardCardMaterial) => React.ReactNode;
+        backFace?: (content: DailyboardCardMaterial) => React.ReactNode;
     },
 }
 

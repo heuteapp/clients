@@ -2,6 +2,7 @@ import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDaily
 import { DailyboardCardViewProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
 import { useLayoutEffect, useRef } from "react";
 import { DailyboardCardRoot } from "./DailyboardCardRoot";
+import { getDailyboardCardDataSet } from "../utils/ui.utils";
 
 function DailyboardCardView(props : DailyboardCardViewProps) {
     const { data: dailyboardCardData } = props;
@@ -23,9 +24,10 @@ function DailyboardCardView(props : DailyboardCardViewProps) {
 
     return (
         <DailyboardCardRoot 
-            data={dailyboardCardData}
+            content={dailyboardCardData.material}
             ref={ref}
             isFrontFace={true}
+            {...getDailyboardCardDataSet(dailyboardCardData)}
         />
     )
 }
