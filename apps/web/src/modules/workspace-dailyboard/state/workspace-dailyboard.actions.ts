@@ -73,8 +73,8 @@ export const cardCreatingPlacingRequestAction = createAssign<
 
         return {
             draftCard: {
-                cardContent: event.input.content,
-                cardSize: event.input.cardSize,
+                size: event.input.size,
+                content: event.input.content
             }
         }
     }

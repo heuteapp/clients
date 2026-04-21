@@ -3,21 +3,13 @@ import { WorkspaceDailyboardEvent } from "./workspace-dailyboard.events.types";
 import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.machine";
 import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
-import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
-import { GridSize } from "@/src/modules/shared/types/common";
-import { DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { DraftCardInput } from "./workspace-dailyboard.types";
 
 export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
-  draftCard: {
-    categoryPath?: string;
-    dailyboardDate?: YYMMDDDate;
-    cardKey?: string;
-    cardSize: GridSize;
-    cardContent?: DailyboardCardMaterial;
-  } | null;
+  draftCard: DraftCardInput | null;
 }
 
 export type WorkspaceDailyboardMachineEvent = WorkspaceDailyboardEvent;
