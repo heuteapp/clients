@@ -11,6 +11,7 @@ import { workspaceDailyboardService } from "../state/workspace-dailyboard.machin
 import { WorkspaceDailyboardStateSideEffects } from "./WorkspaceDailyboardStateSideEffects";
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
 import { WorkspaceDailyboardCardDialog } from "../components/WorkspaceDailyboardCardDialog";
+import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardContext";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -87,5 +88,16 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
 
 const ProviderContent = ({ children }: { children: React.ReactNode }) => {
     useWorkspaceDailyboardBreadcrumbs();
-    return <>{children}</>
+    const { state } = useWorkspaceDailyboardContext();
+
+    return (
+        <>
+            {children}
+            {process.env.NODE_ENV === "development" && (
+                <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", color: "white", padding: "4px 8px", fontSize: "14px", borderRadius: "4px 4px 0 0", zIndex: 9999 }}>
+                    W-Dailyboard: {JSON.stringify(state.value)}
+                </div>
+            )}
+        </>
+    )
 }
