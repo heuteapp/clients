@@ -1,4 +1,4 @@
-import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
+import { StoredDailyboardCardData, StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 
 export const getDailyboardDataSet = (dailyboard: StoredDailyboardData) => {
     return {
@@ -7,5 +7,20 @@ export const getDailyboardDataSet = (dailyboard: StoredDailyboardData) => {
         "data-layout-name": dailyboard.layoutName,
         "data-layout-version": dailyboard.layoutVersion,
         "data-date": dailyboard.date,
+    }
+}
+
+export const getDailyboardCardDataSet = (card: StoredDailyboardCardData) => {
+    return {
+        "data-dailyboard-card": true,
+        "data-id": card.id,
+        "data-key": card.name,
+        "data-title": card.material.title,
+        "data-color": card.material.color,
+        "data-section-name": card.placement?.sectionName || "",
+        "data-col-index": card.placement?.position.colIndex || 0,
+        "data-row-index": card.placement?.position.rowIndex || 0,
+        "data-col-span": card.placement?.position.colSpan || 1,
+        "data-row-span": card.placement?.position.rowSpan || 1,
     }
 }

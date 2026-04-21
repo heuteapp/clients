@@ -4,6 +4,7 @@ import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDaily
 import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
 import { useLayoutEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { getDailyboardCardDataSet } from "../utils/ui.utils";
 
 function DailyboardCard(props : DailyboardCardProps) {
     const { data: dailyboardCardData } = props;
@@ -24,19 +25,10 @@ function DailyboardCard(props : DailyboardCardProps) {
     if(!placement) return null;
 
     return (
-        <div 
-            data-dailyboard-card
-            data-id={dailyboardCardData.id}
-            data-key={dailyboardCardData.name}
-            data-title={dailyboardCardContent.title}
-            data-color={dailyboardCardContent.color}
-            data-section-name={placement.sectionName}
-            data-col-index={placement.position.colIndex}
-            data-row-index={placement.position.rowIndex}
-            data-col-span={placement.position.colSpan}
-            data-row-span={placement.position.rowSpan}
+        <div
             className={clsx('heute-card')}
             ref={ref}
+            {...getDailyboardCardDataSet(dailyboardCardData)}
         >
             <div
                 data-dailyboard-card-header
