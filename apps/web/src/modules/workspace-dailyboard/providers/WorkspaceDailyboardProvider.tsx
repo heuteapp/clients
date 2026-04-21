@@ -8,10 +8,10 @@ import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.con
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
 import { useLayoutStyleStore } from "@/src/heute-store/stores/layout.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
-import { WorkspaceDailyboardStateSideEffects } from "./WorkspaceDailyboardStateSideEffects";
+import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboardStateHooks";
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
-import { WorkspaceDailyboardCardDialog } from "../components/WorkspaceDailyboardCardDialog";
 import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardContext";
+import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDialogs";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -74,11 +74,11 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
             <LayoutProvider rootRef={layoutRef} metricsId="layout"  dataSource={layoutData} styleSource={layoutStyle}>
                 <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
                     <WorkspaceDailyboardContext.Provider value={contextValue}>
-                        <WorkspaceDailyboardStateSideEffects />
                         <ProviderContent>
                             {children}
                         </ProviderContent>
-                        {/*<WorkspaceDailyboardCardDialog />*/}
+                        <WorkspaceDailyboardDialogs />
+                        <WorkspaceDailyboardStateHooks />
                     </WorkspaceDailyboardContext.Provider>
                 </DailyboardProvider>
             </LayoutProvider>
