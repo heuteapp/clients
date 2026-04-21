@@ -1,4 +1,6 @@
 import { StoredDailyboardData, StoredDailyboardCardData } from "@/src/heute-store/types/dailyboard.types";
+import { Theme } from "@emotion/react";
+import { SxProps } from "@mui/system";
 
 export interface DailyboardRootProps {
     data: StoredDailyboardData;
@@ -21,6 +23,12 @@ export interface DailyboardCardRootProps {
         title?: string[];
         frontFace?: string[];
         backFace?: string[];
+    },
+    sx?: {
+        body?: SxProps<Theme>;
+        title?: SxProps<Theme>;
+        frontFace?: SxProps<Theme>;
+        backFace?: SxProps<Theme>;
     },
     render?: {
         title?: (data: StoredDailyboardCardData) => React.ReactNode;

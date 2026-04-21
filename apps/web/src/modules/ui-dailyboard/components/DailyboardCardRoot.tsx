@@ -1,39 +1,44 @@
 import clsx from "clsx";
 import { DailyboardCardRootProps } from "../types/dailyboard.props";
 import { getDailyboardCardDataSet } from "../utils/ui.utils";
+import { Box } from "@mui/material";
 
-export function DailyboardCardRoot({ data, ref, isFrontFace, className, render }: DailyboardCardRootProps) {
+export function DailyboardCardRoot({ data, ref, isFrontFace, className, sx, render }: DailyboardCardRootProps) {
     return (
-        <div
+        <Box
             className={clsx('heute-card', ...(className?.body || []))}
+            sx={{...sx?.body}}
             ref={ref}
             {...getDailyboardCardDataSet(data)}
         >
             {isFrontFace ? (
                 <>
-                    <div
+                    <Box
                         data-title
                         className={clsx('title', ...(className?.title || []))}
+                        sx={{...sx?.title}}
                     >
                         {render?.title ? render.title(data) : data.material.title}
-                    </div>
-                    <div
+                    </Box>
+                    <Box
                         data-front-face
                         className={clsx('face', ...(className?.frontFace || []))}
+                        sx={{...sx?.frontFace}}
                     >
                         {render?.frontFace ? render.frontFace(data) : null}
-                    </div>
+                    </Box>
                 </>
             ) : (
                 <>
-                    <div
+                    <Box
                         data-back-face
                         className={clsx('face', ...(className?.backFace || []))}
+                        sx={{...sx?.backFace}}
                     >
                         {render?.backFace ? render.backFace(data) : null}
-                    </div>
+                    </Box>
                 </>
             )}
-        </div>
+        </Box>
     )
 }
