@@ -36,10 +36,10 @@ export function DailyboardRoot(props: DailyboardRootProps) {
   return (
     <div 
       data-dailyboard
-      data-dailyboard-id={dailyboardData.id}
-      data-dailyboard-layout-name={layoutData.name}
-      data-dailyboard-layout-version={layoutData.version}
-      data-dailyboard-date={dailyboardData.date}
+      data-id={dailyboardData.id}
+      data-layout-name={layoutData.name}
+      data-layout-version={layoutData.version}
+      data-date={dailyboardData.date}
       ref={dailyboardRef} 
       className={style.dailyboard}
     >
