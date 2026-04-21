@@ -77,7 +77,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                         <ProviderContent>
                             {children}
                         </ProviderContent>
-                        <WorkspaceDailyboardCardDialog />
+                        {/*<WorkspaceDailyboardCardDialog />*/}
                     </WorkspaceDailyboardContext.Provider>
                 </DailyboardProvider>
             </LayoutProvider>

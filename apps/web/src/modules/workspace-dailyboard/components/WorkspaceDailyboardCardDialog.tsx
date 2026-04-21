@@ -1,4 +1,4 @@
-import { Box, Dialog, DialogContent, Typography } from '@mui/material';
+import { Dialog, DialogContent, Typography } from '@mui/material';
 import { useWorkspaceDailyboardContext } from '../hooks/useWorkspaceDailyboardContext';
 import { isEditingCard } from '../state/workspace-dailyboard.machine';
 import { useDailyboardDataStore } from '@/src/heute-store/stores/dailyboard.store';
