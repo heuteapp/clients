@@ -66,18 +66,18 @@ export const findDailyboardCardHeaderAtCursor = (clientX: number, clientY: numbe
 //
 
 export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
-    const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card-section-name="${sectionName}"]`);
+    const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card][data-section-name="${sectionName}"]`);
     return Array.from(cardElements) as HTMLDivElement[];
 }
 
 //
 
 export const getDailyboardCardData = (cardEl: HTMLElement) => {
-    const key = cardEl.dataset.dailyboardCardKey;
-    const colIndex = cardEl.dataset.dailyboardCardColIndex;
-    const rowIndex = cardEl.dataset.dailyboardCardRowIndex;
-    const colSpan = cardEl.dataset.dailyboardCardColSpan;
-    const rowSpan = cardEl.dataset.dailyboardCardRowSpan;
+    const key = cardEl.dataset.key;
+    const colIndex = cardEl.dataset.colIndex;
+    const rowIndex = cardEl.dataset.rowIndex;
+    const colSpan = cardEl.dataset.colSpan;
+    const rowSpan = cardEl.dataset.rowSpan;
 
     return {
         key: key || "",

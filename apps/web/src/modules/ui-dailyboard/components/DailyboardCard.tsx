@@ -21,31 +21,21 @@ function DailyboardCard(props : DailyboardCardProps) {
     const dailyboardCardContent = dailyboardCardData.material;
     const placement = dailyboardCardData.placement;
 
-    const [cardColor, setCardColor] = useState('');
-
-    const handleColorChange = (e: React.MouseEvent<HTMLButtonElement>, color: string) => {
-        if (color === '') {
-            setCardColor('');
-        }
-        else {
-            setCardColor('uc-' + color);
-        }
-    };
-
     if(!placement) return null;
 
     return (
         <div 
             data-dailyboard-card
-            data-dailyboard-card-id={dailyboardCardData.id}
-            data-dailyboard-card-key={dailyboardCardData.name}
-            data-dailyboard-card-title={dailyboardCardContent.title}
-            data-dailyboard-card-section-name={placement.sectionName}
-            data-dailyboard-card-col-index={placement.position.colIndex}
-            data-dailyboard-card-row-index={placement.position.rowIndex}
-            data-dailyboard-card-col-span={placement.position.colSpan}
-            data-dailyboard-card-row-span={placement.position.rowSpan}
-            className={clsx('heute-card', style.card, cardColor)}
+            data-id={dailyboardCardData.id}
+            data-key={dailyboardCardData.name}
+            data-title={dailyboardCardContent.title}
+            data-color={dailyboardCardContent.color}
+            data-section-name={placement.sectionName}
+            data-col-index={placement.position.colIndex}
+            data-row-index={placement.position.rowIndex}
+            data-col-span={placement.position.colSpan}
+            data-row-span={placement.position.rowSpan}
+            className={clsx('heute-card')}
             ref={ref}
         >
             <div
