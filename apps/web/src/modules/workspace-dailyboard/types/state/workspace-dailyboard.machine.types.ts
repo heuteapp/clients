@@ -3,34 +3,19 @@ import { WorkspaceDailyboardEvent } from "./workspace-dailyboard.events.types";
 import { workspaceDailyboardMachine } from "../../state/workspace-dailyboard.machine";
 import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
-import { GridSize } from "@/src/modules/shared/types/common";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
+import { GridSize } from "@/src/modules/shared/types/common";
 
 export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
   layoutData: StoredLayoutData | null;
   layoutStyle: StoredLayoutStyle | null;
-  sessions: {
-    card: {
-      creating: {
-        placing: {
-          size: GridSize;
-        } | null
-      } | null,
-      modifying: {
-        editing: {
-          categoryPath: string;
-          date: YYMMDDDate;
-          cardKey: string;
-        } | null,
-        placing: {
-          categoryPath: string;
-          date: YYMMDDDate;
-          cardKey: string;
-        } | null
-      }
-    } | null
-  }
+  draftCard: {
+    categoryPath?: string;
+    dailyboardDate?: YYMMDDDate;
+    cardKey?: string;
+    cardSize: GridSize;
+  } | null;
 }
 
 export type WorkspaceDailyboardMachineEvent = WorkspaceDailyboardEvent;

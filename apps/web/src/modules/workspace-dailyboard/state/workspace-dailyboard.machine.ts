@@ -15,14 +15,12 @@ export const workspaceDailyboardMachine = setup({
         fetchingSourcesDone: fetchingSourcesDoneAction,
     }
 }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDoAzMAFwIAtyA7KM3IRKYAMQBlAPIBVAEoBhAKISA+gDElAFQUAJVXKUBFGSq0BtAAwBdRKBypY5DuVR87IAB6IAjADYAVgAOZgB2IJ8AZkiAFljIgE4AJh8fABoQakRwkMsAhISfIJiYoMTkgF8KjLQsXEISMio6BiY2Th5+QVhUAFd0IlgxCDcwIT4AN1RMMfYubmIe-sGrWyQQBycXNw9vBACkjKyECOYYgoK-c5Li8KqajGx8IlIKGnpGFjnOgWYlgbgYjA6HQGGYOEoeA4rAwAFt2vNFn0AbBVh5Ns5XO51nsfKFYswiqEAkUfHFIpYYqEjtkYpZmAF8gkAlS-JEkkkAvcQLUng1Xs0Pm10GA8BBqEIROJpPJlGpNDp9IYTGY0esMdtsaBcUl2cwkpZIj4CiSAn4igEaQhzQlmEFLCbLHkkqEfLrubz6i8mu9WiwRWKJcJRGIFABBOQAEVUCkMYa0SgMxlMEgsNnRjkxOxxiAS1MyiCShWYeb8fks9qSQVClh8HseXsabxan2YAfFzAIrYIAZcv0gmIEoYj0djSnjiYACgAZMPKJMq1Nq+yZzW7RAUyIli6FUpJPyFSL546BW2hfd+JIxAI13WRLnVHkN55NwV+tuijtdto90V9wQDv+w5RjGcYJjGYYAHLKNOy4bKuWLrggoQFMwR4BLW1aUgkQSWgWyH2mcoRlkWVaWKEMR+PWdQvgKvqtu2Erfiwv5Ql04KQgQXTAaOYFTrO86RlIkFKHBGqITmyGoehmE1ucuFWuaoRoQ6zJOgcrqctRfLes2Qr+p+THdr27EQoQ3HhiBY4TqoM5zom4bQUosHpuqCHZtqG5RISDpkTEupVsUikOvqF4+CS5wGmUVSPnwqAQHAHierRPotkwGZbBJnkIMQnJWsQATbjuxUFJEVGPsl-KpfpCI-FAGVZlqXi+KUW7hFE-lBOaHIFIpVYMky5I1mVkTaY2dFpV8HS8L8wZgA1a6SeFRphBEsRVt1RYJFaFGFWS7JlihQT2keY0pXp77fDN3TIoMC1Zc1CDGv194JHELJGihfg7f4zB5KVOFXLcQRnVVF0MYZ90eY9upWgaMREYELqye9SSg7pb4Q4GkqiFDTW4uRhUGkagShMSxoOn19IUo6zqaaNFXPmDmPCoZnafHjSGulaiRtWFLqJCkZXo6+9Gs9jzE4-NbmZdDuLslapQ+KFZa+dEB7RYzNHM2LBkS8Zf5dJzS3GlaBzK+eZZFIEVK6uVDzaxjusfvrP4mf2ECDvVMuNUh-jHog5ohD4tZKRhJRXPbT6O6Lk0u1+Btsb8ZlcQIxvZeWylHvJ5xXIy+KKXidqqRhdNug+VRAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QHcD2AnA1rADgQwGMwBaCPASwBsBPAI1T3QgDoAzMAFwIAtyA7KM3IRKYAMQBlAPIBVAEoBhAKISA+gDElAFQUAJVXKUBFGSq0BtAAwBdRKBypY5DuVR87IAB6IAjADYAVgAOZgB2IJ8AJiCAFgDQvxiAZgBOABoQakRwkMsAlJTLH2Ckv0jInwBfSoy0LFxCEjIqOgYmNk4efkFYVABXdCJYMQg3MCE+ADdUTHH2Lm5iXoGhq1skEAcnFzcPbwQAyIyshAjmGIKUoMi4oNCAmL8k6tqMbHwiUgoaekYWea6AmYy0GcDEYHQ6AwzBwlDwHFYGAAth0Fkt+qDYGsPFtnK53Bt9j5QkkYswfHcYjEoklLCkAsFjtkYpZmAyrqSScTEn4XiA6u9Gl8Wr92ugwHgINQhCJxNJ5Mo1JodPpDCYzNiNridgTQETIklIsxIpYkj4fGb8pYYhEmQg-D4UswgnSXZESX4UpEvXyBQ1Ps0fm0WOLJdLhKIxAoAIJyAAiqgUhmjWiUBmMpgkFhsOMceN2hMQKVCdu9PmYxcS4WppKCKV9b39TW+rT+zFDUuYBDbBFDLiBkDxAijsYTSaUKbTAAUADLR5Tp9VZzX2PM6vaIWlJCuXFJJfePc2lO2BJ2hSKBGLRc8BJIBKo1fmNj7NkXB9sSzvd9q9iX9wSDv+I7xomyapom0YAHLKDOK6bGu+IbggoQFMwSShBcVyWIElgoUEdrhKyMQJPeVKcrSkQNvUL7CkGbYdtK34sL+8LdDCcIEN0wFjmB05zgucZSJBShwdqiGFshqHoZhLo4XhJ7EmhdIYQa1rREEvKPn6NGBq2YqfoxPZ9mxsKEFxMYgeOk6qLO85pjG0FKLBOZaghBZ6puFrknStIkikjyPOkmSIH4dLGhexFBFF0SJJRfJ8KgEBwB42lCrpooQLm2ziR5CDEJEAR2sQfjMJYZXlRV5XJFRgoBi2GWooCUBZfmupeL4NrbuEUQOpYBUBLhhXBfa0RsvkQR3hNDqpHFrzUWl9XvgCvBAhGYAteuEnFGaYQRBePh9Qyg0EXE5LJOU1oXAETwxDVTa0Xp-ydCtPQYkMG05e1CCOqNd7+YaVLRFcMQEf4pXjRS3o2nuQR3Tpi30QZH3uV9Bqlta5wJFd9LEaS+5wwtb6I2GMqiMjbVEoNxqmpYdahRE-glsNZSsrSVxPP49KeqEBN1UT+kk0x5NIaEPh2qkXURZh9x+LEvOvnRAtfm2a3C1thp2ja5blIkAOkskGmaXNtUK49H6C0Zf7dGruXmkFJyHOW56JCksXUnSt1ac+hOKyGBldpbrEDhAQ7Na52Uo0SfhMycDohAdxQFXSfihRU8sPQ1DEBz+xlAqZnECDbX2haEaEYcWcQ+NSWsKaXLrs2anrXcW1TVEAA */
     context: {
         dailyboardData: null,
         layoutData: null,
         layoutStyle: null,
-        sessions: {
-            card: null
-        }
+        draftCard: null
     },
     id: "workspace-dailyboard",
     initial: "fetching",
@@ -97,6 +95,9 @@ export const workspaceDailyboardMachine = setup({
                                         },
                                         CARD_CREATE_PLACE_CANCEL: {
                                             target: "editing"
+                                        },
+                                        CARD_CREATE_CANCEL: {
+                                            target: "#workspace-dailyboard.ready.idle"
                                         }
                                     }
                                 }
