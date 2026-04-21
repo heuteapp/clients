@@ -5,19 +5,19 @@ import { getDailyboardCardDataSet } from "../utils/ui.utils";
 export function DailyboardCardRoot({ ref, className, data }: DailyboardCardRootProps) {
     return (
         <div
-            className={clsx('heute-card', ...(className || []))}
+            className={clsx('heute-card', ...(className?.body || []))}
             ref={ref}
             {...getDailyboardCardDataSet(data)}
         >
             <div
                 data-title
-                className={'title'}
+                className={clsx('title', ...(className?.title || []))}
             >
-                
+
             </div>
             <div
                 data-front-face
-                className={'face'}
+                className={clsx('face', ...(className?.face || []))}
             >
             </div>
         </div>
