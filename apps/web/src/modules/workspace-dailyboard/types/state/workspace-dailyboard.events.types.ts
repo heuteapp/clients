@@ -1,8 +1,8 @@
 import { DailyboardResponse } from "@/src/api/models/responses/dailyboard.response";
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
-import { GridSize } from "@/src/modules/shared/types/common";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
+import { CardCreatePlaceInput } from "./workspace-dailyboard.types";
 
 export type WorkspaceDailyboardEvent =
     | SourcesFetchEvent
@@ -26,9 +26,9 @@ export type CardCreateRequestEvent = { type: "CARD_CREATE_REQUEST"; };
 
 export type CardCreateCancelEvent = { type: "CARD_CREATE_CANCEL"; };
 
-export type CardCreatePlaceRequestEvent = { type: "CARD_CREATE_PLACE_REQUEST"; cardSize: GridSize };
+export type CardCreatePlaceRequestEvent = { type: "CARD_CREATE_PLACE_REQUEST"; input: CardCreatePlaceInput };
 
-export type CardCreatePlaceDoneEvent = { type: "CARD_CREATE_PLACE_DONE"; categoryPath: string; date: YYMMDDDate; placement: DailyboardCardPlacement };
+export type CardCreatePlaceDoneEvent = { type: "CARD_CREATE_PLACE_DONE"; payload: { categoryPath: string; date: YYMMDDDate; placement: DailyboardCardPlacement } };
 
 export type CardCreatePlaceCancelEvent = { type: "CARD_CREATE_PLACE_CANCEL"; };
 
