@@ -5,11 +5,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext";
 import { GridSize } from "@/src/modules/shared/types/common";
+import { DailyboardCardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardCardRoot";
+import { DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export function CreatingEditingCardDialog() {
     const { send, state } = useWorkspaceDailyboardContext();
     const { metrics } = useDailyboardContext();
 
+    const [cardContent, setCardContent] = useState<DailyboardCardMaterial | null>(null);
     const [cardSpan, setCardSpan] = useState<GridSize | null>(null);
 
     const isOpen = useMemo(() => {
@@ -23,6 +26,12 @@ export function CreatingEditingCardDialog() {
     useEffect(() => {
         if(isOpen) {
             setCardSpan({ colSpan: 12, rowSpan: 3 });
+            setCardContent({
+                title: null,
+                color: 0,
+                frontFace: { type: "plain-text", text: "" },
+                backFace: { type: "plain-text", text: "" }
+            });
         }
     }, [isOpen]);
 
@@ -65,15 +74,19 @@ export function CreatingEditingCardDialog() {
                 >
                     <CloseIcon />
                 </IconButton>
-                <div
-                    className="heute-card"
-                    style={{
-                        width: cardSize.width,
-                        height: cardSize.height,
+                <DailyboardCardRoot
+                    content={cardContent!}
+                    isFrontFace={true}
+                    sx={{
+                        body: {
+                            width: cardSize.width,
+                            height: cardSize.height,
+                        },
+                        title: {
+                            height: cellStep
+                        },
                     }}
-                >
-
-                </div>
+                />
             </DialogContent>
         </Dialog>
     )
