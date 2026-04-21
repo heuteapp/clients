@@ -108,7 +108,7 @@ export const cardCreatingPlaceDoneAction = createAssign<
 
         addCard(payload.categoryPath, payload.date, {
             name: crypto.randomUUID(),
-            material: context.draftCard!.content,
+            content: context.draftCard!.content,
             placement: payload.placement
         });
 

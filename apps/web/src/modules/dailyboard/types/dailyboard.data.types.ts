@@ -6,7 +6,7 @@ export interface DailyboardData extends DailyboardBase {
 }
 
 export interface DailyboardCardData extends DailyboardCardBase {
-    material: DailyboardCardMaterial;
+    content: DailyboardCardMaterial;
     placement: DailyboardCardPlacement | null;
 }
 

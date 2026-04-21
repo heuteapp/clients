@@ -15,7 +15,7 @@ export function responseToDailyboard(response: DailyboardResponse): DailyboardDa
 function responseToDailyboardCard(cardResponse: DailyboardCardResponse): DailyboardCardData {
     return {
         name: cardResponse.name,
-        material: {
+        content: {
             title: cardResponse.title ?? null,
         },
         placement: 

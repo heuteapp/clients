@@ -17,14 +17,14 @@ function DailyboardCardView(props : DailyboardCardViewProps) {
         }
     }, [registry, props.data])
 
-    const dailyboardCardContent = dailyboardCardData.material;
+    const dailyboardCardContent = dailyboardCardData.content;
     const placement = dailyboardCardData.placement;
 
     if(!placement) return null;
 
     return (
         <DailyboardCardRoot 
-            content={dailyboardCardData.material}
+            content={dailyboardCardData.content}
             ref={ref}
             isFrontFace={true}
             {...getDailyboardCardDataSet(dailyboardCardData)}
