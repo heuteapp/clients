@@ -10,6 +10,7 @@ import { useDailyboardContext } from "../hooks/useDailyboardContext";
 import { DailyboardRootProps } from "../types/dailyboard.props";
 import { LayoutRoot } from "@/src/modules/ui-layout/components/LayoutRoot";
 import { useLayoutContext } from "../../ui-layout/hooks/useLayoutContext";
+import { getDailyboardDataSet } from "../utils/ui.utils";
 
 //
 
@@ -35,13 +36,9 @@ export function DailyboardRoot(props: DailyboardRootProps) {
 
   return (
     <div 
-      data-dailyboard
-      data-id={dailyboardData.id}
-      data-layout-name={layoutData.name}
-      data-layout-version={layoutData.version}
-      data-date={dailyboardData.date}
       ref={dailyboardRef} 
       className={style.dailyboard}
+      {...getDailyboardDataSet(dailyboardData)}
     >
       <LayoutRoot data={layoutData} />
       <DailyboardCardContainer cards={dailyboardCards} />
