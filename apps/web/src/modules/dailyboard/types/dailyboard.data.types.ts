@@ -20,8 +20,8 @@ export type DailyboardCardDataContent = DailyboardCardData;
 export interface DailyboardCardMaterial {
     title: string | null;
     color: DailyboardCardColor;
-    frontSide: DailyboardCardSide;
-    backSide: DailyboardCardSide;
+    frontFace: DailyboardCardFace;
+    backFace: DailyboardCardFace;
 }
 
 export interface DailyboardCardPlacement {
@@ -54,14 +54,10 @@ export enum DailyboardCardColor {
     White
 }
 
-export type DailyboardCardSide = 
-    | DailyboardCardPlainTextSide 
+export type DailyboardCardFace = 
+    | DailyboardCardPlainTextFace 
 
-export interface DailyboardCardSideBase {
-    type: "plain-text" | "bullet-points"
-}
-
-export interface DailyboardCardPlainTextSide extends DailyboardCardSideBase {
+export interface DailyboardCardPlainTextFace {
     type: "plain-text";
     text: string;
 }
