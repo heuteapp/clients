@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext";
 import { GridSize } from "@/src/modules/shared/types/common";
 import { DailyboardCardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardCardRoot";
-import { DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { DailyboardCardColor, DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export function CreatingEditingCardDialog() {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -28,9 +28,9 @@ export function CreatingEditingCardDialog() {
             setCardSpan({ colSpan: 12, rowSpan: 3 });
             setCardContent({
                 title: null,
-                color: 0,
-                frontFace: { type: "plain-text", text: "" },
-                backFace: { type: "plain-text", text: "" }
+                color: DailyboardCardColor.Default,
+                frontFace: null,
+                backFace: null
             });
         }
     }, [isOpen]);

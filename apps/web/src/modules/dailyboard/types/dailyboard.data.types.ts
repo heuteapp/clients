@@ -20,8 +20,8 @@ export type DailyboardCardDataContent = DailyboardCardData;
 export interface DailyboardCardMaterial {
     title: string | null;
     color: DailyboardCardColor;
-    frontFace: DailyboardCardFace;
-    backFace: DailyboardCardFace;
+    frontFace: DailyboardCardFace | null;
+    backFace: DailyboardCardFace | null;
 }
 
 export interface DailyboardCardPlacement {
@@ -30,28 +30,28 @@ export interface DailyboardCardPlacement {
 }
 
 export enum DailyboardCardColor {
-    Default,
-    Brown,
-    Blue,
-    LightBlue,
-    Teal,
-    Aqua,
-    Green,
-    LimeGreen,
-    Yellow,
-    LightOrange,
-    Orange,
-    Red,
-    DarkRed,
-    LightPink,
-    Pink,
-    Magenta,
-    Purple,
-    DarkPurple,
-    DarkGrey,
-    MediumGrey,
-    LightGrey,
-    White
+    Default = "default",
+    Brown = "brown",
+    Blue = "blue",
+    LightBlue = "light-blue",
+    Teal = "teal",
+    Aqua = "aqua",
+    Green = "green",
+    LimeGreen = "lime-green",
+    Yellow = "yellow",
+    LightOrange = "light-orange",
+    Orange = "orange",
+    Red = "red",
+    DarkRed = "dark-red",
+    LightPink = "light-pink",
+    Pink = "pink",
+    Magenta = "magenta",
+    Purple = "purple",
+    DarkPurple = "dark-purple",
+    DarkGrey = "dark-grey",
+    MediumGrey = "medium-grey",
+    LightGrey = "light-grey",
+    White = "white"
 }
 
 export type DailyboardCardFace = 
