@@ -15,7 +15,7 @@ export function DailyboardCardRoot({ data, ref, isFrontFace, className, render }
                         data-title
                         className={clsx('title', ...(className?.title || []))}
                     >
-                        {render?.title ? render.title(data) : null}
+                        {render?.title ? render.title(data) : data.material.title}
                     </div>
                     <div
                         data-front-face

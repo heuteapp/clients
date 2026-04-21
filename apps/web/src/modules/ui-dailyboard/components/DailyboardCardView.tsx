@@ -1,8 +1,7 @@
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardViewProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
 import { useLayoutEffect, useRef } from "react";
-import clsx from "clsx";
-import { getDailyboardCardDataSet } from "../utils/ui.utils";
+import { DailyboardCardRoot } from "./DailyboardCardRoot";
 
 function DailyboardCardView(props : DailyboardCardViewProps) {
     const { data: dailyboardCardData } = props;
@@ -23,23 +22,11 @@ function DailyboardCardView(props : DailyboardCardViewProps) {
     if(!placement) return null;
 
     return (
-        <div
-            className={clsx('heute-card')}
+        <DailyboardCardRoot 
+            data={dailyboardCardData}
             ref={ref}
-            {...getDailyboardCardDataSet(dailyboardCardData)}
-        >
-            <div
-                data-title
-                className={'title'}
-            >
-                {dailyboardCardContent.title}
-            </div>
-            <div
-                data-front-face
-                className={'face'}
-            >
-            </div>
-        </div>
+            isFrontFace={true}
+        />
     )
 }
 
