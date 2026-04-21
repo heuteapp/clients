@@ -93,3 +93,27 @@ export const cardCreatingPlacingRequestAction = createAssign<
         }
     }
 );
+
+export const cardCreatingPlaceDoneAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ event, context }) => {
+        if(event.type !== "CARD_CREATE_PLACE_DONE") {
+            throw new Error("cardCreatingPlaceDoneAction can only be used with CARD_CREATE_PLACE_DONE events");
+        }
+
+        const payload = event.payload;
+
+        const { addCard } = useDailyboardDataStore.getState();
+
+        addCard(payload.categoryPath, payload.date, {
+            name: crypto.randomUUID(),
+            material: context.draftCard!.content,
+            placement: payload.placement
+        });
+
+        return {
+            draftCard: null
+        }
+    }
+);
