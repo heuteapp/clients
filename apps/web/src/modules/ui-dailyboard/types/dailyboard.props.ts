@@ -12,6 +12,12 @@ export interface DailyboardCardViewProps {
     data: StoredDailyboardCardData;
 }
 
+export interface DailyboardCardRootProps {
+    ref: React.RefObject<HTMLDivElement | null>;
+    className?: string[];
+    data: StoredDailyboardCardData;
+}
+
 //
 
 export interface DailyboardProviderProps {
