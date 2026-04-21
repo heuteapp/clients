@@ -17,8 +17,8 @@ export interface DailyboardCardViewProps {
 
 export interface DailyboardCardRootProps {
     content: DailyboardCardMaterial;
-    ref: React.RefObject<HTMLDivElement | null>;
     isFrontFace: boolean;
+    ref?: React.RefObject<HTMLDivElement | null>;
     className?: {
         body?: string[];
         title?: string[];

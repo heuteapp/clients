@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { DailyboardCardRootProps } from "../types/dailyboard.props";
 import { Box } from "@mui/material";
 
-export function DailyboardCardRoot({ content, ref, isFrontFace, className, sx, render }: DailyboardCardRootProps) {
+export function DailyboardCardRoot({ content, isFrontFace, ref, className, sx, render }: DailyboardCardRootProps) {
     return (
         <Box
             className={clsx('heute-card', ...(className?.body || []))}
