@@ -5,6 +5,7 @@ import { StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
 import { StoredLayoutData, StoredLayoutStyle } from "@/src/heute-store/types/layout.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 import { GridSize } from "@/src/modules/shared/types/common";
+import { DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export type WorkspaceDailyboardMachineContext = {
   dailyboardData: StoredDailyboardData | null;
@@ -15,6 +16,7 @@ export type WorkspaceDailyboardMachineContext = {
     dailyboardDate?: YYMMDDDate;
     cardKey?: string;
     cardSize: GridSize;
+    cardContent?: DailyboardCardMaterial;
   } | null;
 }
 

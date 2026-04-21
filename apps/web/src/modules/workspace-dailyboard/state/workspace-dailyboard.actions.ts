@@ -60,3 +60,22 @@ export const fetchingSourcesErrorAction = createAssign<
         }
     }
 );
+
+//
+
+export const cardCreatingPlacingRequestAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ event }) => {
+        if(event.type !== "CARD_CREATE_PLACE_REQUEST") {
+            throw new Error("cardCreatingPlacingRequestAction can only be used with CARD_CREATE_PLACE_REQUEST events");
+        }
+
+        return {
+            draftCard: {
+                cardContent: event.input.content,
+                cardSize: event.input.cardSize,
+            }
+        }
+    }
+);
