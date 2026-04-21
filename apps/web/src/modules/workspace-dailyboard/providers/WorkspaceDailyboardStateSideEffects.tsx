@@ -1,10 +1,10 @@
 "use client";
 
-import { useCreateCardState } from "../hooks/state/useCreateCardState";
+import { useCreatingCardState } from "../hooks/state/useCreatingCardState";
 import { useEditCardState } from "../hooks/state/useEditCardState";
 
 export function WorkspaceDailyboardStateSideEffects() {
-    useCreateCardState();
+    useCreatingCardState();
     //useEditCardState();
 
     return null;
