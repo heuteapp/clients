@@ -31,7 +31,7 @@ function DailyboardCard(props : DailyboardCardProps) {
             {...getDailyboardCardDataSet(dailyboardCardData)}
         >
             <div
-                data-dailyboard-card-header
+                data-header
                 className={'title'}
             >
                 {dailyboardCardContent.title}
