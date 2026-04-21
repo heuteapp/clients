@@ -31,12 +31,13 @@ function DailyboardCard(props : DailyboardCardProps) {
             {...getDailyboardCardDataSet(dailyboardCardData)}
         >
             <div
-                data-header
+                data-title
                 className={'title'}
             >
                 {dailyboardCardContent.title}
             </div>
             <div
+                data-front-face
                 className={'face'}
             >
             </div>

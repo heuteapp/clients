@@ -1,5 +1,5 @@
 import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetricsValue } from "../types/dailyboard.metrics";
-import { calcDailyboardCardFixedRect, findDailyboardCardHeaderInSubtree, getDailyboardCardData } from "../utils/dom.utils";
+import { calcDailyboardCardFixedRect, findDailyboardCardTitleInSubtree, getDailyboardCardData } from "../utils/dom.utils";
 import { findGridInSubtree, getSectionDataForGrid } from "../../ui-layout/utils/dom.utils";
 
 export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetricsValue | null => {
@@ -44,7 +44,7 @@ export const applyDailyboardMetrics = ({ metrics, registry } : ApplyDailyboardMe
             const data = getDailyboardCardData(cardEl);
             if (!data) return;
 
-            const cardHeaderEl = findDailyboardCardHeaderInSubtree(cardEl);
+            const cardHeaderEl = findDailyboardCardTitleInSubtree(cardEl);
             if(cardHeaderEl) {
                 const headerHeight = metrics.value?.cardSize.headerHeight || 0;
                 cardHeaderEl.style.height = `${headerHeight}px`;

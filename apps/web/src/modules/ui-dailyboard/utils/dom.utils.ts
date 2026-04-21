@@ -42,16 +42,16 @@ export const findDailyboardCardAtCursor = (clientX: number, clientY: number): HT
     return null;
 }
 
-export const findDailyboardCardHeaderInSubtree = (el: Element): HTMLDivElement | null => {
-    return findDailyboardInSubtree(el)?.querySelector<HTMLDivElement>("[data-header]") || null;
+export const findDailyboardCardTitleInSubtree = (el: Element): HTMLDivElement | null => {
+    return findDailyboardInSubtree(el)?.querySelector<HTMLDivElement>("[data-title]") || null;
 }
 
-export const findDailyboardCardHeaderClosest = (el: Element): HTMLDivElement | null => {
-    return findDailyboardCardClosest(el)?.querySelector<HTMLDivElement>("[data-header]") || null;
+export const findDailyboardCardTitleClosest = (el: Element): HTMLDivElement | null => {
+    return findDailyboardCardClosest(el)?.querySelector<HTMLDivElement>("[data-title]") || null;
 }
 
-export const findDailyboardCardHeaderAtCursor = (clientX: number, clientY: number): HTMLDivElement | null => {
-    return findDailyboardCardAtCursor(clientX, clientY)?.querySelector<HTMLDivElement>("[data-header]") || null;
+export const findDailyboardCardTitleAtCursor = (clientX: number, clientY: number): HTMLDivElement | null => {
+    return findDailyboardCardAtCursor(clientX, clientY)?.querySelector<HTMLDivElement>("[data-title]") || null;
 }
 
 //
