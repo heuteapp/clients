@@ -1,12 +1,10 @@
-import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
-
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import clsx from "clsx";
 import { getDailyboardCardDataSet } from "../utils/ui.utils";
 
-function DailyboardCard(props : DailyboardCardProps) {
+function DailyboardCardView(props : DailyboardCardProps) {
     const { data: dailyboardCardData } = props;
     const { registry} = useDailyboardContext();
     const ref = useRef<HTMLDivElement>(null);
@@ -45,4 +43,4 @@ function DailyboardCard(props : DailyboardCardProps) {
     )
 }
 
-export default DailyboardCard
+export default DailyboardCardView

@@ -1,7 +1,7 @@
 import style from "@/src/modules/ui-dailyboard/styles/dailyboard.module.scss"
 
 import { useLayoutEffect, useRef } from "react";
-import DailyboardCard from "./DailyboardCard"
+import DailyboardCardView from "./DailyboardCardView"
 
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardContainerProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
@@ -28,7 +28,7 @@ function DailyboardCardContainer(props : DailyboardCardContainerProps) {
             {...getDailyboardCardContainerDataSet()}
         >
             {props.cards.map(card => (
-                <DailyboardCard key={card.id} data={card} />
+                <DailyboardCardView key={card.id} data={card} />
             ))}
         </div>
     )
