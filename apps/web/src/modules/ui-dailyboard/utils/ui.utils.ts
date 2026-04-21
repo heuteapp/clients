@@ -10,6 +10,12 @@ export const getDailyboardDataSet = (dailyboard: StoredDailyboardData) => {
     }
 }
 
+export const getDailyboardCardContainerDataSet = () => {
+    return {
+        "data-dailyboard-card-container": true
+    }
+}
+
 export const getDailyboardCardDataSet = (card: StoredDailyboardCardData) => {
     return {
         "data-dailyboard-card": true,

@@ -5,6 +5,7 @@ import DailyboardCard from "./DailyboardCard"
 
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
 import { DailyboardCardContainerProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
+import { getDailyboardCardContainerDataSet } from "../utils/ui.utils";
 
 //
 
@@ -22,9 +23,9 @@ function DailyboardCardContainer(props : DailyboardCardContainerProps) {
 
     return (
         <div 
-            data-dailyboard-card-container
             className={style.cardContainer} 
             ref={ref}
+            {...getDailyboardCardContainerDataSet()}
         >
             {props.cards.map(card => (
                 <DailyboardCard key={card.id} data={card} />
