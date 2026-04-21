@@ -82,8 +82,8 @@ export interface DailyboardCardBullet2x2ListFace {
     layout: "2x2";
     bullets: {
         "1x1": string;
-        "1x2": string;
         "2x1": string;
+        "1x2": string;
         "2x2": string;
     }
 }
@@ -93,10 +93,10 @@ export interface DailyboardCardBullet2x3ListFace {
     layout: "2x3";
     bullets: {
         "1x1": string;
-        "1x2": string;
-        "1x3": string;
         "2x1": string;
+        "1x2": string;
         "2x2": string;
+        "1x3": string;
         "2x3": string;
     }
 }
