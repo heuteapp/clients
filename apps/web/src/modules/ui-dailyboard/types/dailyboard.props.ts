@@ -15,6 +15,7 @@ export interface DailyboardCardViewProps {
 export interface DailyboardCardRootProps {
     data: StoredDailyboardCardData;
     ref: React.RefObject<HTMLDivElement | null>;
+    isFrontFace: boolean;
     className?: {
         body?: string[];
         title?: string[];
@@ -25,7 +26,7 @@ export interface DailyboardCardRootProps {
         title?: (data: StoredDailyboardCardData) => React.ReactNode;
         frontFace?: (data: StoredDailyboardCardData) => React.ReactNode;
         backFace?: (data: StoredDailyboardCardData) => React.ReactNode;
-    }
+    },
 }
 
 //
