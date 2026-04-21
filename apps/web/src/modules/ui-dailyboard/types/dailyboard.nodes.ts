@@ -1,5 +1,5 @@
 import { UINode, UIRootNode } from "@/src/modules/ui-base/types/ui.types";
-import { DailyboardRootProps, DailyboardCardProps, DailyboardCardContainerProps } from "./dailyboard.props";
+import { DailyboardRootProps, DailyboardCardViewProps, DailyboardCardContainerProps } from "./dailyboard.props";
 
 export interface DailyboardRootNode extends UIRootNode {
     ref: React.RefObject<HTMLDivElement | null>
@@ -13,5 +13,5 @@ export interface DailyboardCardContainerNode extends UINode {
 }
 
 export interface DailyboardCardNode extends UINode {
-    props?: DailyboardCardProps; 
+    props?: DailyboardCardViewProps; 
 }

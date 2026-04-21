@@ -1,10 +1,10 @@
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
-import { DailyboardCardProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
+import { DailyboardCardViewProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
 import { useLayoutEffect, useRef } from "react";
 import clsx from "clsx";
 import { getDailyboardCardDataSet } from "../utils/ui.utils";
 
-function DailyboardCardView(props : DailyboardCardProps) {
+function DailyboardCardView(props : DailyboardCardViewProps) {
     const { data: dailyboardCardData } = props;
     const { registry} = useDailyboardContext();
     const ref = useRef<HTMLDivElement>(null);

@@ -8,7 +8,7 @@ export interface DailyboardCardContainerProps {
     cards: StoredDailyboardCardData[];
 }
 
-export interface DailyboardCardProps {
+export interface DailyboardCardViewProps {
     data: StoredDailyboardCardData;
 }
 
