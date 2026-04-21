@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
+import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
 import { cardCreatingCancelAction, cardCreatingPlaceCancelAction, cardCreatingPlaceDoneAction, cardCreatingPlacingRequestAction, fetchingSourcesDoneAction, fetchingSourcesErrorAction } from "./workspace-dailyboard.actions";
 
@@ -122,3 +122,21 @@ export const workspaceDailyboardMachine = setup({
 });
 
 export const workspaceDailyboardService = createActor(workspaceDailyboardMachine);
+
+export const isFetching = (state: WorkspaceDailyboardMachineState): boolean => state.matches("fetching");
+
+export const isFetchingIdle = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ fetching: "idle" });
+
+export const isFetchingSources = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ fetching: "sources" });
+
+export const isReady = (state: WorkspaceDailyboardMachineState): boolean => state.matches("ready");
+
+export const isReadyIdle = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ ready: "idle" });
+
+export const isReadyCard = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ ready: "card" });
+
+export const isCreatingCard = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ ready: { card: "creating" } });
+
+export const isCreatingEditingCard = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ ready: { card: { creating: "editing" } } });
+
+export const isCreatingPlacingCard = (state: WorkspaceDailyboardMachineState): boolean => state.matches({ ready: { card: { creating: "placing" } } });
