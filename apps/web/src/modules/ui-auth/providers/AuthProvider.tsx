@@ -111,6 +111,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return (
         <AuthContext.Provider value={{ state, send: authService.send }}>
             {children}
+            {process.env.NODE_ENV === "development" && (
+                <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", color: "white", padding: "4px 8px", fontSize: "14px", borderRadius: "4px 4px 0 0", zIndex: 9999 }}>
+                    Auth: {JSON.stringify(state.value)}
+                </div>
+            )}
         </AuthContext.Provider>
     );
 }
