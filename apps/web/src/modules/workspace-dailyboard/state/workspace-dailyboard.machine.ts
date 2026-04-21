@@ -1,7 +1,7 @@
 import { createActor, setup } from "xstate";
-import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent, WorkspaceDailyboardMachineState } from "../types/state/workspace-dailyboard.machine.types";
+import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { fetchSourcesActor } from "./workspace-dailyboard.actors";
-import { cardCreatingPlacingRequestAction, fetchingSourcesDoneAction, fetchingSourcesErrorAction } from "./workspace-dailyboard.actions";
+import { cardCreatingCancelAction, cardCreatingPlacingRequestAction, fetchingSourcesDoneAction, fetchingSourcesErrorAction } from "./workspace-dailyboard.actions";
 
 export const workspaceDailyboardMachine = setup({
     types: {
@@ -14,6 +14,7 @@ export const workspaceDailyboardMachine = setup({
     actions: {
         fetchingSourcesDone: fetchingSourcesDoneAction,
         fetchingSourcesError: fetchingSourcesErrorAction,
+        cardCreatingCancel: cardCreatingCancelAction,
         cardCreatingPlacingRequest: cardCreatingPlacingRequestAction
     }
 }).createMachine({
@@ -88,7 +89,8 @@ export const workspaceDailyboardMachine = setup({
                                             actions: "cardCreatingPlacingRequest"
                                         },
                                         CARD_CREATE_CANCEL: {
-                                            target: "#workspace-dailyboard.ready.idle"
+                                            target: "#workspace-dailyboard.ready.idle",
+                                            actions: "cardCreatingCancel"
                                         }
                                     }
                                 },
@@ -101,7 +103,8 @@ export const workspaceDailyboardMachine = setup({
                                             target: "editing"
                                         },
                                         CARD_CREATE_CANCEL: {
-                                            target: "#workspace-dailyboard.ready.idle"
+                                            target: "#workspace-dailyboard.ready.idle",
+                                            actions: "cardCreatingCancel"
                                         }
                                     }
                                 }

@@ -63,6 +63,20 @@ export const fetchingSourcesErrorAction = createAssign<
 
 //
 
+export const cardCreatingCancelAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ event }) => {
+        if(event.type !== "CARD_CREATE_CANCEL") {
+            throw new Error("cardCreatingCancelAction can only be used with CARD_CREATE_CANCEL events");
+        }
+
+        return {
+            draftCard: null
+        }
+    }
+);
+
 export const cardCreatingPlacingRequestAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
 >(
