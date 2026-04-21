@@ -117,3 +117,15 @@ export const cardCreatingPlaceDoneAction = createAssign<
         }
     }
 );
+
+export const cardCreatingPlaceCancelAction = createAssign<
+    WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent
+>(
+    ({ event }) => {
+        if(event.type !== "CARD_CREATE_PLACE_CANCEL") {
+            throw new Error("cardCreatingPlaceCancelAction can only be used with CARD_CREATE_PLACE_CANCEL events");
+        }
+
+        return {}
+    }
+);
