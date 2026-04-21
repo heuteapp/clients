@@ -56,8 +56,47 @@ export enum DailyboardCardColor {
 
 export type DailyboardCardFace = 
     | DailyboardCardPlainTextFace 
+    | DailyboardCardBulletListFace
 
 export interface DailyboardCardPlainTextFace {
     type: "plain-text";
     text: string;
+}
+
+export type DailyboardCardBulletListFace =
+    | DailyboardCardBullet1x2ListFace
+    | DailyboardCardBullet2x2ListFace
+    | DailyboardCardBullet2x3ListFace;
+
+export interface DailyboardCardBullet1x2ListFace {
+    type: "bullet-list";
+    layout: "1x2";
+    bullets: {
+        "1x1": string;
+        "1x2": string;
+    }
+}
+
+export interface DailyboardCardBullet2x2ListFace {
+    type: "bullet-list";
+    layout: "2x2";
+    bullets: {
+        "1x1": string;
+        "1x2": string;
+        "2x1": string;
+        "2x2": string;
+    }
+}
+
+export interface DailyboardCardBullet2x3ListFace {
+    type: "bullet-list";
+    layout: "2x3";
+    bullets: {
+        "1x1": string;
+        "1x2": string;
+        "1x3": string;
+        "2x1": string;
+        "2x2": string;
+        "2x3": string;
+    }
 }
