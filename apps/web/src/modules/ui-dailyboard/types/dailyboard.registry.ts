@@ -1,5 +1,5 @@
 import { DailyboardCardContainerNode, DailyboardCardNode, DailyboardRootNode } from "@/src/modules/ui-dailyboard/types/dailyboard.nodes"
-import { DailyboardCardContainerProps, DailyboardCardViewProps, DailyboardRootProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props"
+import { DailyboardCardContainerProps, DailyboardCardItemProps, DailyboardRootProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props"
 import { LayoutRegistry } from "@/src/modules/ui-layout/types/layout.registry"
 
 export interface DailyboardRegistry {
@@ -19,7 +19,7 @@ export interface DailyboardRegistry {
     registerDailyboardCard(
         id: string,
         ref: React.RefObject<HTMLDivElement | null>,
-        props: DailyboardCardViewProps
+        props: DailyboardCardItemProps
     ): DailyboardCardNode
 
     //

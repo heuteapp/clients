@@ -11,11 +11,11 @@ export interface DailyboardCardContainerProps {
     cards: StoredDailyboardCardData[];
 }
 
-export interface DailyboardCardViewProps {
+export interface DailyboardCardItemProps {
     data: StoredDailyboardCardData;
 }
 
-export interface DailyboardCardRootProps {
+export interface DailyboardCardDisplayProps {
     content: DailyboardCardMaterial;
     isFrontFace: boolean;
     ref?: React.RefObject<HTMLDivElement | null>;

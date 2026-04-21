@@ -1,10 +1,10 @@
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext"
-import { DailyboardCardViewProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
+import { DailyboardCardItemProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props";
 import { useLayoutEffect, useRef } from "react";
-import { DailyboardCardRoot } from "./DailyboardCardRoot";
+import { DailyboardCardDisplay } from "./DailyboardCardDisplay";
 import { getDailyboardCardDataSet } from "../utils/ui.utils";
 
-function DailyboardCardView(props : DailyboardCardViewProps) {
+function DailyboardCardItem(props : DailyboardCardItemProps) {
     const { data: dailyboardCardData } = props;
     const { registry} = useDailyboardContext();
     const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +23,7 @@ function DailyboardCardView(props : DailyboardCardViewProps) {
     if(!placement) return null;
 
     return (
-        <DailyboardCardRoot 
+        <DailyboardCardDisplay 
             content={dailyboardCardData.content}
             ref={ref}
             isFrontFace={true}
@@ -32,4 +32,4 @@ function DailyboardCardView(props : DailyboardCardViewProps) {
     )
 }
 
-export default DailyboardCardView
+export default DailyboardCardItem

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext";
 import { GridSize } from "@/src/modules/shared/types/common";
-import { DailyboardCardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardCardRoot";
+import { DailyboardCardDisplay } from "@/src/modules/ui-dailyboard/components/DailyboardCardDisplay";
 import { DailyboardCardColor, DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 
 export function CreatingEditingCardDialog() {
@@ -74,7 +74,7 @@ export function CreatingEditingCardDialog() {
                 >
                     <CloseIcon />
                 </IconButton>
-                <DailyboardCardRoot
+                <DailyboardCardDisplay
                     content={cardContent!}
                     isFrontFace={true}
                     sx={{
