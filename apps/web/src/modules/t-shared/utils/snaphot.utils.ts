@@ -1,7 +1,11 @@
 import { findAllCanvasGrids, findCanvasInSubtree, getCanvasData, getCanvasGridData } from "../../ui-layout/utils/dom.utils"
 import { CanvasGridSnapshot, CanvasSnapshot } from "../types/snapshot.types";
 
-export const getCanvasSnapshot = (el: Element = document.body) : CanvasSnapshot | null => {
+export const getCanvasSnapshot = () : CanvasSnapshot | null => {
+    return getCanvasSnapshotFrom(document.body);
+}
+
+export const getCanvasSnapshotFrom = (el: Element) : CanvasSnapshot | null => {
     const canvasEl = findCanvasInSubtree(el as HTMLDivElement);
     if (!canvasEl) return null;
 
