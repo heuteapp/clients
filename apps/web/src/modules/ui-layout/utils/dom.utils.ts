@@ -1,3 +1,4 @@
+import { LayoutDataContent } from "../../layout/types/layout.data.types";
 import { Pointer } from "../../shared/types/common";
 
 //
@@ -19,6 +20,19 @@ export const findCanvasFromPoint = (clientX: number, clientY: number): HTMLDivEl
     }
     
     return null;
+}
+
+export const getCanvasData = (canvasEl: HTMLDivElement) : LayoutDataContent | null => {
+    if(!canvasEl.dataset.layout) {
+        return null;
+    }
+
+    return {
+        name: canvasEl.dataset.name || "",
+        version: parseInt(canvasEl.dataset.version || "0", 10),
+        colCount: parseInt(canvasEl.dataset.colCount || "0", 10),
+        rowCount: parseInt(canvasEl.dataset.rowCount || "0", 10)
+    };
 }
 
 //
