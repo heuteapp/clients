@@ -8,6 +8,7 @@ import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDaily
 import { GridSize } from "@/src/modules/shared/types/common";
 import { DailyboardCardDisplay } from "@/src/modules/ui-dailyboard/components/DailyboardCardDisplay";
 import { DailyboardCardColor, DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { ResizeGrid } from "@/src/modules/ui-shared/components/ResizeGrid";
 
 export function CreatingEditingCardDialog() {
     const { send, state } = useWorkspaceDailyboardContext();
@@ -87,8 +88,9 @@ export function CreatingEditingCardDialog() {
             onClose={handleResizeClose}
             sx={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
+                alignItems: "flex-end",
+                justifyContent: "center",
+                pb: 8
             }}
             slotProps={{
                 backdrop: {
@@ -98,34 +100,15 @@ export function CreatingEditingCardDialog() {
                 }
             }}
         >
-            <Box sx={{
-                backgroundColor: "rgba(30, 30, 30, 0.5)",
-                borderRadius: 2,
-                p: 3,
-                minWidth: 280,
-                border: "1px solid rgba(255,255,255,0.1)",
-                outline: "none",
-            }}>
-                <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
-                    Row Span: {cardSpan?.rowSpan}
-                </Typography>
-                <Slider
-                    min={3}
-                    max={6}
-                    value={cardSpan?.rowSpan || 3}
-                    onChange={handleRowSpanChange}
-                    sx={{ mb: 2 }}
-                />
-                <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
-                    Col Span: {cardSpan?.colSpan}
-                </Typography>
-                <Slider
-                    min={4}
-                    max={24}
-                    value={cardSpan?.colSpan || 12}
-                    onChange={handleColSpanChange}
-                />
-            </Box>
+            <ResizeGrid
+                initialColSpan={cardSpan?.colSpan || 12}
+                initialRowSpan={cardSpan?.rowSpan || 3}
+                onResize={(colSpan, rowSpan) => {
+                    setCardSpan({ colSpan, rowSpan });
+                }}
+                maxCols={24}
+                maxRows={6}
+            />
         </Modal>
     );
 
