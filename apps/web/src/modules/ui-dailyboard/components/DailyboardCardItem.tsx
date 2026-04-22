@@ -24,9 +24,11 @@ function DailyboardCardItem(props : DailyboardCardItemProps) {
 
     return (
         <DailyboardCardDisplay 
-            content={dailyboardCardData.content}
+            state={{
+                content: dailyboardCardContent,
+                isFrontFace: true,
+            }}
             ref={ref}
-            isFrontFace={true}
             {...getDailyboardCardDataSet(dailyboardCardData)}
         />
     )

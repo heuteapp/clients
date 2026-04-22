@@ -7,8 +7,8 @@ export function DailyboardCardDisplay({ state, ref, className, sx, render }: Dai
         <Box
             className={clsx('heute-card', ...(className?.body || []))}
             sx={{
-                width: state.colSpan * state.cellStep,
-                height: state.rowSpan * state.cellStep,
+                width: (state.colSpan || 0) * (state.cellStep || 0),
+                height: (state.rowSpan || 0) * (state.cellStep || 0),
                 ...sx?.body,
             }}
             ref={ref}
@@ -19,7 +19,7 @@ export function DailyboardCardDisplay({ state, ref, className, sx, render }: Dai
                         data-title
                         className={clsx('title', ...(className?.title || []))}
                         sx={{
-                            height: 1 * state.cellStep,
+                            height: 1 * (state.cellStep || 0),
                             ...sx?.title,
                         }}
                     >

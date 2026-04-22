@@ -18,10 +18,10 @@ export interface DailyboardCardItemProps {
 export interface DailyboardCardDisplayProps {
     state: {
         content: DailyboardCardMaterial;
-        colSpan: number;
-        rowSpan: number;
-        cellStep: number;
         isFrontFace: boolean;
+        colSpan?: number;
+        rowSpan?: number;
+        cellStep?: number;
     },
     ref?: React.RefObject<HTMLDivElement | null>;
     className?: {
