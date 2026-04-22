@@ -41,6 +41,79 @@ export function CreatingEditingCardDialog() {
         setAnchorEl(event.currentTarget);
     };
 
+    const handleResizeClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleRowSpanChange = (_: Event, value: number | number[]) => {
+        setCardSpan(prev => prev ? { ...prev, rowSpan: value as number } : null);
+    };
+
+    const handleColSpanChange = (_: Event, value: number | number[]) => {
+        setCardSpan(prev => prev ? { ...prev, colSpan: value as number } : null);
+    };
+
+    const renderResizeButton = () => (
+        <Box
+            sx={{
+                position: "absolute",
+                inset: "auto 0 100% 0",
+                height: cellStep,
+                borderRadius: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <IconButton
+                color="inherit"
+                onClick={handleResizeClick}
+                sx={{
+                    border: "2px solid rgba(255, 255, 255, 0.4)",
+                    borderRadius: "30%",
+                    overflow: "hidden",
+                    "& .MuiTouchRipple-child": {
+                        borderRadius: "30%",
+                    }
+                }}
+            >
+                <ZoomOutMapIcon />
+            </IconButton>
+        </Box>
+    );
+
+    const renderResizeModal = () => (
+        <Modal
+            open={Boolean(anchorEl)}
+            onClose={handleResizeClose}
+            sx={{
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "center",
+                pb: 8
+            }}
+            slotProps={{
+                backdrop: {
+                    sx: {
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    }
+                }
+            }}
+        >
+            <DailyboardCardStudio
+                initialColSpan={cardSpan?.colSpan || 12}
+                initialRowSpan={cardSpan?.rowSpan || 3}
+                initialCol={0}
+                initialRow={0}
+                onResize={(colSpan, rowSpan, col, row) => {
+                    setCardSpan({ colSpan, rowSpan });
+                }}
+                maxCols={24}
+                maxRows={12}
+            />
+        </Modal>
+    );
+
     return (
         <Dialog
             open={isOpen}
@@ -59,7 +132,6 @@ export function CreatingEditingCardDialog() {
             }}
         >
             <DialogContent style={{
-                position: "relative",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -72,27 +144,19 @@ export function CreatingEditingCardDialog() {
                     <CloseIcon />
                 </IconButton>
 
-                <DailyboardCardDisplay
-                    state={{
-                        content: cardContent!,
-                        cardSpan: cardSpan!,
-                        isFrontFace: true,
-                        cellStep: cellStep
-                    }}
-                />
-                <Box sx={{ position: "absolute", bottom: 60 }}>
-                    <DailyboardCardStudio
-                        initialColSpan={cardSpan?.colSpan || 12}
-                        initialRowSpan={cardSpan?.rowSpan || 3}
-                        initialCol={0}
-                        initialRow={0}
-                        onResize={(colSpan, rowSpan, col, row) => {
-                            setCardSpan({ colSpan, rowSpan });
+                <Box sx={{ position: "relative" }}>
+                    {renderResizeButton()}
+                    <DailyboardCardDisplay
+                        state={{
+                            content: cardContent!,
+                            isFrontFace: true,
+                            cardSpan: cardSpan!,
+                            cellStep
                         }}
-                        maxCols={24}
-                        maxRows={12}
                     />
                 </Box>
+
+                {renderResizeModal()}
             </DialogContent>
         </Dialog>
     );
