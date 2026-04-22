@@ -39,12 +39,6 @@ export function CreatingEditingCardDialog() {
         return metrics.value?.layout.cellSize.grid || 0;
     }, [metrics.value]);
 
-    const cardSize = useMemo(() => {
-        const width = cellStep * (cardSpan?.colSpan || 0);
-        const height = cellStep * (cardSpan?.rowSpan || 0);
-        return { width, height };
-    }, [cardSpan, cellStep]);
-
     return (
         <Dialog
             open={isOpen}
@@ -75,16 +69,11 @@ export function CreatingEditingCardDialog() {
                     <CloseIcon />
                 </IconButton>
                 <DailyboardCardDisplay
-                    content={cardContent!}
-                    isFrontFace={true}
-                    sx={{
-                        body: {
-                            width: cardSize.width,
-                            height: cardSize.height,
-                        },
-                        title: {
-                            height: cellStep
-                        },
+                    state={{
+                        content: cardContent!,
+                        isFrontFace: true,
+                        cardSpan: cardSpan!,
+                        cellStep
                     }}
                 />
             </DialogContent>
