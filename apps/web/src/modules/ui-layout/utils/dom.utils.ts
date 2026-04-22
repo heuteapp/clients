@@ -1,4 +1,4 @@
-import { LayoutDataContent } from "../../layout/types/layout.data.types";
+import { LayoutDataContent, LayoutSectionDataContent } from "../../layout/types/layout.data.types";
 import { Pointer } from "../../shared/types/common";
 
 //
@@ -60,6 +60,22 @@ export const findCanvasGridAtPoint = (clientX: number, clientY: number): HTMLDiv
 
 export const findAllCanvasGrids = (el: HTMLDivElement): HTMLDivElement[] => {
     return Array.from(findCanvasInSubtree(el)?.querySelectorAll<HTMLDivElement>("[data-layout-grid]") || []);
+}
+
+export const getCanvasGridData = (gridEl: HTMLDivElement): LayoutSectionDataContent | null => {
+    if(!gridEl.dataset.layoutGrid) {
+        return null;
+    }
+
+    return {
+        name: gridEl.dataset.name || "",
+        position: {
+            colIndex: parseInt(gridEl.dataset.colIndex || "0", 10),
+            rowIndex: parseInt(gridEl.dataset.rowIndex || "0", 10),
+            colSpan: parseInt(gridEl.dataset.colSpan || "0", 10),
+            rowSpan: parseInt(gridEl.dataset.rowSpan || "0", 10)
+        }
+    };  
 }
 
 //

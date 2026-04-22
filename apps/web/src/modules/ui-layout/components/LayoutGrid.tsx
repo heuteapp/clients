@@ -3,6 +3,7 @@ import style from "@/src/modules/ui-layout/styles/layout.module.scss"
 import { useLayoutEffect, useRef } from "react";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { LayoutGridProps } from "@/src/modules/ui-layout/types/layout.props";
+import { getCanvasGridDataSet } from "../utils/ui.utils";
 
 function LayoutGrid(props : LayoutGridProps) {
     const context = useLayoutContext();
@@ -19,6 +20,8 @@ function LayoutGrid(props : LayoutGridProps) {
         }
     }, [props.sectionId, registry])
 
+    const data = registry.getLayoutSection(props.sectionId)?.props?.data;
+
     return (
         <div 
             data-layout-grid
@@ -26,6 +29,7 @@ function LayoutGrid(props : LayoutGridProps) {
                 gridTemplateColumns: `repeat(${props.colSpan}, var(--grid-cell-size))`,
                 gridTemplateRows: `repeat(${props.rowSpan}, var(--grid-cell-size))`,
             }}
+            {...getCanvasGridDataSet(data ?? null)}
         />
     )
 }
