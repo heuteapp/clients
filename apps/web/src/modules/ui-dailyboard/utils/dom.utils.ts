@@ -42,9 +42,8 @@ export const findDailyboardCardAtCursor = (clientX: number, clientY: number): HT
     return null;
 }
 
-export const findDailyboardCardForKey = (el: Element, key: string): HTMLDivElement | null => {
-    const card = el.querySelector<HTMLDivElement>(`[data-dailyboard-card][data-key="${key}"]`);
-    return card || null;
+export const findDailyboardCardForKey = (key: string): HTMLDivElement | null => {
+    return findDailyboardInSubtree(document.body)?.querySelector<HTMLDivElement>(`[data-dailyboard-card][data-key="${key}"]`) || null;
 }
 
 //
