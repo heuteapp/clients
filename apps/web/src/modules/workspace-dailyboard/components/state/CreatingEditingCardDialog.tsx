@@ -1,4 +1,4 @@
-import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
+import { Box, Dialog, DialogContent, IconButton, Modal, Popover, Slider, Typography } from "@mui/material";
 import { useWorkspaceDailyboardContext } from "../../hooks/useWorkspaceDailyboardContext";
 import { isCreatingEditingCard } from "../../state/workspace-dailyboard.machine";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -15,6 +15,7 @@ export function CreatingEditingCardDialog() {
 
     const [cardContent, setCardContent] = useState<DailyboardCardMaterial | null>(null);
     const [cardSpan, setCardSpan] = useState<GridSize | null>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const isOpen = useMemo(() => {
         return isCreatingEditingCard(state);
@@ -39,6 +40,22 @@ export function CreatingEditingCardDialog() {
     const cellStep = useMemo(() => {
         return metrics.value?.layout.cellSize.grid || 0;
     }, [metrics.value]);
+
+    const handleResizeClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleResizeClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleRowSpanChange = (_: Event, value: number | number[]) => {
+        setCardSpan(prev => prev ? { ...prev, rowSpan: value as number } : null);
+    };
+
+    const handleColSpanChange = (_: Event, value: number | number[]) => {
+        setCardSpan(prev => prev ? { ...prev, colSpan: value as number } : null);
+    };
 
     return (
         <Dialog
@@ -79,14 +96,15 @@ export function CreatingEditingCardDialog() {
                             position: "absolute",
                             inset: "auto 0 100% 0",
                             height: cellStep,
-                            //border: "2px dashed rgba(255, 255, 255, 0.4)",
                             borderRadius: 1,
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
                         }}
                     >
-                        <IconButton color="inherit"
+                        <IconButton 
+                            color="inherit"
+                            onClick={handleResizeClick}
                             sx={{
                                 border: "2px solid rgba(255, 255, 255, 0.4)",
                                 borderRadius: "30%",
@@ -108,6 +126,52 @@ export function CreatingEditingCardDialog() {
                         }}
                     />
                 </Box>
+
+                <Modal
+                    open={Boolean(anchorEl)}
+                    onClose={handleResizeClose}
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}
+                    slotProps={{
+                        backdrop: {
+                            sx: {
+                                backgroundColor: "rgba(0, 0, 0, 0.1)",
+                            }
+                        }
+                    }}
+                >
+                    <Box sx={{
+                        backgroundColor: "rgba(30, 30, 30, 0.5)",
+                        borderRadius: 2,
+                        p: 3,
+                        minWidth: 280,
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        outline: "none",
+                    }}>
+                        <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
+                            Row Span: {cardSpan?.rowSpan}
+                        </Typography>
+                        <Slider
+                            min={3}
+                            max={6}
+                            value={cardSpan?.rowSpan || 3}
+                            onChange={handleRowSpanChange}
+                            sx={{ mb: 2 }}
+                        />
+                        <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
+                            Col Span: {cardSpan?.colSpan}
+                        </Typography>
+                        <Slider
+                            min={4}
+                            max={24}
+                            value={cardSpan?.colSpan || 12}
+                            onChange={handleColSpanChange}
+                        />
+                    </Box>
+                </Modal>
             </DialogContent>
         </Dialog>
     )
