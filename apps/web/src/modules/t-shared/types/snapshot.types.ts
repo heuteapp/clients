@@ -28,5 +28,5 @@ export interface DailyboardSnapshot extends BaseSnapshot {
 export interface DailyboardCardSnapshot extends BaseSnapshot {
     cardKey: string;
     cardContent: DailyboardCardMaterial;
-    cardPlacement: DailyboardCardPlacement;
+    cardPlacement: DailyboardCardPlacement | null;
 }
