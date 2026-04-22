@@ -1,5 +1,6 @@
+import { findAllDailyboardCards, findDailyboardInSubtree, getDailyboardCardData, getDailyboardData } from "../../ui-dailyboard/utils/dom.utils";
 import { findAllCanvasGrids, findCanvasInSubtree, getCanvasData, getCanvasGridData } from "../../ui-layout/utils/dom.utils"
-import { CanvasGridSnapshot, CanvasSnapshot } from "../types/snapshot.types";
+import { CanvasGridSnapshot, CanvasSnapshot, DailyboardCardSnapshot, DailyboardSnapshot } from "../types/snapshot.types";
 
 export const getCanvasSnapshot = () : CanvasSnapshot | null => {
     return getCanvasSnapshotFrom(document.body);
@@ -38,5 +39,45 @@ export const getCanvasGridSnapshotFor = (gridEl: HTMLDivElement): CanvasGridSnap
         rect: gridEl.getBoundingClientRect(),
         gridName: gridData.name,
         gridRect: gridData.position
+    }
+}
+
+//
+
+export const getDailyboardSnapshot = () : DailyboardSnapshot | null => {
+    return getDailyboardSnapshotFrom(document.body);
+}
+
+export const getDailyboardSnapshotFrom = (el: Element) : DailyboardSnapshot | null => {
+    const dailyboardEl = findDailyboardInSubtree(el as HTMLDivElement);
+    if (!dailyboardEl) return null;
+
+    const data = getDailyboardData(dailyboardEl);
+    if (!data) return null;
+
+    const canvasSnapshot = getCanvasSnapshotFrom(dailyboardEl);
+
+    return {
+        rect: dailyboardEl.getBoundingClientRect(),
+        categoryPath: data.categoryPath,
+        date: data.date,
+        canvas: canvasSnapshot!,
+        cards: [] // TODO: Implement card snapshots
+    }
+}
+
+export const getDailyboardCardSnapshotsFor = (dailyboardEl: HTMLDivElement): DailyboardCardSnapshot[] => {
+    return findAllDailyboardCards(dailyboardEl).map(cardEl => getDailyboardCardSnapshotFor(cardEl)!);
+};
+
+export const getDailyboardCardSnapshotFor = (cardEl: HTMLDivElement) : DailyboardCardSnapshot | null => {
+    const cardData = getDailyboardCardData(cardEl);
+    if (!cardData) return null;
+
+    return {
+        rect: cardEl.getBoundingClientRect(),
+        cardKey: cardEl.dataset.key || "",
+        cardContent: cardData.content,
+        cardPlacement: cardData.placement
     }
 }
