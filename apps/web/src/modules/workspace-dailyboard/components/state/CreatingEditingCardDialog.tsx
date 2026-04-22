@@ -1,4 +1,4 @@
-import { Box, Dialog, DialogContent, IconButton, Modal, Popover, Slider, Typography } from "@mui/material";
+import { Box, Dialog, DialogContent, IconButton, Modal, Slider, Typography } from "@mui/material";
 import { useWorkspaceDailyboardContext } from "../../hooks/useWorkspaceDailyboardContext";
 import { isCreatingEditingCard } from "../../state/workspace-dailyboard.machine";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -17,16 +17,11 @@ export function CreatingEditingCardDialog() {
     const [cardSpan, setCardSpan] = useState<GridSize | null>(null);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const isOpen = useMemo(() => {
-        return isCreatingEditingCard(state);
-    }, [state]);
-
-    const handleClose = useCallback(() => {
-        send({ type: "CARD_CREATE_CANCEL" });
-    }, [send]);
+    const isOpen = useMemo(() => isCreatingEditingCard(state), [state]);
+    const cellStep = useMemo(() => metrics.value?.layout.cellSize.grid || 0, [metrics.value]);
 
     useEffect(() => {
-        if(isOpen) {
+        if (isOpen) {
             setCardSpan({ colSpan: 12, rowSpan: 3 });
             setCardContent({
                 title: null,
@@ -37,9 +32,9 @@ export function CreatingEditingCardDialog() {
         }
     }, [isOpen]);
 
-    const cellStep = useMemo(() => {
-        return metrics.value?.layout.cellSize.grid || 0;
-    }, [metrics.value]);
+    const handleClose = useCallback(() => {
+        send({ type: "CARD_CREATE_CANCEL" });
+    }, [send]);
 
     const handleResizeClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -56,6 +51,83 @@ export function CreatingEditingCardDialog() {
     const handleColSpanChange = (_: Event, value: number | number[]) => {
         setCardSpan(prev => prev ? { ...prev, colSpan: value as number } : null);
     };
+
+    const renderResizeButton = () => (
+        <Box
+            sx={{
+                position: "absolute",
+                inset: "auto 0 100% 0",
+                height: cellStep,
+                borderRadius: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <IconButton
+                color="inherit"
+                onClick={handleResizeClick}
+                sx={{
+                    border: "2px solid rgba(255, 255, 255, 0.4)",
+                    borderRadius: "30%",
+                    overflow: "hidden",
+                    "& .MuiTouchRipple-child": {
+                        borderRadius: "30%",
+                    }
+                }}
+            >
+                <ZoomOutMapIcon />
+            </IconButton>
+        </Box>
+    );
+
+    const renderResizeModal = () => (
+        <Modal
+            open={Boolean(anchorEl)}
+            onClose={handleResizeClose}
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+            }}
+            slotProps={{
+                backdrop: {
+                    sx: {
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    }
+                }
+            }}
+        >
+            <Box sx={{
+                backgroundColor: "rgba(30, 30, 30, 0.5)",
+                borderRadius: 2,
+                p: 3,
+                minWidth: 280,
+                border: "1px solid rgba(255,255,255,0.1)",
+                outline: "none",
+            }}>
+                <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
+                    Row Span: {cardSpan?.rowSpan}
+                </Typography>
+                <Slider
+                    min={3}
+                    max={6}
+                    value={cardSpan?.rowSpan || 3}
+                    onChange={handleRowSpanChange}
+                    sx={{ mb: 2 }}
+                />
+                <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
+                    Col Span: {cardSpan?.colSpan}
+                </Typography>
+                <Slider
+                    min={4}
+                    max={24}
+                    value={cardSpan?.colSpan || 12}
+                    onChange={handleColSpanChange}
+                />
+            </Box>
+        </Modal>
+    );
 
     return (
         <Dialog
@@ -74,49 +146,21 @@ export function CreatingEditingCardDialog() {
                 }
             }}
         >
-            <DialogContent style={{  
+            <DialogContent style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "transparent" 
+                backgroundColor: "transparent"
             }}>
-                <IconButton 
+                <IconButton
                     onClick={handleClose}
                     style={{ position: "absolute", top: 16, right: 16, zIndex: 1, color: "white" }}
                 >
                     <CloseIcon />
                 </IconButton>
-                <Box
-                    sx={{
-                        position: "relative"
-                    }}
-                >
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            inset: "auto 0 100% 0",
-                            height: cellStep,
-                            borderRadius: 1,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <IconButton 
-                            color="inherit"
-                            onClick={handleResizeClick}
-                            sx={{
-                                border: "2px solid rgba(255, 255, 255, 0.4)",
-                                borderRadius: "30%",
-                                overflow: "hidden",
-                                "& .MuiTouchRipple-child": {
-                                    borderRadius: "30%",
-                                }
-                            }}
-                        >
-                            <ZoomOutMapIcon />
-                        </IconButton>
-                    </Box>
+
+                <Box sx={{ position: "relative" }}>
+                    {renderResizeButton()}
                     <DailyboardCardDisplay
                         state={{
                             content: cardContent!,
@@ -127,52 +171,8 @@ export function CreatingEditingCardDialog() {
                     />
                 </Box>
 
-                <Modal
-                    open={Boolean(anchorEl)}
-                    onClose={handleResizeClose}
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center"
-                    }}
-                    slotProps={{
-                        backdrop: {
-                            sx: {
-                                backgroundColor: "rgba(0, 0, 0, 0.1)",
-                            }
-                        }
-                    }}
-                >
-                    <Box sx={{
-                        backgroundColor: "rgba(30, 30, 30, 0.5)",
-                        borderRadius: 2,
-                        p: 3,
-                        minWidth: 280,
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        outline: "none",
-                    }}>
-                        <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
-                            Row Span: {cardSpan?.rowSpan}
-                        </Typography>
-                        <Slider
-                            min={3}
-                            max={6}
-                            value={cardSpan?.rowSpan || 3}
-                            onChange={handleRowSpanChange}
-                            sx={{ mb: 2 }}
-                        />
-                        <Typography variant="body2" sx={{ color: "white", mb: 1 }}>
-                            Col Span: {cardSpan?.colSpan}
-                        </Typography>
-                        <Slider
-                            min={4}
-                            max={24}
-                            value={cardSpan?.colSpan || 12}
-                            onChange={handleColSpanChange}
-                        />
-                    </Box>
-                </Modal>
+                {renderResizeModal()}
             </DialogContent>
         </Dialog>
-    )
+    );
 }
