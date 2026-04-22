@@ -1,6 +1,6 @@
 import { DailyboardCardMaterial, DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.data.types";
-import { GridDimensions, GridRect, Rect } from "./common"
-import { YYMMDDDate } from "./date.types";
+import { GridDimensions, GridRect, Rect } from "../../shared/types/common"
+import { YYMMDDDate } from "../../shared/types/date.types";
 
 export interface BaseSnapshot {
     rect: Rect;
