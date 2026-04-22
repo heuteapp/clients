@@ -1,39 +1,9 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useRef, useCallback, useEffect } from "react";
+import { DailyboardCardStudioProps, ResizeMode } from "../type/t-dailyboard.card-studio.types";
 
-// ============================================================================
-// Types
-// ============================================================================
-
-interface DailyboardCardStudioProps {
-    initialColSpan?: number;
-    initialRowSpan?: number;
-    initialCol?: number;
-    initialRow?: number;
-    onResize: (colSpan: number, rowSpan: number, col: number, row: number) => void;
-    maxCols?: number;
-    maxRows?: number;
-    minColSpan?: number;
-    minRowSpan?: number;
-    cellSize?: number;
-    cellGap?: number;
-}
-
-type ResizeMode = 
-    | "move" 
-    | "top" 
-    | "bottom" 
-    | "left" 
-    | "right" 
-    | "topLeft" 
-    | "topRight" 
-    | "bottomLeft" 
-    | "bottomRight";
-
-// ============================================================================
-// Main Component
-// ============================================================================
+//
 
 export function DailyboardCardStudio({ 
     initialColSpan = 12, 
@@ -65,10 +35,6 @@ export function DailyboardCardStudio({
     const CORNER_SIZE = 12;
     const MOVE_DOT_SIZE = 16;
     const SIZE_LABEL_OFFSET = 20;
-
-    // ========================================================================
-    // Resize Handlers
-    // ========================================================================
 
     const handleResizeStart = useCallback((mode: ResizeMode, e: React.PointerEvent) => {
         e.stopPropagation();
@@ -200,9 +166,6 @@ export function DailyboardCardStudio({
         setIsResizing(false);
     }, []);
 
-    // ========================================================================
-    // Effects
-    // ========================================================================
 
     useEffect(() => {
         if (isResizing) {
@@ -215,9 +178,6 @@ export function DailyboardCardStudio({
         }
     }, [isResizing, handleResizeMove, handleResizeEnd]);
 
-    // ========================================================================
-    // Render Helpers
-    // ========================================================================
 
     const renderGridCells = () => (
         Array.from({ length: maxRows }).map((_, rowIdx) =>
@@ -292,10 +252,6 @@ export function DailyboardCardStudio({
             }}
         />
     );
-
-    // ========================================================================
-    // Main Render
-    // ========================================================================
 
     return (
         <Box sx={{ 
