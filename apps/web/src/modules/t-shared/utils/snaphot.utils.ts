@@ -57,12 +57,14 @@ export const getDailyboardSnapshotFrom = (el: Element) : DailyboardSnapshot | nu
 
     const canvasSnapshot = getCanvasSnapshotFrom(dailyboardEl);
 
+    const cardSnapshots = getDailyboardCardSnapshotsFor(dailyboardEl);
+
     return {
         rect: dailyboardEl.getBoundingClientRect(),
         categoryPath: data.categoryPath,
         date: data.date,
         canvas: canvasSnapshot!,
-        cards: [] // TODO: Implement card snapshots
+        cards: cardSnapshots
     }
 }
 
