@@ -1,4 +1,4 @@
-import { GridRect, GridSize } from "../../shared/types/common";
+import { GridRect, GridSpan } from "../../shared/types/common";
 
 export const findDailyboardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-dailyboard]");
@@ -81,7 +81,7 @@ export const getDailyboardCardData = (cardEl: HTMLElement) => {
 
 //
 
-export const calcDailyboardCardGridIndexes = (mouseCol: number, mouseRow: number, sectionSize: GridSize, cardSize: GridSize) => {
+export const calcDailyboardCardGridIndexes = (mouseCol: number, mouseRow: number, sectionSize: GridSpan, cardSize: GridSpan) => {
     let col = mouseCol - Math.floor(cardSize.colSpan / 2);
     let row = mouseRow - Math.floor(cardSize.rowSpan / 2);
 
@@ -91,7 +91,7 @@ export const calcDailyboardCardGridIndexes = (mouseCol: number, mouseRow: number
     return { col, row };
 }
 
-export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, sectionSize: GridSize, cardPos: GridRect) => {
+export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, sectionSize: GridSpan, cardPos: GridRect) => {
 
     const localGridRect = {
         left: (gridRect.left) + gap,

@@ -1,9 +1,9 @@
-import { GridRect, GridSize } from "@/src/modules/shared/types/common";
+import { GridRect, GridSpan } from "@/src/modules/shared/types/common";
 
 export interface DailyboardEditableCardProps {
     initialRect: GridRect;
-    minSpan: GridSize;
-    maxSpan: GridSize;
+    minSpan: GridSpan;
+    maxSpan: GridSpan;
     cellStep: number;
 }
 

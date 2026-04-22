@@ -102,9 +102,9 @@ export const useDailyboardCardDragPlacement = () => {
             state.sectionElementData = { name: sectionName, position: gridPos };
 
             const gridRect = gridEl.getBoundingClientRect();
-            const gridSize = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
+            const gridSpan = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
             const { col: mouseCol, row: mouseRow } = calcGridPointerAtCursor({ x: clientX, y: clientY }, gridRect, cellSize);
-            let { col: cardCol, row: cardRow } = calcDailyboardCardGridIndexes(mouseCol, mouseRow, gridSize, cardSize);
+            let { col: cardCol, row: cardRow } = calcDailyboardCardGridIndexes(mouseCol, mouseRow, gridSpan, cardSize);
 
             state.ghostCardGridPos = {
                 colIndex: cardCol,
@@ -114,7 +114,7 @@ export const useDailyboardCardDragPlacement = () => {
             };
 
             const gap = dailyboardEl.clientWidth * 0.0075;
-            state.ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, state.ghostCardGridPos);
+            state.ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSpan, state.ghostCardGridPos);
 
             const cards = findDailyboardCardsForSection(dailyboardEl, sectionName).filter((card) => {
                 const cardData = getDailyboardCardData(card);
@@ -125,10 +125,10 @@ export const useDailyboardCardDragPlacement = () => {
             state.isGhostCardOverlapping = isGridRectOverlappingSome(state.ghostCardGridPos, cardRects);
 
             if (state.isGhostCardOverlapping) {
-                const bestPos = findBestGridRectPosition(state.ghostCardGridPos, cardRects, gridSize);
+                const bestPos = findBestGridRectPosition(state.ghostCardGridPos, cardRects, gridSpan);
                 if (bestPos) {
                     state.suggestedCardGridPos = bestPos;
-                    state.suggestedCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSize, state.suggestedCardGridPos);
+                    state.suggestedCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSpan, state.suggestedCardGridPos);
                 } else {
                     state.suggestedCardGridPos = null;
                     state.suggestedCardPos = null;

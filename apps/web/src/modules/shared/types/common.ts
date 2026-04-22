@@ -3,35 +3,30 @@ export interface Pointer {
     y: number;
 }
 
-export interface Rect {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
-
 export interface Size {
     width: number;
     height: number;
 }
 
-export interface GridPosition {
+export interface Rect extends Pointer, Size {}
+
+export interface GridIndex {
     rowIndex: number;
     colIndex: number;
 }
 
-export interface GridSize {
+export interface GridSpan {
     rowSpan: number;
     colSpan: number;
 }
 
-export interface GridRect extends GridPosition, GridSize {}
+export interface GridRect extends GridIndex, GridSpan {}
 
 export interface GridDimensions {
     rowCount: number;
     columnCount: number;
 }
 
-export interface GridRect extends GridPosition, GridSize {}
+export interface GridRect extends GridIndex, GridSpan {}
 
 export type ResizeHandle = "n" | "e" | "s" | "w" | "ne" | "nw" | "se" | "sw"

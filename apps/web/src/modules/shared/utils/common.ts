@@ -1,4 +1,4 @@
-import { GridRect, GridSize } from "../../shared/types/common";
+import { GridRect, GridSpan } from "../../shared/types/common";
 
 export const isGridRectOverlapping = (a: GridRect, b: GridRect) => {
     return !(a.colIndex + a.colSpan <= b.colIndex ||
@@ -14,7 +14,7 @@ export const isGridRectOverlappingSome = (rect: GridRect, others: GridRect[]) =>
 export const findBestGridRectPosition = (
     rect: GridRect,
     others: GridRect[],
-    totalSize: GridSize
+    totalSize: GridSpan
 ): GridRect | null => {
 
     const { colSpan: totalCol, rowSpan: totalRow } = totalSize;

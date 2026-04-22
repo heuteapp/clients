@@ -1,9 +1,9 @@
 import { DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.data.types";
-import { GridRect, GridSize, Rect } from "../../shared/types/common";
+import { GridRect, GridSpan, Rect } from "../../shared/types/common";
 import { LayoutMetrics } from "../../ui-layout/types/layout.metrics";
 
 export interface DailyboardCardPlacementContent {
-    cardSize: GridSize;
+    cardSize: GridSpan;
     targetCardKey?: string;
 }
 
