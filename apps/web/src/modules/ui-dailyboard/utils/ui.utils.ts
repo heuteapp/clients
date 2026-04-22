@@ -3,7 +3,7 @@ import { StoredDailyboardCardData, StoredDailyboardData } from "@/src/heute-stor
 export const getDailyboardDataSet = (dailyboard: StoredDailyboardData) => {
     return {
         "data-dailyboard": true,
-        "data-id": dailyboard.id,
+        "data-category-path": dailyboard.categoryPath,
         "data-layout-name": dailyboard.layoutName,
         "data-layout-version": dailyboard.layoutVersion,
         "data-date": dailyboard.date,
