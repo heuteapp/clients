@@ -1,4 +1,6 @@
+import { DailyboardDataContent } from "../../dailyboard/types/dailyboard.data.types";
 import { GridRect, GridSpan } from "../../shared/types/common";
+import { parseYYMMDD } from "../../shared/utils/date.utils";
 
 export const findDailyboardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-dailyboard]");
@@ -20,6 +22,17 @@ export const findDailyboardAtCursor = (clientX: number, clientY: number): HTMLDi
     
     return null;
 }
+
+export const getDailyboardData = (dailyboardEl: HTMLElement) : DailyboardDataContent => {
+    return {
+        categoryPath: dailyboardEl.dataset.categoryPath || "",
+        layoutName: dailyboardEl.dataset.layoutName || "",
+        layoutVersion: parseInt(dailyboardEl.dataset.layoutVersion || "0", 10),
+        date: parseYYMMDD(dailyboardEl.dataset.date || "")!
+    }
+}
+
+//
 
 export const findDailyboardCardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-dailyboard-card]");
