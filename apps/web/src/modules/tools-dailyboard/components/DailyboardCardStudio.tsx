@@ -186,16 +186,47 @@ export function DailyboardCardStudio({
         </Typography>
     );
 
-    const renderResizeHandle = (dir: ResizeDirection, sx: any) => (
-        <Box
-            onPointerDown={(e) => handleResizeStart(dir, e)}
-            sx={{
-                pointerEvents: "auto",
-                touchAction: "none",
-                ...sx
-            }}
-        />
-    );
+    const renderResizeHandle = (dir: ResizeDirection) => {
+        const isE = dir === "e"; const isSE = dir === "se";
+        const isS = dir === "s"; const isNE = dir === "ne";
+        const isW = dir === "w"; const isSW = dir === "sw";
+        const isN = dir === "n"; const isNW = dir === "nw";
+
+        const isEdge = isE || isS || isW || isN;
+        const isCorner = isSE || isNE || isSW || isNW;
+        
+        // Pozisyon hesaplamaları
+        const getPositionStyles = () => {
+            if (isN) return { top: -HANDLE_SIZE / 2, left: "50%", width: 40, height: HANDLE_SIZE, cursor: "ns-resize" };
+            if (isS) return { bottom: -HANDLE_SIZE / 2, left: "50%", width: 40, height: HANDLE_SIZE, cursor: "ns-resize" };
+            if (isW) return { left: -HANDLE_SIZE / 2, top: "50%", width: HANDLE_SIZE, height: 40, cursor: "ew-resize" };
+            if (isE) return { right: -HANDLE_SIZE / 2, top: "50%", width: HANDLE_SIZE, height: 40, cursor: "ew-resize" };
+            if (isNW) return { top: -CORNER_SIZE / 2, left: -CORNER_SIZE / 2, width: CORNER_SIZE, height: CORNER_SIZE, cursor: "nw-resize" };
+            if (isNE) return { top: -CORNER_SIZE / 2, right: -CORNER_SIZE / 2, width: CORNER_SIZE, height: CORNER_SIZE, cursor: "ne-resize" };
+            if (isSW) return { bottom: -CORNER_SIZE / 2, left: -CORNER_SIZE / 2, width: CORNER_SIZE, height: CORNER_SIZE, cursor: "sw-resize" };
+            if (isSE) return { bottom: -CORNER_SIZE / 2, right: -CORNER_SIZE / 2, width: CORNER_SIZE, height: CORNER_SIZE, cursor: "se-resize" };
+            return {};
+        };
+        
+        return (
+            <Box
+                onPointerDown={(e) => handleResizeStart(dir, e)}
+                sx={{
+                    position: "absolute",
+                    pointerEvents: "auto",
+                    touchAction: "none",
+                    backgroundColor: "rgba(100, 150, 255, 0.9)",
+                    transform: isN || isS ? "translateX(-50%)" : (isE || isW ? "translateY(-50%)" : "none"),
+                    borderRadius: isCorner ? "50%" : 1,
+                    "&:hover": { 
+                        backgroundColor: "rgba(100, 150, 255, 1)",
+                        ...(isCorner && { transform: "scale(1.2)" })
+                    },
+                    ...getPositionStyles()
+                }}
+            />
+        )
+    }
 
     // ============================================================================
     // Main Render
@@ -240,119 +271,14 @@ export function DailyboardCardStudio({
                     {renderMoveHandle()}
                     {renderSizeLabel()}
 
-                    {/* Edge Handles */}
-                    {renderResizeHandle("n", {
-                        position: "absolute",
-                        top: -HANDLE_SIZE / 2,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: 40,
-                        height: HANDLE_SIZE,
-                        backgroundColor: "rgba(100, 150, 255, 0.8)",
-                        borderRadius: 1,
-                        cursor: "ns-resize",
-                        "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
-                    })}
-
-                    {renderResizeHandle("s", {
-                        position: "absolute",
-                        bottom: -HANDLE_SIZE / 2,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: 40,
-                        height: HANDLE_SIZE,
-                        backgroundColor: "rgba(100, 150, 255, 0.8)",
-                        borderRadius: 1,
-                        cursor: "ns-resize",
-                        "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
-                    })}
-
-                    {renderResizeHandle("w", {
-                        position: "absolute",
-                        left: -HANDLE_SIZE / 2,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        width: HANDLE_SIZE,
-                        height: 40,
-                        backgroundColor: "rgba(100, 150, 255, 0.8)",
-                        borderRadius: 1,
-                        cursor: "ew-resize",
-                        "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
-                    })}
-
-                    {renderResizeHandle("e", {
-                        position: "absolute",
-                        right: -HANDLE_SIZE / 2,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        width: HANDLE_SIZE,
-                        height: 40,
-                        backgroundColor: "rgba(100, 150, 255, 0.8)",
-                        borderRadius: 1,
-                        cursor: "ew-resize",
-                        "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
-                    })}
-
-                    {/* Corner Handles */}
-                    {renderResizeHandle("nw", {
-                        position: "absolute",
-                        top: -CORNER_SIZE / 2,
-                        left: -CORNER_SIZE / 2,
-                        width: CORNER_SIZE,
-                        height: CORNER_SIZE,
-                        backgroundColor: "rgba(100, 150, 255, 0.9)",
-                        borderRadius: "50%",
-                        cursor: "nw-resize",
-                        "&:hover": { 
-                            backgroundColor: "rgba(100, 150, 255, 1)",
-                            transform: "scale(1.2)"
-                        }
-                    })}
-
-                    {renderResizeHandle("ne", {
-                        position: "absolute",
-                        top: -CORNER_SIZE / 2,
-                        right: -CORNER_SIZE / 2,
-                        width: CORNER_SIZE,
-                        height: CORNER_SIZE,
-                        backgroundColor: "rgba(100, 150, 255, 0.9)",
-                        borderRadius: "50%",
-                        cursor: "ne-resize",
-                        "&:hover": { 
-                            backgroundColor: "rgba(100, 150, 255, 1)",
-                            transform: "scale(1.2)"
-                        }
-                    })}
-
-                    {renderResizeHandle("sw", {
-                        position: "absolute",
-                        bottom: -CORNER_SIZE / 2,
-                        left: -CORNER_SIZE / 2,
-                        width: CORNER_SIZE,
-                        height: CORNER_SIZE,
-                        backgroundColor: "rgba(100, 150, 255, 0.9)",
-                        borderRadius: "50%",
-                        cursor: "sw-resize",
-                        "&:hover": { 
-                            backgroundColor: "rgba(100, 150, 255, 1)",
-                            transform: "scale(1.2)"
-                        }
-                    })}
-
-                    {renderResizeHandle("se", {
-                        position: "absolute",
-                        bottom: -CORNER_SIZE / 2,
-                        right: -CORNER_SIZE / 2,
-                        width: CORNER_SIZE,
-                        height: CORNER_SIZE,
-                        backgroundColor: "rgba(100, 150, 255, 0.9)",
-                        borderRadius: "50%",
-                        cursor: "se-resize",
-                        "&:hover": { 
-                            backgroundColor: "rgba(100, 150, 255, 1)",
-                            transform: "scale(1.2)"
-                        }
-                    })}
+                    {renderResizeHandle("n")}
+                    {renderResizeHandle("s")}
+                    {renderResizeHandle("w")}
+                    {renderResizeHandle("e")}
+                    {renderResizeHandle("nw")}
+                    {renderResizeHandle("ne")}
+                    {renderResizeHandle("sw")}
+                    {renderResizeHandle("se")}
                 </Box>
             </Box>
         </Box>
