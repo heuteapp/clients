@@ -80,7 +80,7 @@ export function DailyboardCardStudio({
             const params: ResizeParams = {
                 direction,
                 delta: { row: deltaRows, col: deltaCols },
-                dimensions: { rowCount: maxRows, columnCount: maxCols },
+                dimensions: { rowCount: maxRows, colCount: maxCols },
                 minSpan: { rowSpan: minRowSpan, colSpan: minColSpan }
             };
             

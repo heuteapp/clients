@@ -31,7 +31,7 @@ export interface GridRect extends GridIndex, GridSpan {}
 
 export interface GridDimensions {
     rowCount: number;
-    columnCount: number;
+    colCount: number;
 }
 
 export interface GridSnapshot {

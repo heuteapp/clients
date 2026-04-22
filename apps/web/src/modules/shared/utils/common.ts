@@ -72,7 +72,7 @@ export function resizeGridRect(rect: GridRect, params: ResizeParams): GridRect {
 
     const resizeRight = () => {
         newRect.colSpan = Math.min(
-            dimensions.columnCount - newRect.colIndex,
+            dimensions.colCount - newRect.colIndex,
             Math.max(minSpan.colSpan, rect.colSpan + delta.col)
         );
     };
@@ -86,7 +86,7 @@ export function resizeGridRect(rect: GridRect, params: ResizeParams): GridRect {
             newRect.colSpan = rect.colIndex + rect.colSpan;
         }
         
-        const maxColIndex = dimensions.columnCount - newRect.colSpan;
+        const maxColIndex = dimensions.colCount - newRect.colSpan;
         if (newRect.colIndex > maxColIndex) {
             newRect.colIndex = maxColIndex;
         }
@@ -116,7 +116,7 @@ export function resizeGridRect(rect: GridRect, params: ResizeParams): GridRect {
 
     const clampHorizontal = () => {
         newRect.colIndex = Math.max(0, newRect.colIndex);
-        const maxColIndex = dimensions.columnCount - newRect.colSpan;
+        const maxColIndex = dimensions.colCount - newRect.colSpan;
         if (newRect.colIndex > maxColIndex) {
             newRect.colIndex = maxColIndex;
         }
