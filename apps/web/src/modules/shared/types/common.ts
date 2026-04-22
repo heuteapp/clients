@@ -34,7 +34,12 @@ export interface GridDimensions {
     columnCount: number;
 }
 
-export interface GridRect extends GridIndex, GridSpan {}
+export interface GridSnapshot {
+    canvasSize: GridDimensions;
+    gridKey: string;
+    gridRect: GridRect;
+    screenRect: Rect;
+}
 
 //
 
