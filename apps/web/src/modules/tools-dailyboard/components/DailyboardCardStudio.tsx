@@ -234,11 +234,8 @@ export function DailyboardCardStudio({
 
     return (
         <Box sx={{ 
-            backgroundColor: "rgba(0, 0, 0, 0.5)", 
-            backdropFilter: "blur(8px)",
             border: "1px solid rgba(255,255,255,0.2)",
             borderRadius: 2,
-            p: 1,
         }}>
             <Box
                 sx={{
