@@ -14,7 +14,7 @@ export interface CanvasSnapshot extends BaseSnapshot {
 }
 
 export interface CanvasGridSnapshot extends BaseSnapshot {
-    gridKey: string;
+    gridName: string;
     gridRect: GridRect;
 }
 
