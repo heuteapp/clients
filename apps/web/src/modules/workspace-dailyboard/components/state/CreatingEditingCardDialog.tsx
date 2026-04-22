@@ -103,7 +103,9 @@ export function CreatingEditingCardDialog() {
             <ResizeGrid
                 initialColSpan={cardSpan?.colSpan || 12}
                 initialRowSpan={cardSpan?.rowSpan || 3}
-                onResize={(colSpan, rowSpan) => {
+                initialCol={0}
+                initialRow={0}
+                onResize={(colSpan, rowSpan, col, row) => {
                     setCardSpan({ colSpan, rowSpan });
                 }}
                 maxCols={24}
