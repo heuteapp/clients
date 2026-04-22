@@ -10,6 +10,13 @@ export interface Size {
 
 export interface Rect extends Pointer, Size {}
 
+//
+
+export interface GridDelta {
+    row: number;
+    col: number;
+}
+
 export interface GridIndex {
     rowIndex: number;
     colIndex: number;
@@ -29,4 +36,13 @@ export interface GridDimensions {
 
 export interface GridRect extends GridIndex, GridSpan {}
 
-export type ResizeHandle = "n" | "e" | "s" | "w" | "ne" | "nw" | "se" | "sw"
+//
+
+export type ResizeDirection = "n" | "e" | "s" | "w" | "ne" | "nw" | "se" | "sw";
+
+export type ResizeParams = {
+    direction: ResizeDirection;
+    delta: GridDelta;
+    dimensions: GridDimensions;
+    minSpan: GridSpan;
+}
