@@ -1,9 +1,13 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { DailyboardCardStudioProps, ResizeMode } from "../type/t-dailyboard.card-studio.types";
+import { DailyboardCardStudioProps } from "../type/t-dailyboard.card-studio.types";
+import { GridRect, ResizeDirection, ResizeParams } from "../../shared/types/common";
+import { resizeGridRect } from "../../shared/utils/common";
 
-//
+// ============================================================================
+// Main Component
+// ============================================================================
 
 export function DailyboardCardStudio({ 
     initialColSpan = 12, 
@@ -19,16 +23,18 @@ export function DailyboardCardStudio({
     cellGap = 2,
 }: DailyboardCardStudioProps) {
     // State
-    const [colSpan, setColSpan] = useState(initialColSpan);
-    const [rowSpan, setRowSpan] = useState(initialRowSpan);
-    const [col, setCol] = useState(initialCol);
-    const [row, setRow] = useState(initialRow);
-    const [resizeMode, setResizeMode] = useState<ResizeMode>("move");
+    const [gridRect, setGridRect] = useState<GridRect>({
+        colSpan: initialColSpan,
+        rowSpan: initialRowSpan,
+        colIndex: initialCol,
+        rowIndex: initialRow
+    });
+    const [direction, setDirection] = useState<ResizeDirection | null>(null);
     const [isResizing, setIsResizing] = useState(false);
     
     // Refs
     const startPosRef = useRef({ x: 0, y: 0 });
-    const startSpanRef = useRef({ colSpan: 0, rowSpan: 0, col: 0, row: 0 });
+    const startRectRef = useRef<GridRect>({ ...gridRect });
 
     // Handle Sizes
     const HANDLE_SIZE = 8;
@@ -36,14 +42,14 @@ export function DailyboardCardStudio({
     const MOVE_DOT_SIZE = 16;
     const SIZE_LABEL_OFFSET = 20;
 
-    const handleResizeStart = useCallback((mode: ResizeMode, e: React.PointerEvent) => {
+    const handleResizeStart = useCallback((dir: ResizeDirection | "move", e: React.PointerEvent) => {
         e.stopPropagation();
         e.preventDefault();
         setIsResizing(true);
-        setResizeMode(mode);
+        setDirection(dir === "move" ? null : dir);
         startPosRef.current = { x: e.clientX, y: e.clientY };
-        startSpanRef.current = { colSpan, rowSpan, col, row };
-    }, [colSpan, rowSpan, col, row]);
+        startRectRef.current = { ...gridRect };
+    }, [gridRect]);
 
     const handleResizeMove = useCallback((e: PointerEvent) => {
         if (!isResizing) return;
@@ -54,118 +60,47 @@ export function DailyboardCardStudio({
         const deltaCols = Math.round(deltaX / (cellSize + cellGap));
         const deltaRows = Math.round(deltaY / (cellSize + cellGap));
 
-        let newColSpan = startSpanRef.current.colSpan;
-        let newRowSpan = startSpanRef.current.rowSpan;
-        let newCol = startSpanRef.current.col;
-        let newRow = startSpanRef.current.row;
+        let newRect: GridRect;
 
-        switch (resizeMode) {
-            case "move":
-                newCol = Math.min(maxCols - startSpanRef.current.colSpan, Math.max(0, startSpanRef.current.col + deltaCols));
-                newRow = Math.min(maxRows - startSpanRef.current.rowSpan, Math.max(0, startSpanRef.current.row + deltaRows));
-                break;
-            case "right":
-                newColSpan = Math.min(maxCols - newCol, Math.max(minColSpan, startSpanRef.current.colSpan + deltaCols));
-                break;
-            case "left":
-                newColSpan = Math.max(minColSpan, startSpanRef.current.colSpan - deltaCols);
-                newCol = startSpanRef.current.col + (startSpanRef.current.colSpan - newColSpan);
-                if (newCol < 0) {
-                    newCol = 0;
-                    newColSpan = startSpanRef.current.col + startSpanRef.current.colSpan;
-                }
-                if (newCol + newColSpan > maxCols) {
-                    newCol = maxCols - newColSpan;
-                }
-                break;
-            case "bottom":
-                newRowSpan = Math.min(maxRows - newRow, Math.max(minRowSpan, startSpanRef.current.rowSpan + deltaRows));
-                break;
-            case "top":
-                newRowSpan = Math.max(minRowSpan, startSpanRef.current.rowSpan - deltaRows);
-                newRow = startSpanRef.current.row + (startSpanRef.current.rowSpan - newRowSpan);
-                if (newRow < 0) {
-                    newRow = 0;
-                    newRowSpan = startSpanRef.current.row + startSpanRef.current.rowSpan;
-                }
-                if (newRow + newRowSpan > maxRows) {
-                    newRow = maxRows - newRowSpan;
-                }
-                break;
-            case "bottomRight":
-                newColSpan = Math.min(maxCols - newCol, Math.max(minColSpan, startSpanRef.current.colSpan + deltaCols));
-                newRowSpan = Math.min(maxRows - newRow, Math.max(minRowSpan, startSpanRef.current.rowSpan + deltaRows));
-                break;
-            case "bottomLeft":
-                newColSpan = Math.max(minColSpan, startSpanRef.current.colSpan - deltaCols);
-                newCol = startSpanRef.current.col + (startSpanRef.current.colSpan - newColSpan);
-                if (newCol < 0) {
-                    newCol = 0;
-                    newColSpan = startSpanRef.current.col + startSpanRef.current.colSpan;
-                }
-                if (newCol + newColSpan > maxCols) {
-                    newCol = maxCols - newColSpan;
-                }
-                newRowSpan = Math.max(minRowSpan, startSpanRef.current.rowSpan + deltaRows);
-                if (newRow + newRowSpan > maxRows) {
-                    newRowSpan = maxRows - newRow;
-                }
-                break;
-            case "topRight":
-                newRowSpan = Math.max(minRowSpan, startSpanRef.current.rowSpan - deltaRows);
-                newRow = startSpanRef.current.row + (startSpanRef.current.rowSpan - newRowSpan);
-                if (newRow < 0) {
-                    newRow = 0;
-                    newRowSpan = startSpanRef.current.row + startSpanRef.current.rowSpan;
-                }
-                if (newRow + newRowSpan > maxRows) {
-                    newRow = maxRows - newRowSpan;
-                }
-                newColSpan = Math.max(minColSpan, startSpanRef.current.colSpan + deltaCols);
-                if (newCol + newColSpan > maxCols) {
-                    newColSpan = maxCols - newCol;
-                }
-                break;
-            case "topLeft":
-                newColSpan = Math.max(minColSpan, startSpanRef.current.colSpan - deltaCols);
-                newCol = startSpanRef.current.col + (startSpanRef.current.colSpan - newColSpan);
-                if (newCol < 0) {
-                    newCol = 0;
-                    newColSpan = startSpanRef.current.col + startSpanRef.current.colSpan;
-                }
-                if (newCol + newColSpan > maxCols) {
-                    newCol = maxCols - newColSpan;
-                }
-                newRowSpan = Math.max(minRowSpan, startSpanRef.current.rowSpan - deltaRows);
-                newRow = startSpanRef.current.row + (startSpanRef.current.rowSpan - newRowSpan);
-                if (newRow < 0) {
-                    newRow = 0;
-                    newRowSpan = startSpanRef.current.row + startSpanRef.current.rowSpan;
-                }
-                if (newRow + newRowSpan > maxRows) {
-                    newRow = maxRows - newRowSpan;
-                }
-                break;
+        if (direction === null) {
+            // Move
+            newRect = {
+                ...startRectRef.current,
+                colIndex: Math.min(
+                    maxCols - startRectRef.current.colSpan, 
+                    Math.max(0, startRectRef.current.colIndex + deltaCols)
+                ),
+                rowIndex: Math.min(
+                    maxRows - startRectRef.current.rowSpan, 
+                    Math.max(0, startRectRef.current.rowIndex + deltaRows)
+                )
+            };
+        } else {
+            // Resize
+            const params: ResizeParams = {
+                direction,
+                delta: { row: deltaRows, col: deltaCols },
+                dimensions: { rowCount: maxRows, columnCount: maxCols },
+                minSpan: { rowSpan: minRowSpan, colSpan: minColSpan }
+            };
+            
+            newRect = resizeGridRect(startRectRef.current, params);
         }
-
-        // Final safety checks
-        newColSpan = Math.min(maxCols - newCol, Math.max(minColSpan, newColSpan));
-        newRowSpan = Math.min(maxRows - newRow, Math.max(minRowSpan, newRowSpan));
 
         // Update if changed
-        if (newColSpan !== colSpan || newRowSpan !== rowSpan || newCol !== col || newRow !== row) {
-            setColSpan(newColSpan);
-            setRowSpan(newRowSpan);
-            setCol(newCol);
-            setRow(newRow);
-            onResize(newColSpan, newRowSpan, newCol, newRow);
+        if (newRect.colSpan !== gridRect.colSpan || 
+            newRect.rowSpan !== gridRect.rowSpan || 
+            newRect.colIndex !== gridRect.colIndex || 
+            newRect.rowIndex !== gridRect.rowIndex) {
+            
+            setGridRect(newRect);
+            onResize(newRect.colSpan, newRect.rowSpan, newRect.colIndex, newRect.rowIndex);
         }
-    }, [isResizing, resizeMode, maxCols, maxRows, minColSpan, minRowSpan, colSpan, rowSpan, col, row, onResize, cellSize, cellGap]);
+    }, [isResizing, direction, maxCols, maxRows, minColSpan, minRowSpan, gridRect, onResize, cellSize, cellGap]);
 
     const handleResizeEnd = useCallback(() => {
         setIsResizing(false);
     }, []);
-
 
     useEffect(() => {
         if (isResizing) {
@@ -178,6 +113,9 @@ export function DailyboardCardStudio({
         }
     }, [isResizing, handleResizeMove, handleResizeEnd]);
 
+    // ============================================================================
+    // Render Helpers
+    // ============================================================================
 
     const renderGridCells = () => (
         Array.from({ length: maxRows }).map((_, rowIdx) =>
@@ -238,13 +176,13 @@ export function DailyboardCardStudio({
             padding: "2px 6px",
             borderRadius: 1
         }}>
-            {colSpan} x {rowSpan}
+            {gridRect.colSpan} x {gridRect.rowSpan}
         </Typography>
     );
 
-    const renderResizeHandle = (mode: ResizeMode, sx: any) => (
+    const renderResizeHandle = (dir: ResizeDirection, sx: any) => (
         <Box
-            onPointerDown={(e) => handleResizeStart(mode, e)}
+            onPointerDown={(e) => handleResizeStart(dir, e)}
             sx={{
                 pointerEvents: "auto",
                 touchAction: "none",
@@ -252,6 +190,10 @@ export function DailyboardCardStudio({
             }}
         />
     );
+
+    // ============================================================================
+    // Main Render
+    // ============================================================================
 
     return (
         <Box sx={{ 
@@ -279,10 +221,10 @@ export function DailyboardCardStudio({
                 <Box
                     sx={{
                         position: "absolute",
-                        top: 1 + row * (cellSize + cellGap),
-                        left: 1 + col * (cellSize + cellGap),
-                        width: colSpan * (cellSize + cellGap),
-                        height: rowSpan * (cellSize + cellGap),
+                        top: 1 + gridRect.rowIndex * (cellSize + cellGap),
+                        left: 1 + gridRect.colIndex * (cellSize + cellGap),
+                        width: gridRect.colSpan * (cellSize + cellGap),
+                        height: gridRect.rowSpan * (cellSize + cellGap),
                         backgroundColor: "rgba(100, 150, 255, 0.3)",
                         border: "2px solid rgba(100, 150, 255, 0.8)",
                         borderRadius: 1,
@@ -293,7 +235,7 @@ export function DailyboardCardStudio({
                     {renderSizeLabel()}
 
                     {/* Edge Handles */}
-                    {renderResizeHandle("top", {
+                    {renderResizeHandle("n", {
                         position: "absolute",
                         top: -HANDLE_SIZE / 2,
                         left: "50%",
@@ -306,7 +248,7 @@ export function DailyboardCardStudio({
                         "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
                     })}
 
-                    {renderResizeHandle("bottom", {
+                    {renderResizeHandle("s", {
                         position: "absolute",
                         bottom: -HANDLE_SIZE / 2,
                         left: "50%",
@@ -319,7 +261,7 @@ export function DailyboardCardStudio({
                         "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
                     })}
 
-                    {renderResizeHandle("left", {
+                    {renderResizeHandle("w", {
                         position: "absolute",
                         left: -HANDLE_SIZE / 2,
                         top: "50%",
@@ -332,7 +274,7 @@ export function DailyboardCardStudio({
                         "&:hover": { backgroundColor: "rgba(100, 150, 255, 1)" }
                     })}
 
-                    {renderResizeHandle("right", {
+                    {renderResizeHandle("e", {
                         position: "absolute",
                         right: -HANDLE_SIZE / 2,
                         top: "50%",
@@ -346,7 +288,7 @@ export function DailyboardCardStudio({
                     })}
 
                     {/* Corner Handles */}
-                    {renderResizeHandle("topLeft", {
+                    {renderResizeHandle("nw", {
                         position: "absolute",
                         top: -CORNER_SIZE / 2,
                         left: -CORNER_SIZE / 2,
@@ -361,7 +303,7 @@ export function DailyboardCardStudio({
                         }
                     })}
 
-                    {renderResizeHandle("topRight", {
+                    {renderResizeHandle("ne", {
                         position: "absolute",
                         top: -CORNER_SIZE / 2,
                         right: -CORNER_SIZE / 2,
@@ -376,7 +318,7 @@ export function DailyboardCardStudio({
                         }
                     })}
 
-                    {renderResizeHandle("bottomLeft", {
+                    {renderResizeHandle("sw", {
                         position: "absolute",
                         bottom: -CORNER_SIZE / 2,
                         left: -CORNER_SIZE / 2,
@@ -391,7 +333,7 @@ export function DailyboardCardStudio({
                         }
                     })}
 
-                    {renderResizeHandle("bottomRight", {
+                    {renderResizeHandle("se", {
                         position: "absolute",
                         bottom: -CORNER_SIZE / 2,
                         right: -CORNER_SIZE / 2,
@@ -399,7 +341,7 @@ export function DailyboardCardStudio({
                         height: CORNER_SIZE,
                         backgroundColor: "rgba(100, 150, 255, 0.9)",
                         borderRadius: "50%",
-                        cursor: "nw-resize",
+                        cursor: "se-resize",
                         "&:hover": { 
                             backgroundColor: "rgba(100, 150, 255, 1)",
                             transform: "scale(1.2)"
