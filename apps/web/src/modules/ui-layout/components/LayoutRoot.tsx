@@ -7,6 +7,7 @@ import style from "@/src/modules/ui-layout/styles/layout.module.scss"
 import { LayoutSection } from "./LayoutSection";
 import { LayoutRootProps } from "../types/layout.props";
 import { useLayoutContext } from "../hooks/useLayoutContext";
+import { getCanvasDataSet } from "../utils/ui.utils";
 
 export function LayoutRoot(props: LayoutRootProps) {
   const { data } = props;
@@ -43,7 +44,6 @@ export function LayoutRoot(props: LayoutRootProps) {
 
   return (
     <div 
-      data-layout
       ref={layoutRef} 
       className={style.layout}
       style={{
@@ -51,6 +51,7 @@ export function LayoutRoot(props: LayoutRootProps) {
         gridTemplateRows: `repeat(${data.rowCount}, var(--layout-cell-size))`,
         gridTemplateAreas
       }}
+      {...getCanvasDataSet(data)}
     >
       {sections.map((section) => (
         <LayoutSection key={section.name} data={section}/>
