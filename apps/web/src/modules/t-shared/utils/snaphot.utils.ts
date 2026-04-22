@@ -12,15 +12,7 @@ export const getCanvasSnapshotFrom = (el: Element) : CanvasSnapshot | null => {
     const data = getCanvasData(canvasEl);
     if (!data) return null;
 
-    const grids : CanvasGridSnapshot[] = findAllCanvasGrids(canvasEl).map(gridEl => {
-        const gridData = getCanvasGridData(gridEl)!;
-
-        return {
-            rect: gridEl.getBoundingClientRect(),
-            gridName: gridData.name,
-            gridRect: gridData.position
-        }
-    });
+    const grids : CanvasGridSnapshot[] = getAllCanvasGridSnapshotsFor(canvasEl);
 
     return {
         rect: canvasEl.getBoundingClientRect(),
@@ -31,5 +23,20 @@ export const getCanvasSnapshotFrom = (el: Element) : CanvasSnapshot | null => {
             rowCount: data.rowCount
         },
         grids
+    }
+}
+
+export const getAllCanvasGridSnapshotsFor = (canvasEl: HTMLDivElement): CanvasGridSnapshot[] => {
+    return findAllCanvasGrids(canvasEl).map(gridEl => getCanvasGridSnapshotFor(gridEl)!)
+}
+
+export const getCanvasGridSnapshotFor = (gridEl: HTMLDivElement): CanvasGridSnapshot | null => {
+    const gridData = getCanvasGridData(gridEl);
+    if (!gridData) return null;
+
+    return {
+        rect: gridEl.getBoundingClientRect(),
+        gridName: gridData.name,
+        gridRect: gridData.position
     }
 }
