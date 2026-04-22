@@ -16,8 +16,13 @@ export interface DailyboardCardItemProps {
 }
 
 export interface DailyboardCardDisplayProps {
-    content: DailyboardCardMaterial;
-    isFrontFace: boolean;
+    state: {
+        content: DailyboardCardMaterial;
+        colSpan: number;
+        rowSpan: number;
+        cellStep: number;
+        isFrontFace: boolean;
+    },
     ref?: React.RefObject<HTMLDivElement | null>;
     className?: {
         body?: string[];
