@@ -1,4 +1,4 @@
-import { DailyboardDataContent } from "../../dailyboard/types/dailyboard.data.types";
+import { DailyboardCardDataContent, DailyboardDataContent } from "../../dailyboard/types/dailyboard.data.types";
 import { GridRect, GridSpan } from "../../shared/types/common";
 import { parseYYMMDD } from "../../shared/utils/date.utils";
 
@@ -82,19 +82,19 @@ export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sect
 
 //
 
-export const getDailyboardCardData = (cardEl: HTMLElement) => {
-    const key = cardEl.dataset.key;
-    const colIndex = cardEl.dataset.colIndex;
-    const rowIndex = cardEl.dataset.rowIndex;
-    const colSpan = cardEl.dataset.colSpan;
-    const rowSpan = cardEl.dataset.rowSpan;
-
+export const getDailyboardCardData = (cardEl: HTMLElement) : DailyboardCardDataContent => {
     return {
-        key: key || "",
-        colIndex: colIndex ? parseInt(colIndex, 10) : 0,
-        rowIndex: rowIndex ? parseInt(rowIndex, 10) : 0,
-        colSpan: colSpan ? parseInt(colSpan, 10) : 0,
-        rowSpan: rowSpan ? parseInt(rowSpan, 10) : 0
+        name: cardEl.dataset.name || "",
+        content: null!,
+        placement: {
+            sectionName: cardEl.dataset.sectionName || "",
+            position: {
+                colIndex: parseInt(cardEl.dataset.colIndex || "0", 10),
+                rowIndex: parseInt(cardEl.dataset.rowIndex || "0", 10),
+                colSpan: parseInt(cardEl.dataset.colSpan || "1", 10),
+                rowSpan: parseInt(cardEl.dataset.rowSpan || "1", 10)
+            }
+        }
     };
 }
 
