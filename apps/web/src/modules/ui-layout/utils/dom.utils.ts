@@ -58,6 +58,12 @@ export const findCanvasGridAtPoint = (clientX: number, clientY: number): HTMLDiv
     return null;
 }
 
+export const findAllCanvasGrids = (el: HTMLDivElement): HTMLDivElement[] => {
+    return Array.from(findCanvasInSubtree(el)?.querySelectorAll<HTMLDivElement>("[data-layout-grid]") || []);
+}
+
+//
+
 export const findSectionInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
     const gridEl = el.querySelector<HTMLDivElement>("[data-layout-section]");
     return gridEl || null;
