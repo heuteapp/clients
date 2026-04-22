@@ -59,6 +59,7 @@ export function CreatingEditingCardDialog() {
             }}
         >
             <DialogContent style={{
+                position: "relative",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -71,7 +72,15 @@ export function CreatingEditingCardDialog() {
                     <CloseIcon />
                 </IconButton>
 
-                <Box sx={{ position: "relative" }}>
+                <DailyboardCardDisplay
+                    state={{
+                        content: cardContent!,
+                        cardSpan: cardSpan!,
+                        isFrontFace: true,
+                        cellStep: cellStep
+                    }}
+                />
+                <Box sx={{ position: "absolute", bottom: 60 }}>
                     <DailyboardCardStudio
                         initialColSpan={cardSpan?.colSpan || 12}
                         initialRowSpan={cardSpan?.rowSpan || 3}
@@ -81,7 +90,7 @@ export function CreatingEditingCardDialog() {
                             setCardSpan({ colSpan, rowSpan });
                         }}
                         maxCols={24}
-                        maxRows={6}
+                        maxRows={12}
                     />
                 </Box>
             </DialogContent>
