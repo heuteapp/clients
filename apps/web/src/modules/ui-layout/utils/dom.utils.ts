@@ -1,5 +1,28 @@
 import { Pointer } from "../../shared/types/common";
 
+//
+
+export const findCanvasInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+    return el.querySelector<HTMLDivElement>("[data-layout]") || null;
+}
+
+export const findCanvasClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+    return el.closest<HTMLDivElement>("[data-layout]") || null;
+}
+
+export const findCanvasFromPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
+    const allElements = document.elementsFromPoint(clientX, clientY);
+    
+    for (const element of allElements) {
+        const canvas = (element as HTMLElement).closest<HTMLDivElement>("[data-layout]");
+        if (canvas) return canvas;
+    }
+    
+    return null;
+}
+
+//
+
 export const findGridInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
     const gridEl = el.querySelector<HTMLDivElement>("[data-layout-grid]");
     return gridEl || null;
