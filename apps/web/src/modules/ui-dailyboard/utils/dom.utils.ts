@@ -75,7 +75,7 @@ export const findDailyboardCardTitleAtCursor = (clientX: number, clientY: number
 
 //
 
-export const findDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
+export const findAllDailyboardCards = (dailyboardEl: HTMLDivElement, sectionName: string) => {
     const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card][data-section-name="${sectionName}"]`);
     return Array.from(cardElements) as HTMLDivElement[];
 }
