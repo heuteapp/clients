@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { DailyboardCardStudioProps } from "../type/t-dailyboard.card-studio.types";
 import { GridRect, ResizeDirection, ResizeParams } from "../../shared/types/common";
 import { resizeGridRect } from "../../shared/utils/common";
@@ -116,22 +116,28 @@ export function DailyboardCardStudio({
     // ============================================================================
     // Render Helpers
     // ============================================================================
-
-    const renderGridCells = () => (
-        Array.from({ length: maxRows }).map((_, rowIdx) =>
-            Array.from({ length: maxCols }).map((_, colIdx) => (
-                <Box
-                    key={`${rowIdx}-${colIdx}`}
-                    sx={{
-                        width: cellSize,
-                        height: cellSize,
-                        backgroundColor: "rgba(255,255,255,0.1)",
-                        borderRadius: 0.5,
-                    }}
-                />
-            ))
-        )
-    );
+    const GRID_CELL_SX = {
+        backgroundColor: "rgba(255,255,255,0.1)",
+        borderRadius: 0.5,
+    };
+    const gridCells = useMemo(() => {
+        const cells = [];
+        for (let rowIdx = 0; rowIdx < maxRows; rowIdx++) {
+            for (let colIdx = 0; colIdx < maxCols; colIdx++) {
+                cells.push(
+                    <Box
+                        key={`${rowIdx}-${colIdx}`}
+                        sx={{
+                            width: cellSize,
+                            height: cellSize,
+                            ...GRID_CELL_SX,
+                        }}
+                    />
+                );
+            }
+        }
+        return cells;
+    }, [maxRows, maxCols, cellSize]);
 
     const renderMoveHandle = () => (
         <Box
@@ -216,7 +222,7 @@ export function DailyboardCardStudio({
                     touchAction: "none",
                 }}
             >
-                {renderGridCells()}
+                {gridCells}
 
                 <Box
                     sx={{
