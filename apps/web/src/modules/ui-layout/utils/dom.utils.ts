@@ -23,17 +23,17 @@ export const findCanvasFromPoint = (clientX: number, clientY: number): HTMLDivEl
 
 //
 
-export const findGridInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+export const findCanvasGridInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
     const gridEl = el.querySelector<HTMLDivElement>("[data-layout-grid]");
     return gridEl || null;
 }
 
-export const findGridClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+export const findCanvasGridClosest = (el: HTMLDivElement): HTMLDivElement | null => {
     const gridEl = el.closest<HTMLDivElement>("[data-layout-grid]");
     return gridEl || null;
 }
 
-export const findGridAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
+export const findCanvasGridAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
     const allElements = document.elementsFromPoint(clientX, clientY);
     
     for (const element of allElements) {
