@@ -1,7 +1,7 @@
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
 import { StoredDailyboardModel, StoredDailyboardCardModel } from "@/src/heute-store/types/dailyboard.types";
-import { DailyboardCardContent } from "../../dailyboard/types/dailyboard.model.types";
+import { BoardCardContent } from "@/src/modules/board/types/board.model.types";
 import { GridSpan } from "../../shared/types/common";
 
 export interface DailyboardRootProps {
@@ -18,7 +18,7 @@ export interface DailyboardCardItemProps {
 
 export interface DailyboardCardDisplayProps {
     state: {
-        content: DailyboardCardContent;
+        content: BoardCardContent;
         isFrontFace: boolean;
         cardSpan?: GridSpan;
         cellStep?: number;
@@ -37,9 +37,9 @@ export interface DailyboardCardDisplayProps {
         backFace?: SxProps<Theme>;
     },
     render?: {
-        title?: (content: DailyboardCardContent) => React.ReactNode;
-        frontFace?: (content: DailyboardCardContent) => React.ReactNode;
-        backFace?: (content: DailyboardCardContent) => React.ReactNode;
+        title?: (content: BoardCardContent) => React.ReactNode;
+        frontFace?: (content: BoardCardContent) => React.ReactNode;
+        backFace?: (content: BoardCardContent) => React.ReactNode;
     },
 }
 

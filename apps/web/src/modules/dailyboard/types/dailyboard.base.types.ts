@@ -1,15 +1,14 @@
+import { BoardBase, BoardCardBase } from "../../board/types/board.base.types";
 import { YYMMDDDate } from "../../shared/types/date.types";
 
-export interface DailyboardBase {
+export interface DailyboardBase extends BoardBase {
     categoryPath: string;
     date: YYMMDDDate;
-    canvasName: string;
-    canvasVersion: number;
     cards: DailyboardCardBase[];
 }
 
-export interface DailyboardCardBase {
-    name: string;
+export interface DailyboardCardBase extends BoardCardBase {
+    
 }
 
 //

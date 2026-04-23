@@ -1,4 +1,4 @@
-import { DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.model.types";
+import { BoardCardPlacement } from "@/src/modules/board/types/board.model.types";
 import { GridRect, GridSpan, Rect } from "../../shared/types/common";
 import { CanvasMetrics } from "../../ui-canvas/types/canvas.metrics";
 
@@ -29,5 +29,5 @@ export interface DailyboardCardPlacementState {
 export interface DailyboardCardPlacementResult {
     content: DailyboardCardPlacementContent;
     success: boolean;
-    placement: DailyboardCardPlacement | null;
+    placement: BoardCardPlacement | null;
 }

@@ -1,4 +1,4 @@
-import { DailyboardCardContent, DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.model.types";
+import { BoardCardContent, BoardCardPlacement } from "@/src/modules/board/types/board.model.types";
 import { GridDimensions, GridRect, Rect } from "../../shared/types/common"
 import { YYMMDDDate } from "../../shared/types/date.types";
 
@@ -27,6 +27,6 @@ export interface DailyboardSnapshot extends BaseSnapshot {
 
 export interface DailyboardCardSnapshot extends BaseSnapshot {
     cardKey: string;
-    cardContent: DailyboardCardContent;
-    cardPlacement: DailyboardCardPlacement | null;
+    cardContent: BoardCardContent;
+    cardPlacement: BoardCardPlacement | null;
 }
