@@ -17,12 +17,21 @@ export function TracingProvider({ children }: TracingProviderProps) {
         return components.delete(key);
     }, [components]);
 
+    const getItemsOf = useCallback((type: string, filter?: (item: TracingItemData) => boolean) => {
+        const items: TracingItemData[] = [];
+        for(const item of components.values()) {
+            if(item.type === type && (!filter || filter(item))) items.push(item);
+        }
+        return items;
+    }, [components]);
+
     const contextValue = useMemo(() => {
         return {
             trace,
-            untrace
+            untrace,
+            getItemsOf
         };
-    }, [trace, untrace]);
+    }, [trace, untrace, getItemsOf]);
 
     return (
         <TracingContext.Provider value={contextValue}>
