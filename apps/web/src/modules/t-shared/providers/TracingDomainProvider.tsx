@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { TracingDomainContext } from "../contexts/tracing.context";
-import { TracingProviderProps } from "../types/props.types";
+import { TracingDomainProviderProps } from "../types/props.types";
 import { TracingItemData } from "../types/context.types";
 
-export function TracingDomainProvider({ name, children }: TracingProviderProps) {
+export function TracingDomainProvider({ name, children }: TracingDomainProviderProps) {
     const components = useMemo(() => new Map<string, TracingItemData>(), []);
 
     const trace = useCallback((id: string, item: TracingItemData) => {

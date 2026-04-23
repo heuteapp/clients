@@ -13,7 +13,11 @@ export interface TracedUniqueItemProps extends TracedItemPropsBase {
     
 }
 
-export interface TracingProviderProps {
+export interface TracingDomainProviderProps {
     name: string;
+    children: React.ReactNode;
+}
+
+export interface TracingStoreProviderProps {
     children: React.ReactNode;
 }
