@@ -1,4 +1,4 @@
-import { YYMMDDDate } from "./date.types";
+import { YYMMDDDate } from "../../d-shared/types/date.types";
 
 export interface DailyboardPathConfig {
     minCategories?: number;
