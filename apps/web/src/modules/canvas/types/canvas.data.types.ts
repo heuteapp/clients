@@ -1,18 +1,18 @@
 import { GridRect } from "@/src/modules/shared/types/common";
-import { CanvasBase, CanvasSectionBase } from "./canvas.base.types";
+import { CanvasBase, CanvasGridBase } from "./canvas.base.types";
 
 export interface CanvasData extends CanvasBase {
     colCount: number;
     rowCount: number;
-    sections: CanvasSectionData[];
+    grids: CanvasGridData[];
 }
 
-export interface CanvasSectionData extends CanvasSectionBase {
+export interface CanvasGridData extends CanvasGridBase {
     position: GridRect;
 }
 
 //
 
-export type CanvasDataContent = Omit<CanvasData, "sections">;
+export type CanvasDataContent = Omit<CanvasData, "grids">;
 
-export type CanvasSectionDataContent = CanvasSectionData;
+export type CanvasGridDataContent = CanvasGridData;

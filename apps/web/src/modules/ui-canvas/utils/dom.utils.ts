@@ -1,4 +1,4 @@
-import { CanvasDataContent, CanvasSectionDataContent } from "../../canvas/types/canvas.data.types";
+import { CanvasDataContent, CanvasGridDataContent } from "../../canvas/types/canvas.data.types";
 import { Pointer } from "../../shared/types/common";
 
 //
@@ -62,7 +62,7 @@ export const findAllCanvasGrids = (el: HTMLDivElement): HTMLDivElement[] => {
     return Array.from(findCanvasInSubtree(el)?.querySelectorAll<HTMLDivElement>("[data-canvas-grid]") || []);
 }
 
-export const getCanvasGridData = (gridEl: HTMLDivElement): CanvasSectionDataContent | null => {
+export const getCanvasGridData = (gridEl: HTMLDivElement): CanvasGridDataContent | null => {
     if(!gridEl.dataset.canvasGrid) {
         return null;
     }
@@ -80,22 +80,22 @@ export const getCanvasGridData = (gridEl: HTMLDivElement): CanvasSectionDataCont
 
 //
 
-export const findSectionInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
-    const gridEl = el.querySelector<HTMLDivElement>("[data-canvas-section]");
+export const findGridInSubtree = (el: HTMLDivElement): HTMLDivElement | null => {
+    const gridEl = el.querySelector<HTMLDivElement>("[data-canvas-grid]");
     return gridEl || null;
 }
 
-export const findSectionClosest = (el: HTMLDivElement): HTMLDivElement | null => {
-    const gridEl = el.closest<HTMLDivElement>("[data-canvas-section]");
+export const findGridClosest = (el: HTMLDivElement): HTMLDivElement | null => {
+    const gridEl = el.closest<HTMLDivElement>("[data-canvas-grid]");
     return gridEl || null;
 }
 
-export const findSectionAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
+export const findGridAtPoint = (clientX: number, clientY: number): HTMLDivElement | null => {
     const allElements = document.elementsFromPoint(clientX, clientY);
     
     for (const element of allElements) {
-        const section = (element as HTMLElement).closest<HTMLDivElement>("[data-canvas-section]");
-        if (section) return section;
+        const grid = (element as HTMLElement).closest<HTMLDivElement>("[data-canvas-grid]");
+        if (grid) return grid;
     }
     
     return null;
@@ -103,29 +103,20 @@ export const findSectionAtPoint = (clientX: number, clientY: number): HTMLDivEle
 
 //
 
-export const getSectionData = (sectionEl: HTMLDivElement) => {
-    if(!sectionEl.dataset.canvasSection) {
+export const getGridData = (gridEl: HTMLDivElement) => {
+    if(!gridEl.dataset.canvasGrid) {
         return null;
     }
 
     return {
-        name: sectionEl.dataset.canvasSectionName || "",
+        name: gridEl.dataset.canvasGridName || "",
         position: {
-            colIndex: parseInt(sectionEl.dataset.canvasSectionColIndex || "0", 10),
-            rowIndex: parseInt(sectionEl.dataset.canvasSectionRowIndex || "0", 10),
-            colSpan: parseInt(sectionEl.dataset.canvasSectionColSpan || "0", 10),
-            rowSpan: parseInt(sectionEl.dataset.canvasSectionRowSpan || "0", 10)
+            colIndex: parseInt(gridEl.dataset.canvasGridColIndex || "0", 10),
+            rowIndex: parseInt(gridEl.dataset.canvasGridRowIndex || "0", 10),
+            colSpan: parseInt(gridEl.dataset.canvasGridColSpan || "0", 10),
+            rowSpan: parseInt(gridEl.dataset.canvasGridRowSpan || "0", 10)
         }
     };
-}
-
-export const getSectionDataForGrid = (gridEl: HTMLDivElement) => {
-    const section = findSectionClosest(gridEl);
-    if (!section) {
-        return null;
-    }
-
-    return getSectionData(section)!;
 }
 
 //

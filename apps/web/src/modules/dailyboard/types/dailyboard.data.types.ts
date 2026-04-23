@@ -25,7 +25,7 @@ export interface DailyboardCardMaterial {
 }
 
 export interface DailyboardCardPlacement {
-    sectionName: string;
+    gridName: string;
     position: GridRect;
 }
 

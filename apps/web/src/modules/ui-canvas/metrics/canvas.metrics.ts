@@ -32,16 +32,16 @@ export function calculateCanvasMetrics({ registry, dataSource, styleSource }: Ca
 
     const canvasCellSize = Math.min(canvasCellWidth, canvasCellHeight);
 
-    const sections = dataSource?.sections || [];
-    const sectionStyles = styleSource?.sections || [];
+    const grids = dataSource?.grids || [];
+    const gridStyles = styleSource?.grids || [];
 
     let gridCellSize = canvasCellSize;
 
-    sections.forEach(section => {
-        const style = sectionStyles.find(s => s.id === section.id);
+    grids.forEach(grid => {
+        const style = gridStyles.find(s => s.id === grid.id);
 
-        const colSpan = section.position.colSpan;
-        const rowSpan = section.position.rowSpan;
+        const colSpan = grid.position.colSpan;
+        const rowSpan = grid.position.rowSpan;
 
         const width = colSpan * canvasCellSize;
         const height = rowSpan * canvasCellSize;
@@ -100,7 +100,7 @@ export function applyCanvasMetrics({ registry, metrics, styleSource }: ApplyCanv
     canvasEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
 
     registry.getCanvasGridSections()?.forEach(section => {
-        const style = styleSource?.sections.find(s => s.id === section.props?.data.id);
+        const style = styleSource?.grids.find(s => s.id === section.props?.data.id);
 
         const parent = { width: canvasWidth, height: canvasHeight };
 

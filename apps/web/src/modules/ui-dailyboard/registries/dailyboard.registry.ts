@@ -89,22 +89,22 @@ export function createDailyboardRegistry(dailyboardRef: React.RefObject<HTMLDivE
             return cards ? Array.from(cards.values()) : undefined
         },
 
-        getDailyboardCardsForSection(sectionId) {
+        getDailyboardCardsForGrid(gridId) {
             const cards = registry.dailyboard.cardContainer?.cards
             if (!cards) return undefined
 
-            const sectionCards = []
+            const gridCards = []
 
-            const section = registry.canvasRegistry.canvas?.container?.sections.get(sectionId);
+            const grid = registry.canvasRegistry.canvas?.container?.sections.get(gridId);
 
             for (const card of cards.values()) {
                 const placement = card.props?.data.placement;
-                if (placement?.sectionName === section?.props?.data.name) {
-                    sectionCards.push(card)
+                if (placement?.gridName === grid?.props?.data.name) {
+                    gridCards.push(card)
                 }
             }
 
-            return sectionCards
+            return gridCards
         },
     }
 

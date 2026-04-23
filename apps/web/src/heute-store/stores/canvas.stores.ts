@@ -1,6 +1,6 @@
 import { immer } from "zustand/middleware/immer";
 
-import { CanvasBaseState, StoredCanvasItem, StoredCanvasItemContent, StoredCanvasSectionItem, StoredCanvasSectionItemContent } from "../types/canvas.types";
+import { CanvasBaseState, StoredCanvasItem, StoredCanvasItemContent, StoredCanvasGridItem, StoredCanvasGridItemContent } from "../types/canvas.types";
 import { CanvasBase } from "@/src/modules/canvas/types/canvas.base.types";
 import { getCanvasItemFromState, saveCanvasToState } from "../utils/canvas.utils";
 import { devtools } from "zustand/middleware";
@@ -9,18 +9,18 @@ import { CanvasDataState, CanvasStyleState } from "../types/canvas.types";
 
 export const withCanvasImmer = <
     TCanvasSource extends CanvasBase,
-    TCanvasItem extends StoredCanvasItem<TCanvasSection>,
+    TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
     TCanvasItemContent extends StoredCanvasItemContent,
-    TCanvasSection extends StoredCanvasSectionItem,
-    TCanvasSectionContent extends StoredCanvasSectionItemContent
+    TCanvasGrid extends StoredCanvasGridItem,
+    TCanvasGridContent extends StoredCanvasGridItemContent
 >() => {
 
-    type CanvasState = CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasSection, TCanvasSectionContent>;
+    type CanvasState = CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasGrid, TCanvasGridContent>;
 
     return (
         immer<CanvasState>((set, get) => ({
             byId: {},
-            sectionById: {},
+            gridById: {},
             userOrder: [],
 
             loadGlobalCanvas: (canvas: TCanvasSource) => {
@@ -58,9 +58,9 @@ export const withCanvasImmer = <
                             .filter(id => id.startsWith(`${oldestUser}@`));
 
                         for (const canvasId of canvasIds) {
-                            const sectionKeys = Object.keys(state.sectionById)
+                            const gridKeys = Object.keys(state.gridById)
                                 .filter(k => k.startsWith(`${canvasId}/`));
-                            sectionKeys.forEach(k => delete state.sectionById[k]);
+                            gridKeys.forEach(k => delete state.gridById[k]);
                             delete state.byId[canvasId];
                         }
                     }

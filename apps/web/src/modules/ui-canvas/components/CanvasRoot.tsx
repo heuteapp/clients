@@ -13,7 +13,7 @@ export function CanvasRoot(props: CanvasRootProps) {
   const { data } = props;
   const { registry, dataSource: source } = useCanvasContext();
 
-  const grids = source?.sections ?? [];
+  const grids = source?.grids ?? [];
   const canvasRef = registry.canvas.ref;
 
   useLayoutEffect(() => {

@@ -1,6 +1,6 @@
 import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetricsValue } from "../types/dailyboard.metrics";
 import { calcDailyboardCardFixedRect, findDailyboardCardTitleInSubtree, getDailyboardCardData } from "../utils/dom.utils";
-import { findCanvasGridInSubtree, getSectionDataForGrid } from "../../ui-canvas/utils/dom.utils";
+import { findCanvasGridInSubtree, getGridData } from "../../ui-canvas/utils/dom.utils";
 
 export const calculateDailyboardMetrics = ({ canvas } : CalculateDailyboardMetrics) : DailyboardMetricsValue | null => {
     if(!canvas) return null;
@@ -30,12 +30,12 @@ export const applyDailyboardMetrics = ({ metrics, registry } : ApplyDailyboardMe
         const gridEl = findCanvasGridInSubtree(sectionEl);
         if (!gridEl) return;
 
-        const gridData = getSectionDataForGrid(gridEl);
+        const gridData = getGridData(gridEl);
         if (!gridData) return;
 
         const gridRect = gridEl.getBoundingClientRect();
 
-        const cards = registry.getDailyboardCardsForSection(section.props?.data.id);
+        const cards = registry.getDailyboardCardsForGrid(section.props?.data.id);
 
         cards?.forEach(card => {
             const cardEl = card.ref?.current;

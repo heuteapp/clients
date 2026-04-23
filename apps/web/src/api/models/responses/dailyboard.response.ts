@@ -11,7 +11,7 @@ export interface DailyboardResponse {
 export interface DailyboardCardResponse {
     name: string;
     title?: string;
-    sectionName?: string;
+    gridName?: string;
     colIndex?: number;
     rowIndex?: number;
     colSpan?: number;

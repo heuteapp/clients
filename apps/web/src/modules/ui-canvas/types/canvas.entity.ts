@@ -1,4 +1,4 @@
-import { CanvasDataContent, CanvasSectionDataContent } from "@/src/modules/canvas/types/canvas.data.types";
+import { CanvasDataContent, CanvasGridDataContent } from "@/src/modules/canvas/types/canvas.data.types";
 import { UIEntity } from "@/src/modules/ui-base/types/ui.types"
 
 /**
@@ -9,8 +9,8 @@ export interface CanvasEntity extends UIEntity {
 }
 
 /**
- * Represents a canvas section entity combining UI state and section data
+ * Represents a canvas grid entity combining UI state and grid data
  */
-export interface CanvasSectionEntity extends UIEntity {
-    data: CanvasSectionDataContent;
+export interface CanvasGridEntity extends UIEntity {
+    data: CanvasGridDataContent;
 }

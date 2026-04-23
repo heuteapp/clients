@@ -1,15 +1,15 @@
 export interface CanvasBase {
     name: string;
     version: number;
-    sections: CanvasSectionBase[];
+    grids: CanvasGridBase[];
 }
 
-export interface CanvasSectionBase {
+export interface CanvasGridBase {
     name: string;
 }
 
 //
 
-export type CanvasBaseContent = Omit<CanvasBase, "sections">;
+export type CanvasBaseContent = Omit<CanvasBase, "grids">;
 
-export type CanvasSectionBaseContent = CanvasSectionBase;
+export type CanvasGridBaseContent = CanvasGridBase;

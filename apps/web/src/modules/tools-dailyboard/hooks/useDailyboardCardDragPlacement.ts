@@ -1,9 +1,9 @@
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 import { GridRect } from "@/src/modules/shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/shared/utils/common";
-import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForGrid, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
-import { findCanvasGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-canvas/utils/dom.utils";
+import { findCanvasGridAtPoint, calcGridPointerAtCursor } from "@/src/modules/ui-canvas/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { DailyboardCardPlacementResult, DailyboardCardPlacementContent, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
@@ -19,9 +19,8 @@ export const useDailyboardCardDragPlacement = () => {
         canvasMetrics: null,
 
         dailyboardElement: null,
-        sectionElement: null,
-        sectionElementData: null,
         gridElement: null,
+        gridElementData: null,
         
         ghostCardElement: null,
         ghostCardGridPos: null,
@@ -59,14 +58,14 @@ export const useDailyboardCardDragPlacement = () => {
     }, [state.isGhostCardOverlapping, state.suggestedCardGridPos, state.ghostCardGridPos]);
 
     const resolvePlacement = useCallback((): DailyboardCardPlacement | null => {
-        if (!state.sectionElementData || !state.ghostCardGridPos) return null;
+        if (!state.gridElementData || !state.ghostCardGridPos) return null;
 
-        const sectionName = state.sectionElementData.name;
+        const gridName = state.gridElementData.name;
         const position = resolvePosition();
         if (!position) return null;
 
-        return { sectionName, position };
-    }, [state.sectionElementData, state.ghostCardGridPos, resolvePosition]);
+        return { gridName, position };
+    }, [state.gridElementData, state.ghostCardGridPos, resolvePosition]);
 
     const resolveResult = useCallback((): DailyboardCardPlacementResult => {
         const placement = resolvePlacement();
@@ -89,17 +88,16 @@ export const useDailyboardCardDragPlacement = () => {
 
         const ghostCardEl = state.ghostCardElement!;
         const gridEl = (state.gridElement = findCanvasGridAtPoint(clientX, clientY));
-        const sectionEl = (state.sectionElement = gridEl ? findSectionClosest(gridEl) : null);
-        const dailyboardEl = (state.dailyboardElement = sectionEl ? findDailyboardClosest(sectionEl) : null);
+        const dailyboardEl = (state.dailyboardElement = gridEl ? findDailyboardClosest(gridEl) : null);
 
         state.isGhostCardOverlapping = false;
 
-        if (gridEl && sectionEl && dailyboardEl) {
-            const sectionData = getSectionDataForGrid(gridEl);
-            if (!sectionData) return;
+        if (gridEl && gridEl && dailyboardEl) {
+            const gridData = getGridDataForGrid(gridEl);
+            if (!gridData) return;
 
-            const { name: sectionName, position: gridPos } = sectionData;
-            state.sectionElementData = { name: sectionName, position: gridPos };
+            const { name: gridName, position: gridPos } = gridData;
+            state.gridElementData = { name: gridName, position: gridPos };
 
             const gridRect = gridEl.getBoundingClientRect();
             const gridSpan = { colSpan: gridPos.colSpan, rowSpan: gridPos.rowSpan };
@@ -116,7 +114,7 @@ export const useDailyboardCardDragPlacement = () => {
             const gap = dailyboardEl.clientWidth * 0.0075;
             state.ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSpan, state.ghostCardGridPos);
 
-            const cards = findAllDailyboardCardsForSection(dailyboardEl, sectionName).filter((card) => {
+            const cards = findAllDailyboardCardsForGrid(dailyboardEl, gridName).filter((card) => {
                 const cardData = getDailyboardCardData(card);
                 return cardData.key !== targetCardKey;
             });
@@ -139,8 +137,8 @@ export const useDailyboardCardDragPlacement = () => {
                 state.suggestedCardPos = null;
             }
         } else {
-            state.sectionElement = null;
-            state.sectionElementData = null;
+            state.gridElement = null;
+            state.gridElementData = null;
             state.ghostCardGridPos = null;
             state.ghostCardPos = {
                 x: clientX - size.width / 2,
@@ -199,8 +197,8 @@ export const useDailyboardCardDragPlacement = () => {
         state.hammer?.off("ghostcardpanend", drop);
 
         state.dailyboardElement = null;
-        state.sectionElement = null;
-        state.sectionElementData = null;
+        state.gridElement = null;
+        state.gridElementData = null;
         state.gridElement = null;
         state.ghostCardElement = null;
         state.ghostCardGridPos = null;

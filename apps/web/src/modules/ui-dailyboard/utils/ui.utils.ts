@@ -23,7 +23,7 @@ export const getDailyboardCardDataSet = (card: StoredDailyboardCardData) => {
         "data-key": card.name,
         "data-title": card.content.title,
         "data-color": card.content.color,
-        "data-section-name": card.placement?.sectionName || "",
+        "data-grid-name": card.placement?.gridName || "",
         "data-col-index": card.placement?.position.colIndex || 0,
         "data-row-index": card.placement?.position.rowIndex || 0,
         "data-col-span": card.placement?.position.colSpan || 1,

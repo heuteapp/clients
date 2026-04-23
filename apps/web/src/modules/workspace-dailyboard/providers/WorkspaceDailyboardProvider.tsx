@@ -49,7 +49,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
             name: "default",
             version: 1,
             box: {},
-            sections: [
+            grids: [
                 {
                     name: "first",
                     box: {                        

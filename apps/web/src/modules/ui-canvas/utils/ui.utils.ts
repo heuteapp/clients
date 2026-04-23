@@ -1,4 +1,4 @@
-import { StoredCanvasData, StoredCanvasSectionData } from "@/src/heute-store/types/canvas.types"
+import { StoredCanvasData, StoredCanvasGridData } from "@/src/heute-store/types/canvas.types"
 
 export const getCanvasDataSet = (canvas: StoredCanvasData | null) => {
     if(!canvas) return null;
@@ -12,15 +12,15 @@ export const getCanvasDataSet = (canvas: StoredCanvasData | null) => {
     }
 }
 
-export const getCanvasGridDataSet = (section: StoredCanvasSectionData | null) => {
-    if(!section) return null;
+export const getCanvasGridDataSet = (grid: StoredCanvasGridData | null) => {
+    if(!grid) return null;
 
     return {
         "data-canvas-grid": true,
-        "data-name": section.name,
-        "data-col-index": section.position.colIndex,
-        "data-row-index": section.position.rowIndex,
-        "data-col-span": section.position.colSpan,
-        "data-row-span": section.position.rowSpan,
+        "data-name": grid.name,
+        "data-col-index": grid.position.colIndex,
+        "data-row-index": grid.position.rowIndex,
+        "data-col-span": grid.position.colSpan,
+        "data-row-span": grid.position.rowSpan,
     }
 }

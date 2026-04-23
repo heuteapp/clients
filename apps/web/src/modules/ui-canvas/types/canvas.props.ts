@@ -1,19 +1,19 @@
-import { StoredCanvasData, StoredCanvasSectionData, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
+import { StoredCanvasData, StoredCanvasGridData, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
 
 export interface CanvasRootProps {
     data: StoredCanvasData;
 }
 
 export interface CanvasGridContainerProps {
-    grids: StoredCanvasSectionData[];
+    grids: StoredCanvasGridData[];
 }
 
 export interface CanvasGridSectionProps {
-    data: StoredCanvasSectionData
+    data: StoredCanvasGridData
 }
 
 export interface CanvasGridItemProps  {
-    data: StoredCanvasSectionData
+    data: StoredCanvasGridData
 }
 
 export interface CanvasProviderProps {

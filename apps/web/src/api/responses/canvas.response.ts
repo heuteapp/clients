@@ -1,5 +1,5 @@
-import { CanvasData, CanvasSectionData } from "@/src/modules/canvas/types/canvas.data.types";
-import { CanvasResponse, CanvasSectionResponse } from "../models/responses/canvas.response";
+import { CanvasData, CanvasGridData } from "@/src/modules/canvas/types/canvas.data.types";
+import { CanvasResponse, CanvasGridResponse } from "../models/responses/canvas.response";
 
 export function responseToCanvas(response: CanvasResponse): CanvasData {
     return {
@@ -7,11 +7,11 @@ export function responseToCanvas(response: CanvasResponse): CanvasData {
         version: response.version,
         colCount: response.colCount,
         rowCount: response.rowCount,
-        sections: response.sections.map(responseToCanvasSections),
+        grids: response.sections.map(responseToCanvasGrids),
     };
 }
 
-export function responseToCanvasSections(response: CanvasSectionResponse): CanvasSectionData {
+export function responseToCanvasGrids(response: CanvasGridResponse): CanvasGridData {
     return {
         name: response.name,
         position: {

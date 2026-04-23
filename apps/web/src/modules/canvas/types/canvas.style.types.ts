@@ -1,16 +1,16 @@
 import { BoxStyle } from "@/src/modules/shared/types/style";
-import { CanvasBase, CanvasSectionBase } from "./canvas.base.types";
+import { CanvasBase, CanvasGridBase } from "./canvas.base.types";
 
 export interface CanvasStyle extends CanvasBase{
     box: BoxStyle;
-    sections: CanvasSectionStyle[];
+    grids: CanvasGridStyle[];
 }
 
-export interface CanvasSectionStyle extends CanvasSectionBase {
+export interface CanvasGridStyle extends CanvasGridBase {
     box: BoxStyle;
     grid?: BoxStyle;
 }
 
-export type CanvasStyleContent = Omit<CanvasStyle, "sections">;
+export type CanvasStyleContent = Omit<CanvasStyle, "grids">;
 
-export type CanvasSectionStyleContent = CanvasSectionStyle;
+export type CanvasGridStyleContent = CanvasGridStyle;

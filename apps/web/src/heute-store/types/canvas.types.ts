@@ -1,14 +1,14 @@
-import { CanvasBase, CanvasSectionBase } from "@/src/modules/canvas/types/canvas.base.types";
+import { CanvasBase, CanvasGridBase } from "@/src/modules/canvas/types/canvas.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
 
 export interface CanvasBaseState<
     TCanvasSource extends CanvasBaseSource,
-    TCanvasItem extends StoredCanvasItem<TCanvasSection>,
+    TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
     TCanvasItemContent extends StoredCanvasItemContent,
-    TCanvasSection extends StoredCanvasSectionItem,
-    TCanvasSectionContent extends StoredCanvasSectionItemContent
+    TCanvasGrid extends StoredCanvasGridItem,
+    TCanvasGridContent extends StoredCanvasGridItemContent
 > extends UserBasedStoreState<TCanvasItemContent> {
-    sectionById: Record<string, TCanvasSectionContent>;
+    gridById: Record<string, TCanvasGridContent>;
 
     loadGlobalCanvas: (canvas: TCanvasSource) => void;
     loadMeCanvas: (canvas: TCanvasSource) => void;
@@ -23,76 +23,76 @@ export interface CanvasBaseState<
 
 export type CanvasBaseSource = CanvasBase;
 
-export type CanvasSectionBaseSource = CanvasSectionBase;
+export type CanvasGridBaseSource = CanvasGridBase;
 
 export interface StoredCanvasItem<
-    TCanvasSection extends StoredCanvasSectionItem = StoredCanvasSectionItem
+    TCanvasGrid extends StoredCanvasGridItem = StoredCanvasGridItem
 > extends StoredItem, CanvasBase {
-    sections: TCanvasSection[];
+    grids: TCanvasGrid[];
 }
 
-export interface StoredCanvasSectionItem extends StoredItem, CanvasSectionBase {
+export interface StoredCanvasGridItem extends StoredItem, CanvasGridBase {
     canvasId: () => string;
 }
 
-export type StoredCanvasItemContent = Omit<StoredCanvasItem<StoredCanvasSectionItem>, "sections">;
+export type StoredCanvasItemContent = Omit<StoredCanvasItem<StoredCanvasGridItem>, "grids">;
 
-export type StoredCanvasSectionItemContent = StoredCanvasSectionItem;
+export type StoredCanvasGridItemContent = StoredCanvasGridItem;
 
 //
 
-import { CanvasData, CanvasSectionData } from "@/src/modules/canvas/types/canvas.data.types";
+import { CanvasData, CanvasGridData } from "@/src/modules/canvas/types/canvas.data.types";
 
 export interface CanvasDataState extends CanvasBaseState<
     CanvasData, 
     StoredCanvasData, 
     StoredCanvasDataContent, 
-    StoredCanvasSectionData,
-    StoredCanvasSectionDataContent> {
+    StoredCanvasGridData,
+    StoredCanvasGridDataContent> {
 
 }
 
 //
 
 export interface StoredCanvasData<
-    TCanvasSection extends StoredCanvasSectionData = StoredCanvasSectionData
-> extends StoredCanvasItem<TCanvasSection>, CanvasData {
-    sections: TCanvasSection[];
+    TCanvasGrid extends StoredCanvasGridData = StoredCanvasGridData
+> extends StoredCanvasItem<TCanvasGrid>, CanvasData {
+    grids: TCanvasGrid[];
 }
 
-export interface StoredCanvasSectionData extends StoredCanvasSectionItem, CanvasSectionData {
+export interface StoredCanvasGridData extends StoredCanvasGridItem, CanvasGridData {
 
 }
 
-export type StoredCanvasDataContent = Omit<StoredCanvasData, "sections">;
+export type StoredCanvasDataContent = Omit<StoredCanvasData, "grids">;
 
-export type StoredCanvasSectionDataContent = StoredCanvasSectionData;
+export type StoredCanvasGridDataContent = StoredCanvasGridData;
 
 //
 
-import { CanvasStyle, CanvasSectionStyle } from "@/src/modules/canvas/types/canvas.style.types";
+import { CanvasStyle, CanvasGridStyle } from "@/src/modules/canvas/types/canvas.style.types";
 
 export interface CanvasStyleState extends CanvasBaseState<
     CanvasStyle, 
     StoredCanvasStyle, 
     StoredCanvasStyleContent,
-    StoredCanvasSectionStyle,
-    StoredCanvasSectionStyleContent> {
+    StoredCanvasGridStyle,
+    StoredCanvasGridStyleContent> {
 
 }
 
 //
 
 export interface StoredCanvasStyle<
-    TCanvasSection extends StoredCanvasSectionStyle = StoredCanvasSectionStyle
-> extends StoredCanvasItem<TCanvasSection>, CanvasStyle {
-    sections: TCanvasSection[];
+    TCanvasGrid extends StoredCanvasGridStyle = StoredCanvasGridStyle
+> extends StoredCanvasItem<TCanvasGrid>, CanvasStyle {
+    grids: TCanvasGrid[];
 }
 
-export interface StoredCanvasSectionStyle extends StoredCanvasSectionItem, CanvasSectionStyle {
+export interface StoredCanvasGridStyle extends StoredCanvasGridItem, CanvasGridStyle {
 
 }
 
-export type StoredCanvasStyleContent = Omit<StoredCanvasStyle, "sections">;
+export type StoredCanvasStyleContent = Omit<StoredCanvasStyle, "grids">;
 
-export type StoredCanvasSectionStyleContent = StoredCanvasSectionStyle;
+export type StoredCanvasGridStyleContent = StoredCanvasGridStyle;

@@ -38,5 +38,5 @@ export interface DailyboardRegistry {
 
     getDailyboardCards(): DailyboardCardNode[] | undefined
 
-    getDailyboardCardsForSection(sectionId: string): DailyboardCardNode[] | undefined
+    getDailyboardCardsForGrid(gridId: string): DailyboardCardNode[] | undefined
 }

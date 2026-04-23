@@ -3,10 +3,11 @@ export interface CanvasResponse {
     version: number;
     colCount: number;
     rowCount: number;
-    sections: CanvasSectionResponse[];
+    sections: CanvasGridResponse[];
+    grids: CanvasGridResponse[];
 }
 
-export interface CanvasSectionResponse {
+export interface CanvasGridResponse {
     name: string;
     colIndex: number;
     rowIndex: number;

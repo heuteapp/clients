@@ -19,12 +19,12 @@ function responseToDailyboardCard(cardResponse: DailyboardCardResponse): Dailybo
             title: cardResponse.title ?? null,
         },
         placement: 
-            cardResponse.sectionName && 
+            cardResponse.gridName && 
             cardResponse.colIndex &&
             cardResponse.rowIndex &&
             cardResponse.colSpan &&
             cardResponse.rowSpan ? {
-                sectionName: cardResponse.sectionName,
+                gridName: cardResponse.gridName,
                 position: {
                     colIndex: cardResponse.colIndex,
                     rowIndex: cardResponse.rowIndex,

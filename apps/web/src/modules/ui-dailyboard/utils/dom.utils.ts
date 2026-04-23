@@ -80,8 +80,8 @@ export const findAllDailyboardCards = (dailyboardEl: HTMLDivElement) => {
     return Array.from(cardElements) as HTMLDivElement[];
 }
 
-export const findAllDailyboardCardsForSection = (dailyboardEl: HTMLDivElement, sectionName: string) => {
-    const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card][data-section-name="${sectionName}"]`);
+export const findAllDailyboardCardsForGrid = (dailyboardEl: HTMLDivElement, gridName: string) => {
+    const cardElements = dailyboardEl.querySelectorAll(`[data-dailyboard-card][data-grid-name="${gridName}"]`);
     return Array.from(cardElements) as HTMLDivElement[];
 }
 
@@ -92,7 +92,7 @@ export const getDailyboardCardData = (cardEl: HTMLElement) : DailyboardCardDataC
         name: cardEl.dataset.name || "",
         content: null!,
         placement: {
-            sectionName: cardEl.dataset.sectionName || "",
+            gridName: cardEl.dataset.gridName || "",
             position: {
                 colIndex: parseInt(cardEl.dataset.colIndex || "0", 10),
                 rowIndex: parseInt(cardEl.dataset.rowIndex || "0", 10),
@@ -105,17 +105,17 @@ export const getDailyboardCardData = (cardEl: HTMLElement) : DailyboardCardDataC
 
 //
 
-export const calcDailyboardCardGridIndexes = (mouseCol: number, mouseRow: number, sectionSize: GridSpan, cardSize: GridSpan) => {
+export const calcDailyboardCardGridIndexes = (mouseCol: number, mouseRow: number, gridSize: GridSpan, cardSize: GridSpan) => {
     let col = mouseCol - Math.floor(cardSize.colSpan / 2);
     let row = mouseRow - Math.floor(cardSize.rowSpan / 2);
 
-    col = Math.max(1, Math.min(col, sectionSize.colSpan - cardSize.colSpan + 1));
-    row = Math.max(1, Math.min(row, sectionSize.rowSpan - cardSize.rowSpan + 1));
+    col = Math.max(1, Math.min(col, gridSize.colSpan - cardSize.colSpan + 1));
+    row = Math.max(1, Math.min(row, gridSize.rowSpan - cardSize.rowSpan + 1));
 
     return { col, row };
 }
 
-export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, sectionSize: GridSpan, cardPos: GridRect) => {
+export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, gridSize: GridSpan, cardPos: GridRect) => {
 
     const localGridRect = {
         left: (gridRect.left) + gap,
@@ -125,8 +125,8 @@ export const calcDailyboardCardFixedRect = (gridRect: DOMRect, gap: number, sect
     }
 
     const stepSize = {
-        width: localGridRect.width / sectionSize.colSpan,
-        height: localGridRect.height / sectionSize.rowSpan
+        width: localGridRect.width / gridSize.colSpan,
+        height: localGridRect.height / gridSize.rowSpan
     }
 
     const rawPosition = {

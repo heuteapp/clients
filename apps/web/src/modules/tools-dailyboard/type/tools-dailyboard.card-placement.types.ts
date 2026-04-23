@@ -13,9 +13,8 @@ export interface DailyboardCardPlacementState {
     canvasMetrics: CanvasMetrics | null;
 
     dailyboardElement: HTMLDivElement | null;
-    sectionElement: HTMLDivElement | null;
-    sectionElementData: { name: string; position: GridRect } | null;
     gridElement: HTMLDivElement | null;
+    gridElementData: { name: string; position: GridRect } | null;
 
     ghostCardElement: HTMLDivElement | null;
     ghostCardGridPos: GridRect | null;
