@@ -1,4 +1,4 @@
-import { BoardBase, BoardCardBase } from "../../board/types/board.base.types";
+import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "../../board/types/board.base.types";
 import { YYMMDDDate } from "../../shared/types/date.types";
 
 export interface DailyboardBase extends BoardBase {
@@ -13,6 +13,6 @@ export interface DailyboardCardBase extends BoardCardBase {
 
 //
 
-export type DailyboardBaseData = Omit<DailyboardBase, "cards">;
+export type DailyboardBaseData<TBase extends DailyboardBase = DailyboardBase> = BoardBaseData<TBase>
 
-export type DailyboardCardBaseData = Omit<DailyboardCardBase, "name">;
+export type DailyboardCardBaseData<TBase extends DailyboardCardBase = DailyboardCardBase> = BoardCardBaseData<TBase>

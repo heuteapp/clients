@@ -1,4 +1,4 @@
-import { BoardCardModel, BoardModel } from "../../board/types/board.model.types";
+import { BoardCardModel, BoardCardModelData, BoardModel, BoardModelData } from "../../board/types/board.model.types";
 import { DailyboardBase, DailyboardCardBase } from "./dailyboard.base.types";
 
 export interface DailyboardModel extends DailyboardBase, BoardModel {
@@ -9,6 +9,6 @@ export interface DailyboardCardModel extends DailyboardCardBase, BoardCardModel 
     
 }
 
-export type DailyboardModelData = Omit<DailyboardModel, "cards">;
+export type DailyboardModelData<TBase extends DailyboardModel = DailyboardModel> = BoardModelData<TBase>
 
-export type DailyboardCardModelData = Omit<DailyboardCardModel, "">;
+export type DailyboardCardModelData<TBase extends DailyboardCardModel = DailyboardCardModel> = BoardCardModelData<TBase>;

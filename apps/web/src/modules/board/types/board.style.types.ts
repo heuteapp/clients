@@ -1,5 +1,5 @@
 import { BoxStyle } from "@/src/modules/shared/types/style";
-import { BoardBase, BoardCardBase } from "./board.base.types";
+import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "./board.base.types";
 
 export interface BoardStyle extends BoardBase {
     box: BoxStyle;
@@ -10,6 +10,6 @@ export interface BoardCardStyle extends BoardCardBase {
     box: BoxStyle;
 }
 
-export type BoardStyleData = Omit<BoardStyle, "cards">;
+export type BoardStyleData<TBase extends BoardStyle = BoardStyle> = BoardBaseData<TBase>
 
-export type BoardCardStyleData = Omit<BoardCardStyle, "">;
+export type BoardCardStyleData<TBase extends BoardCardStyle = BoardCardStyle> = BoardCardBaseData<TBase>

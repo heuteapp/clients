@@ -1,5 +1,5 @@
 import { GridRect } from "../../shared/types/common";
-import { BoardBase, BoardCardBase } from "./board.base.types";
+import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "./board.base.types";
 
 export interface BoardModel extends BoardBase {
     cards: BoardCardModel[];
@@ -10,9 +10,9 @@ export interface BoardCardModel extends BoardCardBase {
     placement: BoardCardPlacement | null;
 }
 
-export type BoardModelData = Omit<BoardModel, "cards">;
+export type BoardModelData<TBase extends BoardModel = BoardModel> = BoardBaseData<TBase>
 
-export type BoardCardModelData = Omit<BoardCardModel, "">;
+export type BoardCardModelData<TBase extends BoardCardModel = BoardCardModel> = BoardCardBaseData<TBase>
 
 
 //
