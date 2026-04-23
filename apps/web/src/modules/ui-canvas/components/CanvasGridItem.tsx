@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
 import { CanvasGridItemProps } from "@/src/modules/ui-canvas/types/canvas.props";
 import { getCanvasGridDataSet } from "../utils/ui.utils";
+import { TracedItem } from "../../t-shared/components/TracedItem";
 
 function CanvasGridItem(props : CanvasGridItemProps) {
     const { data } = props;
@@ -23,14 +24,19 @@ function CanvasGridItem(props : CanvasGridItemProps) {
     }, [data.name, registry])
 
     return (
-        <div 
-            data-canvas-grid
-            ref={ref} className={style.gridItem} style={{
-                gridTemplateColumns: `repeat(${data.position.colSpan}, var(--grid-cell-size))`,
-                gridTemplateRows: `repeat(${data.position.rowSpan}, var(--grid-cell-size))`,
-            }}
-            {...getCanvasGridDataSet(data)}
-        />
+        <TracedItem
+            type={"canvas-grid-item"}
+            id={data.name}
+            data={data}
+            ref={ref}
+        >
+            <div
+                ref={ref} className={style.gridItem} style={{
+                    gridTemplateColumns: `repeat(${data.position.colSpan}, var(--grid-cell-size))`,
+                    gridTemplateRows: `repeat(${data.position.rowSpan}, var(--grid-cell-size))`,
+                }}
+            />        
+        </TracedItem>
     )
 }
 

@@ -28,11 +28,9 @@ export function CanvasGridSection(props : CanvasGridSectionProps) {
         <TracedItem
             type={"canvas-grid-section"}
             id={data.name}
-            data={props}
             ref={ref}
         >
             <div
-                data-canvas-section
                 ref={ref}
                 className={style.gridSection}
                 style={{

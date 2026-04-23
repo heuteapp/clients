@@ -42,7 +42,6 @@ export function CanvasGridContainer(props : CanvasGridContainerProps) {
     return (
         <TracedUniqueItem
             type="canvas-grid-container"
-            data={props}
             ref={ref}
         >
             <div
