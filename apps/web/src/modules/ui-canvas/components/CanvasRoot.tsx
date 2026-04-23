@@ -15,10 +15,10 @@ export function CanvasRoot(props: CanvasRootProps) {
   const { registry, dataSource: source } = useCanvasContext();
 
   const grids = source?.grids ?? [];
-  const canvasRef = registry.canvas.ref;
+  const ref = registry.canvas.ref;
 
   useLayoutEffect(() => {
-    registry.registerCanvasRoot(canvasRef, props)
+    registry.registerCanvasRoot(ref, props)
 
     return () => {
       registry.unregisterCanvasRoot()
@@ -29,10 +29,10 @@ export function CanvasRoot(props: CanvasRootProps) {
     <TracedUniqueItem
       type="canvas-root"
       data={data}
-      ref={canvasRef}
+      ref={ref}
     >
       <div 
-        ref={canvasRef} 
+        ref={ref} 
         className={style.canvas}
         {...getCanvasDataSet(data)}
       >
