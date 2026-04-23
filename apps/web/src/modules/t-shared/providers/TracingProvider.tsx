@@ -6,15 +6,15 @@ import { TracingItemData } from "../types/context.types";
 export function TracingProvider({ children }: TracingProviderProps) {
     const components = useMemo(() => new Map<string, TracingItemData>(), []);
 
-    const trace = useCallback((key: string, item: TracingItemData) => {
-        if(components.has(key)) return false;
+    const trace = useCallback((id: string, item: TracingItemData) => {
+        if(components.has(id)) return false;
 
-        components.set(key, item);
+        components.set(id, item);
         return true;
     }, [components]);
 
-    const untrace = useCallback((key: string) => {
-        return components.delete(key);
+    const untrace = useCallback((id: string) => {
+        return components.delete(id);
     }, [components]);
 
     const getItemsOf = useCallback((type: string, filter?: (item: TracingItemData) => boolean) => {

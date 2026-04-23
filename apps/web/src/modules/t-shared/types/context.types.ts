@@ -1,6 +1,6 @@
 export interface TracingContextValue {
-    trace: (key: string, item: TracingItemData) => boolean;
-    untrace: (key: string) => boolean;
+    trace: (id: string, item: TracingItemData) => boolean;
+    untrace: (id: string) => boolean;
     getItemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => TracingItemData[];
 }
 

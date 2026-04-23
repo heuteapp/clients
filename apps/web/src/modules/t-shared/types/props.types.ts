@@ -1,6 +1,6 @@
 export interface TracedItemProps {
     type: string;
-    key: string;
+    id: string;
     data: any;
     ref: React.RefObject<HTMLElement | null>;
     children: React.ReactNode;
