@@ -1,8 +1,8 @@
-import { DailyboardData, DailyboardCardData } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { DailyboardModel, DailyboardCardModel } from "@/src/modules/dailyboard/types/dailyboard.model.types";
 import { DailyboardCardResponse, DailyboardResponse } from "../models/responses/dailyboard.response";
 import { isoToYYMMDD } from "@/src/modules/shared/utils/date.utils";
 
-export function responseToDailyboard(response: DailyboardResponse): DailyboardData {
+export function responseToDailyboard(response: DailyboardResponse): DailyboardModel {
     return {        
         categoryPath: response.categoryPath,
         date: isoToYYMMDD(response.date)!,
@@ -12,7 +12,7 @@ export function responseToDailyboard(response: DailyboardResponse): DailyboardDa
     };
 }
 
-function responseToDailyboardCard(cardResponse: DailyboardCardResponse): DailyboardCardData {
+function responseToDailyboardCard(cardResponse: DailyboardCardResponse): DailyboardCardModel {
     return {
         name: cardResponse.name,
         content: {

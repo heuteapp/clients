@@ -1,4 +1,4 @@
-import { DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.data.types";
+import { DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.model.types";
 import { GridRect, GridSpan, Rect } from "../../shared/types/common";
 import { CanvasMetrics } from "../../ui-canvas/types/canvas.metrics";
 

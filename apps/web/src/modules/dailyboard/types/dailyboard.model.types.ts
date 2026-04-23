@@ -1,18 +1,18 @@
 import { GridRect } from "../../shared/types/common";
 import { DailyboardBase, DailyboardCardBase } from "./dailyboard.base.types";
 
-export interface DailyboardData extends DailyboardBase {
-    cards: DailyboardCardData[];
+export interface DailyboardModel extends DailyboardBase {
+    cards: DailyboardCardModel[];
 }
 
-export interface DailyboardCardData extends DailyboardCardBase {
+export interface DailyboardCardModel extends DailyboardCardBase {
     content: DailyboardCardMaterial;
     placement: DailyboardCardPlacement | null;
 }
 
-export type DailyboardDataContent = Omit<DailyboardData, "cards">;
+export type DailyboardModelData = Omit<DailyboardModel, "cards">;
 
-export type DailyboardCardDataContent = DailyboardCardData;
+export type DailyboardCardModelData = Omit<DailyboardCardModel, "">;
 
 
 //

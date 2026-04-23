@@ -46,7 +46,7 @@ export type StoredDailyboardCardItemContent = StoredDailyboardCardItem;
 
 //
 
-import { DailyboardData, DailyboardCardData } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { DailyboardModel, DailyboardCardModel } from "@/src/modules/dailyboard/types/dailyboard.model.types";
 
 export interface DailyboardDataState extends DailyboardBaseState<
     DailyboardDataSource,
@@ -59,17 +59,17 @@ export interface DailyboardDataState extends DailyboardBaseState<
 
 }
 
-export type DailyboardDataSource = DailyboardData;
+export type DailyboardDataSource = DailyboardModel;
 
-export type DailyboardCardDataSource = DailyboardCardData;
+export type DailyboardCardDataSource = DailyboardCardModel;
 
 export interface StoredDailyboardData<
     TDailyboardCard extends StoredDailyboardCardData = StoredDailyboardCardData
-> extends StoredDailyboardItem<TDailyboardCard>, DailyboardData {
+> extends StoredDailyboardItem<TDailyboardCard>, DailyboardModel {
     cards: TDailyboardCard[];
 }
 
-export interface StoredDailyboardCardData extends StoredDailyboardCardItem, DailyboardCardData {
+export interface StoredDailyboardCardData extends StoredDailyboardCardItem, DailyboardCardModel {
 
 }
 

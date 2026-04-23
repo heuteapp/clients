@@ -1,4 +1,4 @@
-import { DailyboardCardMaterial, DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
+import { DailyboardCardMaterial, DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.model.types";
 import { GridSpan } from "@/src/modules/shared/types/common";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 

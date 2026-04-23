@@ -1,4 +1,4 @@
-import { DailyboardCardMaterial, DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.data.types";
+import { DailyboardCardMaterial, DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.model.types";
 import { GridDimensions, GridRect, Rect } from "../../shared/types/common"
 import { YYMMDDDate } from "../../shared/types/date.types";
 

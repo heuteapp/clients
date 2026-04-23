@@ -1,4 +1,4 @@
-import { DailyboardCardDataContent, DailyboardDataContent } from "../../dailyboard/types/dailyboard.data.types";
+import { DailyboardCardModelData, DailyboardModelData } from "../../dailyboard/types/dailyboard.model.types";
 import { GridRect, GridSpan } from "../../shared/types/common";
 import { parseYYMMDD } from "../../shared/utils/date.utils";
 
@@ -23,7 +23,7 @@ export const findDailyboardAtCursor = (clientX: number, clientY: number): HTMLDi
     return null;
 }
 
-export const getDailyboardData = (dailyboardEl: HTMLElement) : DailyboardDataContent => {
+export const getDailyboardData = (dailyboardEl: HTMLElement) : DailyboardModelData => {
     return {
         categoryPath: dailyboardEl.dataset.categoryPath || "",
         canvasName: dailyboardEl.dataset.canvasName || "",
@@ -87,7 +87,7 @@ export const findAllDailyboardCardsForGrid = (dailyboardEl: HTMLDivElement, grid
 
 //
 
-export const getDailyboardCardData = (cardEl: HTMLElement) : DailyboardCardDataContent => {
+export const getDailyboardCardData = (cardEl: HTMLElement) : DailyboardCardModelData => {
     return {
         name: cardEl.dataset.name || "",
         content: null!,
