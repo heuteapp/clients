@@ -1,4 +1,4 @@
-import { GridRect, GridSpan, ResizeParams } from "../../shared/types/common";
+import { GridRect, GridSpan, ResizeParams } from "../types/common";
 
 export const isGridRectOverlapping = (a: GridRect, b: GridRect) => {
     return !(a.colIndex + a.colSpan <= b.colIndex ||

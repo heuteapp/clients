@@ -4,7 +4,7 @@ import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } fr
 import { responseToCanvas } from "@/src/api/responses/canvas.response";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useCanvasModelStore } from "@/src/heute-store/stores/canvas.stores";
-import { isoToYYMMDD } from "../../shared/utils/date.utils";
+import { isoToYYMMDD } from "../../d-shared/utils/date.utils";
 
 export const fetchingSourcesDoneAction = createAssign<
     WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent

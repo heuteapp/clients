@@ -1,4 +1,4 @@
-import { DailyboardPath, DailyboardPathConfig, DailyboardPathValidationResult } from "@/src/modules/shared/types/dailyboard.types";
+import { DailyboardPath, DailyboardPathConfig, DailyboardPathValidationResult } from "@/src/modules/d-shared/types/dailyboard.types";
 import { parseYYMMDD, YYMMDD_PATTERN } from "./date.utils";
 
 /**

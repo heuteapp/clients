@@ -1,6 +1,6 @@
 import { BoardCardContent, BoardCardPlacement } from "@/src/modules/d-board/types/board.types";
-import { GridDimensions, GridRect, Rect } from "../../shared/types/common"
-import { YYMMDDDate } from "../../shared/types/date.types";
+import { GridDimensions, GridRect, Rect } from "../../d-shared/types/common"
+import { YYMMDDDate } from "../../d-shared/types/date.types";
 
 export interface BaseSnapshot {
     rect: Rect;

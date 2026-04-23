@@ -1,4 +1,4 @@
-import { BoxStyle } from "@/src/modules/shared/types/style";
+import { BoxStyle } from "@/src/modules/d-shared/types/style";
 import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "./board.base.types";
 
 export interface BoardStyle extends BoardBase {

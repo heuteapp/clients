@@ -1,6 +1,6 @@
 import { DailyboardCardModelData, DailyboardModelData } from "../../d-dailyboard/types/dailyboard.model.types";
-import { GridRect, GridSpan } from "../../shared/types/common";
-import { parseYYMMDD } from "../../shared/utils/date.utils";
+import { GridRect, GridSpan } from "../../d-shared/types/common";
+import { parseYYMMDD } from "../../d-shared/utils/date.utils";
 
 export const findDailyboardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-dailyboard]");

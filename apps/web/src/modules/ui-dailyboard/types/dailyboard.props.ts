@@ -2,7 +2,7 @@ import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
 import { StoredDailyboardModel, StoredDailyboardCardModel } from "@/src/heute-store/types/dailyboard.types";
 import { BoardCardContent } from "@/src/modules/d-board/types/board.types";
-import { GridSpan } from "../../shared/types/common";
+import { GridSpan } from "../../d-shared/types/common";
 
 export interface DailyboardRootProps {
     data: StoredDailyboardModel;

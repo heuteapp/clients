@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { WorkspaceDailyboardConfig, WorkspaceDailyboardMetadata } from "../types/workspace-dailyboard.types";
 import { usePathname } from "next/navigation";
-import { parseDailyboardPath, validateDailyboardPath } from "../../shared/utils/dailyboard.utils";
-import { dateToYYMMDD, isToday } from "../../shared/utils/date.utils";
+import { parseDailyboardPath, validateDailyboardPath } from "../../d-shared/utils/dailyboard.utils";
+import { dateToYYMMDD, isToday } from "../../d-shared/utils/date.utils";
 import { useWorkspaceContext } from "../../workspace/hooks/useWorkspaceContext";
 
 export function useWorkspaceDailyboard(config: WorkspaceDailyboardConfig = {}): WorkspaceDailyboardMetadata {

@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
+import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 import { DailyboardBaseSource, DailyboardBaseState, DailyboardCardBaseSource, StoredDailyboardItem, StoredDailyboardItemData, StoredDailyboardCardItem, StoredDailyboardCardItemData } from "../types/dailyboard.types";
 
 export const convertDailyboardSourceToItemContent = <

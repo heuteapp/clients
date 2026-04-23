@@ -1,6 +1,6 @@
 import { DailyboardBase, DailyboardBaseData, DailyboardCardBase, DailyboardCardBaseData } from "@/src/modules/d-dailyboard/types/dailyboard.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
-import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
+import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 
 export interface DailyboardBaseState<
     TDailyboardSource extends DailyboardBaseSource,

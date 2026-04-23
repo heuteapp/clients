@@ -12,7 +12,7 @@ import {
 import { DailyboardBase, DailyboardCardBase } from "@/src/modules/d-dailyboard/types/dailyboard.base.types";
 import { addCardToDailyboardState, getDailyboardCardItemFromState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
 import { DailyboardModelState } from "../types/dailyboard.types";
-import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
+import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 
 export const withDailyboardImmer = <
     TDailyboardSource extends DailyboardBase,

@@ -1,4 +1,4 @@
-import { GridRect } from "../../shared/types/common";
+import { GridRect } from "../../d-shared/types/common";
 
 export interface BoardCardContent {
     title: string | null;

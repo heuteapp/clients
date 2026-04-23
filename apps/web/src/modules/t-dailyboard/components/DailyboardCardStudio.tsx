@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { DailyboardCardStudioProps } from "../type/t-dailyboard.card-studio.types";
-import { GridRect, ResizeDirection, ResizeParams } from "../../shared/types/common";
-import { resizeGridRect } from "../../shared/utils/common";
+import { GridRect, ResizeDirection, ResizeParams } from "../../d-shared/types/common";
+import { resizeGridRect } from "../../d-shared/utils/common";
 
 // ============================================================================
 // Main Component

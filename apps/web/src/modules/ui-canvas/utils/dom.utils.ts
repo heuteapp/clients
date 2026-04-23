@@ -1,5 +1,5 @@
 import { CanvasModelData, CanvasGridModelData } from "../../d-canvas/types/canvas.model.types";
-import { Pointer } from "../../shared/types/common";
+import { Pointer } from "../../d-shared/types/common";
 
 //
 

@@ -1,5 +1,5 @@
 import { CalculateCanvasMetricsProps, ApplyCanvasMetricsProps, CanvasMetricsValue } from "../types/canvas.metrics";
-import { spacingResult } from "../../shared/utils/style";
+import { spacingResult } from "../../d-shared/utils/style";
 
 export function calculateCanvasMetrics({ registry, dataSource, styleSource }: CalculateCanvasMetricsProps) : CanvasMetricsValue | null {
     const canvasRef = registry.canvas.ref;
