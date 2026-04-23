@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react"
 
 import { CanvasGridSectionProps } from "@/src/modules/ui-canvas/types/canvas.props";
 import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
+import { TracedItem } from "../../t-shared/components/TracedItem";
 import CanvasGridItem from "./CanvasGridItem";
 
 //
@@ -24,15 +25,22 @@ export function CanvasGridSection(props : CanvasGridSectionProps) {
     }, [data.name, registry])
 
     return (
-        <div
-            data-canvas-section
+        <TracedItem
+            type={"canvas-grid-section"}
+            id={data.name}
+            data={props}
             ref={ref}
-            className={style.gridSection}
-            style={{
-                gridArea: data.name
-            }}
         >
-            <CanvasGridItem data={data}/>
-        </div>
+            <div
+                data-canvas-section
+                ref={ref}
+                className={style.gridSection}
+                style={{
+                    gridArea: data.name
+                }}
+            >
+                <CanvasGridItem data={data}/>
+            </div>        
+        </TracedItem>
     )
 }
