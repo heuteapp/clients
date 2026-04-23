@@ -12,7 +12,7 @@ import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboard
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
 import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardContext";
 import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDialogs";
-import { TracingProvider } from "../../t-shared/providers/TracingProvider";
+import { TracingDomainProvider } from "../../t-shared/providers/TracingDomainProvider";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -71,7 +71,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     const canvasStyle = getGlobalCanvas("default", 1);
 
     return (
-        <TracingProvider>
+        <TracingDomainProvider name="w-dailyboard" >
             <MetricsProvider rootRef={dailyboardRef} targets={["canvas", "dailyboard"]}>
                 <CanvasProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
                     <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
@@ -85,7 +85,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                     </DailyboardProvider>
                 </CanvasProvider>
             </MetricsProvider>        
-        </TracingProvider>
+        </TracingDomainProvider>
     )
 }
 

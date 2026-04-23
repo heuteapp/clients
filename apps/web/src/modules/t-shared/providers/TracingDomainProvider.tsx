@@ -3,7 +3,7 @@ import { TracingContext } from "../contexts/tracing.context";
 import { TracingProviderProps } from "../types/props.types";
 import { TracingItemData } from "../types/context.types";
 
-export function TracingProvider({ children }: TracingProviderProps) {
+export function TracingDomainProvider({ name, children }: TracingProviderProps) {
     const components = useMemo(() => new Map<string, TracingItemData>(), []);
 
     const trace = useCallback((id: string, item: TracingItemData) => {

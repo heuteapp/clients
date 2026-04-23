@@ -14,5 +14,6 @@ export interface TracedUniqueItemProps extends TracedItemPropsBase {
 }
 
 export interface TracingProviderProps {
+    name: string;
     children: React.ReactNode;
 }
