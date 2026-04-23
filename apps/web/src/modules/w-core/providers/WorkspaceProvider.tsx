@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { WorkspaceContext } from "@/src/modules/workspace/contexts/workspace.context";
-import { useWorkspaceMetadata } from "@/src/modules/workspace/hooks/useWorkspaceMetadata";
+import { WorkspaceContext } from "@/src/modules/w-core/contexts/workspace.context";
+import { useWorkspaceMetadata } from "@/src/modules/w-core/hooks/useWorkspaceMetadata";
 import { useWorkspaceBreadcrumbs } from "../hooks/useWorkspaceBreadcrumbs";
 import { useCategoriesLoader } from "@/src/heute-store/hooks/useCategoriesLoader";
 

@@ -1,4 +1,4 @@
-import { WorkspaceMetadata } from "@/src/modules/workspace/types/workspace.types";
+import { WorkspaceMetadata } from "@/src/modules/w-core/types/workspace.types";
 import { useWorkspaceType } from "./useWorkspaceType";
 import { useWorkspaceSegments } from "./useWorkspaceSegments";
 

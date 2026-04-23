@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import { WorkspaceDailyboardProvider } from '@/src/modules/workspace-dailyboard/providers/WorkspaceDailyboardProvider';
-import { WorkspaceProvider } from '@/src/modules/workspace/providers/WorkspaceProvider';
-import { useWorkspaceContext } from '@/src/modules/workspace/hooks/useWorkspaceContext';
-import { WorkspaceBreadcrumbs } from '@/src/modules/workspace/components/WorkspaceBreadcrumbs';
+import { WorkspaceDailyboardProvider } from '@/src/modules/w-dailyboard/providers/WorkspaceDailyboardProvider';
+import { WorkspaceProvider } from '@/src/modules/w-core/providers/WorkspaceProvider';
+import { useWorkspaceContext } from '@/src/modules/w-core/hooks/useWorkspaceContext';
+import { WorkspaceBreadcrumbs } from '@/src/modules/w-core/components/WorkspaceBreadcrumbs';
 import { LayoutSidebar } from './sidebar';
 
 export default function WorkspaceLayout({

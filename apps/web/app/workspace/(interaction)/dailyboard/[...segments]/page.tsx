@@ -2,9 +2,8 @@
 
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
 import { useCanvasModelStore } from "@/src/heute-store/stores/canvas.stores";
-import { DailyboardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardRoot";
-import { WorkspaceDailyboardView } from "@/src/modules/workspace-dailyboard/components/WorkspaceDailyboardView";
-import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
+import { WorkspaceDailyboardView } from "@/src/modules/w-dailyboard/components/WorkspaceDailyboardView";
+import { useWorkspaceDailyboardContext } from "@/src/modules/w-dailyboard/hooks/useWorkspaceDailyboardContext";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function WorkspaceDailyboardPage() {

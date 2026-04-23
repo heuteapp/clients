@@ -3,7 +3,7 @@ import { WorkspaceDailyboardConfig, WorkspaceDailyboardMetadata } from "../types
 import { usePathname } from "next/navigation";
 import { parseDailyboardPath, validateDailyboardPath } from "../../d-shared/utils/dailyboard.utils";
 import { dateToYYMMDD, isToday } from "../../d-shared/utils/date.utils";
-import { useWorkspaceContext } from "../../workspace/hooks/useWorkspaceContext";
+import { useWorkspaceContext } from "../../w-core/hooks/useWorkspaceContext";
 
 export function useWorkspaceDailyboard(config: WorkspaceDailyboardConfig = {}): WorkspaceDailyboardMetadata {
     const pathName = usePathname();

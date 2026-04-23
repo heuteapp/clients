@@ -1,6 +1,6 @@
-import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
-import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
-import { ChevronLeft, ChevronRight, Add, Launch } from "@mui/icons-material";
+import { useWorkspaceDailyboardContext } from "@/src/modules/w-dailyboard/hooks/useWorkspaceDailyboardContext";
+import { useWorkspaceContext } from "@/src/modules/w-core/hooks/useWorkspaceContext";
+import { ChevronLeft, ChevronRight, Add } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authService, isAuthenticatedInvalid, isAuthenticatedValid, isAwaitingRegistration, isAwaitingRegistrationDone, isAwaitingRegistrationPending, isSigningIn, isSigningUp } from "@/src/modules/auth/state/auth.machine";
+import { authService, isAuthenticatedInvalid, isAuthenticatedValid, isAwaitingRegistration, isAwaitingRegistrationDone, isAwaitingRegistrationPending, isSigningIn, isSigningUp } from "@/src/modules/d-auth/state/auth.machine";
 import { AuthContext } from "@/src/modules/ui-auth/contexts/auth.context";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthHashParams } from "@/src/modules/ui-auth/hooks/useAuthHashParams";

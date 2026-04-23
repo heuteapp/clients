@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useWorkspaceContext } from "@/src/modules/workspace/hooks/useWorkspaceContext";
+import { useWorkspaceContext } from "@/src/modules/w-core/hooks/useWorkspaceContext";
 import { WorkspaceDailyboardCategoriesBreadcrumb } from "../components/WorkspaceDailyboardCategoriesBreadcrumb";
 import { WorkspaceDailyboardDateBreadcrumb } from "../components/WorkspaceDailyboardDateBreadcrumb";
 import { useWorkspaceDailyboardContext } from "./useWorkspaceDailyboardContext";

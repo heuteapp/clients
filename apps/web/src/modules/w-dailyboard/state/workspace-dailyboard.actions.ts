@@ -1,5 +1,5 @@
 import { responseToDailyboard } from "@/src/api/responses/dailyboard.response";
-import { createAssign } from "../../auth/utils/create-assign";
+import { createAssign } from "../../d-auth/utils/create-assign";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { responseToCanvas } from "@/src/api/responses/canvas.response";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";

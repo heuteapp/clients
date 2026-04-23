@@ -1,5 +1,5 @@
-import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/auth/types/auth.machine.types";
-import { createAssign } from "@/src/modules/auth/utils/create-assign";
+import { AuthMachineContext, AuthMachineEvent } from "@/src/modules/d-auth/types/auth.machine.types";
+import { createAssign } from "@/src/modules/d-auth/utils/create-assign";
 
 export const redirectingEntryAction = createAssign<AuthMachineContext, AuthMachineEvent>(
     ({ event }) => {

@@ -1,6 +1,6 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
-import { authService } from "../modules/auth/state/auth.machine";
-import { AuthSession } from "../modules/auth/types/auth.types";
+import axios from "axios";
+import { authService } from "../modules/d-auth/state/auth.machine";
+import { AuthSession } from "../modules/d-auth/types/auth.types";
 
 export const heuteClient = axios.create({
     baseURL: "/api",

@@ -1,5 +1,5 @@
 import { createActor, setup } from "xstate";
-import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/auth/types/auth.machine.types";
+import { AuthMachineContext, AuthMachineEvent, AuthMachineState } from "@/src/modules/d-auth/types/auth.machine.types";
 import { hydrateSessionActor, refreshSessionActor, signInActor, signUpActor, verifyEmailActor } from "./auth.actors";
 import { hasRegistrationGuard, hasSessionGuard } from "./auth.guards";
 import { unauthenticatedEntryAction, sessionHydrateFailureAction, sessionHydrateSuccessAction, sessionRefreshFailureAction, sessionRefreshRequestAction, sessionRefreshSuccessAction, signInFailureAction, signInSuccessAction, signUpFailureAction, signUpSuccessAction, verifyEmailRequestAction, verifyEmailConfirmAction, verifyEmailAssumeAction, verifyEmailDoneAction, verifyEmailErrorAction, verifyEmailExpiredAction, redirectingEntryAction } from "./auth.actions";
