@@ -1,14 +1,12 @@
-import { BoxStyle } from "@/src/modules/shared/types/style";
 import { DailyboardBase, DailyboardCardBase } from "./dailyboard.base.types";
-import { BoardCardStyleData, BoardStyleData } from "../../board/types/board.style.types";
+import { BoardCardStyle, BoardCardStyleData, BoardStyle, BoardStyleData } from "../../board/types/board.style.types";
 
-export interface DailyboardStyle extends DailyboardBase {
-    box: BoxStyle;
+export interface DailyboardStyle extends DailyboardBase, BoardStyle {
     cards: DailyboardCardStyle[];
 }
 
-export interface DailyboardCardStyle extends DailyboardCardBase {
-    box: BoxStyle;
+export interface DailyboardCardStyle extends DailyboardCardBase, BoardCardStyle {
+
 }
 
 export type DailyboardStyleData<TBase extends DailyboardStyle = DailyboardStyle> = BoardStyleData<TBase>
