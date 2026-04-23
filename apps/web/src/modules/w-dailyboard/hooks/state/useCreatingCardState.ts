@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { isCreatingPlacingCard } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
-import { useDailyboardCardDragPlacement } from "../../../tools-dailyboard/hooks/useDailyboardCardDragPlacement";
+import { useDailyboardCardDragPlacement } from "../../../t-dailyboard/hooks/useDailyboardCardDragPlacement";
 
 export const useCreatingCardState = () => {
     const { metadata } = useWorkspaceDailyboardContext();

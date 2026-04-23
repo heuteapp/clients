@@ -8,7 +8,7 @@ import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDaily
 import { GridSpan } from "@/src/modules/shared/types/common";
 import { DailyboardCardDisplay } from "@/src/modules/ui-dailyboard/components/DailyboardCardDisplay";
 import { BoardCardColor, BoardCardContent } from "@/src/modules/d-board/types/board.types";
-import { DailyboardCardStudio } from "@/src/modules/tools-dailyboard/components/DailyboardCardStudio";
+import { DailyboardCardStudio } from "@/src/modules/t-dailyboard/components/DailyboardCardStudio";
 
 export function CreatingEditingCardDialog() {
     const { send, state } = useWorkspaceDailyboardContext();

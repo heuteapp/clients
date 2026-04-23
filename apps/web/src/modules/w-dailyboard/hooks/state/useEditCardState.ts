@@ -5,7 +5,7 @@ import { isEditingCard, isModifyingCard, isPlacingCard, isPlacingCardIdle, isPla
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
 import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
-import { useDailyboardCardDragPlacement } from "../../../tools-dailyboard/hooks/useDailyboardCardDragPlacement";
+import { useDailyboardCardDragPlacement } from "../../../t-dailyboard/hooks/useDailyboardCardDragPlacement";
 
 export const useEditCardState = () => {
     const { Hammer } = useHammerContext();
