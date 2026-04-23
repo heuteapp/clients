@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { CanvasGridContainerProps } from "../types/canvas.props";
 import { CanvasGridSection } from "./CanvasGridSection";
 import { useCanvasContext } from "../hooks/useCanvasContext";
+import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
 
 export function CanvasGridContainer(props : CanvasGridContainerProps) {
     const ref = useRef<HTMLDivElement>(null);
@@ -39,18 +40,24 @@ export function CanvasGridContainer(props : CanvasGridContainerProps) {
         .join(" ");
 
     return (
-        <div
+        <TracedUniqueItem
+            type="canvas-grid-container"
+            data={props}
             ref={ref}
-            className={style.gridContainer}
-            style={{
-                gridTemplateColumns: `repeat(${colCount}, var(--canvas-cell-size))`,
-                gridTemplateRows: `repeat(${rowCount}, var(--canvas-cell-size))`,
-                gridTemplateAreas
-            }}
-        > 
-        {grids.map((grid) => (
-            <CanvasGridSection key={grid.name} data={grid}/>
-        ))}
-        </div>
+        >
+            <div
+                ref={ref}
+                className={style.gridContainer}
+                style={{
+                    gridTemplateColumns: `repeat(${colCount}, var(--canvas-cell-size))`,
+                    gridTemplateRows: `repeat(${rowCount}, var(--canvas-cell-size))`,
+                    gridTemplateAreas
+                }}
+            > 
+                {grids.map((grid) => (
+                    <CanvasGridSection key={grid.name} data={grid}/>
+                ))}
+            </div>        
+        </TracedUniqueItem>
     )
 }

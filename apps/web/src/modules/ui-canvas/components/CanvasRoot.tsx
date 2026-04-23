@@ -34,7 +34,6 @@ export function CanvasRoot(props: CanvasRootProps) {
       <div 
         ref={ref} 
         className={style.canvas}
-        {...getCanvasDataSet(data)}
       >
         <CanvasGridContainer colCount={data.colCount} rowCount={data.rowCount} grids={grids}/>
       </div>
