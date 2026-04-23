@@ -1,4 +1,4 @@
-import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
+import { DailyboardBase, DailyboardBaseData, DailyboardCardBase, DailyboardCardBaseData } from "@/src/modules/dailyboard/types/dailyboard.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
@@ -40,9 +40,9 @@ export interface StoredDailyboardCardItem extends StoredItem, DailyboardCardBase
     dailyboardId: () => string;
 }
 
-export type StoredDailyboardItemData = Omit<StoredDailyboardItem, "cards">;
+export type StoredDailyboardItemData<TBase extends StoredDailyboardItem = StoredDailyboardItem> = DailyboardBaseData<TBase>
 
-export type StoredDailyboardCardItemData = StoredDailyboardCardItem;
+export type StoredDailyboardCardItemData<TBase extends StoredDailyboardCardItem = StoredDailyboardCardItem> = DailyboardCardBaseData<TBase>;
 
 //
 
@@ -73,6 +73,6 @@ export interface StoredDailyboardCardModel extends StoredDailyboardCardItem, Dai
 
 }
 
-export type StoredDailyboardModelData = Omit<StoredDailyboardModel, "cards">;
+export type StoredDailyboardModelData<TBase extends StoredDailyboardModel = StoredDailyboardModel> = StoredDailyboardItemData<TBase>
 
-export type StoredDailyboardCardModelData = StoredDailyboardCardModel;
+export type StoredDailyboardCardModelData<TBase extends StoredDailyboardCardModel = StoredDailyboardCardModel> = StoredDailyboardCardItemData<TBase>;
