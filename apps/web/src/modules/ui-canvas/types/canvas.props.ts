@@ -4,6 +4,10 @@ export interface CanvasRootProps {
     data: StoredCanvasData;
 }
 
+export interface CanvasGridContainerProps {
+    grids: StoredCanvasSectionData[];
+}
+
 export interface CanvasSectionProps {
     data: StoredCanvasSectionData
 }
