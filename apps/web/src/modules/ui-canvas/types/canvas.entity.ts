@@ -1,4 +1,4 @@
-import { CanvasModelData, CanvasGridModelData } from "@/src/modules/canvas/types/canvas.model.types";
+import { CanvasModelData, CanvasGridModelData } from "@/src/modules/d-canvas/types/canvas.model.types";
 import { UIEntity } from "@/src/modules/ui-base/types/ui.types"
 
 /**

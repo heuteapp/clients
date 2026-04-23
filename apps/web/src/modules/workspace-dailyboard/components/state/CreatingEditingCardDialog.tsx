@@ -7,7 +7,7 @@ import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext";
 import { GridSpan } from "@/src/modules/shared/types/common";
 import { DailyboardCardDisplay } from "@/src/modules/ui-dailyboard/components/DailyboardCardDisplay";
-import { BoardCardColor, BoardCardContent } from "@/src/modules/board/types/board.model.types";
+import { BoardCardColor, BoardCardContent } from "@/src/modules/d-board/types/board.model.types";
 import { DailyboardCardStudio } from "@/src/modules/tools-dailyboard/components/DailyboardCardStudio";
 
 export function CreatingEditingCardDialog() {

@@ -1,4 +1,4 @@
-import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "../../board/types/board.base.types";
+import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "../../d-board/types/board.base.types";
 import { YYMMDDDate } from "../../shared/types/date.types";
 
 export interface DailyboardBase extends BoardBase {

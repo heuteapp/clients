@@ -1,4 +1,4 @@
-import { CanvasModelData, CanvasGridModelData } from "../../canvas/types/canvas.model.types";
+import { CanvasModelData, CanvasGridModelData } from "../../d-canvas/types/canvas.model.types";
 import { Pointer } from "../../shared/types/common";
 
 //

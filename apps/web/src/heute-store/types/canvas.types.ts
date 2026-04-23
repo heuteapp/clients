@@ -1,4 +1,4 @@
-import { CanvasBase, CanvasGridBase } from "@/src/modules/canvas/types/canvas.base.types";
+import { CanvasBase, CanvasGridBase } from "@/src/modules/d-canvas/types/canvas.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
 
 export interface CanvasBaseState<
@@ -41,7 +41,7 @@ export type StoredCanvasGridItemData = StoredCanvasGridItem;
 
 //
 
-import { CanvasModel, CanvasGridModel } from "@/src/modules/canvas/types/canvas.model.types";
+import { CanvasModel, CanvasGridModel } from "@/src/modules/d-canvas/types/canvas.model.types";
 
 export interface CanvasModelState extends CanvasBaseState<
     CanvasModel, 
@@ -70,7 +70,7 @@ export type StoredCanvasGridModelData = StoredCanvasGridModel;
 
 //
 
-import { CanvasStyle, CanvasGridStyle } from "@/src/modules/canvas/types/canvas.style.types";
+import { CanvasStyle, CanvasGridStyle } from "@/src/modules/d-canvas/types/canvas.style.types";
 
 export interface CanvasStyleState extends CanvasBaseState<
     CanvasStyle, 

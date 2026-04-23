@@ -1,4 +1,4 @@
-import { Category, CategoryChain, CategoryTree, CategoryHierarchy } from "@/src/modules/category/types/category.types";
+import { Category, CategoryChain, CategoryTree, CategoryHierarchy } from "@/src/modules/d-category/types/category.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
 
 //

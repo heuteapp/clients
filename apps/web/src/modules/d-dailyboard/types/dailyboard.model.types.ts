@@ -1,4 +1,4 @@
-import { BoardCardModel, BoardCardModelData, BoardModel, BoardModelData } from "../../board/types/board.model.types";
+import { BoardCardModel, BoardCardModelData, BoardModel, BoardModelData } from "../../d-board/types/board.model.types";
 import { DailyboardBase, DailyboardCardBase } from "./dailyboard.base.types";
 
 export interface DailyboardModel extends DailyboardBase, BoardModel {

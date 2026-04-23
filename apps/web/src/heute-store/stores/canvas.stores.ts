@@ -1,7 +1,7 @@
 import { immer } from "zustand/middleware/immer";
 
 import { CanvasBaseState, StoredCanvasItem, StoredCanvasItemData, StoredCanvasGridItem, StoredCanvasGridItemData } from "../types/canvas.types";
-import { CanvasBase } from "@/src/modules/canvas/types/canvas.base.types";
+import { CanvasBase } from "@/src/modules/d-canvas/types/canvas.base.types";
 import { getCanvasItemFromState, saveCanvasToState } from "../utils/canvas.utils";
 import { devtools } from "zustand/middleware";
 import { create } from "zustand";

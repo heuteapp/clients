@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
+import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/d-category/types/category.types";
 import { CategoryState, StoredCategory } from "@/src/heute-store/types/category.types";
 
 export const useCategoryStore = create<CategoryState>()(

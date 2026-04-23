@@ -1,4 +1,4 @@
-import { CanvasModel, CanvasGridModel } from "@/src/modules/canvas/types/canvas.model.types";
+import { CanvasModel, CanvasGridModel } from "@/src/modules/d-canvas/types/canvas.model.types";
 import { CanvasResponse, CanvasGridResponse } from "../models/responses/canvas.response";
 
 export function responseToCanvas(response: CanvasResponse): CanvasModel {

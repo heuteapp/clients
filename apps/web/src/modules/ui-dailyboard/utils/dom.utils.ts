@@ -1,4 +1,4 @@
-import { DailyboardCardModelData, DailyboardModelData } from "../../dailyboard/types/dailyboard.model.types";
+import { DailyboardCardModelData, DailyboardModelData } from "../../d-dailyboard/types/dailyboard.model.types";
 import { GridRect, GridSpan } from "../../shared/types/common";
 import { parseYYMMDD } from "../../shared/utils/date.utils";
 

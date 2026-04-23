@@ -1,4 +1,4 @@
-import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/category/types/category.types";
+import { CategoryChain, CategoryHierarchy, CategoryTree } from "@/src/modules/d-category/types/category.types";
 
 export type CategoryChainResponse = CategoryChain;
 

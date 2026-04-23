@@ -1,4 +1,4 @@
-import { BoardCardPlacement } from "@/src/modules/board/types/board.model.types";
+import { BoardCardPlacement } from "@/src/modules/d-board/types/board.model.types";
 import { GridRect, GridSpan, Rect } from "../../shared/types/common";
 import { CanvasMetrics } from "../../ui-canvas/types/canvas.metrics";
 

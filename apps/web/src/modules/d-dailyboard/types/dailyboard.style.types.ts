@@ -1,5 +1,5 @@
 import { DailyboardBase, DailyboardCardBase } from "./dailyboard.base.types";
-import { BoardCardStyle, BoardCardStyleData, BoardStyle, BoardStyleData } from "../../board/types/board.style.types";
+import { BoardCardStyle, BoardCardStyleData, BoardStyle, BoardStyleData } from "../../d-board/types/board.style.types";
 
 export interface DailyboardStyle extends DailyboardBase, BoardStyle {
     cards: DailyboardCardStyle[];

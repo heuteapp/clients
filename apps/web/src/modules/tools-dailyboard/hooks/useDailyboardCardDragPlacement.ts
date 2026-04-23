@@ -1,4 +1,4 @@
-import { BoardCardPlacement } from "@/src/modules/board/types/board.model.types";
+import { BoardCardPlacement } from "@/src/modules/d-board/types/board.model.types";
 import { GridRect } from "@/src/modules/shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/shared/utils/common";
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForGrid, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";

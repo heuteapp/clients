@@ -1,4 +1,4 @@
-import { BoardCardContent, BoardCardPlacement } from "@/src/modules/board/types/board.model.types";
+import { BoardCardContent, BoardCardPlacement } from "@/src/modules/d-board/types/board.model.types";
 import { GridDimensions, GridRect, Rect } from "../../shared/types/common"
 import { YYMMDDDate } from "../../shared/types/date.types";
 

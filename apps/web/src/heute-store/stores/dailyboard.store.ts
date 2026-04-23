@@ -9,7 +9,7 @@ import {
     StoredDailyboardCardItem, 
     StoredDailyboardCardItemData 
 } from "../types/dailyboard.types";
-import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
+import { DailyboardBase, DailyboardCardBase } from "@/src/modules/d-dailyboard/types/dailyboard.base.types";
 import { addCardToDailyboardState, getDailyboardCardItemFromState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
 import { DailyboardModelState } from "../types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
