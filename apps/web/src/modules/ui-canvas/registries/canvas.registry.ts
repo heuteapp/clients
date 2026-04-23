@@ -18,10 +18,14 @@ export function createCanvasRegistry(canvasRef: React.RefObject<HTMLDivElement |
         registerCanvasGridContainer(ref, props) {
             if (!registry.canvas) return
 
-            const container = { ref, props, sections: new Map() }
-            registry.canvas.container = container
+            if(!registry.canvas.container) {
+                registry.canvas.container = { sections: new Map() }
+            }
 
-            return container
+            registry.canvas.container.ref = ref
+            registry.canvas.container.props = props
+
+            return registry.canvas.container
         },
 
         registerCanvasGridSection(gridName, ref, props) {
@@ -31,6 +35,7 @@ export function createCanvasRegistry(canvasRef: React.RefObject<HTMLDivElement |
             }
 
             const sections = registry.canvas.container.sections
+            console.log("registering section", gridName, sections);
 
             if (!sections.has(gridName)) {
                 sections.set(gridName, { ref, props })

@@ -16,12 +16,12 @@ export function CanvasGridSection(props : CanvasGridSectionProps) {
     const { registry } = context!;
 
     useLayoutEffect(() => {
-        registry.registerCanvasGridSection(data.id, ref, props)
+        registry.registerCanvasGridSection(data.name, ref, props)
 
         return () => {
-            registry.unregisterCanvasGridSection(data.id)
+            registry.unregisterCanvasGridSection(data.name)
         }
-    }, [data.id, registry])
+    }, [data.name, registry])
 
     return (
         <div
@@ -29,8 +29,7 @@ export function CanvasGridSection(props : CanvasGridSectionProps) {
             ref={ref}
             className={style.section}
             style={{
-                gridArea: data.name,
-                padding: 8
+                gridArea: data.name
             }}
         >
             <CanvasGridItem data={data}/>
