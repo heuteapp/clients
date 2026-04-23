@@ -1,4 +1,4 @@
 import React from "react";
-import { TracingContextValue } from "../types/context.types";
+import { TracingDomainContextValue } from "../types/context.types";
 
-export const TracingContext = React.createContext<TracingContextValue | null>(null);
+export const TracingDomainContext = React.createContext<TracingDomainContextValue | null>(null);

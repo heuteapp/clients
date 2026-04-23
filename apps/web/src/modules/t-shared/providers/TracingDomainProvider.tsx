@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { TracingContext } from "../contexts/tracing.context";
+import { TracingDomainContext } from "../contexts/tracing.context";
 import { TracingProviderProps } from "../types/props.types";
 import { TracingItemData } from "../types/context.types";
 
@@ -34,8 +34,8 @@ export function TracingDomainProvider({ name, children }: TracingProviderProps) 
     }, [trace, untrace, getItemsOf]);
 
     return (
-        <TracingContext.Provider value={contextValue}>
+        <TracingDomainContext.Provider value={contextValue}>
             {children}
-        </TracingContext.Provider>
+        </TracingDomainContext.Provider>
     );
 }

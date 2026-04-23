@@ -1,4 +1,4 @@
-export interface TracingContextValue {
+export interface TracingDomainContextValue {
     trace: (id: string, item: TracingItemData) => boolean;
     untrace: (id: string) => boolean;
     getItemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => TracingItemData[];
