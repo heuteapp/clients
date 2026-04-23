@@ -20,7 +20,7 @@ export function CanvasRoot(props: CanvasRootProps) {
     registry.registerCanvasRoot(canvasRef, props)
 
     return () => {
-      registry.unregisterCanvas()
+      registry.unregisterCanvasRoot()
     }
   }, [registry])
 

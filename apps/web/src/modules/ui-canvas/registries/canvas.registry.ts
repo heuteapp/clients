@@ -6,7 +6,7 @@ import { CanvasRegistry } from "@/src/modules/ui-canvas/types/canvas.registry"
 export function createCanvasRegistry(canvasRef: React.RefObject<HTMLDivElement | null>): CanvasRegistry {
 
     const registry: CanvasRegistry = {
-        canvas: { ref: canvasRef, sections: new Map() },
+        canvas: { ref: canvasRef, container: null },
 
         registerCanvasRoot(ref, props) {
             registry.canvas.ref = ref
@@ -15,19 +15,28 @@ export function createCanvasRegistry(canvasRef: React.RefObject<HTMLDivElement |
             return registry.canvas
         },
 
-        registerCanvasGridSection(id, ref, props) {
+        registerCanvasGridContainer(ref, props) {
+            if (!registry.canvas) return
 
-            if (!registry.canvas.sections) {
-                registry.canvas.sections = new Map()
+            const container = { ref, props, sections: new Map() }
+            registry.canvas.container = container
+
+            return container
+        },
+
+        registerCanvasGridSection(gridName, ref, props) {
+
+            if (!registry.canvas.container) {
+                registry.canvas.container = { sections: new Map() }
             }
 
-            const sections = registry.canvas.sections
+            const sections = registry.canvas.container.sections
 
-            if (!sections.has(id)) {
-                sections.set(id, { ref, props })
+            if (!sections.has(gridName)) {
+                sections.set(gridName, { ref, props })
             }
 
-            const section = sections.get(id)!
+            const section = sections.get(gridName)!
 
             section.ref = ref
             section.props = props
@@ -35,81 +44,72 @@ export function createCanvasRegistry(canvasRef: React.RefObject<HTMLDivElement |
             return section
         },
 
-        registerCanvasGridItem(sectionId, ref, props) {
-            if (!registry.canvas.sections) {
-                registry.canvas.sections = new Map()
+        registerCanvasGridItem(gridName, ref, props) {
+            if (!registry.canvas.container) {
+                registry.canvas.container = { sections: new Map() }
             }
 
-            const sections = registry.canvas.sections
+            const sections = registry.canvas.container.sections
 
-            if (!sections.has(sectionId)) {
-                sections.set(sectionId, {  })
+            if (!sections.has(gridName)) {
+                sections.set(gridName, {  })
             }
 
-            const section = sections.get(sectionId)!
+            const section = sections.get(gridName)!
 
-            if (!section.grid) {
-                section.grid = {
+            if (!section.item) {
+                section.item = {
                     ref,
                     props,
                 }
             } else {
-                section.grid.ref = ref
-                section.grid.props = props
+                section.item.ref = ref
+                section.item.props = props
             }
 
-            return section.grid
+            return section.item
         },
 
-        unregisterCanvas() {
+        unregisterCanvasRoot() {
             registry.canvas.ref.current = null
         },
 
-        unregisterCanvasGridSection(id) {
-            registry.canvas?.sections.delete(id)
+        unregisterCanvasGridContainer() {
+            if (registry.canvas) registry.canvas.container = null
         },
 
-        unregisterCanvasGridItem(sectionId) {
-            const section = registry.canvas?.sections.get(sectionId)
-            if (section) section.grid = null
+        unregisterCanvasGridSection(gridName) {
+            registry.canvas?.container?.sections.delete(gridName)
+        },
+
+        unregisterCanvasGridItem(gridName) {
+            const section = registry.canvas?.container?.sections.get(gridName)
+            if (section) section.item = null
         },
 
         //
 
-        getCanvasGridSection(id) {
-            return registry.canvas?.sections.get(id)
-        },
-
-        getCanvasGridSectionByName(name) {
-            const sections = registry.canvas?.sections
-            if (!sections) return undefined
-
-            for (const section of sections.values()) {
-                if (section.props?.data.name === name) {
-                    return section
-                }
-            }
-
-            return undefined
+        getCanvasGridSection(gridName) {
+            return registry.canvas?.container?.sections.get(gridName)
         },
 
         getCanvasGridSections() {
-            const map = registry.canvas?.sections
+            const map = registry.canvas?.container?.sections
             return map ? Array.from(map.values()) : undefined
         },
 
-        getCanvasGridItem(sectionId) {
-            return registry.canvas?.sections.get(sectionId)?.grid ?? undefined
+        getCanvasGridItem(gridName) {
+            return registry.canvas?.container?.sections.get(gridName)?.item ?? undefined
         },
 
         getCanvasGridItems() {
-            const sections = registry.canvas?.sections
+            const sections = registry.canvas?.container?.sections
             if (!sections) return undefined
 
             const grids = []
 
             for (const section of sections.values()) {
-                if (section.grid) grids.push(section.grid)
+                if (section.item) grids.push(section.item)
             }
 
             return grids

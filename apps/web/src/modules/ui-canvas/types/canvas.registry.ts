@@ -28,7 +28,7 @@ export interface CanvasRegistry {
 
     //
 
-    unregisterCanvas(): void
+    unregisterCanvasRoot(): void
 
     unregisterCanvasGridContainer(): void
 

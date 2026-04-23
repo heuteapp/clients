@@ -3,11 +3,11 @@ import { CanvasRootProps, CanvasGridItemProps, CanvasGridSectionProps, CanvasGri
 
 export interface CanvasRootNode extends UIRootNode {
     ref: React.RefObject<HTMLDivElement | null>
-    props?: CanvasRootProps
+    props?: CanvasRootProps,
+    container?: CanvasGridContainerNode | null
 }
 
 export interface CanvasGridContainerNode extends UINode {
-    ref: React.RefObject<HTMLDivElement | null>
     props?: CanvasGridContainerProps
     sections: Map<string, CanvasGridSectionNode>
 }

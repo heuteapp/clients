@@ -95,7 +95,7 @@ export function createDailyboardRegistry(dailyboardRef: React.RefObject<HTMLDivE
 
             const sectionCards = []
 
-            const section = registry.canvasRegistry.canvas?.sections.get(sectionId);
+            const section = registry.canvasRegistry.canvas?.container?.sections.get(sectionId);
 
             for (const card of cards.values()) {
                 const placement = card.props?.data.placement;
