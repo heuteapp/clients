@@ -24,36 +24,13 @@ export function CanvasRoot(props: CanvasRootProps) {
     }
   }, [registry])
 
-  const matrix = Array.from({ length: data.rowCount }, () =>
-    Array.from({ length: data.colCount }, () => ".")
-  );
-
-  grids.forEach(s => {
-    const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
-
-    for (let r = 0; r < rowSpan; r++) {
-      for (let c = 0; c < colSpan; c++) {
-        matrix[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
-      }
-    }
-  });
-
-  const gridTemplateAreas = matrix
-    .map(row => `"${row.join(" ")}"`)
-    .join(" ");
-
   return (
     <div 
       ref={canvasRef} 
       className={style.canvas}
-      style={{
-        gridTemplateColumns: `repeat(${data.colCount}, var(--canvas-cell-size))`,
-        gridTemplateRows: `repeat(${data.rowCount}, var(--canvas-cell-size))`,
-        gridTemplateAreas
-      }}
       {...getCanvasDataSet(data)}
     >
-      <CanvasGridContainer grids={grids}/>
+      <CanvasGridContainer colCount={data.colCount} rowCount={data.rowCount} grids={grids}/>
     </div>
   )
 }

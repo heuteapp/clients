@@ -5,6 +5,8 @@ export interface CanvasRootProps {
 }
 
 export interface CanvasGridContainerProps {
+    rowCount: number;
+    colCount: number;
     grids: StoredCanvasGridModel[];
 }
 
