@@ -1,7 +1,7 @@
-import { TracedRootItemProps } from "../types/props.types";
+import { TracedUniqueItemProps } from "../types/props.types";
 import { TracedItem } from "./TracedItem";
 
-export function TracedRootItem({ type, data, ref, children }: TracedRootItemProps) {
+export function TracedUniqueItem({ type, data, ref, children }: TracedUniqueItemProps) {
     return (
         <TracedItem type={type} id={type} data={data} ref={ref}>
             {children}

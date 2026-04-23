@@ -8,7 +8,7 @@ import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";
 import { getCanvasDataSet } from "../utils/ui.utils";
 import { CanvasGridContainer } from "./CanvasGridContainer";
-import { TracedRootItem } from "../../t-shared/components/TracedRootItem";
+import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
 
 export function CanvasRoot(props: CanvasRootProps) {
   const { data } = props;
@@ -26,7 +26,7 @@ export function CanvasRoot(props: CanvasRootProps) {
   }, [registry])
 
   return (
-    <TracedRootItem
+    <TracedUniqueItem
       type="canvas-root"
       data={data}
       ref={canvasRef}
@@ -38,6 +38,6 @@ export function CanvasRoot(props: CanvasRootProps) {
       >
         <CanvasGridContainer colCount={data.colCount} rowCount={data.rowCount} grids={grids}/>
       </div>
-    </TracedRootItem>
+    </TracedUniqueItem>
   )
 }

@@ -9,7 +9,7 @@ export interface TracedItemProps extends TracedItemPropsBase {
     id: string;
 }
 
-export interface TracedRootItemProps extends TracedItemPropsBase {
+export interface TracedUniqueItemProps extends TracedItemPropsBase {
     
 }
 
