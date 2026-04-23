@@ -19,7 +19,7 @@ export const applyDailyboardMetrics = ({ metrics, registry } : ApplyDailyboardMe
     const dailyboardEl = registry.dailyboard.ref?.current;
     if (!dailyboardEl) return;
 
-    const sections = registry.canvasRegistry.getCanvasSections();
+    const sections = registry.canvasRegistry.getCanvasGridSections();
 
     sections?.forEach(section => {
         if(!section.props?.data?.id) return;

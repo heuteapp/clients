@@ -99,7 +99,7 @@ export function applyCanvasMetrics({ registry, metrics, styleSource }: ApplyCanv
     canvasEl.style.setProperty("--canvas-cell-size", `${canvasCellSize}px`);
     canvasEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
 
-    registry.getCanvasSections()?.forEach(section => {
+    registry.getCanvasGridSections()?.forEach(section => {
         const style = styleSource?.sections.find(s => s.id === section.props?.data.id);
 
         const parent = { width: canvasWidth, height: canvasHeight };

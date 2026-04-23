@@ -1,16 +1,22 @@
 import { UINode, UIRootNode } from "@/src/modules/ui-base/types/ui.types";
-import { CanvasRootProps, CanvasGridProps, CanvasSectionProps } from "./canvas.props";
+import { CanvasRootProps, CanvasGridItemProps, CanvasGridSectionProps, CanvasGridContainerProps } from "./canvas.props";
 
 export interface CanvasRootNode extends UIRootNode {
     ref: React.RefObject<HTMLDivElement | null>
     props?: CanvasRootProps
-    sections: Map<string, CanvasSectionNode>
-}
-export interface CanvasGridNode extends UINode {
-    props?: CanvasGridProps
 }
 
-export interface CanvasSectionNode extends UINode {
-    props?: CanvasSectionProps
-    grid?: CanvasGridNode | null
+export interface CanvasGridContainerNode extends UINode {
+    ref: React.RefObject<HTMLDivElement | null>
+    props?: CanvasGridContainerProps
+    sections: Map<string, CanvasGridSectionNode>
+}
+
+export interface CanvasGridSectionNode extends UINode {
+    props?: CanvasGridSectionProps
+    item?: CanvasGridItemNode | null
+}
+
+export interface CanvasGridItemNode extends UINode {
+    props?: CanvasGridItemProps
 }

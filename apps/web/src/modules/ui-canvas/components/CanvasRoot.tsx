@@ -4,7 +4,7 @@ import { useLayoutEffect } from "react"
 
 import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
 
-import { CanvasSection } from "./CanvasSection";
+import { CanvasGridSection } from "./CanvasSection";
 import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";
 import { getCanvasDataSet } from "../utils/ui.utils";
@@ -17,7 +17,7 @@ export function CanvasRoot(props: CanvasRootProps) {
   const canvasRef = registry.canvas.ref;
 
   useLayoutEffect(() => {
-    registry.registerCanvas(canvasRef, props)
+    registry.registerCanvasRoot(canvasRef, props)
 
     return () => {
       registry.unregisterCanvas()
@@ -54,7 +54,7 @@ export function CanvasRoot(props: CanvasRootProps) {
       {...getCanvasDataSet(data)}
     >
       {sections.map((section) => (
-        <CanvasSection key={section.name} data={section}/>
+        <CanvasGridSection key={section.name} data={section}/>
       ))}
     </div>
   )

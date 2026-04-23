@@ -8,14 +8,12 @@ export interface CanvasGridContainerProps {
     grids: StoredCanvasSectionData[];
 }
 
-export interface CanvasSectionProps {
+export interface CanvasGridSectionProps {
     data: StoredCanvasSectionData
 }
 
-export interface CanvasGridProps  {
-    sectionId: string,
-    colSpan: number,
-    rowSpan: number,
+export interface CanvasGridItemProps  {
+    data: StoredCanvasSectionData
 }
 
 export interface CanvasProviderProps {

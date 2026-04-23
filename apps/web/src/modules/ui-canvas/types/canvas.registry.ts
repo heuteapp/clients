@@ -1,43 +1,48 @@
-import { CanvasRootNode, CanvasSectionNode, CanvasGridNode } from "./canvas.nodes"
-import { CanvasRootProps, CanvasSectionProps, CanvasGridProps } from "./canvas.props"
+import { CanvasRootNode, CanvasGridSectionNode, CanvasGridItemNode } from "./canvas.nodes"
+import { CanvasRootProps, CanvasGridSectionProps, CanvasGridItemProps, CanvasGridContainerProps } from "./canvas.props"
 
 export interface CanvasRegistry {
     canvas: CanvasRootNode
 
-    registerCanvas(
+    registerCanvasRoot(
         ref: React.RefObject<HTMLDivElement | null>,
         props: CanvasRootProps,
     ): CanvasRootNode
 
-    registerCanvasSection(
-        id: string,
+    registerCanvasGridContainer(
         ref: React.RefObject<HTMLDivElement | null>,
-        props: CanvasSectionProps
-    ): CanvasSectionNode
+        props: CanvasGridContainerProps,
+    ): void
 
-    registerCanvasGrid(
-        sectionId: string,
+    registerCanvasGridSection(
+        gridName: string,
         ref: React.RefObject<HTMLDivElement | null>,
-        props: CanvasGridProps
-    ): CanvasGridNode
+        props: CanvasGridSectionProps
+    ): CanvasGridSectionNode
+
+    registerCanvasGridItem(
+        gridName: string,
+        ref: React.RefObject<HTMLDivElement | null>,
+        props: CanvasGridItemProps
+    ): CanvasGridItemNode
 
     //
 
     unregisterCanvas(): void
 
-    unregisterCanvasSection(id: string): void
+    unregisterCanvasGridContainer(): void
 
-    unregisterCanvasGrid(sectionId: string): void
+    unregisterCanvasGridSection(gridName: string): void
+
+    unregisterCanvasGridItem(gridName: string): void
 
     //
 
-    getCanvasSection(id: string): CanvasSectionNode | undefined
+    getCanvasGridSection(gridName: string): CanvasGridSectionNode | undefined
 
-    getCanvasSectionByName(name: string): CanvasSectionNode | undefined
+    getCanvasGridSections(): CanvasGridSectionNode[] | undefined
 
-    getCanvasSections(): CanvasSectionNode[] | undefined
+    getCanvasGridItem(gridName: string): CanvasGridItemNode | undefined
 
-    getCanvasGrid(sectionId: string): CanvasGridNode | undefined
-
-    getCanvasGrids(sectionId: string): CanvasGridNode[] | undefined
+    getCanvasGridItems(): CanvasGridItemNode[] | undefined
 }
