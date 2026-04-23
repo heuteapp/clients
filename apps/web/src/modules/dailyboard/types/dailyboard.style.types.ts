@@ -10,6 +10,6 @@ export interface DailyboardCardStyle extends DailyboardCardBase {
     box: BoxStyle;
 }
 
-export type DailyboardStyleContent = Omit<DailyboardStyle, "cards">;
+export type DailyboardStyleData = Omit<DailyboardStyle, "cards">;
 
-export type DailyboardCardStyleContent = DailyboardCardStyle;
+export type DailyboardCardStyleData = DailyboardCardStyle;
