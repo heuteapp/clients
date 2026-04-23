@@ -7,14 +7,14 @@ import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import { useDailyboardContext } from "@/src/modules/ui-dailyboard/hooks/useDailyboardContext";
 import { GridSpan } from "@/src/modules/shared/types/common";
 import { DailyboardCardDisplay } from "@/src/modules/ui-dailyboard/components/DailyboardCardDisplay";
-import { DailyboardCardColor, DailyboardCardMaterial } from "@/src/modules/dailyboard/types/dailyboard.model.types";
+import { DailyboardCardColor, DailyboardCardContent } from "@/src/modules/dailyboard/types/dailyboard.model.types";
 import { DailyboardCardStudio } from "@/src/modules/tools-dailyboard/components/DailyboardCardStudio";
 
 export function CreatingEditingCardDialog() {
     const { send, state } = useWorkspaceDailyboardContext();
     const { metrics } = useDailyboardContext();
 
-    const [cardContent, setCardContent] = useState<DailyboardCardMaterial | null>(null);
+    const [cardContent, setCardContent] = useState<DailyboardCardContent | null>(null);
     const [cardSpan, setCardSpan] = useState<GridSpan | null>(null);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

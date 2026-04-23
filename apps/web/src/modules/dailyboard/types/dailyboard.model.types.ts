@@ -6,7 +6,7 @@ export interface DailyboardModel extends DailyboardBase {
 }
 
 export interface DailyboardCardModel extends DailyboardCardBase {
-    content: DailyboardCardMaterial;
+    content: DailyboardCardContent;
     placement: DailyboardCardPlacement | null;
 }
 
@@ -17,7 +17,7 @@ export type DailyboardCardModelData = Omit<DailyboardCardModel, "">;
 
 //
 
-export interface DailyboardCardMaterial {
+export interface DailyboardCardContent {
     title: string | null;
     color: DailyboardCardColor;
     frontFace: DailyboardCardFace | null;
