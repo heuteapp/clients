@@ -4,16 +4,16 @@ import { useLayoutEffect } from "react"
 
 import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
 
-import { CanvasGridSection } from "./CanvasSection";
 import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";
 import { getCanvasDataSet } from "../utils/ui.utils";
+import { CanvasGridContainer } from "./CanvasGridContainer";
 
 export function CanvasRoot(props: CanvasRootProps) {
   const { data } = props;
   const { registry, dataSource: source } = useCanvasContext();
 
-  const sections = source?.sections ?? [];
+  const grids = source?.sections ?? [];
   const canvasRef = registry.canvas.ref;
 
   useLayoutEffect(() => {
@@ -28,7 +28,7 @@ export function CanvasRoot(props: CanvasRootProps) {
     Array.from({ length: data.colCount }, () => ".")
   );
 
-  sections.forEach(s => {
+  grids.forEach(s => {
     const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
 
     for (let r = 0; r < rowSpan; r++) {
@@ -53,9 +53,7 @@ export function CanvasRoot(props: CanvasRootProps) {
       }}
       {...getCanvasDataSet(data)}
     >
-      {sections.map((section) => (
-        <CanvasGridSection key={section.name} data={section}/>
-      ))}
+      <CanvasGridContainer grids={grids}/>
     </div>
   )
 }
