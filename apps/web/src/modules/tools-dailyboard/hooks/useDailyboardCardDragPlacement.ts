@@ -1,7 +1,7 @@
 import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboard.data.types";
 import { GridRect } from "@/src/modules/shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/shared/utils/common";
-import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
 import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
 import { findCanvasGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
@@ -116,7 +116,7 @@ export const useDailyboardCardDragPlacement = () => {
             const gap = dailyboardEl.clientWidth * 0.0075;
             state.ghostCardPos = calcDailyboardCardFixedRect(gridRect, gap, gridSpan, state.ghostCardGridPos);
 
-            const cards = findDailyboardCardsForSection(dailyboardEl, sectionName).filter((card) => {
+            const cards = findAllDailyboardCardsForSection(dailyboardEl, sectionName).filter((card) => {
                 const cardData = getDailyboardCardData(card);
                 return cardData.key !== targetCardKey;
             });
