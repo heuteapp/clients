@@ -3,24 +3,24 @@ import { DailyboardMetrics } from "../types/dailyboard.metrics";
 import { applyDailyboardMetrics, calculateDailyboardMetrics } from "../metrics/dailyboard.metrics";
 import { DailyboardRegistry } from "../types/dailyboard.registry";
 import { useMetricsContext } from "../../ui-shared/hooks/useMetricsContext";
-import { useLayoutContext } from "../../ui-layout/hooks/useLayoutContext";
+import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
 
 export const useDailyboardMetrics = (metricsId: string, registry: DailyboardRegistry) : DailyboardMetrics => {
-    const { metrics: layoutMetrics } = useLayoutContext();
+    const { metrics: canvasMetrics } = useCanvasContext();
 
     const { subscribe, unsubscribe } = useMetricsContext();
     const metrics = React.useRef<DailyboardMetrics>({ value: null });
 
     React.useEffect(() => {
         subscribe(metricsId, () => {
-            metrics.current.value = calculateDailyboardMetrics({layout: layoutMetrics.value});
+            metrics.current.value = calculateDailyboardMetrics({canvas: canvasMetrics.value});
             applyDailyboardMetrics({registry, metrics: metrics.current!});
         });
 
         return () => {
             unsubscribe(metricsId);
         }
-    }, [metricsId, registry, layoutMetrics]);
+    }, [metricsId, registry, canvasMetrics]);
 
     return metrics.current!;
 }

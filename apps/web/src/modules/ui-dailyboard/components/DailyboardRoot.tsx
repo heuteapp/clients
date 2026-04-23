@@ -8,8 +8,8 @@ import DailyboardCardContainer from "./DailyboardCardContainer";
 
 import { useDailyboardContext } from "../hooks/useDailyboardContext";
 import { DailyboardRootProps } from "../types/dailyboard.props";
-import { LayoutRoot } from "@/src/modules/ui-layout/components/LayoutRoot";
-import { useLayoutContext } from "../../ui-layout/hooks/useLayoutContext";
+import { CanvasRoot } from "@/src/modules/ui-canvas/components/CanvasRoot";
+import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
 import { getDailyboardDataSet } from "../utils/ui.utils";
 
 //
@@ -21,7 +21,7 @@ export function DailyboardRoot(props: DailyboardRootProps) {
   const dailyboardRef = registry.dailyboard.ref;
   const dailyboardCards = dailyboardData.cards;
 
-  const { dataSource: layoutData } = useLayoutContext();
+  const { dataSource: canvasData } = useCanvasContext();
 
   useLayoutEffect(() => {
     registry.registerDailyboard(dailyboardRef, props)
@@ -32,7 +32,7 @@ export function DailyboardRoot(props: DailyboardRootProps) {
   }, [registry])
   
   if(!dailyboardCards) return null;
-  if(!layoutData) return null;
+  if(!canvasData) return null;
 
   return (
     <div 
@@ -40,7 +40,7 @@ export function DailyboardRoot(props: DailyboardRootProps) {
       className={style.dailyboard}
       {...getDailyboardDataSet(dailyboardData)}
     >
-      <LayoutRoot data={layoutData} />
+      <CanvasRoot data={canvasData} />
       <DailyboardCardContainer cards={dailyboardCards} />
     </div>
   )

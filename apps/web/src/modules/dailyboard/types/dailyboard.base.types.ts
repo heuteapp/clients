@@ -3,8 +3,8 @@ import { YYMMDDDate } from "../../shared/types/date.types";
 export interface DailyboardBase {
     categoryPath: string;
     date: YYMMDDDate;
-    layoutName: string;
-    layoutVersion: number;
+    canvasName: string;
+    canvasVersion: number;
     cards: DailyboardCardBase[];
 }
 

@@ -2,14 +2,14 @@
 
 import React from "react"
 import { DailyboardRegistry } from "@/src/modules/ui-dailyboard/types/dailyboard.registry"
-import { LayoutRegistry } from "@/src/modules/ui-layout/types/layout.registry"
+import { CanvasRegistry } from "@/src/modules/ui-canvas/types/canvas.registry"
 //
 
-export function createDailyboardRegistry(dailyboardRef: React.RefObject<HTMLDivElement | null>, layoutRegistry: LayoutRegistry): DailyboardRegistry {
+export function createDailyboardRegistry(dailyboardRef: React.RefObject<HTMLDivElement | null>, canvasRegistry: CanvasRegistry): DailyboardRegistry {
 
     const registry: DailyboardRegistry = {
         dailyboard: { ref: dailyboardRef },
-        layoutRegistry,
+        canvasRegistry,
 
         registerDailyboard(ref, props) {
             registry.dailyboard.ref = ref
@@ -95,7 +95,7 @@ export function createDailyboardRegistry(dailyboardRef: React.RefObject<HTMLDivE
 
             const sectionCards = []
 
-            const section = registry.layoutRegistry.layout?.sections.get(sectionId);
+            const section = registry.canvasRegistry.canvas?.sections.get(sectionId);
 
             for (const card of cards.values()) {
                 const placement = card.props?.data.placement;

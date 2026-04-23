@@ -4,8 +4,8 @@ export const getDailyboardDataSet = (dailyboard: StoredDailyboardData) => {
     return {
         "data-dailyboard": true,
         "data-category-path": dailyboard.categoryPath,
-        "data-layout-name": dailyboard.layoutName,
-        "data-layout-version": dailyboard.layoutVersion,
+        "data-canvas-name": dailyboard.canvasName,
+        "data-canvas-version": dailyboard.canvasVersion,
         "data-date": dailyboard.date,
     }
 }

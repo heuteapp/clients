@@ -1,4 +1,4 @@
-import { LayoutMetricsValue } from "../../ui-layout/types/layout.metrics";
+import { CanvasMetricsValue } from "../../ui-canvas/types/canvas.metrics";
 import { DailyboardRegistry } from "./dailyboard.registry";
 
 export interface DailyboardMetrics {
@@ -6,14 +6,14 @@ export interface DailyboardMetrics {
 }
 
 export interface DailyboardMetricsValue {
-    layout: LayoutMetricsValue;
+    canvas: CanvasMetricsValue;
     cardSize: {
         headerHeight: number;
     }
 }
 
 export interface CalculateDailyboardMetrics {
-    layout: LayoutMetricsValue | null;
+    canvas: CanvasMetricsValue | null;
 }
 
 export interface ApplyDailyboardMetrics {

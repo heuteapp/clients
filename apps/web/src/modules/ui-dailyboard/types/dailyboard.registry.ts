@@ -1,10 +1,10 @@
 import { DailyboardCardContainerNode, DailyboardCardNode, DailyboardRootNode } from "@/src/modules/ui-dailyboard/types/dailyboard.nodes"
 import { DailyboardCardContainerProps, DailyboardCardItemProps, DailyboardRootProps } from "@/src/modules/ui-dailyboard/types/dailyboard.props"
-import { LayoutRegistry } from "@/src/modules/ui-layout/types/layout.registry"
+import { CanvasRegistry } from "@/src/modules/ui-canvas/types/canvas.registry"
 
 export interface DailyboardRegistry {
     dailyboard: DailyboardRootNode
-    layoutRegistry: LayoutRegistry
+    canvasRegistry: CanvasRegistry
 
     registerDailyboard(
         ref: React.RefObject<HTMLDivElement | null>,

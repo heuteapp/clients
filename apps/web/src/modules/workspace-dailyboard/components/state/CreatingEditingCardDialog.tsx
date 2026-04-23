@@ -19,7 +19,7 @@ export function CreatingEditingCardDialog() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const isOpen = useMemo(() => isCreatingEditingCard(state), [state]);
-    const cellStep = useMemo(() => metrics.value?.layout.cellSize.grid || 0, [metrics.value]);
+    const cellStep = useMemo(() => metrics.value?.canvas.cellSize.grid || 0, [metrics.value]);
 
     useEffect(() => {
         if (isOpen) {

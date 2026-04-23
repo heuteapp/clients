@@ -1,6 +1,6 @@
 import { DailyboardCardPlacement } from "../../dailyboard/types/dailyboard.data.types";
 import { GridRect, GridSpan, Rect } from "../../shared/types/common";
-import { LayoutMetrics } from "../../ui-layout/types/layout.metrics";
+import { CanvasMetrics } from "../../ui-canvas/types/canvas.metrics";
 
 export interface DailyboardCardPlacementContent {
     cardSize: GridSpan;
@@ -10,7 +10,7 @@ export interface DailyboardCardPlacementContent {
 export interface DailyboardCardPlacementState {
     content: DailyboardCardPlacementContent | null;
     hammer: HammerManager | null;
-    layoutMetrics: LayoutMetrics | null;
+    canvasMetrics: CanvasMetrics | null;
 
     dailyboardElement: HTMLDivElement | null;
     sectionElement: HTMLDivElement | null;

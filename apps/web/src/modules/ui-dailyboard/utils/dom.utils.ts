@@ -26,8 +26,8 @@ export const findDailyboardAtCursor = (clientX: number, clientY: number): HTMLDi
 export const getDailyboardData = (dailyboardEl: HTMLElement) : DailyboardDataContent => {
     return {
         categoryPath: dailyboardEl.dataset.categoryPath || "",
-        layoutName: dailyboardEl.dataset.layoutName || "",
-        layoutVersion: parseInt(dailyboardEl.dataset.layoutVersion || "0", 10),
+        canvasName: dailyboardEl.dataset.canvasName || "",
+        canvasVersion: parseInt(dailyboardEl.dataset.canvasVersion || "0", 10),
         date: parseYYMMDD(dailyboardEl.dataset.date || "")!
     }
 }

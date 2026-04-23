@@ -1,9 +1,9 @@
-import { LayoutResponse } from "./layout.response";
+import { CanvasResponse } from "./canvas.response";
 
 export interface DailyboardResponse {
     categoryPath: string;
     date: string;
-    layout: LayoutResponse;
+    canvas: CanvasResponse;
     cards: DailyboardCardResponse[];
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
-import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
+import { useCanvasDataStore } from "@/src/heute-store/stores/canvas.stores";
 import { DailyboardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardRoot";
 import { WorkspaceDailyboardView } from "@/src/modules/workspace-dailyboard/components/WorkspaceDailyboardView";
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
@@ -11,7 +11,7 @@ export default function WorkspaceDailyboardPage() {
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata!;
     const { getMeDailyboard } = useDailyboardDataStore();
-    const { getGlobalLayout } = useLayoutDataStore();
+    const { getGlobalCanvas } = useCanvasDataStore();
 
     const dailyboard = getMeDailyboard(categoryPath, date!);
 
@@ -21,9 +21,9 @@ export default function WorkspaceDailyboardPage() {
         )
     }
 
-    const layout = getGlobalLayout(dailyboard.layoutName, dailyboard.layoutVersion);
+    const canvas = getGlobalCanvas(dailyboard.canvasName, dailyboard.canvasVersion);
 
-    if(!layout) {
+    if(!canvas) {
         return (
             <CircularProgress />
         )

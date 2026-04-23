@@ -1,9 +1,9 @@
 import { responseToDailyboard } from "@/src/api/responses/dailyboard.response";
 import { createAssign } from "../../auth/utils/create-assign";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
-import { responseToLayout } from "@/src/api/responses/layout.response";
+import { responseToCanvas } from "@/src/api/responses/canvas.response";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
-import { useLayoutDataStore } from "@/src/heute-store/stores/layout.stores";
+import { useCanvasDataStore } from "@/src/heute-store/stores/canvas.stores";
 import { isoToYYMMDD } from "../../shared/utils/date.utils";
 
 export const fetchingSourcesDoneAction = createAssign<
@@ -27,20 +27,20 @@ export const fetchingSourcesDoneAction = createAssign<
             dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
         }
 
-        const { getGlobalLayout } = useLayoutDataStore.getState();
-        let layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
+        const { getGlobalCanvas } = useCanvasDataStore.getState();
+        let canvasData = getGlobalCanvas(output.canvas.name, output.canvas.version) ?? null;
 
-        if(!layoutData) {
-            const { loadGlobalLayout } = useLayoutDataStore.getState();
-            loadGlobalLayout(responseToLayout(output.layout));
+        if(!canvasData) {
+            const { loadGlobalCanvas } = useCanvasDataStore.getState();
+            loadGlobalCanvas(responseToCanvas(output.canvas));
 
-            layoutData = getGlobalLayout(output.layout.name, output.layout.version) ?? null;
+            canvasData = getGlobalCanvas(output.canvas.name, output.canvas.version) ?? null;
         }
 
         return {
             dailyboardData,
-            layoutData,
-            layoutStyle: null
+            canvasData,
+            canvasStyle: null
         };
     }
 );
@@ -55,8 +55,8 @@ export const fetchingSourcesErrorAction = createAssign<
 
         return {
             dailyboardData: null,
-            layoutData: null,
-            layoutStyle: null
+            canvasData: null,
+            canvasStyle: null
         }
     }
 );

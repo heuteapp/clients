@@ -2,21 +2,21 @@ import { DailyboardCardPlacement } from "@/src/modules/dailyboard/types/dailyboa
 import { GridRect } from "@/src/modules/shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/shared/utils/common";
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForSection, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
-import { useLayoutContext } from "@/src/modules/ui-layout/hooks/useLayoutContext";
-import { findCanvasGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-layout/utils/dom.utils";
+import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
+import { findCanvasGridAtPoint, findSectionClosest, getSectionDataForGrid, calcGridPointerAtCursor } from "@/src/modules/ui-canvas/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { DailyboardCardPlacementResult, DailyboardCardPlacementContent, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
 
 export const useDailyboardCardDragPlacement = () => {
     const [content, setContent] = useState<DailyboardCardPlacementContent | null>(null);
-    const { metrics: layoutMetrics } = useLayoutContext();
+    const { metrics: canvasMetrics } = useCanvasContext();
     const { Hammer } = useHammerContext();
 
     const state = useMemo<DailyboardCardPlacementState>(() => ({
         content: null,
         hammer: null,
-        layoutMetrics: null,
+        canvasMetrics: null,
 
         dailyboardElement: null,
         sectionElement: null,
@@ -37,8 +37,8 @@ export const useDailyboardCardDragPlacement = () => {
 
     useEffect(() => {
         state.content = content;
-        state.layoutMetrics = layoutMetrics;
-    }, [content, layoutMetrics, state]);
+        state.canvasMetrics = canvasMetrics;
+    }, [content, canvasMetrics, state]);
 
     useEffect(() => {
         if (Hammer && !state.hammer) {
@@ -81,7 +81,7 @@ export const useDailyboardCardDragPlacement = () => {
         if (!state.content) return;
 
         const { cardSize, targetCardKey } = state.content;
-        const cellSize = state.layoutMetrics?.value?.cellSize?.grid || 0;
+        const cellSize = state.canvasMetrics?.value?.cellSize?.grid || 0;
         const size = {
             width: cellSize * cardSize.colSpan,
             height: cellSize * cardSize.rowSpan,

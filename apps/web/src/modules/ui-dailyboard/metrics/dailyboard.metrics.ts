@@ -1,16 +1,16 @@
 import { ApplyDailyboardMetrics, CalculateDailyboardMetrics, DailyboardMetricsValue } from "../types/dailyboard.metrics";
 import { calcDailyboardCardFixedRect, findDailyboardCardTitleInSubtree, getDailyboardCardData } from "../utils/dom.utils";
-import { findCanvasGridInSubtree, getSectionDataForGrid } from "../../ui-layout/utils/dom.utils";
+import { findCanvasGridInSubtree, getSectionDataForGrid } from "../../ui-canvas/utils/dom.utils";
 
-export const calculateDailyboardMetrics = ({ layout } : CalculateDailyboardMetrics) : DailyboardMetricsValue | null => {
-    if(!layout) return null;
+export const calculateDailyboardMetrics = ({ canvas } : CalculateDailyboardMetrics) : DailyboardMetricsValue | null => {
+    if(!canvas) return null;
 
     const cardSize = {
-        headerHeight: layout.cellSize.grid * 1,
+        headerHeight: canvas.cellSize.grid * 1,
     }
 
     return {
-        layout,
+        canvas,
         cardSize
     }
 }
@@ -19,7 +19,7 @@ export const applyDailyboardMetrics = ({ metrics, registry } : ApplyDailyboardMe
     const dailyboardEl = registry.dailyboard.ref?.current;
     if (!dailyboardEl) return;
 
-    const sections = registry.layoutRegistry.getLayoutSections();
+    const sections = registry.canvasRegistry.getCanvasSections();
 
     sections?.forEach(section => {
         if(!section.props?.data?.id) return;
@@ -52,7 +52,7 @@ export const applyDailyboardMetrics = ({ metrics, registry } : ApplyDailyboardMe
 
             const { clientWidth: cardWidth } = dailyboardEl;
 
-            const cardRect = calcDailyboardCardFixedRect(gridRect, cardWidth * 0.0075, gridData.position, data);
+            const cardRect = calcDailyboardCardFixedRect(gridRect, cardWidth * 0.0075, gridData.position, data.placement!.position);
 
             cardEl.style.left = `${cardRect.x}px`;
             cardEl.style.top = `${cardRect.y}px`;

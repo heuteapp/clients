@@ -26,12 +26,12 @@ export function WorkspaceDailyboardCardDialog() {
 
   const dialogRatio = useMemo(() => {
     if (!metrics.value || !pos) return 1;
-    return Math.max(metrics.value.layout.viewRatio.width, metrics.value.layout.viewRatio.height);
+    return Math.max(metrics.value.canvas.viewRatio.width, metrics.value.canvas.viewRatio.height);
   }, [metrics.value, pos]);
 
   const dialogSize = useMemo(() => {
     if (!metrics.value || !pos) return { width: 10, height: 10 };
-    const grid = metrics.value.layout.cellSize.layout * 1.1;
+    const grid = metrics.value.canvas.cellSize.canvas * 1.1;
     return {
       width: grid * pos.colSpan * dialogRatio,
       height: grid * pos.rowSpan * dialogRatio,
@@ -47,7 +47,7 @@ export function WorkspaceDailyboardCardDialog() {
 
   return (
     <Dialog
-      key={metrics.value?.layout.cellSize.grid}
+      key={metrics.value?.canvas.cellSize.grid}
       open={isOpen}
       onClose={handleClose}
       slotProps={{

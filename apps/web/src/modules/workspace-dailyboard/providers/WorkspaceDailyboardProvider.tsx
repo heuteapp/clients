@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { DailyboardProvider } from "@/src/modules/ui-dailyboard/provider/DailyboardProvider"
-import { LayoutProvider } from "@/src/modules/ui-layout/provider/LayoutProvider"
+import { CanvasProvider } from "@/src/modules/ui-canvas/provider/CanvasProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
-import { useLayoutStyleStore } from "@/src/heute-store/stores/layout.stores";
+import { useCanvasStyleStore } from "@/src/heute-store/stores/canvas.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboardStateHooks";
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
@@ -16,10 +16,10 @@ import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDia
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
     const [state, setState] = useState(() => workspaceDailyboardService.getSnapshot());  
-    const { loadGlobalLayout, getGlobalLayout } = useLayoutStyleStore();
+    const { loadGlobalCanvas, getGlobalCanvas } = useCanvasStyleStore();
 
     const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
-    const layoutRef = React.useRef<HTMLDivElement | null>(null);
+    const canvasRef = React.useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         workspaceDailyboardService.start();
@@ -45,7 +45,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     }, [metadata, state, workspaceDailyboardService.send]);
 
     useEffect(() => {
-        loadGlobalLayout({
+        loadGlobalCanvas({
             name: "default",
             version: 1,
             box: {},
@@ -64,14 +64,14 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                 }
             ]
         });
-    }, [loadGlobalLayout]);
+    }, [loadGlobalCanvas]);
 
-    const { dailyboardData, layoutData } = state.context;
-    const layoutStyle = getGlobalLayout("default", 1);
+    const { dailyboardData, canvasData } = state.context;
+    const canvasStyle = getGlobalCanvas("default", 1);
 
     return (
-        <MetricsProvider rootRef={dailyboardRef} targets={["layout", "dailyboard"]}>
-            <LayoutProvider rootRef={layoutRef} metricsId="layout"  dataSource={layoutData} styleSource={layoutStyle}>
+        <MetricsProvider rootRef={dailyboardRef} targets={["canvas", "dailyboard"]}>
+            <CanvasProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
                 <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
                     <WorkspaceDailyboardContext.Provider value={contextValue}>
                         <ProviderContent>
@@ -81,7 +81,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                         <WorkspaceDailyboardStateHooks />
                     </WorkspaceDailyboardContext.Provider>
                 </DailyboardProvider>
-            </LayoutProvider>
+            </CanvasProvider>
         </MetricsProvider>
     )
 }

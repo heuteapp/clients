@@ -70,7 +70,7 @@ export type DailyboardCardBulletListFace =
 
 export interface DailyboardCardBullet1x2ListFace {
     type: "bullet-list";
-    layout: "1x2";
+    canvas: "1x2";
     bullets: {
         "1x1": string;
         "1x2": string;
@@ -79,7 +79,7 @@ export interface DailyboardCardBullet1x2ListFace {
 
 export interface DailyboardCardBullet2x2ListFace {
     type: "bullet-list";
-    layout: "2x2";
+    canvas: "2x2";
     bullets: {
         "1x1": string;
         "2x1": string;
@@ -90,7 +90,7 @@ export interface DailyboardCardBullet2x2ListFace {
 
 export interface DailyboardCardBullet2x3ListFace {
     type: "bullet-list";
-    layout: "2x3";
+    canvas: "2x3";
     bullets: {
         "1x1": string;
         "2x1": string;
