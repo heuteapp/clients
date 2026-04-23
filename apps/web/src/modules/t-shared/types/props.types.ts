@@ -1,9 +1,16 @@
-export interface TracedItemProps {
+export interface TracedItemPropsBase {
     type: string;
-    id: string;
     data: any;
     ref: React.RefObject<HTMLElement | null>;
     children: React.ReactNode;
+}
+
+export interface TracedItemProps extends TracedItemPropsBase {
+    id: string;
+}
+
+export interface TracedRootItemProps extends TracedItemPropsBase {
+    
 }
 
 export interface TracingProviderProps {
