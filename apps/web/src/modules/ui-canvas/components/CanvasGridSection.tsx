@@ -27,7 +27,7 @@ export function CanvasGridSection(props : CanvasGridSectionProps) {
         <div
             data-canvas-section
             ref={ref}
-            className={style.section}
+            className={style.gridSection}
             style={{
                 gridArea: data.name
             }}

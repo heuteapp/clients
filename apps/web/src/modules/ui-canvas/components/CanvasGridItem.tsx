@@ -25,7 +25,7 @@ function CanvasGridItem(props : CanvasGridItemProps) {
     return (
         <div 
             data-canvas-grid
-            ref={ref} className={style.grid} style={{
+            ref={ref} className={style.gridItem} style={{
                 gridTemplateColumns: `repeat(${data.position.colSpan}, var(--grid-cell-size))`,
                 gridTemplateRows: `repeat(${data.position.rowSpan}, var(--grid-cell-size))`,
             }}
