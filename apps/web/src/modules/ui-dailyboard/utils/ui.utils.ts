@@ -1,6 +1,6 @@
-import { StoredDailyboardCardData, StoredDailyboardData } from "@/src/heute-store/types/dailyboard.types";
+import { StoredDailyboardCardModel, StoredDailyboardModel } from "@/src/heute-store/types/dailyboard.types";
 
-export const getDailyboardDataSet = (dailyboard: StoredDailyboardData) => {
+export const getDailyboardDataSet = (dailyboard: StoredDailyboardModel) => {
     return {
         "data-dailyboard": true,
         "data-category-path": dailyboard.categoryPath,
@@ -16,7 +16,7 @@ export const getDailyboardCardContainerDataSet = () => {
     }
 }
 
-export const getDailyboardCardDataSet = (card: StoredDailyboardCardData) => {
+export const getDailyboardCardDataSet = (card: StoredDailyboardCardModel) => {
     return {
         "data-dailyboard-card": true,
         "data-id": card.id,

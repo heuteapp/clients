@@ -1,10 +1,10 @@
 import { produce } from 'immer';
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
-import { DailyboardBaseSource, DailyboardBaseState, DailyboardCardBaseSource, StoredDailyboardItem, StoredDailyboardItemContent, StoredDailyboardCardItem, StoredDailyboardCardItemContent } from "../types/dailyboard.types";
+import { DailyboardBaseSource, DailyboardBaseState, DailyboardCardBaseSource, StoredDailyboardItem, StoredDailyboardItemData, StoredDailyboardCardItem, StoredDailyboardCardItemData } from "../types/dailyboard.types";
 
 export const convertDailyboardSourceToItemContent = <
     TSource extends DailyboardBaseSource, 
-    TItemContent extends StoredDailyboardItemContent
+    TItemContent extends StoredDailyboardItemData
 > (id: string, source: TSource) : TItemContent => {
     const { cards, ...rest } = source;
 
@@ -16,7 +16,7 @@ export const convertDailyboardSourceToItemContent = <
 
 export const convertDailyboardCardSourceToItemContent = <
     TSource extends DailyboardCardBaseSource,
-    TItemContent extends StoredDailyboardCardItemContent
+    TItemContent extends StoredDailyboardCardItemData
 > (id: string, source: TSource) : TItemContent => {
 
     return {
@@ -32,9 +32,9 @@ export const saveDailyboardToState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
     owner: string, 
@@ -54,9 +54,9 @@ export const getDailyboardItemFromState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
     owner: string, 
@@ -78,9 +78,9 @@ export const getDailyboardItemContentFromState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(  
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     owner: string, 
@@ -95,9 +95,9 @@ export const getDailyboardCardItemFromState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     owner: string, 
@@ -113,9 +113,9 @@ export const getDailyboardCardItemContentsFromState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>, 
     dailyboardId: string | null
@@ -132,9 +132,9 @@ export const addCardToDailyboardState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     categoryPath: string,
@@ -161,9 +161,9 @@ export const updateCardInDailyboardState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent,
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData,
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     categoryPath: string,
@@ -189,9 +189,9 @@ export const removeCardFromDailyboardState = <
     TDailyboardSource extends DailyboardBaseSource,
     TDailyboardCardSource extends DailyboardCardBaseSource,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemContent extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemContent extends StoredDailyboardCardItemData
 >(
     state: DailyboardBaseState<TDailyboardSource, TDailyboardCardSource, TDailyboardItem, TDailyboardItemContent, TDailyboardCardItem, TDailyboardCardItemContent>,
     categoryPath: string,

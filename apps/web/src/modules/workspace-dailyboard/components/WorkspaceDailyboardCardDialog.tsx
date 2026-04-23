@@ -3,14 +3,14 @@ import { useWorkspaceDailyboardContext } from '../hooks/useWorkspaceDailyboardCo
 import { isEditingCard } from '../state/workspace-dailyboard.machine';
 import { useDailyboardDataStore } from '@/src/heute-store/stores/dailyboard.store';
 import { useRef, useMemo } from 'react';
-import { StoredDailyboardCardData } from '@/src/heute-store/types/dailyboard.types';
+import { StoredDailyboardCardModel } from '@/src/heute-store/types/dailyboard.types';
 import { useDailyboardContext } from '../../ui-dailyboard/hooks/useDailyboardContext';
 
 export function WorkspaceDailyboardCardDialog() {
   const { send, state } = useWorkspaceDailyboardContext();
   const { metrics } = useDailyboardContext();
   const { getMeDailyboardCard } = useDailyboardDataStore();
-  const cardRef = useRef<StoredDailyboardCardData | null>(null);
+  const cardRef = useRef<StoredDailyboardCardModel | null>(null);
 
   const handleClose = () => {
     send({ type: "CARD_EDIT_CANCELLED" });

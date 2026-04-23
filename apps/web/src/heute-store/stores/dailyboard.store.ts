@@ -5,31 +5,31 @@ import { create } from "zustand";
 import { 
     DailyboardBaseState, 
     StoredDailyboardItem, 
-    StoredDailyboardItemContent, 
+    StoredDailyboardItemData, 
     StoredDailyboardCardItem, 
-    StoredDailyboardCardItemContent 
+    StoredDailyboardCardItemData 
 } from "../types/dailyboard.types";
 import { DailyboardBase, DailyboardCardBase } from "@/src/modules/dailyboard/types/dailyboard.base.types";
 import { addCardToDailyboardState, getDailyboardCardItemFromState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
-import { DailyboardDataState } from "../types/dailyboard.types";
+import { DailyboardModelState } from "../types/dailyboard.types";
 import { YYMMDDDate } from "@/src/modules/shared/types/date.types";
 
 export const withDailyboardImmer = <
     TDailyboardSource extends DailyboardBase,
     TDailyboardCardSource extends DailyboardCardBase,
     TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemContent extends StoredDailyboardItemContent,
+    TDailyboardItemData extends StoredDailyboardItemData,
     TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemContent extends StoredDailyboardCardItemContent
+    TDailyboardCardItemData extends StoredDailyboardCardItemData
 >() => {
 
     type DailyboardState = DailyboardBaseState<
         TDailyboardSource, 
         TDailyboardCardSource,
         TDailyboardItem, 
-        TDailyboardItemContent, 
+        TDailyboardItemData, 
         TDailyboardCardItem, 
-        TDailyboardCardItemContent
+        TDailyboardCardItemData
     >;
 
     return (
@@ -97,7 +97,7 @@ export const withDailyboardImmer = <
                 });
             },
 
-            updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TDailyboardCardItemContent) => void) => {
+            updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TDailyboardCardItemData) => void) => {
                 set((state) => {
                     return updateCardInDailyboardState(state as DailyboardState, categoryPath, date, cardKey, cardUpdates);
                 });
@@ -157,6 +157,6 @@ export const withDailyboardImmer = <
     );
 };
 
-export const useDailyboardDataStore = create<DailyboardDataState>()(
-    devtools(withDailyboardImmer(), { name: "DailyboardDataStore" })
+export const useDailyboardDataStore = create<DailyboardModelState>()(
+    devtools(withDailyboardImmer(), { name: "DailyboardModelStore" })
 );
