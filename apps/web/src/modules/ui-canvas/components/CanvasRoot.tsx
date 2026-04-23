@@ -8,6 +8,7 @@ import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";
 import { getCanvasDataSet } from "../utils/ui.utils";
 import { CanvasGridContainer } from "./CanvasGridContainer";
+import { TracedRootItem } from "../../t-shared/components/TracedRootItem";
 
 export function CanvasRoot(props: CanvasRootProps) {
   const { data } = props;
@@ -25,12 +26,18 @@ export function CanvasRoot(props: CanvasRootProps) {
   }, [registry])
 
   return (
-    <div 
-      ref={canvasRef} 
-      className={style.canvas}
-      {...getCanvasDataSet(data)}
+    <TracedRootItem
+      type="canvas-root"
+      data={data}
+      ref={canvasRef}
     >
-      <CanvasGridContainer colCount={data.colCount} rowCount={data.rowCount} grids={grids}/>
-    </div>
+      <div 
+        ref={canvasRef} 
+        className={style.canvas}
+        {...getCanvasDataSet(data)}
+      >
+        <CanvasGridContainer colCount={data.colCount} rowCount={data.rowCount} grids={grids}/>
+      </div>
+    </TracedRootItem>
   )
 }
