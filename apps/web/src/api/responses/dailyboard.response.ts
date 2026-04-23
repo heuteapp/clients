@@ -6,8 +6,8 @@ export function responseToDailyboard(response: DailyboardResponse): DailyboardDa
     return {        
         categoryPath: response.categoryPath,
         date: isoToYYMMDD(response.date)!,
-        canvasName: response.canvas.name,
-        canvasVersion: response.canvas.version,
+        canvasName: response.layout.name,
+        canvasVersion: response.layout.version,
         cards: response.cards.map(responseToDailyboardCard)
     };
 }

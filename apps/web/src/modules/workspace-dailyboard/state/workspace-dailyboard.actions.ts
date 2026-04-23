@@ -28,13 +28,13 @@ export const fetchingSourcesDoneAction = createAssign<
         }
 
         const { getGlobalCanvas } = useCanvasDataStore.getState();
-        let canvasData = getGlobalCanvas(output.canvas.name, output.canvas.version) ?? null;
+        let canvasData = getGlobalCanvas(output.layout.name, output.layout.version) ?? null;
 
         if(!canvasData) {
             const { loadGlobalCanvas } = useCanvasDataStore.getState();
-            loadGlobalCanvas(responseToCanvas(output.canvas));
+            loadGlobalCanvas(responseToCanvas(output.layout));
 
-            canvasData = getGlobalCanvas(output.canvas.name, output.canvas.version) ?? null;
+            canvasData = getGlobalCanvas(output.layout.name, output.layout.version) ?? null;
         }
 
         return {
