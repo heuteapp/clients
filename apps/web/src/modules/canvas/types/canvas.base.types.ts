@@ -10,6 +10,6 @@ export interface CanvasGridBase {
 
 //
 
-export type CanvasBaseContent = Omit<CanvasBase, "grids">;
+export type CanvasBaseData = Omit<CanvasBase, "grids">;
 
-export type CanvasGridBaseContent = CanvasGridBase;
+export type CanvasGridBaseData = CanvasGridBase;

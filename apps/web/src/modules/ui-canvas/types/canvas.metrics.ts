@@ -1,4 +1,4 @@
-import { StoredCanvasData, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types"
+import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types"
 import { CanvasRegistry } from "./canvas.registry"
 
 export interface CanvasMetrics {
@@ -22,7 +22,7 @@ export interface CanvasMetricsValue {
 
 export interface CalculateCanvasMetricsProps {
     registry: CanvasRegistry, 
-    dataSource: StoredCanvasData | null, 
+    dataSource: StoredCanvasModel | null, 
     styleSource: StoredCanvasStyle | null
 }
 

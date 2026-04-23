@@ -4,11 +4,11 @@ import { StoredItem, UserBasedStoreState } from "./store.types";
 export interface CanvasBaseState<
     TCanvasSource extends CanvasBaseSource,
     TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
-    TCanvasItemContent extends StoredCanvasItemContent,
+    TCanvasItemData extends StoredCanvasItemData,
     TCanvasGrid extends StoredCanvasGridItem,
-    TCanvasGridContent extends StoredCanvasGridItemContent
-> extends UserBasedStoreState<TCanvasItemContent> {
-    gridById: Record<string, TCanvasGridContent>;
+    TCanvasGridData extends StoredCanvasGridItemData
+> extends UserBasedStoreState<TCanvasItemData> {
+    gridById: Record<string, TCanvasGridData>;
 
     loadGlobalCanvas: (canvas: TCanvasSource) => void;
     loadMeCanvas: (canvas: TCanvasSource) => void;
@@ -35,38 +35,38 @@ export interface StoredCanvasGridItem extends StoredItem, CanvasGridBase {
     canvasId: () => string;
 }
 
-export type StoredCanvasItemContent = Omit<StoredCanvasItem<StoredCanvasGridItem>, "grids">;
+export type StoredCanvasItemData = Omit<StoredCanvasItem<StoredCanvasGridItem>, "grids">;
 
-export type StoredCanvasGridItemContent = StoredCanvasGridItem;
+export type StoredCanvasGridItemData = StoredCanvasGridItem;
 
 //
 
 import { CanvasModel, CanvasGridModel } from "@/src/modules/canvas/types/canvas.model.types";
 
-export interface CanvasDataState extends CanvasBaseState<
+export interface CanvasModelState extends CanvasBaseState<
     CanvasModel, 
-    StoredCanvasData, 
-    StoredCanvasDataContent, 
-    StoredCanvasGridData,
-    StoredCanvasGridDataContent> {
+    StoredCanvasModel, 
+    StoredCanvasModelData, 
+    StoredCanvasGridModel,
+    StoredCanvasGridModelData> {
 
 }
 
 //
 
-export interface StoredCanvasData<
-    TCanvasGrid extends StoredCanvasGridData = StoredCanvasGridData
+export interface StoredCanvasModel<
+    TCanvasGrid extends StoredCanvasGridModel = StoredCanvasGridModel
 > extends StoredCanvasItem<TCanvasGrid>, CanvasModel {
     grids: TCanvasGrid[];
 }
 
-export interface StoredCanvasGridData extends StoredCanvasGridItem, CanvasGridModel {
+export interface StoredCanvasGridModel extends StoredCanvasGridItem, CanvasGridModel {
 
 }
 
-export type StoredCanvasDataContent = Omit<StoredCanvasData, "grids">;
+export type StoredCanvasModelData = Omit<StoredCanvasModel, "grids">;
 
-export type StoredCanvasGridDataContent = StoredCanvasGridData;
+export type StoredCanvasGridModelData = StoredCanvasGridModel;
 
 //
 
@@ -75,9 +75,9 @@ import { CanvasStyle, CanvasGridStyle } from "@/src/modules/canvas/types/canvas.
 export interface CanvasStyleState extends CanvasBaseState<
     CanvasStyle, 
     StoredCanvasStyle, 
-    StoredCanvasStyleContent,
+    StoredCanvasStyleData,
     StoredCanvasGridStyle,
-    StoredCanvasGridStyleContent> {
+    StoredCanvasGridStyleData> {
 
 }
 
@@ -93,6 +93,6 @@ export interface StoredCanvasGridStyle extends StoredCanvasGridItem, CanvasGridS
 
 }
 
-export type StoredCanvasStyleContent = Omit<StoredCanvasStyle, "grids">;
+export type StoredCanvasStyleData = Omit<StoredCanvasStyle, "grids">;
 
-export type StoredCanvasGridStyleContent = StoredCanvasGridStyle;
+export type StoredCanvasGridStyleData = StoredCanvasGridStyle;

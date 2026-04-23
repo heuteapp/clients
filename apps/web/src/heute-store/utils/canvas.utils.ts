@@ -1,8 +1,8 @@
-import { CanvasBaseSource, CanvasBaseState, CanvasGridBaseSource, StoredCanvasItem, StoredCanvasItemContent, StoredCanvasGridItem, StoredCanvasGridItemContent } from "../types/canvas.types";
+import { CanvasBaseSource, CanvasBaseState, CanvasGridBaseSource, StoredCanvasItem, StoredCanvasItemData, StoredCanvasGridItem, StoredCanvasGridItemData } from "../types/canvas.types";
 
 export const convertCanvasSourceToItemContent = <
     TSource extends CanvasBaseSource, 
-    TItemContent extends StoredCanvasItemContent
+    TItemContent extends StoredCanvasItemData
 > (id: string, source: TSource) : TItemContent => {
     const { grids, ...rest } = source;
 
@@ -14,7 +14,7 @@ export const convertCanvasSourceToItemContent = <
 
 export const convertCanvasGridSourceToItemContent = <
     TSource extends CanvasGridBaseSource,
-    TItemContent extends StoredCanvasGridItemContent
+    TItemContent extends StoredCanvasGridItemData
 > (id: string, source: TSource) : TItemContent => {
 
     return {
@@ -29,9 +29,9 @@ export const convertCanvasGridSourceToItemContent = <
 export const saveCanvasToState = <
     TCanvasSource extends CanvasBaseSource,
     TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
-    TCanvasItemContent extends StoredCanvasItemContent,
+    TCanvasItemContent extends StoredCanvasItemData,
     TCanvasGrid extends StoredCanvasGridItem,
-    TCanvasGridContent extends StoredCanvasGridItemContent
+    TCanvasGridContent extends StoredCanvasGridItemData
 >(
     state: CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasGrid, TCanvasGridContent>, 
     owner: string, canvas: TCanvasSource
@@ -49,9 +49,9 @@ export const saveCanvasToState = <
 export const getCanvasItemFromState = <
     TCanvasSource extends CanvasBaseSource,
     TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
-    TCanvasItemContent extends StoredCanvasItemContent,
+    TCanvasItemContent extends StoredCanvasItemData,
     TCanvasGrid extends StoredCanvasGridItem,
-    TCanvasGridContent extends StoredCanvasGridItemContent
+    TCanvasGridContent extends StoredCanvasGridItemData
 >(
     state: CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasGrid, TCanvasGridContent>, 
     owner: string, name: string, version: number
@@ -72,9 +72,9 @@ export const getCanvasItemFromState = <
 export const getCanvasItemContentFromState = <
     TCanvasSource extends CanvasBaseSource,
     TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
-    TCanvasItemContent extends StoredCanvasItemContent,
+    TCanvasItemContent extends StoredCanvasItemData,
     TCanvasGrid extends StoredCanvasGridItem,
-    TCanvasGridContent extends StoredCanvasGridItemContent
+    TCanvasGridContent extends StoredCanvasGridItemData
 >(  
     state: CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasGrid, TCanvasGridContent>,
     owner: string, name: string, version: number
@@ -86,9 +86,9 @@ export const getCanvasItemContentFromState = <
 export const getCanvasGridItemContentsFromState = <
     TCanvasSource extends CanvasBaseSource,
     TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
-    TCanvasItemContent extends StoredCanvasItemContent,
+    TCanvasItemContent extends StoredCanvasItemData,
     TCanvasGrid extends StoredCanvasGridItem,
-    TCanvasGridContent extends StoredCanvasGridItemContent
+    TCanvasGridContent extends StoredCanvasGridItemData
 >(
     state: CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasGrid, TCanvasGridContent>, 
     canvasId: string | null

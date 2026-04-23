@@ -1,21 +1,21 @@
 import { immer } from "zustand/middleware/immer";
 
-import { CanvasBaseState, StoredCanvasItem, StoredCanvasItemContent, StoredCanvasGridItem, StoredCanvasGridItemContent } from "../types/canvas.types";
+import { CanvasBaseState, StoredCanvasItem, StoredCanvasItemData, StoredCanvasGridItem, StoredCanvasGridItemData } from "../types/canvas.types";
 import { CanvasBase } from "@/src/modules/canvas/types/canvas.base.types";
 import { getCanvasItemFromState, saveCanvasToState } from "../utils/canvas.utils";
 import { devtools } from "zustand/middleware";
 import { create } from "zustand";
-import { CanvasDataState, CanvasStyleState } from "../types/canvas.types";
+import { CanvasModelState, CanvasStyleState } from "../types/canvas.types";
 
 export const withCanvasImmer = <
     TCanvasSource extends CanvasBase,
     TCanvasItem extends StoredCanvasItem<TCanvasGrid>,
-    TCanvasItemContent extends StoredCanvasItemContent,
+    TCanvasItemData extends StoredCanvasItemData,
     TCanvasGrid extends StoredCanvasGridItem,
-    TCanvasGridContent extends StoredCanvasGridItemContent
+    TCanvasGridData extends StoredCanvasGridItemData
 >() => {
 
-    type CanvasState = CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemContent, TCanvasGrid, TCanvasGridContent>;
+    type CanvasState = CanvasBaseState<TCanvasSource, TCanvasItem, TCanvasItemData, TCanvasGrid, TCanvasGridData>;
 
     return (
         immer<CanvasState>((set, get) => ({
@@ -101,8 +101,8 @@ export const withCanvasImmer = <
     )
 }
 
-export const useCanvasDataStore = create<CanvasDataState>()(
-    devtools(withCanvasImmer(), { name: "CanvasDataStore" })
+export const useCanvasModelStore = create<CanvasModelState>()(
+    devtools(withCanvasImmer(), { name: "CanvasModelStore" })
 );
 
 export const useCanvasStyleStore = create<CanvasStyleState>()(

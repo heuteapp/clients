@@ -3,7 +3,7 @@ import { createAssign } from "../../auth/utils/create-assign";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { responseToCanvas } from "@/src/api/responses/canvas.response";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
-import { useCanvasDataStore } from "@/src/heute-store/stores/canvas.stores";
+import { useCanvasModelStore } from "@/src/heute-store/stores/canvas.stores";
 import { isoToYYMMDD } from "../../shared/utils/date.utils";
 
 export const fetchingSourcesDoneAction = createAssign<
@@ -27,11 +27,11 @@ export const fetchingSourcesDoneAction = createAssign<
             dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
         }
 
-        const { getGlobalCanvas } = useCanvasDataStore.getState();
+        const { getGlobalCanvas } = useCanvasModelStore.getState();
         let canvasData = getGlobalCanvas(output.layout.name, output.layout.version) ?? null;
 
         if(!canvasData) {
-            const { loadGlobalCanvas } = useCanvasDataStore.getState();
+            const { loadGlobalCanvas } = useCanvasModelStore.getState();
             loadGlobalCanvas(responseToCanvas(output.layout));
 
             canvasData = getGlobalCanvas(output.layout.name, output.layout.version) ?? null;

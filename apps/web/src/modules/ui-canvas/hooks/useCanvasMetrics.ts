@@ -2,10 +2,10 @@ import React from "react";
 import { CanvasMetrics } from "../types/canvas.metrics";
 import { applyCanvasMetrics, calculateCanvasMetrics } from "../metrics/canvas.metrics";
 import { CanvasRegistry } from "../types/canvas.registry";
-import { StoredCanvasData, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
+import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
 import { useMetricsContext } from "../../ui-shared/hooks/useMetricsContext";
 
-export const useCanvasMetrics = (metricsId: string, registry: CanvasRegistry, dataSource: StoredCanvasData | null, styleSource: StoredCanvasStyle | null) : CanvasMetrics => {
+export const useCanvasMetrics = (metricsId: string, registry: CanvasRegistry, dataSource: StoredCanvasModel | null, styleSource: StoredCanvasStyle | null) : CanvasMetrics => {
     const { subscribe, unsubscribe } = useMetricsContext();
     const metrics = React.useRef<CanvasMetrics>({ value: null });
 

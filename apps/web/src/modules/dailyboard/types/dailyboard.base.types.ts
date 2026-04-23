@@ -14,6 +14,6 @@ export interface DailyboardCardBase {
 
 //
 
-export type DailyboardBaseContent = Omit<DailyboardBase, "cards">;
+export type DailyboardBaseData = Omit<DailyboardBase, "cards">;
 
-export type DailyboardCardBaseContent = Omit<DailyboardCardBase, "name">;
+export type DailyboardCardBaseData = Omit<DailyboardCardBase, "name">;

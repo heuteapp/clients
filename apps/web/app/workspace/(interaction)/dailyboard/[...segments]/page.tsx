@@ -1,7 +1,7 @@
 "use client";
 
 import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
-import { useCanvasDataStore } from "@/src/heute-store/stores/canvas.stores";
+import { useCanvasModelStore } from "@/src/heute-store/stores/canvas.stores";
 import { DailyboardRoot } from "@/src/modules/ui-dailyboard/components/DailyboardRoot";
 import { WorkspaceDailyboardView } from "@/src/modules/workspace-dailyboard/components/WorkspaceDailyboardView";
 import { useWorkspaceDailyboardContext } from "@/src/modules/workspace-dailyboard/hooks/useWorkspaceDailyboardContext";
@@ -11,7 +11,7 @@ export default function WorkspaceDailyboardPage() {
     const { metadata } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata!;
     const { getMeDailyboard } = useDailyboardDataStore();
-    const { getGlobalCanvas } = useCanvasDataStore();
+    const { getGlobalCanvas } = useCanvasModelStore();
 
     const dailyboard = getMeDailyboard(categoryPath, date!);
 

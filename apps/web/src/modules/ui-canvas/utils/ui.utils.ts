@@ -1,6 +1,6 @@
-import { StoredCanvasData, StoredCanvasGridData } from "@/src/heute-store/types/canvas.types"
+import { StoredCanvasModel, StoredCanvasGridModel } from "@/src/heute-store/types/canvas.types"
 
-export const getCanvasDataSet = (canvas: StoredCanvasData | null) => {
+export const getCanvasDataSet = (canvas: StoredCanvasModel | null) => {
     if(!canvas) return null;
     
     return {
@@ -12,7 +12,7 @@ export const getCanvasDataSet = (canvas: StoredCanvasData | null) => {
     }
 }
 
-export const getCanvasGridDataSet = (grid: StoredCanvasGridData | null) => {
+export const getCanvasGridDataSet = (grid: StoredCanvasGridModel | null) => {
     if(!grid) return null;
 
     return {
