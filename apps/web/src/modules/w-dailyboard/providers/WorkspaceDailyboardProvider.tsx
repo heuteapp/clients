@@ -12,6 +12,7 @@ import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboard
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
 import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardContext";
 import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDialogs";
+import { TracingProvider } from "../../t-shared/providers/TracingProvider";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -70,19 +71,21 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     const canvasStyle = getGlobalCanvas("default", 1);
 
     return (
-        <MetricsProvider rootRef={dailyboardRef} targets={["canvas", "dailyboard"]}>
-            <CanvasProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
-                <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
-                    <WorkspaceDailyboardContext.Provider value={contextValue}>
-                        <ProviderContent>
-                            {children}
-                        </ProviderContent>
-                        <WorkspaceDailyboardDialogs />
-                        <WorkspaceDailyboardStateHooks />
-                    </WorkspaceDailyboardContext.Provider>
-                </DailyboardProvider>
-            </CanvasProvider>
-        </MetricsProvider>
+        <TracingProvider>
+            <MetricsProvider rootRef={dailyboardRef} targets={["canvas", "dailyboard"]}>
+                <CanvasProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
+                    <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
+                        <WorkspaceDailyboardContext.Provider value={contextValue}>
+                            <ProviderContent>
+                                {children}
+                            </ProviderContent>
+                            <WorkspaceDailyboardDialogs />
+                            <WorkspaceDailyboardStateHooks />
+                        </WorkspaceDailyboardContext.Provider>
+                    </DailyboardProvider>
+                </CanvasProvider>
+            </MetricsProvider>        
+        </TracingProvider>
     )
 }
 
