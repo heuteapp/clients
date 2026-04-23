@@ -29,7 +29,8 @@ export function CanvasGridSection(props : CanvasGridSectionProps) {
             ref={ref}
             className={style.section}
             style={{
-                gridArea: data.name
+                gridArea: data.name,
+                padding: 8
             }}
         >
             <CanvasGridItem data={data}/>
