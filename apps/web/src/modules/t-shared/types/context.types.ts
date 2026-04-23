@@ -6,5 +6,6 @@ export interface TracingContextValue {
 
 export interface TracingItemData {
     rect: Rect;
-    props: any;
+    type: string;
+    data: any;
 }

@@ -1,4 +1,6 @@
 export interface TracedItemProps {
+    type: string;
+    data: any;
     children: React.ReactNode;
 }
 
