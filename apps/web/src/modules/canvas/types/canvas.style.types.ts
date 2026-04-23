@@ -11,6 +11,6 @@ export interface CanvasGridStyle extends CanvasGridBase {
     grid?: BoxStyle;
 }
 
-export type CanvasStyleContent = Omit<CanvasStyle, "grids">;
+export type CanvasStyleData = Omit<CanvasStyle, "grids">;
 
-export type CanvasGridStyleContent = CanvasGridStyle;
+export type CanvasGridStyleData = Omit<CanvasGridStyle, "">;
