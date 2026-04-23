@@ -1,5 +1,5 @@
 import { findAllDailyboardCards, findDailyboardInSubtree, getDailyboardCardData, getDailyboardData } from "../../ui-dailyboard/utils/dom.utils";
-import { findAllCanvasGrids, findCanvasInSubtree, getCanvasData, getCanvasGridData } from "../../ui-canvas/utils/dom.utils"
+import { findAllCanvasGrids, findCanvasInSubtree, getCanvasModelData, getCanvasGridModelData } from "../../ui-canvas/utils/dom.utils"
 import { CanvasGridSnapshot, CanvasSnapshot, DailyboardCardSnapshot, DailyboardSnapshot } from "../types/snapshot.types";
 
 export const getCanvasSnapshot = () : CanvasSnapshot | null => {
@@ -10,7 +10,7 @@ export const getCanvasSnapshotFrom = (el: Element) : CanvasSnapshot | null => {
     const canvasEl = findCanvasInSubtree(el as HTMLDivElement);
     if (!canvasEl) return null;
 
-    const data = getCanvasData(canvasEl);
+    const data = getCanvasModelData(canvasEl);
     if (!data) return null;
 
     const grids : CanvasGridSnapshot[] = getAllCanvasGridSnapshotsFor(canvasEl);
@@ -32,7 +32,7 @@ export const getAllCanvasGridSnapshotsFor = (canvasEl: HTMLDivElement): CanvasGr
 }
 
 export const getCanvasGridSnapshotFor = (gridEl: HTMLDivElement): CanvasGridSnapshot | null => {
-    const gridData = getCanvasGridData(gridEl);
+    const gridData = getCanvasGridModelData(gridEl);
     if (!gridData) return null;
 
     return {

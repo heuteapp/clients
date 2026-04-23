@@ -1,4 +1,4 @@
-import { CanvasDataContent, CanvasGridDataContent } from "../../canvas/types/canvas.data.types";
+import { CanvasModelData, CanvasGridModelData } from "../../canvas/types/canvas.model.types";
 import { Pointer } from "../../shared/types/common";
 
 //
@@ -22,7 +22,7 @@ export const findCanvasFromPoint = (clientX: number, clientY: number): HTMLDivEl
     return null;
 }
 
-export const getCanvasData = (canvasEl: HTMLDivElement) : CanvasDataContent | null => {
+export const getCanvasModelData = (canvasEl: HTMLDivElement) : CanvasModelData | null => {
     if(!canvasEl.dataset.canvas) {
         return null;
     }
@@ -62,7 +62,7 @@ export const findAllCanvasGrids = (el: HTMLDivElement): HTMLDivElement[] => {
     return Array.from(findCanvasInSubtree(el)?.querySelectorAll<HTMLDivElement>("[data-canvas-grid]") || []);
 }
 
-export const getCanvasGridData = (gridEl: HTMLDivElement): CanvasGridDataContent | null => {
+export const getCanvasGridModelData = (gridEl: HTMLDivElement): CanvasGridModelData | null => {
     if(!gridEl.dataset.canvasGrid) {
         return null;
     }
@@ -99,24 +99,6 @@ export const findGridAtPoint = (clientX: number, clientY: number): HTMLDivElemen
     }
     
     return null;
-}
-
-//
-
-export const getGridData = (gridEl: HTMLDivElement) => {
-    if(!gridEl.dataset.canvasGrid) {
-        return null;
-    }
-
-    return {
-        name: gridEl.dataset.canvasGridName || "",
-        position: {
-            colIndex: parseInt(gridEl.dataset.canvasGridColIndex || "0", 10),
-            rowIndex: parseInt(gridEl.dataset.canvasGridRowIndex || "0", 10),
-            colSpan: parseInt(gridEl.dataset.canvasGridColSpan || "0", 10),
-            rowSpan: parseInt(gridEl.dataset.canvasGridRowSpan || "0", 10)
-        }
-    };
 }
 
 //

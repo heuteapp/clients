@@ -1,7 +1,7 @@
-import { CanvasData, CanvasGridData } from "@/src/modules/canvas/types/canvas.data.types";
+import { CanvasModel, CanvasGridModel } from "@/src/modules/canvas/types/canvas.model.types";
 import { CanvasResponse, CanvasGridResponse } from "../models/responses/canvas.response";
 
-export function responseToCanvas(response: CanvasResponse): CanvasData {
+export function responseToCanvas(response: CanvasResponse): CanvasModel {
     return {
         name: response.name,
         version: response.version,
@@ -11,7 +11,7 @@ export function responseToCanvas(response: CanvasResponse): CanvasData {
     };
 }
 
-export function responseToCanvasGrids(response: CanvasGridResponse): CanvasGridData {
+export function responseToCanvasGrids(response: CanvasGridResponse): CanvasGridModel {
     return {
         name: response.name,
         position: {

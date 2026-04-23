@@ -41,10 +41,10 @@ export type StoredCanvasGridItemContent = StoredCanvasGridItem;
 
 //
 
-import { CanvasData, CanvasGridData } from "@/src/modules/canvas/types/canvas.data.types";
+import { CanvasModel, CanvasGridModel } from "@/src/modules/canvas/types/canvas.model.types";
 
 export interface CanvasDataState extends CanvasBaseState<
-    CanvasData, 
+    CanvasModel, 
     StoredCanvasData, 
     StoredCanvasDataContent, 
     StoredCanvasGridData,
@@ -56,11 +56,11 @@ export interface CanvasDataState extends CanvasBaseState<
 
 export interface StoredCanvasData<
     TCanvasGrid extends StoredCanvasGridData = StoredCanvasGridData
-> extends StoredCanvasItem<TCanvasGrid>, CanvasData {
+> extends StoredCanvasItem<TCanvasGrid>, CanvasModel {
     grids: TCanvasGrid[];
 }
 
-export interface StoredCanvasGridData extends StoredCanvasGridItem, CanvasGridData {
+export interface StoredCanvasGridData extends StoredCanvasGridItem, CanvasGridModel {
 
 }
 
