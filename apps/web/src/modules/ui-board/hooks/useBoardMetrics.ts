@@ -13,6 +13,8 @@ export const useBoardMetrics = (metricsId: string, selector: TracingDomainSelect
 
     React.useEffect(() => {
         subscribe(metricsId, () => {
+            if(!selector) return;
+
             metrics.current.value = calculateBoardMetrics({canvas: canvasMetrics.value});
             applyBoardMetrics({selector, metrics: metrics.current!});
         });
