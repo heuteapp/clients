@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { BoardRenderProvider } from "@/src/modules/ui-board/provider/BoardRenderProvider"
-import { CanvasProvider } from "@/src/modules/ui-canvas/provider/CanvasProvider"
+import { CanvasRenderProvider } from "@/src/modules/ui-canvas/provider/CanvasRenderProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
@@ -73,7 +73,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     return (
         <TracingDomainProvider name="w-dailyboard" >
             <MetricsProvider rootRef={dailyboardRef} targets={["canvas", "dailyboard"]}>
-                <CanvasProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
+                <CanvasRenderProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
                     <BoardRenderProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
                         <WorkspaceDailyboardContext.Provider value={contextValue}>
                             <ProviderContent>
@@ -83,7 +83,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                             <WorkspaceDailyboardStateHooks />
                         </WorkspaceDailyboardContext.Provider>
                     </BoardRenderProvider>
-                </CanvasProvider>
+                </CanvasRenderProvider>
             </MetricsProvider>        
         </TracingDomainProvider>
     )

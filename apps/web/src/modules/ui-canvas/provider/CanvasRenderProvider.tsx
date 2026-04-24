@@ -6,7 +6,7 @@ import { useCanvasMetrics } from "../hooks/useCanvasMetrics";
 import { CanvasProviderProps } from "../types/canvas.props";
 import { useTracingStore } from "../../t-core/hooks/useTracingStore";
 
-export function CanvasProvider({ rootRef, metricsId, dataSource, styleSource, children }: CanvasProviderProps) {
+export function CanvasRenderProvider({ rootRef, metricsId, dataSource, styleSource, children }: CanvasProviderProps) {
 
     const { domains } = useTracingStore();
 
