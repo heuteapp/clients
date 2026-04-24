@@ -11,7 +11,7 @@ export function responseToDailyboard(response: DailyboardResponse): DailyboardMo
         cards: response.cards.map(responseToDailyboardCard),
 
         getKey: function() {
-            return `${this.categoryPath}@${this.date}`;
+            return `${this.categoryPath}@${this.date.raw}`;
         }
     };
 }

@@ -1,4 +1,4 @@
-import { responseToDailyboard } from "@/src/api/responses/dailyboard.response";
+import { responseToDailyboard } from "@/src/api/responses/board.response";
 import { createAssign } from "../../d-auth/utils/create-assign";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { responseToCanvas } from "@/src/api/responses/canvas.response";
@@ -18,13 +18,15 @@ export const fetchingSourcesDoneAction = createAssign<
 
         const { getMeDailyboard } = useDailyboardDataStore.getState();
 
-        let dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
+        const key = `${output.categoryPath}@${isoToYYMMDD(output.date)!.raw}`;
+
+        let dailyboardData = getMeDailyboard(key) ?? null;
 
         if(!dailyboardData) {
             const { loadMeDailyboard } = useDailyboardDataStore.getState();
             loadMeDailyboard(responseToDailyboard(output));
 
-            dailyboardData = getMeDailyboard(output.categoryPath, isoToYYMMDD(output.date)!) ?? null;
+            dailyboardData = getMeDailyboard(key) ?? null;
         }
 
         const { getGlobalCanvas } = useCanvasModelStore.getState();
@@ -106,7 +108,9 @@ export const cardCreatingPlaceDoneAction = createAssign<
 
         const { addCard } = useDailyboardDataStore.getState();
 
-        addCard(payload.categoryPath, payload.date, {
+        const key = `${payload.categoryPath}@${payload.date!.raw}`;
+
+        addCard(key, {
             name: crypto.randomUUID(),
             content: context.draftCard!.content,
             placement: payload.placement
