@@ -5,7 +5,7 @@ import BoardCardItem from "./BoardCardItem"
 
 import { useBoardContext } from "@/src/modules/ui-board/hooks/useBoardContext"
 import { BoardCardContainerProps } from "@/src/modules/ui-board/types/board.props";
-import { getBoardCardContainerDataSet } from "../utils/ui.utils";
+import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
 
 //
 
@@ -22,15 +22,19 @@ function BoardCardContainer(props : BoardCardContainerProps) {
     }, [registry])
 
     return (
-        <div 
-            className={style.cardContainer} 
+        <TracedUniqueItem
+            type="board-card-container"
             ref={ref}
-            {...getBoardCardContainerDataSet()}
         >
-            {props.cards.map(card => (
-                <BoardCardItem key={card.id} data={card} />
-            ))}
-        </div>
+            <div 
+                className={style.cardContainer} 
+                ref={ref}
+            >
+                {props.cards.map(card => (
+                    <BoardCardItem key={card.id} data={card} />
+                ))}
+            </div>
+        </TracedUniqueItem>
     )
 }
 
