@@ -1,17 +1,19 @@
 import { CalculateCanvasMetricsProps, ApplyCanvasMetricsProps, CanvasMetricsValue } from "../types/canvas.metrics";
 import { spacingResult } from "../../d-shared/utils/style";
 
-export function calculateCanvasMetrics({ registry, dataSource, styleSource }: CalculateCanvasMetricsProps) : CanvasMetricsValue | null {
-    const canvasRef = registry.canvas.ref;
-    const canvasEl = canvasRef.current;
+export function calculateCanvasMetrics({ selector, dataSource, styleSource }: CalculateCanvasMetricsProps) : CanvasMetricsValue | null {
+    const c = selector.uniqueItem("canvas-root");
+    
+    const canvasRef = c?.ref;
+    const canvasEl = canvasRef?.current;
 
     if(!canvasEl) {
         return null;
     }
 
-    const canvas = registry.canvas;
+    const canvasData = c?.data;
 
-    if (!canvas.props) {
+    if (!canvasData) {
         return null;
     }
 
@@ -27,8 +29,8 @@ export function calculateCanvasMetrics({ registry, dataSource, styleSource }: Ca
         height: document.body.clientHeight / viewSize.height,
     }
 
-    const canvasCellWidth = canvasWidth / canvas.props.data.colCount;
-    const canvasCellHeight = canvasHeight / canvas.props.data.rowCount;
+    const canvasCellWidth = canvasWidth / canvasData.colCount;
+    const canvasCellHeight = canvasHeight / canvasData.rowCount;
 
     const canvasCellSize = Math.min(canvasCellWidth, canvasCellHeight);
 
@@ -82,10 +84,10 @@ export function calculateCanvasMetrics({ registry, dataSource, styleSource }: Ca
     }
 }
 
-export function applyCanvasMetrics({ registry, metrics, styleSource }: ApplyCanvasMetricsProps) {
-    const canvasRef = registry.canvas.ref;
+export function applyCanvasMetrics({ selector, metrics, styleSource }: ApplyCanvasMetricsProps) {
+    const canvasRef = selector.uniqueItem("canvas-root")?.ref;
 
-    const canvasEl = canvasRef.current;
+    const canvasEl = canvasRef?.current;
     if (!canvasEl) return;
 
     const metricsValue = metrics.value;
@@ -99,8 +101,8 @@ export function applyCanvasMetrics({ registry, metrics, styleSource }: ApplyCanv
     canvasEl.style.setProperty("--canvas-cell-size", `${canvasCellSize}px`);
     canvasEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
 
-    registry.getCanvasGridSections()?.forEach(section => {
-        const style = styleSource?.grids.find(s => s.name === section.props?.data.name);
+    selector.itemsOf("canvas-grid-item")?.forEach(section => {
+        const style = styleSource?.grids.find(s => s.name === section?.data.name);
         const parent = { width: canvasWidth, height: canvasHeight };
 
         const padding = spacingResult(style?.box.padding, parent);

@@ -1,25 +1,13 @@
 import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
 
-import { useLayoutEffect, useRef } from "react";
+import { useRef } from "react";
 import { CanvasGridContainerProps } from "../types/canvas.props";
 import { CanvasGridSection } from "./CanvasGridSection";
-import { useCanvasContext } from "../hooks/useCanvasContext";
 import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
 
 export function CanvasGridContainer(props : CanvasGridContainerProps) {
     const ref = useRef<HTMLDivElement>(null);
     const { colCount, rowCount, grids } = props;
-
-    const context = useCanvasContext();
-    const { registry } = context!;
-
-    useLayoutEffect(() => {
-        registry.registerCanvasGridContainer(ref, props);
-
-        return () => {
-            registry.unregisterCanvasGridContainer()
-        }
-    }, [registry])
 
     const matrix = Array.from({ length: rowCount }, () =>
         Array.from({ length: colCount }, () => ".")
@@ -29,9 +17,9 @@ export function CanvasGridContainer(props : CanvasGridContainerProps) {
         const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
 
         for (let r = 0; r < rowSpan; r++) {
-        for (let c = 0; c < colSpan; c++) {
-            matrix[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
-        }
+            for (let c = 0; c < colSpan; c++) {
+                matrix[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
+            }
         }
     });
 
