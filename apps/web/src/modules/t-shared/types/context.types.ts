@@ -1,4 +1,4 @@
-import { TracingDomainData, TracingDomainSelector, TracingItemData } from "./tracing.types";
+import { TracingDomainData, TracingDomainSelector, TracingItemParams } from "./tracing.types";
 
 export interface TracingStoreContextValue {
     subscribe: (name: string, data: TracingDomainData) => boolean;
@@ -7,6 +7,6 @@ export interface TracingStoreContextValue {
 }
 
 export interface TracingDomainContextValue {
-    trace: (id: string | null, data: TracingItemData) => boolean;
+    trace: (id: string | null, params: TracingItemParams) => boolean;
     untrace: (id: string | null, type: string) => boolean;
 }

@@ -8,10 +8,14 @@ export interface TracingDomainData {
     items: Map<string, TracingItemData>;
 }
 
-export interface TracingItemData {
+export interface TracingItemParams {
     type: string;
     data: any;
     ref: React.RefObject<HTMLElement | null>;
+}
+
+export interface TracingItemData extends TracingItemParams {
+    id: string | null;
 }
 
 export type TracingItemFilter = (item: TracingItemData) => boolean;

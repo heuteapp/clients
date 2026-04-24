@@ -2,17 +2,17 @@ import { useCallback, useEffect, useMemo } from "react";
 import { TracingDomainContext } from "../contexts/tracing.context";
 import { TracingDomainProviderProps } from "../types/props.types";
 import { useTracingStore } from "../hooks/useTracingStore";
-import { TracingItemData } from "../types/tracing.types";
+import { TracingItemData, TracingItemParams } from "../types/tracing.types";
 
 export function TracingDomainProvider({ name, children }: TracingDomainProviderProps) {
     const { subscribe, unsubscribe } = useTracingStore();
     const items = useMemo(() => new Map<string, TracingItemData>(), []);
 
-    const trace = useCallback((id: string | null, item: TracingItemData) => {
+    const trace = useCallback((id: string | null, item: TracingItemParams) => {
         const key = id ? `${item.type}-${id}` : item.type;
         if(items.has(key)) return false;
 
-        items.set(key, item);
+        items.set(key, { id, ...item });
         return true;
     }, [items]);
 
