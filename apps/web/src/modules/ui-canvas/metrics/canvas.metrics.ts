@@ -1,5 +1,5 @@
 import { CalculateCanvasMetricsProps, ApplyCanvasMetricsProps, CanvasMetricsValue } from "../types/canvas.metrics";
-import { spacingResult } from "../../d-shared/utils/style";
+import { spacingResult } from "../../d-core/utils/style";
 
 export function calculateCanvasMetrics({ selector, dataSource, styleSource }: CalculateCanvasMetricsProps) : CanvasMetricsValue | null {
     const c = selector.uniqueItem("canvas-root");

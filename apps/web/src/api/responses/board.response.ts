@@ -1,6 +1,6 @@
 import { DailyboardModel, DailyboardCardModel } from "@/src/modules/d-board/types/board.model.types";
 import { DailyboardCardResponse, DailyboardResponse } from "../models/responses/dailyboard.response";
-import { isoToYYMMDD } from "@/src/modules/d-shared/utils/date.utils";
+import { isoToYYMMDD } from "@/src/modules/d-core/utils/date.utils";
 
 export function responseToDailyboard(response: DailyboardResponse): DailyboardModel {
     return {        

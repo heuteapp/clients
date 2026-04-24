@@ -1,4 +1,4 @@
-import { BoxStyle } from "@/src/modules/d-shared/types/style";
+import { BoxStyle } from "@/src/modules/d-core/types/style";
 import { CanvasBase, CanvasGridBase } from "./canvas.base.types";
 
 export interface CanvasStyle extends CanvasBase{

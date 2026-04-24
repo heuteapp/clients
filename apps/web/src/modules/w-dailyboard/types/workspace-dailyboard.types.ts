@@ -1,4 +1,4 @@
-import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
+import { YYMMDDDate } from "@/src/modules/d-core/types/date.types";
 import { DailyboardPathConfig, DailyboardPathValidationResult } from "../../d-board/types/board.types";
 
 /**

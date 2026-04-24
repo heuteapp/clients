@@ -1,4 +1,4 @@
-import { GridRect, GridSpan } from "@/src/modules/d-shared/types/common";
+import { GridRect, GridSpan } from "@/src/modules/d-core/types/common";
 
 export interface DailyboardEditableCardProps {
     initialRect: GridRect;

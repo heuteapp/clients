@@ -1,6 +1,6 @@
 import { BoardCardModelData, BoardModelData } from "../../d-board/types/board.model.types";
-import { GridRect, GridSpan } from "../../d-shared/types/common";
-import { parseYYMMDD } from "../../d-shared/utils/date.utils";
+import { GridRect, GridSpan } from "../../d-core/types/common";
+import { parseYYMMDD } from "../../d-core/utils/date.utils";
 
 export const findBoardInSubtree = (el: Element): HTMLDivElement | null => {
     const child = el.querySelector<HTMLDivElement>("[data-board]");

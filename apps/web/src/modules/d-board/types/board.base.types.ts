@@ -16,7 +16,7 @@ export type BoardCardBaseData<TBase extends BoardCardBase = BoardCardBase> = Omi
 
 //
 
-import { YYMMDDDate } from "../../d-shared/types/date.types";
+import { YYMMDDDate } from "../../d-core/types/date.types";
 
 export interface DailyboardBase extends BoardBase {
     categoryPath: string;

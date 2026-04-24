@@ -1,7 +1,7 @@
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
 import { BoardCardContent } from "@/src/modules/d-board/types/board.types";
-import { GridSpan } from "../../d-shared/types/common";
+import { GridSpan } from "../../d-core/types/common";
 
 import { StoredBoardModel, StoredBoardCardModel } from "@/src/heute-store/types/board.types";
 

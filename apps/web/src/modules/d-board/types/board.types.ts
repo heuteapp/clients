@@ -1,4 +1,4 @@
-import { GridRect } from "../../d-shared/types/common";
+import { GridRect } from "../../d-core/types/common";
 
 export interface BoardCardContent {
     title: string | null;
@@ -86,7 +86,7 @@ export interface BoardCardBullet2x3ListFace {
 
 //
 
-import { YYMMDDDate } from "../../d-shared/types/date.types";
+import { YYMMDDDate } from "../../d-core/types/date.types";
 
 export interface DailyboardPathConfig {
     minCategories?: number;

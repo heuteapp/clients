@@ -1,6 +1,6 @@
 import { BoardCardContent, BoardCardPlacement } from "@/src/modules/d-board/types/board.types";
-import { GridSpan } from "@/src/modules/d-shared/types/common";
-import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
+import { GridSpan } from "@/src/modules/d-core/types/common";
+import { YYMMDDDate } from "@/src/modules/d-core/types/date.types";
 
 //
 

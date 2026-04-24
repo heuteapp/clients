@@ -1,5 +1,5 @@
 import { PathSegmentsResult } from "@/src/modules/ui-core/types/path-segments.types";
-import { YYMMDDDate } from "../../d-shared/types/date.types";
+import { YYMMDDDate } from "../../d-core/types/date.types";
 
 export type WorkspaceMetadata = {
     type: WorkspaceType;

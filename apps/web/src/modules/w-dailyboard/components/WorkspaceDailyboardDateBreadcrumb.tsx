@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { YYMMDDDate } from "../../d-shared/types/date.types";
+import { YYMMDDDate } from "../../d-core/types/date.types";
 
 export function WorkspaceDailyboardDateBreadcrumb({ date, isDateToday }: { date: YYMMDDDate, isDateToday: boolean }) {
     return (

@@ -12,7 +12,7 @@ import {
 import { BoardBase, BoardCardBase } from "@/src/modules/d-board/types/board.base.types";
 import { addCardToDailyboardState, getBoardCardItemFromState, getBoardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/board.utils";
 import { BoardModelState } from "../types/board.types";
-import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
+import { YYMMDDDate } from "@/src/modules/d-core/types/date.types";
 
 export const withBoardImmer = <
     TBoardSource extends BoardBase,

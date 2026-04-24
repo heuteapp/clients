@@ -1,4 +1,4 @@
-import { GridRect } from "@/src/modules/d-shared/types/common";
+import { GridRect } from "@/src/modules/d-core/types/common";
 import { CanvasBase, CanvasGridBase } from "./canvas.base.types";
 
 export interface CanvasModel extends CanvasBase {
