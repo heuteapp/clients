@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { DailyboardProvider } from "@/src/modules/ui-board/provider/BoardProvider"
+import { BoardProvider } from "@/src/modules/ui-board/provider/BoardProvider"
 import { CanvasProvider } from "@/src/modules/ui-canvas/provider/CanvasProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
@@ -74,7 +74,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
         <TracingDomainProvider name="w-dailyboard" >
             <MetricsProvider rootRef={dailyboardRef} targets={["canvas", "dailyboard"]}>
                 <CanvasProvider rootRef={canvasRef} metricsId="canvas"  dataSource={canvasData} styleSource={canvasStyle}>
-                    <DailyboardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
+                    <BoardProvider rootRef={dailyboardRef} metricsId="dailyboard" dataSource={dailyboardData}>
                         <WorkspaceDailyboardContext.Provider value={contextValue}>
                             <ProviderContent>
                                 {children}
@@ -82,7 +82,7 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                             <WorkspaceDailyboardDialogs />
                             <WorkspaceDailyboardStateHooks />
                         </WorkspaceDailyboardContext.Provider>
-                    </DailyboardProvider>
+                    </BoardProvider>
                 </CanvasProvider>
             </MetricsProvider>        
         </TracingDomainProvider>
