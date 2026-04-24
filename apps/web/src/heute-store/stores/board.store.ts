@@ -75,37 +75,37 @@ export const withBoardImmer = <
                 });
             },
 
-            getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => {
-                return getBoardItemFromState(get(), "me", categoryPath, date);
+            getMeDailyboard: (key: string) => {
+                return getBoardItemFromState(get(), "me", key);
             },
 
-            getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
-                return getBoardItemFromState(get(), user, categoryPath, date);
+            getUserDailyboard: (user: string, key: string) => {
+                return getBoardItemFromState(get(), user, key);
             },
 
-            getMeDailyboardCard: (categoryPath: string, date: YYMMDDDate, cardKey: string) => {
-                return getBoardCardItemFromState(get(), "me", categoryPath, date, cardKey);
+            getMeDailyboardCard: (key: string, cardKey: string) => {
+                return getBoardCardItemFromState(get(), "me", key, cardKey);
             },
 
-            getUserDailyboardCard: (user: string, categoryPath: string, date: YYMMDDDate, cardKey: string) => {
-                return getBoardCardItemFromState(get(), user, categoryPath, date, cardKey);
+            getUserDailyboardCard: (user: string, key: string, cardKey: string) => {
+                return getBoardCardItemFromState(get(), user, key, cardKey);
             },
 
-            addCard: (categoryPath: string, date: YYMMDDDate, card: TBoardCardSource) => {
+            addCard: (key: string, card: TBoardCardSource) => {
                 set((state) => {
-                    addCardToDailyboardState(state as BoardState, categoryPath, date, card);
+                    addCardToDailyboardState(state as BoardState, key, card);
                 });
             },
 
-            updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TBoardCardItemData) => void) => {
+            updateCard: (key: string, cardKey: string, cardUpdates: (draftCard: TBoardCardItemData) => void) => {
                 set((state) => {
-                    return updateCardInDailyboardState(state as BoardState, categoryPath, date, cardKey, cardUpdates);
+                    return updateCardInDailyboardState(state as BoardState, key, cardKey, cardUpdates);
                 });
             },
 
-            removeCard: (categoryPath: string, date: YYMMDDDate, cardName: string) => {
+            removeCard: (key: string, cardKey: string) => {
                 set((state) => {
-                    removeCardFromDailyboardState(state as BoardState, categoryPath, date, cardName);
+                    removeCardFromDailyboardState(state as BoardState, key, cardKey);
                 });
             },
 

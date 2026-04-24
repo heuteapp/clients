@@ -60,10 +60,9 @@ export const getBoardItemFromState = <
 >(
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>, 
     owner: string, 
-    categoryPath: string, 
-    date: YYMMDDDate
+    key: string,
 ): TBoardItem | null => {
-    const content = getBoardItemContentFromState(state, owner, categoryPath, date);
+    const content = getBoardItemContentFromState(state, owner, key);
     if (!content) return null;
     
     const cards = getBoardCardItemContentsFromState(state, content.id);
@@ -84,11 +83,10 @@ export const getBoardItemContentFromState = <
 >(  
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>,
     owner: string, 
-    categoryPath: string, 
-    date: YYMMDDDate
+    key: string,
 ) => {
-    const key = Object.keys(state.byId).find(id => id.startsWith(`${owner}@${categoryPath}@${date.raw}`));
-    return key ? state.byId[key] as TBoardItemContent : null;
+    const id = Object.keys(state.byId).find(id => id.startsWith(`${owner}@${key}`));
+    return id ? state.byId[id] as TBoardItemContent : null;
 };
 
 export const getBoardCardItemFromState = <
@@ -101,11 +99,10 @@ export const getBoardCardItemFromState = <
 >(
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>,
     owner: string, 
-    categoryPath: string, 
-    date: YYMMDDDate,
+    key: string, 
     cardKey: string
 ) => {
-    const cardId = `${owner}@${categoryPath}@${date.raw}/${cardKey}`;
+    const cardId = `${owner}@${key}/${cardKey}`;
     return state.cardById[cardId] as unknown as TBoardCardItem || null;
 };
 
@@ -137,11 +134,10 @@ export const addCardToDailyboardState = <
     TBoardCardItemContent extends StoredBoardCardItemData
 >(
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>,
-    categoryPath: string,
-    date: YYMMDDDate,
+    key: string,
     card: TBoardCardSource
 ): boolean => {
-    const dailyboardContent = getBoardItemContentFromState(state, "me", categoryPath, date);
+    const dailyboardContent = getBoardItemContentFromState(state, "me", key);
     if (!dailyboardContent) return false;
 
     const dailyboardId = dailyboardContent.id;
@@ -166,14 +162,13 @@ export const updateCardInDailyboardState = <
     TBoardCardItemContent extends StoredBoardCardItemData,
 >(
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>,
-    categoryPath: string,
-    date: YYMMDDDate,
+    key: string,
     cardKey: string,
     cardUpdates: (draftCard: TBoardCardItemContent) => void
 ): BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent> => {
     
     return produce(state, (draft) => {
-        const cardId = `me@${categoryPath}@${date.raw}/${cardKey}`;
+        const cardId = `me@${key}/${cardKey}`;
         const card = draft.cardById[cardId];
 
         console.log("Updating card in state with ID:", cardId, "Current card data:", card);
@@ -194,18 +189,17 @@ export const removeCardFromDailyboardState = <
     TBoardCardItemContent extends StoredBoardCardItemData
 >(
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>,
-    categoryPath: string,
-    date: YYMMDDDate,
-    cardName: string
+    key: string,
+    cardKey: string
 ): boolean => {
-    const dailyboardContent = getBoardItemContentFromState(state, "me", categoryPath, date);
+    const dailyboardContent = getBoardItemContentFromState(state, "me", key);
     if (!dailyboardContent) return false;
 
     const dailyboardId = dailyboardContent.id;
-    const cardId = `${dailyboardId}/${cardName}`;
+    const cardId = `${dailyboardId}/${cardKey}`;
     
     if (!state.cardById[cardId]) {
-        console.warn(`Card not found with name: ${cardName}`);
+        console.warn(`Card not found with name: ${cardKey}`);
         return false;
     }
 

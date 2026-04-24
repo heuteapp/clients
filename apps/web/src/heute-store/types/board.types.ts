@@ -1,6 +1,5 @@
 import { BoardBase, BoardBaseData, BoardCardBase, BoardCardBaseData } from "@/src/modules/d-board/types/board.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
-import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 
 export interface BoardBaseState<
     TBoardSource extends BoardBaseSource,
@@ -15,15 +14,15 @@ export interface BoardBaseState<
     loadMeDailyboard: (dailyboard: TBoardSource) => void;
     loadUserDailyboard: (user: string, dailyboard: TBoardSource) => void;
 
-    getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => TBoardItem | null;
-    getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => TBoardItem | null;
+    getMeDailyboard: (key: string) => TBoardItem | null;
+    getUserDailyboard: (user: string, key: string) => TBoardItem | null;
 
-    getMeDailyboardCard: (categoryPath: string, date: YYMMDDDate, cardKey: string) => TBoardCardItem | null;
-    getUserDailyboardCard: (user: string, categoryPath: string, date: YYMMDDDate, cardKey: string) => TBoardCardItem | null;
+    getMeDailyboardCard: (key: string, cardKey: string) => TBoardCardItem | null;
+    getUserDailyboardCard: (user: string, key: string, cardKey: string) => TBoardCardItem | null;
 
-    addCard: (categoryPath: string, date: YYMMDDDate, card: TBoardCardSource) => void;
-    updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draft: TBoardCardItemData) => void) => void;
-    removeCard: (categoryPath: string,  date: YYMMDDDate, cardName: string) => void;
+    addCard: (key: string, card: TBoardCardSource) => void;
+    updateCard: (key: string, cardKey: string, cardUpdates: (draft: TBoardCardItemData) => void) => void;
+    removeCard: (key: string, cardName: string) => void;
 }
 
 export type BoardBaseSource = BoardBase;
