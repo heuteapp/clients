@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from "react";
 import { TracingStoreContext } from "../contexts/tracing.context";
 import { TracingStoreProviderProps } from "../types/props.types";
-import { TracingDomainData, TracingDomain, TracingItemData } from "../types/context.types";
+import { TracingDomainData, TracingDomainSelector, TracingItemData } from "../types/context.types";
 
 export function TracingStoreProvider({ children }: TracingStoreProviderProps) {
-    const domains = useMemo(() => ({} as Record<string, TracingDomain>), []);
+    const domains = useMemo(() => ({} as Record<string, TracingDomainSelector>), []);
 
     const subscribe = useCallback((name: string, data: TracingDomainData): boolean => {
         if(domains[name]) {
