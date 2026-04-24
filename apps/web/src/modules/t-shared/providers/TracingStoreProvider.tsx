@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { TracingStoreContext } from "../contexts/tracing.context";
 import { TracingStoreProviderProps } from "../types/props.types";
-import { TracingDomainData, TracingDomainSelector, TracingItemData } from "../types/context.types";
+import { TracingDomainData, TracingDomainSelector, TracingItemData, TracingItemFilter } from "../types/context.types";
 
 export function TracingStoreProvider({ children }: TracingStoreProviderProps) {
     const domains = useMemo(() => ({} as Record<string, TracingDomainSelector>), []);
@@ -12,7 +12,11 @@ export function TracingStoreProvider({ children }: TracingStoreProviderProps) {
         }
 
         domains[name] = {
-            itemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => {
+            items: (filter?: TracingItemFilter) => {
+                const items = Array.from(data.items.values());
+                return filter ? items.filter(filter) : items;
+            },
+            itemsOf: (type: string, filter?: TracingItemFilter) => {
                 const items = Array.from(data.items.values()).filter(item => item.type === type);
                 return filter ? items.filter(filter) : items;
             },

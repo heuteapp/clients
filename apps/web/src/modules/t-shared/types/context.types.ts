@@ -1,7 +1,7 @@
 export interface TracingStoreContextValue {
     subscribe: (name: string, data: TracingDomainData) => boolean;
     unsubscribe: (name: string) => boolean;
-    domains: Record<string, TracingDomain>;
+    domains: Record<string, TracingDomainSelector>;
 }
 
 export interface TracingDomainContextValue {
@@ -9,8 +9,9 @@ export interface TracingDomainContextValue {
     untrace: (id: string | null, type: string) => boolean;
 }
 
-export interface TracingDomain {
-    itemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => TracingItemData[];
+export interface TracingDomainSelector {
+    items: (filter?: TracingItemFilter) => TracingItemData[];
+    itemsOf: (type: string, filter?: TracingItemFilter) => TracingItemData[];
     uniqueItem: (type: string) => TracingItemData | null;
 }
 
@@ -23,3 +24,5 @@ export interface TracingItemData {
     data: any;
     ref: React.RefObject<HTMLElement | null>;
 }
+
+export type TracingItemFilter = (item: TracingItemData) => boolean;
