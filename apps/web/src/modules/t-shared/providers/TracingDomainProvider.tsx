@@ -1,37 +1,38 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { TracingDomainContext } from "../contexts/tracing.context";
 import { TracingDomainProviderProps } from "../types/props.types";
 import { TracingItemData } from "../types/context.types";
+import { useTracingStore } from "../hooks/useTracingStore";
 
 export function TracingDomainProvider({ name, children }: TracingDomainProviderProps) {
-    const components = useMemo(() => new Map<string, TracingItemData>(), []);
+    const { subscribe, unsubscribe } = useTracingStore();
+    const items = useMemo(() => new Map<string, TracingItemData>(), []);
 
     const trace = useCallback((id: string, item: TracingItemData) => {
-        if(components.has(id)) return false;
+        if(items.has(id)) return false;
 
-        components.set(id, item);
+        items.set(id, item);
         return true;
-    }, [components]);
+    }, [items]);
 
     const untrace = useCallback((id: string) => {
-        return components.delete(id);
-    }, [components]);
-
-    const getItemsOf = useCallback((type: string, filter?: (item: TracingItemData) => boolean) => {
-        const items: TracingItemData[] = [];
-        for(const item of components.values()) {
-            if(item.type === type && (!filter || filter(item))) items.push(item);
-        }
-        return items;
-    }, [components]);
+        return items.delete(id);
+    }, [items]);
 
     const contextValue = useMemo(() => {
         return {
             trace,
-            untrace,
-            getItemsOf
+            untrace
         };
-    }, [trace, untrace, getItemsOf]);
+    }, [trace, untrace]);
+
+    useEffect(() => {
+        subscribe(name, { items });
+
+        return () => {
+            unsubscribe(name);
+        };
+    }, []);
 
     return (
         <TracingDomainContext.Provider value={contextValue}>

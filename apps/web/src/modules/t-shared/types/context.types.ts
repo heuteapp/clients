@@ -14,7 +14,7 @@ export interface TracingDomain {
 }
 
 export interface TracingDomainData {
-    items: TracingItemData[];
+    items: Map<string, TracingItemData>;
 }
 
 export interface TracingItemData {
