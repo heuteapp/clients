@@ -10,7 +10,7 @@ export interface BoardCardBase {
     name: string;
 }
 
-export type BoardBaseData<TBase extends BoardBase = BoardBase> = Omit<TBase, "cards">;
+export type BoardBaseData<TBase extends BoardBase = BoardBase> = Omit<TBase, "cards" | "getKey">;
 
 export type BoardCardBaseData<TBase extends BoardCardBase = BoardCardBase> = Omit<TBase, never>;
 
