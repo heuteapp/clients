@@ -4,7 +4,7 @@ import React from "react";
 import { CanvasContext } from "@/src/modules/ui-canvas/contexts/canvas.context";
 import { useCanvasMetrics } from "../hooks/useCanvasMetrics";
 import { CanvasProviderProps } from "../types/canvas.props";
-import { useTracingStore } from "../../t-shared/hooks/useTracingStore";
+import { useTracingStore } from "../../t-core/hooks/useTracingStore";
 
 export function CanvasProvider({ rootRef, metricsId, dataSource, styleSource, children }: CanvasProviderProps) {
 

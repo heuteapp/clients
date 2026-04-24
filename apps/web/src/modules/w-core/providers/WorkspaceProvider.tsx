@@ -5,7 +5,7 @@ import { WorkspaceContext } from "@/src/modules/w-core/contexts/workspace.contex
 import { useWorkspaceMetadata } from "@/src/modules/w-core/hooks/useWorkspaceMetadata";
 import { useWorkspaceBreadcrumbs } from "../hooks/useWorkspaceBreadcrumbs";
 import { useCategoriesLoader } from "@/src/heute-store/hooks/useCategoriesLoader";
-import { TracingStoreProvider } from "../../t-shared/providers/TracingStoreProvider";
+import { TracingStoreProvider } from "../../t-core/providers/TracingStoreProvider";
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceMetadata();

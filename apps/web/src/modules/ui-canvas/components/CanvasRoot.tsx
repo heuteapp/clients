@@ -5,7 +5,7 @@ import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
 import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";
 import { CanvasGridContainer } from "./CanvasGridContainer";
-import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
+import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 
 export function CanvasRoot(props: CanvasRootProps) {
   const { data } = props;

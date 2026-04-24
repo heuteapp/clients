@@ -3,7 +3,7 @@ import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
 import { useRef } from "react";
 import { CanvasGridContainerProps } from "../types/canvas.props";
 import { CanvasGridSection } from "./CanvasGridSection";
-import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
+import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 
 export function CanvasGridContainer(props : CanvasGridContainerProps) {
     const ref = useRef<HTMLDivElement>(null);

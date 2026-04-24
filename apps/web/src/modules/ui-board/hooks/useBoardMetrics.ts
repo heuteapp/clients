@@ -3,7 +3,7 @@ import { BoardMetrics } from "../types/board.metrics";
 import { applyBoardMetrics, calculateBoardMetrics } from "../metrics/board.metrics";
 import { useMetricsContext } from "../../ui-shared/hooks/useMetricsContext";
 import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
-import { TracingDomainSelector } from "../../t-shared/types/tracing.types";
+import { TracingDomainSelector } from "../../t-core/types/tracing.types";
 
 export const useBoardMetrics = (metricsId: string, selector: TracingDomainSelector) : BoardMetrics => {
     const { metrics: canvasMetrics } = useCanvasContext();

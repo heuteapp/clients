@@ -3,7 +3,7 @@ import { useWorkspaceContext } from "@/src/modules/w-core/hooks/useWorkspaceCont
 import { ChevronLeft, ChevronRight, Add, Launch } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
-import { useTracingStore } from "@/src/modules/t-shared/hooks/useTracingStore";
+import { useTracingStore } from "@/src/modules/t-core/hooks/useTracingStore";
 
 export function LayoutSidebar() {
   const { metadata } = useWorkspaceContext();

@@ -1,5 +1,5 @@
 import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types"
-import { TracingDomainSelector } from "../../t-shared/types/tracing.types";
+import { TracingDomainSelector } from "../../t-core/types/tracing.types";
 
 export interface CanvasMetrics {
     value: CanvasMetricsValue | null;

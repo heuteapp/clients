@@ -8,7 +8,7 @@ import BoardCardContainer from "./BoardCardContainer";
 import { BoardRootProps } from "../types/board.props";
 import { CanvasRoot } from "@/src/modules/ui-canvas/components/CanvasRoot";
 import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
-import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
+import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 import { useBoardContext } from "../hooks/useBoardContext";
 
 //

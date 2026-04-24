@@ -4,7 +4,7 @@ import { useRef } from "react";
 import BoardCardItem from "./BoardCardItem"
 
 import { BoardCardContainerProps } from "@/src/modules/ui-board/types/board.props";
-import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
+import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 
 //
 

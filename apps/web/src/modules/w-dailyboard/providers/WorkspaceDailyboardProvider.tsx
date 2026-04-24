@@ -12,7 +12,7 @@ import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboard
 import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
 import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardContext";
 import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDialogs";
-import { TracingDomainProvider } from "../../t-shared/providers/TracingDomainProvider";
+import { TracingDomainProvider } from "../../t-core/providers/TracingDomainProvider";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
