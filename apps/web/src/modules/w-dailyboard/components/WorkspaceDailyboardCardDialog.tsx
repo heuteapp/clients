@@ -1,16 +1,16 @@
 import { Dialog, DialogContent, Typography } from '@mui/material';
 import { useWorkspaceDailyboardContext } from '../hooks/useWorkspaceDailyboardContext';
 import { isEditingCard } from '../state/workspace-dailyboard.machine';
-import { useDailyboardDataStore } from '@/src/heute-store/stores/dailyboard.store';
+import { useDailyboardDataStore } from '@/src/heute-store/stores/board.store';
 import { useRef, useMemo } from 'react';
-import { StoredDailyboardCardModel } from '@/src/heute-store/types/dailyboard.types';
+import { StoredBoardCardModel } from '@/src/heute-store/types/board.types';
 import { useDailyboardContext } from '../../ui-dailyboard/hooks/useDailyboardContext';
 
 export function WorkspaceDailyboardCardDialog() {
   const { send, state } = useWorkspaceDailyboardContext();
   const { metrics } = useDailyboardContext();
   const { getMeDailyboardCard } = useDailyboardDataStore();
-  const cardRef = useRef<StoredDailyboardCardModel | null>(null);
+  const cardRef = useRef<StoredBoardCardModel | null>(null);
 
   const handleClose = () => {
     send({ type: "CARD_EDIT_CANCELLED" });

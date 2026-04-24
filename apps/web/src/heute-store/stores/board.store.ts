@@ -3,54 +3,54 @@ import { devtools } from "zustand/middleware";
 import { create } from "zustand";
 
 import { 
-    DailyboardBaseState, 
-    StoredDailyboardItem, 
-    StoredDailyboardItemData, 
-    StoredDailyboardCardItem, 
-    StoredDailyboardCardItemData 
-} from "../types/dailyboard.types";
-import { DailyboardBase, DailyboardCardBase } from "@/src/modules/d-board/types/board.base.types";
-import { addCardToDailyboardState, getDailyboardCardItemFromState, getDailyboardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/dailyboard.utils";
-import { DailyboardModelState } from "../types/dailyboard.types";
+    BoardBaseState, 
+    StoredBoardItem, 
+    StoredBoardItemData, 
+    StoredBoardCardItem, 
+    StoredBoardCardItemData 
+} from "../types/board.types";
+import { BoardBase, BoardCardBase } from "@/src/modules/d-board/types/board.base.types";
+import { addCardToDailyboardState, getBoardCardItemFromState, getBoardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/board.utils";
+import { BoardModelState } from "../types/board.types";
 import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 
 export const withDailyboardImmer = <
-    TDailyboardSource extends DailyboardBase,
-    TDailyboardCardSource extends DailyboardCardBase,
-    TDailyboardItem extends StoredDailyboardItem<TDailyboardCardItem>,
-    TDailyboardItemData extends StoredDailyboardItemData,
-    TDailyboardCardItem extends StoredDailyboardCardItem,
-    TDailyboardCardItemData extends StoredDailyboardCardItemData
+    TBoardSource extends BoardBase,
+    TBoardCardSource extends BoardCardBase,
+    TBoardItem extends StoredBoardItem<TBoardCardItem>,
+    TBoardItemData extends StoredBoardItemData,
+    TBoardCardItem extends StoredBoardCardItem,
+    TBoardCardItemData extends StoredBoardCardItemData
 >() => {
 
-    type DailyboardState = DailyboardBaseState<
-        TDailyboardSource, 
-        TDailyboardCardSource,
-        TDailyboardItem, 
-        TDailyboardItemData, 
-        TDailyboardCardItem, 
-        TDailyboardCardItemData
+    type BoardState = BoardBaseState<
+        TBoardSource, 
+        TBoardCardSource,
+        TBoardItem, 
+        TBoardItemData, 
+        TBoardCardItem, 
+        TBoardCardItemData
     >;
 
     return (
-        immer<DailyboardState>((set, get) => ({
+        immer<BoardState>((set, get) => ({
             byId: {},
             cardById: {},
             userOrder: [],
 
-            loadMeDailyboard: (dailyboard: TDailyboardSource) => {
+            loadMeDailyboard: (dailyboard: TBoardSource) => {
                 set((state) => {
                     const owner = "me";
-                    saveDailyboardToState(state as DailyboardState, owner, dailyboard);
+                    saveDailyboardToState(state as BoardState, owner, dailyboard);
                     if (!state.userOrder.includes(owner)) {
                         state.userOrder.push(owner);
                     }
                 });
             },
 
-            loadUserDailyboard: (user: string, dailyboard: TDailyboardSource) => {
+            loadUserDailyboard: (user: string, dailyboard: TBoardSource) => {
                 set((state) => {
-                    saveDailyboardToState(state as DailyboardState, user, dailyboard);
+                    saveDailyboardToState(state as BoardState, user, dailyboard);
 
                     state.userOrder = state.userOrder.filter(u => u !== user);
                     state.userOrder.push(user);
@@ -76,36 +76,36 @@ export const withDailyboardImmer = <
             },
 
             getMeDailyboard: (categoryPath: string, date: YYMMDDDate) => {
-                return getDailyboardItemFromState(get(), "me", categoryPath, date);
+                return getBoardItemFromState(get(), "me", categoryPath, date);
             },
 
             getUserDailyboard: (user: string, categoryPath: string, date: YYMMDDDate) => {
-                return getDailyboardItemFromState(get(), user, categoryPath, date);
+                return getBoardItemFromState(get(), user, categoryPath, date);
             },
 
             getMeDailyboardCard: (categoryPath: string, date: YYMMDDDate, cardKey: string) => {
-                return getDailyboardCardItemFromState(get(), "me", categoryPath, date, cardKey);
+                return getBoardCardItemFromState(get(), "me", categoryPath, date, cardKey);
             },
 
             getUserDailyboardCard: (user: string, categoryPath: string, date: YYMMDDDate, cardKey: string) => {
-                return getDailyboardCardItemFromState(get(), user, categoryPath, date, cardKey);
+                return getBoardCardItemFromState(get(), user, categoryPath, date, cardKey);
             },
 
-            addCard: (categoryPath: string, date: YYMMDDDate, card: TDailyboardCardSource) => {
+            addCard: (categoryPath: string, date: YYMMDDDate, card: TBoardCardSource) => {
                 set((state) => {
-                    addCardToDailyboardState(state as DailyboardState, categoryPath, date, card);
+                    addCardToDailyboardState(state as BoardState, categoryPath, date, card);
                 });
             },
 
-            updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TDailyboardCardItemData) => void) => {
+            updateCard: (categoryPath: string, date: YYMMDDDate, cardKey: string, cardUpdates: (draftCard: TBoardCardItemData) => void) => {
                 set((state) => {
-                    return updateCardInDailyboardState(state as DailyboardState, categoryPath, date, cardKey, cardUpdates);
+                    return updateCardInDailyboardState(state as BoardState, categoryPath, date, cardKey, cardUpdates);
                 });
             },
 
             removeCard: (categoryPath: string, date: YYMMDDDate, cardName: string) => {
                 set((state) => {
-                    removeCardFromDailyboardState(state as DailyboardState, categoryPath, date, cardName);
+                    removeCardFromDailyboardState(state as BoardState, categoryPath, date, cardName);
                 });
             },
 
@@ -157,6 +157,6 @@ export const withDailyboardImmer = <
     );
 };
 
-export const useDailyboardDataStore = create<DailyboardModelState>()(
+export const useDailyboardDataStore = create<BoardModelState>()(
     devtools(withDailyboardImmer(), { name: "DailyboardModelStore" })
 );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
+import { useDailyboardDataStore } from "@/src/heute-store/stores/board.store";
 import { useCanvasModelStore } from "@/src/heute-store/stores/canvas.stores";
 import { WorkspaceDailyboardView } from "@/src/modules/w-dailyboard/components/WorkspaceDailyboardView";
 import { useWorkspaceDailyboardContext } from "@/src/modules/w-dailyboard/hooks/useWorkspaceDailyboardContext";

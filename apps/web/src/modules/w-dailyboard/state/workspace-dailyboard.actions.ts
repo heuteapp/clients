@@ -2,7 +2,7 @@ import { responseToDailyboard } from "@/src/api/responses/dailyboard.response";
 import { createAssign } from "../../d-auth/utils/create-assign";
 import { WorkspaceDailyboardMachineContext, WorkspaceDailyboardMachineEvent } from "../types/state/workspace-dailyboard.machine.types";
 import { responseToCanvas } from "@/src/api/responses/canvas.response";
-import { useDailyboardDataStore } from "@/src/heute-store/stores/dailyboard.store";
+import { useDailyboardDataStore } from "@/src/heute-store/stores/board.store";
 import { useCanvasModelStore } from "@/src/heute-store/stores/canvas.stores";
 import { isoToYYMMDD } from "../../d-shared/utils/date.utils";
 

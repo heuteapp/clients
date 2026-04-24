@@ -1,19 +1,19 @@
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
-import { StoredDailyboardModel, StoredDailyboardCardModel } from "@/src/heute-store/types/dailyboard.types";
+import { StoredBoardModel, StoredBoardCardModel } from "@/src/heute-store/types/board.types";
 import { BoardCardContent } from "@/src/modules/d-board/types/board.types";
 import { GridSpan } from "../../d-shared/types/common";
 
 export interface DailyboardRootProps {
-    data: StoredDailyboardModel;
+    data: StoredBoardModel;
 }
 
 export interface DailyboardCardContainerProps {
-    cards: StoredDailyboardCardModel[];
+    cards: StoredBoardCardModel[];
 }
 
 export interface DailyboardCardItemProps {
-    data: StoredDailyboardCardModel;
+    data: StoredBoardCardModel;
 }
 
 export interface DailyboardCardDisplayProps {
@@ -48,6 +48,6 @@ export interface DailyboardCardDisplayProps {
 export interface DailyboardProviderProps {
     rootRef: React.RefObject<HTMLDivElement | null>;
     metricsId?: string;
-    dataSource: StoredDailyboardModel | null;
+    dataSource: StoredBoardModel | null;
     children: React.ReactNode;
 }
