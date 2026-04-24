@@ -38,13 +38,13 @@ export const saveDailyboardToState = <
 >(
     state: BoardBaseState<TBoardSource, TBoardCardSource, TBoardItem, TBoardItemContent, TBoardCardItem, TBoardCardItemContent>, 
     owner: string, 
-    dailyboard: TBoardSource
+    board: TBoardSource
 ) => {
-    const dailyboardId = `${owner}@${dailyboard.categoryPath}@${dailyboard.date.raw}`;
+    const dailyboardId = `${owner}@${board.getKey()}`;
 
-    state.byId[dailyboardId] = convertBoardSourceToItemContent(dailyboardId, dailyboard);
+    state.byId[dailyboardId] = convertBoardSourceToItemContent(dailyboardId, board);
 
-    dailyboard.cards.forEach((card) => {
+    board.cards.forEach((card) => {
         const cardId = `${dailyboardId}/${card.name}`;
         state.cardById[cardId] = convertBoardCardSourceToItemContent(cardId, card);
     });

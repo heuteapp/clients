@@ -8,7 +8,11 @@ export function responseToDailyboard(response: DailyboardResponse): DailyboardMo
         date: isoToYYMMDD(response.date)!,
         canvasName: response.layout.name,
         canvasVersion: response.layout.version,
-        cards: response.cards.map(responseToDailyboardCard)
+        cards: response.cards.map(responseToDailyboardCard),
+
+        getKey: function() {
+            return `${this.categoryPath}@${this.date}`;
+        }
     };
 }
 

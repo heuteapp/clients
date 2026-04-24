@@ -38,19 +38,19 @@ export const withDailyboardImmer = <
             cardById: {},
             userOrder: [],
 
-            loadMeDailyboard: (dailyboard: TBoardSource) => {
+            loadMeDailyboard: (board: TBoardSource) => {
                 set((state) => {
                     const owner = "me";
-                    saveDailyboardToState(state as BoardState, owner, dailyboard);
+                    saveDailyboardToState(state as BoardState, owner, board);
                     if (!state.userOrder.includes(owner)) {
                         state.userOrder.push(owner);
                     }
                 });
             },
 
-            loadUserDailyboard: (user: string, dailyboard: TBoardSource) => {
+            loadUserDailyboard: (user: string, board: TBoardSource) => {
                 set((state) => {
-                    saveDailyboardToState(state as BoardState, user, dailyboard);
+                    saveDailyboardToState(state as BoardState, user, board);
 
                     state.userOrder = state.userOrder.filter(u => u !== user);
                     state.userOrder.push(user);

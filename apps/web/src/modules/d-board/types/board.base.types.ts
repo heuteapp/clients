@@ -2,6 +2,8 @@ export interface BoardBase {
     canvasName: string;
     canvasVersion: number;
     cards: BoardCardBase[];
+
+    getKey: () => string;
 }
 
 export interface BoardCardBase {
