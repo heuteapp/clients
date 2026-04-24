@@ -7,7 +7,7 @@ import { BoardProviderProps } from "../types/board.props";
 import { useBoardMetrics } from "../hooks/useBoardMetrics";
 import { useTracingStore } from "../../t-core/hooks/useTracingStore";
 
-export function BoardProvider({ rootRef, metricsId, dataSource, children }: BoardProviderProps) {
+export function BoardRenderProvider({ rootRef, metricsId, dataSource, children }: BoardProviderProps) {
     const canvas = useCanvasContext();
 
     const { domains } = useTracingStore();
