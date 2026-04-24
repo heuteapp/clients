@@ -1,7 +1,7 @@
 import { isGridRectOverlapping } from "../../d-shared/utils/common";
-import { DailyboardCardModel } from "../types/dailyboard.model.types";
+import { BoardCardModel } from "../types/board.model.types";
 
-export const isDailyboardCardOverlapping = (a: DailyboardCardModel, b: DailyboardCardModel) => {
+export const isBoardCardOverlapping = (a: BoardCardModel, b: BoardCardModel) => {
     if(a.placement === null || b.placement === null) {
         return false;
     }

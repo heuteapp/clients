@@ -1,4 +1,4 @@
-import { DailyboardModel, DailyboardCardModel } from "@/src/modules/d-dailyboard/types/dailyboard.model.types";
+import { DailyboardModel, DailyboardCardModel } from "@/src/modules/d-board/types/board.model.types";
 import { DailyboardCardResponse, DailyboardResponse } from "../models/responses/dailyboard.response";
 import { isoToYYMMDD } from "@/src/modules/d-shared/utils/date.utils";
 

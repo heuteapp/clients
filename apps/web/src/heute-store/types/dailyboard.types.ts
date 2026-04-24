@@ -1,4 +1,4 @@
-import { DailyboardBase, DailyboardBaseData, DailyboardCardBase, DailyboardCardBaseData } from "@/src/modules/d-dailyboard/types/dailyboard.base.types";
+import { DailyboardBase, DailyboardBaseData, DailyboardCardBase, DailyboardCardBaseData } from "@/src/modules/d-board/types/board.base.types";
 import { StoredItem, UserBasedStoreState } from "./store.types";
 import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 
@@ -46,7 +46,7 @@ export type StoredDailyboardCardItemData<TBase extends StoredDailyboardCardItem 
 
 //
 
-import { DailyboardModel, DailyboardCardModel } from "@/src/modules/d-dailyboard/types/dailyboard.model.types";
+import { DailyboardModel, DailyboardCardModel } from "@/src/modules/d-board/types/board.model.types";
 
 export interface DailyboardModelState extends DailyboardBaseState<
     DailyboardModelSource,

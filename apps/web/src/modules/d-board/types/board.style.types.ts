@@ -13,3 +13,19 @@ export interface BoardCardStyle extends BoardCardBase {
 export type BoardStyleData<TBase extends BoardStyle = BoardStyle> = BoardBaseData<TBase>
 
 export type BoardCardStyleData<TBase extends BoardCardStyle = BoardCardStyle> = BoardCardBaseData<TBase>
+
+//
+
+import { DailyboardBase, DailyboardCardBase } from "./board.base.types";
+
+export interface DailyboardStyle extends DailyboardBase, BoardStyle {
+    cards: DailyboardCardStyle[];
+}
+
+export interface DailyboardCardStyle extends DailyboardCardBase, BoardCardStyle {
+
+}
+
+export type DailyboardStyleData<TBase extends DailyboardStyle = DailyboardStyle> = BoardStyleData<TBase>
+
+export type DailyboardCardStyleData<TBase extends DailyboardCardStyle = DailyboardCardStyle> = BoardCardStyleData<TBase>;

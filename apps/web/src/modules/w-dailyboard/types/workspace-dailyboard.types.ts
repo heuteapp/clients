@@ -1,5 +1,5 @@
 import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
-import { DailyboardPathConfig, DailyboardPathValidationResult } from "../../d-dailyboard/types/dailyboard.types";
+import { DailyboardPathConfig, DailyboardPathValidationResult } from "../../d-board/types/board.types";
 
 /**
  * Configuration options for the useWorkspaceDailyboard hook, allowing customization of how the dailyboard path is parsed and validated.

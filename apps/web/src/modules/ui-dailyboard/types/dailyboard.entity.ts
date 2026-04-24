@@ -1,5 +1,5 @@
 import { UIEntity } from "@/src/modules/ui-base/types/ui.types";
-import { DailyboardCardModel, DailyboardModel } from "@/src/modules/d-dailyboard/types/dailyboard.model.types";
+import { DailyboardCardModel, DailyboardModel } from "@/src/modules/d-board/types/board.model.types";
 
 /**
  * Represents a complete dailyboard entity combining UI state and dailyboard data

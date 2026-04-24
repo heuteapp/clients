@@ -1,19 +1,19 @@
-export interface DailyboardCommand {
+export interface BoardCommand {
     occurredAt: string;
-    type: DailyboardCommandType;
+    type: BoardCommandType;
     payload: object;
 }
 
-export enum DailyboardCommandType {
+export enum BoardCommandType {
     CreateCard = "CreateCard",
     DeleteCard = "DeleteCard",
 }
 
 //
 
-export interface CreateCardCommand extends DailyboardCommand {
+export interface CreateCardCommand extends BoardCommand {
     occurredAt: string;
-    type: DailyboardCommandType.CreateCard;
+    type: BoardCommandType.CreateCard;
     payload: CreateCardPayload;
 }
 
@@ -29,9 +29,9 @@ export interface CreateCardPayload {
     }
 }
 
-export interface DeleteCardCommand extends DailyboardCommand {
+export interface DeleteCardCommand extends BoardCommand {
     occurredAt: string;
-    type: DailyboardCommandType.DeleteCard;
+    type: BoardCommandType.DeleteCard;
     payload: DeleteCardPayload;
 }
 
