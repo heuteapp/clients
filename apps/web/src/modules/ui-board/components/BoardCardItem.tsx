@@ -3,6 +3,7 @@ import { BoardCardItemProps } from "@/src/modules/ui-board/types/board.props";
 import { useLayoutEffect, useRef } from "react";
 import { BoardCardDisplay } from "./BoardCardDisplay";
 import { getBoardCardDataSet } from "../utils/ui.utils";
+import { TracedItem } from "../../t-shared/components/TracedItem";
 
 function BoardCardItem(props : BoardCardItemProps) {
     const { data: boardCardData } = props;
@@ -23,14 +24,21 @@ function BoardCardItem(props : BoardCardItemProps) {
     if(!placement) return null;
 
     return (
-        <BoardCardDisplay 
-            state={{
-                content: boardCardContent,
-                isFrontFace: true,
-            }}
+        <TracedItem
+            type="board-card-item"
+            id={boardCardData.name}
+            data={boardCardData}
             ref={ref}
-            {...getBoardCardDataSet(boardCardData)}
-        />
+        >
+            <BoardCardDisplay 
+                state={{
+                    content: boardCardContent,
+                    isFrontFace: true,
+                }}
+                ref={ref}
+                {...getBoardCardDataSet(boardCardData)}
+            />
+        </TracedItem>
     )
 }
 
