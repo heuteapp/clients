@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { TracingDomainContext } from "../contexts/tracing.context";
 import { TracingDomainProviderProps } from "../types/props.types";
-import { TracingItemData } from "../types/context.types";
 import { useTracingStore } from "../hooks/useTracingStore";
+import { TracingItemData } from "../types/tracing.types";
 
 export function TracingDomainProvider({ name, children }: TracingDomainProviderProps) {
     const { subscribe, unsubscribe } = useTracingStore();

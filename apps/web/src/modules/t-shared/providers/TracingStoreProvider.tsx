@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { TracingStoreContext } from "../contexts/tracing.context";
 import { TracingStoreProviderProps } from "../types/props.types";
-import { TracingDomainData, TracingDomainSelector, TracingItemFilter } from "../types/context.types";
+import { TracingDomainSelector, TracingDomainData, TracingItemFilter } from "../types/tracing.types";
 
 export function TracingStoreProvider({ children }: TracingStoreProviderProps) {
     const domains = useMemo(() => ({} as Record<string, TracingDomainSelector>), []);
