@@ -19,7 +19,7 @@ export function BoardProvider({ rootRef, metricsId, dataSource, children }: Boar
             return domains[tracingName];
         }
         return null;
-    }, [tracingName, domains])!;
+    }, [domains[tracingName]])!;
 
     const metrics = useBoardMetrics(metricsId ?? "board", selector);
     

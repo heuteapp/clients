@@ -1,6 +1,5 @@
 import { ApplyBoardMetrics, CalculateBoardMetrics, BoardMetricsValue } from "../types/board.metrics";
 import { calcBoardCardFixedRect, findBoardCardTitleInSubtree, getBoardCardData } from "../utils/dom.utils";
-import { findCanvasGridInSubtree, getCanvasGridModelData } from "../../ui-canvas/utils/dom.utils";
 import { CanvasGridModelData } from "../../d-canvas/types/canvas.model.types";
 import { BoardCardModelData } from "../../d-board/types/board.model.types";
 

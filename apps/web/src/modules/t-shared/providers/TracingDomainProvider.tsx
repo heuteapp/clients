@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect, useMemo } from "react";
 import { TracingDomainContext } from "../contexts/tracing.context";
 import { TracingDomainProviderProps } from "../types/props.types";
 import { useTracingStore } from "../hooks/useTracingStore";
@@ -28,7 +28,7 @@ export function TracingDomainProvider({ name, children }: TracingDomainProviderP
         };
     }, [trace, untrace]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         subscribe(name, { items });
 
         return () => {

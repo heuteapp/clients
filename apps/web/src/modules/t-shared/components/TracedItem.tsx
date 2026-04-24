@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useTracingDomainContext } from "../hooks/useTracingDomainContext";
 import { TracedItemProps } from "../types/props.types";
 
 export function TracedItem({ type, id, data, ref, children }: TracedItemProps) {
     const { trace, untrace } = useTracingDomainContext();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         trace(id, { type, data, ref });
 
         return () => {
