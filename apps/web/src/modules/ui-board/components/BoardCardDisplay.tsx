@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import { DailyboardCardDisplayProps } from "../types/dailyboard.props";
+import { BoardCardDisplayProps } from "../types/board.props";
 import { Box } from "@mui/material";
 
-export function DailyboardCardDisplay({ state, ref, className, sx, render }: DailyboardCardDisplayProps) {
+export function BoardCardDisplay({ state, ref, className, sx, render }: BoardCardDisplayProps) {
     return (
         <Box
             className={clsx('heute-card', ...(className?.body || []))}

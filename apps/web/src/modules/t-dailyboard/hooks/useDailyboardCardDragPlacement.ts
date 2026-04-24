@@ -1,7 +1,7 @@
 import { BoardCardPlacement } from "@/src/modules/d-board/types/board.types";
 import { GridRect } from "@/src/modules/d-shared/types/common";
 import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modules/d-shared/utils/common";
-import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForGrid, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-dailyboard/utils/dom.utils";
+import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForGrid, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-board/utils/dom.utils";
 import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
 import { findCanvasGridAtPoint, calcGridPointerAtCursor } from "@/src/modules/ui-canvas/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";

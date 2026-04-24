@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { DailyboardProvider } from "@/src/modules/ui-dailyboard/provider/DailyboardProvider"
+import { DailyboardProvider } from "@/src/modules/ui-board/provider/BoardProvider"
 import { CanvasProvider } from "@/src/modules/ui-canvas/provider/CanvasProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";

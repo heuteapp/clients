@@ -1,4 +1,4 @@
-import { DailyboardRoot } from "../../ui-dailyboard/components/DailyboardRoot";
+import { DailyboardRoot } from "../../ui-board/components/BoardRoot";
 import { WorkspaceDailyboardProps } from "../types/workspace-dailyboard.props";
 
 export function WorkspaceDailyboardView({ data }: WorkspaceDailyboardProps) {

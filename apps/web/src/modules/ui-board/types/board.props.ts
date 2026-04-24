@@ -1,22 +1,23 @@
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
-import { StoredBoardModel, StoredBoardCardModel } from "@/src/heute-store/types/board.types";
 import { BoardCardContent } from "@/src/modules/d-board/types/board.types";
 import { GridSpan } from "../../d-shared/types/common";
 
-export interface DailyboardRootProps {
+import { StoredBoardModel, StoredBoardCardModel } from "@/src/heute-store/types/board.types";
+
+export interface BoardRootProps {
     data: StoredBoardModel;
 }
 
-export interface DailyboardCardContainerProps {
+export interface BoardCardContainerProps {
     cards: StoredBoardCardModel[];
 }
 
-export interface DailyboardCardItemProps {
+export interface BoardCardItemProps {
     data: StoredBoardCardModel;
 }
 
-export interface DailyboardCardDisplayProps {
+export interface BoardCardDisplayProps {
     state: {
         content: BoardCardContent;
         isFrontFace: boolean;
@@ -45,7 +46,7 @@ export interface DailyboardCardDisplayProps {
 
 //
 
-export interface DailyboardProviderProps {
+export interface BoardProviderProps {
     rootRef: React.RefObject<HTMLDivElement | null>;
     metricsId?: string;
     dataSource: StoredBoardModel | null;

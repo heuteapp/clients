@@ -4,7 +4,7 @@ import { isEditingCard } from '../state/workspace-dailyboard.machine';
 import { useDailyboardDataStore } from '@/src/heute-store/stores/board.store';
 import { useRef, useMemo } from 'react';
 import { StoredBoardCardModel } from '@/src/heute-store/types/board.types';
-import { useDailyboardContext } from '../../ui-dailyboard/hooks/useDailyboardContext';
+import { useDailyboardContext } from '../../ui-board/hooks/useBoardContext';
 
 export function WorkspaceDailyboardCardDialog() {
   const { send, state } = useWorkspaceDailyboardContext();

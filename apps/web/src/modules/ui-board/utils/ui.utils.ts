@@ -1,24 +1,24 @@
 import { StoredBoardCardModel, StoredBoardModel } from "@/src/heute-store/types/board.types";
 
-export const getDailyboardDataSet = (dailyboard: StoredBoardModel) => {
+export const getBoardDataSet = (board: StoredBoardModel) => {
     return {
-        "data-dailyboard": true,
-        "data-category-path": dailyboard.categoryPath,
-        "data-canvas-name": dailyboard.canvasName,
-        "data-canvas-version": dailyboard.canvasVersion,
-        "data-date": dailyboard.date,
+        "data-board": true,
+        "data-category-path": board.categoryPath,
+        "data-canvas-name": board.canvasName,
+        "data-canvas-version": board.canvasVersion,
+        "data-date": board.date,
     }
 }
 
-export const getDailyboardCardContainerDataSet = () => {
+export const getBoardCardContainerDataSet = () => {
     return {
-        "data-dailyboard-card-container": true
+        "data-board-card-container": true
     }
 }
 
-export const getDailyboardCardDataSet = (card: StoredBoardCardModel) => {
+export const getBoardCardDataSet = (card: StoredBoardCardModel) => {
     return {
-        "data-dailyboard-card": true,
+        "data-board-card": true,
         "data-id": card.id,
         "data-key": card.name,
         "data-title": card.content.title,
