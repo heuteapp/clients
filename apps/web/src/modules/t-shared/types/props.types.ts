@@ -6,7 +6,7 @@ export interface TracedItemPropsBase {
 }
 
 export interface TracedItemProps extends TracedItemPropsBase {
-    id: string;
+    id: string | null;
 }
 
 export interface TracedUniqueItemProps extends TracedItemPropsBase {
