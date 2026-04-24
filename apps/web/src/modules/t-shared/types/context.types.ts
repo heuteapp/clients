@@ -10,7 +10,8 @@ export interface TracingDomainContextValue {
 }
 
 export interface TracingDomain {
-    getItemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => TracingItemData[];
+    itemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => TracingItemData[];
+    uniqueItem: (type: string) => TracingItemData | null;
 }
 
 export interface TracingDomainData {

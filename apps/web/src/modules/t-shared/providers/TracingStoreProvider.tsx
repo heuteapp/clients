@@ -12,9 +12,13 @@ export function TracingStoreProvider({ children }: TracingStoreProviderProps) {
         }
 
         domains[name] = {
-            getItemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => {
+            itemsOf: (type: string, filter?: (item: TracingItemData) => boolean) => {
                 const items = Array.from(data.items.values()).filter(item => item.type === type);
                 return filter ? items.filter(filter) : items;
+            },
+            uniqueItem: (type: string) => {
+                const items = Array.from(data.items.values()).filter(item => item.type === type);
+                return items.length > 0 ? items[0] : null;
             }
         };
 
