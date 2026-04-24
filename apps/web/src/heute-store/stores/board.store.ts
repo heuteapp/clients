@@ -14,7 +14,7 @@ import { addCardToDailyboardState, getBoardCardItemFromState, getBoardItemFromSt
 import { BoardModelState } from "../types/board.types";
 import { YYMMDDDate } from "@/src/modules/d-shared/types/date.types";
 
-export const withDailyboardImmer = <
+export const withBoardImmer = <
     TBoardSource extends BoardBase,
     TBoardCardSource extends BoardCardBase,
     TBoardItem extends StoredBoardItem<TBoardCardItem>,
@@ -158,5 +158,5 @@ export const withDailyboardImmer = <
 };
 
 export const useDailyboardDataStore = create<BoardModelState>()(
-    devtools(withDailyboardImmer(), { name: "DailyboardModelStore" })
+    devtools(withBoardImmer(), { name: "DailyboardModelStore" })
 );
