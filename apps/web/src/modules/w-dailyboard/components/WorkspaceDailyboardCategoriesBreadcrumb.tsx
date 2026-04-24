@@ -2,7 +2,7 @@
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Stack, TextField, Typography, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
-import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
+import { HeuteAnimatedBreadcrumbs } from "../../ui-core/components/HeuteBreadcrumbs";
 import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/heute-store/stores/category.store";
 import { usePathname, useRouter } from "next/navigation";

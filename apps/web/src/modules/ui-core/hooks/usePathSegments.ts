@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { PathSegmentsConfig, PathSegmentsResult } from "@/src/modules/ui-shared/types/path-segments.types";
+import { PathSegmentsConfig, PathSegmentsResult } from "@/src/modules/ui-core/types/path-segments.types";
 
 //
 

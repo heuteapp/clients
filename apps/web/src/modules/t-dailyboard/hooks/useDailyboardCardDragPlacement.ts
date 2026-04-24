@@ -4,7 +4,7 @@ import { isGridRectOverlappingSome, findBestGridRectPosition } from "@/src/modul
 import { calcDailyboardCardFixedRect, calcDailyboardCardGridIndexes, findAllDailyboardCardsForGrid, findDailyboardClosest, findDailyboardInSubtree, getDailyboardCardData } from "@/src/modules/ui-board/utils/dom.utils";
 import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
 import { findCanvasGridAtPoint, calcGridPointerAtCursor } from "@/src/modules/ui-canvas/utils/dom.utils";
-import { useHammerContext } from "@/src/modules/ui-shared/hooks/useHammerContext";
+import { useHammerContext } from "@/src/modules/ui-core/hooks/useHammerContext";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { DailyboardCardPlacementResult, DailyboardCardPlacementContent, DailyboardCardPlacementState } from "../type/tools-dailyboard.card-placement.types";
 

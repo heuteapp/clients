@@ -3,8 +3,8 @@ import { useWorkspaceContext } from "@/src/modules/w-core/hooks/useWorkspaceCont
 import { WorkspaceDailyboardCategoriesBreadcrumb } from "../components/WorkspaceDailyboardCategoriesBreadcrumb";
 import { WorkspaceDailyboardDateBreadcrumb } from "../components/WorkspaceDailyboardDateBreadcrumb";
 import { useWorkspaceDailyboardContext } from "./useWorkspaceDailyboardContext";
-import { HeuteLink } from "../../ui-shared/components/HeuteLink";
-import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
+import { HeuteLink } from "../../ui-core/components/HeuteLink";
+import { HeuteAnimatedBreadcrumbsItem } from "../../ui-core/types/components/heute-breadcrumbs.types";
 
 export const useWorkspaceDailyboardBreadcrumbs = () => {
     const { breadcrumbs } = useWorkspaceContext();

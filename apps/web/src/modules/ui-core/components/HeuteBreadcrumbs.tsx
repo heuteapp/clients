@@ -1,5 +1,5 @@
 import { Breadcrumbs, BreadcrumbsAnimationRender, BreadcrumbsSeparator } from "@/src/modules/ui-base/components/Breadcrumbs"
-import { HeuteAnimatedBreadcrumbsItem, HeuteAnimatedBreadcrumbsProps, HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-shared/types/components/heute-breadcrumbs.types"
+import { HeuteAnimatedBreadcrumbsItem, HeuteAnimatedBreadcrumbsProps, HeuteLinkedBreadcrumbsProps } from "@/src/modules/ui-core/types/components/heute-breadcrumbs.types"
 import { BreadcrumbsItemData } from "@/src/modules/ui-base/types/breadcrumbs.types"
 import { HeuteLink } from "./HeuteLink"
 import { AnimatePresence, motion } from "framer-motion"

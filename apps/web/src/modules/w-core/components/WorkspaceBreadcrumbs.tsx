@@ -1,7 +1,7 @@
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext";
-import { HeuteIconOnlyBrand } from "../../ui-shared/components/HeuteBrand";
-import { HeuteAnimatedBreadcrumbs } from "../../ui-shared/components/HeuteBreadcrumbs";
-import { HeuteAnimatedBreadcrumbsItem } from "../../ui-shared/types/components/heute-breadcrumbs.types";
+import { HeuteIconOnlyBrand } from "../../ui-core/components/HeuteBrand";
+import { HeuteAnimatedBreadcrumbs } from "../../ui-core/components/HeuteBreadcrumbs";
+import { HeuteAnimatedBreadcrumbsItem } from "../../ui-core/types/components/heute-breadcrumbs.types";
 import Box from "@mui/material/Box";
 
 export function WorkspaceBreadcrumbs() {

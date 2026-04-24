@@ -1,5 +1,5 @@
 import { BrandRoot, BrandIcon, BrandText } from "@/src/modules/ui-base/components/Brand";
-import { HeuteFullBrandProps, HeuteCompactBrandProps, HeuteIconOnlyBrandProps, HeuteTextOnlyBrandProps } from "@/src/modules/ui-shared/types/ui.props.types";
+import { HeuteFullBrandProps, HeuteCompactBrandProps, HeuteIconOnlyBrandProps, HeuteTextOnlyBrandProps } from "@/src/modules/ui-core/types/ui.props.types";
 
 export const HeuteFullBrand = ({ link, iconSize, iconAlt, iconProps, text = "HeuteApp", textColor, textSize, textProps, ...props }: HeuteFullBrandProps) => {
   return (

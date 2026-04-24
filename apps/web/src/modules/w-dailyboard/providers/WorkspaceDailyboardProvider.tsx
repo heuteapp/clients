@@ -9,7 +9,7 @@ import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboa
 import { useCanvasStyleStore } from "@/src/heute-store/stores/canvas.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboardStateHooks";
-import { MetricsProvider } from "../../ui-shared/providers/MetricsProvider";
+import { MetricsProvider } from "../../ui-core/providers/MetricsProvider";
 import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardContext";
 import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDialogs";
 import { TracingDomainProvider } from "../../t-core/providers/TracingDomainProvider";

@@ -1,4 +1,4 @@
-import { usePathSegments } from "@/src/modules/ui-shared/hooks/usePathSegments"
+import { usePathSegments } from "@/src/modules/ui-core/hooks/usePathSegments"
 import { useMemo } from "react";
 
 export const useWorkspaceSegments = () => { 

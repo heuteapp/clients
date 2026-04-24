@@ -1,4 +1,4 @@
-import { usePathSegments } from "../../ui-shared/hooks/usePathSegments";
+import { usePathSegments } from "../../ui-core/hooks/usePathSegments";
 import { WorkspaceType } from "../types/workspace.types";
 
 export const useWorkspaceType = (): WorkspaceType => {
