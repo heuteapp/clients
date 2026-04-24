@@ -2,21 +2,30 @@
 
 import React from "react";
 import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
-import { useBoardRegistry } from "@/src/modules/ui-board/hooks/useBoardRegistry";
 import { BoardContext } from "@/src/modules/ui-board/contexts/board.context";
 import { BoardProviderProps } from "../types/board.props";
 import { useBoardMetrics } from "../hooks/useBoardMetrics";
+import { useTracingStore } from "../../t-shared/hooks/useTracingStore";
 
 export function BoardProvider({ rootRef, metricsId, dataSource, children }: BoardProviderProps) {
     const canvas = useCanvasContext();
 
-    const registry = useBoardRegistry(rootRef, canvas.registry);
+    const { domains } = useTracingStore();
 
-    const metrics = useBoardMetrics(metricsId ?? "board", registry);
+    const tracingName = "w-dailyboard";
+
+    const selector = React.useMemo(() => {
+        if(tracingName && domains[tracingName]) {
+            return domains[tracingName];
+        }
+        return null;
+    }, [tracingName, domains])!;
+
+    const metrics = useBoardMetrics(metricsId ?? "board", selector);
     
     const contextValue = React.useMemo(() => ({
-        dataSource, canvas, registry, metrics
-    }), [dataSource, canvas, registry, metrics]);
+        rootRef, dataSource, canvas, selector, metrics
+    }), [rootRef, dataSource, canvas, selector, metrics]);
 
     return (
         <BoardContext.Provider value={contextValue}>

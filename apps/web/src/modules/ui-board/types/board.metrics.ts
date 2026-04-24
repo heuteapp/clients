@@ -1,5 +1,5 @@
+import { TracingDomainSelector } from "../../t-shared/types/tracing.types";
 import { CanvasMetricsValue } from "../../ui-canvas/types/canvas.metrics";
-import { BoardRegistry } from "./board.registry";
 
 export interface BoardMetrics {
     value: BoardMetricsValue | null;
@@ -17,6 +17,6 @@ export interface CalculateBoardMetrics {
 }
 
 export interface ApplyBoardMetrics {
-    registry: BoardRegistry;
+    selector: TracingDomainSelector;
     metrics: BoardMetrics;
 }

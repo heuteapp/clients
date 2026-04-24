@@ -1,6 +1,8 @@
 import { ApplyBoardMetrics, CalculateBoardMetrics, BoardMetricsValue } from "../types/board.metrics";
 import { calcBoardCardFixedRect, findBoardCardTitleInSubtree, getBoardCardData } from "../utils/dom.utils";
 import { findCanvasGridInSubtree, getCanvasGridModelData } from "../../ui-canvas/utils/dom.utils";
+import { CanvasGridModelData } from "../../d-canvas/types/canvas.model.types";
+import { BoardCardModelData } from "../../d-board/types/board.model.types";
 
 export const calculateBoardMetrics = ({ canvas } : CalculateBoardMetrics) : BoardMetricsValue | null => {
     if(!canvas) return null;
@@ -15,27 +17,28 @@ export const calculateBoardMetrics = ({ canvas } : CalculateBoardMetrics) : Boar
     }
 }
 
-export const applyBoardMetrics = ({ metrics, registry } : ApplyBoardMetrics) => {
-    const boardEl = registry.board.ref?.current;
+export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => {
+    const boardEl = selector.uniqueItem("board-root")?.ref?.current;
     if (!boardEl) return;
 
-    const sections = registry.canvasRegistry.getCanvasGridSections();
+    const grids = selector.itemsOf("canvas-grid-item");
 
-    sections?.forEach(section => {
-        if(!section.props?.data?.id) return;
+    grids?.forEach(grid => {
+        if(!grid.data?.id) return;
 
-        const sectionEl = section.ref?.current;
-        if (!sectionEl) return;
-
-        const gridEl = findCanvasGridInSubtree(sectionEl);
+        const gridEl = grid.ref?.current;
         if (!gridEl) return;
 
-        const gridData = getCanvasGridModelData(gridEl);
+        const gridData = grid.data as CanvasGridModelData;
         if (!gridData) return;
 
         const gridRect = gridEl.getBoundingClientRect();
 
-        const cards = registry.getBoardCardsForGrid(section.props?.data.id);
+        const cards = selector.itemsOf("board-card-item", (card) => {
+            const cardData = card.data as BoardCardModelData;
+
+            return cardData.placement?.gridName === gridData.name;
+        });
 
         cards?.forEach(card => {
             const cardEl = card.ref?.current;

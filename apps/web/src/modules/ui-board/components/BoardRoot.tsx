@@ -2,34 +2,22 @@
 
 import "@/src/modules/ui-board/styles/board.css";
 import style from "@/src/modules/ui-board/styles/board.module.scss"
-import { useLayoutEffect } from "react";
 
 import BoardCardContainer from "./BoardCardContainer";
 
-import { useBoardContext } from "../hooks/useBoardContext";
 import { BoardRootProps } from "../types/board.props";
 import { CanvasRoot } from "@/src/modules/ui-canvas/components/CanvasRoot";
 import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
 import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
+import { useBoardContext } from "../hooks/useBoardContext";
 
 //
 
-export function BoardRoot(props: BoardRootProps) {
-  const { registry } = useBoardContext();
-
-  const data = props.data;
-  const ref = registry.board.ref;
+export function BoardRoot({ data }: BoardRootProps) {
+  const { rootRef } = useBoardContext();
   const cards = data.cards;
 
   const { dataSource: canvasData } = useCanvasContext();
-
-  useLayoutEffect(() => {
-    registry.registerBoard(ref, props)
-
-    return () => {
-      registry.unregisterBoard()
-    }
-  }, [registry])
   
   if(!cards) return null;
   if(!canvasData) return null;
@@ -38,10 +26,10 @@ export function BoardRoot(props: BoardRootProps) {
     <TracedUniqueItem
       type="board-root"
       data={data}
-      ref={ref}
+      ref={rootRef}
     >
       <div 
-        ref={ref} 
+        ref={rootRef} 
         className={style.board}
       >
         <CanvasRoot data={canvasData} />
