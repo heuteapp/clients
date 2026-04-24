@@ -10,38 +10,43 @@ import { useBoardContext } from "../hooks/useBoardContext";
 import { BoardRootProps } from "../types/board.props";
 import { CanvasRoot } from "@/src/modules/ui-canvas/components/CanvasRoot";
 import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
-import { getBoardDataSet } from "../utils/ui.utils";
+import { TracedUniqueItem } from "../../t-shared/components/TracedUniqueItem";
 
 //
 
 export function BoardRoot(props: BoardRootProps) {
   const { registry } = useBoardContext();
 
-  const { data: boardData } = props;
-  const boardRef = registry.board.ref;
-  const boardCards = boardData.cards;
+  const data = props.data;
+  const ref = registry.board.ref;
+  const cards = data.cards;
 
   const { dataSource: canvasData } = useCanvasContext();
 
   useLayoutEffect(() => {
-    registry.registerBoard(boardRef, props)
+    registry.registerBoard(ref, props)
 
     return () => {
       registry.unregisterBoard()
     }
   }, [registry])
   
-  if(!boardCards) return null;
+  if(!cards) return null;
   if(!canvasData) return null;
 
   return (
-    <div 
-      ref={boardRef} 
-      className={style.board}
-      {...getBoardDataSet(boardData)}
+    <TracedUniqueItem
+      type="board-root"
+      data={data}
+      ref={ref}
     >
-      <CanvasRoot data={canvasData} />
-      <BoardCardContainer cards={boardCards} />
-    </div>
+      <div 
+        ref={ref} 
+        className={style.board}
+      >
+        <CanvasRoot data={canvasData} />
+        <BoardCardContainer cards={cards} />
+      </div>
+    </TracedUniqueItem>
   )
 }
