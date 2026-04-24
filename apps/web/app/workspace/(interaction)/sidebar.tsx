@@ -1,8 +1,9 @@
 import { useWorkspaceDailyboardContext } from "@/src/modules/w-dailyboard/hooks/useWorkspaceDailyboardContext";
 import { useWorkspaceContext } from "@/src/modules/w-core/hooks/useWorkspaceContext";
-import { ChevronLeft, ChevronRight, Add } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight, Add, Launch } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
+import { useTracingStore } from "@/src/modules/t-shared/hooks/useTracingStore";
 
 export function LayoutSidebar() {
   const { metadata } = useWorkspaceContext();
@@ -56,19 +57,25 @@ export function LayoutSidebar() {
 
 const SidebarDailyboardContent = () => {
   const { send } = useWorkspaceDailyboardContext();
+  const { domains } = useTracingStore();
 
   const handleAddCard = (e: React.PointerEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
     send({ type: "CARD_CREATE_REQUEST" });
   };
+
+  const testTracing = () => {
+    const domain = domains["w-dailyboard"];
+    console.log(domain.itemsOf("canvas-grid-section"));
+  }
   
   return (
     <>
       <IconButton 
         color="primary"
         aria-label="add" 
-        onPointerDown={handleAddCard}
+        onPointerUp={handleAddCard}
         sx={{
           width: 36,
           height: 48,
@@ -79,9 +86,10 @@ const SidebarDailyboardContent = () => {
       >
         <Add />
       </IconButton>
-      {/*<IconButton 
+      {<IconButton 
         color="secondary"
         aria-label="add"
+        onClick={testTracing}
         sx={{
           width: 36,
           height: 24,
@@ -92,7 +100,7 @@ const SidebarDailyboardContent = () => {
         }}
       >
         <Launch sx={{ fontSize: 18 }} />
-      </IconButton>*/}
+      </IconButton>}
     </>
   )
 }
