@@ -85,7 +85,7 @@ export function calculateCanvasMetrics({ selector, dataSource, styleSource }: Ca
 }
 
 export function applyCanvasMetrics({ selector, metrics, styleSource }: ApplyCanvasMetricsProps) {
-    const canvasRef = selector.uniqueItem("canvas-root")?.ref;
+    const canvasRef = selector.uniqueRef("canvas-root");
 
     const canvasEl = canvasRef?.current;
     if (!canvasEl) return;

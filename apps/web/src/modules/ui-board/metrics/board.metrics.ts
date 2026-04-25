@@ -17,7 +17,7 @@ export const calculateBoardMetrics = ({ canvas } : CalculateBoardMetrics) : Boar
 }
 
 export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => {
-    const boardEl = selector.uniqueItem("board-root")?.ref?.current;
+    const boardEl = selector.uniqueRef("board-root")?.current;
     if (!boardEl) return;
 
     const grids = selector.itemsByType("canvas-grid-item");
@@ -35,7 +35,6 @@ export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => 
 
         const cards = selector.itemsByType("board-card-item", (card) => {
             const cardData = card.data as BoardCardModelData;
-
             return cardData.placement?.gridName === gridData.name;
         });
 
