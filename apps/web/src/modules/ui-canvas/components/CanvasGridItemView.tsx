@@ -1,10 +1,11 @@
 import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 import { CanvasGridItemViewProps } from "../types/props.types";
+import clsx from "clsx";
 
-export function CanvasGridItemView({ ref, state, render } : CanvasGridItemViewProps) {
+export function CanvasGridItemView({ ref, state, className, render } : CanvasGridItemViewProps) {
     return (
         <div
-            ref={ref} className={style.gridItem} style={{
+            ref={ref} className={clsx(style.gridItem, className)} style={{
                 gridTemplateColumns: `repeat(${state.colSpan}, var(--grid-cell-size))`,
                 gridTemplateRows: `repeat(${state.rowSpan}, var(--grid-cell-size))`,
             }}
