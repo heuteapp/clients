@@ -6,5 +6,5 @@ export interface ViewProps<
     TStates extends ViewState
 > extends ViewRendering<TSchema, TStates>, ViewStyling<TSchema> {
     state: TState;
-    ref?: React.RefObject<HTMLDivElement>;
+    ref?: React.RefObject<HTMLDivElement | null>;
 }
