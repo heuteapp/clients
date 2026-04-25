@@ -8,6 +8,10 @@ import { CanvasGridSectionView } from "./CanvasGridSectionView";
 //
 
 export function CanvasGridContainerView({ ref, state, className, sx, render }: CanvasGridContainerViewProps) {
+    const viewKey = "canvas-grid-container";
+    const viewClassName = className?.[viewKey];
+    const viewRender = render?.[viewKey];
+
     const matrix = useMemo(() => {
         const result = Array.from({ length: state.rowCount }, () =>
             Array.from({ length: state.colCount }, () => ".")
@@ -33,14 +37,14 @@ export function CanvasGridContainerView({ ref, state, className, sx, render }: C
     return (  
         <div
             ref={ref}
-            className={clsx(style.gridContainer, ...(className || []))}
+            className={clsx(style.gridContainer, ...(viewClassName || []))}
             style={{
                 gridTemplateColumns: `repeat(${state.colCount}, var(--canvas-cell-size))`,
                 gridTemplateRows: `repeat(${state.rowCount}, var(--canvas-cell-size))`,
                 gridTemplateAreas
             }}
         > 
-            {render ? render(state) : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} />)}
+            {viewRender ? viewRender(state) : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} className={className} sx={sx} render={render} />)}
         </div>       
     )
 }

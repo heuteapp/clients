@@ -7,15 +7,19 @@ import { CanvasGridItemView } from "./CanvasGridItemView";
 //
 
 export function CanvasGridSectionView({ ref, state, className, render }: CanvasGridSectionViewProps) {
+    const viewKey = "canvas-grid-section";
+    const viewClassName = className?.[viewKey];
+    const viewRender = render?.[viewKey];
+
     return (
         <div
             ref={ref}
-            className={clsx(style.gridSection, ...(className || []))}
+            className={clsx(style.gridSection, ...(viewClassName || []))}
             style={{
                 gridArea: state.areaName
             }}
         >
-            {render ? render(state) : state.item && <CanvasGridItemView state={state.item} />}
+            {viewRender ? viewRender(state) : state.item && <CanvasGridItemView state={state.item} />}
         </div>        
     )
 }

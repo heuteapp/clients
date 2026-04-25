@@ -3,57 +3,27 @@ import { SxProps } from "@mui/system";
 
 export type ViewKey = string | null;
 
-export type ViewStateType = ViewStateValue;
-
-export type ViewStateValue = {
+export type ViewState = {
     [key: string]: any;
 }
 
-export type ViewClassNameValue = string[];
+export type ViewClassNames<TKeys extends string = string> = { [key in TKeys]?: string[]; }
 
-export type ViewClassNameType<TKey extends string = string> = { [key in TKey]: ViewClassNameValue; } & { body: ViewClassNameValue} 
+export type ViewSxStyles<TKeys extends string = string> = { [key in TKeys]?: SxProps<Theme>; }
 
-export type ViewSxValue = SxProps<Theme>;
+export type ViewRenderFunc<TStates extends any = any> = (state: TStates) => React.ReactNode;
 
-export type ViewSxRecord<TKey extends string = string> = { [key in TKey]: ViewSxValue; } & { body: ViewSxValue} 
-
-export type ViewRenderValue<TState extends any = any> = (state: TState) => React.ReactNode;
-
-export type ViewRenderRecord<TState extends ViewStateType = ViewStateType, TKey extends string = string> = { 
-    [key in TKey]: ViewRenderValue<TState>;
+export type ViewRenderMap<TStates extends ViewState = ViewState, TKeys extends string = string> = { 
+    [key in TKeys]?: ViewRenderFunc<TStates>;
 }
 
 //
 
-export interface ViewData<TState extends ViewStateValue = ViewStateValue, TKey extends string = string> {
-    state: TState;
-    render?: ViewRenderValue<TState> | ViewRenderRecord<TState, TKey>;
+export interface ViewRendering<TStates extends ViewState = ViewState, TKeys extends string = string> {
+    render?: ViewRenderMap<TStates, TKeys>;
 }
 
-export interface SimpleViewData<TState extends ViewStateValue = ViewStateValue> extends ViewData<TState, never> {
-    render?: ViewRenderValue<TState>;
-}
-
-export interface RichViewData<
-    TState extends ViewStateValue = ViewStateValue, 
-    TKey extends string = string
-> extends ViewData<TState, TKey> {
-    render?: ViewRenderRecord<TState, TKey>;
-}
-
-//
-
-export interface ViewOverrides<TKey extends string = string> {
-    className?: ViewClassNameValue | ViewClassNameType<TKey>;
-    sx?: ViewSxValue | ViewSxRecord<TKey>;
-}
-
-export interface SimpleViewOverrides extends ViewOverrides<never> {
-    className?: ViewClassNameValue;
-    sx?: ViewSxValue;
-}
-
-export interface RichViewOverrides<TKey extends string = string> extends ViewOverrides<TKey> {
-    className?: ViewClassNameType<TKey>;
-    sx?: ViewSxRecord<TKey>;
+export interface ViewStyling<TKeys extends string = string> {
+    className?: ViewClassNames<TKeys>;
+    sx?: ViewSxStyles<TKeys>;
 }

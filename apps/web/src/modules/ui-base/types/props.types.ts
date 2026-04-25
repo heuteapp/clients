@@ -1,9 +1,10 @@
-import { RichViewData, RichViewOverrides, SimpleViewData, SimpleViewOverrides, ViewStateValue } from "./view.types";
+import { ViewRendering, ViewState, ViewStyling } from "./view.types";
 
-export interface SimpleViewProps<TState extends ViewStateValue = ViewStateValue> extends SimpleViewData<TState>, SimpleViewOverrides {
-    ref?: React.RefObject<HTMLDivElement | null>;
-}
-
-export interface RichViewProps<TState extends ViewStateValue = ViewStateValue, TKey extends string = string> extends RichViewData<TState, TKey>, RichViewOverrides<TKey> {
-    ref?: React.RefObject<HTMLDivElement | null>;
+export interface ViewProps<
+    TState extends TStates,
+    TStates extends ViewState = ViewState,
+    TKeys extends string = string
+> extends ViewRendering<TStates, TKeys>, ViewStyling<TKeys> {
+    state: TState;
+    ref?: React.RefObject<HTMLDivElement>;
 }
