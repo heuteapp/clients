@@ -1,6 +1,5 @@
 import { BoardCardItemProps } from "@/src/modules/ux-board/types/board.props";
 import { DisplayBoardCardItem } from "../../ui-board/components/DisplayBoardCardItem";
-import { getBoardCardDataSet } from "../utils/ui.utils";
 import { TracedItem } from "../../t-core/components/TracedItem";
 import { useRef } from "react";
 
