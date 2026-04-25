@@ -4,21 +4,10 @@ import React from "react";
 import { CanvasContext } from "@/src/modules/ui-canvas/contexts/canvas.context";
 import { useCanvasMetrics } from "../hooks/useCanvasMetrics";
 import { CanvasProviderProps } from "../types/canvas.props";
-import { useTracingStore } from "../../t-core/hooks/useTracingStore";
+import { useTracingDomain } from "../../t-core/hooks/useTracingDomain";
 
 export function CanvasRenderProvider({ rootRef, metricsId, dataSource, styleSource, children }: CanvasProviderProps) {
-
-    const { domains } = useTracingStore();
-
-    const tracingName = "w-dailyboard";
-
-    const selector = React.useMemo(() => {
-        if(tracingName && domains[tracingName]) {
-            return domains[tracingName];
-        }
-        return null;
-    }, [domains[tracingName]])!;
-        
+    const { selector } = useTracingDomain();
     const metrics = useCanvasMetrics(metricsId ?? "canvas", selector, dataSource, styleSource);
 
     const contextValue = React.useMemo(() => ({
