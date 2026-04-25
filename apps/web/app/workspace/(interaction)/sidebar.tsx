@@ -67,7 +67,7 @@ const SidebarDailyboardContent = () => {
 
   const testTracing = () => {
     const domain = domains["w-dailyboard"];
-    console.log(domain.itemsOf("canvas-grid-section"));
+    console.log(domain.itemsByType("canvas-grid-section"));
   }
   
   return (

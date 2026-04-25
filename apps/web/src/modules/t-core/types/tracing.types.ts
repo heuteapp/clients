@@ -1,7 +1,18 @@
 export interface TracingDomainSelector {
-    items: (filter?: TracingItemFilter) => TracingItemData[];
-    itemsOf: (type: string, filter?: TracingItemFilter) => TracingItemData[];
     uniqueItem: (type: string) => TracingItemData | null;
+    itemById: (type: string, id: string) => TracingItemData | null;
+    items: (filter?: TracingItemFilter) => TracingItemData[];
+    itemsByType: (type: string, filter?: TracingItemFilter) => TracingItemData[];
+
+    uniqueRef: (type: string) => React.RefObject<HTMLElement | null> | null;
+    refById: (type: string, id: string) => React.RefObject<HTMLElement | null> | null;
+    refs: (filter?: TracingItemFilter) => React.RefObject<HTMLElement | null>[];
+    refsByType: (type: string, filter?: TracingItemFilter) => React.RefObject<HTMLElement | null>[];
+
+    uniqueData: (type: string) => any;
+    dataById: (type: string, id: string) => any;
+    datas: (filter?: TracingItemFilter) => any[];
+    datasByType: (type: string, filter?: TracingItemFilter) => any[];
 }
 
 export interface TracingDomainData {

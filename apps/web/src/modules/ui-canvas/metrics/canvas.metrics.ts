@@ -101,7 +101,7 @@ export function applyCanvasMetrics({ selector, metrics, styleSource }: ApplyCanv
     canvasEl.style.setProperty("--canvas-cell-size", `${canvasCellSize}px`);
     canvasEl.style.setProperty("--grid-cell-size", `${gridCellSize}px`);
 
-    selector.itemsOf("canvas-grid-item")?.forEach(section => {
+    selector.itemsByType("canvas-grid-item")?.forEach(section => {
         const style = styleSource?.grids.find(s => s.name === section?.data.name);
         const parent = { width: canvasWidth, height: canvasHeight };
 

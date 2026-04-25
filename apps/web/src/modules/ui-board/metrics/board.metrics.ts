@@ -20,7 +20,7 @@ export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => 
     const boardEl = selector.uniqueItem("board-root")?.ref?.current;
     if (!boardEl) return;
 
-    const grids = selector.itemsOf("canvas-grid-item");
+    const grids = selector.itemsByType("canvas-grid-item");
 
     grids?.forEach(grid => {
         if(!grid.data?.id) return;
@@ -33,7 +33,7 @@ export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => 
 
         const gridRect = gridEl.getBoundingClientRect();
 
-        const cards = selector.itemsOf("board-card-item", (card) => {
+        const cards = selector.itemsByType("board-card-item", (card) => {
             const cardData = card.data as BoardCardModelData;
 
             return cardData.placement?.gridName === gridData.name;
