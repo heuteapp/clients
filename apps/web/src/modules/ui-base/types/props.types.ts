@@ -5,7 +5,7 @@ export interface BaseViewProps<TState extends ViewStateValue = ViewStateValue> {
     state: TState;
 }
 
-export interface SimpleViewProps<TState extends ViewStateValue = ViewStateValue>  extends BaseViewProps<TState> {
+export interface SimpleViewProps<TState extends ViewStateValue = ViewStateValue> extends BaseViewProps<TState> {
     className?: ViewClassNameValue;
     sx?: ViewSxValue;
     render?: ViewRenderValue<TState>;

@@ -1,21 +1,22 @@
-import { StoredCanvasModel, StoredCanvasGridModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
+import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
+import { CanvasGridModel, CanvasModel } from "../../d-canvas/types/canvas.model.types";
 
 export interface CanvasRootProps {
     rootRef?: React.RefObject<HTMLDivElement | null>;
-    src: StoredCanvasModel;
+    src: CanvasModel;
 }
 
 export interface CanvasGridContainerProps {
     rowCount: number; colCount: number;
-    gridSources: StoredCanvasGridModel[];
+    gridSources: CanvasGridModel[];
 }
 
 export interface CanvasGridSectionProps {
-    src: StoredCanvasGridModel
+    src: CanvasGridModel;
 }
 
 export interface CanvasGridItemProps  {
-    src: StoredCanvasGridModel
+    src: CanvasGridModel
 }
 
 export interface CanvasProviderProps {
