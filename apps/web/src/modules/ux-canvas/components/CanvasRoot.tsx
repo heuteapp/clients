@@ -6,24 +6,23 @@ import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";
 import { CanvasGridContainer } from "./CanvasGridContainer";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
+import { useRef } from "react";
 
-export function CanvasRoot(props: CanvasRootProps) {
-  const { data } = props;
-  const { rootRef, dataSource: source } = useCanvasContext();
-
-  const grids = source?.grids ?? [];
+export function CanvasRoot({ rootRef, src }: CanvasRootProps) {
+  const internalRef = useRef<HTMLDivElement>(null);
+  const ref = rootRef || internalRef;
 
   return (
     <TracedUniqueItem
       type="canvas-root"
-      data={data}
-      ref={rootRef}
+      data={src}
+      ref={ref}
     >
       <div 
-        ref={rootRef} 
+        ref={ref} 
         className={style.canvas}
       >
-        <CanvasGridContainer colCount={data.colCount} rowCount={data.rowCount} grids={grids}/>
+        <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>
       </div>
     </TracedUniqueItem>
   )

@@ -4,22 +4,20 @@ import { useRef } from "react";
 import { CanvasGridItemProps } from "@/src/modules/ux-canvas/types/canvas.props";
 import { TracedItem } from "../../t-core/components/TracedItem";
 
-function CanvasGridItem(props : CanvasGridItemProps) {
-    const { data } = props;
-
+function CanvasGridItem({ src } : CanvasGridItemProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
         <TracedItem
             type={"canvas-grid-item"}
-            id={data.name}
-            data={data}
+            id={src.name}
+            data={src}
             ref={ref}
         >
             <div
                 ref={ref} className={style.gridItem} style={{
-                    gridTemplateColumns: `repeat(${data.position.colSpan}, var(--grid-cell-size))`,
-                    gridTemplateRows: `repeat(${data.position.rowSpan}, var(--grid-cell-size))`,
+                    gridTemplateColumns: `repeat(${src.position.colSpan}, var(--grid-cell-size))`,
+                    gridTemplateRows: `repeat(${src.position.rowSpan}, var(--grid-cell-size))`,
                 }}
             />        
         </TracedItem>
