@@ -1,7 +1,7 @@
 import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
+import clsx from "clsx";
 
 import { CanvasGridSectionViewProps } from "../types/props.types";
-import clsx from "clsx";
 import { CanvasGridItemView } from "./CanvasGridItemView";
 
 //

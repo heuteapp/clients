@@ -23,14 +23,14 @@ export function BoardCardItemView({ state, ref, className, sx, render }: BoardCa
                             ...sx?.title,
                         }}
                     >
-                        {render?.title ? render.title(state.content) : state.content.title}
+                        {render?.title ? render.title(state) : state.content.title}
                     </Box>
                     <Box
                         data-front-face
                         className={clsx('face', ...(className?.frontFace || []))}
                         sx={{...sx?.frontFace}}
                     >
-                        {render?.frontFace ? render.frontFace(state.content) : null}
+                        {render?.frontFace ? render.frontFace(state) : null}
                     </Box>
                 </>
             ) : (
@@ -39,7 +39,7 @@ export function BoardCardItemView({ state, ref, className, sx, render }: BoardCa
                     className={clsx('face', ...(className?.backFace || []))}
                     sx={{...sx?.backFace}}
                 >
-                    {render?.backFace ? render.backFace(state.content) : null}
+                    {render?.backFace ? render.backFace(state) : null}
                 </Box>
             )}
         </Box>
