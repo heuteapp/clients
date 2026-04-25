@@ -1,6 +1,6 @@
 "use client";
 
-import { isVerificationLocked } from "@/src/modules/auth/state/auth.machine";
+import { isVerificationLocked } from "@/src/modules/d-auth/state/auth.machine";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Stack } from "@mui/material";

@@ -1,4 +1,4 @@
-import { AuthProfile } from "@/src/modules/auth/types/auth.types";
+import { AuthProfile } from "@/src/modules/d-auth/types/auth.types";
 import { heuteClient } from "../../heuteClient";
 import { categories } from "./categories";
 import { dailyboards } from "./dailyboards";

@@ -6,7 +6,7 @@ import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { isAwaitingRegistrationDone, isAwaitingRegistrationExpired, isAwaitingRegistrationPending } from "@/src/modules/auth/state/auth.machine";
+import { isAwaitingRegistrationDone, isAwaitingRegistrationExpired, isAwaitingRegistrationPending } from "@/src/modules/d-auth/state/auth.machine";
 
 export default function VerificationPage() {
     const authHash = useAuthHashParams();

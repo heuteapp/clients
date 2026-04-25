@@ -1,6 +1,6 @@
 "use client";
 
-import { isSignLocked } from "@/src/modules/auth/state/auth.machine";
+import { isSignLocked } from "@/src/modules/d-auth/state/auth.machine";
 import { HeuteCompactBrand, HeuteFullBrand } from "@/src/modules/ui-core/components/HeuteBrand";
 import { useAuthContext } from "@/src/modules/ui-auth/hooks/useAuthContext";
 import { CircularProgress } from "@mui/material";

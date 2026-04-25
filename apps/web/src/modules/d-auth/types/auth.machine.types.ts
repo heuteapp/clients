@@ -1,6 +1,6 @@
-import { AuthRegistration, AuthSession } from "@/src/modules/auth/types/auth.types";
+import { AuthRegistration, AuthSession } from "@/src/modules/d-auth/types/auth.types";
 import { ActorRefFrom } from "xstate";
-import { authMachine } from "@/src/modules/auth/state/auth.machine";
+import { authMachine } from "@/src/modules/d-auth/state/auth.machine";
 import { AuthEvent } from "./auth.events.types";
 
 export interface AuthMachineContext {

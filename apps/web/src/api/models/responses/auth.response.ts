@@ -1,4 +1,4 @@
-import { AuthProfile } from "@/src/modules/auth/types/auth.types";
+import { AuthProfile } from "@/src/modules/d-auth/types/auth.types";
 
 export interface SignInResponse {
     accessToken: string;
