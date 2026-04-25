@@ -16,7 +16,6 @@ export function CanvasGridItem({ src } : CanvasGridItemProps) {
             <CanvasGridItemView ref={ref} state={{
                 colSpan: src.position.colSpan,
                 rowSpan: src.position.rowSpan,
-                showCells: false
             }} />
         </TracedItem>
     )

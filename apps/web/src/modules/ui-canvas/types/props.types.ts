@@ -4,7 +4,7 @@ import { CanvasGridContainerViewState, CanvasGridItemViewState, CanvasGridSectio
 export interface CanvasRootViewProps extends RichViewProps<CanvasRootViewState, "container"> {
 }
 
-export interface CanvasGridContainerViewProps extends RichViewProps<CanvasGridContainerViewState, "areas"> {
+export interface CanvasGridContainerViewProps extends SimpleViewProps<CanvasGridContainerViewState> {
 }
 
 export interface CanvasGridSectionViewProps extends RichViewProps<CanvasGridSectionViewState, "item"> {
