@@ -12,7 +12,7 @@ import { BoardCardContainer } from "./BoardCardContainer";
 
 //
 
-export function BoardRoot({ rootRef, src, canvasSrc }: BoardRootProps) {
+export function BoardRoot({ rootRef, canvasRef, src, canvasSrc }: BoardRootProps) {
   const initialRef = React.useRef<HTMLDivElement | null>(null);
   const ref = rootRef || initialRef;
 
@@ -26,7 +26,7 @@ export function BoardRoot({ rootRef, src, canvasSrc }: BoardRootProps) {
         ref={ref} 
         className={style.board}
       >
-        <CanvasRoot data={canvasSrc} />
+        <CanvasRoot rootRef={canvasRef} src={canvasSrc} />
         <BoardCardContainer src={src.cards} />
       </div>
     </TracedUniqueItem>

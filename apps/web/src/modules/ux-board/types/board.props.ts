@@ -3,6 +3,7 @@ import { StoredCanvasModel } from "@/src/heute-store/types/canvas.types";
 
 export interface BoardRootProps {
     rootRef?: React.RefObject<HTMLDivElement | null>;
+    canvasRef?: React.RefObject<HTMLDivElement | null>;
     src: StoredBoardModel;
     canvasSrc: StoredCanvasModel;
 }
