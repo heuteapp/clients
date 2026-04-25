@@ -20,10 +20,11 @@ export function CanvasGridSection({ src }: CanvasGridSectionProps) {
             <CanvasGridSectionView 
                 ref={ref} 
                 state={{
-                    areaName: src.name
+                    areaName: src.name,
+                    position: src.position,
                 }} 
                 render={{
-                    gridItem: () => <CanvasGridItem src={src} />
+                    item: () => <CanvasGridItem src={src} />
                 }}
             />
         </TracedItem>

@@ -1,11 +1,17 @@
+import { GridRect } from "../../d-core/types/common";
+
 export interface CanvasRootViewState {
 }
 
 export interface CanvasGridContainerViewState {
+    colCount: number;
+    rowCount: number;
+    areas: CanvasGridSectionViewState[];
 }
 
 export interface CanvasGridSectionViewState {
     areaName: string;
+    position: GridRect;
     item?: CanvasGridItemViewState;
 }
 

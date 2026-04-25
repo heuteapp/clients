@@ -15,8 +15,8 @@ export function CanvasGridSectionView({ ref, state, className, render }: CanvasG
                 gridArea: state.areaName
             }}
         >
-            {render?.gridItem 
-                ? render.gridItem(state) 
+            {render?.item 
+                ? render.item(state) 
                 : state.item && <CanvasGridItemView state={state.item} />}
         </div>        
     )
