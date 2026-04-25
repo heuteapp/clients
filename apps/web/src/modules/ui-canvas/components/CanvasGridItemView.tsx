@@ -1,11 +1,7 @@
 import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
-
-import { useRef } from "react";
 import { CanvasGridItemViewProps } from "../types/props.types";
 
-export function CanvasGridItemView({ state } : CanvasGridItemViewProps) {
-    const ref = useRef<HTMLDivElement>(null);
-
+export function CanvasGridItemView({ ref, state } : CanvasGridItemViewProps) {
     return (
         <div
             ref={ref} className={style.gridItem} style={{
