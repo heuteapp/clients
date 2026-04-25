@@ -26,7 +26,11 @@ function BoardCardItem(props : BoardCardItemProps) {
                     isFrontFace: true,
                 }}
                 ref={ref}
-                {...getBoardCardDataSet(boardCardData)}
+                sx={{
+                    body: {
+                        position: "fixed",
+                    }
+                }}
             />
         </TracedItem>
     )

@@ -93,7 +93,7 @@ export const withBoardImmer = <
 
             addCard: (key: string, card: TBoardCardSource) => {
                 set((state) => {
-                    addCardToDailyboardState(state as BoardState, key, card);
+                    const h = addCardToDailyboardState(state as BoardState, key, card);
                 });
             },
 

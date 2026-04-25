@@ -42,10 +42,7 @@ export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => 
             const cardEl = card.ref?.current;
             if (!cardEl) return;
 
-            const data = getBoardCardData(cardEl);
-            if (!data) return;
-
-            const cardHeaderEl = findBoardCardTitleInSubtree(cardEl);
+            const cardHeaderEl = cardEl.querySelector(".title") as HTMLElement | null;
             if(cardHeaderEl) {
                 const headerHeight = metrics.value?.cardSize.headerHeight || 0;
                 cardHeaderEl.style.height = `${headerHeight}px`;
@@ -53,7 +50,7 @@ export const applyBoardMetrics = ({ metrics, selector } : ApplyBoardMetrics) => 
 
             const { clientWidth: cardWidth } = boardEl;
 
-            const cardRect = calcBoardCardFixedRect(gridRect, cardWidth * 0.0075, gridData.position, data.placement!.position);
+            const cardRect = calcBoardCardFixedRect(gridRect, cardWidth * 0.0075, gridData.position, card.data.placement!.position);
 
             cardEl.style.left = `${cardRect.x}px`;
             cardEl.style.top = `${cardRect.y}px`;
