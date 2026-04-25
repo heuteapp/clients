@@ -9,4 +9,5 @@ export interface TracingStoreContextValue {
 export interface TracingDomainContextValue {
     trace: (id: string | null, params: TracingItemParams) => boolean;
     untrace: (id: string | null, type: string) => boolean;
+    selector: TracingDomainSelector;
 }

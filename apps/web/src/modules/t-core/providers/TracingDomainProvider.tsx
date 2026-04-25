@@ -5,7 +5,16 @@ import { useTracingStore } from "../hooks/useTracingStore";
 import { TracingItemData, TracingItemParams } from "../types/tracing.types";
 
 export function TracingDomainProvider({ name, children }: TracingDomainProviderProps) {
-    const { subscribe, unsubscribe } = useTracingStore();
+    const { subscribe, unsubscribe, domains } = useTracingStore();
+
+    useLayoutEffect(() => {
+        subscribe(name, { items });
+
+        return () => {
+            unsubscribe(name);
+        };
+    }, []);
+
     const items = useMemo(() => new Map<string, TracingItemData>(), []);
 
     const trace = useCallback((id: string | null, item: TracingItemParams) => {
@@ -21,20 +30,17 @@ export function TracingDomainProvider({ name, children }: TracingDomainProviderP
         return items.delete(key);
     }, [items]);
 
+    const selector = useMemo(() => {
+        return domains[name];
+    }, [domains[name]]);
+
     const contextValue = useMemo(() => {
         return {
             trace,
-            untrace
+            untrace,
+            selector
         };
-    }, [trace, untrace]);
-
-    useLayoutEffect(() => {
-        subscribe(name, { items });
-
-        return () => {
-            unsubscribe(name);
-        };
-    }, []);
+    }, [trace, untrace, selector]);
 
     return (
         <TracingDomainContext.Provider value={contextValue}>
