@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { CanvasRootView } from "../../ui-canvas/components/CanvasRootView";
 import { CanvasGridContainer } from "./CanvasGridContainer";
 
-export function CanvasRoot({ rootRef, src }: CanvasRootProps) {
+export function CanvasRoot({ rootRef, src, className, sx }: CanvasRootProps) {
   const internalRef = useRef<HTMLDivElement>(null);
   const ref = rootRef || internalRef;
 
@@ -19,6 +19,8 @@ export function CanvasRoot({ rootRef, src }: CanvasRootProps) {
       <CanvasRootView 
         ref={ref}
         state={{}}
+        className={className}
+        sx={sx}
         render={() => <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>}
       />
     </TracedUniqueItem>

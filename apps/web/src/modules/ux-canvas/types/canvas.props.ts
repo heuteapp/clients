@@ -1,21 +1,22 @@
 import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
 import { CanvasGridModel, CanvasModel } from "../../d-canvas/types/canvas.model.types";
+import { SimpleViewOverrides } from "../../ui-base/types/view.types";
 
-export interface CanvasRootProps {
+export interface CanvasRootProps extends SimpleViewOverrides {
     rootRef?: React.RefObject<HTMLDivElement | null>;
     src: CanvasModel;
 }
 
-export interface CanvasGridContainerProps {
+export interface CanvasGridContainerProps extends SimpleViewOverrides {
     rowCount: number; colCount: number;
     gridSources: CanvasGridModel[];
 }
 
-export interface CanvasGridSectionProps {
+export interface CanvasGridSectionProps extends SimpleViewOverrides {
     src: CanvasGridModel;
 }
 
-export interface CanvasGridItemProps  {
+export interface CanvasGridItemProps extends SimpleViewOverrides  {
     src: CanvasGridModel
 }
 
