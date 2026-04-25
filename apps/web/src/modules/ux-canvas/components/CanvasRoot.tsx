@@ -3,7 +3,6 @@
 import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 
 import { CanvasRootProps } from "../types/canvas.props";
-import { useCanvasContext } from "../hooks/useCanvasContext";
 import { CanvasGridContainer } from "./CanvasGridContainer";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 import { useRef } from "react";

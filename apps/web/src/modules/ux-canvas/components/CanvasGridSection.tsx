@@ -8,24 +8,24 @@ import CanvasGridItem from "./CanvasGridItem";
 
 //
 
-export function CanvasGridSection(props : CanvasGridSectionProps) {
-    const { data } = props;
+export function CanvasGridSection({ src }: CanvasGridSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
 
     return (
         <TracedItem
             type={"canvas-grid-section"}
-            id={data.name}
+            data={src}
+            id={src.name}
             ref={ref}
         >
             <div
                 ref={ref}
                 className={style.gridSection}
                 style={{
-                    gridArea: data.name
+                    gridArea: src.name
                 }}
             >
-                <CanvasGridItem data={data}/>
+                <CanvasGridItem src={src}/>
             </div>        
         </TracedItem>
     )
