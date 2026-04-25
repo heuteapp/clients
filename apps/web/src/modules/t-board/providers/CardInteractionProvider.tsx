@@ -1,4 +1,6 @@
-export function CardInteractionProvider({ children }: { children: React.ReactNode }) {
+import { CardInteractionProviderProps } from "../types/props.types";
+
+export function CardInteractionProvider({ children }: CardInteractionProviderProps) {
     return (
         <>
             {children}
