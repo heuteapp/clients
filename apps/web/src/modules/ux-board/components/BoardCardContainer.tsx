@@ -1,15 +1,15 @@
 import style from "@/src/modules/ux-board/styles/board.module.scss"
 
 import { useRef } from "react";
-import BoardCardItem from "./BoardCardItem"
 
 import { BoardCardContainerProps } from "@/src/modules/ux-board/types/board.props";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
+import { BoardCardItem } from "./BoardCardItem";
 
 //
 
-function BoardCardContainer(props : BoardCardContainerProps) {
-    const ref = useRef<HTMLDivElement>(null);
+export function BoardCardContainer({ cards } : BoardCardContainerProps) {
+    const ref = useRef<HTMLDivElement | null>(null);
 
     return (
         <TracedUniqueItem
@@ -20,12 +20,10 @@ function BoardCardContainer(props : BoardCardContainerProps) {
                 className={style.cardContainer} 
                 ref={ref}
             >
-                {props.cards.map(card => (
+                {cards.map(card => (
                     <BoardCardItem key={card.id} data={card} />
                 ))}
             </div>
         </TracedUniqueItem>
     )
 }
-
-export default BoardCardContainer

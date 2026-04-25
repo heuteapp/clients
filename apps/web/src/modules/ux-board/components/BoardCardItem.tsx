@@ -3,25 +3,19 @@ import { BoardCardItemView } from "../../ui-board/components/BoardCardItemView";
 import { TracedItem } from "../../t-core/components/TracedItem";
 import { useRef } from "react";
 
-function BoardCardItem(props : BoardCardItemProps) {
-    const { data: boardCardData } = props;
+export function BoardCardItem({ data } : BoardCardItemProps) {
     const ref = useRef<HTMLDivElement>(null);
-
-    const boardCardContent = boardCardData.content;
-    const placement = boardCardData.placement;
-
-    if(!placement) return null;
 
     return (
         <TracedItem
             type="board-card-item"
-            id={boardCardData.name}
-            data={boardCardData}
+            id={data.name}
+            data={data}
             ref={ref}
         >
             <BoardCardItemView 
                 state={{
-                    content: boardCardContent,
+                    content: data.content,
                     isFrontFace: true,
                 }}
                 ref={ref}
@@ -34,5 +28,3 @@ function BoardCardItem(props : BoardCardItemProps) {
         </TracedItem>
     )
 }
-
-export default BoardCardItem

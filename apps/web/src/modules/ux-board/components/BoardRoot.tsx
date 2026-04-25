@@ -3,13 +3,12 @@
 import "@/src/modules/ux-board/styles/board.css";
 import style from "@/src/modules/ux-board/styles/board.module.scss"
 
-import BoardCardContainer from "./BoardCardContainer";
-
 import { BoardRootProps } from "../types/board.props";
 import { CanvasRoot } from "@/src/modules/ux-canvas/components/CanvasRoot";
 import { useCanvasContext } from "../../ux-canvas/hooks/useCanvasContext";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 import { useBoardContext } from "../hooks/useBoardContext";
+import { BoardCardContainer } from "./BoardCardContainer";
 
 //
 
