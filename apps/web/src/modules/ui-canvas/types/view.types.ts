@@ -1,6 +1,7 @@
 import { GridRect } from "../../d-core/types/common";
 
 export interface CanvasRootViewState {
+    container?: CanvasGridContainerViewState;
 }
 
 export interface CanvasGridContainerViewState {

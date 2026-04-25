@@ -1,11 +1,10 @@
 "use client"
 
-import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
-
 import { CanvasRootProps } from "../types/canvas.props";
-import { CanvasGridContainer } from "./CanvasGridContainer";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 import { useRef } from "react";
+import { CanvasRootView } from "../../ui-canvas/components/CanvasRootView";
+import { CanvasGridContainer } from "./CanvasGridContainer";
 
 export function CanvasRoot({ rootRef, src }: CanvasRootProps) {
   const internalRef = useRef<HTMLDivElement>(null);
@@ -17,12 +16,11 @@ export function CanvasRoot({ rootRef, src }: CanvasRootProps) {
       data={src}
       ref={ref}
     >
-      <div 
-        ref={ref} 
-        className={style.canvas}
-      >
-        <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>
-      </div>
+      <CanvasRootView 
+        ref={ref}
+        state={{}}
+        render={() => <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>}
+      />
     </TracedUniqueItem>
   )
 }

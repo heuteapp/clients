@@ -1,7 +1,7 @@
-import { RichViewProps, SimpleViewProps } from "../../ui-base/types/props.types";
+import { SimpleViewProps } from "../../ui-base/types/props.types";
 import { CanvasGridContainerViewState, CanvasGridItemViewState, CanvasGridSectionViewState, CanvasRootViewState } from "./view.types";
 
-export interface CanvasRootViewProps extends RichViewProps<CanvasRootViewState, "container"> {
+export interface CanvasRootViewProps extends SimpleViewProps<CanvasRootViewState> {
 }
 
 export interface CanvasGridContainerViewProps extends SimpleViewProps<CanvasGridContainerViewState> {
