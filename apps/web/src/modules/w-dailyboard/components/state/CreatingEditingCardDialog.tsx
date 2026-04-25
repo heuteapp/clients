@@ -4,9 +4,9 @@ import { isCreatingEditingCard } from "../../state/workspace-dailyboard.machine"
 import { useCallback, useEffect, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
-import { useBoardContext } from "@/src/modules/ui-board/hooks/useBoardContext";
+import { useBoardContext } from "@/src/modules/ux-board/hooks/useBoardContext";
 import { GridSpan } from "@/src/modules/d-core/types/common";
-import { BoardCardDisplay } from "@/src/modules/ui-board/components/BoardCardDisplay";
+import { BoardCardDisplay } from "@/src/modules/ux-board/components/BoardCardDisplay";
 import { BoardCardColor, BoardCardContent } from "@/src/modules/d-board/types/board.types";
 import { DailyboardCardStudio } from "@/src/modules/t-dailyboard/components/DailyboardCardStudio";
 

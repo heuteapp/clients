@@ -2,7 +2,7 @@ import React from "react";
 import { BoardMetrics } from "../types/board.metrics";
 import { applyBoardMetrics, calculateBoardMetrics } from "../metrics/board.metrics";
 import { useMetricsContext } from "../../ui-core/hooks/useMetricsContext";
-import { useCanvasContext } from "../../ui-canvas/hooks/useCanvasContext";
+import { useCanvasContext } from "../../ux-canvas/hooks/useCanvasContext";
 import { TracingDomainSelector } from "../../t-core/types/tracing.types";
 
 export const useBoardMetrics = (metricsId: string, selector: TracingDomainSelector) : BoardMetrics => {

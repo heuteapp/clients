@@ -1,4 +1,4 @@
-import { BoardCardItemProps } from "@/src/modules/ui-board/types/board.props";
+import { BoardCardItemProps } from "@/src/modules/ux-board/types/board.props";
 import { BoardCardDisplay } from "./BoardCardDisplay";
 import { getBoardCardDataSet } from "../utils/ui.utils";
 import { TracedItem } from "../../t-core/components/TracedItem";

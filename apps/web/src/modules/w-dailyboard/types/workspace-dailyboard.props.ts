@@ -1,4 +1,4 @@
-import { BoardRootProps } from "../../ui-board/types/board.props";
+import { BoardRootProps } from "../../ux-board/types/board.props";
 
 export interface WorkspaceDailyboardProps extends BoardRootProps {
     

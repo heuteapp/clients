@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import { isEditingCard, isModifyingCard, isPlacingCard, isPlacingCardIdle, isPlacingCardMoving } from "../../state/workspace-dailyboard.machine";
 import { useWorkspaceDailyboardContext } from "../useWorkspaceDailyboardContext";
-import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ui-board/utils/dom.utils";
+import { findDailyboardCardAtCursor, getDailyboardCardData } from "@/src/modules/ux-board/utils/dom.utils";
 import { useHammerContext } from "@/src/modules/ui-core/hooks/useHammerContext";
 import { useDailyboardCardDragPlacement } from "../../../t-dailyboard/hooks/useDailyboardCardDragPlacement";
 

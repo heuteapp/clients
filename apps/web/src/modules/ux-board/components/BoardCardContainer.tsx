@@ -1,9 +1,9 @@
-import style from "@/src/modules/ui-board/styles/board.module.scss"
+import style from "@/src/modules/ux-board/styles/board.module.scss"
 
 import { useRef } from "react";
 import BoardCardItem from "./BoardCardItem"
 
-import { BoardCardContainerProps } from "@/src/modules/ui-board/types/board.props";
+import { BoardCardContainerProps } from "@/src/modules/ux-board/types/board.props";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 
 //

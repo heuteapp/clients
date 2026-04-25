@@ -1,4 +1,4 @@
-import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
+import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 
 import { useRef } from "react";
 import { CanvasGridContainerProps } from "../types/canvas.props";

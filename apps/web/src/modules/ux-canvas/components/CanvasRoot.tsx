@@ -1,6 +1,6 @@
 "use client"
 
-import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
+import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 
 import { CanvasRootProps } from "../types/canvas.props";
 import { useCanvasContext } from "../hooks/useCanvasContext";

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CanvasContext } from "@/src/modules/ui-canvas/contexts/canvas.context";
+import { CanvasContext } from "@/src/modules/ux-canvas/contexts/canvas.context";
 import { useCanvasMetrics } from "../hooks/useCanvasMetrics";
 import { CanvasProviderProps } from "../types/canvas.props";
 import { useTracingDomain } from "../../t-core/hooks/useTracingDomain";

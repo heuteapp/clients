@@ -1,5 +1,5 @@
 import { TracingDomainSelector } from "../../t-core/types/tracing.types";
-import { CanvasMetricsValue } from "../../ui-canvas/types/canvas.metrics";
+import { CanvasMetricsValue } from "../../ux-canvas/types/canvas.metrics";
 
 export interface BoardMetrics {
     value: BoardMetricsValue | null;

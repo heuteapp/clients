@@ -1,5 +1,5 @@
-import { findAllDailyboardCards, findDailyboardInSubtree, getDailyboardCardData, getDailyboardData } from "../../ui-board/utils/dom.utils";
-import { findAllCanvasGrids, findCanvasInSubtree, getCanvasModelData, getCanvasGridModelData } from "../../ui-canvas/utils/dom.utils"
+import { findAllDailyboardCards, findDailyboardInSubtree, getDailyboardCardData, getDailyboardData } from "../../ux-board/utils/dom.utils";
+import { findAllCanvasGrids, findCanvasInSubtree, getCanvasModelData, getCanvasGridModelData } from "../../ux-canvas/utils/dom.utils"
 import { CanvasGridSnapshot, CanvasSnapshot, DailyboardCardSnapshot, DailyboardSnapshot } from "../types/snapshot.types";
 
 export const getCanvasSnapshot = () : CanvasSnapshot | null => {

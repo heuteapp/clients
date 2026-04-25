@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BoardRenderProvider } from "@/src/modules/ui-board/provider/BoardRenderProvider"
-import { CanvasRenderProvider } from "@/src/modules/ui-canvas/provider/CanvasRenderProvider"
+import { BoardRenderProvider } from "@/src/modules/ux-board/provider/BoardRenderProvider"
+import { CanvasRenderProvider } from "@/src/modules/ux-canvas/provider/CanvasRenderProvider"
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";

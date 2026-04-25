@@ -1,7 +1,7 @@
-import style from "@/src/modules/ui-canvas/styles/canvas.module.scss"
+import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 
 import { useRef } from "react";
-import { CanvasGridItemProps } from "@/src/modules/ui-canvas/types/canvas.props";
+import { CanvasGridItemProps } from "@/src/modules/ux-canvas/types/canvas.props";
 import { TracedItem } from "../../t-core/components/TracedItem";
 
 function CanvasGridItem(props : CanvasGridItemProps) {

@@ -1,6 +1,6 @@
 import { BoardCardPlacement } from "@/src/modules/d-board/types/board.types";
 import { GridRect, GridSpan, Rect } from "../../d-core/types/common";
-import { CanvasMetrics } from "../../ui-canvas/types/canvas.metrics";
+import { CanvasMetrics } from "../../ux-canvas/types/canvas.metrics";
 
 export interface DailyboardCardPlacementContent {
     cardSize: GridSpan;

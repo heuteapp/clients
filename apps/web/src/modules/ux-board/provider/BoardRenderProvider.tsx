@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { useCanvasContext } from "@/src/modules/ui-canvas/hooks/useCanvasContext";
-import { BoardContext } from "@/src/modules/ui-board/contexts/board.context";
+import { useCanvasContext } from "@/src/modules/ux-canvas/hooks/useCanvasContext";
+import { BoardContext } from "@/src/modules/ux-board/contexts/board.context";
 import { BoardProviderProps } from "../types/board.props";
 import { useBoardMetrics } from "../hooks/useBoardMetrics";
 import { useTracingStore } from "../../t-core/hooks/useTracingStore";
