@@ -3,7 +3,7 @@ import { SxProps } from "@mui/system";
 import { BoardCardContent } from "@/src/modules/d-board/types/board.types";
 import { GridSpan } from "../../d-core/types/common";
 
-export interface DisplayBoardCardItemProps {
+export interface BoardCardItemViewProps {
     state: {
         content: BoardCardContent;
         isFrontFace: boolean;
