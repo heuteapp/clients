@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import { useBoardContext } from "@/src/modules/ux-board/hooks/useBoardContext";
 import { GridSpan } from "@/src/modules/d-core/types/common";
-import { BoardCardDisplay } from "@/src/modules/ux-board/components/BoardCardDisplay";
+import { DisplayBoardCardItem } from "@/src/modules/ui-board/components/DisplayBoardCardItem";
 import { BoardCardColor, BoardCardContent } from "@/src/modules/d-board/types/board.types";
 import { DailyboardCardStudio } from "@/src/modules/t-dailyboard/components/DailyboardCardStudio";
 
@@ -146,7 +146,7 @@ export function CreatingEditingCardDialog() {
 
                 <Box sx={{ position: "relative" }}>
                     {renderResizeButton()}
-                    <BoardCardDisplay
+                    <DisplayBoardCardItem
                         state={{
                             content: cardContent!,
                             isFrontFace: true,

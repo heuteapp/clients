@@ -1,5 +1,5 @@
 import { BoardCardItemProps } from "@/src/modules/ux-board/types/board.props";
-import { BoardCardDisplay } from "./BoardCardDisplay";
+import { DisplayBoardCardItem } from "../../ui-board/components/DisplayBoardCardItem";
 import { getBoardCardDataSet } from "../utils/ui.utils";
 import { TracedItem } from "../../t-core/components/TracedItem";
 import { useRef } from "react";
@@ -20,7 +20,7 @@ function BoardCardItem(props : BoardCardItemProps) {
             data={boardCardData}
             ref={ref}
         >
-            <BoardCardDisplay 
+            <DisplayBoardCardItem 
                 state={{
                     content: boardCardContent,
                     isFrontFace: true,
