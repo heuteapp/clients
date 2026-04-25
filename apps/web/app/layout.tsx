@@ -1,6 +1,6 @@
 import { AppProviders } from "@/app/AppProviders";
-import "@/src/modules/ui-shared/styles/global.css";
-import "@/src/modules/ui-shared/styles/styled-card.scss";
+import "@/src/modules/ui-core/styles/global.css";
+import "@/src/modules/ui-core/styles/styled-card.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
