@@ -12,10 +12,9 @@ export interface SimpleViewProps<TState extends ViewStateValue = ViewStateValue>
 
 export interface RichViewProps<
     TState extends ViewStateValue = ViewStateValue, 
-    TKey extends string = string,
-    TRenderContent extends any = any
+    TKey extends string = string
 > extends BaseViewProps<TState> {
     className?: ViewClassNameType<TKey>;
     sx?: ViewSxType<TKey>;
-    render?: ViewRenderType<TKey, TRenderContent>;
+    render?: ViewRenderType<TState, TKey>;
 }

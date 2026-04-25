@@ -17,6 +17,6 @@ export type ViewSxValue = SxProps<Theme>;
 
 export type ViewSxType<TKey extends string = string> = { [key in TKey]: ViewSxValue; } & { body: ViewSxValue} 
 
-export type ViewRenderValue<TRenderContent extends any = any> = (content: TRenderContent) => React.ReactNode;
+export type ViewRenderValue<TState extends any = any> = (state: TState) => React.ReactNode;
 
-export type ViewRenderType<TKey extends string = string, TRenderContent extends any = any> = { [key in TKey]: ViewRenderValue<TRenderContent>; }
+export type ViewRenderType<TState extends ViewStateType = ViewStateType, TKey extends string = string> = { [key in TKey]: ViewRenderValue<TState>; }
