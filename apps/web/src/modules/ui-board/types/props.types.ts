@@ -1,7 +1,6 @@
-import { RichViewProps } from "../../ui-base/types/props.types";
-import { BoardCardItemViewState } from "./view.types";
+import { ViewProps } from "../../ui-base/types/props.types";
+import { BoardCardItemViewState, BoardViewSchema, BoardViewStates } from "./view.types";
 
-export interface BoardCardItemViewProps extends RichViewProps<
-    BoardCardItemViewState, 
-    "title" | "frontFace" | "backFace"> {
+export interface BoardCardItemViewProps extends ViewProps<BoardViewSchema, BoardCardItemViewState, BoardViewStates> {
+    
 }
