@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { TracingDomainContext } from "../contexts/tracing.context";
 
-export const useTracingDomainContext = () => {
+export const useTracingDomain = () => {
     const context = useContext(TracingDomainContext);
 
     if (!context) {
