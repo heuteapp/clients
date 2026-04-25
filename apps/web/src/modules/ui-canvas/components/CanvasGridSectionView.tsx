@@ -10,14 +10,12 @@ export function CanvasGridSectionView({ ref, state, className, render }: CanvasG
     return (
         <div
             ref={ref}
-            className={clsx(style.gridSection, ...(className?.body || []))}
+            className={clsx(style.gridSection, ...(className || []))}
             style={{
                 gridArea: state.areaName
             }}
         >
-            {render?.item 
-                ? render.item(state) 
-                : state.item && <CanvasGridItemView state={state.item} />}
+            {render ? render(state) : state.item && <CanvasGridItemView state={state.item} />}
         </div>        
     )
 }

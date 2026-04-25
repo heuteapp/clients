@@ -23,9 +23,7 @@ export function CanvasGridSection({ src }: CanvasGridSectionProps) {
                     areaName: src.name,
                     position: src.position,
                 }} 
-                render={{
-                    item: () => <CanvasGridItem src={src} />
-                }}
+                render={() => <CanvasGridItem src={src} />}
             />
         </TracedItem>
     )
