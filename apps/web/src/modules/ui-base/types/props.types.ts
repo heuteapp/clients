@@ -1,7 +1,7 @@
 import { ViewClassNameType, ViewClassNameValue, ViewRenderType, ViewStateValue, ViewSxType, ViewSxValue } from "./view.types";
 
 export interface BaseViewProps<TState extends ViewStateValue = ViewStateValue> {
-    ref: React.RefObject<HTMLDivElement | null>;
+    ref?: React.RefObject<HTMLDivElement | null>;
     state: TState;
 }
 
