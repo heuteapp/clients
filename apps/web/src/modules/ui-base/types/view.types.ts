@@ -15,18 +15,20 @@ export type ViewClassNameType<TKey extends string = string> = { [key in TKey]: V
 
 export type ViewSxValue = SxProps<Theme>;
 
-export type ViewSxType<TKey extends string = string> = { [key in TKey]: ViewSxValue; } & { body: ViewSxValue} 
+export type ViewSxRecord<TKey extends string = string> = { [key in TKey]: ViewSxValue; } & { body: ViewSxValue} 
 
 export type ViewRenderValue<TState extends any = any> = (state: TState) => React.ReactNode;
 
-export type ViewRenderType<TState extends ViewStateType = ViewStateType, TKey extends string = string> = { [key in TKey]: ViewRenderValue<TState>; }
+export type ViewRenderRecord<TState extends ViewStateType = ViewStateType, TKey extends string = string> = { 
+    [key in TKey]: ViewRenderValue<TState>;
+}
 
 //
 
 export interface ViewData<TState extends ViewStateValue = ViewStateValue, TKey extends string = string> {
-    ref?: React.RefObject<HTMLDivElement | null>;
     state: TState;
-    render?: ViewRenderValue<TState> | ViewRenderType<TState, TKey>;
+    ref?: React.RefObject<HTMLDivElement | null>;
+    render?: ViewRenderValue<TState> | ViewRenderRecord<TState, TKey>;
 }
 
 export interface SimpleViewData<TState extends ViewStateValue = ViewStateValue> extends ViewData<TState, never> {
@@ -37,14 +39,14 @@ export interface RichViewData<
     TState extends ViewStateValue = ViewStateValue, 
     TKey extends string = string
 > extends ViewData<TState, TKey> {
-    render?: ViewRenderType<TState, TKey>;
+    render?: ViewRenderRecord<TState, TKey>;
 }
 
 //
 
 export interface ViewOverrides<TKey extends string = string> {
     className?: ViewClassNameValue | ViewClassNameType<TKey>;
-    sx?: ViewSxValue | ViewSxType<TKey>;
+    sx?: ViewSxValue | ViewSxRecord<TKey>;
 }
 
 export interface SimpleViewOverrides extends ViewOverrides<never> {
@@ -54,5 +56,5 @@ export interface SimpleViewOverrides extends ViewOverrides<never> {
 
 export interface RichViewOverrides<TKey extends string = string> extends ViewOverrides<TKey> {
     className?: ViewClassNameType<TKey>;
-    sx?: ViewSxType<TKey>;
+    sx?: ViewSxRecord<TKey>;
 }
