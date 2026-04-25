@@ -1,38 +1,33 @@
 "use client"
 
 import "@/src/modules/ux-board/styles/board.css";
+
+import React from "react";
 import style from "@/src/modules/ux-board/styles/board.module.scss"
 
 import { BoardRootProps } from "../types/board.props";
 import { CanvasRoot } from "@/src/modules/ux-canvas/components/CanvasRoot";
-import { useCanvasContext } from "../../ux-canvas/hooks/useCanvasContext";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
-import { useBoardContext } from "../hooks/useBoardContext";
 import { BoardCardContainer } from "./BoardCardContainer";
 
 //
 
-export function BoardRoot({ data }: BoardRootProps) {
-  const { rootRef } = useBoardContext();
-  const cards = data.cards;
-
-  const { dataSource: canvasData } = useCanvasContext();
-  
-  if(!cards) return null;
-  if(!canvasData) return null;
+export function BoardRoot({ rootRef, src, canvasSrc }: BoardRootProps) {
+  const initialRef = React.useRef<HTMLDivElement | null>(null);
+  const ref = rootRef || initialRef;
 
   return (
     <TracedUniqueItem
       type="board-root"
-      data={data}
-      ref={rootRef}
+      data={src}
+      ref={ref}
     >
       <div 
-        ref={rootRef} 
+        ref={ref} 
         className={style.board}
       >
-        <CanvasRoot data={canvasData} />
-        <BoardCardContainer cards={cards} />
+        <CanvasRoot data={canvasSrc} />
+        <BoardCardContainer src={src.cards} />
       </div>
     </TracedUniqueItem>
   )

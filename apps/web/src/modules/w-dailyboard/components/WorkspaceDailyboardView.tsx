@@ -1,7 +1,7 @@
 import { BoardRoot } from "../../ux-board/components/BoardRoot";
 import { WorkspaceDailyboardProps } from "../types/workspace-dailyboard.props";
 
-export function WorkspaceDailyboardView({ data }: WorkspaceDailyboardProps) {
+export function WorkspaceDailyboardView({ rootRef, src, canvasSrc }: WorkspaceDailyboardProps) {
     return (
         <div
             style={{
@@ -13,7 +13,7 @@ export function WorkspaceDailyboardView({ data }: WorkspaceDailyboardProps) {
                 display: "flex",
             }}
         >
-            <BoardRoot data={data} />
+            <BoardRoot rootRef={rootRef} src={src} canvasSrc={canvasSrc} />
         </div>
     );
 }

@@ -8,7 +8,7 @@ import { BoardCardItem } from "./BoardCardItem";
 
 //
 
-export function BoardCardContainer({ cards } : BoardCardContainerProps) {
+export function BoardCardContainer({ src } : BoardCardContainerProps) {
     const ref = useRef<HTMLDivElement | null>(null);
 
     return (
@@ -20,8 +20,8 @@ export function BoardCardContainer({ cards } : BoardCardContainerProps) {
                 className={style.cardContainer} 
                 ref={ref}
             >
-                {cards.map(card => (
-                    <BoardCardItem key={card.id} data={card} />
+                {src.map(card => (
+                    <BoardCardItem key={card.id} src={card} />
                 ))}
             </div>
         </TracedUniqueItem>

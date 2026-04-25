@@ -1,15 +1,18 @@
 import { StoredBoardModel, StoredBoardCardModel } from "@/src/heute-store/types/board.types";
+import { StoredCanvasModel } from "@/src/heute-store/types/canvas.types";
 
 export interface BoardRootProps {
-    data: StoredBoardModel;
+    rootRef?: React.RefObject<HTMLDivElement | null>;
+    src: StoredBoardModel;
+    canvasSrc: StoredCanvasModel;
 }
 
 export interface BoardCardContainerProps {
-    cards: StoredBoardCardModel[];
+    src: StoredBoardCardModel[];
 }
 
 export interface BoardCardItemProps {
-    data: StoredBoardCardModel;
+    src: StoredBoardCardModel;
 }
 
 //

@@ -5,7 +5,6 @@ import { useCanvasContext } from "@/src/modules/ux-canvas/hooks/useCanvasContext
 import { BoardContext } from "@/src/modules/ux-board/contexts/board.context";
 import { BoardProviderProps } from "../types/board.props";
 import { useBoardMetrics } from "../hooks/useBoardMetrics";
-import { useTracingStore } from "../../t-core/hooks/useTracingStore";
 import { useTracingDomain } from "../../t-core/hooks/useTracingDomain";
 
 export function BoardRenderProvider({ rootRef, metricsId, dataSource, children }: BoardProviderProps) {
