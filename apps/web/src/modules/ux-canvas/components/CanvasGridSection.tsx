@@ -4,7 +4,7 @@ import { useRef } from "react"
 
 import { CanvasGridSectionProps } from "@/src/modules/ux-canvas/types/canvas.props";
 import { TracedItem } from "../../t-core/components/TracedItem";
-import CanvasGridItem from "./CanvasGridItem";
+import { CanvasGridItem } from "./CanvasGridItem";
 
 //
 
