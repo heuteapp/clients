@@ -6,7 +6,7 @@ export interface CanvasGridContainerViewState {
 
 export interface CanvasGridSectionViewState {
     areaName: string;
-    item: CanvasGridItemViewState;
+    item?: CanvasGridItemViewState;
 }
 
 export interface CanvasGridItemViewState {

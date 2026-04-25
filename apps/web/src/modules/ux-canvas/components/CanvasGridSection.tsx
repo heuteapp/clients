@@ -1,10 +1,9 @@
-import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
-
 import { useRef } from "react"
 
 import { CanvasGridSectionProps } from "@/src/modules/ux-canvas/types/canvas.props";
 import { TracedItem } from "../../t-core/components/TracedItem";
 import { CanvasGridItem } from "./CanvasGridItem";
+import { CanvasGridSectionView } from "../../ui-canvas/components/CanvasGridSectionView";
 
 //
 
@@ -18,15 +17,15 @@ export function CanvasGridSection({ src }: CanvasGridSectionProps) {
             id={src.name}
             ref={ref}
         >
-            <div
-                ref={ref}
-                className={style.gridSection}
-                style={{
-                    gridArea: src.name
+            <CanvasGridSectionView 
+                ref={ref} 
+                state={{
+                    areaName: src.name
+                }} 
+                render={{
+                    gridItem: () => <CanvasGridItem src={src} />
                 }}
-            >
-                <CanvasGridItem src={src}/>
-            </div>        
+            />
         </TracedItem>
     )
 }
