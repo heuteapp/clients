@@ -20,11 +20,11 @@ const getRandomSize = (maxCol: number, maxRow: number, score?: number) => {
   if (isBig) {
     // Yüksek score -> büyük kart (max'e yakın)
     colSpan = random(Math.floor(maxCol * 0.6), maxCol);
-    rowSpan = random(Math.floor(maxRow * 0.7), maxRow);
+    rowSpan = random(Math.floor(maxRow * 0.8), maxRow);
   } else {
     // Düşük score -> küçük kart (min'e yakın)
-    colSpan = random(4, Math.floor(maxCol * 0.4));
-    rowSpan = random(3, Math.floor(maxRow * 0.5));
+    colSpan = random(4, Math.floor(maxCol * 0.6));
+    rowSpan = random(3, Math.floor(maxRow * 0.8));
   }
   
   // Genişlik öncelikli
