@@ -1,4 +1,12 @@
 import { GridRect } from "../../d-core/types/common";
+import { ViewSchema } from "../../ui-base/types/view.types";
+
+export interface CanvasViewSchema extends ViewSchema {
+    "canvas-root": true;
+    "canvas-grid-container": true;
+    "canvas-grid-section": true;
+    "canvas-grid-item": true;
+}
 
 //
 
@@ -28,11 +36,3 @@ export interface CanvasGridItemViewState {
     colSpan: number;
     rowSpan: number;
 }
-
-//
-
-export type CanvasViewKeys = 
-    | "canvas-root" 
-    | "canvas-grid-container" 
-    | "canvas-grid-section" 
-    | "canvas-grid-item";

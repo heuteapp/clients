@@ -7,23 +7,36 @@ export type ViewState = {
     [key: string]: any;
 }
 
-export type ViewClassNames<TKeys extends string = string> = { [key in TKeys]?: string[]; }
+export type ViewSchema = {
+    [key in string]: true | ViewSchema;
+}
 
-export type ViewSxStyles<TKeys extends string = string> = { [key in TKeys]?: SxProps<Theme>; }
-
-export type ViewRenderFunc<TStates extends any = any> = (state: TStates) => React.ReactNode;
-
-export type ViewRenderMap<TStates extends ViewState = ViewState, TKeys extends string = string> = { 
-    [key in TKeys]?: ViewRenderFunc<TStates>;
+export type ViewTree<TSchema extends ViewSchema, TReturn> = {
+    [K in keyof TSchema]: TSchema[K] extends true 
+        ? TReturn 
+        : TSchema[K] extends object 
+            ? ViewTree<TSchema[K], TReturn>
+            : never;
 }
 
 //
 
-export interface ViewRendering<TStates extends ViewState = ViewState, TKeys extends string = string> {
-    render?: ViewRenderMap<TStates, TKeys>;
+export type ViewClassName<TSchema extends ViewSchema> 
+    = ViewTree<TSchema, string[]>;
+
+export type ViewSx<TSchema extends ViewSchema> 
+    = ViewTree<TSchema, SxProps<Theme>>;
+
+export type ViewRender<TSchema extends ViewSchema, TStates extends ViewState = ViewState> 
+    = ViewTree<TSchema, (state: TStates) => React.ReactNode>;
+
+//
+
+export interface ViewRendering<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
+    render?: ViewRender<TSchema, TStates>;
 }
 
-export interface ViewStyling<TKeys extends string = string> {
-    className?: ViewClassNames<TKeys>;
-    sx?: ViewSxStyles<TKeys>;
+export interface ViewStyling<TSchema extends ViewSchema> {
+    className?: ViewClassName<TSchema>;
+    sx?: ViewSx<TSchema>;
 }
