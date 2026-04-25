@@ -27,7 +27,6 @@ export type ViewRenderRecord<TState extends ViewStateType = ViewStateType, TKey 
 
 export interface ViewData<TState extends ViewStateValue = ViewStateValue, TKey extends string = string> {
     state: TState;
-    ref?: React.RefObject<HTMLDivElement | null>;
     render?: ViewRenderValue<TState> | ViewRenderRecord<TState, TKey>;
 }
 
