@@ -15,6 +15,7 @@ import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDia
 import { TracingDomainProvider } from "../../t-core/providers/TracingDomainProvider";
 import { useDailyboardDataStore } from "@/src/heute-store/stores/board.store";
 import { BoardCardColor } from "../../d-board/types/board.types";
+import { useRandomCards } from "./dds";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
@@ -69,28 +70,6 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
         });
     }, [loadGlobalCanvas]);
 
-    const { addCard } = useDailyboardDataStore();
-    useEffect(() => {
-        addCard("History@260425", {
-            name: "fdsfsdsdsdf",
-            content: {
-                title: "Morning Meditation",
-                color: BoardCardColor.LightBlue,
-                frontFace: null,
-                backFace: null
-            },
-            placement: {
-                gridName: "first",
-                position: {
-                    rowIndex: 1,
-                    colIndex: 1,
-                    rowSpan: 6,
-                    colSpan: 12
-                }
-            }
-        });
-    }, [state, addCard]);
-
 
     const { dailyboardData, canvasData } = state.context;
     const canvasStyle = getGlobalCanvas("default", 1);
@@ -117,6 +96,8 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
 const ProviderContent = ({ children }: { children: React.ReactNode }) => {
     useWorkspaceDailyboardBreadcrumbs();
     const { state } = useWorkspaceDailyboardContext();
+    
+    useRandomCards();
 
     return (
         <>
