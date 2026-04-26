@@ -1,7 +1,7 @@
-import { ViewStructure, ViewSchema, ViewSlot, ViewState } from "./view.types";
+import { ViewStructure, ViewTreeSchema, ViewSlot, ViewState } from "./view.types";
 
 export interface ViewProps<
-    TSchema extends ViewSchema,
+    TSchema extends ViewTreeSchema,
     TState extends TStates,
     TStates extends ViewState
 > extends ViewStructure<TSchema, TStates> {
