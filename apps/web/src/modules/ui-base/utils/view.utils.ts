@@ -1,6 +1,5 @@
-import { GetNestedValue } from "../../d-core/types/types";
-import { filterKeysByPrefix, getNestedValue, idKey, omitKeysByPrefix } from "../../d-core/utils/types";
-import { ViewRenderProps } from "../types/props.types";
+import { getNestedValue } from "../../d-core/utils/types";
+import { ViewProps, ViewRenderProps } from "../types/props.types";
 import { ViewPort, ViewSchema, ViewTreeSchema } from "../types/view.types";
 
 export function getPort<ID extends string, TSchema extends ViewTreeSchema | true>(
@@ -15,25 +14,30 @@ export function getPort<ID extends string, TSchema extends ViewTreeSchema | true
     }
 }
 
-export function viewRender<ID extends string, TSchema extends ViewSchema>(  
-    id: ID,
-    state: TSchema["state"][ID],
-    ref: React.RefObject<HTMLDivElement | null> | undefined,
-    port: ViewPort<GetNestedValue<TSchema["tree"], ID, true, ViewTreeSchema>>,
-    renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode
+export function VIEW<
+    const ID extends string,
+    const TSchema extends ViewSchema,
+>(  
+    renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode,
+    config: {
+        id: ID;
+        schema: TSchema;
+    }
 ) {
-    return renderFunc({
-        state,
-        ref,
+    const func = <const TProps extends ViewProps<ID, TSchema>>(props: TProps,) => renderFunc({
+        state: props.state,
+        ref: props.ref,
         x: {
-            className: port.className ? omitKeysByPrefix(getNestedValue(port.className, id) as any, idKey(id)) as any : undefined,
-            sx: port.sx ? omitKeysByPrefix(getNestedValue(port.sx, id) as any, idKey(id)) as any : undefined,
-            render: port.render ? omitKeysByPrefix(getNestedValue(port.render, id) as any, idKey(id)) as any : undefined,
+            className: props.port.className ? getNestedValue(props.port.className, config.id) as any : undefined,
+            sx: props.port.sx ? getNestedValue(props.port.sx, config.id) as any : undefined,
+            render: props.port.render ? getNestedValue(props.port.render, config.id) as any : undefined,
         },
         y: {
-            className: port.className ? filterKeysByPrefix(getNestedValue(port.className, id) as any, idKey(id)) as any : undefined,
-            sx: port.sx ? filterKeysByPrefix(getNestedValue(port.sx, id) as any, idKey(id)) as any : undefined,
-            render: port.render ? filterKeysByPrefix(getNestedValue(port.render, id) as any, idKey(id)) as any : undefined,
+            className: props.port.className ? getNestedValue(props.port.className, config.id) as any : undefined,
+            sx: props.port.sx ? getNestedValue(props.port.sx, config.id) as any : undefined,
+            render: props.port.render ? getNestedValue(props.port.render, config.id) as any : undefined,
         }
     });
+
+    return { RENDER: func }
 }
