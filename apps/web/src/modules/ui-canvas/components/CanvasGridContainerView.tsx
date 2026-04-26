@@ -7,7 +7,7 @@ import { CanvasGridSectionView } from "./CanvasGridSectionView";
 
 //
 
-export function CanvasGridContainerView({ ref, state, className, sx, render }: CanvasGridContainerViewProps) {
+export function CanvasGridContainerView({ ref, state, className, sx, render, slot }: CanvasGridContainerViewProps) {
     const viewKey = "canvas-grid-container";
     const viewClassName = className?.[viewKey];
     const viewRender = render?.[viewKey];
@@ -44,7 +44,7 @@ export function CanvasGridContainerView({ ref, state, className, sx, render }: C
                 gridTemplateAreas
             }}
         > 
-            {viewRender ? viewRender(state) : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} className={className} sx={sx} render={render} />)}
+            {slot?.render ? slot.render(state) : viewRender ? viewRender(state) : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} className={className} sx={sx} render={render} />)}
         </div>       
     )
 }

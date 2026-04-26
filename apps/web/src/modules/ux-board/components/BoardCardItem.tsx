@@ -19,8 +19,8 @@ export function BoardCardItem({ src } : BoardCardItemProps) {
                     isFrontFace: true,
                 }}
                 ref={ref}
-                sx={{
-                    body: {
+                slot={{
+                    sx: {
                         position: "fixed",
                     }
                 }}

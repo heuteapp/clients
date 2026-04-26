@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { Box } from "@mui/material";
 import { BoardCardItemViewProps } from "../types/props.types";
 
-export function BoardCardItemView({ state, ref, className, sx, render }: BoardCardItemViewProps) {
+export function BoardCardItemView({ state, ref, className, sx, render, slot }: BoardCardItemViewProps) {
     const viewKey = "board-card-item";
     const viewClassName = className?.[viewKey];
     const viewSx = sx?.[viewKey];
@@ -14,7 +14,7 @@ export function BoardCardItemView({ state, ref, className, sx, render }: BoardCa
             sx={{
                 width: (state.cardSpan?.colSpan || 0) * (state.cellStep || 0),
                 height: (state.cardSpan?.rowSpan || 0) * (state.cellStep || 0),
-                ...viewSx?.body,
+                ...(slot?.sx || viewSx?.body),
             }}
             ref={ref}
         >
