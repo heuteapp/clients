@@ -21,6 +21,9 @@ export type FlattenKeys<T> =
       >
     : {};
 
+
+export type IdKey<T extends string> = T extends `${infer First}-${string}` ? First : T;
+
 export type FilterKeysByPrefix<T, Prefix extends string> = Simplify<{
   [K in keyof T as K extends `${Prefix}${string}` ? K : never]: T[K]
 }>;

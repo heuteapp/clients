@@ -1,4 +1,4 @@
-import { ViewPort, ViewX, ViewSchema, ViewSlot, ViewTreeSchema } from "./view.types";
+import { ViewPort, ViewX, ViewSchema, ViewSlot, ViewTreeSchema, ViewY } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
@@ -12,9 +12,12 @@ export interface ViewProps<
 
 export interface ViewRenderProps<
     ID extends string,
-    TSchema extends ViewTreeSchema
+    TSchema extends ViewSchema
 > {
-  x: ViewX<ID, TSchema>;
+  state: TSchema["state"][ID];
+  ref?: React.RefObject<HTMLDivElement | null>;
+  x: ViewX<ID, TSchema["tree"]>;
+  y: ViewY<ID, TSchema["tree"]>;
 }
 
 //
