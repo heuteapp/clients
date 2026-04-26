@@ -21,7 +21,9 @@ export function BoardCardItem({ src } : BoardCardItemProps) {
                 ref={ref}
                 slot={{
                     sx: {
-                        position: "fixed",
+                        "&": {
+                            position: "fixed"
+                        }
                     }
                 }}
             />

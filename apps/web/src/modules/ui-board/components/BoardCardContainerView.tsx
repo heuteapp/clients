@@ -16,7 +16,7 @@ export const BoardCardContainerView = (props : BoardCardContainerViewProps) => (
                 ref={ref}
                 className={clsx(style.cardContainer, ...(slot.className?.["&"] || []))}
             > 
-                {slot.render?.["board-card-item"]?.["&"] ? slot.render["board-card-item"]["&"](state) 
+                {slot.render?.["&"] ? slot.render["&"](state) 
                     : state.cards.map((s, i) => <BoardCardItemView key={i} state={s} port={props.port} />)}
             </div>
         )
