@@ -22,24 +22,30 @@ export type ViewTree<TSchema extends ViewSchema, TReturn> = {
 //
 
 export type ViewClassName<TSchema extends ViewSchema> 
-    = ViewTree<TSchema, string[]>;
+    = ViewTree<TSchema, ViewClassNameValue>;
+
+export type ViewClassNameValue = string[];
 
 export type ViewSx<TSchema extends ViewSchema> 
-    = ViewTree<TSchema, SxProps<Theme>>;
+    = ViewTree<TSchema, ViewSxValue>;
 
-export type ViewRender<TSchema extends ViewSchema, TStates extends ViewState = ViewState> 
-    = ViewTree<TSchema, (state: TStates) => React.ReactNode>;
+export type ViewSxValue = SxProps<Theme>;
+
+export type ViewRender<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
+    = ViewTree<TSchema, ViewRenderValue<TState>>;
+
+export type ViewRenderValue<TState extends ViewState = ViewState> = (state: TState) => React.ReactNode;
 
 //
 
 export interface ViewComposition<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
-    render?: ViewRender<TSchema, TStates>;
     className?: ViewClassName<TSchema>;
-    sx?: ViewSx<TSchema>;
+    sx?: ViewSx<TSchema>;    
+    render?: ViewRender<TSchema, TStates>;
 }
 
 export interface ViewSlot<TStates extends ViewState = ViewState> {
-    render?: (state: TStates) => React.ReactNode;
-    className?: string[];
-    sx?: SxProps<Theme>;
+    className?: ViewClassNameValue;
+    sx?: ViewSxValue;    
+    render?: ViewRenderValue<TStates>;
 }
