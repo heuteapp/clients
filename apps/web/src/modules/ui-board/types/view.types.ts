@@ -21,7 +21,7 @@ export type BoardViewSchema = ViewSchema<"board",
 //
 
 export interface BoardRootViewState {
-    cards: BoardCardItemViewState[];
+    container: BoardCardContainerViewState;
 }
 
 export interface BoardCardContainerViewState {
