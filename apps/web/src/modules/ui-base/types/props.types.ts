@@ -18,7 +18,9 @@ type GetViewTreeValue<
 > = K extends keyof T
   ? T[K] extends V
     ? T[K]
-    : never
+    : T[K] extends true
+      ? T[K]
+      : never
   : T extends Record<string, infer U>
   ? GetViewTreeValue<U, K, V>
   : never;
