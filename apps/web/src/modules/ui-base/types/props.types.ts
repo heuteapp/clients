@@ -1,4 +1,4 @@
-import { ViewPort, ViewSlot, ViewSchema, ViewTreeSchema } from "./view.types";
+import { ViewPort, ViewSlot, ViewSchema, ViewTreeSchema, ViewUXSlot } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
@@ -10,6 +10,13 @@ export interface ViewProps<
     slot?: ViewSlot<ID, TSchema["tree"]>;
 }
 
+export interface ViewUXProps<
+    ID extends string,
+    TSchema extends ViewSchema
+> {
+    slot?: ViewUXSlot<ID, TSchema["tree"]>;
+}
+
 export interface ViewRenderProps<
     ID extends string,
     TSchema extends ViewSchema
@@ -19,19 +26,3 @@ export interface ViewRenderProps<
   x: ViewSlot<ID, TSchema["tree"]>;
   y: ViewSlot<ID, TSchema["tree"]>;
 }
-
-//
-
-type GetViewTreeValue<
-  T, 
-  K extends string,
-  V extends ViewTreeSchema = ViewTreeSchema
-> = K extends keyof T
-  ? T[K] extends V
-    ? T[K]
-    : T[K] extends true
-      ? T[K]
-      : never
-  : T extends Record<string, infer U>
-  ? GetViewTreeValue<U, K, V>
-  : never;

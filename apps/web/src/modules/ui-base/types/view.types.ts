@@ -66,20 +66,34 @@ export type ViewRenderTree<TSchema extends ViewTreeSchema, TState extends ViewSt
 
 //
 
-export type ViewSlot<
-    ID extends string, 
-    TSchema extends ViewTreeSchema | true,
-    TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true
-> = {
-    className?: TX extends ViewTreeSchema ? ViewClassNameTree<TX> : ViewClassName;
-    sx?: TX extends ViewTreeSchema ? ViewSxTree<TX> : ViewSx;
-    wrapper?: TX extends ViewTreeSchema ? ViewWrapperTree<TX> : ViewWrapper;
-    render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
-}
-
 export type ViewPort<TSchema extends ViewTreeSchema> = {
     className?: ViewClassNameTree<TSchema>;
     sx?: ViewSxTree<TSchema>;
     wrapper?: ViewWrapperTree<TSchema>;
     render?: ViewRenderTree<TSchema>;
+}
+
+export interface ViewSlot<
+    ID extends string, 
+    TSchema extends ViewTreeSchema | true
+> extends ViewStylingSlot<ID, TSchema>, ViewWrapperSlot<ID, TSchema>, ViewRenderSlot<ID, TSchema> {
+}
+
+export interface ViewUXSlot<
+    ID extends string, 
+    TSchema extends ViewTreeSchema | true
+> extends ViewStylingSlot<ID, TSchema>, ViewWrapperSlot<ID, TSchema> {
+}
+
+export interface ViewStylingSlot<ID extends string, TSchema extends ViewTreeSchema | true, TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true> {
+    className?: TX extends ViewTreeSchema ? ViewClassNameTree<TX> : ViewClassName;
+    sx?: TX extends ViewTreeSchema ? ViewSxTree<TX> : ViewSx;
+}
+
+export interface ViewWrapperSlot<ID extends string, TSchema extends ViewTreeSchema | true, TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true> {
+    wrapper?: TX extends ViewTreeSchema ? ViewWrapperTree<TX> : ViewWrapper;
+}
+
+export interface ViewRenderSlot<ID extends string, TSchema extends ViewTreeSchema | true, TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true> {
+    render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
 }

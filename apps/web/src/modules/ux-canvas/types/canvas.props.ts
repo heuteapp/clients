@@ -1,28 +1,25 @@
 import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
 import { CanvasGridModel, CanvasModel } from "../../d-canvas/types/canvas.model.types";
-import { ViewSlot } from "../../ui-base/types/view.types";
+import { ViewUXSlot } from "../../ui-base/types/view.types";
 import { CanvasViewSchema } from "../../ui-canvas/types/view.types";
+import { ViewUXProps } from "../../ui-base/types/props.types";
 
-export interface CanvasRootProps {
+export interface CanvasRootProps extends ViewUXProps<"canvas-root", CanvasViewSchema> {
     rootRef?: React.RefObject<HTMLDivElement | null>;
     src: CanvasModel;
-    slot?: ViewSlot<"canvas-root", CanvasViewSchema["tree"]>;
 }
 
-export interface CanvasGridContainerProps {
+export interface CanvasGridContainerProps extends ViewUXProps<"canvas-grid-container", CanvasViewSchema> {
     rowCount: number; colCount: number;
     gridSources: CanvasGridModel[];
-    slot?: ViewSlot<"canvas-grid-container", CanvasViewSchema["tree"]>;
 }
 
-export interface CanvasGridSectionProps {
+export interface CanvasGridSectionProps extends ViewUXProps<"canvas-grid-section", CanvasViewSchema> {
     src: CanvasGridModel;
-    slot?: ViewSlot<"canvas-grid-section", CanvasViewSchema["tree"]>;
 }
 
-export interface CanvasGridItemProps  {
+export interface CanvasGridItemProps extends ViewUXProps<"canvas-grid-item", CanvasViewSchema> {
     src: CanvasGridModel
-    slot?: ViewSlot<"canvas-grid-item", CanvasViewSchema["tree"]>;
 }
 
 export interface CanvasProviderProps {
