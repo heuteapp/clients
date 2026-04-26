@@ -1,6 +1,6 @@
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
-import { FilterKeysByPrefix, FlattenKeys } from "../../d-core/types/types";
+import { FilterKeysByPrefix, FlattenKeys, GetNestedValue, OmitKeysByPrefix } from "../../d-core/types/types";
 
 export type ViewState = {
     [key: string]: any;
@@ -79,3 +79,18 @@ export interface ViewSlot<TStates extends ViewState = ViewState> {
     wrapper?: ViewWrapper<TStates>;
     render?: ViewRender<TStates>;
 }
+
+export interface ViewX<
+    ID extends string, 
+    TSchema extends ViewTreeSchema | true,
+    TX = TSchema extends ViewTreeSchema ? OmitKeysByPrefix<GetNestedValue<
+            TSchema, 
+        ID, true, ViewTreeSchema>, `${Key<ID>}-`> : true
+> {
+    className?: TX extends ViewTreeSchema ? ViewClassNameTree<TX> : ViewClassName;
+    sx?: TX extends ViewTreeSchema ? ViewSxTree<TX> : ViewSx;
+    wrapper?: TX extends ViewTreeSchema ? ViewWrapperTree<TX> : ViewWrapper;
+    render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
+}
+
+type Key<T extends string> = T extends `${infer First}-${string}` ? First : T;
