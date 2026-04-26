@@ -42,6 +42,8 @@ export function getNestedValue<
   }
 ): GetNestedValue<T, K, typeof config extends { leafValue: infer L } ? L : unknown, typeof config extends { branchValue: infer B } ? B : Record<string, any>> | undefined {
   
+  if(!obj || typeof obj !== 'object') return obj;
+
   const search = (current: any, depth: number = 0): any => {
     if (!current || typeof current !== 'object') return undefined;
     
