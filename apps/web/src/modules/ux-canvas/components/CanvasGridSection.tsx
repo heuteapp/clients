@@ -23,9 +23,11 @@ export function CanvasGridSection({ src, className, sx }: CanvasGridSectionProps
                     areaName: src.name,
                     position: src.position,
                 }} 
-                className={className} 
-                sx={sx}
-                render={() => <CanvasGridItem src={src} />}
+                slot={{
+                    className,
+                    sx,
+                    render: () => <CanvasGridItem src={src} />
+                }}
             />
         </TracedItem>
     )

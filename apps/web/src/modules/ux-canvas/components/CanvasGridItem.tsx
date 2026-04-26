@@ -19,8 +19,10 @@ export function CanvasGridItem({ src, className, sx }: CanvasGridItemProps) {
                     colSpan: src.position.colSpan,
                     rowSpan: src.position.rowSpan,
                 }} 
-                className={className} 
-                sx={sx} 
+                slot={{
+                    className,
+                    sx
+                }}
             />
         </TracedItem>
     )

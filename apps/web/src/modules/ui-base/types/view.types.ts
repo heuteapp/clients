@@ -32,11 +32,14 @@ export type ViewRender<TSchema extends ViewSchema, TStates extends ViewState = V
 
 //
 
-export interface ViewRendering<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
+export interface ViewComposition<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
     render?: ViewRender<TSchema, TStates>;
-}
-
-export interface ViewStyling<TSchema extends ViewSchema> {
     className?: ViewClassName<TSchema>;
     sx?: ViewSx<TSchema>;
+}
+
+export interface ViewSlot<TStates extends ViewState = ViewState> {
+    render?: (state: TStates) => React.ReactNode;
+    className?: string[];
+    sx?: SxProps<Theme>;
 }

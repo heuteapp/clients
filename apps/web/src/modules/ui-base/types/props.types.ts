@@ -1,10 +1,11 @@
-import { ViewRendering, ViewSchema, ViewState, ViewStyling } from "./view.types";
+import { ViewComposition, ViewSchema, ViewSlot, ViewState } from "./view.types";
 
 export interface ViewProps<
     TSchema extends ViewSchema,
     TState extends TStates,
     TStates extends ViewState
-> extends ViewRendering<TSchema, TStates>, ViewStyling<TSchema> {
+> extends ViewComposition<TSchema, TStates> {
     state: TState;
     ref?: React.RefObject<HTMLDivElement | null>;
+    slot?: ViewSlot<TStates>;
 }

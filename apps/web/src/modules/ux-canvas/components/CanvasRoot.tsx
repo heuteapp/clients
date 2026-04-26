@@ -19,9 +19,11 @@ export function CanvasRoot({ rootRef, src, className, sx }: CanvasRootProps) {
       <CanvasRootView 
         ref={ref}
         state={{}}
-        className={className}
-        sx={sx}
-        render={() => <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>}
+        slot={{
+          className,
+          sx,
+          render: () => <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>
+        }}
       />
     </TracedUniqueItem>
   )

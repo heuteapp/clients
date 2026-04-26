@@ -22,12 +22,14 @@ export function CanvasGridContainer({ colCount, rowCount, gridSources, className
                         position: s.position,
                     }))
                 }}
-                className={className}
-                sx={sx}
-                render={() => {
-                    return gridSources.map(s => (
-                        <CanvasGridSection key={s.name} src={s} />
-                    ))
+                slot={{
+                    className,
+                    sx,
+                    render: () => {
+                        return gridSources.map(s => (
+                            <CanvasGridSection key={s.name} src={s} />
+                        ))
+                    }
                 }}
             />
         </TracedUniqueItem>
