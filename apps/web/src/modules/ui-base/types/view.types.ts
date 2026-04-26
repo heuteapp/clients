@@ -16,6 +16,11 @@ export type ViewTree<TSchema extends ViewTreeSchema, TReturn> = {
             : never;
 } & { "&"?: TReturn };
 
+export type ViewSchema<ID extends string, TSchema extends ViewTreeSchema> = {
+    tree: TSchema;
+    root: ViewRootSchema<ID, TSchema>;
+}
+
 export type ViewTreeSchema = {
     [key in string]: true | ViewTreeSchema;
 }
