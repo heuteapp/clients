@@ -5,8 +5,8 @@ export interface ViewProps<
     TSchema extends ViewSchema
 > {
     state: TSchema["state"][ID];
-    port: ViewPort<GetViewTreeValue<TSchema["tree"], ID>>;
     ref?: React.RefObject<HTMLDivElement | null>;
+      port?: ViewPort<GetViewTreeValue<TSchema["tree"], ID>>;
     slot?: ViewSlot<Exclude<TSchema["state"][ID], undefined>>;
 }
 

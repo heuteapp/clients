@@ -18,13 +18,12 @@ export function VIEW<
     const ID extends string,
     const TSchema extends ViewSchema,
 >(  
-    renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode,
     config: {
         id: ID;
         schema: TSchema;
     }
 ) {
-    const func = <const TProps extends ViewProps<ID, TSchema>>(props: TProps,) => renderFunc({
+    const func = (props: ViewProps<ID, TSchema>, renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode) => renderFunc({
         state: props.state,
         ref: props.ref,
         x: {
