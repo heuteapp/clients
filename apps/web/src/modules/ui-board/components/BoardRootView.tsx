@@ -14,7 +14,7 @@ export const BoardRootView = (props : BoardRootViewProps) => (
           ref={ref} 
           className={clsx(style.canvas, ...(slot.className?.["&"] || []))}
         >
-          {slot.render?.["board-card-container"]?.["&"] ? slot.render["board-card-container"]["&"](state) 
+          {slot.render?.["&"] ? slot.render["&"](state) 
             : state.container && <BoardCardContainerView state={state.container} port={props.port} />}
         </div>
       )
