@@ -1,15 +1,16 @@
 import { BoardCardContent } from "../../d-board/types/board.types";
 import { GridSpan } from "../../d-core/types/common";
-import { ViewTreeSchema } from "../../ui-base/types/view.types";
+import { ViewSchema, ViewTreeSchema } from "../../ui-base/types/view.types";
 
-export interface BoardViewSchema extends ViewTreeSchema {
-    "board-root": true;
-    "board-card-item": {
-        "title": true;
-        "frontFace": true;
-        "backFace": true;
+export type BoardViewSchema = ViewSchema<"board", {
+    "board-card-container": {
+        "board-card-item": {
+            "title": true
+            "front-face": true
+            "back-face": true
+        }
     }
-}
+}>;
 
 //
 
