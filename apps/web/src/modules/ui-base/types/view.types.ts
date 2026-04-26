@@ -66,7 +66,7 @@ export type ViewRenderTree<TSchema extends ViewTreeSchema, TState extends ViewSt
 
 //
 
-export interface ViewStructure<TSchema extends ViewTreeSchema | true> {
+export interface ViewPort<TSchema extends ViewTreeSchema | true> {
     className?: TSchema extends ViewTreeSchema ? ViewClassNameTree<TSchema> : ViewClassName;
     sx?: TSchema extends ViewTreeSchema ? ViewSxTree<TSchema> : ViewSx;
     wrapper?: TSchema extends ViewTreeSchema ? ViewWrapperTree<TSchema> : ViewWrapper;

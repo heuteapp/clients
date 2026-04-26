@@ -1,10 +1,11 @@
-import { ViewStructure, ViewSchema, ViewSlot, ViewTreeSchema } from "./view.types";
+import { ViewPort, ViewSchema, ViewSlot, ViewTreeSchema } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
     TSchema extends ViewSchema
-> extends ViewStructure<GetViewTreeValue<TSchema["tree"], ID>> {
+> {
     state: TSchema["state"][ID];
+      port: ViewPort<GetViewTreeValue<TSchema["tree"], ID>>;
     ref?: React.RefObject<HTMLDivElement | null>;
     slot?: ViewSlot<Exclude<TSchema["state"][ID], undefined>>;
 }

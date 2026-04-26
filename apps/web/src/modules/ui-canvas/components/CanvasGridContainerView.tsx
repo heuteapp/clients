@@ -4,10 +4,11 @@ import clsx from "clsx";
 import { CanvasGridContainerViewProps } from "../types/props.types";
 import { useMemo } from "react";
 import { CanvasGridSectionView } from "./CanvasGridSectionView";
+import { getPort } from "../../ui-base/utils/view.utils";
 
 //
 
-export function CanvasGridContainerView({ ref, state, className, sx, render, slot }: CanvasGridContainerViewProps) {
+export function CanvasGridContainerView({ ref, state, port, slot }: CanvasGridContainerViewProps) {
     const matrix = useMemo(() => {
         const result = Array.from({ length: state.rowCount }, () =>
             Array.from({ length: state.colCount }, () => ".")
@@ -33,14 +34,14 @@ export function CanvasGridContainerView({ ref, state, className, sx, render, slo
     return (  
         <div
             ref={ref}
-            className={clsx(style.gridContainer, ...(className?.["&"] || []))}
+            className={clsx(style.gridContainer, ...(port.className?.["&"] || []))}
             style={{
                 gridTemplateColumns: `repeat(${state.colCount}, var(--canvas-cell-size))`,
                 gridTemplateRows: `repeat(${state.rowCount}, var(--canvas-cell-size))`,
                 gridTemplateAreas
             }}
         > 
-            {slot?.render ? slot.render(state) : render?.["&"] ? render["&"](state) : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} className={className} sx={sx} render={render} />)}
+            {slot?.render ? slot.render(state) : port.render?.["&"] ? port.render["&"](state) : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} port={getPort(port, "canvas-grid-section")} />)}
         </div>       
     )
 }
