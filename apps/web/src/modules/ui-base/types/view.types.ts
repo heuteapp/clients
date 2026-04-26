@@ -31,21 +31,30 @@ export type ViewSx<TSchema extends ViewSchema>
 
 export type ViewSxValue = SxProps<Theme>;
 
+export type ViewWrapper<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
+    = ViewTree<TSchema, ViewWrapperValue<TState>>;
+
+export type ViewWrapperValue<TState extends ViewState = ViewState> 
+    = (children: React.ReactNode, state: TState) => React.ReactNode;
+
 export type ViewRender<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
     = ViewTree<TSchema, ViewRenderValue<TState>>;
 
-export type ViewRenderValue<TState extends ViewState = ViewState> = (state: TState) => React.ReactNode;
+export type ViewRenderValue<TState extends ViewState = ViewState> 
+    = (state: TState) => React.ReactNode;
 
 //
 
 export interface ViewComposition<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
     className?: ViewClassName<TSchema>;
     sx?: ViewSx<TSchema>;    
+    wrapper?: ViewWrapper<TSchema, TStates>;
     render?: ViewRender<TSchema, TStates>;
 }
 
 export interface ViewSlot<TStates extends ViewState = ViewState> {
     className?: ViewClassNameValue;
     sx?: ViewSxValue;    
+    wrapper?: ViewWrapperValue<TStates>;
     render?: ViewRenderValue<TStates>;
 }
