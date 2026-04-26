@@ -5,15 +5,12 @@ import { CanvasRootViewProps } from "../types/props.types";
 import { CanvasGridContainerView } from "./CanvasGridContainerView";
 
 export function CanvasRootView({ ref, state, className, render, slot } : CanvasRootViewProps) {
-  const viewClassName = className?.["&"];
-  const viewRender = render?.["&"];
-
   return (
     <div 
       ref={ref} 
-      className={clsx(style.canvas, ...(viewClassName || []))}
+      className={clsx(style.canvas, ...(className?.["&"] || []))}
     >
-      {slot?.render ? slot.render(state) : viewRender ? viewRender(state) : state.container && <CanvasGridContainerView state={state.container} />}
+      {slot?.render ? slot.render(state) : render?.["&"] ? render["&"](state) : state.container && <CanvasGridContainerView state={state.container} />}
     </div>
   )
 }
