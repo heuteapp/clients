@@ -11,21 +11,21 @@ export type ViewSchema = {
     [key in string]: true | ViewSchema;
 }
 
-export type ViewTree<TSchema extends ViewSchema, TReturn, TX extends string = ""> = {
-    [K in keyof TSchema]: TSchema[K] extends true 
+export type ViewTree<TSchema extends ViewSchema, TReturn> = {
+    [K in keyof TSchema]?: TSchema[K] extends true 
         ? TReturn 
         : TSchema[K] extends object 
-            ? ViewTree<TSchema[K], TReturn, TX> & { [key in TX]: TReturn }
+            ? ViewTree<TSchema[K], TReturn>
             : never;
-}
+} & { "&"?: TReturn };
 
 //
 
 export type ViewClassName<TSchema extends ViewSchema> 
-    = ViewTree<TSchema, string[], "body">;
+    = ViewTree<TSchema, string[]>;
 
 export type ViewSx<TSchema extends ViewSchema> 
-    = ViewTree<TSchema, SxProps<Theme>, "body">;
+    = ViewTree<TSchema, SxProps<Theme>>;
 
 export type ViewRender<TSchema extends ViewSchema, TStates extends ViewState = ViewState> 
     = ViewTree<TSchema, (state: TStates) => React.ReactNode>;
