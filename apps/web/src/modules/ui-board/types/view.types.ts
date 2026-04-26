@@ -13,17 +13,19 @@ export type BoardViewSchema = ViewSchema<"board",
     }
 }, 
 {
+    "board-root": BoardRootViewState;
+    "board-card-container": BoardCardContainerViewState;
     "board-card-item": BoardCardItemViewState
 }>;
 
 //
 
-export type BoardViewStates =
-    | BoardRootViewState
-    | BoardCardItemViewState;
-
 export interface BoardRootViewState {
-    
+    cards: BoardCardItemViewState[];
+}
+
+export interface BoardCardContainerViewState {
+    cards: BoardCardItemViewState[];
 }
 
 export type BoardCardItemViewState = {
