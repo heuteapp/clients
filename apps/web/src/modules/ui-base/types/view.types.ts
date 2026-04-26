@@ -2,11 +2,11 @@ import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/system";
 import { FilterKeysByPrefix, FlattenKeys } from "../../d-core/types/types";
 
-export type ViewKey = string | null;
-
 export type ViewState = {
     [key: string]: any;
 }
+
+export type ViewKey = string | null;
 
 export type ViewTree<TSchema extends ViewTreeSchema, TReturn> = {
     [K in keyof TSchema]?: TSchema[K] extends true 
@@ -16,17 +16,21 @@ export type ViewTree<TSchema extends ViewTreeSchema, TReturn> = {
             : never;
 } & { "&"?: TReturn };
 
-export type ViewSchema<ID extends string, TSchema extends ViewTreeSchema> = {
-    tree: TSchema;
-    root: ViewRootSchema<ID, TSchema>;
+export type ViewSchema<ID extends string, TTree extends ViewTreeSchema, TState extends ViewStateSchema<ID, TTree>> = {
+    tree: TTree;
+    state: TState;
 }
 
 export type ViewTreeSchema = {
     [key in string]: true | ViewTreeSchema;
 }
 
-export type ViewRootSchema<ID extends string, TSchema extends ViewTreeSchema> 
-    = FilterKeysByPrefix<FlattenKeys<TSchema>, ID>;
+export type ViewRootSchema<ID extends string, TTree extends ViewTreeSchema> 
+    = FilterKeysByPrefix<FlattenKeys<TTree>, ID>;
+
+export type ViewStateSchema<ID extends string, TTree extends ViewTreeSchema> = {
+    [K in keyof ViewRootSchema<ID, TTree>]?: ViewState
+};
 
 //
 

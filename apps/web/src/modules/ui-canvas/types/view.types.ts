@@ -1,12 +1,18 @@
 import { GridRect } from "../../d-core/types/common";
 import { ViewSchema } from "../../ui-base/types/view.types";
 
-export type CanvasViewSchema = ViewSchema<"canvas", {
+export type CanvasViewSchema = ViewSchema<"canvas", 
+{
     "canvas-grid-container": {
         "canvas-grid-section": {
             "canvas-grid-item": true;
         }
     }
+},
+{
+    "canvas-grid-container": CanvasGridContainerViewState;
+    "canvas-grid-section": CanvasGridSectionViewState;
+    "canvas-grid-item": CanvasGridItemViewState;
 }>;
 
 //
