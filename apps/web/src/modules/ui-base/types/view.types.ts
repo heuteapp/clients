@@ -19,9 +19,9 @@ export type ViewTree<TSchema extends ViewTreeSchema, TReturn> = {
 export type ViewSchema<
     ID extends string = string, 
     TTree extends ViewTreeSchema = ViewTreeSchema, 
-    TState extends ViewStateSchema<ID, TTree> = ViewStateSchema<ID, TTree>
+    TState extends ViewStateSchema<ID, ViewBaseTreeSchema<ID, TTree>> = ViewStateSchema<ID, ViewBaseTreeSchema<ID, TTree>>
 > = {
-    tree: TTree;
+    tree: ViewBaseTreeSchema<ID, TTree>;
     state: TState;
 }
 
@@ -29,8 +29,12 @@ export type ViewTreeSchema = {
     [key in string]: true | ViewTreeSchema;
 }
 
+export type ViewBaseTreeSchema<ID extends string, TTree extends ViewTreeSchema> = {
+    [K in `${ID}-root`]: TTree;
+}
+
 export type ViewRootSchema<ID extends string, TTree extends ViewTreeSchema> 
-    = FilterKeysByPrefix<FlattenKeys<TTree> & { [key in `${ID}-root`]: true }, ID>
+    = FilterKeysByPrefix<FlattenKeys<TTree>, ID>;
 
 export type ViewStateSchema<ID extends string, TTree extends ViewTreeSchema> = {
     [K in keyof ViewRootSchema<ID, TTree>]?: ViewState
