@@ -7,8 +7,8 @@ export type BoardViewSchema = ViewSchema<"board",
     "board-card-container": {
         "board-card-item": {
             "title": true
-            "front-face": true
-            "back-face": true
+            "frontFace": true
+            "backFace": true
         }
     }
 }, 

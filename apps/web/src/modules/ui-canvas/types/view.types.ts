@@ -10,6 +10,7 @@ export type CanvasViewSchema = ViewSchema<"canvas",
     }
 },
 {
+    "canvas-root": CanvasRootViewState;
     "canvas-grid-container": CanvasGridContainerViewState;
     "canvas-grid-section": CanvasGridSectionViewState;
     "canvas-grid-item": CanvasGridItemViewState;

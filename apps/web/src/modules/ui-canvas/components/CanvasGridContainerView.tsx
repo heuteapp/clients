@@ -8,9 +8,8 @@ import { CanvasGridSectionView } from "./CanvasGridSectionView";
 //
 
 export function CanvasGridContainerView({ ref, state, className, sx, render, slot }: CanvasGridContainerViewProps) {
-    const viewKey = "canvas-grid-container";
-    const viewClassName = className?.[viewKey];
-    const viewRender = render?.[viewKey];
+    const viewClassName = className?.["&"];
+    const viewRender = render?.["&"];
 
     const matrix = useMemo(() => {
         const result = Array.from({ length: state.rowCount }, () =>

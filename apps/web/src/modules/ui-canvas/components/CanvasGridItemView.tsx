@@ -3,9 +3,8 @@ import { CanvasGridItemViewProps } from "../types/props.types";
 import clsx from "clsx";
 
 export function CanvasGridItemView({ ref, state, className, render, slot } : CanvasGridItemViewProps) {
-    const viewKey = "canvas-grid-item";
-    const viewClassName = className?.[viewKey];
-    const viewRender = render?.[viewKey];
+    const viewClassName = className;
+    const viewRender = render;
 
     return (
         <div

@@ -5,8 +5,8 @@ import { CanvasRootViewProps } from "../types/props.types";
 import { CanvasGridContainerView } from "./CanvasGridContainerView";
 
 export function CanvasRootView({ ref, state, className, render, slot } : CanvasRootViewProps) {
-  const viewClassName = className?.["canvas-root"];
-  const viewRender = render?.["canvas-root"];
+  const viewClassName = className?.["&"];
+  const viewRender = render?.["&"];
 
   return (
     <div 

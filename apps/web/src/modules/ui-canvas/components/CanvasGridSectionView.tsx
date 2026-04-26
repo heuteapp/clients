@@ -7,9 +7,8 @@ import { CanvasGridItemView } from "./CanvasGridItemView";
 //
 
 export function CanvasGridSectionView({ ref, state, className, render, slot }: CanvasGridSectionViewProps) {
-    const viewKey = "canvas-grid-section";
-    const viewClassName = className?.[viewKey];
-    const viewRender = render?.[viewKey];
+    const viewClassName = className?.["&"];
+    const viewRender = render?.["&"];
 
     return (
         <div
