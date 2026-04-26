@@ -12,10 +12,10 @@ export const CanvasGridSectionView = (props : CanvasGridSectionViewProps) => (
             ref={ref}
             className={clsx(style.gridSection, ...(slot.className?.["&"] || []))}
             style={{
-                gridArea: state.areaName
+                gridArea: state.data.name
             }}
         >
-            {slot.render?.["canvas-grid-item"] ? slot.render["canvas-grid-item"]?.(state) : null}
+            {slot.render?.["&"] ? slot.render["&"]?.(state) : null}
         </div>  
     ))
 )

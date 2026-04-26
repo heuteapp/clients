@@ -15,22 +15,16 @@ export function CanvasGridContainer({ colCount, rowCount, gridSources, slot }: C
             <CanvasGridContainerView 
                 ref={ref}
                 state={{
-                    colCount,
-                    rowCount,
-                    areas: gridSources.map(s => ({
-                        areaName: s.name,
-                        position: s.position,
-                    }))
+                    dimensions: { colCount, rowCount },
+                    grids: gridSources
                 }}
                 slot={{
                     ...slot,
                     render: {
-                        "canvas-grid-section": {
-                            "&": () => {
-                                return gridSources.map(s => (
-                                    <CanvasGridSection key={s.name} src={s} />
-                                ))
-                            }
+                        "&": (state) => {
+                            return state.grids.map(s => (
+                                <CanvasGridSection key={s.name} src={s} />
+                            ))
                         }
                     }
                 }}

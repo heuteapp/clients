@@ -20,13 +20,12 @@ export function CanvasGridSection({ src, slot }: CanvasGridSectionProps) {
             <CanvasGridSectionView 
                 ref={ref} 
                 state={{
-                    areaName: src.name,
-                    position: src.position,
+                    data: src
                 }} 
                 slot={{
                     ...slot,
                     render: {
-                        "canvas-grid-item": (state) => <CanvasGridItem src={src} />
+                        "canvas-grid-item": (state) => <CanvasGridItem src={state.data} />
                     }
                 }}
             />

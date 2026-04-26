@@ -18,14 +18,14 @@ export function CanvasRoot({ rootRef, src, slot }: CanvasRootProps) {
     >
       <CanvasRootView 
         ref={ref}
-        state={{}}
+        state={{
+          canvas: src
+        }}
         slot={{
           ...slot,
           render: {
-            "canvas-grid-container": {
-              "&": () => <CanvasGridContainer colCount={src.colCount} rowCount={src.rowCount} gridSources={src.grids}/>
-              }
-            }
+            "&": (state) => <CanvasGridContainer colCount={state.canvas.colCount} rowCount={state.canvas.rowCount} gridSources={state.canvas.grids}/>
+          }
         }}
       />
     </TracedUniqueItem>

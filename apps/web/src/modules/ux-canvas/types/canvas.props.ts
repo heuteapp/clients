@@ -1,6 +1,5 @@
 import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
 import { CanvasGridModel, CanvasModel } from "../../d-canvas/types/canvas.model.types";
-import { ViewUXSlot } from "../../ui-base/types/view.types";
 import { CanvasViewSchema } from "../../ui-canvas/types/view.types";
 import { ViewUXProps } from "../../ui-base/types/props.types";
 

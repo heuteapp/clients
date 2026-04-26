@@ -14,8 +14,8 @@ export const CanvasRootView = (props : CanvasRootViewProps) => (
           ref={ref} 
           className={clsx(style.canvas, ...(slot.className?.["&"] || []))}
         >
-          {slot.render?.["canvas-grid-container"]?.["&"] ? slot.render["canvas-grid-container"]["&"](state) 
-            : state.container && <CanvasGridContainerView state={state.container} port={props.port} />}
+          {slot.render?.["&"] ? slot.render["&"](state) 
+            : <CanvasGridContainerView state={{ dimensions: { colCount: state.canvas.colCount, rowCount: state.canvas.rowCount }, grids: state.canvas.grids }} port={props.port} />}
         </div>
       )
     })

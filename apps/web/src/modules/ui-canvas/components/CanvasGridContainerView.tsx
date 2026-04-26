@@ -13,22 +13,22 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
     VIEW(canvasView("canvas-grid-container"))
     .RENDER(props, ({ ref, state, slot }) => {
         const matrix = useMemo(() => {
-            const result = Array.from({ length: state.rowCount }, () =>
-                Array.from({ length: state.colCount }, () => ".")
+            const result = Array.from({ length: state.dimensions.rowCount }, () =>
+                Array.from({ length: state.dimensions.colCount }, () => ".")
             );
 
-            state.areas.forEach(s => {
+            state.grids.forEach(s => {
                 const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
 
                 for (let r = 0; r < rowSpan; r++) {
                     for (let c = 0; c < colSpan; c++) {
-                        result[rowIndex - 1 + r][colIndex - 1 + c] = s.areaName;
+                        result[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
                     }
                 }
             });
 
             return result;
-        }, [state.rowCount, state.colCount]);
+        }, [state.dimensions.rowCount, state.dimensions.colCount]);
 
         const gridTemplateAreas = useMemo(() => {
             return matrix.map(row => `"${row.join(" ")}"`).join(" ");
@@ -39,13 +39,13 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
                 ref={ref}
                 className={clsx(style.gridContainer, ...(slot.className?.["&"] || []))}
                 style={{
-                    gridTemplateColumns: `repeat(${state.colCount}, var(--canvas-cell-size))`,
-                    gridTemplateRows: `repeat(${state.rowCount}, var(--canvas-cell-size))`,
+                    gridTemplateColumns: `repeat(${state.dimensions.colCount}, var(--canvas-cell-size))`,
+                    gridTemplateRows: `repeat(${state.dimensions.rowCount}, var(--canvas-cell-size))`,
                     gridTemplateAreas
                 }}
             > 
-                {slot.render?.["canvas-grid-section"]?.["&"] ? slot.render["canvas-grid-section"]["&"](state) 
-                    : state.areas.map(s => <CanvasGridSectionView key={s.areaName} state={s} port={props.port} />)}
+                {slot.render?.["&"] ? slot.render["&"](state) 
+                    : state.grids.map(s => <CanvasGridSectionView key={s.name} state={{ data: s }} port={props.port} />)}
             </div>       
         )
     })

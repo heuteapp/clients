@@ -16,8 +16,7 @@ export function CanvasGridItem({ src, slot }: CanvasGridItemProps) {
             <CanvasGridItemView 
                 ref={ref} 
                 state={{
-                    colSpan: src.position.colSpan,
-                    rowSpan: src.position.rowSpan,
+                    data: src
                 }} 
                 slot={slot}
             />

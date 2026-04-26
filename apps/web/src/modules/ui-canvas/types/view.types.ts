@@ -1,4 +1,5 @@
-import { GridRect } from "../../d-core/types/common";
+import { CanvasModel, CanvasGridModel } from "../../d-canvas/types/canvas.model.types";
+import { GridDimensions } from "../../d-core/types/common";
 import { ViewSchema } from "../../ui-base/types/view.types";
 
 export type CanvasViewSchema = ViewSchema<"canvas", 
@@ -25,22 +26,18 @@ export type CanvasViewStates =
     | CanvasGridItemViewState;
 
 export interface CanvasRootViewState {
-    container?: CanvasGridContainerViewState;
+    canvas: CanvasModel;
 }
 
 export interface CanvasGridContainerViewState {
-    colCount: number;
-    rowCount: number;
-    areas: CanvasGridSectionViewState[];
+    dimensions: GridDimensions;
+    grids: CanvasGridModel[];
 }
 
 export interface CanvasGridSectionViewState {
-    areaName: string;
-    position: GridRect;
-    item?: CanvasGridItemViewState;
+    data: CanvasGridModel;
 }
 
 export interface CanvasGridItemViewState {
-    colSpan: number;
-    rowSpan: number;
+    data: CanvasGridModel;
 }
