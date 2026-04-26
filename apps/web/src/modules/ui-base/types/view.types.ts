@@ -21,40 +21,40 @@ export type ViewTree<TSchema extends ViewSchema, TReturn> = {
 
 //
 
-export type ViewClassName<TSchema extends ViewSchema> 
-    = ViewTree<TSchema, ViewClassNameValue>;
+export type ViewClassName = string[];
 
-export type ViewClassNameValue = string[];
+export type ViewClassNameTree<TSchema extends ViewSchema> 
+    = ViewTree<TSchema, ViewClassName>;
 
-export type ViewSx<TSchema extends ViewSchema> 
-    = ViewTree<TSchema, ViewSxValue>;
+export type ViewSx = SxProps<Theme>;
 
-export type ViewSxValue = SxProps<Theme>;
+export type ViewSxTree<TSchema extends ViewSchema> 
+    = ViewTree<TSchema, ViewSx>;
 
-export type ViewWrapper<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
-    = ViewTree<TSchema, ViewWrapperValue<TState>>;
-
-export type ViewWrapperValue<TState extends ViewState = ViewState> 
+export type ViewWrapper<TState extends ViewState = ViewState> 
     = (children: React.ReactNode, state: TState) => React.ReactNode;
 
-export type ViewRender<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
-    = ViewTree<TSchema, ViewRenderValue<TState>>;
+export type ViewWrapperTree<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
+    = ViewTree<TSchema, ViewWrapper<TState>>;
 
-export type ViewRenderValue<TState extends ViewState = ViewState> 
+export type ViewRender<TState extends ViewState = ViewState> 
     = (state: TState) => React.ReactNode;
+
+export type ViewRenderTree<TSchema extends ViewSchema, TState extends ViewState = ViewState> 
+    = ViewTree<TSchema, ViewRender<TState>>;
 
 //
 
-export interface ViewComposition<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
-    className?: ViewClassName<TSchema>;
-    sx?: ViewSx<TSchema>;    
-    wrapper?: ViewWrapper<TSchema, TStates>;
-    render?: ViewRender<TSchema, TStates>;
+export interface ViewStructure<TSchema extends ViewSchema, TStates extends ViewState = ViewState> {
+    className?: ViewClassNameTree<TSchema>;
+    sx?: ViewSxTree<TSchema>;    
+    wrapper?: ViewWrapperTree<TSchema, TStates>;
+    render?: ViewRenderTree<TSchema, TStates>;
 }
 
 export interface ViewSlot<TStates extends ViewState = ViewState> {
-    className?: ViewClassNameValue;
-    sx?: ViewSxValue;    
-    wrapper?: ViewWrapperValue<TStates>;
-    render?: ViewRenderValue<TStates>;
+    className?: ViewClassName;
+    sx?: ViewSx;    
+    wrapper?: ViewWrapper<TStates>;
+    render?: ViewRender<TStates>;
 }
