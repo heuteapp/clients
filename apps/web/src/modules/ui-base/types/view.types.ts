@@ -85,15 +85,27 @@ export interface ViewUXSlot<
 > extends ViewStylingSlot<ID, TSchema>, ViewWrapperSlot<ID, TSchema> {
 }
 
-export interface ViewStylingSlot<ID extends string, TSchema extends ViewTreeSchema | true, TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true> {
+export interface ViewStylingSlot<
+    ID extends string, 
+    TSchema extends ViewTreeSchema | true, 
+    TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true
+> {
     className?: TX extends ViewTreeSchema ? ViewClassNameTree<TX> : ViewClassName;
     sx?: TX extends ViewTreeSchema ? ViewSxTree<TX> : ViewSx;
 }
 
-export interface ViewWrapperSlot<ID extends string, TSchema extends ViewTreeSchema | true, TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true> {
+export interface ViewWrapperSlot<
+    ID extends string, 
+    TSchema extends ViewTreeSchema | true, 
+    TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true
+> {
     wrapper?: TX extends ViewTreeSchema ? ViewWrapperTree<TX> : ViewWrapper;
 }
 
-export interface ViewRenderSlot<ID extends string, TSchema extends ViewTreeSchema | true, TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true> {
+export interface ViewRenderSlot<
+    ID extends string, 
+    TSchema extends ViewTreeSchema | true, 
+    TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true
+> {
     render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
 }
