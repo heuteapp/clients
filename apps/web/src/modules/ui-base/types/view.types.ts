@@ -16,7 +16,11 @@ export type ViewTree<TSchema extends ViewTreeSchema, TReturn> = {
             : never;
 } & { "&"?: TReturn };
 
-export type ViewSchema<ID extends string, TTree extends ViewTreeSchema, TState extends ViewStateSchema<ID, TTree>> = {
+export type ViewSchema<
+    ID extends string = string, 
+    TTree extends ViewTreeSchema = ViewTreeSchema, 
+    TState extends ViewStateSchema<ID, TTree> = ViewStateSchema<ID, TTree>
+> = {
     tree: TTree;
     state: TState;
 }
@@ -26,7 +30,7 @@ export type ViewTreeSchema = {
 }
 
 export type ViewRootSchema<ID extends string, TTree extends ViewTreeSchema> 
-    = FilterKeysByPrefix<FlattenKeys<TTree>, ID>;
+    = FilterKeysByPrefix<FlattenKeys<TTree> & { [key in `${ID}-root`]: true }, ID>
 
 export type ViewStateSchema<ID extends string, TTree extends ViewTreeSchema> = {
     [K in keyof ViewRootSchema<ID, TTree>]?: ViewState
@@ -58,11 +62,11 @@ export type ViewRenderTree<TSchema extends ViewTreeSchema, TState extends ViewSt
 
 //
 
-export interface ViewStructure<TSchema extends ViewTreeSchema, TStates extends ViewState = ViewState> {
+export interface ViewStructure<TSchema extends ViewTreeSchema> {
     className?: ViewClassNameTree<TSchema>;
     sx?: ViewSxTree<TSchema>;    
-    wrapper?: ViewWrapperTree<TSchema, TStates>;
-    render?: ViewRenderTree<TSchema, TStates>;
+    wrapper?: ViewWrapperTree<TSchema>;
+    render?: ViewRenderTree<TSchema>;
 }
 
 export interface ViewSlot<TStates extends ViewState = ViewState> {

@@ -1,6 +1,6 @@
 import { ViewProps } from "../../ui-base/types/props.types";
-import { BoardCardItemViewState, BoardViewSchema, BoardViewStates } from "./view.types";
+import { BoardViewSchema } from "./view.types";
 
-export interface BoardCardItemViewProps extends ViewProps<BoardViewSchema, BoardCardItemViewState, BoardViewStates> {
+export interface BoardCardItemViewProps extends ViewProps<"board-card-item", BoardViewSchema> {
     
 }

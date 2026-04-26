@@ -1,14 +1,14 @@
 import { ViewProps } from "../../ui-base/types/props.types";
-import { CanvasGridContainerViewState, CanvasGridItemViewState, CanvasGridSectionViewState, CanvasRootViewState, CanvasViewSchema, CanvasViewStates } from "./view.types";
+import { CanvasViewSchema } from "./view.types";
 
-export interface CanvasRootViewProps extends ViewProps<CanvasViewSchema, CanvasRootViewState, CanvasViewStates> {
+export interface CanvasRootViewProps extends ViewProps<"canvas-root", CanvasViewSchema> {
 }
 
-export interface CanvasGridContainerViewProps extends ViewProps<CanvasViewSchema, CanvasGridContainerViewState, CanvasViewStates> {
+export interface CanvasGridContainerViewProps extends ViewProps<"canvas-grid-container", CanvasViewSchema> {
 }
 
-export interface CanvasGridSectionViewProps extends ViewProps<CanvasViewSchema, CanvasGridSectionViewState, CanvasViewStates> {
+export interface CanvasGridSectionViewProps extends ViewProps<"canvas-grid-section", CanvasViewSchema> {
 }
 
-export interface CanvasGridItemViewProps extends ViewProps<CanvasViewSchema, CanvasGridItemViewState, CanvasViewStates> {
+export interface CanvasGridItemViewProps extends ViewProps<"canvas-grid-item", CanvasViewSchema> {
 }
