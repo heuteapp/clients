@@ -7,7 +7,7 @@ export interface ViewProps<
     state: TSchema["state"][ID];
     ref?: React.RefObject<HTMLDivElement | null>;
     port?: ViewPort<TSchema["tree"]>;
-    slot?: ViewSlot<ID, TSchema["tree"]>;
+    slot?: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
 }
 
 export interface ViewUXProps<
@@ -23,6 +23,6 @@ export interface ViewRenderProps<
 > {
   state: TSchema["state"][ID];
   ref?: React.RefObject<HTMLDivElement | null>;
-  x: ViewSlot<ID, TSchema["tree"]>;
-  y: ViewSlot<ID, TSchema["tree"]>;
+  x: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+  y: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
 }

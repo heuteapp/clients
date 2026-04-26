@@ -29,15 +29,15 @@ export type ViewTreeSchema = {
     [key in string]: true | ViewTreeSchema;
 }
 
-export type ViewBaseTreeSchema<ID extends string, TTree extends ViewTreeSchema> = {
-    [K in `${ID}-root`]: TTree;
+export type ViewBaseTreeSchema<KEY extends string, TTree extends ViewTreeSchema> = {
+    [K in `${KEY}-root`]: TTree;
 }
 
-export type ViewRootSchema<ID extends string, TTree extends ViewTreeSchema> 
-    = FilterKeysByPrefix<FlattenKeys<TTree>, ID>;
+export type ViewRootSchema<KEY extends string, TTree extends ViewTreeSchema = ViewTreeSchema> 
+    = FilterKeysByPrefix<FlattenKeys<TTree>, KEY>;
 
-export type ViewStateSchema<ID extends string, TTree extends ViewTreeSchema> = {
-    [K in keyof ViewRootSchema<ID, TTree>]?: ViewState
+export type ViewStateSchema<KEY extends string, TTree extends ViewTreeSchema = ViewTreeSchema> = {
+    [K in keyof ViewRootSchema<KEY, TTree>]?: ViewState
 };
 
 //
@@ -52,16 +52,16 @@ export type ViewSx = SxProps<Theme>;
 export type ViewSxTree<TSchema extends ViewTreeSchema> 
     = ViewTree<TSchema, ViewSx>;
 
-export type ViewWrapper<TState extends ViewState = ViewState> 
+export type ViewWrapper<TState extends ViewState | undefined = ViewState> 
     = (children: React.ReactNode, state: TState) => React.ReactNode;
 
-export type ViewWrapperTree<TSchema extends ViewTreeSchema, TState extends ViewState = ViewState> 
+export type ViewWrapperTree<TSchema extends ViewTreeSchema, TState extends ViewState | undefined = ViewState> 
     = ViewTree<TSchema, ViewWrapper<TState>>;
 
-export type ViewRender<TState extends ViewState = ViewState> 
+export type ViewRender<TState extends ViewState | undefined = ViewState> 
     = (state: TState) => React.ReactNode;
 
-export type ViewRenderTree<TSchema extends ViewTreeSchema, TState extends ViewState = ViewState> 
+export type ViewRenderTree<TSchema extends ViewTreeSchema, TState extends ViewState | undefined = ViewState> 
     = ViewTree<TSchema, ViewRender<TState>>;
 
 //
@@ -75,8 +75,9 @@ export type ViewPort<TSchema extends ViewTreeSchema> = {
 
 export interface ViewSlot<
     ID extends string, 
-    TSchema extends ViewTreeSchema | true
-> extends ViewStylingSlot<ID, TSchema>, ViewWrapperSlot<ID, TSchema>, ViewRenderSlot<ID, TSchema> {
+    TSchema extends ViewTreeSchema | true,
+    TStateSchema extends ViewStateSchema<ID>
+> extends ViewStylingSlot<ID, TSchema>, ViewWrapperSlot<ID, TSchema>, ViewRenderSlot<ID, TSchema, TStateSchema> {
 }
 
 export interface ViewUXSlot<
@@ -105,7 +106,10 @@ export interface ViewWrapperSlot<
 export interface ViewRenderSlot<
     ID extends string, 
     TSchema extends ViewTreeSchema | true, 
+    TStateSchema extends ViewStateSchema<IdKey<ID>>,
     TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true
 > {
-    render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
+    render?: TX extends ViewTreeSchema ? ID extends keyof TStateSchema 
+        ? ViewRenderTree<TX, TStateSchema[ID]>
+        : ViewRenderTree<TX, ViewState> : ViewRender;
 }
