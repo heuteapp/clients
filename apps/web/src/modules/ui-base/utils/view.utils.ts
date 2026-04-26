@@ -27,14 +27,14 @@ export function VIEW<
             state: props.state,
             ref: props.ref,
             x: {
-                className: className ? getNestedValue(className, config.id) as any : undefined,
-                sx: sx ? getNestedValue(sx, config.id) as any : undefined,
-                render: render ? getNestedValue(render, config.id) as any : undefined,
+                className: className ? className as any : undefined,
+                sx: sx ? sx as any : undefined,
+                render: render ? render as any : undefined,
             },
             y: {
-                className: className ? getNestedValue(className, config.id) as any : undefined,
-                sx: sx ? getNestedValue(sx, config.id) as any : undefined,
-                render: render ? getNestedValue(render, config.id) as any : undefined,
+                className: className ? className as any : undefined,
+                sx: sx ? sx as any : undefined,
+                render: render ? render as any : undefined,
             }
         })
     };

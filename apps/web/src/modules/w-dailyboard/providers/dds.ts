@@ -193,7 +193,6 @@ export const useRandomCards = () => {
             addCard(boardKey, newCard);
             newCards.push(newCard);
             cardAdded = true;
-            console.log(`Card ${i+1} placed with score ${currentScore}, size ${colSpan}x${rowSpan}`);
             break;
             }
         }
@@ -201,12 +200,10 @@ export const useRandomCards = () => {
         // Bulamadıysa score'u düşür (küçült)
         if (!cardAdded) {
             currentScore = Math.max(0, currentScore - 25); // 25 puan düşür
-            console.log(`Retrying card ${i+1} with lower score: ${currentScore}`);
         }
         }
         
         if (!cardAdded) {
-        console.warn(`Could not place card ${i+1} even with minimum size`);
         }
     }
     
@@ -214,7 +211,6 @@ export const useRandomCards = () => {
         setPlacedCards(prev => [...prev, ...newCards]);
     }
     
-    console.log(`Successfully added ${newCards.length}/${count} cards`);
     }, [addCard, boardKey, getMeDailyboard]);
 
   useEffect(() => {
