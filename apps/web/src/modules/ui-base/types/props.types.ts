@@ -1,4 +1,4 @@
-import { ViewPort, ViewX, ViewSchema, ViewSlot, ViewTreeSchema, ViewY } from "./view.types";
+import { ViewPort, ViewSlot, ViewSchema, ViewTreeSchema } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
@@ -6,8 +6,8 @@ export interface ViewProps<
 > {
     state: TSchema["state"][ID];
     ref?: React.RefObject<HTMLDivElement | null>;
-      port?: ViewPort<GetViewTreeValue<TSchema["tree"], ID>>;
-    slot?: ViewSlot<Exclude<TSchema["state"][ID], undefined>>;
+    port?: ViewPort<TSchema["tree"]>;
+    slot?: ViewSlot<ID, TSchema["tree"]>;
 }
 
 export interface ViewRenderProps<
@@ -16,8 +16,8 @@ export interface ViewRenderProps<
 > {
   state: TSchema["state"][ID];
   ref?: React.RefObject<HTMLDivElement | null>;
-  x: ViewX<ID, TSchema["tree"]>;
-  y: ViewY<ID, TSchema["tree"]>;
+  x: ViewSlot<ID, TSchema["tree"]>;
+  y: ViewSlot<ID, TSchema["tree"]>;
 }
 
 //

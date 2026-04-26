@@ -3,7 +3,7 @@ import { CanvasGridItemProps } from "@/src/modules/ux-canvas/types/canvas.props"
 import { TracedItem } from "../../t-core/components/TracedItem";
 import { CanvasGridItemView } from "../../ui-canvas/components/CanvasGridItemView";
 
-export function CanvasGridItem({ src, className, sx }: CanvasGridItemProps) {
+export function CanvasGridItem({ src, slot }: CanvasGridItemProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
@@ -19,10 +19,7 @@ export function CanvasGridItem({ src, className, sx }: CanvasGridItemProps) {
                     colSpan: src.position.colSpan,
                     rowSpan: src.position.rowSpan,
                 }} 
-                slot={{
-                    className,
-                    sx
-                }}
+                slot={slot}
             />
         </TracedItem>
     )

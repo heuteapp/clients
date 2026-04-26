@@ -66,42 +66,20 @@ export type ViewRenderTree<TSchema extends ViewTreeSchema, TState extends ViewSt
 
 //
 
-export interface ViewPort<TSchema extends ViewTreeSchema | true> {
-    className?: TSchema extends ViewTreeSchema ? ViewClassNameTree<TSchema> : ViewClassName;
-    sx?: TSchema extends ViewTreeSchema ? ViewSxTree<TSchema> : ViewSx;
-    wrapper?: TSchema extends ViewTreeSchema ? ViewWrapperTree<TSchema> : ViewWrapper;
-    render?: TSchema extends ViewTreeSchema ? ViewRenderTree<TSchema> : ViewRender;
-}
-
-export interface ViewSlot<TStates extends ViewState = ViewState> {
-    className?: ViewClassName;
-    sx?: ViewSx;    
-    wrapper?: ViewWrapper<TStates>;
-    render?: ViewRender<TStates>;
-}
-
-export interface ViewX<
+export type ViewSlot<
     ID extends string, 
     TSchema extends ViewTreeSchema | true,
-    TX = TSchema extends ViewTreeSchema ? OmitKeysByPrefix<GetNestedValue<
-            TSchema, 
-        ID, true, ViewTreeSchema>, `${IdKey<ID>}-`> : true
-> {
+    TX = TSchema extends ViewTreeSchema ? GetNestedValue<TSchema, ID, true, ViewTreeSchema> : true
+> = {
     className?: TX extends ViewTreeSchema ? ViewClassNameTree<TX> : ViewClassName;
     sx?: TX extends ViewTreeSchema ? ViewSxTree<TX> : ViewSx;
     wrapper?: TX extends ViewTreeSchema ? ViewWrapperTree<TX> : ViewWrapper;
     render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
 }
 
-export interface ViewY<
-    ID extends string, 
-    TSchema extends ViewTreeSchema | true,
-    TX = TSchema extends ViewTreeSchema ? FilterKeysByPrefix<GetNestedValue<
-            TSchema, 
-        ID, true, ViewTreeSchema>, `${IdKey<ID>}-`> : true
-> {
-    className?: TX extends ViewTreeSchema ? ViewClassNameTree<TX> : ViewClassName;
-    sx?: TX extends ViewTreeSchema ? ViewSxTree<TX> : ViewSx;
-    wrapper?: TX extends ViewTreeSchema ? ViewWrapperTree<TX> : ViewWrapper;
-    render?: TX extends ViewTreeSchema ? ViewRenderTree<TX> : ViewRender;
+export type ViewPort<TSchema extends ViewTreeSchema> = {
+    className?: ViewClassNameTree<TSchema>;
+    sx?: ViewSxTree<TSchema>;
+    wrapper?: ViewWrapperTree<TSchema>;
+    render?: ViewRenderTree<TSchema>;
 }

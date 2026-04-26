@@ -1,15 +1,18 @@
 import clsx from "clsx";
 import { Box } from "@mui/material";
 import { BoardCardItemViewProps } from "../types/props.types";
+import { BoardViewSchema } from "../types/view.types";
+import { VIEW } from "../../ui-base/utils/view.utils";
 
-export function BoardCardItemView({ state, ref, port, slot }: BoardCardItemViewProps) {
-    return (
+export const BoardCardItemView = (props : BoardCardItemViewProps) => (
+    VIEW({ schema: {} as BoardViewSchema, id: "board-card-item" })
+    .RENDER(props, ({ ref, state, x, y }) => (
         <Box
-            className={clsx('heute-card', ...(port.className?.["&"] || []))}
+            className={clsx('heute-card', ...(x.className?.["&"] || []))}
             sx={{
                 width: (state.cardSpan?.colSpan || 0) * (state.cellStep || 0),
                 height: (state.cardSpan?.rowSpan || 0) * (state.cellStep || 0),
-                ...(slot?.sx || port.sx?.["&"]),
+                ...(x?.sx || x.sx?.["&"]),
             }}
             ref={ref}
         >
@@ -17,31 +20,31 @@ export function BoardCardItemView({ state, ref, port, slot }: BoardCardItemViewP
                 <>
                     <Box
                         data-title
-                        className={clsx('title', ...(port.className?.title || []))}
+                        className={clsx('title', ...(x.className?.title || []))}
                         sx={{
                             height: 1 * (state.cellStep || 0),
-                            ...port.sx?.title,
+                            ...x.sx?.title,
                         }}
                     >
-                        {port.render?.title ? port.render.title(state) : state.content.title}
+                        {x.render?.title ? x.render.title(state) : state.content.title}
                     </Box>
                     <Box
                         data-front-face
-                        className={clsx('face', ...(port.className?.frontFace || []))}
-                        sx={{...port.sx?.frontFace}}
+                        className={clsx('face', ...(x.className?.frontFace || []))}
+                        sx={{...x.sx?.frontFace}}
                     >
-                        {port.render?.frontFace ? port.render.frontFace(state) : null}
+                        {x.render?.frontFace ? x.render.frontFace(state) : null}
                     </Box>
                 </>
             ) : (
                 <Box
                     data-back-face
-                    className={clsx('face', ...(port.className?.backFace || []))}
-                    sx={{...port.sx?.backFace}}
+                    className={clsx('face', ...(x.className?.backFace || []))}
+                    sx={{...x.sx?.backFace}}
                 >
-                    {port.render?.backFace ? port.render.backFace(state) : null}
+                    {x.render?.backFace ? x.render.backFace(state) : null}
                 </Box>
             )}
         </Box>
-    )
-}
+    ))
+)

@@ -7,7 +7,7 @@ import { CanvasGridSectionView } from "../../ui-canvas/components/CanvasGridSect
 
 //
 
-export function CanvasGridSection({ src, className, sx }: CanvasGridSectionProps) {
+export function CanvasGridSection({ src, slot }: CanvasGridSectionProps) {
     const ref = useRef<HTMLDivElement>(null)
 
     return (
@@ -24,9 +24,10 @@ export function CanvasGridSection({ src, className, sx }: CanvasGridSectionProps
                     position: src.position,
                 }} 
                 slot={{
-                    className,
-                    sx,
-                    render: () => <CanvasGridItem src={src} />
+                    ...slot,
+                    render: {
+                        "canvas-grid-item": () => <CanvasGridItem src={src} />
+                    }
                 }}
             />
         </TracedItem>
