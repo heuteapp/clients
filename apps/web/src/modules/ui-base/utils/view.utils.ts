@@ -26,16 +26,11 @@ export function VIEW<
         return renderFunc({
             state: props.state,
             ref: props.ref,
-            x: {
+            slot: {
                 className: className ? className as any : undefined,
                 sx: sx ? sx as any : undefined,
                 render: render ? render as any : undefined,
             },
-            y: {
-                className: className ? className as any : undefined,
-                sx: sx ? sx as any : undefined,
-                render: render ? render as any : undefined,
-            }
         })
     };
 

@@ -8,13 +8,13 @@ import { canvasView } from "../utils/view.utils";
 
 export const CanvasRootView = (props : CanvasRootViewProps) => (
     VIEW(canvasView("canvas-root"))
-    .RENDER(props, ({ ref, state, x, y }) => {
+    .RENDER(props, ({ ref, state, slot }) => {
       return (
         <div 
           ref={ref} 
-          className={clsx(style.canvas, ...(x.className?.["&"] || []))}
+          className={clsx(style.canvas, ...(slot.className?.["&"] || []))}
         >
-          {y.render?.["canvas-grid-container"]?.["&"] ? y.render["canvas-grid-container"]["&"](state) 
+          {slot.render?.["canvas-grid-container"]?.["&"] ? slot.render["canvas-grid-container"]["&"](state) 
             : state.container && <CanvasGridContainerView state={state.container} port={props.port} />}
         </div>
       )

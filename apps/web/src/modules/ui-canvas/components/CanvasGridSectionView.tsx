@@ -7,15 +7,15 @@ import { canvasView } from "../utils/view.utils";
 
 export const CanvasGridSectionView = (props : CanvasGridSectionViewProps) => (
     VIEW(canvasView("canvas-grid-section"))
-    .RENDER(props, ({ ref, state, x, y }) => (
+    .RENDER(props, ({ ref, state, slot }) => (
         <div
             ref={ref}
-            className={clsx(style.gridSection, ...(x.className?.["&"] || []))}
+            className={clsx(style.gridSection, ...(slot.className?.["&"] || []))}
             style={{
                 gridArea: state.areaName
             }}
         >
-            {y.render?.["canvas-grid-item"] ? y.render["canvas-grid-item"]?.(state) : null}
+            {slot.render?.["canvas-grid-item"] ? slot.render["canvas-grid-item"]?.(state) : null}
         </div>  
     ))
 )

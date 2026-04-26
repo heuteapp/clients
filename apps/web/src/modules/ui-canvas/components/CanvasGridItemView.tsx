@@ -6,14 +6,14 @@ import { canvasView } from "../utils/view.utils";
 
 export const CanvasGridItemView = (props : CanvasGridItemViewProps) => (
     VIEW(canvasView("canvas-grid-item"))
-    .RENDER(props, ({ ref, state, x }) => (
+    .RENDER(props, ({ ref, state, slot }) => (
         <div
-            ref={ref} className={clsx(style.gridItem, ...(x.className || []))} style={{
+            ref={ref} className={clsx(style.gridItem, ...(slot.className || []))} style={{
                 gridTemplateColumns: `repeat(${state.colSpan}, var(--grid-cell-size))`,
                 gridTemplateRows: `repeat(${state.rowSpan}, var(--grid-cell-size))`,
             }}
         >
-            {x.render ? x.render(state) : null}
+            {slot.render ? slot.render(state) : null}
         </div>
     ))
 )

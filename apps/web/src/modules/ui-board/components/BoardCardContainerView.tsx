@@ -10,13 +10,13 @@ import { BoardCardItemView } from "./BoardCardItemView";
 
 export const BoardCardContainerView = (props : BoardCardContainerViewProps) => (
     VIEW(boardView("board-card-container"))
-    .RENDER(props, ({ ref, state, x, y }) => {
+    .RENDER(props, ({ ref, state, slot }) => {
         return (  
             <div
                 ref={ref}
-                className={clsx(style.cardContainer, ...(x.className?.["&"] || []))}
+                className={clsx(style.cardContainer, ...(slot.className?.["&"] || []))}
             > 
-                {y.render?.["board-card-item"]?.["&"] ? y.render["board-card-item"]["&"](state) 
+                {slot.render?.["board-card-item"]?.["&"] ? slot.render["board-card-item"]["&"](state) 
                     : state.cards.map((s, i) => <BoardCardItemView key={i} state={s} port={props.port} />)}
             </div>
         )

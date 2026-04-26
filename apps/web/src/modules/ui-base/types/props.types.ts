@@ -23,6 +23,5 @@ export interface ViewRenderProps<
 > {
   state: TSchema["state"][ID];
   ref?: React.RefObject<HTMLDivElement | null>;
-  x: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
-  y: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+  slot: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
 }
