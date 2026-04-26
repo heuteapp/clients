@@ -6,13 +6,13 @@ import { VIEW } from "../../ui-base/utils/view.utils";
 
 export const BoardCardItemView = (props : BoardCardItemViewProps) => (
     VIEW({ schema: {} as BoardViewSchema, id: "board-card-item" })
-    .RENDER(props, ({ ref, state, x, y }) => (
+    .RENDER(props, ({ ref, state, slot }) => (
         <Box
-            className={clsx('heute-card', ...(x.className?.["&"] || []))}
+            className={clsx('heute-card', ...(slot.className?.["&"] || []))}
             sx={{
                 width: (state.cardSpan?.colSpan || 0) * (state.cellStep || 0),
                 height: (state.cardSpan?.rowSpan || 0) * (state.cellStep || 0),
-                ...(x?.sx || x.sx?.["&"]),
+                ...(slot.sx || slot.sx?.["&"]),
             }}
             ref={ref}
         >
@@ -20,29 +20,29 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
                 <>
                     <Box
                         data-title
-                        className={clsx('title', ...(x.className?.title || []))}
+                        className={clsx('title', ...(slot.className?.title || []))}
                         sx={{
                             height: 1 * (state.cellStep || 0),
-                            ...x.sx?.title,
+                            ...slot.sx?.title,
                         }}
                     >
-                        {x.render?.title ? x.render.title(state) : state.content.title}
+                        {slot.render?.title ? slot.render.title(state) : state.content.title}
                     </Box>
                     <Box
                         data-front-face
-                        className={clsx('face', ...(x.className?.frontFace || []))}
-                        sx={{...x.sx?.frontFace}}
+                        className={clsx('face', ...(slot.className?.frontFace || []))}
+                        sx={{...slot.sx?.frontFace}}
                     >
-                        {x.render?.frontFace ? x.render.frontFace(state) : null}
+                        {slot.render?.frontFace ? slot.render.frontFace(state) : null}
                     </Box>
                 </>
             ) : (
                 <Box
                     data-back-face
-                    className={clsx('face', ...(x.className?.backFace || []))}
-                    sx={{...x.sx?.backFace}}
+                    className={clsx('face', ...(slot.className?.backFace || []))}
+                    sx={{...slot.sx?.backFace}}
                 >
-                    {x.render?.backFace ? x.render.backFace(state) : null}
+                    {slot.render?.backFace ? slot.render.backFace(state) : null}
                 </Box>
             )}
         </Box>
