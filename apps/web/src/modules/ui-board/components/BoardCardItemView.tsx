@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import { Box } from "@mui/material";
 import { BoardCardItemViewProps } from "../types/props.types";
-import { BoardViewSchema } from "../types/view.types";
 import { VIEW } from "../../ui-base/utils/view.utils";
+import { boardView } from "../utils/view.utils";
 
 export const BoardCardItemView = (props : BoardCardItemViewProps) => (
-    VIEW({ schema: {} as BoardViewSchema, id: "board-card-item" })
+    VIEW(boardView("board-card-item"))
     .RENDER(props, ({ ref, state, slot }) => (
         <Box
             className={clsx('heute-card', ...(slot.className?.["&"] || []))}
