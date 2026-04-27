@@ -1,4 +1,4 @@
-import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
+import style from "@/src/modules/ux-board/styles/board.module.scss"
 import clsx from "clsx";
 
 import { VIEW } from "../../ui-base/utils/view.utils";
@@ -12,10 +12,10 @@ export const BoardRootView = (props : BoardRootViewProps) => (
       return (
         <div 
           ref={ref} 
-          className={clsx(style.canvas, ...(slot.className?.["&"] || []))}
+          className={clsx(style.board, ...(slot.className?.["&"] || []))}
         >
           {slot.render?.["&"] ? slot.render["&"](state) 
-            : state.container && <BoardCardContainerView state={state.container} port={props.port} />}
+            : <BoardCardContainerView state={{ cards: state.board.cards }} port={props.port} />}
         </div>
       )
     })

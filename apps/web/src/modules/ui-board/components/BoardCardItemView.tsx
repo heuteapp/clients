@@ -10,8 +10,8 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
         <Box
             className={clsx('heute-card', ...(slot.className?.["&"] || []))}
             sx={{
-                width: (state.cardSpan?.colSpan || 0) * (state.cellStep || 0),
-                height: (state.cardSpan?.rowSpan || 0) * (state.cellStep || 0),
+                width: (state.data.placement?.position.colSpan || 0) * (state.cellStep || 0),
+                height: (state.data.placement?.position.rowSpan || 0) * (state.cellStep || 0),
                 ...(slot.sx || slot.sx?.["&"]),
             }}
             ref={ref}
@@ -26,7 +26,7 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
                             ...slot.sx?.title,
                         }}
                     >
-                        {slot.render?.title ? slot.render.title(state) : state.content.title}
+                        {slot.render?.title ? slot.render.title(state) : state.data.content.title}
                     </Box>
                     <Box
                         data-front-face

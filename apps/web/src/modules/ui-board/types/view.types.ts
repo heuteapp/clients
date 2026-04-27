@@ -1,3 +1,4 @@
+import { BoardCardModel, BoardModel } from "../../d-board/types/board.model.types";
 import { BoardCardContent } from "../../d-board/types/board.types";
 import { GridSpan } from "../../d-core/types/common";
 import { ViewSchema } from "../../ui-base/types/view.types";
@@ -21,16 +22,15 @@ export type BoardViewSchema = ViewSchema<"board",
 //
 
 export interface BoardRootViewState {
-    container: BoardCardContainerViewState;
+    board: BoardModel;
 }
 
 export interface BoardCardContainerViewState {
-    cards: BoardCardItemViewState[];
+    cards: BoardCardModel[];
 }
 
 export type BoardCardItemViewState = {
-    content: BoardCardContent;
+    data: BoardCardModel;
     isFrontFace: boolean;
-    cardSpan?: GridSpan;
-    cellStep?: number;
+    cellStep: number;
 }

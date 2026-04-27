@@ -25,7 +25,7 @@ export function CanvasGridSection({ src, slot }: CanvasGridSectionProps) {
                 slot={{
                     ...slot,
                     render: {
-                        "canvas-grid-item": (state) => <CanvasGridItem src={state.data} />
+                        "&": (state) => <CanvasGridItem src={state.data} />
                     }
                 }}
             />

@@ -1,20 +1,15 @@
 "use client"
 
-import "@/src/modules/ux-board/styles/board.css";
-
-import React from "react";
-import style from "@/src/modules/ux-board/styles/board.module.scss"
-
-import { BoardRootProps } from "../types/board.props";
-import { CanvasRoot } from "@/src/modules/ux-canvas/components/CanvasRoot";
 import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
+import { useRef } from "react";
+import { BoardRootProps } from "../types/board.props";
 import { BoardCardContainer } from "./BoardCardContainer";
+import { BoardRootView } from "../../ui-board/components/BoardRootView";
+import { CanvasRoot } from "../../ux-canvas/components/CanvasRoot";
 
-//
-
-export function BoardRoot({ rootRef, canvasRef, src, canvasSrc }: BoardRootProps) {
-  const initialRef = React.useRef<HTMLDivElement | null>(null);
-  const ref = rootRef || initialRef;
+export function BoardRoot({ rootRef, canvasRef, canvasSrc, src, slot }: BoardRootProps) {
+  const internalRef = useRef<HTMLDivElement>(null);
+  const ref = rootRef || internalRef;
 
   return (
     <TracedUniqueItem
@@ -22,13 +17,23 @@ export function BoardRoot({ rootRef, canvasRef, src, canvasSrc }: BoardRootProps
       data={src}
       ref={ref}
     >
-      <div 
-        ref={ref} 
-        className={style.board}
-      >
-        <CanvasRoot rootRef={canvasRef} src={canvasSrc} />
-        <BoardCardContainer src={src.cards} />
-      </div>
+      <BoardRootView 
+        ref={ref}
+        state={{
+          board: src
+        }}
+        slot={{
+          ...slot,
+          render: {
+            "&": (state) => (
+                  <>
+                    <CanvasRoot rootRef={canvasRef} src={canvasSrc} />
+                    <BoardCardContainer src={state.board.cards}/>
+                  </>
+              )
+          }
+        }}
+      />
     </TracedUniqueItem>
   )
 }
