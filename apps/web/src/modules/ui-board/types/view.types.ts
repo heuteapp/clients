@@ -31,6 +31,6 @@ export interface BoardCardContainerViewState {
 
 export type BoardCardItemViewState = {
     data: BoardCardModel;
-    isFrontFace: boolean;
-    cellStep: number;
+    isFrontFace?: boolean;
+    cellStep?: number;
 }

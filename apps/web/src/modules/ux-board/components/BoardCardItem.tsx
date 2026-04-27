@@ -15,9 +15,7 @@ export function BoardCardItem({ src } : BoardCardItemProps) {
         >
             <BoardCardItemView 
                 state={{
-                    data: src,
-                    isFrontFace: true,
-                    cellStep: 0
+                    data: src
                 }}
                 ref={ref}
                 slot={{
