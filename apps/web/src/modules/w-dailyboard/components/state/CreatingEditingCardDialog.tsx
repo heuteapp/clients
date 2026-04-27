@@ -9,9 +9,10 @@ import { GridSpan } from "@/src/modules/d-core/types/common";
 import { BoardCardItemView } from "@/src/modules/ui-board/components/BoardCardItemView";
 import { BoardCardColor, BoardCardContent } from "@/src/modules/d-board/types/board.types";
 import { DailyboardCardStudio } from "@/src/modules/t-dailyboard/components/DailyboardCardStudio";
+import { BoardRoot } from "@/src/modules/ux-board/components/BoardRoot";
 
 export function CreatingEditingCardDialog() {
-    const { send, state } = useWorkspaceDailyboardContext();
+    const { send, state, dailyboard, canvas } = useWorkspaceDailyboardContext();
     const { metrics } = useBoardContext();
 
     const [cardContent, setCardContent] = useState<BoardCardContent | null>(null);
@@ -43,14 +44,6 @@ export function CreatingEditingCardDialog() {
 
     const handleResizeClose = () => {
         setAnchorEl(null);
-    };
-
-    const handleRowSpanChange = (_: Event, value: number | number[]) => {
-        setCardSpan(prev => prev ? { ...prev, rowSpan: value as number } : null);
-    };
-
-    const handleColSpanChange = (_: Event, value: number | number[]) => {
-        setCardSpan(prev => prev ? { ...prev, colSpan: value as number } : null);
     };
 
     const renderResizeButton = () => (
@@ -100,17 +93,17 @@ export function CreatingEditingCardDialog() {
                 }
             }}
         >
-            <DailyboardCardStudio
-                initialColSpan={cardSpan?.colSpan || 12}
-                initialRowSpan={cardSpan?.rowSpan || 3}
-                initialCol={0}
-                initialRow={0}
-                onResize={(colSpan, rowSpan, col, row) => {
-                    setCardSpan({ colSpan, rowSpan });
-                }}
-                maxCols={24}
-                maxRows={12}
-            />
+            <BoardRoot src={dailyboard!} canvasSrc={canvas!} slot={{
+                sx: {
+                    "&": {
+                        backgroundColor: "white",
+                        position: "fixed",
+                        inset: 0,
+                        margin: "100px",
+                        boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.2)",
+                    }
+                }
+            }} />
         </Modal>
     );
 

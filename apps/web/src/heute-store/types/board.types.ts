@@ -116,10 +116,10 @@ import { DailyboardModel, DailyboardCardModel} from "@/src/modules/d-board/types
 export interface DailyboardModelState extends BoardBaseState<
     DailyboardModelSource,
     DailyboardCardModelSource,
-    StoredDailyboardItem,
-    StoredDailyboardItemData,
-    StoredDailyboardCardItem,
-    StoredDailyboardCardItemData
+    StoredDailyboardModel,
+    StoredDailyboardModelData,
+    StoredDailyboardCardModel,
+    StoredDailyboardCardModelData
 > {
 
 }

@@ -6,7 +6,7 @@ import { CanvasRenderProvider } from "@/src/modules/ux-canvas/provider/CanvasRen
 import { useWorkspaceDailyboard } from "../hooks/useWorkspaceDailyboard"
 import { WorkspaceDailyboardContext } from "../contexts/workspace-dailyboard.context";
 import { useWorkspaceDailyboardBreadcrumbs } from "../hooks/useWorkspaceDailyboardBreadcrumbs";
-import { useCanvasStyleStore } from "@/src/heute-store/stores/canvas.stores";
+import { useCanvasModelStore, useCanvasStyleStore } from "@/src/heute-store/stores/canvas.stores";
 import { workspaceDailyboardService } from "../state/workspace-dailyboard.machine";
 import { WorkspaceDailyboardStateHooks } from "../components/WorkspaceDailyboardStateHooks";
 import { MetricsProvider } from "../../ui-core/providers/MetricsProvider";
@@ -14,14 +14,22 @@ import { useWorkspaceDailyboardContext } from "../hooks/useWorkspaceDailyboardCo
 import { WorkspaceDailyboardDialogs } from "../components/WorkspaceDailyboardDialogs";
 import { TracingDomainProvider } from "../../t-core/providers/TracingDomainProvider";
 import { useRandomCards } from "./dds";
+import { useDailyboardDataStore } from "@/src/heute-store/stores/board.store";
 
 export function WorkspaceDailyboardProvider({ children }: { children: React.ReactNode }) {
     const metadata = useWorkspaceDailyboard();
     const [state, setState] = useState(() => workspaceDailyboardService.getSnapshot());  
-    const { loadGlobalCanvas, getGlobalCanvas } = useCanvasStyleStore();
+    const { loadGlobalCanvas: loadGlobalCanvasStyle, getGlobalCanvas: getGlobalCanvasStyle } = useCanvasStyleStore();
 
     const dailyboardRef = React.useRef<HTMLDivElement | null>(null);
     const canvasRef = React.useRef<HTMLDivElement | null>(null);
+
+    const { getMeDailyboard } = useDailyboardDataStore();
+    const { getGlobalCanvas } = useCanvasModelStore();
+    
+    const dailyboard = getMeDailyboard(metadata.categoryPath + "@" + metadata.date?.raw) || null;
+
+    const canvas = dailyboard ? getGlobalCanvas(dailyboard.canvasName, dailyboard.canvasVersion) : null;
 
     useEffect(() => {
         workspaceDailyboardService.start();
@@ -43,11 +51,11 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
     }, [metadata]);
 
     const contextValue = React.useMemo(() => {
-        return { metadata, state, send: workspaceDailyboardService.send };
-    }, [metadata, state, workspaceDailyboardService.send]);
+        return { metadata, state, send: workspaceDailyboardService.send, dailyboard, canvas };
+    }, [metadata, state, workspaceDailyboardService.send, dailyboard, canvas]);
 
     useEffect(() => {
-        loadGlobalCanvas({
+        loadGlobalCanvasStyle({
             name: "default",
             version: 1,
             box: {},
@@ -66,11 +74,11 @@ export function WorkspaceDailyboardProvider({ children }: { children: React.Reac
                 }
             ]
         });
-    }, [loadGlobalCanvas]);
+    }, [loadGlobalCanvasStyle]);
 
 
     const { dailyboardData, canvasData } = state.context;
-    const canvasStyle = getGlobalCanvas("default", 1);
+    const canvasStyle = getGlobalCanvasStyle("default", 1);
 
     return (
         <TracingDomainProvider name="w-dailyboard" >

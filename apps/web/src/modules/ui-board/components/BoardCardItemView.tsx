@@ -16,13 +16,13 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
             }}
             ref={ref}
         >
-            {state.isFrontFace ? (
+            {state.isFrontFace != false ? (
                 <>
                     <Box
                         data-title
                         className={clsx('title', ...(slot.className?.title || []))}
                         sx={{
-                            height: 1 * (state.cellStep || 0),
+                            height: state.cellStep ? (1 * (state.cellStep || 0)): "auto",
                             ...slot.sx?.title,
                         }}
                     >

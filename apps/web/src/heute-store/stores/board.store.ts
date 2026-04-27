@@ -7,12 +7,11 @@ import {
     StoredBoardItem, 
     StoredBoardItemData, 
     StoredBoardCardItem, 
-    StoredBoardCardItemData 
+    StoredBoardCardItemData, 
+    DailyboardModelState
 } from "../types/board.types";
 import { BoardBase, BoardCardBase } from "@/src/modules/d-board/types/board.base.types";
 import { addCardToDailyboardState, getBoardCardItemFromState, getBoardItemFromState, removeCardFromDailyboardState, saveDailyboardToState, updateCardInDailyboardState } from "../utils/board.utils";
-import { BoardModelState } from "../types/board.types";
-import { YYMMDDDate } from "@/src/modules/d-core/types/date.types";
 
 export const withBoardImmer = <
     TBoardSource extends BoardBase,
@@ -157,6 +156,6 @@ export const withBoardImmer = <
     );
 };
 
-export const useDailyboardDataStore = create<BoardModelState>()(
+export const useDailyboardDataStore = create<DailyboardModelState>()(
     devtools(withBoardImmer(), { name: "DailyboardModelStore" })
 );

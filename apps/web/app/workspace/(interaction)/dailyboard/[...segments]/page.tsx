@@ -9,22 +9,18 @@ import { useWorkspaceDailyboardContext } from "@/src/modules/w-dailyboard/hooks/
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function WorkspaceDailyboardPage() {
-    const { metadata } = useWorkspaceDailyboardContext();
+    const { metadata, dailyboard, canvas } = useWorkspaceDailyboardContext();
     const { categoryPath, date } = metadata!;
     const { getMeDailyboard } = useDailyboardDataStore();
     const { getGlobalCanvas } = useCanvasModelStore();
     const { rootRef: boardRef } = useBoardContext();
     const { rootRef: canvasRef } = useCanvasContext();
 
-    const dailyboard = getMeDailyboard(categoryPath + "@" + date?.raw);
-
     if(!dailyboard) {
         return (
             <CircularProgress />
         )
     }
-
-    const canvas = getGlobalCanvas(dailyboard.canvasName, dailyboard.canvasVersion);
 
     if(!canvas) {
         return (
