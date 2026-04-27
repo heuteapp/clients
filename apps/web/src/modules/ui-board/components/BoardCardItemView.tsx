@@ -12,7 +12,7 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
             sx={{
                 width: (state.data.placement?.position.colSpan || 0) * (state.cellStep || 0),
                 height: (state.data.placement?.position.rowSpan || 0) * (state.cellStep || 0),
-                ...(slot.sx || slot.sx?.["&"]),
+                ...(slot.sx?.["&"]),
             }}
             ref={ref}
         >
