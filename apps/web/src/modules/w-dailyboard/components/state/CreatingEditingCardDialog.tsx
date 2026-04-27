@@ -148,9 +148,16 @@ export function CreatingEditingCardDialog() {
                     {renderResizeButton()}
                     <BoardCardItemView
                         state={{
-                            content: cardContent!,
+                            data: {
+                                content: cardContent,
+                                placement: {
+                                    position: {
+                                        colSpan: cardSpan?.colSpan || 12,
+                                        rowSpan: cardSpan?.rowSpan || 3
+                                    }
+                                } as any
+                            } as any,
                             isFrontFace: true,
-                            cardSpan: cardSpan!,
                             cellStep
                         }}
                     />
