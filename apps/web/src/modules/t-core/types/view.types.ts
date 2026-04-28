@@ -12,9 +12,10 @@ export interface ViewRenderParams<
     ID extends string,
     TSchema extends ViewSchema
 > {
-  state: TSchema["state"][ID];
-  ref?: React.RefObject<HTMLDivElement | null>;
-  slot: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+    state: TSchema["state"][ID];
+    context: ViewContextValue | null;
+    ref?: React.RefObject<HTMLDivElement | null>;
+    slot: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
 }
 
 export interface ViewContextValue {

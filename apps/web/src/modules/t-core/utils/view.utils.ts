@@ -1,5 +1,5 @@
 import { ViewProps } from "../types/props.types";
-import { ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema } from "../types/view.types";
+import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema } from "../types/view.types";
 
 export function VIEW<
     const ID extends string,
@@ -10,7 +10,7 @@ export function VIEW<
         schema: TSchema;
     }
 ) {
-    return { RENDER: VIEWRENDER<ID, TSchema> }
+    return { RENDER: VIEWRENDER_FROMPROPS<ID, TSchema> }
 }
 
 export function VIEWROOT<
@@ -23,28 +23,40 @@ export function VIEWROOT<
     }
 ) {
     type ID = `${KEY}-root`;
-    return { CONFIG: VIEWROOTCONFIG<ID, TSchema>, RENDER: VIEWRENDER<ID, TSchema> }
+    return { CONFIG: VIEWCONFIG<ID, TSchema>, RENDER: VIEWRENDER_NOCONTEXT<ID, TSchema> }
 }
 
 //
 
-const VIEWROOTCONFIG = <
+const VIEWCONFIG = <
     ID extends string, 
     TSchema extends ViewSchema
 > (
     config: ViewContextConfig
 ) => {
-    return { RENDER: VIEWRENDER<ID, TSchema> }
+    const context : ViewContextValue = null!;
+
+    return { 
+        RENDER: (
+            params: ViewComponentParams<ID, TSchema>,
+            renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
+        ) => {
+            return VIEWRENDER<ID, TSchema>(params, context, renderFunc);
+        } 
+    }
 }
+
+//
 
 const VIEWRENDER = <
     ID extends string, 
     TSchema extends ViewSchema
 > (
-    props: ViewProps<ID, TSchema>,
-    renderFunc: (props: ViewRenderParams<ID, TSchema>) => React.ReactNode
+    params: ViewComponentParams<ID, TSchema>,
+    context: ViewContextValue | null,
+    renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
-    const { port, slot } = props;
+    const { state, ref, port, slot } = params;
 
     const className = slot?.className ? slot.className 
         : port?.className ? port.className : undefined;
@@ -56,8 +68,9 @@ const VIEWRENDER = <
         : port?.render ? port.render : undefined;
 
     return renderFunc({
-        state: props.state,
-        ref: props.ref,
+        state: state,
+        context: context,
+        ref: ref,
         slot: {
             className: className ? className as any : undefined,
             sx: sx ? sx as any : undefined,
@@ -65,3 +78,23 @@ const VIEWRENDER = <
         },
     })
 };
+
+const VIEWRENDER_FROMPROPS = <
+    ID extends string, 
+    TSchema extends ViewSchema
+> (
+    props: ViewProps<ID, TSchema>,
+    renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
+) => {
+    return VIEWRENDER<ID, TSchema>(props, props.context, renderFunc);
+};
+
+const VIEWRENDER_NOCONTEXT = <
+    ID extends string, 
+    TSchema extends ViewSchema
+> (
+    params: ViewComponentParams<ID, TSchema>,
+    renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
+) => {
+    return VIEWRENDER<ID, TSchema>(params, null, renderFunc);
+}
