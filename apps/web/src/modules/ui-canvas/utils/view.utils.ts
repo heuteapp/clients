@@ -6,6 +6,6 @@ export const canvasView = <const ID extends string>(id: ID) => ({
 });
 
 export const canvasRootView = () => ({
-    key: "canvas",
+    key: "canvas" as const,
     schema: {} as CanvasViewSchema,
 });

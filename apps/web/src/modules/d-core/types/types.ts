@@ -37,7 +37,9 @@ export type GetNestedValue<
   K extends string,
   LeafValue = unknown,
   BranchValue = Record<string, any>
-> = K extends keyof T
+> = string extends K  // K literal değilse (yani generic string ise)
+  ? never              // Hemen dur, recursive'e girme
+  : K extends keyof T
   ? T[K] extends BranchValue | LeafValue
     ? T[K]
     : never

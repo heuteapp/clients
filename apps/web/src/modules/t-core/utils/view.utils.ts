@@ -4,26 +4,36 @@ import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderPar
 export function VIEW<
     const ID extends string,
     const TSchema extends ViewSchema,
->(  
+>(
     _: {
         id: ID;
         schema: TSchema;
-    }
+    },
+    props: ViewProps<ID, TSchema>
 ) {
-    return { RENDER: VIEWRENDER_FROMPROPS<ID, TSchema> }
+    return { 
+        RENDER: (renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode) => {
+            return VIEWRENDER<ID, TSchema>(props, props.context, renderFunc);
+        }
+    }
 }
 
 export function VIEWROOT<
     const KEY extends string,
-    const TSchema extends ViewSchema
+    const TSchema extends ViewSchema,
+    const ID extends string = `${KEY}-root`
 >(  
     _: {
         key: KEY;
         schema: TSchema;
-    }
+    },
+    props: ViewProps<ID, TSchema>
 ) {
-    type ID = `${KEY}-root`;
-    return { CONFIG: VIEWCONFIG<ID, TSchema>, RENDER: VIEWRENDER_NOCONTEXT<ID, TSchema> }
+    return { 
+        CONFIG: (config: ViewContextConfig) => {
+            return VIEWCONFIG<ID, TSchema>(props, config);
+        }
+    }
 }
 
 //
@@ -32,17 +42,17 @@ const VIEWCONFIG = <
     ID extends string, 
     TSchema extends ViewSchema
 > (
+    params: ViewComponentParams<ID, TSchema>,
     config: ViewContextConfig
 ) => {
     const context : ViewContextValue = null!;
 
     return { 
         RENDER: (
-            params: ViewComponentParams<ID, TSchema>,
             renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
         ) => {
             return VIEWRENDER<ID, TSchema>(params, context, renderFunc);
-        } 
+        }
     }
 }
 
@@ -78,23 +88,3 @@ const VIEWRENDER = <
         },
     })
 };
-
-const VIEWRENDER_FROMPROPS = <
-    ID extends string, 
-    TSchema extends ViewSchema
-> (
-    props: ViewProps<ID, TSchema>,
-    renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
-) => {
-    return VIEWRENDER<ID, TSchema>(props, props.context, renderFunc);
-};
-
-const VIEWRENDER_NOCONTEXT = <
-    ID extends string, 
-    TSchema extends ViewSchema
-> (
-    params: ViewComponentParams<ID, TSchema>,
-    renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
-) => {
-    return VIEWRENDER<ID, TSchema>(params, null, renderFunc);
-}

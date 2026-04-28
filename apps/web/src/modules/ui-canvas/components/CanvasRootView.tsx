@@ -3,19 +3,26 @@ import clsx from "clsx";
 
 import { CanvasRootViewProps } from "../types/props.types";
 import { CanvasGridContainerView } from "./CanvasGridContainerView";
-import { VIEW } from "../../t-core/utils/view.utils";
-import { canvasView } from "../utils/view.utils";
+import { VIEWROOT } from "../../t-core/utils/view.utils";
+import { canvasRootView } from "../utils/view.utils";
 
 export const CanvasRootView = (props : CanvasRootViewProps) => (
-    VIEW(canvasView("canvas-root"))
-    .RENDER(props, ({ ref, state, slot }) => {
+    VIEWROOT(canvasRootView(), props)
+    .CONFIG({})
+    .RENDER(({ ref, state, slot }) => {
       return (
         <div 
           ref={ref} 
           className={clsx(style.canvas, ...(slot.className?.["&"] || []))}
         >
           {slot.render?.["&"] ? slot.render["&"](state) 
-            : <CanvasGridContainerView state={{ dimensions: { colCount: state.canvas.colCount, rowCount: state.canvas.rowCount }, grids: state.canvas.grids }} port={props.port} />}
+            : (
+              <CanvasGridContainerView 
+                state={{ dimensions: { colCount: state.canvas.colCount, rowCount: state.canvas.rowCount }, grids: state.canvas.grids }}
+                context={{}}
+                port={props.port} 
+              />
+            )}
         </div>
       )
     })
