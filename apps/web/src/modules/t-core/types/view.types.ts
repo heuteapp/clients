@@ -115,13 +115,13 @@ export interface ViewSlot<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true,
     TState extends ViewStateSchema<ID>
-> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewWrapperSlot<ID, THierarchy>, ViewRenderSlot<ID, THierarchy, TState> {
+> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewSlotWrapper<ID, THierarchy, TState> {
 }
 
 export interface ViewUXSlot<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true
-> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewWrapperSlot<ID, THierarchy> {
+> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy> {
 }
 
 export interface ViewSlotClassName<
@@ -140,21 +140,13 @@ export interface ViewSlotSx<
     sx?: TX extends ViewHierarchySchemaNode ? ViewSxTree<TX> : ViewSx;
 }
 
-export interface ViewWrapperSlot<
-    ID extends string, 
-    THierarchy extends ViewHierarchySchemaNode | true, 
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
-> {
-    wrapper?: TX extends ViewHierarchySchemaNode ? ViewWrapperTree<TX> : ViewWrapper;
-}
-
-export interface ViewRenderSlot<
+export interface ViewSlotWrapper<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true, 
     TStateSchema extends ViewStateSchema<IdKey<ID>>,
     TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
 > {
-    render?: TX extends ViewHierarchySchemaNode ? ID extends keyof TStateSchema 
-        ? ViewRenderTree<TX, TStateSchema[ID]>
-        : ViewRenderTree<TX, ViewState> : ViewRender;
+    wrapper?:  TX extends ViewHierarchySchemaNode ? ID extends keyof TStateSchema 
+        ? ViewWrapperTree<TX, TStateSchema[ID]>
+        : ViewWrapperTree<TX, ViewState> : ViewWrapper;
 }
