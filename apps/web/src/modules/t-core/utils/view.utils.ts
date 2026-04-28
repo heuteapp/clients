@@ -1,5 +1,5 @@
-import { ViewProps, ViewRenderProps } from "../types/props.types";
-import { ViewSchema } from "../types/view.types";
+import { ViewProps } from "../types/props.types";
+import { ViewRenderParams, ViewSchema } from "../types/view.types";
 
 export function VIEW<
     const ID extends string,
@@ -18,7 +18,7 @@ const VIEWRENDER = <
     TSchema extends ViewSchema
 > (
     props: ViewProps<ID, TSchema>,
-    renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode
+    renderFunc: (props: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
     const { port, slot } = props;
 

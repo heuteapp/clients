@@ -1,6 +1,13 @@
-import { Theme } from "@emotion/react";
-import { SxProps } from "@mui/system";
-import { FilterKeysByPrefix, FlattenKeys, GetNestedValue, IdKey, OmitKeysByPrefix } from "../../d-core/types/types";
+export interface ViewRenderParams<
+    ID extends string,
+    TSchema extends ViewSchema
+> {
+  state: TSchema["state"][ID];
+  ref?: React.RefObject<HTMLDivElement | null>;
+  slot: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+}
+
+//
 
 export type ViewState = {
     [key: string]: any;
@@ -15,6 +22,10 @@ export type ViewTree<TSchema extends ViewTreeSchema, TReturn> = {
             ? ViewTree<TSchema[K], TReturn>
             : never;
 } & { "&"?: TReturn };
+
+//
+
+import { FilterKeysByPrefix, FlattenKeys } from "../../d-core/types/types";
 
 export type ViewSchema<
     ID extends string = string, 
@@ -41,6 +52,8 @@ export type ViewStateSchema<KEY extends string, TTree extends ViewTreeSchema = V
 };
 
 //
+
+import { Theme, SxProps } from "@mui/system";
 
 export type ViewClassName = string[];
 
@@ -72,6 +85,10 @@ export type ViewPort<TSchema extends ViewTreeSchema> = {
     wrapper?: ViewWrapperTree<TSchema>;
     render?: ViewRenderTree<TSchema>;
 }
+
+//
+
+import { IdKey, GetNestedValue } from "../../d-core/types/types";
 
 export interface ViewSlot<
     ID extends string, 
