@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Box } from "@mui/material";
 import { BoardCardItemViewProps } from "../types/props.types";
-import { VIEW } from "../../ui-base/utils/view.utils";
+import { VIEW } from "../../t-core/utils/view.utils";
 import { boardView } from "../utils/view.utils";
 
 export const BoardCardItemView = (props : BoardCardItemViewProps) => (

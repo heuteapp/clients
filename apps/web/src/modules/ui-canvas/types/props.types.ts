@@ -1,4 +1,4 @@
-import { ViewProps } from "../../ui-base/types/props.types";
+import { ViewProps } from "../../t-core/types/props.types";
 import { CanvasViewSchema } from "./view.types";
 
 export interface CanvasRootViewProps extends ViewProps<"canvas-root", CanvasViewSchema> {

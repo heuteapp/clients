@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { CanvasGridContainerViewProps } from "../types/props.types";
 import { useMemo } from "react";
 import { CanvasGridSectionView } from "./CanvasGridSectionView";
-import { VIEW } from "../../ui-base/utils/view.utils";
+import { VIEW } from "../../t-core/utils/view.utils";
 import { canvasView } from "../utils/view.utils";
 
 //

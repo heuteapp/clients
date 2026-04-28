@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import { CanvasRootViewProps } from "../types/props.types";
 import { CanvasGridContainerView } from "./CanvasGridContainerView";
-import { VIEW } from "../../ui-base/utils/view.utils";
+import { VIEW } from "../../t-core/utils/view.utils";
 import { canvasView } from "../utils/view.utils";
 
 export const CanvasRootView = (props : CanvasRootViewProps) => (

@@ -2,7 +2,7 @@ import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 import clsx from "clsx";
 
 import { CanvasGridSectionViewProps } from "../types/props.types";
-import { VIEW } from "../../ui-base/utils/view.utils";
+import { VIEW } from "../../t-core/utils/view.utils";
 import { canvasView } from "../utils/view.utils";
 
 export const CanvasGridSectionView = (props : CanvasGridSectionViewProps) => (

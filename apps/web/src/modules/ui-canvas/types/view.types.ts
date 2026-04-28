@@ -1,6 +1,6 @@
 import { CanvasModel, CanvasGridModel } from "../../d-canvas/types/canvas.model.types";
 import { GridDimensions } from "../../d-core/types/common";
-import { ViewSchema } from "../../ui-base/types/view.types";
+import { ViewSchema } from "../../t-core/types/view.types";
 
 export type CanvasViewSchema = ViewSchema<"canvas", 
 {

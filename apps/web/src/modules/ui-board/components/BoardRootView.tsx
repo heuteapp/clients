@@ -1,7 +1,7 @@
 import style from "@/src/modules/ux-board/styles/board.module.scss"
 import clsx from "clsx";
 
-import { VIEW } from "../../ui-base/utils/view.utils";
+import { VIEW } from "../../t-core/utils/view.utils";
 import { boardView } from "../utils/view.utils";
 import { BoardRootViewProps } from "../types/props.types";
 import { BoardCardContainerView } from "./BoardCardContainerView";
