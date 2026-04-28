@@ -113,46 +113,46 @@ import { IdKey, GetNestedValue } from "../../d-core/types/types";
 
 export interface ViewSlot<
     ID extends string, 
-    TSchema extends ViewHierarchySchemaNode | true,
-    TStateSchema extends ViewStateSchema<ID>
-> extends ViewSlotClassName<ID, TSchema>, ViewSlotSx<ID, TSchema>, ViewWrapperSlot<ID, TSchema>, ViewRenderSlot<ID, TSchema, TStateSchema> {
+    THierarchy extends ViewHierarchySchemaNode | true,
+    TState extends ViewStateSchema<ID>
+> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewWrapperSlot<ID, THierarchy>, ViewRenderSlot<ID, THierarchy, TState> {
 }
 
 export interface ViewUXSlot<
     ID extends string, 
-    TSchema extends ViewHierarchySchemaNode | true
-> extends ViewSlotClassName<ID, TSchema>, ViewSlotSx<ID, TSchema>, ViewWrapperSlot<ID, TSchema> {
+    THierarchy extends ViewHierarchySchemaNode | true
+> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewWrapperSlot<ID, THierarchy> {
 }
 
 export interface ViewSlotClassName<
     ID extends string, 
-    TSchema extends ViewHierarchySchemaNode | true, 
-    TX = TSchema extends ViewHierarchySchemaNode ? GetNestedValue<TSchema, ID, true, ViewHierarchySchemaNode> : true
+    THierarchy extends ViewHierarchySchemaNode | true, 
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
 > {
     className?: TX extends ViewHierarchySchemaNode ? ViewClassNameTree<TX> : ViewClassName;
 }
 
 export interface ViewSlotSx<
     ID extends string, 
-    TSchema extends ViewHierarchySchemaNode | true, 
-    TX = TSchema extends ViewHierarchySchemaNode ? GetNestedValue<TSchema, ID, true, ViewHierarchySchemaNode> : true
+    THierarchy extends ViewHierarchySchemaNode | true, 
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
 > {
     sx?: TX extends ViewHierarchySchemaNode ? ViewSxTree<TX> : ViewSx;
 }
 
 export interface ViewWrapperSlot<
     ID extends string, 
-    TSchema extends ViewHierarchySchemaNode | true, 
-    TX = TSchema extends ViewHierarchySchemaNode ? GetNestedValue<TSchema, ID, true, ViewHierarchySchemaNode> : true
+    THierarchy extends ViewHierarchySchemaNode | true, 
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
 > {
     wrapper?: TX extends ViewHierarchySchemaNode ? ViewWrapperTree<TX> : ViewWrapper;
 }
 
 export interface ViewRenderSlot<
     ID extends string, 
-    TSchema extends ViewHierarchySchemaNode | true, 
+    THierarchy extends ViewHierarchySchemaNode | true, 
     TStateSchema extends ViewStateSchema<IdKey<ID>>,
-    TX = TSchema extends ViewHierarchySchemaNode ? GetNestedValue<TSchema, ID, true, ViewHierarchySchemaNode> : true
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
 > {
     render?: TX extends ViewHierarchySchemaNode ? ID extends keyof TStateSchema 
         ? ViewRenderTree<TX, TStateSchema[ID]>
