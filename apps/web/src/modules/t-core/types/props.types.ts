@@ -18,7 +18,7 @@ export interface ViewUXProps<
     ID extends string,
     TSchema extends ViewSchema
 > {
-    slot?: ViewUXSlot<ID, TSchema["tree"]>;
+    slot?: ViewUXSlot<ID, TSchema["hierarchy"]>;
 }
 
 //
