@@ -16,7 +16,10 @@ export function VIEW<
 const VIEWRENDER = <
     ID extends string, 
     TSchema extends ViewSchema
-> (props: ViewProps<ID, TSchema>, renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode) => {
+> (
+    props: ViewProps<ID, TSchema>,
+    renderFunc: (props: ViewRenderProps<ID, TSchema>) => React.ReactNode
+) => {
     const { port, slot } = props;
 
     const className = slot?.className ? slot.className 
