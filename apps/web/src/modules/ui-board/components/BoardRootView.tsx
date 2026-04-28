@@ -1,15 +1,16 @@
 import style from "@/src/modules/ux-board/styles/board.module.scss"
 import clsx from "clsx";
 
-import { VIEW } from "../../t-core/utils/view.utils";
-import { boardView } from "../utils/view.utils";
+import { VIEWROOT } from "../../t-core/utils/view.utils";
+import { boardRootView, boardView } from "../utils/view.utils";
 import { BoardRootViewProps } from "../types/props.types";
 import { BoardCardContainerView } from "./BoardCardContainerView";
 import { Box } from "@mui/material";
 
 export const BoardRootView = (props : BoardRootViewProps) => (
-    VIEW(boardView("board-root"))
-    .RENDER(props, ({ ref, state, slot }) => {
+    VIEWROOT(boardRootView, props)
+    .CONFIG({})
+    .RENDER(({ ref, state, context, slot }) => {
       return (
         <Box 
           ref={ref} 
@@ -19,7 +20,14 @@ export const BoardRootView = (props : BoardRootViewProps) => (
           }}
         >
           {slot.render?.["&"] ? slot.render["&"](state) 
-            : <BoardCardContainerView state={{ cards: state.board.cards }} port={props.port} />}
+            : (
+              <BoardCardContainerView 
+                state={{ cards: state.board.cards }}
+                context={context}
+                port={props.port} 
+              />
+            )
+          }
         </Box>
       )
     })

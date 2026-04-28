@@ -7,7 +7,7 @@ import { VIEWROOT } from "../../t-core/utils/view.utils";
 import { canvasRootView } from "../utils/view.utils";
 
 export const CanvasRootView = (props : CanvasRootViewProps) => (
-    VIEWROOT(canvasRootView(), props)
+    VIEWROOT(canvasRootView, props)
     .CONFIG({})
     .RENDER(({ ref, state, slot }) => {
       return (

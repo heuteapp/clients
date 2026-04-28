@@ -5,8 +5,8 @@ import { VIEW } from "../../t-core/utils/view.utils";
 import { boardView } from "../utils/view.utils";
 
 export const BoardCardItemView = (props : BoardCardItemViewProps) => (
-    VIEW(boardView("board-card-item"))
-    .RENDER(props, ({ ref, state, slot }) => (
+    VIEW(boardView("board-card-item"), props)
+    .RENDER(({ ref, state, slot }) => (
         <Box
             className={clsx('heute-card', ...(slot.className?.["&"] || []))}
             sx={{

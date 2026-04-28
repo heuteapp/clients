@@ -13,7 +13,7 @@ export interface ViewRenderParams<
     TSchema extends ViewSchema
 > {
     state: TSchema["state"][ID];
-    context: ViewContextValue | null;
+    context: ViewContextValue;
     ref?: React.RefObject<HTMLDivElement | null>;
     slot: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
 }

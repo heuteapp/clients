@@ -5,7 +5,7 @@ export const canvasView = <const ID extends string>(id: ID) => ({
     schema: {} as CanvasViewSchema,
 });
 
-export const canvasRootView = () => ({
-    key: "canvas" as const,
+export const canvasRootView = {
+    key: "canvas",
     schema: {} as CanvasViewSchema,
-});
+} as const;

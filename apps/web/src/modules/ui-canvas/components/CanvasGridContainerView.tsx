@@ -10,8 +10,8 @@ import { canvasView } from "../utils/view.utils";
 //
 
 export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) => (
-    VIEW(canvasView("canvas-grid-container"))
-    .RENDER(props, ({ ref, state, slot }) => {
+    VIEW(canvasView("canvas-grid-container"), props)
+    .RENDER(({ ref, state, context, slot }) => {
         const matrix = useMemo(() => {
             const result = Array.from({ length: state.dimensions.rowCount }, () =>
                 Array.from({ length: state.dimensions.colCount }, () => ".")
@@ -45,7 +45,15 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
                 }}
             > 
                 {slot.render?.["&"] ? slot.render["&"](state) 
-                    : state.grids.map(s => <CanvasGridSectionView key={s.name} state={{ data: s }} port={props.port} />)}
+                    : state.grids.map(s => (
+                        <CanvasGridSectionView 
+                            key={s.name} 
+                            state={{ data: s }} 
+                            context={context}
+                            port={props.port} 
+                        />
+                    ))
+                }
             </div>       
         )
     })

@@ -5,7 +5,7 @@ export const boardView = <const ID extends string>(id: ID) => ({
     id,
 });
 
-export const boardRootView = () => ({
+export const boardRootView = {
     key: "board",
     schema: {} as BoardViewSchema,
-});
+} as const;
