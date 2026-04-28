@@ -1,5 +1,5 @@
 import { ViewProps } from "../types/props.types";
-import { ViewRenderParams, ViewSchema } from "../types/view.types";
+import { ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema } from "../types/view.types";
 
 export function VIEW<
     const ID extends string,
@@ -23,10 +23,19 @@ export function VIEWROOT<
     }
 ) {
     type ID = `${KEY}-root`;
-    return { RENDER: VIEWRENDER<ID, TSchema> }
+    return { CONFIG: VIEWROOTCONFIG<ID, TSchema>, RENDER: VIEWRENDER<ID, TSchema> }
 }
 
 //
+
+const VIEWROOTCONFIG = <
+    ID extends string, 
+    TSchema extends ViewSchema
+> (
+    config: ViewContextConfig
+) => {
+    return { RENDER: VIEWRENDER<ID, TSchema> }
+}
 
 const VIEWRENDER = <
     ID extends string, 

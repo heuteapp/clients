@@ -1,13 +1,17 @@
-import { ViewSchema, ViewPort, ViewSlot, ViewUXSlot } from "./view.types";
+import { ViewSchema, ViewUXSlot, ViewContextConfig, ViewComponentParams } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
     TSchema extends ViewSchema
-> {
-    state: TSchema["state"][ID];
-    ref?: React.RefObject<HTMLDivElement | null>;
-    port?: ViewPort<TSchema["tree"]>;
-    slot?: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+> extends ViewComponentParams<ID, TSchema> {
+    context: ViewContextConfig | null;
+}
+
+export interface ViewRootProps<
+    ID extends string,
+    TSchema extends ViewSchema
+> extends ViewComponentParams<ID, TSchema> {
+    config?: ViewContextConfig;
 }
 
 export interface ViewUXProps<

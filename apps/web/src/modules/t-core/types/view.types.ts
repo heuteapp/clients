@@ -1,3 +1,13 @@
+export interface ViewComponentParams<
+    ID extends string,
+    TSchema extends ViewSchema
+> {
+    state: TSchema["state"][ID];
+    ref?: React.RefObject<HTMLDivElement | null>;
+    port?: ViewPort<TSchema["tree"]>;
+    slot?: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+}
+
 export interface ViewRenderParams<
     ID extends string,
     TSchema extends ViewSchema
@@ -5,6 +15,14 @@ export interface ViewRenderParams<
   state: TSchema["state"][ID];
   ref?: React.RefObject<HTMLDivElement | null>;
   slot: ViewSlot<ID, TSchema["tree"], TSchema["state"]>;
+}
+
+export interface ViewContextValue {
+
+}
+
+export interface ViewContextConfig {
+
 }
 
 //
