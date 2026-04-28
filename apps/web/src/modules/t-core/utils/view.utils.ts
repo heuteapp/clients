@@ -63,7 +63,7 @@ const VIEWRENDER = <
     TSchema extends ViewSchema
 > (
     params: ViewComponentParams<ID, TSchema>,
-    context: ViewContextValue | null,
+    context: ViewContextValue,
     renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
     const { state, ref, port, slot } = params;

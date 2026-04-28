@@ -1,10 +1,10 @@
-import { ViewSchema, ViewUXSlot, ViewContextConfig, ViewComponentParams } from "./view.types";
+import { ViewSchema, ViewUXSlot, ViewContextConfig, ViewComponentParams, ViewContextValue } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
     TSchema extends ViewSchema
 > extends ViewComponentParams<ID, TSchema> {
-    context: ViewContextConfig | null;
+    context: ViewContextValue;
 }
 
 export interface ViewRootProps<
