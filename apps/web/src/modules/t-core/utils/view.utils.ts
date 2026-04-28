@@ -13,6 +13,21 @@ export function VIEW<
     return { RENDER: VIEWRENDER<ID, TSchema> }
 }
 
+export function VIEWROOT<
+    const KEY extends string,
+    const TSchema extends ViewSchema
+>(  
+    _: {
+        key: KEY;
+        schema: TSchema;
+    }
+) {
+    type ID = `${KEY}-root`;
+    return { RENDER: VIEWRENDER<ID, TSchema> }
+}
+
+//
+
 const VIEWRENDER = <
     ID extends string, 
     TSchema extends ViewSchema
