@@ -1,5 +1,7 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { ViewParams, ViewProps } from "../types/view.types";
+import { SxProps, Theme } from "@mui/system";
+import clsx from "clsx";
 
 export const VIEW = <TProps extends ViewProps>(render: (params: ViewParams) => React.ReactNode) => {
   return (props: TProps) => {
@@ -7,21 +9,29 @@ export const VIEW = <TProps extends ViewProps>(render: (params: ViewParams) => R
 
     const state = props.state;
 
-    const overrides = useMemo(() => {
+    const impl = useMemo(() => {
       return {
-        classNames: props.classNames || [],
-        styles: props.styles || {},
-        sx: props.sx || {},
-      };
-    }, [props.classNames, props.styles, props.sx]);
-
-    const content = useCallback((def?: () => React.ReactNode) => {
-      if (props.children) {
-        return props.children;
+        className: (...classNames: string[]) => {
+          const overrideClassNames = props.overrides?.className || [];
+          return clsx(...classNames, ...overrideClassNames);
+        },
+        styles: (styles?: React.CSSProperties) => {
+          const overrideStyles = props.overrides?.styles || {};
+          return { ...styles, ...overrideStyles };
+        },
+        sx: (sx?: SxProps<Theme>) => {
+          const overrideSx = props.overrides?.sx || {};
+          return { ...sx, ...overrideSx };
+        },
+        content: (def?: () => React.ReactNode) => {
+          if (props.children) {
+            return props.children;
+          }
+          return def?.() || null;
+        }
       }
-      return def?.() || null;
-    }, [props.children]);
+    }, [props.overrides]);
 
-    return render({ ref, state, overrides, content });
+    return render({ ref, state, impl });
   };
 };
