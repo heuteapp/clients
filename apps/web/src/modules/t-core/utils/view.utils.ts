@@ -1,6 +1,6 @@
 import { getNestedValue } from "../../d-core/utils/types";
 import { ViewProps } from "../types/props.types";
-import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema, ViewTree, ViewWrapper } from "../types/view.types";
+import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema, ViewSlot, ViewTree, ViewWrapper } from "../types/view.types";
 
 export function VIEW<
     const ID extends string,
@@ -91,23 +91,12 @@ const VIEWRENDER = <
 
     const rootSlot = context?.rootSlot;
 
-    const className = slot?.className ? slot.className :
-        rootSlot?.className ? getNestedValue(rootSlot.className, id) : undefined;
-
-    const sx = slot?.sx ? slot.sx :
-        rootSlot?.sx ? getNestedValue(rootSlot.sx, id) : undefined;
-
-    const wrapper = slot?.wrapper ? slot.wrapper :
-        rootSlot?.wrapper ? getNestedValue(rootSlot.wrapper, id) : undefined;
+    const targetSlot = slot || getNestedValue(rootSlot, id) as ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
         
     return renderFunc({
         state: state,
         context: context,
         ref: ref,
-        slot: {
-            className: className ? className as any : undefined,
-            sx: sx ? sx as any : undefined,
-            wrapper: wrapper ? wrapper as any : undefined,
-        },
+        slot: targetSlot
     })
 };
