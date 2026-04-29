@@ -16,7 +16,7 @@ export interface ViewRenderParams<
 }
 
 export interface ViewContextValue {
-
+    rootSlot: ViewSlot<any, any, any>;
 }
 
 export interface ViewContextConfig {

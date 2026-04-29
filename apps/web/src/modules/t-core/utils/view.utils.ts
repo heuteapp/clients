@@ -1,3 +1,4 @@
+import { getNestedValue } from "../../d-core/utils/types";
 import { ViewProps } from "../types/props.types";
 import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema, ViewTree, ViewWrapper } from "../types/view.types";
 
@@ -13,7 +14,7 @@ export function VIEW<
 ) {
     return { 
         RENDER: (renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode) => {
-            return VIEWRENDER<ID, TSchema>(props, props.context, renderFunc);
+            return VIEWRENDER<ID, TSchema>(_.id, props, props.context, renderFunc);
         }
     }
 }
@@ -29,9 +30,11 @@ export function VIEWROOT<
     },
     props: ViewProps<ID, TSchema>
 ) {
+    const rootId = `${_.key}-root` as ID;
+
     return { 
         CONFIG: (config: ViewContextConfig) => {
-            return VIEWCONFIG<ID, TSchema>(props, config);
+            return VIEWCONFIG<ID, TSchema>(rootId, props, config);
         }
     }
 }
@@ -58,6 +61,7 @@ const VIEWCONFIG = <
     ID extends string, 
     TSchema extends ViewSchema
 > (
+    id: ID,
     params: ViewComponentParams<ID, TSchema>,
     config: ViewContextConfig
 ) => {
@@ -67,7 +71,7 @@ const VIEWCONFIG = <
         RENDER: (
             renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
         ) => {
-            return VIEWRENDER<ID, TSchema>(params, context, renderFunc);
+            return VIEWRENDER<ID, TSchema>(id, params, context, renderFunc);
         }
     }
 }
@@ -78,21 +82,24 @@ const VIEWRENDER = <
     ID extends string, 
     TSchema extends ViewSchema
 > (
+    id: ID,
     params: ViewComponentParams<ID, TSchema>,
     context: ViewContextValue,
     renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
     const { state, ref, slot } = params;
 
-    const className = slot?.className ? slot.className : undefined;
-        //: port?.className ? port.className : undefined;
+    const rootSlot = context?.rootSlot;
 
-    const sx = slot?.sx ? slot.sx : undefined;
-        //: port?.sx ? port.sx : undefined;
+    const className = slot?.className ? slot.className :
+        rootSlot?.className ? getNestedValue(rootSlot.className, id) : undefined;
 
-    const wrapper = slot?.wrapper ? slot.wrapper : undefined;
-        //: port?.wrapper ? port.wrapper : undefined;
+    const sx = slot?.sx ? slot.sx :
+        rootSlot?.sx ? getNestedValue(rootSlot.sx, id) : undefined;
 
+    const wrapper = slot?.wrapper ? slot.wrapper :
+        rootSlot?.wrapper ? getNestedValue(rootSlot.wrapper, id) : undefined;
+        
     return renderFunc({
         state: state,
         context: context,
