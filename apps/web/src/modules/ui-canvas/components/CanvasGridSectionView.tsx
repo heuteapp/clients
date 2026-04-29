@@ -11,7 +11,7 @@ export const CanvasGridSectionView = (props : CanvasGridSectionViewProps) => (
     .RENDER(({ ref, state, context, slot }) => (
         <div
             ref={ref}
-            className={clsx(style.gridSection, ...(slot.className?.["&"] || []))}
+            className={clsx(style.gridSection, ...(slot["&"]?.className || []))}
             style={{
                 gridArea: state.data.name
             }}
@@ -21,7 +21,7 @@ export const CanvasGridSectionView = (props : CanvasGridSectionViewProps) => (
                     state={{ data: state.data }} 
                     context={context}
                 />
-            ), slot.wrapper?.["&"])}
+            ), slot["&"]?.wrapper)}
         </div>  
     ))
 )

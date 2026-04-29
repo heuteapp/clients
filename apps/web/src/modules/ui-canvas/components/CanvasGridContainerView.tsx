@@ -37,7 +37,7 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
         return (  
             <div
                 ref={ref}
-                className={clsx(style.gridContainer, ...(slot.className?.["&"] || []))}
+                className={clsx(style.gridContainer, ...(slot["&"]?.className || []))}
                 style={{
                     gridTemplateColumns: `repeat(${state.dimensions.colCount}, var(--canvas-cell-size))`,
                     gridTemplateRows: `repeat(${state.dimensions.rowCount}, var(--canvas-cell-size))`,
@@ -52,7 +52,7 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
                             context={context}
                         />
                     ))
-                ), slot.wrapper?.["&"])}
+                ), slot["&"]?.wrapper)}
             </div>       
         )
     })

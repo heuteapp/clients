@@ -14,7 +14,7 @@ export const BoardCardContainerView = (props : BoardCardContainerViewProps) => (
         return (  
             <div
                 ref={ref}
-                className={clsx(style.cardContainer, ...(slot.className?.["&"] || []))}
+                className={clsx(style.cardContainer, ...(slot["&"]?.className || []))}
             > 
                 {VIEWCONTENT(state, () => (
                     state.cards.map((s, i) => (
@@ -24,7 +24,7 @@ export const BoardCardContainerView = (props : BoardCardContainerViewProps) => (
                             context={context}
                         />
                     ))
-                ), slot.wrapper?.["&"])}
+                ), slot["&"]?.wrapper)}
             </div>
         )
     })

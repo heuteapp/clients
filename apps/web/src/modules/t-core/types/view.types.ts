@@ -77,70 +77,31 @@ import { Theme, SxProps } from "@mui/system";
 
 export type ViewClassName = string[];
 
-export type ViewClassNameTree<TSchema extends ViewHierarchySchemaNode> 
-    = ViewTree<TSchema, ViewClassName>;
-
 export type ViewSx = SxProps<Theme>;
-
-export type ViewSxTree<TSchema extends ViewHierarchySchemaNode> 
-    = ViewTree<TSchema, ViewSx>;
 
 export type ViewWrapper<TState extends ViewState | undefined = ViewState> 
     = (children: React.ReactNode, state: TState) => React.ReactNode;
 
-export type ViewWrapperTree<TSchema extends ViewHierarchySchemaNode, TState extends ViewState | undefined = ViewState> 
-    = ViewTree<TSchema, ViewWrapper<TState>>;
-
 export type ViewRender<TState extends ViewState | undefined = ViewState> 
     = (state: TState) => React.ReactNode;
-
-export type ViewRenderTree<TSchema extends ViewHierarchySchemaNode, TState extends ViewState | undefined = ViewState> 
-    = ViewTree<TSchema, ViewRender<TState>>;
-
-//
-
-export type ViewPort<TSchema extends ViewHierarchySchemaNode> = {
-    className?: ViewClassNameTree<TSchema>;
-    sx?: ViewSxTree<TSchema>;
-    wrapper?: ViewWrapperTree<TSchema>;
-    render?: ViewRenderTree<TSchema>;
-}
-
 //
 
 import { IdKey, GetNestedValue } from "../../d-core/types/types";
-import { NapiServerPath } from "next/dist/build/swc/generated-native";
 
-export interface ViewSlot<
+export type ViewSlot<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true,
-    TState extends ViewStateSchema<ID>
-> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewSlotWrapper<ID, THierarchy, TState> {
-}
-
-export interface ViewSlotClassName<
-    ID extends string, 
-    THierarchy extends ViewHierarchySchemaNode | true, 
+    TState extends ViewStateSchema<ID>,
     TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
-> {
-    className?: TX extends ViewHierarchySchemaNode ? ViewClassNameTree<TX> : ViewClassName;
-}
+> = TX extends ViewHierarchySchemaNode ? ViewTree<TX, ViewSlotValue<ID, TState>> : ViewSlotValue<ID, TState>;
 
-export interface ViewSlotSx<
+export interface ViewSlotValue<
     ID extends string, 
-    THierarchy extends ViewHierarchySchemaNode | true, 
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
+    TStateSchema extends ViewStateSchema<IdKey<ID>>
 > {
-    sx?: TX extends ViewHierarchySchemaNode ? ViewSxTree<TX> : ViewSx;
-}
-
-export interface ViewSlotWrapper<
-    ID extends string, 
-    THierarchy extends ViewHierarchySchemaNode | true, 
-    TStateSchema extends ViewStateSchema<IdKey<ID>>,
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
-> {
-    wrapper?:  TX extends ViewHierarchySchemaNode ? ID extends keyof TStateSchema 
-        ? ViewWrapperTree<TX, TStateSchema[ID]>
-        : ViewWrapperTree<TX, ViewState> : ViewWrapper;
+    className?: ViewClassName;
+    sx?: ViewSx;
+    wrapper?: ID extends keyof TStateSchema 
+        ? ViewWrapper<TStateSchema[ID]>
+        : ViewWrapper<ViewState>;
 }

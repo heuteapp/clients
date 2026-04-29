@@ -9,18 +9,18 @@ import { canvasRootView } from "../utils/view.utils";
 export const CanvasRootView = (props : CanvasRootViewProps) => (
     VIEWROOT(canvasRootView, props)
     .CONFIG({})
-    .RENDER(({ ref, state, slot }) => {
+    .RENDER(({ ref, context, state, slot }) => {
       return (
         <div 
           ref={ref} 
-          className={clsx(style.canvas, ...(slot.className?.["&"] || []))}
+          className={clsx(style.canvas, ...(slot["&"]?.className || []))}
         >
           {VIEWCONTENT(state, () => (
             <CanvasGridContainerView 
               state={{ dimensions: { colCount: state.canvas.colCount, rowCount: state.canvas.rowCount }, grids: state.canvas.grids }}
-              context={{}}
+              context={context}
             />
-          ), slot.wrapper?.["&"])}
+          ), slot["&"]?.wrapper)}
         </div>
       )
     })

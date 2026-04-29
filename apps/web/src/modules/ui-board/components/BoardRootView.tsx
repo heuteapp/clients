@@ -14,9 +14,9 @@ export const BoardRootView = (props : BoardRootViewProps) => (
       return (
         <Box 
           ref={ref} 
-          className={clsx(style.board, ...(slot.className?.["&"] || []))}
+          className={clsx(style.board, ...(slot["&"]?.className || []))}
           sx={{
-            ...slot.sx?.["&"]
+            ...slot["&"]?.sx
           }}
         >
           {VIEWCONTENT(state, () => (
@@ -24,7 +24,7 @@ export const BoardRootView = (props : BoardRootViewProps) => (
               state={{ cards: state.board.cards }}
               context={context}
             />
-          ), slot.wrapper?.["&"])}
+          ), slot["&"]?.wrapper)}
         </Box>
       )
     })
