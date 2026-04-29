@@ -6,6 +6,7 @@ import { boardRootView } from "../utils/view.utils";
 import { BoardRootViewProps } from "../types/props.types";
 import { BoardCardContainerView } from "./BoardCardContainerView";
 import { Box } from "@mui/material";
+import { CanvasRootView } from "../../ui-canvas/components/CanvasRootView";
 
 export const BoardRootView = (props : BoardRootViewProps) => (
     VIEWROOT(boardRootView, props)
@@ -20,10 +21,15 @@ export const BoardRootView = (props : BoardRootViewProps) => (
           }}
         >
           {VIEWCONTENT(state, () => (
-            <BoardCardContainerView 
-              state={{ ...state.container }}
-              context={context}
-            />
+            <>
+              <CanvasRootView 
+                state={{ ...state.canvas }}
+              />
+              <BoardCardContainerView 
+                state={{ ...state.container }}
+                context={context}
+              />
+            </>
           ), slot["&"]?.wrapper)}
         </Box>
       )

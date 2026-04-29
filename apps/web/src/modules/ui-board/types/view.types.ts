@@ -1,6 +1,7 @@
 import { BoardCardContent } from "../../d-board/types/board.types";
 import { GridRect } from "../../d-core/types/common";
 import { ViewSchema } from "../../t-core/types/view.types";
+import { CanvasViewStateSchema } from "../../ui-canvas/types/view.types";
 
 export type BoardViewSchema = ViewSchema<"board", BoardViewContextSchema, BoardViewHiearchySchema, BoardViewStateSchema>;
 
@@ -21,6 +22,7 @@ export type BoardViewHiearchySchema = {
 
 export type BoardViewStateSchema = {
     "board-root": {
+        canvas: CanvasViewStateSchema["canvas-root"];
         container: BoardViewStateSchema["board-card-container"];
     };
     "board-card-container": {

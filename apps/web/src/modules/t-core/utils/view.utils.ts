@@ -65,7 +65,9 @@ const VIEWCONFIG = <
     params: ViewComponentParams<ID, TSchema>,
     config: ViewContextConfig
 ) => {
-    const context : ViewContextValue<TSchema> = null!;
+    const context : ViewContextValue<TSchema> = {
+        rootSlot: params.slot as ViewSlot<never, TSchema["hierarchy"], TSchema["state"]>,
+    };
 
     return { 
         RENDER: (
