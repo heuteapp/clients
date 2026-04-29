@@ -3,6 +3,7 @@ export interface ViewComponentParams<
     TSchema extends ViewSchema
 > {
     state: TSchema["state"][ID];
+    children?: React.ReactNode;
     ref?: React.RefObject<HTMLDivElement | null>;
     slot?: ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
 }
@@ -88,13 +89,15 @@ export type ViewRender<TState extends ViewState | undefined = ViewState>
     = (state: TState) => React.ReactNode;
 //
 
-import { IdKey, GetNestedValue } from "../../d-core/types/types";
+import { OmitKeysByPrefix, IdKey, GetNestedValue } from "../../d-core/types/types";
 
 export type ViewSlot<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true,
     TState extends ViewStateSchema<ID>,
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
+    TX = THierarchy extends ViewHierarchySchemaNode ? 
+        OmitKeysByPrefix<GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode>, IdKey<ID>>
+    : true
 > = TX extends ViewHierarchySchemaNode ? ViewTree<TX, ViewSlotValue<ID, TState>> : ViewSlotValue<ID, TState>;
 
 export interface ViewSlotValue<

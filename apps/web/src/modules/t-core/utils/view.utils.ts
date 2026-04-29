@@ -14,7 +14,7 @@ export function VIEW<
 ) {
     return { 
         RENDER: (renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode) => {
-            return VIEWRENDER<ID, TSchema>(_.id, props, props.context, renderFunc);
+            return VIEWRENDER<ID, TSchema>(props, props.context, renderFunc);
         }
     }
 }
@@ -30,11 +30,9 @@ export function VIEWROOT<
     },
     props: ViewRootProps<KEY, TSchema>
 ) {
-    const rootId = `${_.key}-root` as ID;
-
     return { 
         CONFIG: (config: ViewContextConfig) => {
-            return VIEWCONFIG<ID, TSchema>(rootId, props as ViewComponentParams<ID, TSchema>, config);
+            return VIEWCONFIG<ID, TSchema>(props as ViewComponentParams<ID, TSchema>, config);
         }
     }
 }
@@ -61,19 +59,16 @@ const VIEWCONFIG = <
     const ID extends string, 
     const TSchema extends ViewSchema
 > (
-    id: ID,
     params: ViewComponentParams<ID, TSchema>,
     config: ViewContextConfig
 ) => {
-    const context : ViewContextValue<TSchema> = {
-        rootSlot: params.slot as ViewSlot<never, TSchema["hierarchy"], TSchema["state"]>,
-    };
+    const context : ViewContextValue<TSchema> = null!;
 
     return { 
         RENDER: (
             renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
         ) => {
-            return VIEWRENDER<ID, TSchema>(id, params, context, renderFunc);
+            return VIEWRENDER<ID, TSchema>(params, context, renderFunc);
         }
     }
 }
@@ -84,21 +79,16 @@ const VIEWRENDER = <
     const ID extends string, 
     const TSchema extends ViewSchema
 > (
-    id: ID,
     params: ViewComponentParams<ID, TSchema>,
     context: ViewContextValue<TSchema>,
     renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
     const { state, ref, slot } = params;
-
-    const rootSlot = context?.rootSlot;
-
-    const targetSlot = slot || getNestedValue(rootSlot, id) as ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
         
     return renderFunc({
         state: state,
         context: context,
         ref: ref,
-        slot: targetSlot
+        slot: slot || {} as ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>
     })
 };
