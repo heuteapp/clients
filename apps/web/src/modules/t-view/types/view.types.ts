@@ -1,4 +1,8 @@
+import { SxProps, Theme } from "@mui/system";
+
 export interface ViewProps {
+    sx?: SxProps<Theme>;
+    classNames?: string[];
     children?: React.ReactNode;
 }
 
