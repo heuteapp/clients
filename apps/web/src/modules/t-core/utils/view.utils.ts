@@ -82,38 +82,25 @@ const VIEWRENDER = <
     context: ViewContextValue,
     renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
-    const { state, ref, port, slot } = params;
+    const { state, ref, slot } = params;
 
-    const className = slot?.className ? slot.className 
-        : port?.className ? port.className : undefined;
+    const className = slot?.className ? slot.className : undefined;
+        //: port?.className ? port.className : undefined;
 
-    const sx = slot?.sx ? slot.sx 
-        : port?.sx ? port.sx : undefined;
+    const sx = slot?.sx ? slot.sx : undefined;
+        //: port?.sx ? port.sx : undefined;
 
-    const wrapper = slot?.wrapper ? slot.wrapper 
-        : port?.wrapper ? port.wrapper : undefined;
+    const wrapper = slot?.wrapper ? slot.wrapper : undefined;
+        //: port?.wrapper ? port.wrapper : undefined;
 
-    return VIEWCONTENT(
-        state, 
-        () => renderFunc({
-            state: state,
-            context: context,
-            ref: ref,
-            slot: {
-                className: className ? className as any : undefined,
-                sx: sx ? sx as any : undefined,
-                wrapper: wrapper ? wrapper as any : undefined,
-            },
-        }),
-        getValue(wrapper)
-    )
+    return renderFunc({
+        state: state,
+        context: context,
+        ref: ref,
+        slot: {
+            className: className ? className as any : undefined,
+            sx: sx ? sx as any : undefined,
+            wrapper: wrapper ? wrapper as any : undefined,
+        },
+    })
 };
-
-//
-
-function getValue<T>(dir: any) : T | undefined {
-  if (dir && typeof dir === "object" && "&" in dir) {
-    return dir["&"];
-  }
-  return dir;
-}

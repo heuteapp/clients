@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { CanvasGridContainerViewProps } from "../types/props.types";
 import { useMemo } from "react";
 import { CanvasGridSectionView } from "./CanvasGridSectionView";
-import { VIEW } from "../../t-core/utils/view.utils";
+import { VIEW, VIEWCONTENT } from "../../t-core/utils/view.utils";
 import { canvasView } from "../utils/view.utils";
 
 //
@@ -44,16 +44,15 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
                     gridTemplateAreas
                 }}
             > 
-                {slot.render?.["&"] ? slot.render["&"](state) 
-                    : state.grids.map(s => (
+                {VIEWCONTENT(state, () => (
+                    state.grids.map(s => (
                         <CanvasGridSectionView 
                             key={s.name} 
                             state={{ data: s }} 
                             context={context}
-                            port={props.port} 
                         />
                     ))
-                }
+                ), slot.wrapper?.["&"])}
             </div>       
         )
     })

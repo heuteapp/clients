@@ -4,18 +4,15 @@ export interface ViewComponentParams<
 > {
     state: TSchema["state"][ID];
     ref?: React.RefObject<HTMLDivElement | null>;
-    port?: ViewPort<TSchema["hierarchy"]>;
     slot?: ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
 }
 
 export interface ViewRenderParams<
     ID extends string,
     TSchema extends ViewSchema
-> {
-    state: TSchema["state"][ID];
+> extends ViewComponentParams<ID, TSchema> {
     context: ViewContextValue;
-    ref?: React.RefObject<HTMLDivElement | null>;
-    slot: ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
+    slot: Exclude<ViewComponentParams<ID, TSchema>["slot"], undefined>
 }
 
 export interface ViewContextValue {

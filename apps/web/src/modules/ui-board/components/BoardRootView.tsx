@@ -1,7 +1,7 @@
 import style from "@/src/modules/ux-board/styles/board.module.scss"
 import clsx from "clsx";
 
-import { VIEWROOT } from "../../t-core/utils/view.utils";
+import { VIEWCONTENT, VIEWROOT } from "../../t-core/utils/view.utils";
 import { boardRootView, boardView } from "../utils/view.utils";
 import { BoardRootViewProps } from "../types/props.types";
 import { BoardCardContainerView } from "./BoardCardContainerView";
@@ -19,15 +19,12 @@ export const BoardRootView = (props : BoardRootViewProps) => (
             ...slot.sx?.["&"]
           }}
         >
-          {slot.render?.["&"] ? slot.render["&"](state) 
-            : (
-              <BoardCardContainerView 
-                state={{ cards: state.board.cards }}
-                context={context}
-                port={props.port} 
-              />
-            )
-          }
+          {VIEWCONTENT(state, () => (
+            <BoardCardContainerView 
+              state={{ cards: state.board.cards }}
+              context={context}
+            />
+          ), slot.wrapper?.["&"])}
         </Box>
       )
     })
