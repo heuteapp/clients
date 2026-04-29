@@ -1,5 +1,5 @@
 import { getNestedValue } from "../../d-core/utils/types";
-import { ViewProps } from "../types/props.types";
+import { ViewProps, ViewRootProps } from "../types/props.types";
 import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema, ViewSlot, ViewTree, ViewWrapper } from "../types/view.types";
 
 export function VIEW<
@@ -28,13 +28,13 @@ export function VIEWROOT<
         key: KEY;
         schema: TSchema;
     },
-    props: ViewProps<ID, TSchema>
+    props: ViewRootProps<KEY, TSchema>
 ) {
     const rootId = `${_.key}-root` as ID;
 
     return { 
         CONFIG: (config: ViewContextConfig) => {
-            return VIEWCONFIG<ID, TSchema>(rootId, props, config);
+            return VIEWCONFIG<ID, TSchema>(rootId, props as ViewComponentParams<ID, TSchema>, config);
         }
     }
 }
@@ -58,8 +58,8 @@ export function VIEWCONTENT<
 //
 
 const VIEWCONFIG = <
-    ID extends string, 
-    TSchema extends ViewSchema
+    const ID extends string, 
+    const TSchema extends ViewSchema
 > (
     id: ID,
     params: ViewComponentParams<ID, TSchema>,
@@ -79,8 +79,8 @@ const VIEWCONFIG = <
 //
 
 const VIEWRENDER = <
-    ID extends string, 
-    TSchema extends ViewSchema
+    const ID extends string, 
+    const TSchema extends ViewSchema
 > (
     id: ID,
     params: ViewComponentParams<ID, TSchema>,

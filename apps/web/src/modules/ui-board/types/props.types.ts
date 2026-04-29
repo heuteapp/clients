@@ -1,7 +1,7 @@
-import { ViewProps } from "../../t-core/types/props.types";
+import { ViewProps, ViewRootProps } from "../../t-core/types/props.types";
 import { BoardViewSchema } from "./view.types";
 
-export interface BoardRootViewProps extends ViewProps<"board-root", BoardViewSchema> {
+export interface BoardRootViewProps extends ViewRootProps<"board", BoardViewSchema> {
     
 }
 
