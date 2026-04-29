@@ -9,8 +9,8 @@ export const CanvasGridItemView = (props : CanvasGridItemViewProps) => (
     .RENDER(({ ref, state, slot }) => (
         <div
             ref={ref} className={clsx(style.gridItem, ...(slot.className || []))} style={{
-                gridTemplateColumns: `repeat(${state.data.position.colSpan}, var(--grid-cell-size))`,
-                gridTemplateRows: `repeat(${state.data.position.rowSpan}, var(--grid-cell-size))`,
+                gridTemplateColumns: `repeat(${state.position.colSpan}, var(--grid-cell-size))`,
+                gridTemplateRows: `repeat(${state.position.rowSpan}, var(--grid-cell-size))`,
             }}
         >
             {VIEWCONTENT(state, null, slot.wrapper)}

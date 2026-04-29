@@ -1,11 +1,10 @@
-import { CanvasModel, CanvasGridModel } from "../../d-canvas/types/canvas.model.types";
-import { GridDimensions } from "../../d-core/types/common";
+import { GridDimensions, GridRect } from "../../d-core/types/common";
 import { ViewSchema } from "../../t-core/types/view.types";
 
 export type CanvasViewSchema = ViewSchema<"canvas", CanvasViewContextSchema, CanvasViewHiearchySchema, CanvasViewStateSchema>;
 
 export type CanvasViewContextSchema = {
-    
+
 }
 
 export type CanvasViewHiearchySchema = {
@@ -17,33 +16,18 @@ export type CanvasViewHiearchySchema = {
 }
 
 export type CanvasViewStateSchema = {
-    "canvas-root": CanvasRootViewState;
-    "canvas-grid-container": CanvasGridContainerViewState;
-    "canvas-grid-section": CanvasGridSectionViewState;
-    "canvas-grid-item": CanvasGridItemViewState;
-}
-
-//
-
-export type CanvasViewStates =
-    | CanvasRootViewState
-    | CanvasGridContainerViewState
-    | CanvasGridSectionViewState
-    | CanvasGridItemViewState;
-
-export interface CanvasRootViewState {
-    canvas: CanvasModel;
-}
-
-export interface CanvasGridContainerViewState {
-    dimensions: GridDimensions;
-    grids: CanvasGridModel[];
-}
-
-export interface CanvasGridSectionViewState {
-    data: CanvasGridModel;
-}
-
-export interface CanvasGridItemViewState {
-    data: CanvasGridModel;
+    "canvas-root": {
+        container: CanvasViewStateSchema["canvas-grid-container"];
+    }
+    "canvas-grid-container": {
+        dimensions: GridDimensions;
+        items: CanvasViewStateSchema["canvas-grid-item"][];
+    };
+    "canvas-grid-section": {
+        item: CanvasViewStateSchema["canvas-grid-item"];
+    };
+    "canvas-grid-item": {
+        areaName: string;
+        position: GridRect;
+    };
 }

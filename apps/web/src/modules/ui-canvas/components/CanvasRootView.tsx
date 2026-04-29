@@ -17,7 +17,7 @@ export const CanvasRootView = (props : CanvasRootViewProps) => (
         >
           {VIEWCONTENT(state, () => (
             <CanvasGridContainerView 
-              state={{ dimensions: { colCount: state.canvas.colCount, rowCount: state.canvas.rowCount }, grids: state.canvas.grids }}
+              state={{ ...state.container }}
               context={context}
             />
           ), slot["&"]?.wrapper)}

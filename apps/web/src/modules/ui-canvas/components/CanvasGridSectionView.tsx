@@ -13,12 +13,12 @@ export const CanvasGridSectionView = (props : CanvasGridSectionViewProps) => (
             ref={ref}
             className={clsx(style.gridSection, ...(slot["&"]?.className || []))}
             style={{
-                gridArea: state.data.name
+                gridArea: state.item.areaName
             }}
         >            
             {VIEWCONTENT(state, () => (
                 <CanvasGridItemView 
-                    state={{ data: state.data }} 
+                    state={{ ...state.item }} 
                     context={context}
                 />
             ), slot["&"]?.wrapper)}

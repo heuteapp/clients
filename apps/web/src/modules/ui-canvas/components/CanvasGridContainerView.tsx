@@ -17,12 +17,12 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
                 Array.from({ length: state.dimensions.colCount }, () => ".")
             );
 
-            state.grids.forEach(s => {
+            state.items.forEach(s => {
                 const { rowIndex, colIndex, rowSpan, colSpan } = s.position;
 
                 for (let r = 0; r < rowSpan; r++) {
                     for (let c = 0; c < colSpan; c++) {
-                        result[rowIndex - 1 + r][colIndex - 1 + c] = s.name;
+                        result[rowIndex - 1 + r][colIndex - 1 + c] = s.areaName;
                     }
                 }
             });
@@ -45,10 +45,10 @@ export const CanvasGridContainerView = (props : CanvasGridContainerViewProps) =>
                 }}
             > 
                 {VIEWCONTENT(state, () => (
-                    state.grids.map(s => (
+                    state.items.map(item => (
                         <CanvasGridSectionView 
-                            key={s.name} 
-                            state={{ data: s }} 
+                            key={item.areaName} 
+                            state={{ item }} 
                             context={context}
                         />
                     ))
