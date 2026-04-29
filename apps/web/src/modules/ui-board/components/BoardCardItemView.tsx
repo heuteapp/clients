@@ -6,23 +6,23 @@ import { boardView } from "../utils/view.utils";
 
 export const BoardCardItemView = (props : BoardCardItemViewProps) => (
     VIEW(boardView("board-card-item"), props)
-    .RENDER(({ ref, state, slot }) => (
+    .RENDER(({ context, ref, state, slot }) => (
         <Box
             className={clsx('heute-card', ...(slot["&"]?.className || []))}
             sx={{
-                width: (state.data.placement?.position.colSpan || 0) * (state.cellStep || 0),
-                height: (state.data.placement?.position.rowSpan || 0) * (state.cellStep || 0),
+                width: (state.position.colSpan || 0) * (context.cellStep || 0),
+                height: (state.position.rowSpan || 0) * (context.cellStep || 0),
                 ...(slot["&"]?.sx || {}),
             }}
             ref={ref}
         >
-            {state.isFrontFace != false ? (
+            {context.isFrontFace != false ? (
                 <>
                     <Box
                         data-title
                         className={clsx('title', ...(slot.title?.className || []))}
                         sx={{
-                            height: state.cellStep ? (1 * (state.cellStep || 0)): "auto",
+                            height: context.cellStep ? (1 * (context.cellStep || 0)): "auto",
                             ...slot.title?.sx,
                         }}
                     >

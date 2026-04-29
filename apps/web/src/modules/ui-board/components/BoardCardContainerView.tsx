@@ -17,10 +17,10 @@ export const BoardCardContainerView = (props : BoardCardContainerViewProps) => (
                 className={clsx(style.cardContainer, ...(slot["&"]?.className || []))}
             > 
                 {VIEWCONTENT(state, () => (
-                    state.cards.map((s, i) => (
+                    state.items.map((item, i) => (
                         <BoardCardItemView 
                             key={i} 
-                            state={{ data: s, isFrontFace: false, cellStep: 0 }} 
+                            state={{ ...item }} 
                             context={context}
                         />
                     ))

@@ -21,7 +21,7 @@ export const BoardRootView = (props : BoardRootViewProps) => (
         >
           {VIEWCONTENT(state, () => (
             <BoardCardContainerView 
-              state={{ cards: state.board.cards }}
+              state={{ ...state.container }}
               context={context}
             />
           ), slot["&"]?.wrapper)}

@@ -1,10 +1,12 @@
-import { BoardCardModel, BoardModel } from "../../d-board/types/board.model.types";
+import { BoardCardContent } from "../../d-board/types/board.types";
+import { GridRect } from "../../d-core/types/common";
 import { ViewSchema } from "../../t-core/types/view.types";
 
 export type BoardViewSchema = ViewSchema<"board", BoardViewContextSchema, BoardViewHiearchySchema, BoardViewStateSchema>;
 
 export type BoardViewContextSchema = {
-
+    isFrontFace?: boolean;
+    cellStep?: number;
 }
 
 export type BoardViewHiearchySchema = {
@@ -18,23 +20,14 @@ export type BoardViewHiearchySchema = {
 }
 
 export type BoardViewStateSchema = {
-    "board-root": BoardRootViewState;
-    "board-card-container": BoardCardContainerViewState;
-    "board-card-item": BoardCardItemViewState
-}
-
-//
-
-export interface BoardRootViewState {
-    board: BoardModel;
-}
-
-export interface BoardCardContainerViewState {
-    cards: BoardCardModel[];
-}
-
-export type BoardCardItemViewState = {
-    data: BoardCardModel;
-    isFrontFace?: boolean;
-    cellStep?: number;
+    "board-root": {
+        container: BoardViewStateSchema["board-card-container"];
+    };
+    "board-card-container": {
+        items: BoardViewStateSchema["board-card-item"][];
+    };
+    "board-card-item": {
+        content: BoardCardContent;
+        position: GridRect;
+    }
 }
