@@ -1,8 +1,13 @@
 import { BoardCardModel, BoardModel } from "../../d-board/types/board.model.types";
 import { ViewSchema } from "../../t-core/types/view.types";
 
-export type BoardViewSchema = ViewSchema<"board", 
-{
+export type BoardViewSchema = ViewSchema<"board", BoardViewContextSchema, BoardViewHiearchySchema, BoardViewStateSchema>;
+
+export type BoardViewContextSchema = {
+
+}
+
+export type BoardViewHiearchySchema = {
     "board-card-container": {
         "board-card-item": {
             "title": true
@@ -10,12 +15,13 @@ export type BoardViewSchema = ViewSchema<"board",
             "backFace": true
         }
     }
-}, 
-{
+}
+
+export type BoardViewStateSchema = {
     "board-root": BoardRootViewState;
     "board-card-container": BoardCardContainerViewState;
     "board-card-item": BoardCardItemViewState
-}>;
+}
 
 //
 

@@ -2,20 +2,26 @@ import { CanvasModel, CanvasGridModel } from "../../d-canvas/types/canvas.model.
 import { GridDimensions } from "../../d-core/types/common";
 import { ViewSchema } from "../../t-core/types/view.types";
 
-export type CanvasViewSchema = ViewSchema<"canvas", 
-{
+export type CanvasViewSchema = ViewSchema<"canvas", CanvasViewContextSchema, CanvasViewHiearchySchema, CanvasViewStateSchema>;
+
+export type CanvasViewContextSchema = {
+    
+}
+
+export type CanvasViewHiearchySchema = {
     "canvas-grid-container": {
         "canvas-grid-section": {
             "canvas-grid-item": true;
         }
     }
-},
-{
+}
+
+export type CanvasViewStateSchema = {
     "canvas-root": CanvasRootViewState;
     "canvas-grid-container": CanvasGridContainerViewState;
     "canvas-grid-section": CanvasGridSectionViewState;
     "canvas-grid-item": CanvasGridItemViewState;
-}>;
+}
 
 //
 

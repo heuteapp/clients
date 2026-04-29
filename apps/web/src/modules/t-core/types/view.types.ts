@@ -49,9 +49,11 @@ import { FilterKeysByPrefix, FlattenKeys } from "../../d-core/types/types";
 
 export type ViewSchema<
     ID extends string = string, 
+    TContext extends Record<string, any> = Record<string, any>,
     THierarchy extends ViewHierarchySchemaNode = ViewHierarchySchemaNode, 
     TState extends ViewStateSchema<ID, ViewHierarchySchemaRoot<ID, THierarchy>> = ViewStateSchema<ID, ViewHierarchySchemaRoot<ID, THierarchy>>
 > = {
+    context: TContext;
     hierarchy: THierarchy;
     state: TState;
 }
