@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Box } from "@mui/material";
 import { BoardCardItemViewProps } from "../types/props.types";
-import { VIEW } from "../../t-core/utils/view.utils";
+import { VIEW, VIEWCONTENT } from "../../t-core/utils/view.utils";
 import { boardView } from "../utils/view.utils";
 
 export const BoardCardItemView = (props : BoardCardItemViewProps) => (
@@ -26,14 +26,14 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
                             ...slot.sx?.title,
                         }}
                     >
-                        {slot.render?.title ? slot.render.title(state) : state.data.content.title}
+                        {VIEWCONTENT(state, null, slot.wrapper?.title)}
                     </Box>
                     <Box
                         data-front-face
                         className={clsx('face', ...(slot.className?.frontFace || []))}
                         sx={{...slot.sx?.frontFace}}
                     >
-                        {slot.render?.frontFace ? slot.render.frontFace(state) : null}
+                        {VIEWCONTENT(state, null, slot.wrapper?.frontFace)}
                     </Box>
                 </>
             ) : (
@@ -42,7 +42,7 @@ export const BoardCardItemView = (props : BoardCardItemViewProps) => (
                     className={clsx('face', ...(slot.className?.backFace || []))}
                     sx={{...slot.sx?.backFace}}
                 >
-                    {slot.render?.backFace ? slot.render.backFace(state) : null}
+                    {VIEWCONTENT(state, null, slot.wrapper?.backFace)}
                 </Box>
             )}
         </Box>

@@ -1,5 +1,5 @@
 import { ViewProps } from "../types/props.types";
-import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema } from "../types/view.types";
+import { ViewComponentParams, ViewContextConfig, ViewContextValue, ViewRenderParams, ViewSchema, ViewTree, ViewWrapper } from "../types/view.types";
 
 export function VIEW<
     const ID extends string,
@@ -33,6 +33,22 @@ export function VIEWROOT<
         CONFIG: (config: ViewContextConfig) => {
             return VIEWCONFIG<ID, TSchema>(props, config);
         }
+    }
+}
+
+export function VIEWCONTENT<
+    const ID extends string,
+    const TSchema extends ViewSchema,
+    const TState = TSchema['state'][ID]
+>(
+    state: TState,
+    render: (() => React.ReactNode) | null, 
+    wrapper?: (children: React.ReactNode, state: TState) => React.ReactNode
+) {
+    if (wrapper) {
+        return wrapper(render?.() || null, state);
+    } else {
+        return render?.() || null;
     }
 }
 
@@ -74,17 +90,30 @@ const VIEWRENDER = <
     const sx = slot?.sx ? slot.sx 
         : port?.sx ? port.sx : undefined;
 
-    const render = slot?.render ? slot.render 
-        : port?.render ? port.render : undefined;
+    const wrapper = slot?.wrapper ? slot.wrapper 
+        : port?.wrapper ? port.wrapper : undefined;
 
-    return renderFunc({
-        state: state,
-        context: context,
-        ref: ref,
-        slot: {
-            className: className ? className as any : undefined,
-            sx: sx ? sx as any : undefined,
-            render: render ? render as any : undefined,
-        },
-    })
+    return VIEWCONTENT(
+        state, 
+        () => renderFunc({
+            state: state,
+            context: context,
+            ref: ref,
+            slot: {
+                className: className ? className as any : undefined,
+                sx: sx ? sx as any : undefined,
+                wrapper: wrapper ? wrapper as any : undefined,
+            },
+        }),
+        getValue(wrapper)
+    )
 };
+
+//
+
+function getValue<T>(dir: any) : T | undefined {
+  if (dir && typeof dir === "object" && "&" in dir) {
+    return dir["&"];
+  }
+  return dir;
+}

@@ -1,7 +1,7 @@
 import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 import { CanvasGridItemViewProps } from "../types/props.types";
 import clsx from "clsx";
-import { VIEW } from "../../t-core/utils/view.utils";
+import { VIEW, VIEWCONTENT } from "../../t-core/utils/view.utils";
 import { canvasView } from "../utils/view.utils";
 
 export const CanvasGridItemView = (props : CanvasGridItemViewProps) => (
@@ -13,7 +13,7 @@ export const CanvasGridItemView = (props : CanvasGridItemViewProps) => (
                 gridTemplateRows: `repeat(${state.data.position.rowSpan}, var(--grid-cell-size))`,
             }}
         >
-            {slot.render ? slot.render(state) : null}
+            {VIEWCONTENT(state, null, slot.wrapper)}
         </div>
     ))
 )
