@@ -1,23 +1,23 @@
 import { StoredCanvasModel, StoredCanvasStyle } from "@/src/heute-store/types/canvas.types";
 import { CanvasGridModel, CanvasModel } from "../../d-canvas/types/canvas.model.types";
 import { CanvasViewSchema } from "../../ui-canvas/types/view.types";
-import { ViewUXProps } from "../../ui-base/types/props.types";
+import { ViewProps } from "../../t-core/types/props.types";
 
-export interface CanvasRootProps extends ViewUXProps<"canvas-root", CanvasViewSchema> {
+export interface CanvasRootProps extends ViewProps<"canvas-root", CanvasViewSchema> {
     rootRef?: React.RefObject<HTMLDivElement | null>;
     src: CanvasModel;
 }
 
-export interface CanvasGridContainerProps extends ViewUXProps<"canvas-grid-container", CanvasViewSchema> {
+export interface CanvasGridContainerProps extends ViewProps<"canvas-grid-container", CanvasViewSchema> {
     rowCount: number; colCount: number;
     gridSources: CanvasGridModel[];
 }
 
-export interface CanvasGridSectionProps extends ViewUXProps<"canvas-grid-section", CanvasViewSchema> {
+export interface CanvasGridSectionProps extends ViewProps<"canvas-grid-section", CanvasViewSchema> {
     src: CanvasGridModel;
 }
 
-export interface CanvasGridItemProps extends ViewUXProps<"canvas-grid-item", CanvasViewSchema> {
+export interface CanvasGridItemProps extends ViewProps<"canvas-grid-item", CanvasViewSchema> {
     src: CanvasGridModel
 }
 

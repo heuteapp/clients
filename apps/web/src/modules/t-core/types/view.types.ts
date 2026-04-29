@@ -115,12 +115,6 @@ export interface ViewSlot<
 > extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy>, ViewSlotWrapper<ID, THierarchy, TState> {
 }
 
-export interface ViewUXSlot<
-    ID extends string, 
-    THierarchy extends ViewHierarchySchemaNode | true
-> extends ViewSlotClassName<ID, THierarchy>, ViewSlotSx<ID, THierarchy> {
-}
-
 export interface ViewSlotClassName<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true, 
