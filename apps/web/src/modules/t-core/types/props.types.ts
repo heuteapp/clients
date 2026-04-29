@@ -1,16 +1,16 @@
-import { ViewSchema, ViewUXSlot, ViewContextConfig, ViewComponentParams, ViewContextValue } from "./view.types";
+import { ViewSchema, ViewSlot, ViewContextConfig, ViewComponentParams, ViewContextValue, ViewID } from "./view.types";
 
 export interface ViewProps<
     ID extends string,
     TSchema extends ViewSchema
 > extends ViewComponentParams<ID, TSchema> {
-    context: ViewContextValue;
+    context: ViewContextValue<TSchema>;
 }
 
 export interface ViewRootProps<
-    ID extends string,
+    KEY extends string,
     TSchema extends ViewSchema
-> extends ViewComponentParams<ID, TSchema> {
+> extends ViewComponentParams<ViewID<KEY>, TSchema> {
     config?: ViewContextConfig;
 }
 
@@ -18,7 +18,7 @@ export interface ViewUXProps<
     ID extends string,
     TSchema extends ViewSchema
 > {
-    slot?: ViewUXSlot<ID, TSchema["hierarchy"]>;
+    slot?: ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
 }
 
 //

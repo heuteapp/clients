@@ -65,7 +65,7 @@ const VIEWCONFIG = <
     params: ViewComponentParams<ID, TSchema>,
     config: ViewContextConfig
 ) => {
-    const context : ViewContextValue = null!;
+    const context : ViewContextValue<TSchema> = null!;
 
     return { 
         RENDER: (
@@ -84,7 +84,7 @@ const VIEWRENDER = <
 > (
     id: ID,
     params: ViewComponentParams<ID, TSchema>,
-    context: ViewContextValue,
+    context: ViewContextValue<TSchema>,
     renderFunc: (params: ViewRenderParams<ID, TSchema>) => React.ReactNode
 ) => {
     const { state, ref, slot } = params;

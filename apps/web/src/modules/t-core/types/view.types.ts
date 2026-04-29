@@ -11,12 +11,12 @@ export interface ViewRenderParams<
     ID extends string,
     TSchema extends ViewSchema
 > extends ViewComponentParams<ID, TSchema> {
-    context: ViewContextValue;
-    slot: Exclude<ViewComponentParams<ID, TSchema>["slot"], undefined>
+    context: ViewContextValue<TSchema>;
+    slot: ViewSlot<ID, TSchema["hierarchy"], TSchema["state"]>;
 }
 
-export interface ViewContextValue {
-    rootSlot: ViewSlot<any, any, any>;
+export interface ViewContextValue<TSchema extends ViewSchema> {
+    rootSlot: ViewSlot<never, TSchema["hierarchy"], TSchema["state"]>;
 }
 
 export interface ViewContextConfig {
@@ -26,6 +26,8 @@ export interface ViewContextConfig {
 //
 
 export type ViewID<TKey extends string> = `${TKey}-root`;
+
+export type IsViewRootID<ID extends string> = ID extends `${string}-root` ? true : false;
 
 export type ViewState = {
     [key: string]: any;
@@ -47,10 +49,10 @@ import { FilterKeysByPrefix, FlattenKeys } from "../../d-core/types/types";
 
 export type ViewSchema<
     ID extends string = string, 
-    TTree extends ViewHierarchySchemaNode = ViewHierarchySchemaNode, 
-    TState extends ViewStateSchema<ID, ViewHierarchySchemaRoot<ID, TTree>> = ViewStateSchema<ID, ViewHierarchySchemaRoot<ID, TTree>>
+    THierarchy extends ViewHierarchySchemaNode = ViewHierarchySchemaNode, 
+    TState extends ViewStateSchema<ID, ViewHierarchySchemaRoot<ID, THierarchy>> = ViewStateSchema<ID, ViewHierarchySchemaRoot<ID, THierarchy>>
 > = {
-    hierarchy: ViewHierarchySchemaRoot<ID, TTree>;
+    hierarchy: THierarchy;
     state: TState;
 }
 
@@ -107,6 +109,7 @@ export type ViewPort<TSchema extends ViewHierarchySchemaNode> = {
 //
 
 import { IdKey, GetNestedValue } from "../../d-core/types/types";
+import { NapiServerPath } from "next/dist/build/swc/generated-native";
 
 export interface ViewSlot<
     ID extends string, 
@@ -118,7 +121,7 @@ export interface ViewSlot<
 export interface ViewSlotClassName<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true, 
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
 > {
     className?: TX extends ViewHierarchySchemaNode ? ViewClassNameTree<TX> : ViewClassName;
 }
@@ -126,7 +129,7 @@ export interface ViewSlotClassName<
 export interface ViewSlotSx<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true, 
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
 > {
     sx?: TX extends ViewHierarchySchemaNode ? ViewSxTree<TX> : ViewSx;
 }
@@ -135,7 +138,7 @@ export interface ViewSlotWrapper<
     ID extends string, 
     THierarchy extends ViewHierarchySchemaNode | true, 
     TStateSchema extends ViewStateSchema<IdKey<ID>>,
-    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, ID, true, ViewHierarchySchemaNode> : true
+    TX = THierarchy extends ViewHierarchySchemaNode ? GetNestedValue<THierarchy, [IsViewRootID<ID>] extends [true] ? never : ID, true, ViewHierarchySchemaNode> : true
 > {
     wrapper?:  TX extends ViewHierarchySchemaNode ? ID extends keyof TStateSchema 
         ? ViewWrapperTree<TX, TStateSchema[ID]>

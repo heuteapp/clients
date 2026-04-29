@@ -2,7 +2,7 @@ import style from "@/src/modules/ux-board/styles/board.module.scss"
 import clsx from "clsx";
 
 import { VIEWCONTENT, VIEWROOT } from "../../t-core/utils/view.utils";
-import { boardRootView, boardView } from "../utils/view.utils";
+import { boardRootView } from "../utils/view.utils";
 import { BoardRootViewProps } from "../types/props.types";
 import { BoardCardContainerView } from "./BoardCardContainerView";
 import { Box } from "@mui/material";
