@@ -1,11 +1,24 @@
 import { SxProps, Theme } from "@mui/system";
 
-export interface ViewProps<ID extends string, TSchema extends ViewSchema> {
+export interface ViewBaseProps<ID extends string, TSchema extends ViewSchema> {
     ref?: React.Ref<HTMLDivElement | null>;
-    context: TSchema["context"] | null;
     state: TSchema["states"][ID];
     overrides?: ViewOverrides;
     children?: React.ReactNode;
+}
+
+export interface ViewProps<ID extends string, TSchema extends ViewSchema> extends ViewBaseProps<ID, TSchema> {
+    context: TSchema["context"] | null;
+}
+
+export interface ViewRootProps<TSchema extends ViewSchema> extends ViewBaseProps<"root", TSchema> {
+    provider: ViewProvider;
+}
+
+//
+
+export interface ViewProvider {
+
 }
 
 //
