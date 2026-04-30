@@ -14,7 +14,7 @@ export const CanvasGridSectionView = canvasView("grid-section", ({ ref, state, i
         {impl.content(() => (
             <CanvasGridItemView  { ...
                 impl.pass<"grid-item">({ state: state.item })
-            }/>
+            } />
         ))}
     </div>
 ));

@@ -12,7 +12,7 @@ export const CanvasRootView = canvasView("root", ({ ref, state, impl }) => (
     {impl.content(() => (
       <CanvasGridContainerView { ...
         impl.pass<"grid-container">({ state: state.container })
-      }/>
+      } />
     ))}
   </div>
 ));
