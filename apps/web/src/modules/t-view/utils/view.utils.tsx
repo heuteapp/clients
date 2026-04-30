@@ -47,7 +47,7 @@ export const VIEW = <
           }
         }
       }
-    }, [props.overrides]);
+    }, [props.overrides, props.children, context]);
 
     return render({ ref, context, state, impl });
   };
