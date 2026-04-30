@@ -1,16 +1,23 @@
 import { useMemo } from "react";
-import { ViewParams, ViewProps, ViewState } from "../types/view.types";
+import { ViewParams, ViewProps, ViewSchema } from "../types/view.types";
 import { SxProps, Theme } from "@mui/system";
 import clsx from "clsx";
 
 export const VIEW = <
-  TProps extends ViewProps,
-  const TState extends ViewState = TProps["state"]
-> (render: (params: ViewParams<TState>) => React.ReactNode) => {
-  return (props: TProps) => {
+  const ID extends string = string, 
+  const TSchema extends ViewSchema = ViewSchema
+> (
+  _: {
+    id: ID;
+    schema: TSchema;
+  },
+  render: (params: ViewParams<ID, TSchema>) => React.ReactNode
+) => {
+  return (props: ViewProps<ID, TSchema>) => {
     const ref = props.ref || null;
 
-    const state = props.state as TState;
+    const context = props.context as TSchema["context"];
+    const state = props.state as TSchema["states"][ID];
 
     const impl = useMemo(() => {
       return {
@@ -35,6 +42,6 @@ export const VIEW = <
       }
     }, [props.overrides]);
 
-    return render({ ref, state, impl });
+    return render({ ref, context, state, impl });
   };
 };
