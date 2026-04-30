@@ -17,9 +17,9 @@ export interface ViewOverrides {
     sx?: SxProps<Theme>;
 }
 
-export interface ViewParams {
+export interface ViewParams<TState extends ViewState = ViewState> {
     ref: React.Ref<HTMLDivElement | null> | null;
-    state: ViewState;
+    state: TState;
     impl: ViewImpl;
 }
 

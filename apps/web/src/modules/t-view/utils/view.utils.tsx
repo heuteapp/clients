@@ -1,13 +1,16 @@
 import { useMemo } from "react";
-import { ViewParams, ViewProps } from "../types/view.types";
+import { ViewParams, ViewProps, ViewState } from "../types/view.types";
 import { SxProps, Theme } from "@mui/system";
 import clsx from "clsx";
 
-export const VIEW = <TProps extends ViewProps>(render: (params: ViewParams) => React.ReactNode) => {
+export const VIEW = <
+  TProps extends ViewProps,
+  const TState extends ViewState = TProps["state"]
+> (render: (params: ViewParams<TState>) => React.ReactNode) => {
   return (props: TProps) => {
     const ref = props.ref || null;
 
-    const state = props.state;
+    const state = props.state as TState;
 
     const impl = useMemo(() => {
       return {
