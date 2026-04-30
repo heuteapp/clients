@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ViewParams, ViewProps, ViewSchema } from "../types/view.types";
+import { ViewParams, ViewPassParams, ViewProps, ViewSchema, ViewState } from "../types/view.types";
 import { SxProps, Theme } from "@mui/system";
 import clsx from "clsx";
 
@@ -38,6 +38,13 @@ export const VIEW = <
             return props.children;
           }
           return def?.() || null;
+        },
+        pass: <PassID extends string>(params: ViewPassParams<PassID, TSchema>) => {
+          return {
+            context,
+            key: params.key,
+            state: params.state
+          }
         }
       }
     }, [props.overrides]);
