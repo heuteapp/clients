@@ -1,9 +1,9 @@
 import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 
-import { canvasView } from "../utils/view.utils";
+import { canvasRootView } from "../utils/view.utils";
 import { CanvasGridContainerView } from "./CanvasGridContainerView";
 
-export const CanvasRootView = canvasView<"root">(({ ref, state, impl }) => (
+export const CanvasRootView = canvasRootView(({ ref, state, impl }) => (
   <div 
     ref={ref} 
     className={impl.className(style.root)}
