@@ -6,7 +6,12 @@ export interface CanvasViewSchema extends ViewSchema {
     states: CanvasViewSchemaStates
 }
 
-export type CanvasViewSchemaContext = null;
+export type CanvasViewSchemaContext = {
+    metrics: {
+        canvasCellSize: number;
+        gridCellSize: number;
+    }
+};
 
 export type CanvasViewSchemaStates = {
     "root": {

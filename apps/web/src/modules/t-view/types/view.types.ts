@@ -13,6 +13,7 @@ export interface ViewProps<ID extends string, TSchema extends ViewSchema> {
 export interface ViewSchema {
     context: ViewContext | null;
     states: {
+        "root": ViewState;
         [key: string]: ViewState;
     }
 }
@@ -22,7 +23,8 @@ export interface ViewState {
 }
 
 export interface ViewContext {
-    [key: string]: any;
+    state?: Record<string, any>;
+    metrics?: Record<string, any>;
 }
 
 export interface ViewOverrides {
