@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { CanvasGridSectionView } from "./CanvasGridSectionView";
 import { canvasView } from "../utils/view.utils";
 
-export const CanvasGridContainerView = canvasView("grid-container", ({ ref, state, impl }) => {
+export const CanvasGridContainerView = canvasView<"grid-container">(({ ref, state, impl }) => {
     const matrix = useMemo(() => {
         const result = Array.from({ length: state.dimensions.rowCount }, () =>
             Array.from({ length: state.dimensions.colCount }, () => ".")

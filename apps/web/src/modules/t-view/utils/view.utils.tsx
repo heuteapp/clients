@@ -7,10 +7,6 @@ export const VIEW = <
   const ID extends string = string, 
   const TSchema extends ViewSchema = ViewSchema
 > (
-  _: {
-    id: ID;
-    schema: TSchema;
-  },
   render: (params: ViewParams<ID, TSchema>) => React.ReactNode
 ) => {
   return (props: ViewProps<ID, TSchema>) => {
@@ -21,7 +17,6 @@ export const VIEW = <
 export const VIEWROOT = <
   const TSchema extends ViewSchema = ViewSchema
 > (
-  _schema: TSchema,
   render: (params: ViewParams<"root", TSchema>) => React.ReactNode
 ) => {
   return (props: ViewRootProps<TSchema>) => {

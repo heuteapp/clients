@@ -2,7 +2,7 @@ import style from "@/src/modules/ux-canvas/styles/canvas.module.scss"
 
 import { canvasView } from "../utils/view.utils";
 
-export const CanvasGridItemView = canvasView("grid-item", ({ ref, state, impl }) => (
+export const CanvasGridItemView = canvasView<"grid-item">(({ ref, state, impl }) => (
     <div
         ref={ref} 
         className={impl.className(style.gridItem)} 
