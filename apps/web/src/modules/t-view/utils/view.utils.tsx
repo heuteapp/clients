@@ -18,8 +18,8 @@ export const VIEW = <
           const overrideClassNames = props.overrides?.className || [];
           return clsx(...classNames, ...overrideClassNames);
         },
-        styles: (styles?: React.CSSProperties) => {
-          const overrideStyles = props.overrides?.styles || {};
+        style: (styles?: React.CSSProperties) => {
+          const overrideStyles = props.overrides?.style || {};
           return { ...styles, ...overrideStyles };
         },
         sx: (sx?: SxProps<Theme>) => {

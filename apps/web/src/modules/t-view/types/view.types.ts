@@ -13,9 +13,11 @@ export interface ViewState {
 
 export interface ViewOverrides {
     className?: string[];
-    styles?: React.CSSProperties;
+    style?: React.CSSProperties;
     sx?: SxProps<Theme>;
 }
+
+//
 
 export interface ViewParams<TState extends ViewState = ViewState> {
     ref: React.Ref<HTMLDivElement | null> | null;
@@ -25,14 +27,14 @@ export interface ViewParams<TState extends ViewState = ViewState> {
 
 export interface ViewImpl {
     className: ViewClassNameImpl;
-    styles: ViewStylesImpl;
+    style: ViewStyleImpl;
     sx: ViewSxImpl;
     content: ViewContentImpl;
 }
 
 export type ViewClassNameImpl = (...classNames: string[]) => string;
 
-export type ViewStylesImpl = (styles?: React.CSSProperties) => React.CSSProperties;
+export type ViewStyleImpl = (style?: React.CSSProperties) => React.CSSProperties;
 
 export type ViewSxImpl = (sx?: SxProps<Theme>) => SxProps<Theme>;
 
