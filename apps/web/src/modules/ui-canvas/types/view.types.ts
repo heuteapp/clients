@@ -1,32 +1,25 @@
 import { GridDimensions, GridRect } from "../../d-core/types/common";
-import { ViewSchema } from "../../t-core/types/view.types";
+import { ViewSchema } from "../../t-view/types/view.types";
 
-export type CanvasViewSchema = ViewSchema<"canvas", CanvasViewContextSchema, CanvasViewHiearchySchema, CanvasViewStateSchema>;
-
-export type CanvasViewContextSchema = {
-
+export interface CanvasViewSchema extends ViewSchema {
+    context: CanvasViewSchemaContext;
+    states: CanvasViewSchemaStates
 }
 
-export type CanvasViewHiearchySchema = {
-    "canvas-grid-container": {
-        "canvas-grid-section": {
-            "canvas-grid-item": true;
-        }
-    }
-}
+export type CanvasViewSchemaContext = null;
 
-export type CanvasViewStateSchema = {
-    "canvas-root": {
-        container: CanvasViewStateSchema["canvas-grid-container"];
-    }
-    "canvas-grid-container": {
+export type CanvasViewSchemaStates = {
+    "root": {
+        container: CanvasViewSchemaStates["grid-container"];
+    },
+    "grid-container": {
         dimensions: GridDimensions;
-        items: CanvasViewStateSchema["canvas-grid-item"][];
-    };
-    "canvas-grid-section": {
-        item: CanvasViewStateSchema["canvas-grid-item"];
-    };
-    "canvas-grid-item": {
+        items: CanvasViewSchemaStates["grid-item"][];
+    },
+    "grid-section": {
+        item: CanvasViewSchemaStates["grid-item"];
+    },
+    "grid-item": {
         areaName: string;
         position: GridRect;
     };
