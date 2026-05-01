@@ -69,7 +69,7 @@ export interface ViewImpl {
     className: ViewClassNameImpl;
     style: ViewStyleImpl;
     sx: ViewSxImpl;
-    content: ViewContentImpl;
+    render: ViewContentImpl;
 }
 
 export type ViewClassNameImpl = (...classNames: string[]) => string;

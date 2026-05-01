@@ -11,6 +11,6 @@ export const CanvasGridItemView = canvasView<"grid-item">(({ ref, state, impl })
             gridTemplateRows: `repeat(${state.position.rowSpan}, var(--grid-cell-size))`,
         })}
     >
-        {impl.content()}
+        {impl.render()}
     </div>
 ));

@@ -14,7 +14,7 @@ export const BoardCardItemView = boardView<"card-item">(({ ref, state, impl }) =
                 height: (state.position.rowSpan || 0) * (cellStep || 0),
             })}
         >
-            {impl.content(() => {
+            {impl.render(() => {
                 if(isFrontFace) {
                     return (
                         <>

@@ -9,7 +9,7 @@ export const CanvasRootView = canvasRootView(({ ref, state, impl }) => (
     className={impl.className(style.root)}
     style={impl.style()}
   >
-    {impl.content(() => (
+    {impl.render(() => (
       <CanvasGridContainerView 
         state={{ ...state.container }}
       />

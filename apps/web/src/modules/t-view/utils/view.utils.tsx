@@ -58,7 +58,7 @@ const renderView = <
           const overrideSx = props.overrides?.sx || {};
           return { ...sx, ...overrideSx };
         },
-        content: (def?: () => React.ReactNode) => {
+        render: (def?: () => React.ReactNode) => {
           if (props.children) {
             return props.children;
           }

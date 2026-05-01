@@ -11,7 +11,7 @@ export const BoardRootView = boardRootView(({ ref, state, impl }) => (
     className={impl.className(style.root)}
     style={impl.style()}
   >
-    {impl.content(() => (
+    {impl.render(() => (
       <>
         <CanvasRootView 
           state={{ ...state.canvas }}

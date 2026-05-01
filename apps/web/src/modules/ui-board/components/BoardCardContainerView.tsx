@@ -11,7 +11,7 @@ export const BoardCardContainerView = boardView<"card-container">(({ ref, state,
             ref={ref}
             className={impl.className(style["card-container"])}
         > 
-            {impl.content(() => (
+            {impl.render(() => (
                 state.items.map((item, i) => (
                     <BoardCardItemView 
                         key={i}
