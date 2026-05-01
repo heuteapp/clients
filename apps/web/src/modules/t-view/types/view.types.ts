@@ -7,13 +7,7 @@ import { SxProps, Theme } from "@mui/system";
 export type ViewProps<ID extends string, TSchema extends ViewSchema> = {
     ref?: React.Ref<HTMLDivElement | null>;
     overrides?: ViewOverrides;
-} & (
-    | ({ children: React.ReactNode; } & ( ResolveState<ID, TSchema["states"]> extends never 
-            ? { state?: never }
-            : { state: ResolveState<ID, TSchema["states"]> }
-        ))
-    | { children?: never; state: ResolveRichState<ID, TSchema["states"], TSchema["hierarchy"]> }
-)
+} & (WithChildrenProps<ID, TSchema> | WithRichStateProps<ID, TSchema>);
 
 export type ViewRootProps<TSchema extends ViewSchema> = ViewProps<"root", TSchema> & {
     provider: TSchema["context"] extends ViewContext ? ViewProvider<TSchema["context"]> : never;
@@ -90,6 +84,18 @@ export type ViewSxImpl = (sx?: SxProps<Theme>) => SxProps<Theme>;
 export type ViewContentImpl = (def?: () => React.ReactNode) => React.ReactNode;
 
 //
+
+type WithChildrenProps<ID extends string, TSchema extends ViewSchema> = {
+    children: React.ReactNode;
+} & (ResolveState<ID, TSchema["states"]> extends never 
+    ? { state?: never }
+    : { state: ResolveState<ID, TSchema["states"]> }
+);
+
+type WithRichStateProps<ID extends string, TSchema extends ViewSchema> = {
+    children?: never;
+    state: ResolveRichState<ID, TSchema["states"], TSchema["hierarchy"]>;
+};
 
 export type ResolveState<
     TRef,
