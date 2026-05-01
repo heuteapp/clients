@@ -119,9 +119,11 @@ export function createViewContext<TContext extends ViewContext>(
 
     return {
         Provider,
-        useSelector,
-        useContextValue,
-        useSetState,
-        useSetMetrics
+        use: {
+            selector: useSelector,
+            contextValue: useContextValue,
+            setState: useSetState,
+            setMetrics: useSetMetrics
+        }
     };
 }

@@ -9,11 +9,20 @@ export interface ViewBaseProps<ID extends string, TSchema extends ViewSchema> {
 }
 
 export interface ViewProps<ID extends string, TSchema extends ViewSchema> extends ViewBaseProps<ID, TSchema> {
-    context: TSchema["context"] | null;
+    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : never;
 }
 
 export interface ViewRootProps<TSchema extends ViewSchema> extends ViewBaseProps<"root", TSchema> {
     provider: TSchema["context"] extends ViewContext ? ViewProvider<TSchema["context"]> : never;
+}
+
+//
+
+export interface ViewUse<TContext extends ViewContext = ViewContext> {
+    selector: <TSelected>(func: (ctx: TContext) => TSelected) => TSelected;
+    contextValue: () => TContext;
+    setState: (newState: TContext["state"]) => void;
+    setMetrics: (newMetrics: TContext["metrics"]) => void;
 }
 
 //
@@ -56,7 +65,7 @@ export interface ViewOverrides {
 
 export interface ViewParams<ID extends string, TSchema extends ViewSchema> {
     ref: React.Ref<HTMLDivElement | null> | null;
-    context: TSchema["context"] | null;
+    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : never;
     state: TSchema["states"][ID];
     impl: ViewImpl<TSchema>;
 }
@@ -85,7 +94,7 @@ export type ViewPassParams<ID extends string, TSchema extends ViewSchema> = {
 }
 
 export type ViewPassProps<ID extends string, TSchema extends ViewSchema> = {
-    context: TSchema["context"];
+    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : never;
     key?: number | string | undefined;
     state: TSchema["states"][ID];
 }
