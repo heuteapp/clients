@@ -22,10 +22,18 @@ export const VIEWROOT = <
   render: (params: ViewParams<"root", TSchema>) => React.ReactNode
 ) => {
   return (props: ViewRootProps<TSchema>) => {
-    const ctx = useMemo(() => createViewContext(props.provider), [props.provider]);
-    const rendered = renderView(ctx.use, props, render);
+    const contextResult = props.provider 
+      ? createViewContext(props.provider as any)
+      : null;
+
+    const useHooks = contextResult?.use || null;
+    const rendered = renderView(useHooks, props, render);
     
-    return <ctx.Provider>{rendered}</ctx.Provider>;
+    if (contextResult) {
+      return <contextResult.Provider>{rendered}</contextResult.Provider>;
+    }
+    
+    return rendered;
   };
 };
 

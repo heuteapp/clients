@@ -1,6 +1,8 @@
 import React from "react";
 import { SxProps, Theme } from "@mui/system";
 
+//
+
 export interface ViewBaseProps<ID extends string, TSchema extends ViewSchema> {
     ref?: React.Ref<HTMLDivElement | null>;
     state: TSchema["states"][ID];
@@ -9,7 +11,7 @@ export interface ViewBaseProps<ID extends string, TSchema extends ViewSchema> {
 }
 
 export interface ViewProps<ID extends string, TSchema extends ViewSchema> extends ViewBaseProps<ID, TSchema> {
-    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : never;
+    use: ViewUse | null;
 }
 
 export interface ViewRootProps<TSchema extends ViewSchema> extends ViewBaseProps<"root", TSchema> {
@@ -25,16 +27,21 @@ export interface ViewUse<TContext extends ViewContext = ViewContext> {
     setMetrics: (newMetrics: TContext["metrics"]) => void;
 }
 
-//
-
-export interface ViewProvider<TContext extends ViewContext> {
-    state: ViewValueProvider<TContext["state"]>;
-    metrics: ViewValueProvider<TContext["metrics"]>;
-}
+// 
 
 export type ViewValueProvider<TValue> =
     | { type: "static"; value: TValue }
     | { type: "dynamic"; host: (set: (value: TValue) => void) => void }
+
+export type ViewProvider<TContext extends ViewContext> = (
+    TContext["state"] extends Record<string, any> 
+        ? { state: ViewValueProvider<TContext["state"]> } 
+        : { state?: never }
+) & (
+    TContext["metrics"] extends Record<string, any> 
+        ? { metrics: ViewValueProvider<TContext["metrics"]> } 
+        : { metrics?: never }
+)
 
 //
 
@@ -65,7 +72,7 @@ export interface ViewOverrides {
 
 export interface ViewParams<ID extends string, TSchema extends ViewSchema> {
     ref: React.Ref<HTMLDivElement | null> | null;
-    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : never;
+    context: TSchema["context"] | null;
     state: TSchema["states"][ID];
     impl: ViewImpl<TSchema>;
 }
@@ -88,13 +95,13 @@ export type ViewContentImpl = (def?: () => React.ReactNode) => React.ReactNode;
 
 export type ViewPassImpl<TSchema extends ViewSchema> = <ID extends string>(params: ViewPassParams<ID, TSchema>) => ViewPassProps<ID, TSchema>;
 
-export type ViewPassParams<ID extends string, TSchema extends ViewSchema> = {
+export interface ViewPassParams<ID extends string, TSchema extends ViewSchema> {
     key?: number | string;
     state: TSchema["states"][ID];
 }
 
-export type ViewPassProps<ID extends string, TSchema extends ViewSchema> = {
-    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : never;
+export interface ViewPassProps<ID extends string, TSchema extends ViewSchema> {
+    use: ViewUse | null;
     key?: number | string | undefined;
     state: TSchema["states"][ID];
 }
