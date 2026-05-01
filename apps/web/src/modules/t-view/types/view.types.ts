@@ -68,7 +68,7 @@ export interface ViewOverrides {
 
 export interface ViewParams<ID extends ViewID, TSchema extends ViewSchema> {
     ref: React.Ref<HTMLDivElement | null> | null;
-    state: TSchema["states"][ID];
+    state: ResolveState<ID, TSchema["states"]>;
     impl: ViewImpl;
 }
 
@@ -110,19 +110,21 @@ export type ResolveRichState<
     TRef,
     TStates extends Record<string, ViewState>,
     THierarchy extends Record<string, ViewDefinition>
-> = TRef extends string ?
+> = TRef extends keyof THierarchy ?
       ResolveRichState<
-          ToAbsolute<THierarchy[TRef], GetSpace<TRef>>,
+          ToAbsolute<THierarchy[TRef], GetSpace<TRef & string>>,
           TStates,
           THierarchy
-      > & TStates[TRef]
+      > & (TRef extends keyof TStates ? TStates[TRef] : {})
     : TRef extends Array<infer U> 
         ? ResolveRichState<U, TStates, THierarchy>[]
         : TRef extends object 
             ? {
                 [K in keyof TRef]: ResolveRichState<TRef[K], TStates, THierarchy>
               }
-            : TRef;
+            : TRef extends keyof TStates
+              ? TStates[TRef]
+              : TRef;
 
 type GetSpace<TKey extends string> = TKey extends `${infer TSpace}:${infer _}`
     ? TSpace
