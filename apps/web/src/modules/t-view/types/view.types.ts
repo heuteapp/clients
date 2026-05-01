@@ -8,8 +8,11 @@ export type ViewProps<ID extends string, TSchema extends ViewSchema> = {
     ref?: React.Ref<HTMLDivElement | null>;
     overrides?: ViewOverrides;
 } & (
-    | { children: React.ReactNode; state?: never }
-    | { children?: never; state: TSchema["states"][ID] }
+    | ({ children: React.ReactNode; } & ( ResolveState<ID, TSchema["states"]> extends never 
+            ? { state?: never }
+            : { state: ResolveState<ID, TSchema["states"]> }
+        ))
+    | { children?: never; state: ResolveRichState<ID, TSchema["states"], TSchema["hierarchy"]> }
 )
 
 export type ViewRootProps<TSchema extends ViewSchema> = ViewProps<"root", TSchema> & {

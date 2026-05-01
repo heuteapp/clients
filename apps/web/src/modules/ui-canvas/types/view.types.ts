@@ -3,6 +3,7 @@ import { ViewSchema } from "../../t-view/types/view.types";
 
 export interface CanvasViewSchema extends ViewSchema {
     context: CanvasViewSchemaContext;
+    hierarchy: CanvasViewSchemaHierarchy;
     states: CanvasViewSchemaStates
 }
 
@@ -13,16 +14,21 @@ export type CanvasViewSchemaContext = {
     }
 };
 
-export type CanvasViewSchemaStates = {
+export type CanvasViewSchemaHierarchy = {
     "root": {
-        container: CanvasViewSchemaStates["grid-container"];
+        container: "grid-container";
     },
     "grid-container": {
-        dimensions: GridDimensions;
-        items: CanvasViewSchemaStates["grid-item"][];
+        items: "grid-item"[];
     },
     "grid-section": {
-        item: CanvasViewSchemaStates["grid-item"];
+        item: "grid-item";
+    },
+}
+
+export type CanvasViewSchemaStates = {
+    "grid-container": {
+        dimensions: GridDimensions;
     },
     "grid-item": {
         areaName: string;
