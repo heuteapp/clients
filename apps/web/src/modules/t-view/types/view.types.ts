@@ -36,10 +36,16 @@ export type ViewProvider<TContext extends ViewContext> = (
 
 export interface ViewSchema {
     context: ViewContext | null;
+    hierarchy: {
+        [key: string]: ViewDefinition;
+    };
     states: {
-        "root": ViewState;
         [key: string]: ViewState;
     }
+}
+
+export interface ViewDefinition {
+    [key: string]: string | string[] | ViewDefinition;
 }
 
 export interface ViewState {
@@ -79,3 +85,24 @@ export type ViewStyleImpl = (style?: React.CSSProperties) => React.CSSProperties
 export type ViewSxImpl = (sx?: SxProps<Theme>) => SxProps<Theme>;
 
 export type ViewContentImpl = (def?: () => React.ReactNode) => React.ReactNode;
+
+//
+
+export type ResolveState<
+    TRef,
+    TStates extends Record<string, ViewState>
+> = TRef extends keyof TStates ? TStates[TRef] : never;
+
+export type ResolveRichState<
+    TRef,
+    TStates extends Record<string, ViewState>,
+    THierarchy extends Record<string, ViewDefinition>
+> = TRef extends string ?
+      ResolveRichState<THierarchy[TRef], THierarchy, TStates> & TStates[TRef]
+    : TRef extends Array<infer U> 
+        ? ResolveRichState<U, THierarchy, TStates>[] 
+        : TRef extends object 
+            ? {
+                [K in keyof TRef]: ResolveRichState<TRef[K], THierarchy, TStates>;
+              }
+            : TRef;
