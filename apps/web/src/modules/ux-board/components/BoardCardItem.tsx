@@ -15,16 +15,10 @@ export function BoardCardItem({ src } : BoardCardItemProps) {
         >
             <BoardCardItemView 
                 state={{
-                    data: src
+                    content: src.content,
+                    position: src.placement!.position
                 }}
                 ref={ref}
-                slot={{
-                    sx: {
-                        "&": {
-                            position: "fixed"
-                        }
-                    }
-                }}
             />
         </TracedItem>
     )

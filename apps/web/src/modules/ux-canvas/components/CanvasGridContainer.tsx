@@ -4,7 +4,7 @@ import { TracedUniqueItem } from "../../t-core/components/TracedUniqueItem";
 import { CanvasGridContainerView } from "../../ui-canvas/components/CanvasGridContainerView";
 import { CanvasGridSection } from "./CanvasGridSection";
 
-export function CanvasGridContainer({ colCount, rowCount, gridSources, slot }: CanvasGridContainerProps) {
+export function CanvasGridContainer({ gridSources }: CanvasGridContainerProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
@@ -14,21 +14,11 @@ export function CanvasGridContainer({ colCount, rowCount, gridSources, slot }: C
         >
             <CanvasGridContainerView 
                 ref={ref}
-                state={{
-                    dimensions: { colCount, rowCount },
-                    grids: gridSources
-                }}
-                slot={{
-                    ...slot,
-                    render: {
-                        "&": (state) => {
-                            return state.grids.map(s => (
-                                <CanvasGridSection key={s.name} src={s} />
-                            ))
-                        }
-                    }
-                }}
-            />
+            >
+                {gridSources.map(s => (
+                    <CanvasGridSection key={s.name} src={s} />
+                ))}
+            </CanvasGridContainerView>
         </TracedUniqueItem>
     )
 }

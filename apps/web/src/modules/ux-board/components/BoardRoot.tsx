@@ -7,7 +7,7 @@ import { BoardCardContainer } from "./BoardCardContainer";
 import { BoardRootView } from "../../ui-board/components/BoardRootView";
 import { CanvasRoot } from "../../ux-canvas/components/CanvasRoot";
 
-export function BoardRoot({ rootRef, canvasRef, canvasSrc, src, slot }: BoardRootProps) {
+export function BoardRoot({ rootRef, canvasRef, canvasSrc, src }: BoardRootProps) {
   const internalRef = useRef<HTMLDivElement>(null);
   const ref = rootRef || internalRef;
 
@@ -19,21 +19,11 @@ export function BoardRoot({ rootRef, canvasRef, canvasSrc, src, slot }: BoardRoo
     >
       <BoardRootView 
         ref={ref}
-        state={{
-          board: src
-        }}
-        slot={{
-          ...slot,
-          render: {
-            "&": (state) => (
-                  <>
-                    <CanvasRoot rootRef={canvasRef} src={canvasSrc} />
-                    <BoardCardContainer src={state.board.cards}/>
-                  </>
-              )
-          }
-        }}
-      />
+        provider={null!}
+      >
+        <CanvasRoot rootRef={canvasRef} src={canvasSrc} />
+        <BoardCardContainer src={src.cards}/>
+      </BoardRootView>
     </TracedUniqueItem>
   )
 }

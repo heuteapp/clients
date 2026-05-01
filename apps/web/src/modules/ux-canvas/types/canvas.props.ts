@@ -3,21 +3,21 @@ import { CanvasGridModel, CanvasModel } from "../../d-canvas/types/canvas.model.
 import { CanvasViewSchema } from "../../ui-canvas/types/view.types";
 import { ViewProps } from "../../t-core/types/props.types";
 
-export interface CanvasRootProps extends ViewProps<"canvas-root", CanvasViewSchema> {
+export interface CanvasRootProps {
     rootRef?: React.RefObject<HTMLDivElement | null>;
     src: CanvasModel;
 }
 
-export interface CanvasGridContainerProps extends ViewProps<"canvas-grid-container", CanvasViewSchema> {
+export interface CanvasGridContainerProps {
     rowCount: number; colCount: number;
     gridSources: CanvasGridModel[];
 }
 
-export interface CanvasGridSectionProps extends ViewProps<"canvas-grid-section", CanvasViewSchema> {
+export interface CanvasGridSectionProps {
     src: CanvasGridModel;
 }
 
-export interface CanvasGridItemProps extends ViewProps<"canvas-grid-item", CanvasViewSchema> {
+export interface CanvasGridItemProps {
     src: CanvasGridModel
 }
 

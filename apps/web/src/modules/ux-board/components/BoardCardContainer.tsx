@@ -7,7 +7,7 @@ import { BoardCardItem } from "./BoardCardItem";
 
 //
 
-export function BoardCardContainer({ src, slot } : BoardCardContainerProps) {
+export function BoardCardContainer({ src } : BoardCardContainerProps) {
     const ref = useRef<HTMLDivElement | null>(null);
 
     return (
@@ -17,18 +17,11 @@ export function BoardCardContainer({ src, slot } : BoardCardContainerProps) {
         >
             <BoardCardContainerView
                 ref={ref}
-                state={{} as any}
-                slot={{
-                    ...slot,
-                    render: {
-                        "&": () => {
-                            return src.map(s => (
-                                <BoardCardItem key={s.name} src={s} />
-                            ))
-                        }
-                    }
-                }}
-            />
+            >
+                {src.map(s => (
+                    <BoardCardItem key={s.name} src={s} />
+                ))}
+            </BoardCardContainerView>
         </TracedUniqueItem>
     )
 }
