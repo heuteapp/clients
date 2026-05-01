@@ -22,15 +22,10 @@ export const VIEWROOT = <
   render: (params: ViewParams<"root", TSchema>) => React.ReactNode
 ) => {
   return (props: ViewRootProps<TSchema>) => {
-    
-    const ctx = createViewContext(props.provider);
+    const ctx = useMemo(() => createViewContext(props.provider), [props.provider]);
     const rendered = renderView(ctx.use, props, render);
     
-    if (ctx.Provider) {
-      return <ctx.Provider>{rendered}</ctx.Provider>;
-    }
-    
-    return rendered;
+    return <ctx.Provider>{rendered}</ctx.Provider>;
   };
 };
 
@@ -81,7 +76,6 @@ const renderView = <
     }, [props.overrides, props.children, use]);
 
     const params = { ref, state, impl } as any;
-
     if (use) {
       params.use = use;
     }
