@@ -1,3 +1,4 @@
+import React from "react";
 import { SxProps, Theme } from "@mui/system";
 
 export interface ViewBaseProps<ID extends string, TSchema extends ViewSchema> {
@@ -12,14 +13,19 @@ export interface ViewProps<ID extends string, TSchema extends ViewSchema> extend
 }
 
 export interface ViewRootProps<TSchema extends ViewSchema> extends ViewBaseProps<"root", TSchema> {
-    provider: ViewProvider;
+    provider: TSchema["context"] extends ViewContext ? ViewProvider<TSchema["context"]> : never;
 }
 
 //
 
-export interface ViewProvider {
-
+export interface ViewProvider<TContext extends ViewContext> {
+    state: ViewValueProvider<TContext["state"]>;
+    metrics: ViewValueProvider<TContext["metrics"]>;
 }
+
+export type ViewValueProvider<TValue> =
+    | { type: "static"; value: TValue }
+    | { type: "dynamic"; host: (set: (value: TValue) => void) => void }
 
 //
 
@@ -50,7 +56,7 @@ export interface ViewOverrides {
 
 export interface ViewParams<ID extends string, TSchema extends ViewSchema> {
     ref: React.Ref<HTMLDivElement | null> | null;
-    context: TSchema["context"];
+    context: TSchema["context"] | null;
     state: TSchema["states"][ID];
     impl: ViewImpl<TSchema>;
 }
