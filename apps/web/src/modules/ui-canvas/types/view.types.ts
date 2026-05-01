@@ -15,22 +15,22 @@ export type CanvasViewSchemaContext = {
 };
 
 export type CanvasViewSchemaHierarchy = {
-    "root": {
-        container: "grid-container";
+    "canvas:root": {
+        container: "canvas:grid-container";
     },
-    "grid-container": {
-        items: "grid-item"[];
+    "canvas:grid-container": {
+        items: "canvas:grid-item"[];
     },
-    "grid-section": {
-        item: "grid-item";
+    "canvas:grid-section": {
+        item: "canvas:grid-item";
     },
 }
 
 export type CanvasViewSchemaStates = {
-    "grid-container": {
+    "canvas:grid-container": {
         dimensions: GridDimensions;
     },
-    "grid-item": {
+    "canvas:grid-item": {
         areaName: string;
         position: GridRect;
     };

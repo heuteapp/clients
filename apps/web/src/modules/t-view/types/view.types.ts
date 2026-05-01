@@ -4,14 +4,18 @@ import { SxProps, Theme } from "@mui/system";
 //
 
 
-export type ViewProps<ID extends string, TSchema extends ViewSchema> = {
+export type ViewProps<ID extends ViewID, TSchema extends ViewSchema> = {
     ref?: React.Ref<HTMLDivElement | null>;
     overrides?: ViewOverrides;
 } & (WithChildrenProps<ID, TSchema> | WithRichStateProps<ID, TSchema>);
 
-export type ViewRootProps<TSchema extends ViewSchema> = ViewProps<"root", TSchema> & {
+export type ViewRootProps<KEY extends string, TSchema extends ViewSchema> = ViewProps<ViewRootId<KEY>, TSchema> & {
     provider: TSchema["context"] extends ViewContext ? ViewProvider<TSchema["context"]> : never;
 }
+
+export type ViewID<TSpace extends string = string, TKey extends string = string> = `${TSpace}:${TKey}`;
+
+export type ViewRootId<TSpace extends string = string> = ViewID<TSpace, "root">;
 
 // 
 
@@ -34,10 +38,10 @@ export type ViewProvider<TContext extends ViewContext> = (
 export interface ViewSchema {
     context: ViewContext | null;
     hierarchy: {
-        [key: string]: ViewDefinition;
+        [key: ViewID]: ViewDefinition;
     };
     states: {
-        [key: string]: ViewState;
+        [key: ViewID]: ViewState;
     }
 }
 
@@ -62,7 +66,7 @@ export interface ViewOverrides {
 
 //
 
-export interface ViewParams<ID extends string, TSchema extends ViewSchema> {
+export interface ViewParams<ID extends ViewID, TSchema extends ViewSchema> {
     ref: React.Ref<HTMLDivElement | null> | null;
     state: TSchema["states"][ID];
     impl: ViewImpl;
@@ -85,14 +89,14 @@ export type ViewContentImpl = (def?: () => React.ReactNode) => React.ReactNode;
 
 //
 
-type WithChildrenProps<ID extends string, TSchema extends ViewSchema> = {
+type WithChildrenProps<ID extends ViewID, TSchema extends ViewSchema> = {
     children: React.ReactNode;
 } & (ResolveState<ID, TSchema["states"]> extends never 
     ? { state?: never }
     : { state: ResolveState<ID, TSchema["states"]> }
 );
 
-type WithRichStateProps<ID extends string, TSchema extends ViewSchema> = {
+type WithRichStateProps<ID extends ViewID, TSchema extends ViewSchema> = {
     children?: never;
     state: ResolveRichState<ID, TSchema["states"], TSchema["hierarchy"]>;
 };
