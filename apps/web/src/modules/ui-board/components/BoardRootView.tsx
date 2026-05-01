@@ -1,37 +1,26 @@
 import style from "@/src/modules/ux-board/styles/board.module.scss"
-import clsx from "clsx";
 
-import { VIEWCONTENT, VIEWROOT } from "../../t-core/utils/view.utils";
 import { boardRootView } from "../utils/view.utils";
-import { BoardRootViewProps } from "../types/props.types";
 import { BoardCardContainerView } from "./BoardCardContainerView";
 import { Box } from "@mui/material";
 import { CanvasRootView } from "../../ui-canvas/components/CanvasRootView";
 
-export const BoardRootView = (props : BoardRootViewProps) => (
-    VIEWROOT(boardRootView, props)
-    .CONFIG({})
-    .RENDER(({ ref, state, context, slot }) => {
-      return (
-        <Box 
-          ref={ref} 
-          className={clsx(style.board, ...(slot["&"]?.className || []))}
-          sx={{
-            ...slot["&"]?.sx
-          }}
-        >
-          {VIEWCONTENT(state, () => (
-            <>
-              <CanvasRootView 
-                state={{ ...state.canvas }}
-              />
-              <BoardCardContainerView 
-                state={{ ...state.container }}
-                context={context}
-              />
-            </>
-          ), slot["&"]?.wrapper)}
-        </Box>
-      )
-    })
-)
+export const BoardRootView = boardRootView(({ ref, state, impl }) => (
+  <Box 
+    ref={ref} 
+    className={impl.className(style.root)}
+    style={impl.style()}
+  >
+    {impl.content(() => (
+      <>
+        <CanvasRootView 
+          state={{ ...state.canvas }}
+          provider={{ metrics: { type: "static", value: null! } }}
+        />
+        <BoardCardContainerView { ...
+          impl.pass<"card-container">({ state: state.container })
+        }/>
+      </>
+    ))}
+  </Box>
+));

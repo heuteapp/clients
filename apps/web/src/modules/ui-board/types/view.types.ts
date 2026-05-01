@@ -1,35 +1,29 @@
 import { BoardCardContent } from "../../d-board/types/board.types";
 import { GridRect } from "../../d-core/types/common";
-import { ViewSchema } from "../../t-core/types/view.types";
-import { CanvasViewStateSchema } from "../../ui-canvas/types/view.types";
+import { ViewSchema } from "../../t-view/types/view.types";
+import { CanvasViewSchemaContext, CanvasViewSchemaStates } from "../../ui-canvas/types/view.types";
 
-export type BoardViewSchema = ViewSchema<"board", BoardViewContextSchema, BoardViewHiearchySchema, BoardViewStateSchema>;
-
-export type BoardViewContextSchema = {
-    isFrontFace?: boolean;
-    cellStep?: number;
+export interface BoardViewSchema extends ViewSchema {
+    context: BoardViewSchemaContext;
+    states: BoardViewSchemaStates
 }
 
-export type BoardViewHiearchySchema = {
-    "board-card-container": {
-        "board-card-item": {
-            "title": true
-            "frontFace": true
-            "backFace": true
-        }
+export type BoardViewSchemaContext = {
+    metrics: {
+        layout: CanvasViewSchemaContext["metrics"];
     }
-}
+};
 
-export type BoardViewStateSchema = {
-    "board-root": {
-        canvas: CanvasViewStateSchema["canvas-root"];
-        container: BoardViewStateSchema["board-card-container"];
-    };
-    "board-card-container": {
-        items: BoardViewStateSchema["board-card-item"][];
-    };
-    "board-card-item": {
+export type BoardViewSchemaStates = {
+    "root": {
+        canvas: CanvasViewSchemaStates["root"];
+        container: BoardViewSchemaStates["card-container"];
+    },
+    "card-container": {
+        items: BoardViewSchemaStates["card-item"][];
+    },
+    "card-item": {
         content: BoardCardContent;
         position: GridRect;
-    }
+    };
 }

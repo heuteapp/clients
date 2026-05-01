@@ -1,11 +1,11 @@
+import { ViewParams } from "../../t-view/types/view.types";
+import { VIEW, VIEWROOT } from "../../t-view/utils/view.utils";
 import { BoardViewSchema } from "../types/view.types";
 
-export const boardView = <const ID extends string>(id: ID) => ({
-    schema: {} as BoardViewSchema,
-    id,
-});
+export const boardView = <const ID extends string>(
+    render: (params: ViewParams<ID, BoardViewSchema>) => React.ReactNode
+) => VIEW<ID, BoardViewSchema>(render);
 
-export const boardRootView = {
-    key: "board",
-    schema: {} as BoardViewSchema,
-} as const;
+export const boardRootView = (
+    render: (params: ViewParams<"root", BoardViewSchema>) => React.ReactNode
+) => VIEWROOT<BoardViewSchema>(render);

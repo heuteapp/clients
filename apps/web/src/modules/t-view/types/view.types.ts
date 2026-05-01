@@ -72,7 +72,7 @@ export interface ViewOverrides {
 
 export interface ViewParams<ID extends string, TSchema extends ViewSchema> {
     ref: React.Ref<HTMLDivElement | null> | null;
-    context: TSchema["context"] | null;
+    use: TSchema["context"] extends ViewContext ? ViewUse<TSchema["context"]> : null;
     state: TSchema["states"][ID];
     impl: ViewImpl<TSchema>;
 }
