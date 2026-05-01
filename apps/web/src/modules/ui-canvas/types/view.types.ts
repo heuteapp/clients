@@ -1,5 +1,5 @@
 import { GridDimensions, GridRect } from "../../d-core/types/common";
-import { ViewSchema } from "../../t-view/types/view.types";
+import { ResolveRichState, ResolveState, ViewSchema } from "../../t-view/types/view.types";
 
 export interface CanvasViewSchema extends ViewSchema {
     context: CanvasViewSchemaContext;
@@ -16,13 +16,13 @@ export type CanvasViewSchemaContext = {
 
 export type CanvasViewSchemaHierarchy = {
     "canvas:root": {
-        container: "canvas:grid-container";
+        container: "grid-container";
     },
     "canvas:grid-container": {
-        items: "canvas:grid-item"[];
+        items: "grid-item"[];
     },
     "canvas:grid-section": {
-        item: "canvas:grid-item";
+        item: "grid-item";
     },
 }
 
@@ -33,5 +33,5 @@ export type CanvasViewSchemaStates = {
     "canvas:grid-item": {
         areaName: string;
         position: GridRect;
-    };
+    },
 }

@@ -106,16 +106,39 @@ export type ResolveState<
     TStates extends Record<string, ViewState>
 > = TRef extends keyof TStates ? TStates[TRef] : never;
 
+// Space'i key'den çıkaran yardımcı tip
+type GetSpace<TKey extends string> = TKey extends `${infer TSpace}:${infer _}`
+    ? TSpace
+    : never;
+
+// Relative referansı absolute'a çeviren tip (sadece string'leri)
+type ToAbsolute<TRef, TSpace extends string> = TRef extends string
+    ? TRef extends `${infer _}:${infer _}`
+        ? TRef
+        : `${TSpace}:${TRef}`
+    : TRef extends Array<infer U>
+        ? ToAbsolute<U, TSpace>[]
+        : TRef extends object
+            ? {
+                [K in keyof TRef]: ToAbsolute<TRef[K], TSpace>;
+              }
+            : TRef;
+
+// Ana ResolveRichState
 export type ResolveRichState<
     TRef,
     TStates extends Record<string, ViewState>,
     THierarchy extends Record<string, ViewDefinition>
 > = TRef extends string ?
-      ResolveRichState<THierarchy[TRef], THierarchy, TStates> & TStates[TRef]
+      ResolveRichState<
+          ToAbsolute<THierarchy[TRef], GetSpace<TRef>>,
+          TStates, 
+          THierarchy
+      > & TStates[TRef]
     : TRef extends Array<infer U> 
         ? ResolveRichState<U, THierarchy, TStates>[] 
         : TRef extends object 
             ? {
-                [K in keyof TRef]: ResolveRichState<TRef[K], THierarchy, TStates>;
+                [K in keyof TRef]: ResolveRichState<TRef[K], THierarchy, TStates>
               }
             : TRef;
