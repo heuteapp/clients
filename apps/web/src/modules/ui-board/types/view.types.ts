@@ -16,6 +16,7 @@ export type BoardViewSchemaContext = {
 
 export type BoardViewSchemaHierarchy = ResolveHierarchy<"board", {
     "root": {
+        canvas: "canvas:root";
         container: "card-container";
     },
     "card-container": {
