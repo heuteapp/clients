@@ -146,6 +146,18 @@ export type ResolveHierarchy<
   TSpace extends string,
   THierarchy extends Record<string, any>,
   TDepends extends any[] = []
+> = ResolveRecord<TSpace, THierarchy, TDepends>
+
+export type ResolveStates<
+    TSpace extends string,
+    TStates extends Record<string, ViewState>,
+    TDepends extends any[] = []
+> = ResolveRecord<TSpace, TStates, TDepends>;
+
+export type ResolveRecord<
+  TSpace extends string,
+  THierarchy extends Record<string, any>,
+  TDepends extends any[] = []
 > = PrefixedKeys<THierarchy, TSpace> & 
   (TDepends extends [infer First, ...infer Rest] 
     ? First & ResolveHierarchy<TSpace, {}, Rest>
