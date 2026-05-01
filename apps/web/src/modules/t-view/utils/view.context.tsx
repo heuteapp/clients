@@ -2,153 +2,110 @@ import React, { useSyncExternalStore, useCallback, useContext, useMemo } from "r
 import { ViewContext, ViewProvider } from "../types/view.types";
 import { IStore, createStoreFromProvider } from "./view.store";
 
-interface ViewStores<TContext extends ViewContext> {
-    stateStore: IStore<TContext["state"]>;
-    metricsStore: IStore<TContext["metrics"]>;
-}
+const contextStoresMap = new Map<string, { stateStore?: IStore<any>, metricsStore?: IStore<any> }>();
+
+let activeContextId: string | null = null;
 
 export function createViewContext<TContext extends ViewContext>(
+    id: string,
     provider: ViewProvider<TContext>
 ) {
-    const stateStore = provider.state 
-        ? createStoreFromProvider(provider.state)
-        : undefined;
+    const stateStore = provider.state ? createStoreFromProvider(provider.state) : undefined;
+    const metricsStore = provider.metrics ? createStoreFromProvider(provider.metrics) : undefined;
     
-    const metricsStore = provider.metrics 
-        ? createStoreFromProvider(provider.metrics)
-        : undefined;
-
-    const ViewCtx = React.createContext<ViewStores<TContext> | null>(null);
-
+    contextStoresMap.set(id, { stateStore, metricsStore });
+    
+    activeContextId = id;
+    
+    const ViewContext = React.createContext<{ stateStore?: IStore<TContext["state"]>, metricsStore?: IStore<TContext["metrics"]> } | null>(null);
+    
     const Provider = ({ children }: { children: React.ReactNode }) => {
-        const value = useMemo(() => ({ 
-            stateStore, 
-            metricsStore 
-        }), []);
-        return <ViewCtx.Provider value={value as ViewStores<TContext>}>{children}</ViewCtx.Provider>;
+        const value = useMemo(() => ({ stateStore, metricsStore }), []);
+        return React.createElement(ViewContext.Provider, { value }, children);
     };
+    
+    return { Provider };
+}
 
-    function useSelector<TSelected>(
-        selector: (ctx: TContext) => TSelected
-    ): TSelected {
-        const stores = useContext(ViewCtx);
-        if (!stores) {
-            throw new Error("ViewContext Provider not found");
+export function useSelector<TSelected>(
+    selector: (ctx: any) => TSelected
+): TSelected {
+    const stores = activeContextId ? contextStoresMap.get(activeContextId) : null;
+    
+    const getContext = useCallback(() => {
+        const ctx: any = {};
+        if (stores?.stateStore) {
+            ctx.state = stores.stateStore.get();
         }
+        if (stores?.metricsStore) {
+            ctx.metrics = stores.metricsStore.get();
+        }
+        return ctx;
+    }, []);
+    
+    const subscribe = useCallback((onStoreChange: () => void) => {
+        const unsubscribers: (() => void)[] = [];
+        if (stores?.stateStore) {
+            unsubscribers.push(stores.stateStore.subscribe(onStoreChange));
+        }
+        if (stores?.metricsStore) {
+            unsubscribers.push(stores.metricsStore.subscribe(onStoreChange));
+        }
+        return () => unsubscribers.forEach(unsub => unsub());
+    }, []);
+    
+    const getSnapshot = useCallback(() => selector(getContext()), [selector, getContext]);
+    return useSyncExternalStore(subscribe, getSnapshot);
+}
 
-        const getContext = useCallback((): TContext => {
-            const ctx: Partial<TContext> = {};
-            
-            if (stores.stateStore) {
-                (ctx as any).state = stores.stateStore.get();
-            }
-            if (stores.metricsStore) {
-                (ctx as any).metrics = stores.metricsStore.get();
-            }
-            
-            return ctx as TContext;
-        }, [stores]);
+export function useContextValue(): any {
+    const stores = activeContextId ? contextStoresMap.get(activeContextId) : null;
+    
+    const getContext = useCallback(() => {
+        const ctx: any = {};
+        if (stores?.stateStore) {
+            ctx.state = stores.stateStore.get();
+        }
+        if (stores?.metricsStore) {
+            ctx.metrics = stores.metricsStore.get();
+        }
+        return ctx;
+    }, []);
+    
+    const subscribe = useCallback((onStoreChange: () => void) => {
+        const unsubscribers: (() => void)[] = [];
+        if (stores?.stateStore) {
+            unsubscribers.push(stores.stateStore.subscribe(onStoreChange));
+        }
+        if (stores?.metricsStore) {
+            unsubscribers.push(stores.metricsStore.subscribe(onStoreChange));
+        }
+        return () => unsubscribers.forEach(unsub => unsub());
+    }, []);
+    
+    return useSyncExternalStore(subscribe, getContext);
+}
 
-        const subscribe = useCallback(
-            (onStoreChange: () => void) => {
-                const unsubscribers: (() => void)[] = [];
-                
-                if (stores.stateStore) {
-                    unsubscribers.push(stores.stateStore.subscribe(onStoreChange));
-                }
-                if (stores.metricsStore) {
-                    unsubscribers.push(stores.metricsStore.subscribe(onStoreChange));
-                }
-                
-                return () => {
-                    unsubscribers.forEach(unsub => unsub());
-                };
-            },
-            [stores]
-        );
-
-        const getSnapshot = useCallback(() => selector(getContext()), [selector, getContext]);
-
-        return useSyncExternalStore(subscribe, getSnapshot);
+export function useSetState(): (newState: any) => void {
+    const stores = activeContextId ? contextStoresMap.get(activeContextId) : null;
+    
+    if (!stores?.stateStore) {
+        throw new Error("state is not defined in this context");
     }
+    
+    return useCallback((newState: any) => {
+        stores.stateStore!.set(newState);
+    }, []);
+}
 
-    function useContextValue(): TContext {
-        const stores = useContext(ViewCtx);
-        if (!stores) {
-            throw new Error("ViewContext Provider not found");
-        }
-
-        const getContext = useCallback((): TContext => {
-            const ctx: Partial<TContext> = {};
-            
-            if (stores.stateStore) {
-                (ctx as any).state = stores.stateStore.get();
-            }
-            if (stores.metricsStore) {
-                (ctx as any).metrics = stores.metricsStore.get();
-            }
-            
-            return ctx as TContext;
-        }, [stores]);
-
-        const subscribe = useCallback(
-            (onStoreChange: () => void) => {
-                const unsubscribers: (() => void)[] = [];
-                
-                if (stores.stateStore) {
-                    unsubscribers.push(stores.stateStore.subscribe(onStoreChange));
-                }
-                if (stores.metricsStore) {
-                    unsubscribers.push(stores.metricsStore.subscribe(onStoreChange));
-                }
-                
-                return () => {
-                    unsubscribers.forEach(unsub => unsub());
-                };
-            },
-            [stores]
-        );
-
-        return useSyncExternalStore(subscribe, getContext);
+export function useSetMetrics(): (newMetrics: any) => void {
+    const stores = activeContextId ? contextStoresMap.get(activeContextId) : null;
+    
+    if (!stores?.metricsStore) {
+        throw new Error("metrics is not defined in this context");
     }
-
-    function useSetState() {
-        const stores = useContext(ViewCtx);
-        if (!stores) {
-            throw new Error("ViewContext Provider not found");
-        }
-        
-        if (!stores.stateStore) {
-            throw new Error("state is not defined in this context");
-        }
-        
-        return useCallback((newState: TContext["state"]) => {
-            stores.stateStore!.set(newState);
-        }, [stores]);
-    }
-
-    function useSetMetrics() {
-        const stores = useContext(ViewCtx);
-        if (!stores) {
-            throw new Error("ViewContext Provider not found");
-        }
-        
-        if (!stores.metricsStore) {
-            throw new Error("metrics is not defined in this context");
-        }
-        
-        return useCallback((newMetrics: TContext["metrics"]) => {
-            stores.metricsStore!.set(newMetrics);
-        }, [stores]);
-    }
-
-    return {
-        Provider,
-        use: {
-            selector: useSelector,
-            contextValue: useContextValue,
-            setState: useSetState,
-            setMetrics: useSetMetrics
-        }
-    };
+    
+    return useCallback((newMetrics: any) => {
+        stores.metricsStore!.set(newMetrics);
+    }, []);
 }

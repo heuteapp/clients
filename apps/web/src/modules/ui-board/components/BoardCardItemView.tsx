@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { boardView } from "../utils/view.utils";
 
-export const BoardCardItemView = boardView<"card-item">(({ ref, use, state, impl }) => {
+export const BoardCardItemView = boardView<"card-item">(({ ref, state, impl }) => {
     const isFrontFace = true;
     const cellStep = 32;
 

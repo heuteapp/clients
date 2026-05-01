@@ -5,7 +5,7 @@ import { BoardCardItemView } from "./BoardCardItemView";
 
 //
 
-export const BoardCardContainerView = boardView<"card-container">(({ ref, use, state, impl }) => {
+export const BoardCardContainerView = boardView<"card-container">(({ ref, state, impl }) => {
     return (
         <div
             ref={ref}
@@ -13,9 +13,10 @@ export const BoardCardContainerView = boardView<"card-container">(({ ref, use, s
         > 
             {impl.content(() => (
                 state.items.map((item, i) => (
-                    <BoardCardItemView { ...
-                        impl.pass<"card-item">({ state: item })
-                    }/>
+                    <BoardCardItemView 
+                        key={i}
+                        state={item}
+                    />
                 ))
             ))}
         </div>

@@ -10,9 +10,9 @@ export const CanvasRootView = canvasRootView(({ ref, state, impl }) => (
     style={impl.style()}
   >
     {impl.content(() => (
-      <CanvasGridContainerView { ...
-        impl.pass<"grid-container">({ state: state.container })
-      } />
+      <CanvasGridContainerView 
+        state={{ ...state.container }}
+      />
     ))}
   </div>
 ));

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ViewBaseProps, ViewParams, ViewPassParams, ViewProps, ViewRootProps, ViewSchema, ViewUse } from "../types/view.types";
+import { ViewParams, ViewProps, ViewRootProps, ViewSchema } from "../types/view.types";
 import { SxProps, Theme } from "@mui/system";
 import clsx from "clsx";
 import React from "react";
@@ -12,9 +12,11 @@ export const VIEW = <
   render: (params: ViewParams<ID, TSchema>) => React.ReactNode
 ) => {
   return (props: ViewProps<ID, TSchema>) => {
-    return renderView(props.use, props, render);
+    return renderView(props, render);
   };
 };
+
+let rootCounter = 0;
 
 export const VIEWROOT = <
   const TSchema extends ViewSchema = ViewSchema
@@ -22,18 +24,13 @@ export const VIEWROOT = <
   render: (params: ViewParams<"root", TSchema>) => React.ReactNode
 ) => {
   return (props: ViewRootProps<TSchema>) => {
-    const contextResult = props.provider 
-      ? createViewContext(props.provider as any)
-      : null;
-
-    const useHooks = contextResult?.use || null;
-    const rendered = renderView(useHooks, props, render);
-    
-    if (contextResult) {
-      return <contextResult.Provider>{rendered}</contextResult.Provider>;
+    if (props.provider) {
+      const uniqueId = `root_${++rootCounter}`;
+      const { Provider } = createViewContext(uniqueId, props.provider as any);
+      return <Provider>{render(props as any)}</Provider>;
     }
     
-    return rendered;
+    return render(props as any);
   };
 };
 
@@ -41,8 +38,7 @@ const renderView = <
   const ID extends string = string, 
   const TSchema extends ViewSchema = ViewSchema
 > (
-  use: ViewUse | null,
-  props: ViewBaseProps<ID, TSchema>,
+  props: ViewProps<ID, TSchema>,
   render: (params: ViewParams<ID, TSchema>) => React.ReactNode
 ) => {
     const ref = props.ref || null;
@@ -67,26 +63,9 @@ const renderView = <
             return props.children;
           }
           return def?.() || null;
-        },
-        pass: <PassID extends string>(params: ViewPassParams<PassID, TSchema>) => {
-          const p = {
-            key: params.key,
-            state: params.state
-          } as any;
-
-          if(use) {
-            p.use = use;
-          }
-
-          return p;
         }
       };
-    }, [props.overrides, props.children, use]);
+    }, [props.overrides, props.children,]);
 
-    const params = { ref, state, impl } as any;
-    if (use) {
-      params.use = use;
-    }
-
-    return render(params as ViewParams<ID, TSchema>);
+    return render({ ref, state, impl } as ViewParams<ID, TSchema>);
 };

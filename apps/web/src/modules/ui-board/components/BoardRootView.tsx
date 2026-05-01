@@ -17,9 +17,9 @@ export const BoardRootView = boardRootView(({ ref, state, impl }) => (
           state={{ ...state.canvas }}
           provider={{ metrics: { type: "static", value: null! } }}
         />
-        <BoardCardContainerView { ...
-          impl.pass<"card-container">({ state: state.container })
-        }/>
+        <BoardCardContainerView
+          state={{ ...state.container }}
+        />
       </>
     ))}
   </Box>

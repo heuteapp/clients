@@ -39,12 +39,10 @@ export const CanvasGridContainerView = canvasView<"grid-container">(({ ref, stat
         > 
             {impl.content(() => (
                 state.items.map(item => (
-                    <CanvasGridSectionView { ...
-                        impl.pass<"grid-section">({ 
-                            key: item.areaName,
-                            state: { item }
-                        })
-                    } />
+                    <CanvasGridSectionView 
+                        key={item.areaName}
+                        state={{ item }}
+                    />
                 ))
             ))}
         </div>       
