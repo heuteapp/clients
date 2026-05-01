@@ -113,14 +113,14 @@ export type ResolveRichState<
 > = TRef extends string ?
       ResolveRichState<
           ToAbsolute<THierarchy[TRef], GetSpace<TRef>>,
-          TStates, 
+          TStates,
           THierarchy
       > & TStates[TRef]
     : TRef extends Array<infer U> 
-        ? ResolveRichState<U, THierarchy, TStates>[] 
+        ? ResolveRichState<U, TStates, THierarchy>[]
         : TRef extends object 
             ? {
-                [K in keyof TRef]: ResolveRichState<TRef[K], THierarchy, TStates>
+                [K in keyof TRef]: ResolveRichState<TRef[K], TStates, THierarchy>
               }
             : TRef;
 
