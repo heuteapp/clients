@@ -6,7 +6,7 @@ import React from "react";
 import { createViewContext } from "./view.context";
 
 export const VIEW = <
-  const ID extends string = string, 
+  const ID extends ViewI = string, 
   const TSchema extends ViewSchema = ViewSchema
 > (
   render: (params: ViewParams<ID, TSchema>) => React.ReactNode
